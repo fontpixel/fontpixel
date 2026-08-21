@@ -1,0 +1,10 @@
+# id: jisx0201
+# section: jp
+# order: 23
+# name_zh: JIS X 0201
+# name_en: JIS X 0201
+# desc_zh: 罗马字与半角假名(7 位/8 位单字节集)
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+0020..007E
+FF61..FF9F

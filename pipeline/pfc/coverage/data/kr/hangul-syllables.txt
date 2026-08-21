@@ -1,0 +1,9 @@
+# id: hangul-syllables
+# section: kr
+# order: 40
+# name_zh: 现代谚文音节(全部)
+# name_en: Hangul Syllables (All Modern)
+# desc_zh: U+AC00–D7A3 全部 11172 个音节
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+AC00..D7A3

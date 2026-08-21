@@ -1,0 +1,21 @@
+# id: gbk-hanzi
+# section: gb
+# order: 30
+# name_zh: GBK 汉字
+# name_en: GBK Hanzi
+# desc_zh: GBK 编码全部汉字(含兼容表意字)
+# desc_en: 
+# source: Python codecs; generated 2026-08-21
+4E00..9FA5
+F92C
+F979
+F995
+F9E7
+F9F1
+FA0C..FA0F
+FA11
+FA13..FA14
+FA18
+FA1F..FA21
+FA23..FA24
+FA27..FA29

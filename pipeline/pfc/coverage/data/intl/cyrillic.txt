@@ -1,0 +1,9 @@
+# id: cyrillic
+# section: intl
+# order: 40
+# name_zh: 西里尔字母
+# name_en: Cyrillic
+# desc_zh: U+0400–04FF 基本区
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+0400..04FF

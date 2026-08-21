@@ -1,0 +1,9 @@
+# id: latin-basic
+# section: intl
+# order: 30
+# name_zh: 基本拉丁字母
+# name_en: Basic Latin
+# desc_zh: 可打印 ASCII,U+0020–007E
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+0020..007E

@@ -1,0 +1,9 @@
+# id: braille
+# section: intl
+# order: 74
+# name_zh: 盲文点字
+# name_en: Braille Patterns
+# desc_zh: U+2800–28FF 全部 256 个盲文图案
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+2800..28FF

@@ -1,0 +1,10 @@
+# id: radicals-supplement
+# section: prc-lit
+# order: 61
+# name_zh: 汉字部首补充
+# name_en: CJK Radicals Supplement
+# desc_zh: U+2E80–2EF3 中已指派的 115 个变形部首
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+2E80..2E99
+2E9B..2EF3

@@ -1,0 +1,9 @@
+# id: hiragana
+# section: jp
+# order: 20
+# name_zh: 平假名
+# name_en: Hiragana
+# desc_zh: U+3041–3096 全部平假名字母
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+3041..3096

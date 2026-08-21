@@ -1,0 +1,9 @@
+# id: hangul-compat-jamo
+# section: kr
+# order: 50
+# name_zh: 谚文兼容字母
+# name_en: Hangul Compatibility Jamo
+# desc_zh: U+3131–318E 谚文兼容字母
+# desc_en: 
+# source: Unicode block ranges; generated 2026-08-21
+3131..318E

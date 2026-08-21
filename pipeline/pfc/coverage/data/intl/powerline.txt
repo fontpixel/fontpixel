@@ -1,0 +1,10 @@
+# id: powerline
+# section: intl
+# order: 73
+# name_zh: Powerline 符号
+# name_en: Powerline Symbols
+# desc_zh: 私用区 U+E0A0–E0D4 中 Powerline 及其扩展占用的 41 个符号
+# desc_en: 
+# source: powerline/fontpatcher 约定; generated 2026-08-21
+E0A0..E0A3
+E0B0..E0D4
