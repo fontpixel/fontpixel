@@ -1,0 +1,8 @@
+name = "Mini Test"
+name_zh = "迷你测试"
+author = "PFC Tests"
+homepage = "https://example.com/mini"
+description = "测试家族"
+form = "gothic"
+vibes = ["retro-game"]
+added = "2026-08-21"

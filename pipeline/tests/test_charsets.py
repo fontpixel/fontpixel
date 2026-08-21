@@ -58,6 +58,10 @@ def test_task5_external_tables():
         assert cp in cs["wgl4"].cps
     assert len(cs["unihan-core-2020"].cps) == 20720
     assert len(cs["viet-latin"].cps) == 186
+    assert len(cs["changyong-2500"].cps) == 2500
+    assert len(cs["cichangyong-1000"].cps) == 1000
+    assert (cs["changyong-2500"].cps | cs["cichangyong-1000"].cps
+            ) == cs["changyong-3500"].cps
 
 
 def test_gb18030_2022_levels():
