@@ -57,7 +57,7 @@ const charsetsMeta = loadCharsetsMeta();
     <h1>{displayName}</h1>
     {m.nameZh && lang === 'zh' && <p class="hero__latin mono">{m.name}</p>}
     {detail.description && <p class="hero__desc">{detail.description}</p>}
-    <div class="hero__preview" set:html={previewSvg} />
+    <div class="hero__preview lattice" set:html={previewSvg} />
   </header>
 
   <div class="layout">
@@ -209,6 +209,9 @@ const charsetsMeta = loadCharsetsMeta();
     }
     .hero__preview {
       margin: var(--s4) 0 var(--s5);
+      border: 1px solid var(--line-soft);
+      padding: var(--s4);
+      max-width: 44rem;
     }
     .hero__preview :global(svg) {
       width: 100%;

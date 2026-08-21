@@ -24,6 +24,11 @@
   );
   const variant = family.variants.reduce((a, b) => (b.glyphs > a.glyphs ? b : a));
   const text = $derived(sampleText.trim() || defaultSample(family.sampleLang));
+  const sizeLabel = $derived(
+    family.sizes.length > 3
+      ? `${family.sizes[0]}–${family.sizes[family.sizes.length - 1]}${s.card.px}`
+      : family.sizes.map((sz) => `${sz}${s.card.px}`).join(' '),
+  );
 
   let canvasEl: HTMLCanvasElement | undefined = $state();
   let nameEl: HTMLCanvasElement | undefined = $state();
@@ -103,33 +108,33 @@
 
 <article class="card" bind:this={rootEl} data-slug={family.slug}>
   <a class="card__link" {href}>
-    <h2 class="card__name">{displayName}</h2>
+    <header class="card__head">
+      <h2 class="card__name">{displayName}</h2>
+      <span class="card__marks">
+        {#if family.converted}<span class="chip chip--accent">{s.card.converted}</span>{/if}
+        {#if !family.curated}<span class="chip">{s.card.uncurated}</span>{/if}
+        {#if missing > 0}
+          <span class="chip chip--accent mono" data-testid="missing-chip"
+            >{s.detail.missingCount.replace('{n}', String(missing))}</span
+          >
+        {/if}
+      </span>
+    </header>
     <canvas class="card__namecanvas" bind:this={nameEl} style="display:none" aria-hidden="true"
     ></canvas>
-    <div class="card__sample">
+    <div class="card__sample lattice">
       <canvas bind:this={canvasEl} aria-label={text}></canvas>
     </div>
-    <p class="card__meta">
-      {#each family.sizes as sz (sz)}
-        <span class="chip mono">{sz}{s.card.px}</span>
-      {/each}
-      {#if family.form}<span class="chip">{s.forms[family.form] ?? family.form}</span>{/if}
-      {#if family.license.spdx}
-        <span class="chip">{family.license.spdx}</span>
-      {:else}
-        <span class="chip chip--accent">{s.card.licenseUnknown}</span>
-      {/if}
-      {#each family.scripts as sc (sc)}
-        <span class="chip">{s.scriptNames[sc] ?? sc}</span>
-      {/each}
-      {#if family.converted}<span class="chip chip--accent">{s.card.converted}</span>{/if}
-      {#if !family.curated}<span class="chip">{s.card.uncurated}</span>{/if}
-      <span class="chip mono">{family.glyphCount.toLocaleString()} {s.card.glyphs}</span>
-      {#if missing > 0}
-        <span class="chip chip--accent mono" data-testid="missing-chip"
-          >{s.detail.missingCount.replace('{n}', String(missing))}</span
-        >
-      {/if}
+    <p class="card__meta mono">
+      <span>{sizeLabel}</span>
+      {#if family.form}<span class="card__sep">·</span><span
+          >{s.forms[family.form] ?? family.form}</span
+        >{/if}
+      <span class="card__sep">·</span>
+      <span>{family.glyphCount.toLocaleString()} {s.card.glyphs}</span>
+      <span class="card__lic" class:card__lic--warn={!family.license.spdx}>
+        {family.license.spdx ?? s.card.licenseUnknown}
+      </span>
     </p>
   </a>
 </article>
@@ -141,17 +146,30 @@
     background: var(--surface);
   }
   .card:hover {
-    border-color: var(--ink-3);
+    border-color: var(--accent);
   }
   .card__link {
     display: block;
     padding: var(--s4);
   }
+  .card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--s2);
+    margin-bottom: var(--s2);
+  }
   .card__name {
-    font-size: 1rem;
-    margin: 0 0 var(--s2);
+    font-size: 0.92rem;
+    margin: 0;
     color: var(--ink-2);
     font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .card__marks {
+    display: flex;
+    gap: var(--s1);
+    flex-shrink: 0;
   }
   .card__namecanvas {
     display: block;
@@ -159,17 +177,33 @@
     max-width: 100%;
   }
   .card__sample {
-    min-height: 3rem;
+    min-height: 3.6rem;
     overflow: hidden;
+    border: 1px solid var(--line-soft);
+    padding: var(--s3);
   }
   .card__sample canvas {
     max-width: 100%;
     image-rendering: pixelated;
+    display: block;
   }
   .card__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--s1);
+    align-items: baseline;
+    gap: var(--s2);
     margin: var(--s3) 0 0;
+    font-size: 0.72rem;
+    color: var(--ink-3);
+  }
+  .card__sep {
+    color: var(--line);
+  }
+  .card__lic {
+    margin-left: auto;
+    color: var(--ink-3);
+  }
+  .card__lic--warn {
+    color: var(--accent);
   }
 </style>

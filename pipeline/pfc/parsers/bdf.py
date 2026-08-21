@@ -59,6 +59,7 @@ def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
     bbox = (0, 0, 0, 0)
     size_line: tuple[int, int, int] | None = None
     declared_chars: int | None = None
+    missing_dwidth = 0
 
     i = 0
     n = len(lines)
@@ -94,7 +95,7 @@ def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
         elif key == "STARTCHAR":
             name = rest.strip() or "?"
             enc = -1
-            dwidth = 0
+            dwidth: int | None = None
             gb = (0, 0, 0, 0)
             rows = b""
             while i < n:
@@ -146,6 +147,9 @@ def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
                 continue
             if not rows:
                 rows = b"\x00" * (gb[1] * row_bytes(gb[0]))
+            if dwidth is None:
+                dwidth = -1  # 哨兵:解析完 pixel_size 后统一回退
+                missing_dwidth += 1
             glyphs[enc] = Glyph(
                 cp=enc, name=name, dwidth=dwidth,
                 bbw=gb[0], bbh=gb[1], bbx=gb[2], bby=gb[3], rows=rows,
@@ -176,6 +180,18 @@ def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
         asc = bbox[1] + bbox[3]
         desc = -bbox[3]
         warnings.append("ascent/descent derived from FONTBOUNDINGBOX")
+
+    if missing_dwidth:
+        # UnifontEX 等方言省略 DWIDTH:按单元格语义回退——
+        # 墨迹超过半格视为全宽(= pixel_size),否则半宽。
+        half = (pixel_size + 1) // 2
+        for g in glyphs.values():
+            if g.dwidth == -1:
+                natural = g.bbw + max(g.bbx, 0)
+                g.dwidth = pixel_size if natural > half else max(half, natural)
+        warnings.append(
+            f"{missing_dwidth} glyphs missing DWIDTH, cell-width fallback applied"
+        )
 
     # 非 Unicode 字符集:按 CHARSET_REGISTRY 重映射码位
     registry = str(props.get("CHARSET_REGISTRY", ""))

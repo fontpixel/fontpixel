@@ -58,6 +58,21 @@ def test_missing_ascent_derived(tmp_path):
     assert any("ascent" in w.lower() for w in f.warnings)
 
 
+def test_missing_dwidth_falls_back_to_fbb_width(tmp_path):
+    """UnifontEX 式方言:全宽字形省略 DWIDTH → 用 FONTBOUNDINGBOX 宽度。"""
+    src = (FIX / "mini.bdf").read_text()
+    src = src.replace("ENCODING 27704\nSWIDTH 1000 0\nDWIDTH 16 0\n",
+                      "ENCODING 27704\n")
+    p = tmp_path / "nodw.bdf"
+    p.write_text(src)
+    f = parse_bdf(p, "x")
+    yong = next(g for g in f.glyphs if g.cp == 27704)
+    assert yong.dwidth == 16  # FONTBOUNDINGBOX 16 16 0 -2
+    a = next(g for g in f.glyphs if g.cp == 65)
+    assert a.dwidth == 8  # 显式 DWIDTH 不受影响
+    assert any("DWIDTH" in w for w in f.warnings)
+
+
 def test_ksx_registry_remapped_to_unicode():
     """baekmuk batang:ksx1001.1997 GL 编码的 BDF 应重映射到 Unicode。"""
     f = parse_bdf(FIX / "real-batang10-ksx.bdf", "batang")

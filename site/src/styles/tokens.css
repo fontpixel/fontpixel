@@ -146,6 +146,22 @@ pre,
   color: var(--accent);
 }
 
+/* 点格纸:字形样例的展示底纹(标本馆玻璃柜) */
+.lattice {
+  background-color: var(--surface);
+  background-image: radial-gradient(var(--line-soft) 1px, transparent 1px);
+  background-size: 8px 8px;
+  background-position: 4px 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a,
+  button,
+  .chip {
+    transition: color 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+  }
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

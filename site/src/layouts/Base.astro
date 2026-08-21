@@ -1,7 +1,8 @@
 ---
 import '../styles/tokens.css';
+import BrandMark from '../islands/BrandMark.svelte';
 import { t, otherLang, type Lang } from '../i18n';
-import { withBase } from '../lib/data';
+import { loadIndex, withBase } from '../lib/data';
 
 interface Props {
   lang: Lang;
@@ -16,6 +17,23 @@ const { lang, title, description, path, ogImage } = Astro.props;
 const s = t(lang);
 const other = otherLang(lang);
 const canonical = withBase(`/${lang}${path}`);
+
+// 站名由馆藏字体自渲染(签名元素):挑选一款覆盖中文的家族
+let brandFont: { slug: string; variantId: string } | null = null;
+try {
+  const idx = loadIndex();
+  const preferred = ['fusion-pixel', 'ark-pixel', 'ark-pixel-12px-monospaced',
+    'wqy-bitmap-song', 'unifont-ex'];
+  const fam =
+    preferred.map((p) => idx.families.find((f) => f.slug === p)).find(Boolean) ??
+    idx.families.find((f) => f.scripts.includes('zh-hans'));
+  if (fam) {
+    const v = fam.variants.reduce((a, b) => (b.glyphs > a.glyphs ? b : a));
+    brandFont = { slug: fam.slug, variantId: v.id };
+  }
+} catch {
+  /* 数据未构建时退回纯文字 */
+}
 ---
 
 <!doctype html>
@@ -51,7 +69,19 @@ const canonical = withBase(`/${lang}${path}`);
     <header class="site-header">
       <div class="container site-header__row">
         <a class="site-brand" href={withBase(`/${lang}/`)}>
-          <span class="site-brand__name">{s.siteName}</span>
+          {
+            brandFont ? (
+              <BrandMark
+                client:load
+                slug={brandFont.slug}
+                variantId={brandFont.variantId}
+                dataBase={withBase('/data')}
+                text={s.siteName}
+              />
+            ) : (
+              <span class="site-brand__name">{s.siteName}</span>
+            )
+          }
           <span class="site-brand__latin mono">{s.siteNameLatin}</span>
         </a>
         <nav class="site-nav" aria-label="site">

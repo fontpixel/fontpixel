@@ -130,7 +130,7 @@
     {/if}
   </div>
 
-  <div class="ed__canvas" bind:this={wrapEl}>
+  <div class="ed__canvas lattice" bind:this={wrapEl}>
     <canvas bind:this={canvasEl}></canvas>
   </div>
 </section>
