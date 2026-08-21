@@ -69,10 +69,13 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
     dest = dest_root / slug
     changed = False
 
-    if fam.get("zip"):
+    zip_list = ([fam["zip"]] if fam.get("zip") else []) + list(fam.get("zips", []))
+    for zp in zip_list:
         with tempfile.TemporaryDirectory() as td:
-            files = extract_zip(source / fam["zip"], fam.get("zip_take", ["*.bdf"]),
+            files = extract_zip(source / zp, fam.get("zip_take", ["*.bdf"]),
                                 Path(td))
+            if not files:
+                report.errors.append(f"{slug}: zip {zp} 无匹配文件")
             for f in sorted(files):
                 changed |= _place(f.read_bytes(), dest / f.name, report)
 
