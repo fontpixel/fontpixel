@@ -89,6 +89,11 @@ export class GlyphStore {
     return p;
   }
 
+  /** 直接取某个区间分块(字形网格用)。 */
+  loadChunk(slug: string, variantId: string, file: string): Promise<GlyphChunk> {
+    return this.rangeChunk(slug, variantId, file);
+  }
+
   async glyphsFor(
     slug: string,
     variantId: string,

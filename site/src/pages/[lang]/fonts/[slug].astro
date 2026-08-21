@@ -1,13 +1,16 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import CoverageReport from '../../../components/CoverageReport.astro';
 import InkDiagram from '../../../components/InkDiagram.astro';
 import MetaSidebar from '../../../components/MetaSidebar.astro';
 import DownloadList from '../../../components/DownloadList.astro';
+import GlyphGrid from '../../../islands/GlyphGrid.svelte';
 import SampleEditor from '../../../islands/SampleEditor.svelte';
 import { t, type Lang } from '../../../i18n';
 import {
   downloadsBase,
   listDetailSlugs,
+  loadCharsetsMeta,
   loadDetail,
   readLicenseText,
   readPreviewSvg,
@@ -36,6 +39,7 @@ try {
 }
 const dlBase = downloadsBase();
 const variantIds = m.variants.map((v) => v.id);
+const charsetsMeta = loadCharsetsMeta();
 ---
 
 <Base
@@ -151,9 +155,20 @@ const variantIds = m.variants.map((v) => v.id);
         }
       </section>
 
-      <section id="coverage-root" class="coverage-mount" data-testid="coverage-mount">
-        <!-- Task 18:覆盖率报告与字形网格岛屿挂载点 -->
-      </section>
+      <CoverageReport
+        lang={lang}
+        detail={detail}
+        sections={charsetsMeta.sections}
+        charsets={charsetsMeta.charsets}
+      />
+
+      <GlyphGrid
+        client:visible
+        slug={slug}
+        variantIds={variantIds}
+        s={s}
+        dataBase={withBase('/data')}
+      />
 
       <DownloadList lang={lang} detail={detail} base={dlBase} />
     </div>

@@ -88,6 +88,7 @@ export const DetailSchema = z.object({
     z.string(),
     z.array(z.tuple([z.string(), z.number().int(), z.number().int()])),
   ),
+  missingChars: z.record(z.string(), z.record(z.string(), z.string())),
   downloads: z.array(z.object({
     family: z.string(),
     variantId: z.string().nullable(),

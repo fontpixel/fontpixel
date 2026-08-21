@@ -37,6 +37,23 @@ export function downloadsBase(): string {
   return (import.meta.env.PFC_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
 }
 
+export interface CharsetMeta {
+  id: string;
+  section: string;
+  order: number;
+  nameZh: string;
+  nameEn: string;
+  descZh: string;
+  descEn: string;
+  source: string;
+  total: number;
+}
+
+export function loadCharsetsMeta(): { sections: string[]; charsets: CharsetMeta[] } {
+  const raw = readFileSync(join(DATA_DIR, 'charsets.json'), 'utf-8');
+  return JSON.parse(raw) as { sections: string[]; charsets: CharsetMeta[] };
+}
+
 export function readLicenseText(slug: string): string | null {
   try {
     return readFileSync(join(DATA_DIR, 'licenses', `${slug}.txt`), 'utf-8');

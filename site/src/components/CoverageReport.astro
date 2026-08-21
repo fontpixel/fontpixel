@@ -1,0 +1,288 @@
+---
+import { t, type Lang } from '../i18n';
+import type { CharsetMeta } from '../lib/data';
+import type { FontDetail } from '../lib/schema';
+
+interface Props {
+  lang: Lang;
+  detail: FontDetail;
+  sections: string[];
+  charsets: CharsetMeta[];
+}
+const { lang, detail, sections, charsets } = Astro.props;
+const s = t(lang);
+const m = detail.meta;
+const name = (c: CharsetMeta) => (lang === 'zh' ? c.nameZh : c.nameEn || c.nameZh);
+const desc = (c: CharsetMeta) => (lang === 'zh' ? c.descZh : c.descEn || c.descZh);
+const bySection = new Map<string, CharsetMeta[]>();
+for (const c of charsets) {
+  const list = bySection.get(c.section) ?? [];
+  list.push(c);
+  bySection.set(c.section, list);
+}
+const pct = (have: number, total: number) =>
+  total === 0 ? '0' : ((have / total) * 100).toFixed(have === total ? 0 : 2);
+---
+
+<section class="cov" data-testid="coverage-report">
+  <h2>{s.detail.coverageTitle}</h2>
+  {
+    m.variants.map((v, vi) => {
+      const cov = detail.coverage[v.id]!;
+      const ov = detail.overview[v.id]!;
+      const blocks = detail.unicodeBlocks[v.id]!;
+      const missing = detail.missingChars[v.id] ?? {};
+      return (
+        <div data-variant-panel={v.id} hidden={vi !== 0}>
+          <section class="cov__overview">
+            <h3>{s.coverage.sections['overview']}</h3>
+            <table class="cov__table">
+              <tbody>
+                <tr>
+                  <th>{s.coverage.totalEncoded}</th>
+                  <td class="mono">
+                    {ov.total[0]!.toLocaleString()} / {ov.total[1]!.toLocaleString()}
+                  </td>
+                  <td class="mono cov__pct">{pct(ov.total[0]!, ov.total[1]!)}%</td>
+                  <td />
+                </tr>
+                {ov.planes
+                  .filter((p) => p[1] > 0)
+                  .map((p) => (
+                    <tr class="cov__sub">
+                      <th>{p[0]}</th>
+                      <td class="mono">
+                        {p[1].toLocaleString()} / {p[2].toLocaleString()}
+                      </td>
+                      <td class="mono cov__pct">{pct(p[1], p[2])}%</td>
+                      <td />
+                    </tr>
+                  ))}
+                <tr>
+                  <th>{s.coverage.hanTotal}</th>
+                  <td class="mono">
+                    {ov.hanTotal[0]!.toLocaleString()} / {ov.hanTotal[1]!.toLocaleString()}
+                  </td>
+                  <td class="mono cov__pct">{pct(ov.hanTotal[0]!, ov.hanTotal[1]!)}%</td>
+                  <td />
+                </tr>
+                {ov.compat[0]! > 0 && (
+                  <tr>
+                    <th>
+                      {s.coverage.compat}
+                      <span class="cov__note" title={s.coverage.compatNote}>
+                        *
+                      </span>
+                    </th>
+                    <td class="mono">
+                      {ov.compat[0]} / {ov.compat[1]}
+                    </td>
+                    <td class="mono cov__pct">{pct(ov.compat[0]!, ov.compat[1]!)}%</td>
+                    <td />
+                  </tr>
+                )}
+                {ov.pua.some((p) => p[1] > 0) &&
+                  ov.pua.map((p) => (
+                    <tr class="cov__sub">
+                      <th>
+                        {s.coverage.pua} · {p[0]}
+                      </th>
+                      <td class="mono">
+                        {p[1].toLocaleString()} / {p[2].toLocaleString()}
+                      </td>
+                      <td class="mono cov__pct">{pct(p[1], p[2])}%</td>
+                      <td />
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </section>
+
+          {sections.map((sec) => {
+            const rows = (bySection.get(sec) ?? []).filter((c) => cov[c.id]);
+            if (!rows.length) return null;
+            return (
+              <section class="cov__section">
+                <h3>{s.coverage.sections[sec] ?? sec}</h3>
+                <table class="cov__table">
+                  <tbody>
+                    {rows.map((c) => {
+                      const [have, total] = cov[c.id]!;
+                      const ratio = total ? have / total : 0;
+                      const filled = Math.round(ratio * 100);
+                      const miss = missing[c.id];
+                      return (
+                        <tr data-charset={c.id}>
+                          <th title={`${desc(c)}\n${s.coverage.sourceLabel}:${c.source}`}>
+                            {name(c)}
+                          </th>
+                          <td class="mono">
+                            {have.toLocaleString()} / {total.toLocaleString()}
+                          </td>
+                          <td class="mono cov__pct">{pct(have, total)}%</td>
+                          <td class="cov__barcell">
+                            <span
+                              class="pxbar"
+                              class:list={[{ full: have === total }]}
+                              style={`--fill:${filled}%`}
+                            />
+                            {have === total ? (
+                              <span class="cov__full">✓ {s.coverage.complete}</span>
+                            ) : (
+                              miss && (
+                                <details class="cov__missing">
+                                  <summary>
+                                    {s.coverage.missingChars} {total - have}
+                                  </summary>
+                                  <p class="cov__missing-chars">{miss}</p>
+                                </details>
+                              )
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </section>
+            );
+          })}
+
+          <details class="cov__blocks">
+            <summary>
+              {s.coverage.unicodeBlocks}({blocks.filter((b) => b[1] > 0).length})
+            </summary>
+            <table class="cov__table">
+              <tbody>
+                {blocks
+                  .filter((b) => b[1] > 0)
+                  .map((b) => (
+                    <tr>
+                      <th>{b[0]}</th>
+                      <td class="mono">
+                        {b[1].toLocaleString()} / {b[2].toLocaleString()}
+                      </td>
+                      <td class="mono cov__pct">{pct(b[1], b[2])}%</td>
+                      <td class="cov__barcell">
+                        <span
+                          class="pxbar"
+                          style={`--fill:${Math.round((b[1] / b[2]) * 100)}%`}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </details>
+        </div>
+      );
+    })
+  }
+</section>
+
+<style>
+  .cov h2 {
+    font-size: 1rem;
+    margin: 0 0 var(--s3);
+  }
+  .cov h3 {
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    margin: var(--s4) 0 var(--s2);
+    letter-spacing: 0.02em;
+  }
+  .cov__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  .cov__table th {
+    text-align: left;
+    font-weight: 400;
+    padding: 3px var(--s3) 3px 0;
+    border-top: 1px dotted var(--line);
+    width: 40%;
+  }
+  .cov__table td {
+    padding: 3px var(--s3) 3px 0;
+    border-top: 1px dotted var(--line);
+    white-space: nowrap;
+  }
+  .cov__sub th {
+    padding-left: var(--s4);
+    color: var(--ink-3);
+  }
+  .cov__pct {
+    text-align: right;
+    color: var(--ink-2);
+    width: 5em;
+  }
+  .cov__barcell {
+    width: 30%;
+  }
+  /* 像素方块进度条:纯 CSS,两层渐变 */
+  .pxbar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 7.5rem;
+    height: 0.55rem;
+    background:
+      repeating-linear-gradient(
+        to right,
+        transparent 0,
+        transparent calc(0.375rem - 1px),
+        var(--paper) calc(0.375rem - 1px),
+        var(--paper) 0.375rem
+      ),
+      linear-gradient(to right, var(--accent) var(--fill, 0%), var(--line-soft) var(--fill, 0%));
+  }
+  .pxbar.full {
+    background:
+      repeating-linear-gradient(
+        to right,
+        transparent 0,
+        transparent calc(0.375rem - 1px),
+        var(--paper) calc(0.375rem - 1px),
+        var(--paper) 0.375rem
+      ),
+      linear-gradient(to right, var(--accent), var(--accent));
+  }
+  .cov__full {
+    color: var(--accent);
+    font-size: 0.75rem;
+    margin-left: var(--s2);
+  }
+  .cov__missing {
+    display: inline-block;
+    margin-left: var(--s2);
+    font-size: 0.75rem;
+    color: var(--ink-2);
+  }
+  .cov__missing summary {
+    cursor: pointer;
+  }
+  .cov__missing-chars {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    max-width: 28rem;
+    max-height: 10rem;
+    overflow: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: var(--s2);
+    font-size: 0.9rem;
+    user-select: all;
+  }
+  .cov__note {
+    color: var(--accent);
+    cursor: help;
+  }
+  .cov__blocks {
+    margin-top: var(--s4);
+  }
+  .cov__blocks summary {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+</style>

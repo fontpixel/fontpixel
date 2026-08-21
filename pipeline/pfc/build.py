@@ -128,6 +128,7 @@ def _build_family(
 
     license_info = detect_license(family_dir, [b.font for b in built],
                                   meta.license_override)
+    _cps_cache = {b.desc.id: font_cps(b.font) for b in built}
 
     # 家族级聚合
     best = max(built, key=lambda b: len(b.font.glyphs))
@@ -267,12 +268,30 @@ def _build_family(
         "unicodeBlocks": {
             b.desc.id: [list(row) for row in b.blocks] for b in built
         },
+        "missingChars": {
+            b.desc.id: {
+                c.id: "".join(chr(cp) for cp in sorted(missing))
+                for c in charsets
+                if 0 < len(missing := c.cps - _cps_cache[b.desc.id]) <= 500
+            }
+            for b in built
+        },
         "downloads": dl_entries,
     }
     _json_dump(detail, site_data / "details" / f"{slug}.json")
 
+    from pfc.emit import cps_to_runs
+
+    fam_cps: set[int] = set()
+    for b in built:
+        fam_cps |= font_cps(b.font)
+
     report.variants += len(built)
-    cache_payload = {"index_entry": entry, "downloads": dl_entries}
+    cache_payload = {
+        "index_entry": entry,
+        "downloads": dl_entries,
+        "runs": [list(r) for r in cps_to_runs(fam_cps)],
+    }
     return entry, cache_payload
 
 
@@ -308,6 +327,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
 
     entries: list[dict] = []
     all_downloads: list[dict] = []
+    runs_by_slug: dict[str, list[tuple[int, int]]] = {}
     for family_dir in sorted(p for p in fonts_dir.iterdir() if p.is_dir()):
         slug = family_dir.name
         if slug.startswith("."):
@@ -324,12 +344,14 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
             if cached and _outputs_exist(site_data, cached["index_entry"]):
                 entries.append(cached["index_entry"])
                 all_downloads.extend(cached["downloads"])
+                runs_by_slug[slug] = [tuple(r) for r in cached.get("runs", [])]
                 report.cached += 1
                 report.families += 1
             continue
         if cached and _outputs_exist(site_data, cached["index_entry"]):
             entries.append(cached["index_entry"])
             all_downloads.extend(cached["downloads"])
+            runs_by_slug[slug] = [tuple(r) for r in cached.get("runs", [])]
             report.cached += 1
             report.families += 1
             print(f"  {slug}: cached")
@@ -341,6 +363,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
         cache.store(slug, payload)
         entries.append(entry)
         all_downloads.extend(payload["downloads"])
+        runs_by_slug[slug] = [tuple(r) for r in payload["runs"]]
         report.families += 1
         print(f"  {slug}: built ({len(entry['variants'])} variants)")
 
@@ -350,6 +373,11 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
         site_data / "index.json",
     )
     _json_dump({"entries": all_downloads}, downloads_dir / "manifest.json")
+
+    from pfc.emit import write_charsets_json, write_intervals
+
+    write_intervals(runs_by_slug, site_data / "coverage-intervals.bin.gz")
+    write_charsets_json(charsets, site_data / "charsets.json")
 
     report.data_bytes = sum(p.stat().st_size for p in site_data.rglob("*") if p.is_file())
     report.took_s = time.monotonic() - t0

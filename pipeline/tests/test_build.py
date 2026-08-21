@@ -64,6 +64,36 @@ def test_full_build(tmp_path):
     assert ("mini", "bdf") in kinds and ("mini", "zip") in kinds
 
 
+def test_coverage_intervals_and_missing(tmp_path):
+    from pfc.emit import read_intervals
+
+    fonts, data, dl, cache = _setup(tmp_path)
+    build(fonts, data, dl, cache)
+
+    runs = read_intervals(data / "coverage-intervals.bin.gz")
+    assert set(runs) == {"mini", "nometa"}
+    assert runs["mini"] == [(65, 66), (27704, 27705)]
+
+    detail = json.loads((data / "details" / "mini.json").read_text(encoding="utf-8"))
+    vid = detail["meta"]["variants"][0]["id"]
+    # hiragana 共 86 字,mini 全缺(≤500)→ 提供缺字列表
+    assert len(detail["missingChars"][vid]["hiragana"]) == 86
+    # gb2312 缺 6763 个(>500)→ 不提供
+    assert "gb2312" not in detail["missingChars"][vid]
+
+    charsets = json.loads((data / "charsets.json").read_text(encoding="utf-8"))
+    by_id = {c["id"]: c for c in charsets["charsets"]}
+    assert by_id["gb2312"]["nameZh"].startswith("GB/T 2312")
+    assert by_id["gb2312"]["total"] == 6763
+    assert by_id["gb2312"]["section"] == "gb"
+    assert charsets["sections"][0] == "gb"
+
+    # 缓存后重跑,intervals 仍完整(来自缓存 payload)
+    build(fonts, data, dl, cache)
+    runs2 = read_intervals(data / "coverage-intervals.bin.gz")
+    assert runs2 == runs
+
+
 def test_incremental_cache(tmp_path):
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)
