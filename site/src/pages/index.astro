@@ -1,15 +1,27 @@
 ---
-// 临时占位页;Task 15 替换为语言跳转页。
+// 语言跳转页:按浏览器语言去 /zh/ 或 /en/,默认 zh。
+import { withBase } from '../lib/data';
+const zhUrl = withBase('/zh/');
+const enUrl = withBase('/en/');
 ---
 
 <!doctype html>
-<html lang="zh">
+<html lang="zh-Hans">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>点阵字库 Pixel Font Collection</title>
+    <link rel="alternate" hreflang="zh-Hans" href={zhUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={zhUrl} />
+    <meta name="robots" content="noindex" />
+    <script is:inline define:vars={{ zhUrl, enUrl }}>
+      var lang = (navigator.language || 'zh').toLowerCase();
+      location.replace(lang.indexOf('zh') === 0 ? zhUrl : enUrl);
+    </script>
+    <noscript><meta http-equiv="refresh" content={`0; url=${zhUrl}`} /></noscript>
   </head>
   <body>
-    <p>建设中 / Under construction</p>
+    <p><a href={zhUrl}>中文</a> · <a href={enUrl}>English</a></p>
   </body>
 </html>

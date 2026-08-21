@@ -1,0 +1,110 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t, type Lang } from '../../i18n';
+import { loadIndex, readPreviewSvg, withBase } from '../../lib/data';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'zh' } }, { params: { lang: 'en' } }];
+}
+
+const lang = Astro.params.lang as Lang;
+const s = t(lang);
+const index = loadIndex();
+const families = index.families;
+const previews = new Map(
+  families.map((f) => {
+    try {
+      return [f.slug, readPreviewSvg(f.preview)] as const;
+    } catch {
+      return [f.slug, ''] as const;
+    }
+  }),
+);
+---
+
+<Base
+  lang={lang}
+  title={`${s.siteName} ${s.siteNameLatin}`}
+  description={s.siteTagline}
+  path="/"
+>
+  <p class="tagline">{s.siteTagline}</p>
+
+  <section class="catalogue" data-testid="catalogue">
+    <p class="results mono">{s.catalogue.results.replace('{n}', String(families.length))}</p>
+    <div class="grid">
+      {
+        families.map((f) => (
+          <article class="card" data-slug={f.slug}>
+            <a href={withBase(`/${lang}/fonts/${f.slug}/`)} class="card__link">
+              <h2 class="card__name">
+                {lang === 'zh' && f.nameZh ? f.nameZh : f.name}
+              </h2>
+              <div class="card__preview" set:html={previews.get(f.slug)} />
+              <p class="card__meta">
+                {f.sizes.map((sz) => (
+                  <span class="chip mono">
+                    {sz}
+                    {s.card.px}
+                  </span>
+                ))}
+                {f.form && <span class="chip">{s.forms[f.form] ?? f.form}</span>}
+                {f.license.spdx && <span class="chip">{f.license.spdx}</span>}
+                {f.converted && <span class="chip chip--accent">{s.card.converted}</span>}
+                {!f.curated && <span class="chip">{s.card.uncurated}</span>}
+                <span class="chip mono">
+                  {f.glyphCount.toLocaleString()} {s.card.glyphs}
+                </span>
+              </p>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <style>
+    .tagline {
+      color: var(--ink-2);
+      margin: 0 0 var(--s5);
+    }
+    .results {
+      color: var(--ink-3);
+      font-size: 0.8rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+      gap: var(--s4);
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .card:hover {
+      border-color: var(--ink-3);
+    }
+    .card__link {
+      display: block;
+      padding: var(--s4);
+    }
+    .card__name {
+      font-size: 1.05rem;
+      margin: 0 0 var(--s3);
+    }
+    .card__preview :global(svg) {
+      width: 100%;
+      height: auto;
+      max-height: 5.5rem;
+      color: var(--ink);
+      image-rendering: pixelated;
+    }
+    .card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s1);
+      margin: var(--s3) 0 0;
+    }
+  </style>
+</Base>

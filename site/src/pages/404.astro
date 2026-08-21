@@ -1,0 +1,48 @@
+---
+import '../styles/tokens.css';
+import { withBase } from '../lib/data';
+---
+
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 · 点阵字库 Pixel Font Collection</title>
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('pfc-theme');
+          document.documentElement.dataset.theme =
+            t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="container nf">
+      <p class="nf__code mono" aria-hidden="true">
+        <!-- 像素风 404,由 CSS 网格绘制 -->
+        <span class="nf__pix"></span>
+      </p>
+      <h1>404</h1>
+      <p>页面不存在 / Page not found。这个码位还没有字形。</p>
+      <p>
+        <a href={withBase('/zh/')}>回到馆藏</a> · <a href={withBase('/en/')}>Catalogue</a>
+      </p>
+    </main>
+    <style>
+      .nf {
+        padding-top: 15vh;
+        text-align: center;
+      }
+      h1 {
+        font-size: 3rem;
+        letter-spacing: 0.1em;
+      }
+      a {
+        color: var(--accent);
+      }
+    </style>
+  </body>
+</html>

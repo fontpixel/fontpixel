@@ -1,0 +1,14 @@
+# 此文件由构建器自动生成,请补全后把 TODO 注释删掉。
+# form 可选值: gothic(黑体) | mingcho(宋体/明朝) | rounded(圆体) | kai(楷体)
+#   | fangsong(仿宋) | serif-pixel(西文衬线) | sans(西文无衬线) | script(手写)
+#   | decorative(装饰) | terminal(终端) | other
+name = "Nometa"
+name_zh = ""            # TODO: 中文名(可留空)
+author = ""             # TODO
+homepage = ""           # TODO
+repository = ""
+description = ""        # TODO: 一句话介绍
+form = ""               # TODO: 字形分类
+vibes = []              # TODO: 气质标签,如 ["retro-game", "cute"]
+converted_from = ""
+provenance = ""

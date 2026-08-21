@@ -1,0 +1,156 @@
+/* 设计令牌:纸白/炭黑双主题 + 朱砂红强调(spec §8「标本馆」) */
+
+:root {
+  --paper: #f6f2e9;
+  --surface: #fdfbf5;
+  --ink: #1c1a17;
+  --ink-2: #6b6459;
+  --ink-3: #97907f;
+  --line: #d9d2c2;
+  --line-soft: #e9e3d6;
+  --accent: #b5312f;
+  --accent-soft: #b5312f22;
+  --on-accent: #fdfbf5;
+  --canvas-ink: #1c1a17;
+  --canvas-paper: #fdfbf5;
+
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    'Noto Sans Mono', monospace;
+
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.5rem;
+  --s6: 2rem;
+  --s7: 3rem;
+
+  --radius: 2px;
+  --maxw: 76rem;
+}
+
+:root[data-theme='dark'] {
+  --paper: #151310;
+  --surface: #1d1a16;
+  --ink: #e9e3d5;
+  --ink-2: #a69d8c;
+  --ink-3: #776f60;
+  --line: #35312a;
+  --line-soft: #26231e;
+  --accent: #e25a4f;
+  --accent-soft: #e25a4f2b;
+  --on-accent: #151310;
+  --canvas-ink: #e9e3d5;
+  --canvas-paper: #1d1a16;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s1) var(--s3);
+  cursor: pointer;
+}
+button:hover {
+  border-color: var(--ink-2);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s1) var(--s2);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--ink-3);
+}
+
+code,
+pre,
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--s5);
+}
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+.dotline {
+  border: 0;
+  border-top: 1px dotted var(--line);
+}
+
+.chip {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 1px var(--s2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.chip--accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

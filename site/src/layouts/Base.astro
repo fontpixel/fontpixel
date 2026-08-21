@@ -1,0 +1,169 @@
+---
+import '../styles/tokens.css';
+import { t, otherLang, type Lang } from '../i18n';
+import { withBase } from '../lib/data';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  /** 不含语言前缀的路径,如 "/fonts/galmuri/",用于 hreflang 与语言切换 */
+  path: string;
+  ogImage?: string;
+}
+
+const { lang, title, description, path, ogImage } = Astro.props;
+const s = t(lang);
+const other = otherLang(lang);
+const canonical = withBase(`/${lang}${path}`);
+---
+
+<!doctype html>
+<html lang={lang === 'zh' ? 'zh-Hans' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-Hans" href={withBase(`/zh${path}`)} />
+    <link rel="alternate" hreflang="en" href={withBase(`/en${path}`)} />
+    <link rel="alternate" hreflang="x-default" href={withBase(`/zh${path}`)} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('pfc-theme');
+          var m =
+            t ||
+            (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.dataset.theme = m;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header__row">
+        <a class="site-brand" href={withBase(`/${lang}/`)}>
+          <span class="site-brand__name">{s.siteName}</span>
+          <span class="site-brand__latin mono">{s.siteNameLatin}</span>
+        </a>
+        <nav class="site-nav" aria-label="site">
+          <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
+          <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
+          <a
+            href={withBase(`/${other}${path}`)}
+            data-testid="lang-switch"
+            rel="alternate"
+            hreflang={other === 'zh' ? 'zh-Hans' : 'en'}>{s.langSwitch}</a
+          >
+          <button
+            type="button"
+            class="theme-toggle"
+            data-testid="theme-toggle"
+            aria-label={s.themeToggle}
+            title={s.themeToggle}>◐</button
+          >
+        </nav>
+      </div>
+      <hr class="hairline" style="margin:0" />
+    </header>
+
+    <main class="container site-main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <hr class="dotline" style="margin:0" />
+      <div class="container site-footer__row">
+        <p>{s.footer.disclaimer}</p>
+        <p>
+          <a href={withBase(`/${lang}/about/`)}>{s.footer.dataSources}</a>
+          ·
+          <a href="https://github.com/pixelfontworkshop/pixel-font-collection"
+            >{s.footer.sourceCode}</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.querySelector('[data-testid="theme-toggle"]');
+      btn?.addEventListener('click', () => {
+        const cur = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = cur;
+        try {
+          localStorage.setItem('pfc-theme', cur);
+        } catch {
+          /* 私隐模式等场景忽略 */
+        }
+      });
+    </script>
+
+    <style>
+      .site-header__row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--s4);
+        padding-top: var(--s4);
+        padding-bottom: var(--s3);
+      }
+      .site-brand {
+        display: flex;
+        align-items: baseline;
+        gap: var(--s2);
+      }
+      .site-brand__name {
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .site-brand__latin {
+        color: var(--ink-3);
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+      }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: var(--s4);
+        font-size: 0.9rem;
+        color: var(--ink-2);
+      }
+      .theme-toggle {
+        border: none;
+        padding: 0 var(--s1);
+        font-size: 1rem;
+        color: var(--ink-2);
+      }
+      .site-main {
+        min-height: 70vh;
+        padding-top: var(--s5);
+        padding-bottom: var(--s7);
+      }
+      .site-footer__row {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--s4);
+        flex-wrap: wrap;
+        font-size: 0.8rem;
+        color: var(--ink-3);
+        padding-top: var(--s3);
+        padding-bottom: var(--s4);
+      }
+      @media (max-width: 640px) {
+        .site-header__row {
+          flex-direction: column;
+          gap: var(--s2);
+        }
+      }
+    </style>
+  </body>
+</html>

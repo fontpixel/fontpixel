@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t, type Lang } from '../../i18n';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'zh' } }, { params: { lang: 'en' } }];
+}
+
+const lang = Astro.params.lang as Lang;
+const s = t(lang);
+---
+
+<Base lang={lang} title={`${s.about.title} · ${s.siteName}`} path="/about/">
+  <h1>{s.about.title}</h1>
+  <p>{s.siteTagline}</p>
+  <!-- 完整方法论内容在 Task 19 填充 -->
+</Base>
