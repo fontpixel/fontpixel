@@ -4,7 +4,7 @@
 # name_zh: 通用规范汉字表·二级
 # name_en: General Standard Chinese Characters Level 2
 # desc_zh: 二级字表 3000 字
-# desc_en: 
+# desc_en: 3,000 characters.
 # source: 公开数据集快照(两独立来源交叉核对,并集与 CJK-character-count 8105 整表完全一致); generated 2026-08-21
 3918
 39D0

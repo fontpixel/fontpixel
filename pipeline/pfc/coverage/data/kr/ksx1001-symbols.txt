@@ -4,7 +4,7 @@
 # name_zh: KS X 1001 符号
 # name_en: KS X 1001 Symbols
 # desc_zh: 符号、字母、日文假名等非谚文非汉字部分
-# desc_en: 
+# desc_en: The non-hangul, non-hanja part: symbols, letters, Japanese kana and the like.
 # source: Python codecs; generated 2026-08-21
 00A1
 00A4

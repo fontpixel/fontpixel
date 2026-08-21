@@ -2,9 +2,9 @@
 # section: prc-lit
 # order: 50
 # name_zh: 古籍印刷通用字规范字形表
-# name_en: Standard Glyphs for Ancient Books Printing
+# name_en: Standard Glyph Forms for Ancient Book Printing
 # desc_zh: 2021 年发布的古籍印刷用字规范
-# desc_en: 
+# desc_en: The 2021 standard for characters used in printing ancient Chinese books.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)
 3401

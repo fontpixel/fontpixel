@@ -4,7 +4,7 @@
 # name_zh: 常用漢字表
 # name_en: Joyo Kanji
 # desc_zh: 2010 年内閣告示,现行日语常用汉字 2136 字
-# desc_en: 
+# desc_en: The 2,136 kanji in general use today, per the 2010 Cabinet notification.
 # source: https://raw.githubusercontent.com/vaiorabbit/everyday_use_kanji/master/regular_use_utf8.csv; retrieved 2026-08-21
 4E00..4E01
 4E03

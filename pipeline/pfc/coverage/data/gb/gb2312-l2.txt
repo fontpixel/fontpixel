@@ -4,7 +4,7 @@
 # name_zh: GB/T 2312 二级汉字
 # name_en: GB/T 2312 Level 2 Hanzi
 # desc_zh: 二级次常用字 3008 字,按部首排序
-# desc_en: 
+# desc_en: 3,008 less frequently used characters, ordered by radical.
 # source: Python codecs; generated 2026-08-21
 4E0C
 4E10

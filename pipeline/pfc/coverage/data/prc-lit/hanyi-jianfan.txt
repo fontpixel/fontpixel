@@ -2,9 +2,9 @@
 # section: prc-lit
 # order: 90
 # name_zh: 汉仪简繁字表
-# name_en: HanYi Simplified & Traditional Set
+# name_en: Hanyi Simplified & Traditional Set
 # desc_zh: 字库厂商汉仪的简繁覆盖口径
-# desc_en: 
+# desc_en: The simplified-plus-traditional coverage the Hanyi foundry quotes for its fonts.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)
 4E00..4E01

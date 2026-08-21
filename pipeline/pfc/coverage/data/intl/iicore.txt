@@ -4,7 +4,7 @@
 # name_zh: 国际表意文字核心集 (IICore)
 # name_en: International Ideographs Core (IICore)
 # desc_zh: ISO/IEC 10646 附录,面向资源受限环境的核心汉字集合
-# desc_en: 
+# desc_en: An ISO/IEC 10646 annex: a core han set aimed at resource-constrained environments.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)
 34E4

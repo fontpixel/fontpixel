@@ -4,7 +4,7 @@
 # name_zh: 现代汉语常用字表
 # name_en: List of Frequently Used Characters in Modern Chinese
 # desc_zh: 1988 年发布,常用 2500 字与次常用 1000 字
-# desc_en: 
+# desc_en: Issued in 1988: 2,500 frequently used characters plus 1,000 less frequently used ones.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)
 4E00..4E01

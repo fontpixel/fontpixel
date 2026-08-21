@@ -4,6 +4,6 @@
 # name_zh: 拉丁字母扩展-B
 # name_en: Latin Extended-B
 # desc_zh: U+0180–024F
-# desc_en: 
+# desc_en: U+0180–024F.
 # source: Unicode block ranges; generated 2026-08-21
 0180..024F

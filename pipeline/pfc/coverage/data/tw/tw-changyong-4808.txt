@@ -4,7 +4,7 @@
 # name_zh: 常用国字标准字体表
 # name_en: Standard Forms of Common National Characters
 # desc_zh: 台湾地区甲表,4808 字
-# desc_en: 
+# desc_en: Taiwan's Chart A; 4,808 characters.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)
 4E00..4E01

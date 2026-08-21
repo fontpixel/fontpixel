@@ -4,6 +4,6 @@
 # name_zh: 康熙部首
 # name_en: Kangxi Radicals
 # desc_zh: U+2F00–2FD5 全部 214 个部首
-# desc_en: 
+# desc_en: All 214 radicals, U+2F00–2FD5.
 # source: Unicode block ranges; generated 2026-08-21
 2F00..2FD5

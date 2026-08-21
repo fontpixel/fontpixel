@@ -4,7 +4,7 @@
 # name_zh: 五大码 (Big5) 次常用汉字
 # name_en: Big5 Less Frequently Used Hanzi
 # desc_zh: Big5 次常用字面 C940–F9D5
-# desc_en: 
+# desc_en: The Big5 less frequently used range C940–F9D5.
 # source: Python codecs; generated 2026-08-21
 4E07
 4E0C

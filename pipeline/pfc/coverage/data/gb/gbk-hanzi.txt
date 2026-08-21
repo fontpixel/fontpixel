@@ -4,7 +4,7 @@
 # name_zh: GBK 汉字
 # name_en: GBK Hanzi
 # desc_zh: GBK 编码全部汉字(含兼容表意字)
-# desc_en: 
+# desc_en: Every hanzi encoded by GBK, compatibility ideographs included.
 # source: Python codecs; generated 2026-08-21
 4E00..9FA5
 F92C

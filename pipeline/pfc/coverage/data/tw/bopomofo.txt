@@ -4,7 +4,7 @@
 # name_zh: 注音符号
 # name_en: Bopomofo
 # desc_zh: 注音符号及扩展(闽南语/客家语用)
-# desc_en: 
+# desc_en: Bopomofo and its extensions, as used for Min Nan and Hakka.
 # source: Unicode block ranges; generated 2026-08-21
 3105..312F
 31A0..31BF

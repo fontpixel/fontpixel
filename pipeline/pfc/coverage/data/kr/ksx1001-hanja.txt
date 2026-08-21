@@ -4,7 +4,7 @@
 # name_zh: KS X 1001 汉字
 # name_en: KS X 1001 Hanja
 # desc_zh: 韩文汉字 4888 个(重复汉字映射至兼容区)
-# desc_en: 
+# desc_en: 4,888 hanja, with duplicated hanja mapped into the compatibility block.
 # source: Python codecs; generated 2026-08-21
 4E00..4E01
 4E03

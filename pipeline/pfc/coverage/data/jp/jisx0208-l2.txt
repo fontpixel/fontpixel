@@ -4,7 +4,7 @@
 # name_zh: JIS X 0208 第二水準漢字
 # name_en: JIS X 0208 Level 2 Kanji
 # desc_zh: 第二水準 3390 字,按部首排序
-# desc_en: 
+# desc_en: 3,390 Level 2 kanji, ordered by radical.
 # source: Python codecs; generated 2026-08-21
 4E10
 4E15

@@ -4,7 +4,7 @@
 # name_zh: 五大码 (Big5) 全部汉字
 # name_en: Big5 All Hanzi
 # desc_zh: 常用与次常用字面合计(按 Unicode 码位去重)
-# desc_en: 
+# desc_en: Both ranges combined, de-duplicated by Unicode code point.
 # source: Python codecs; generated 2026-08-21
 4E00..4E01
 4E03

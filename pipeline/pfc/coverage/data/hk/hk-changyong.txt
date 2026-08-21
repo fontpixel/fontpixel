@@ -4,7 +4,7 @@
 # name_zh: 常用字字形表
 # name_en: List of Graphemes of Commonly-Used Chinese Characters
 # desc_zh: 香港教育局字形表
-# desc_en: 
+# desc_en: The Hong Kong Education Bureau's table of standard character forms.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)
 4E00..4E01

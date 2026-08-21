@@ -4,7 +4,7 @@
 # name_zh: IBM 代码页 437
 # name_en: IBM Code Page 437
 # desc_zh: DOS/复古终端字符集(图形解释,0x01–0xFF 共 255 字符)
-# desc_en: 
+# desc_en: The DOS and retro-terminal character set, graphics interpretation: 255 characters, 0x01–0xFF.
 # source: Python cp437 codec + IBM graphic set; generated 2026-08-21
 0020..007E
 00A0..00A3

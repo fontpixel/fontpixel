@@ -28,18 +28,28 @@ def _ranges(cps: set[int]) -> list[tuple[int, int]]:
     return out
 
 
+def _translations() -> dict:
+    import json
+
+    p = Path(__file__).resolve().parent / "external" / "charset-desc-en.json"
+    if p.exists():
+        return json.loads(p.read_text(encoding="utf-8"))
+    return {}
+
+
 def write_table(section: str, cid: str, order: int, name_zh: str, name_en: str,
                 desc_zh: str, source: str, cps: set[int], license_: str = "") -> None:
     d = DATA / section
     d.mkdir(parents=True, exist_ok=True)
+    tr = _translations().get(cid, {})
     lines = [
         f"# id: {cid}",
         f"# section: {section}",
         f"# order: {order}",
         f"# name_zh: {name_zh}",
-        f"# name_en: {name_en}",
+        f"# name_en: {tr.get('name_en') or name_en}",
         f"# desc_zh: {desc_zh}",
-        "# desc_en: ",
+        f"# desc_en: {tr.get('desc_en', '')}",
         f"# source: {source}",
     ]
     if license_:

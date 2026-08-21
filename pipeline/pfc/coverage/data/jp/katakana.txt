@@ -4,6 +4,6 @@
 # name_zh: 片假名
 # name_en: Katakana
 # desc_zh: U+30A1–30FA 全部片假名字母
-# desc_en: 
+# desc_en: Every katakana letter, U+30A1–30FA.
 # source: Unicode block ranges; generated 2026-08-21
 30A1..30FA

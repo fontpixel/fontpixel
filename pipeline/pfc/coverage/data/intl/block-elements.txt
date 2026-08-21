@@ -4,6 +4,6 @@
 # name_zh: 方块元素
 # name_en: Block Elements
 # desc_zh: U+2580–259F,终端色块
-# desc_en: 
+# desc_en: U+2580–259F, the solid and shaded terminal blocks.
 # source: Unicode block ranges; generated 2026-08-21
 2580..259F

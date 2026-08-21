@@ -4,7 +4,7 @@
 # name_zh: 教育漢字
 # name_en: Kyoiku Kanji
 # desc_zh: 学年別漢字配当表(2020 年度施行),小学 1026 字
-# desc_en: 
+# desc_en: The 1,026 elementary-school kanji in the by-grade allocation table in force since 2020.
 # source: https://raw.githubusercontent.com/fnshr/kyo-kan/master/kyoiku-kanji-2017.csv; retrieved 2026-08-21
 4E00..4E01
 4E03

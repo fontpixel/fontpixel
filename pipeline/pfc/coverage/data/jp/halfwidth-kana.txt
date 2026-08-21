@@ -4,6 +4,6 @@
 # name_zh: 半角假名
 # name_en: Halfwidth Katakana
 # desc_zh: U+FF61–FF9F 半角片假名与标点
-# desc_en: 
+# desc_en: Halfwidth katakana and punctuation, U+FF61–FF9F.
 # source: Unicode block ranges; generated 2026-08-21
 FF61..FF9F

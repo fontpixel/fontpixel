@@ -4,6 +4,6 @@
 # name_zh: 平假名
 # name_en: Hiragana
 # desc_zh: U+3041–3096 全部平假名字母
-# desc_en: 
+# desc_en: Every hiragana letter, U+3041–3096.
 # source: Unicode block ranges; generated 2026-08-21
 3041..3096

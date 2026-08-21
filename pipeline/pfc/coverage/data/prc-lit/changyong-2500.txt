@@ -2,9 +2,9 @@
 # section: prc-lit
 # order: 21
 # name_zh: 现代汉语常用字表·常用字
-# name_en: Modern Chinese Frequently Used (2500)
+# name_en: Frequently Used Characters in Modern Chinese (2500)
 # desc_zh: 常用字 2500 字
-# desc_en: 
+# desc_en: The 2,500 frequently used characters.
 # source: 公开数据集快照(计数与官方口径一致); generated 2026-08-21
 4E00..4E01
 4E03

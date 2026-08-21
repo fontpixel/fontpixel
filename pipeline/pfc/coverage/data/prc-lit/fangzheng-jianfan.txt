@@ -4,7 +4,7 @@
 # name_zh: 方正简繁字表
 # name_en: FounderType Simplified & Traditional Set
 # desc_zh: 字库厂商方正的简繁覆盖口径
-# desc_en: 
+# desc_en: The simplified-plus-traditional coverage the FounderType foundry quotes for its fonts.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)
 3007

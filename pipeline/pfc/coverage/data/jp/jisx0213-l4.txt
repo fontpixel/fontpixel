@@ -4,7 +4,7 @@
 # name_zh: JIS X 0213 第四水準漢字
 # name_en: JIS X 0213 Level 4 Kanji
 # desc_zh: 第二面汉字
-# desc_en: 
+# desc_en: The kanji on plane 2.
 # source: Python codecs; generated 2026-08-21
 3406
 342C

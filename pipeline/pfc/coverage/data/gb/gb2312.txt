@@ -4,7 +4,7 @@
 # name_zh: GB/T 2312 汉字
 # name_en: GB/T 2312 Hanzi
 # desc_zh: 1980 年国家标准基本集全部汉字,一二级合计 6763 字
-# desc_en: 
+# desc_en: Every hanzi in the 1980 national standard basic set — 6,763 characters across Levels 1 and 2.
 # source: Python codecs; generated 2026-08-21
 4E00..4E01
 4E03

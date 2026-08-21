@@ -4,7 +4,7 @@
 # name_zh: JIS X 0208 第一水準漢字
 # name_en: JIS X 0208 Level 1 Kanji
 # desc_zh: 第一水準 2965 字,按音读排序
-# desc_en: 
+# desc_en: 2,965 Level 1 kanji, ordered by on'yomi reading.
 # source: Python codecs; generated 2026-08-21
 4E00..4E01
 4E03

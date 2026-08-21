@@ -4,7 +4,7 @@
 # name_zh: 希腊和科普特字母
 # name_en: Greek and Coptic
 # desc_zh: U+0370–03FF 区段中已指派的字符
-# desc_en: 
+# desc_en: The assigned characters in U+0370–03FF.
 # source: Unicode 17.0 Blocks/UnicodeData; generated 2026-08-21
 0370..0377
 037A..037F

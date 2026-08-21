@@ -4,7 +4,7 @@
 # name_zh: JIS X 0208 非汉字
 # name_en: JIS X 0208 Non-Kanji
 # desc_zh: 假名、符号、罗马/希腊/西里尔字母等
-# desc_en: 
+# desc_en: Kana, symbols, and Roman, Greek and Cyrillic letters.
 # source: Python codecs; generated 2026-08-21
 00A2..00A3
 00A7..00A8

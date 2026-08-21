@@ -2,9 +2,9 @@
 # section: prc-lit
 # order: 22
 # name_zh: 现代汉语常用字表·次常用字
-# name_en: Modern Chinese Less Frequently Used (1000)
+# name_en: Less Frequently Used Characters in Modern Chinese (1000)
 # desc_zh: 次常用字 1000 字
-# desc_en: 
+# desc_en: The 1,000 less frequently used characters.
 # source: 公开数据集快照(计数与官方口径一致); generated 2026-08-21
 4E10
 4E4D
