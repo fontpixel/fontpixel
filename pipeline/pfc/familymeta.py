@@ -58,6 +58,7 @@ class FamilyMeta:
     converted_from: str = ""
     provenance: str = ""
     curated: bool = True
+    added: str = ""
     license_override: dict | None = None
     samples: dict[str, str] = field(default_factory=dict)
     variant_overrides: dict[str, dict] = field(default_factory=dict)
@@ -89,6 +90,7 @@ def load_family_meta(family_dir: Path) -> FamilyMeta:
         converted_from=str(data.get("converted_from", "")),
         provenance=str(data.get("provenance", "")),
         curated=curated,
+        added=str(data.get("added", "")),
         license_override=data.get("license"),
         samples={str(k): str(v) for k, v in data.get("samples", {}).items()},
         variant_overrides={str(k): dict(v) for k, v in data.get("variants", {}).items()},
