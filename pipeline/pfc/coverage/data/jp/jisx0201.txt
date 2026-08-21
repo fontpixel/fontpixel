@@ -3,7 +3,7 @@
 # order: 23
 # name_zh: JIS X 0201
 # name_en: JIS X 0201
-# desc_zh: 罗马字与半角假名(7 位/8 位单字节集)
+# desc_zh: 罗马字与半角假名（7 位/8 位单字节集）
 # desc_en: Roman characters and halfwidth kana — the 7-bit / 8-bit single-byte set.
 # source: Unicode block ranges; generated 2026-08-21
 0020..007E

@@ -3,7 +3,7 @@
 # order: 40
 # name_zh: 义务教育语文课程常用字表
 # name_en: Compulsory Education Chinese Character List
-# desc_zh: 2022 年版课程标准附录,3500 字
+# desc_zh: 2022 年版课程标准附录，3500 字
 # desc_en: Appendix to the 2022 curriculum standard; 3,500 characters.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)

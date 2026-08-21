@@ -3,9 +3,9 @@
 # order: 52
 # name_zh: GB 18030-2022 实现级别 3
 # name_en: GB 18030-2022 Implementation Level 3
-# desc_zh: 政务与公共服务产品要求:全部汉字扩展 A–F 与康熙部首(88115 字)
+# desc_zh: 政务与公共服务产品要求：全部汉字扩展 A–F 与康熙部首（88115 字）
 # desc_en: Required of government and public-service products: CJK Extensions A–F and the Kangxi radicals in full (88,115 characters).
-# source: GB 18030-2022 第9章实现级别;构造依据 docs/research/gb18030-2022-levels.md; generated 2026-08-21
+# source: GB 18030-2022 第9章实现级别；构造依据 docs/research/gb18030-2022-levels.md; generated 2026-08-21
 2E81
 2E84
 2E88

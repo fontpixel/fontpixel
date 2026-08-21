@@ -3,9 +3,9 @@
 # order: 17
 # name_zh: 人名用漢字
 # name_en: Jinmeiyo Kanji
-# desc_zh: 戸籍法施行規則别表,常用汉字以外可用于人名的汉字(含 2026 年新增)
+# desc_zh: 戸籍法施行規則别表，常用汉字以外可用于人名的汉字（含 2026 年新增）
 # desc_en: Kanji outside the Joyo set permitted in personal names, per the appendix to the Family Register Act rules (2026 additions included).
-# source: https://ja.wikipedia.org/wiki/人名用漢字一覧; retrieved 2026-08-21
+# source: https://ja.wikipedia.org/wiki/人名用漢字一覧；retrieved 2026-08-21
 4E11
 4E1E
 4E43

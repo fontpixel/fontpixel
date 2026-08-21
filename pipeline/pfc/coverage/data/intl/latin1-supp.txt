@@ -3,7 +3,7 @@
 # order: 31
 # name_zh: 拉丁字母-1 补充
 # name_en: Latin-1 Supplement
-# desc_zh: U+00A0–00FF,西欧语言字符
+# desc_zh: U+00A0–00FF，西欧语言字符
 # desc_en: U+00A0–00FF, the Western European characters.
 # source: Unicode block ranges; generated 2026-08-21
 00A0..00FF

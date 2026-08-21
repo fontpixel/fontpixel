@@ -3,7 +3,7 @@
 # order: 11
 # name_zh: UnihanCore2020 核心集
 # name_en: Unihan Core 2020
-# desc_zh: Unihan 数据库定义的现代通用核心汉字集,覆盖中日韩越及港台用字
+# desc_zh: Unihan 数据库定义的现代通用核心汉字集，覆盖中日韩越及港台用字
 # desc_en: The Unihan database's core set for modern general use, covering Chinese, Japanese, Korean and Vietnamese usage as well as Hong Kong and Taiwan.
 # source: https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip kUnihanCore2020; generated 2026-08-21
 # license: Unicode License v3

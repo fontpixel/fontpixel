@@ -1,6 +1,6 @@
-"""下载物构建:每变体 bdf.gz / pcf.gz,每家族 zip(含许可证与来源 README)。
+"""下载物构建：每变体 bdf.gz / pcf.gz，每家族 zip（含许可证与来源 README）。
 
-全部产物字节级确定:gzip mtime=0、zip 条目时间戳固定 1980-01-01。
+全部产物字节级确定：gzip mtime=0、zip 条目时间戳固定 1980-01-01。
 """
 
 from __future__ import annotations
@@ -38,7 +38,7 @@ def _entry(slug: str, variant_id: str | None, kind: str, file: str, data: bytes,
 
 
 def _source_bdf_bytes(f: ParsedFont) -> bytes:
-    """变体的 BDF 原文;源是 .gz 先解压,源是 PCF 则由 ParsedFont 反写。"""
+    """变体的 BDF 原文；源是 .gz 先解压，源是 PCF 则由 ParsedFont 反写。"""
     name = f.path.name.lower()
     if name.endswith(".bdf"):
         return f.path.read_bytes()
@@ -91,7 +91,7 @@ def build_downloads(
             entries.append(_entry(slug, v.id, "pcf", f"{slug}--{v.id}.pcf.gz",
                                   _gz(pcf_data), out))
         else:
-            f.warnings.append(f"{v.id}: PCF 生成失败,仅提供 BDF")
+            f.warnings.append(f"{v.id}: PCF 生成失败，仅提供 BDF")
 
     for lf in license_files:
         p = family_dir / lf

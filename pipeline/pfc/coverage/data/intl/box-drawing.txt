@@ -3,7 +3,7 @@
 # order: 71
 # name_zh: 制表符
 # name_en: Box Drawing
-# desc_zh: U+2500–257F,终端表格线
+# desc_zh: U+2500–257F，终端表格线
 # desc_en: U+2500–257F, the terminal rules and table borders.
 # source: Unicode block ranges; generated 2026-08-21
 2500..257F

@@ -3,7 +3,7 @@
 # order: 30
 # name_zh: 常用香港外字表
 # name_en: Hong Kong Supplementary Characters in Common Use
-# desc_zh: 教育局常用外字(1–6 级)
+# desc_zh: 教育局常用外字（1–6 级）
 # desc_en: The Education Bureau's commonly used supplementary characters, Levels 1–6.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)

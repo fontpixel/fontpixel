@@ -3,7 +3,7 @@
 # order: 60
 # name_zh: 谚文字母 (Jamo)
 # name_en: Hangul Jamo
-# desc_zh: U+1100–11FF 组合用谚文字母(含古谚文)
+# desc_zh: U+1100–11FF 组合用谚文字母（含古谚文）
 # desc_en: Conjoining hangul jamo, U+1100–11FF, archaic letters included.
 # source: Unicode block ranges; generated 2026-08-21
 1100..11FF

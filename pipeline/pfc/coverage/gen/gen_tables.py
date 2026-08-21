@@ -1,9 +1,9 @@
-"""字表数据生成器:编解码派生表、静态区间表、UCD、旧项目数据迁移。
+"""字表数据生成器：编解码派生表、静态区间表、UCD、旧项目数据迁移。
 
-运行(在仓库根):
+运行（在仓库根）：
     .venv/bin/python -m pfc.coverage.gen.gen_tables --all --old-dir <旧项目cjk-tables目录>
 
-生成物直接写入 pfc/coverage/data/ 并入库;可重跑,输出确定。
+生成物直接写入 pfc/coverage/data/ 并入库；可重跑，输出确定。
 """
 
 from __future__ import annotations
@@ -88,11 +88,11 @@ def gen_codec_tables() -> None:
     l1 = _row_cell("gb2312", range(16, 56))
     l2 = _row_cell("gb2312", range(56, 88))
     write_table("gb", "gb2312", 10, "GB/T 2312 汉字", "GB/T 2312 Hanzi",
-                "1980 年国家标准基本集全部汉字,一二级合计 6763 字", src, l1 | l2)
+                "1980 年国家标准基本集全部汉字，一二级合计 6763 字", src, l1 | l2)
     write_table("gb", "gb2312-l1", 11, "GB/T 2312 一级汉字", "GB/T 2312 Level 1 Hanzi",
-                "一级常用字 3755 字,按拼音排序", src, l1)
+                "一级常用字 3755 字，按拼音排序", src, l1)
     write_table("gb", "gb2312-l2", 12, "GB/T 2312 二级汉字", "GB/T 2312 Level 2 Hanzi",
-                "二级次常用字 3008 字,按部首排序", src, l2)
+                "二级次常用字 3008 字，按部首排序", src, l2)
 
     gbk: set[int] = set()
     for lead in range(0x81, 0xFF):
@@ -104,7 +104,7 @@ def gen_codec_tables() -> None:
             if len(s) == 1 and _is_han(ord(s)):
                 gbk.add(ord(s))
     write_table("gb", "gbk-hanzi", 30, "GBK 汉字", "GBK Hanzi",
-                "GBK 编码全部汉字(含兼容表意字)", src, gbk)
+                "GBK 编码全部汉字（含兼容表意字）", src, gbk)
 
     b5_cy = set()
     b5_ci = set()
@@ -126,7 +126,7 @@ def gen_codec_tables() -> None:
     write_table("tw", "big5-cichangyong", 40, "五大码 (Big5) 次常用汉字",
                 "Big5 Less Frequently Used Hanzi", "Big5 次常用字面 C940–F9D5", src, b5_ci)
     write_table("tw", "big5", 50, "五大码 (Big5) 全部汉字", "Big5 All Hanzi",
-                "常用与次常用字面合计(按 Unicode 码位去重)", src, b5_cy | b5_ci)
+                "常用与次常用字面合计（按 Unicode 码位去重）", src, b5_cy | b5_ci)
 
     jis_nk = _row_cell("euc_jp", range(1, 16))
     jis1 = _row_cell("euc_jp", range(16, 48))
@@ -134,9 +134,9 @@ def gen_codec_tables() -> None:
     write_table("jp", "jisx0208-nonkanji", 10, "JIS X 0208 非汉字",
                 "JIS X 0208 Non-Kanji", "假名、符号、罗马/希腊/西里尔字母等", src, jis_nk)
     write_table("jp", "jisx0208-l1", 11, "JIS X 0208 第一水準漢字",
-                "JIS X 0208 Level 1 Kanji", "第一水準 2965 字,按音读排序", src, jis1)
+                "JIS X 0208 Level 1 Kanji", "第一水準 2965 字，按音读排序", src, jis1)
     write_table("jp", "jisx0208-l2", 12, "JIS X 0208 第二水準漢字",
-                "JIS X 0208 Level 2 Kanji", "第二水準 3390 字,按部首排序", src, jis2)
+                "JIS X 0208 Level 2 Kanji", "第二水準 3390 字，按部首排序", src, jis2)
 
     jis0208_kanji = jis1 | jis2
     p1: set[int] = set()
@@ -151,7 +151,7 @@ def gen_codec_tables() -> None:
             if len(s) == 1:
                 p1.add(ord(s))
             if row not in plane2_rows:
-                continue  # Python codec 对未定义面2区回退 JIS X 0212,须排除
+                continue  # Python codec 对未定义面2区回退 JIS X 0212，须排除
             try:
                 s2 = bytes([0x8F, 0xA0 + row, 0xA0 + cell]).decode("euc_jis_2004")
             except UnicodeDecodeError:
@@ -161,7 +161,7 @@ def gen_codec_tables() -> None:
     l3 = {cp for cp in p1 if _is_han(cp) and cp not in jis0208_kanji}
     l4 = {cp for cp in p2 if _is_han(cp)}
     write_table("jp", "jisx0213-l3", 13, "JIS X 0213 第三水準漢字",
-                "JIS X 0213 Level 3 Kanji", "2000/2004 年扩充,第一面新增汉字", src, l3)
+                "JIS X 0213 Level 3 Kanji", "2000/2004 年扩充，第一面新增汉字", src, l3)
     write_table("jp", "jisx0213-l4", 14, "JIS X 0213 第四水準漢字",
                 "JIS X 0213 Level 4 Kanji", "第二面汉字", src, l4)
 
@@ -173,7 +173,7 @@ def gen_codec_tables() -> None:
     write_table("kr", "ksx1001-hangul", 10, "KS X 1001 谚文音节",
                 "KS X 1001 Hangul Syllables", "现代韩语常用音节 2350 个", src, kr_hangul)
     write_table("kr", "ksx1001-hanja", 20, "KS X 1001 汉字",
-                "KS X 1001 Hanja", "韩文汉字 4888 个(重复汉字映射至兼容区)", src, kr_hanja)
+                "KS X 1001 Hanja", "韩文汉字 4888 个（重复汉字映射至兼容区）", src, kr_hanja)
 
     cp437 = set()
     graphics = [0x263A, 0x263B, 0x2665, 0x2666, 0x2663, 0x2660, 0x2022, 0x25D8,
@@ -186,7 +186,7 @@ def gen_codec_tables() -> None:
     for b in range(0x80, 0x100):
         cp437.add(ord(bytes([b]).decode("cp437")))
     write_table("intl", "cp437", 70, "IBM 代码页 437", "IBM Code Page 437",
-                "DOS/复古终端字符集(图形解释,0x01–0xFF 共 255 字符)",
+                "DOS/复古终端字符集（图形解释，0x01–0xFF 共 255 字符）",
                 f"Python cp437 codec + IBM graphic set; generated {TODAY}", cp437)
 
 
@@ -200,7 +200,7 @@ def gen_static_tables() -> None:
                 "CJK Radicals Supplement", "U+2E80–2EF3 中已指派的 115 个变形部首", src,
                 set(range(0x2E80, 0x2E9A)) | set(range(0x2E9B, 0x2EF4)))
     write_table("tw", "bopomofo", 60, "注音符号", "Bopomofo",
-                "注音符号及扩展(闽南语/客家语用)", src,
+                "注音符号及扩展（闽南语/客家语用）", src,
                 set(range(0x3105, 0x3130)) | set(range(0x31A0, 0x31C0)))
     write_table("jp", "hiragana", 20, "平假名", "Hiragana",
                 "U+3041–3096 全部平假名字母", src, set(range(0x3041, 0x3097)))
@@ -209,33 +209,33 @@ def gen_static_tables() -> None:
     write_table("jp", "halfwidth-kana", 22, "半角假名", "Halfwidth Katakana",
                 "U+FF61–FF9F 半角片假名与标点", src, set(range(0xFF61, 0xFFA0)))
     write_table("jp", "jisx0201", 23, "JIS X 0201", "JIS X 0201",
-                "罗马字与半角假名(7 位/8 位单字节集)", src,
+                "罗马字与半角假名（7 位/8 位单字节集）", src,
                 set(range(0x20, 0x7F)) | set(range(0xFF61, 0xFFA0)))
-    write_table("kr", "hangul-syllables", 40, "现代谚文音节(全部)",
+    write_table("kr", "hangul-syllables", 40, "现代谚文音节（全部）",
                 "Hangul Syllables (All Modern)", "U+AC00–D7A3 全部 11172 个音节", src,
                 set(range(0xAC00, 0xD7A4)))
     write_table("kr", "hangul-compat-jamo", 50, "谚文兼容字母",
                 "Hangul Compatibility Jamo", "U+3131–318E 谚文兼容字母", src,
                 set(range(0x3131, 0x318F)))
     write_table("kr", "hangul-jamo", 60, "谚文字母 (Jamo)", "Hangul Jamo",
-                "U+1100–11FF 组合用谚文字母(含古谚文)", src, set(range(0x1100, 0x1200)))
+                "U+1100–11FF 组合用谚文字母（含古谚文）", src, set(range(0x1100, 0x1200)))
     write_table("intl", "latin-basic", 30, "基本拉丁字母", "Basic Latin",
                 "可打印 ASCII,U+0020–007E", src, set(range(0x20, 0x7F)))
     write_table("intl", "latin1-supp", 31, "拉丁字母-1 补充", "Latin-1 Supplement",
-                "U+00A0–00FF,西欧语言字符", src, set(range(0xA0, 0x100)))
+                "U+00A0–00FF，西欧语言字符", src, set(range(0xA0, 0x100)))
     write_table("intl", "latin-ext-a", 32, "拉丁字母扩展-A", "Latin Extended-A",
-                "U+0100–017F,中东欧语言字符", src, set(range(0x100, 0x180)))
+                "U+0100–017F，中东欧语言字符", src, set(range(0x100, 0x180)))
     write_table("intl", "latin-ext-b", 33, "拉丁字母扩展-B", "Latin Extended-B",
                 "U+0180–024F", src, set(range(0x180, 0x250)))
     write_table("intl", "cyrillic", 40, "西里尔字母", "Cyrillic",
                 "U+0400–04FF 基本区", src, set(range(0x400, 0x500)))
     write_table("intl", "box-drawing", 71, "制表符", "Box Drawing",
-                "U+2500–257F,终端表格线", src, set(range(0x2500, 0x2580)))
+                "U+2500–257F，终端表格线", src, set(range(0x2500, 0x2580)))
     write_table("intl", "block-elements", 72, "方块元素", "Block Elements",
-                "U+2580–259F,终端色块", src, set(range(0x2580, 0x25A0)))
+                "U+2580–259F，终端色块", src, set(range(0x2580, 0x25A0)))
     write_table("intl", "powerline", 73, "Powerline 符号", "Powerline Symbols",
                 "私用区 U+E0A0–E0D4 中 Powerline 及其扩展占用的 41 个符号",
-                f"powerline/fontpatcher 约定; generated {TODAY}",
+                f"powerline/fontpatcher 约定；generated {TODAY}",
                 {0xE0A0, 0xE0A1, 0xE0A2, 0xE0A3} | set(range(0xE0B0, 0xE0B4))
                 | set(range(0xE0B4, 0xE0D5)))
     write_table("intl", "braille", 74, "盲文点字", "Braille Patterns",
@@ -275,7 +275,7 @@ def gen_ucd() -> None:
     unicodedata_txt.unlink()
 
     lines = [
-        "# Unicode 17.0.0 已指派码位(排除代理区 Cs;含 Co 私用区)",
+        "# Unicode 17.0.0 已指派码位（排除代理区 Cs；含 Co 私用区）",
         f"# source: {UCD_BASE}UnicodeData.txt; generated {TODAY}",
         "# license: Unicode License v3 (https://www.unicode.org/license.txt)",
     ]
@@ -300,7 +300,7 @@ def gen_unihan_core() -> None:
                 cps.add(int(line.split("\t")[0][2:], 16))
     write_table("intl", "unihan-core-2020", 11, "UnihanCore2020 核心集",
                 "Unihan Core 2020",
-                "Unihan 数据库定义的现代通用核心汉字集,覆盖中日韩越及港台用字",
+                "Unihan 数据库定义的现代通用核心汉字集，覆盖中日韩越及港台用字",
                 f"{UCD_BASE}Unihan.zip kUnihanCore2020; generated {TODAY}", cps,
                 license_="Unicode License v3")
 
@@ -326,9 +326,9 @@ def gen_viet() -> None:
     cps.update(ext)
     cps.update(range(0x1EA0, 0x1EFA))
     write_table("intl", "viet-latin", 50, "越南语拉丁字符", "Vietnamese Latin",
-                "越南语国语字全部字母:基本拉丁 + 带符字母(Latin-1/扩展 A/B)"
+                "越南语国语字全部字母：基本拉丁 + 带符字母(Latin-1/扩展 A/B)"
                 " + 拉丁扩展附加 U+1EA0–1EF9",
-                f"按 Unicode 越南语用字构成定义; generated {TODAY}", cps)
+                f"按 Unicode 越南语用字构成定义；generated {TODAY}", cps)
 
 
 # ---------------------------------------------------------------- 外部数据表
@@ -349,17 +349,17 @@ def gen_external() -> None:
     l3 = _chars_of(EXTERNAL / "tgh-l3-raw.txt")
     assert (len(l1), len(l2), len(l3)) == (3500, 3000, 1605)
     assert frozenset(l1 | l2 | l3) == full, "三级并集必须等于 8105 整表"
-    src_tgh = ("公开数据集快照(两独立来源交叉核对,并集与 CJK-character-count "
-               f"8105 整表完全一致); generated {TODAY}")
+    src_tgh = ("公开数据集快照（两独立来源交叉核对，并集与 CJK-character-count "
+               f"8105 整表完全一致）； generated {TODAY}")
     write_table("prc-lit", "tongyong-guifan-l1", 11, "通用规范汉字表·一级",
                 "General Standard Chinese Characters Level 1",
-                "一级字表 3500 字,义务教育与出版常用", src_tgh, l1)
+                "一级字表 3500 字，义务教育与出版常用", src_tgh, l1)
     write_table("prc-lit", "tongyong-guifan-l2", 12, "通用规范汉字表·二级",
                 "General Standard Chinese Characters Level 2",
                 "二级字表 3000 字", src_tgh, l2)
     write_table("prc-lit", "tongyong-guifan-l3", 13, "通用规范汉字表·三级",
                 "General Standard Chinese Characters Level 3",
-                "三级字表 1605 字,姓氏人名、地名、科技术语用字", src_tgh, l3)
+                "三级字表 1605 字，姓氏人名、地名、科技术语用字", src_tgh, l3)
 
     import json
 
@@ -373,11 +373,11 @@ def gen_external() -> None:
     jinmeiyo = _chars_of(EXTERNAL / "jinmeiyo-raw.txt")
     assert len(joyo) == 2136 and len(kyoiku) == 1026 and kyoiku <= joyo
     write_table("jp", "joyo", 15, "常用漢字表", "Joyo Kanji",
-                "2010 年内閣告示,现行日语常用汉字 2136 字", jp_src("joyo"), joyo)
+                "2010 年内閣告示，现行日语常用汉字 2136 字", jp_src("joyo"), joyo)
     write_table("jp", "kyoiku", 16, "教育漢字", "Kyoiku Kanji",
-                "学年別漢字配当表(2020 年度施行),小学 1026 字", jp_src("kyoiku"), kyoiku)
+                "学年別漢字配当表（2020 年度施行），小学 1026 字", jp_src("kyoiku"), kyoiku)
     write_table("jp", "jinmeiyo", 17, "人名用漢字", "Jinmeiyo Kanji",
-                "戸籍法施行規則别表,常用汉字以外可用于人名的汉字(含 2026 年新增)",
+                "戸籍法施行規則别表，常用汉字以外可用于人名的汉字（含 2026 年新增）",
                 jp_src("jinmeiyo"), jinmeiyo)
 
     import re as _re
@@ -389,7 +389,7 @@ def gen_external() -> None:
             wgl4.add(int(m.group(1), 16))
     assert len(wgl4) == 650
     write_table("intl", "wgl4", 20, "WGL4 泛欧字符集", "Windows Glyph List 4",
-                "微软泛欧字符集,650 个码位(常见 652 计数含两个重复字形)",
+                "微软泛欧字符集，650 个码位（常见 652 计数含两个重复字形）",
                 f"Adobe WGL4 table; retrieved {TODAY}", wgl4)
 
     xdhy_c = EXTERNAL / "xdhy-changyong-2500-raw.txt"
@@ -397,7 +397,7 @@ def gen_external() -> None:
         c2500 = _chars_of(xdhy_c)
         c1000 = _chars_of(EXTERNAL / "xdhy-cichangyong-1000-raw.txt")
         assert len(c2500) == 2500 and len(c1000) == 1000 and not (c2500 & c1000)
-        src_x = f"公开数据集快照(计数与官方口径一致); generated {TODAY}"
+        src_x = f"公开数据集快照（计数与官方口径一致）； generated {TODAY}"
         write_table("prc-lit", "changyong-2500", 21, "现代汉语常用字表·常用字",
                     "Modern Chinese Frequently Used (2500)", "常用字 2500 字", src_x, c2500)
         write_table("prc-lit", "cichangyong-1000", 22, "现代汉语常用字表·次常用字",
@@ -406,10 +406,10 @@ def gen_external() -> None:
 
 
 def gen_gb18030() -> None:
-    """GB 18030-2022 实现级别 1/2/3(汉字及部首口径,非汉字符号 991 个不计入)。
+    """GB 18030-2022 实现级别 1/2/3（汉字及部首口径，非汉字符号 991 个不计入）。
 
-    构造依据 docs/research/gb18030-2022-levels.md(标准条文引用与
-    Unicode L2/22-274 交叉验证);各扩展区按标准冻结于 Unicode 11 的范围。
+    构造依据 docs/research/gb18030-2022-levels.md（标准条文引用与
+    Unicode L2/22-274 交叉验证）；各扩展区按标准冻结于 Unicode 11 的范围。
     """
     from pfc.coverage.charsets import parse_charset_file
 
@@ -424,7 +424,7 @@ def gen_gb18030() -> None:
 
     tgh = set(parse_charset_file(DATA / "prc-lit" / "tongyong-guifan.txt").cps)
     l2 = l1 | tgh
-    assert len(l2) == 27780, f"级别2应为27780,得到{len(l2)}"
+    assert len(l2) == 27780, f"级别2应为27780，得到{len(l2)}"
 
     ext_bf = (
         set(range(0x20000, 0x2A6D7)) | set(range(0x2A700, 0x2B735))
@@ -433,19 +433,19 @@ def gen_gb18030() -> None:
     )
     kangxi = set(range(0x2F00, 0x2FD6))
     l3 = l2 | ext_bf | kangxi
-    assert len(l3) == 88115, f"级别3应为88115,得到{len(l3)}"
+    assert len(l3) == 88115, f"级别3应为88115，得到{len(l3)}"
 
-    src = ("GB 18030-2022 第9章实现级别;构造依据 docs/research/"
+    src = ("GB 18030-2022 第9章实现级别；构造依据 docs/research/"
            f"gb18030-2022-levels.md; generated {TODAY}")
     write_table("gb", "gb18030-2022-l1", 50, "GB 18030-2022 实现级别 1",
                 "GB 18030-2022 Implementation Level 1",
-                "全部产品的最低强制要求:BMP 内全部汉字与部首(27584 字)", src, l1)
+                "全部产品的最低强制要求：BMP 内全部汉字与部首（27584 字）", src, l1)
     write_table("gb", "gb18030-2022-l2", 51, "GB 18030-2022 实现级别 2",
                 "GB 18030-2022 Implementation Level 2",
-                "系统软件强制要求:级别 1 + 通用规范汉字表位于辅助平面的 196 字", src, l2)
+                "系统软件强制要求：级别 1 + 通用规范汉字表位于辅助平面的 196 字", src, l2)
     write_table("gb", "gb18030-2022-l3", 52, "GB 18030-2022 实现级别 3",
                 "GB 18030-2022 Implementation Level 3",
-                "政务与公共服务产品要求:全部汉字扩展 A–F 与康熙部首(88115 字)", src, l3)
+                "政务与公共服务产品要求：全部汉字扩展 A–F 与康熙部首（88115 字）", src, l3)
 
 
 # ---------------------------------------------------------------- 旧数据迁移
@@ -453,35 +453,35 @@ def gen_gb18030() -> None:
 _MIGRATE = {
     "tongyong-guifan-han.txt": ("prc-lit", "tongyong-guifan", 10, "通用规范汉字表",
         "Table of General Standard Chinese Characters",
-        "2013 年国务院发布的现行规范,8105 字,分三级"),
+        "2013 年国务院发布的现行规范，8105 字，分三级"),
     "3500changyong-han.txt": ("prc-lit", "changyong-3500", 20, "现代汉语常用字表",
         "List of Frequently Used Characters in Modern Chinese",
-        "1988 年发布,常用 2500 字与次常用 1000 字"),
+        "1988 年发布，常用 2500 字与次常用 1000 字"),
     "7000tongyong-han.txt": ("prc-lit", "tongyong-7000", 30, "现代汉语通用字表",
-        "List of Commonly Used Characters in Modern Chinese", "1988 年发布,7000 字"),
+        "List of Commonly Used Characters in Modern Chinese", "1988 年发布，7000 字"),
     "yiwu-jiaoyu-han.txt": ("prc-lit", "yijiao-3500", 40, "义务教育语文课程常用字表",
-        "Compulsory Education Chinese Character List", "2022 年版课程标准附录,3500 字"),
+        "Compulsory Education Chinese Character List", "2022 年版课程标准附录，3500 字"),
     "gujiyinshua-han.txt": ("prc-lit", "guji-yinshua", 50, "古籍印刷通用字规范字形表",
         "Standard Glyphs for Ancient Books Printing", "2021 年发布的古籍印刷用字规范"),
     "gb12345-han.txt": ("gb", "gb12345", 40, "GB/T 12345 繁体字符集",
-        "GB/T 12345 Traditional Hanzi", "1990 年发布,与 GB/T 2312 对应的繁体集"),
+        "GB/T 12345 Traditional Hanzi", "1990 年发布，与 GB/T 2312 对应的繁体集"),
     "iicore-han.txt": ("intl", "iicore", 10, "国际表意文字核心集 (IICore)",
         "International Ideographs Core (IICore)",
-        "ISO/IEC 10646 附录,面向资源受限环境的核心汉字集合"),
+        "ISO/IEC 10646 附录，面向资源受限环境的核心汉字集合"),
     "hanyi-jianfan-han.txt": ("prc-lit", "hanyi-jianfan", 90, "汉仪简繁字表",
         "HanYi Simplified & Traditional Set", "字库厂商汉仪的简繁覆盖口径"),
     "fangzheng-jianfan-han.txt": ("prc-lit", "fangzheng-jianfan", 91, "方正简繁字表",
         "FounderType Simplified & Traditional Set", "字库厂商方正的简繁覆盖口径"),
     "4808changyong-han.txt": ("tw", "tw-changyong-4808", 10, "常用国字标准字体表",
-        "Standard Forms of Common National Characters", "台湾地区甲表,4808 字"),
+        "Standard Forms of Common National Characters", "台湾地区甲表，4808 字"),
     "6343cichangyong-han.txt": ("tw", "tw-cichangyong-6343", 20, "次常用国字标准字体表",
-        "Standard Forms of Less-Common National Characters", "台湾地区乙表,6343 字"),
+        "Standard Forms of Less-Common National Characters", "台湾地区乙表，6343 字"),
     "hkchangyong-han.txt": ("hk", "hk-changyong", 10, "常用字字形表",
         "List of Graphemes of Commonly-Used Chinese Characters", "香港教育局字形表"),
     "hkscs-han.txt": ("hk", "hkscs", 20, "香港增补字符集 (HKSCS) 汉字",
         "Hong Kong Supplementary Character Set Hanzi", "HKSCS-2016 汉字部分"),
     "suppchara-han.txt": ("hk", "hk-suppchara", 30, "常用香港外字表",
-        "Hong Kong Supplementary Characters in Common Use", "教育局常用外字(1–6 级)"),
+        "Hong Kong Supplementary Characters in Common Use", "教育局常用外字（1–6 级）"),
 }
 
 

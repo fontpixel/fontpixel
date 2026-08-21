@@ -5,7 +5,7 @@
 # name_en: Frequently Used Characters in Modern Chinese (2500)
 # desc_zh: 常用字 2500 字
 # desc_en: The 2,500 frequently used characters.
-# source: 公开数据集快照(计数与官方口径一致); generated 2026-08-21
+# source: 公开数据集快照（计数与官方口径一致）； generated 2026-08-21
 4E00..4E01
 4E03
 4E07..4E0B

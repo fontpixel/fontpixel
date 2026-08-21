@@ -3,7 +3,7 @@
 # order: 10
 # name_zh: 通用规范汉字表
 # name_en: Table of General Standard Chinese Characters
-# desc_zh: 2013 年国务院发布的现行规范,8105 字,分三级
+# desc_zh: 2013 年国务院发布的现行规范，8105 字，分三级
 # desc_en: The standard now in force, issued by the State Council in 2013: 8,105 characters in three levels.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)

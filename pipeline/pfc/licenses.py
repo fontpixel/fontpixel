@@ -1,4 +1,4 @@
-"""许可证识别:特征短语指纹 + 三级置信(spec §4.4)。"""
+"""许可证识别：特征短语指纹 + 三级置信(spec §4.4)。"""
 
 from __future__ import annotations
 
@@ -58,7 +58,7 @@ def _normalize(text: str) -> str:
 
 
 def _classify_text(norm: str) -> str | None:
-    """归一化文本 → SPDX id;按特异性从高到低匹配。"""
+    """归一化文本 → SPDX id；按特异性从高到低匹配。"""
     if "sil open font license" in norm or "scripts.sil.org/ofl" in norm:
         if "version 1.0" in norm and "version 1.1" not in norm:
             return "OFL-1.0"
@@ -127,7 +127,7 @@ def _commercial(spdx: str | None) -> bool | None:
     return True if spdx in COMMERCIAL_OK else None
 
 
-# 多许可并存时的偏好序(字体本体许可优先于代码许可)
+# 多许可并存时的偏好序（字体本体许可优先于代码许可）
 _PREFERENCE = [
     "OFL-1.1", "OFL-1.0", "IPA-1.0", "LicenseRef-Mplus", "LicenseRef-Baekmuk",
     "CC-BY-SA-4.0", "CC-BY-4.0", "CC0-1.0", "Unlicense", "WTFPL",
@@ -176,7 +176,7 @@ def detect_license(
         note = ""
         if len(ranked) > 1:
             others = ", ".join(_NAMES.get(s, s) for s in ranked[1:])
-            note = f"目录中另含 {others}(通常适用于构建代码或部分文件)"
+            note = f"目录中另含 {others}（通常适用于构建代码或部分文件）"
         return LicenseInfo(
             spdx=best,
             name=_NAMES.get(best, best),
@@ -194,7 +194,7 @@ def detect_license(
             file=None,
             commercial=_commercial(hint),
             confidence="auto-low",
-            note="仅依据字体内嵌属性推断,待确认",
+            note="仅依据字体内嵌属性推断，待确认",
         )
 
     return LicenseInfo(

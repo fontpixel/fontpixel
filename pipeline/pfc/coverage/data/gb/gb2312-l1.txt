@@ -3,7 +3,7 @@
 # order: 11
 # name_zh: GB/T 2312 一级汉字
 # name_en: GB/T 2312 Level 1 Hanzi
-# desc_zh: 一级常用字 3755 字,按拼音排序
+# desc_zh: 一级常用字 3755 字，按拼音排序
 # desc_en: 3,755 frequently used characters, ordered by pinyin.
 # source: Python codecs; generated 2026-08-21
 4E00..4E01

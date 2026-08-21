@@ -3,7 +3,7 @@
 # order: 13
 # name_zh: JIS X 0213 第三水準漢字
 # name_en: JIS X 0213 Level 3 Kanji
-# desc_zh: 2000/2004 年扩充,第一面新增汉字
+# desc_zh: 2000/2004 年扩充，第一面新增汉字
 # desc_en: The kanji added on plane 1 by the 2000/2004 extensions.
 # source: Python codecs; generated 2026-08-21
 3402

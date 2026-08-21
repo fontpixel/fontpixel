@@ -3,7 +3,7 @@
 # order: 20
 # name_zh: 次常用国字标准字体表
 # name_en: Standard Forms of Less-Common National Characters
-# desc_zh: 台湾地区乙表,6343 字
+# desc_zh: 台湾地区乙表，6343 字
 # desc_en: Taiwan's Chart B; 6,343 characters.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)

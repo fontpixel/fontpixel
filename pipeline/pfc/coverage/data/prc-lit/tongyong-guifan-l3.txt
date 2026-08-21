@@ -3,9 +3,9 @@
 # order: 13
 # name_zh: 通用规范汉字表·三级
 # name_en: General Standard Chinese Characters Level 3
-# desc_zh: 三级字表 1605 字,姓氏人名、地名、科技术语用字
+# desc_zh: 三级字表 1605 字，姓氏人名、地名、科技术语用字
 # desc_en: 1,605 characters used in surnames and given names, place names, and technical terminology.
-# source: 公开数据集快照(两独立来源交叉核对,并集与 CJK-character-count 8105 整表完全一致); generated 2026-08-21
+# source: 公开数据集快照（两独立来源交叉核对，并集与 CJK-character-count 8105 整表完全一致）； generated 2026-08-21
 3447
 344A
 356E

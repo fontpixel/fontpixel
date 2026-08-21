@@ -3,9 +3,9 @@
 # order: 51
 # name_zh: GB 18030-2022 实现级别 2
 # name_en: GB 18030-2022 Implementation Level 2
-# desc_zh: 系统软件强制要求:级别 1 + 通用规范汉字表位于辅助平面的 196 字
+# desc_zh: 系统软件强制要求：级别 1 + 通用规范汉字表位于辅助平面的 196 字
 # desc_en: Mandatory for system software: Level 1 plus the 196 General Standard characters that sit in the supplementary planes.
-# source: GB 18030-2022 第9章实现级别;构造依据 docs/research/gb18030-2022-levels.md; generated 2026-08-21
+# source: GB 18030-2022 第9章实现级别；构造依据 docs/research/gb18030-2022-levels.md; generated 2026-08-21
 2E81
 2E84
 2E88

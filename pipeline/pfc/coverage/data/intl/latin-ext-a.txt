@@ -3,7 +3,7 @@
 # order: 32
 # name_zh: 拉丁字母扩展-A
 # name_en: Latin Extended-A
-# desc_zh: U+0100–017F,中东欧语言字符
+# desc_zh: U+0100–017F，中东欧语言字符
 # desc_en: U+0100–017F, the Central and Eastern European characters.
 # source: Unicode block ranges; generated 2026-08-21
 0100..017F

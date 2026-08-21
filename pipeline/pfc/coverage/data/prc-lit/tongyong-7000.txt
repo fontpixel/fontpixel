@@ -3,7 +3,7 @@
 # order: 30
 # name_zh: 现代汉语通用字表
 # name_en: List of Commonly Used Characters in Modern Chinese
-# desc_zh: 1988 年发布,7000 字
+# desc_zh: 1988 年发布，7000 字
 # desc_en: Issued in 1988; 7,000 characters.
 # source: CJK-character-count project data, migrated 2026-08-21
 # license: MIT (CJK-character-count, © NFSL2001)

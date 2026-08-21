@@ -3,9 +3,9 @@
 # order: 50
 # name_zh: 越南语拉丁字符
 # name_en: Vietnamese Latin
-# desc_zh: 越南语国语字全部字母:基本拉丁 + 带符字母(Latin-1/扩展 A/B) + 拉丁扩展附加 U+1EA0–1EF9
+# desc_zh: 越南语国语字全部字母：基本拉丁 + 带符字母(Latin-1/扩展 A/B) + 拉丁扩展附加 U+1EA0–1EF9
 # desc_en: Every letter of Vietnamese quốc ngữ: basic Latin, the accented letters from Latin-1 and Latin Extended-A/B, and Latin Extended Additional U+1EA0–1EF9.
-# source: 按 Unicode 越南语用字构成定义; generated 2026-08-21
+# source: 按 Unicode 越南语用字构成定义；generated 2026-08-21
 0041..005A
 0061..007A
 00C0..00C3

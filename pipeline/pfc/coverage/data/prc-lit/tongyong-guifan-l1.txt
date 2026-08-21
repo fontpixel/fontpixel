@@ -3,9 +3,9 @@
 # order: 11
 # name_zh: 通用规范汉字表·一级
 # name_en: General Standard Chinese Characters Level 1
-# desc_zh: 一级字表 3500 字,义务教育与出版常用
+# desc_zh: 一级字表 3500 字，义务教育与出版常用
 # desc_en: 3,500 characters — the working set for compulsory education and publishing.
-# source: 公开数据集快照(两独立来源交叉核对,并集与 CJK-character-count 8105 整表完全一致); generated 2026-08-21
+# source: 公开数据集快照（两独立来源交叉核对，并集与 CJK-character-count 8105 整表完全一致）； generated 2026-08-21
 4E00..4E01
 4E03
 4E07..4E0B

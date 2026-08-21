@@ -3,7 +3,7 @@
 # order: 20
 # name_zh: WGL4 泛欧字符集
 # name_en: Windows Glyph List 4
-# desc_zh: 微软泛欧字符集,650 个码位(常见 652 计数含两个重复字形)
+# desc_zh: 微软泛欧字符集，650 个码位（常见 652 计数含两个重复字形）
 # desc_en: Microsoft's pan-European character set: 650 code points (the commonly cited 652 counts two duplicated glyphs).
 # source: Adobe WGL4 table; retrieved 2026-08-21
 0020..007E

@@ -1,6 +1,6 @@
-"""构建编排器:fonts/ → site/public/data + dist-downloads(契约 C5/C6/C8)。
+"""构建编排器：fonts/ → site/public/data + dist-downloads（契约 C5/C6/C8）。
 
-用法:python -m pfc.build --fonts fonts --out site/public/data \
+用法：python -m pfc.build --fonts fonts --out site/public/data \
         --downloads dist-downloads --cache .cache [--family <slug>]
 """
 
@@ -157,8 +157,8 @@ def _build_family(
     dl_entries = build_downloads(
         slug, family_dir, [(b.font, b.desc) for b in built],
         [license_info.file] if license_info.file else [],
-        f"{meta.name}\n来源: {meta.provenance or meta.homepage or '-'}\n"
-        f"许可证: {license_info.name}\n由 点阵字库 Pixel Font Collection 打包\n",
+        f"{meta.name}\n来源：{meta.provenance or meta.homepage or '-'}\n"
+        f"许可证：{license_info.name}\n由 点阵字库 Pixel Font Collection 打包\n",
         downloads_dir,
     )
 
@@ -307,10 +307,10 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
             continue
         files = _font_files(family_dir)
         if not files:
-            report.warnings.append(f"{slug}: 目录中无字体文件,跳过")
+            report.warnings.append(f"{slug}: 目录中无字体文件，跳过")
             continue
         if not (family_dir / "family.toml").exists():
-            load_family_meta(family_dir)  # 物化 stub,保证缓存键稳定
+            load_family_meta(family_dir)  # 物化 stub，保证缓存键稳定
         key = family_key(data_hash, family_dir, files)
         cached = cache.load(slug, key)
         if only_family and slug != only_family:
