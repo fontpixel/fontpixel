@@ -13,6 +13,17 @@ def convert_otb(path: Path, family_slug: str) -> list[tuple[str, ParsedFont]]:
 
     font = TTFont(path)
     cmap = font.getBestCmap()
+    if cmap is None:
+        # 老 CJK 字体常见:(3,0) Symbol 声明的伪装 Unicode 表,直接取用
+        for t in font["cmap"].tables:
+            sub = getattr(t, "cmap", None)
+            if sub:
+                cmap = dict(sub)
+                break
+        if cmap and min(cmap) >= 0xF000 and max(cmap) <= 0xF0FF:
+            cmap = {cp - 0xF000: g for cp, g in cmap.items()}  # 真 Symbol 表平移
+    if not cmap:
+        raise ValueError(f"{path}: no usable cmap")
     name_to_cp: dict[str, int] = {}
     for cp, gname in cmap.items():
         # 一名多码位时取最小码位,其余码位共享字形

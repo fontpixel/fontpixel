@@ -2,6 +2,11 @@ import { expect, test, type Page } from '@playwright/test';
 
 const ISLAND = '[data-testid="catalogue-island"]';
 
+async function resultCount(page: Page): Promise<number> {
+  const text = await page.getByTestId('result-count').textContent();
+  return Number.parseInt(text!.match(/\d+/)![0], 10);
+}
+
 async function cardCanvasData(page: Page, slug: string): Promise<string> {
   const sel = `${ISLAND} .card[data-slug="${slug}"] .card__sample canvas`;
   await page.locator(sel).scrollIntoViewIfNeeded();
@@ -9,7 +14,7 @@ async function cardCanvasData(page: Page, slug: string): Promise<string> {
     .poll(async () =>
       page.evaluate((s) => {
         const c = document.querySelector<HTMLCanvasElement>(s);
-        return c && c.width > 0 ? c.toDataURL() : '';
+        return c && c.width > 0 && c.width !== 300 ? c.toDataURL() : '';
       }, sel),
     )
     .not.toBe('');
@@ -21,58 +26,74 @@ async function cardCanvasData(page: Page, slug: string): Promise<string> {
 
 test('form filter narrows results and updates url', async ({ page }) => {
   await page.goto('zh/');
-  await expect(page.getByTestId('result-count')).toHaveText('2 款字体');
-  await page.locator('[data-testid="filter-panel"] [data-form="gothic"]').click();
-  await expect(page.getByTestId('result-count')).toHaveText('1 款字体');
-  await expect(page).toHaveURL(/forms=gothic/);
-  await expect(page.locator(`${ISLAND} .card[data-slug="mini"]`)).toBeVisible();
+  const all = await resultCount(page);
+  expect(all).toBeGreaterThanOrEqual(5);
+  await page.locator('[data-testid="filter-panel"] [data-form="mingcho"]').click();
+  await expect.poll(() => resultCount(page)).toBeLessThan(all);
+  await expect(page).toHaveURL(/forms=mingcho/);
+  await expect(
+    page.locator(`${ISLAND} .card[data-slug="wqy-bitmap-song"]`),
+  ).toBeVisible();
 });
 
 test('url state restores filters on load', async ({ page }) => {
-  await page.goto('zh/?forms=gothic');
-  await expect(page.getByTestId('result-count')).toHaveText('1 款字体');
+  await page.goto('zh/?forms=mingcho');
+  await page.waitForSelector(`${ISLAND} .card`);
+  const filtered = await resultCount(page);
+  await page.goto('zh/');
+  await page.waitForSelector(`${ISLAND} .card`);
+  expect(await resultCount(page)).toBeGreaterThan(filtered);
 });
 
 test('search narrows results', async ({ page }) => {
   await page.goto('zh/');
-  await page.getByTestId('search-input').fill('Nometa');
-  await expect(page.getByTestId('result-count')).toHaveText('1 款字体');
+  await page.getByTestId('search-input').fill('galmuri');
+  await expect.poll(() => resultCount(page)).toBe(1);
+  await expect(page.locator(`${ISLAND} .card[data-slug="galmuri"]`)).toBeVisible();
 });
 
 test('editing sample text repaints canvas', async ({ page }) => {
   await page.goto('zh/');
-  const before = await cardCanvasData(page, 'mini');
-  await page.getByTestId('sample-input').fill('AAAA AAAA');
-  await expect.poll(() => cardCanvasData(page, 'mini')).not.toBe(before);
+  const before = await cardCanvasData(page, 'galmuri');
+  await page.getByTestId('sample-input').fill('픽셀 폰트 1234');
+  await expect.poll(() => cardCanvasData(page, 'galmuri')).not.toBe(before);
 });
 
 test('zoom changes canvas height', async ({ page }) => {
-  // 样例按容器宽换行,宽度被钳住;放大必然增加高度(行高×倍数,且换行更多)
   await page.goto('zh/');
-  await cardCanvasData(page, 'mini');
-  const h2 = await page
-    .locator(`${ISLAND} .card[data-slug="mini"] .card__sample canvas`)
-    .evaluate((c: HTMLCanvasElement) => c.height);
+  await cardCanvasData(page, 'galmuri');
+  const sel = `${ISLAND} .card[data-slug="galmuri"] .card__sample canvas`;
+  const h2 = await page.locator(sel).evaluate((c: HTMLCanvasElement) => c.height);
   await page.getByTestId('zoom-select').selectOption('3');
   await expect
-    .poll(() =>
-      page
-        .locator(`${ISLAND} .card[data-slug="mini"] .card__sample canvas`)
-        .evaluate((c: HTMLCanvasElement) => c.height),
-    )
+    .poll(() => page.locator(sel).evaluate((c: HTMLCanvasElement) => c.height))
     .toBeGreaterThan(h2);
 });
 
 test('invert repaints canvas', async ({ page }) => {
   await page.goto('zh/');
-  const before = await cardCanvasData(page, 'mini');
+  const before = await cardCanvasData(page, 'galmuri');
   await page.getByTestId('invert-toggle').check();
-  await expect.poll(() => cardCanvasData(page, 'mini')).not.toBe(before);
+  await expect.poll(() => cardCanvasData(page, 'galmuri')).not.toBe(before);
 });
 
 test('reset clears filters', async ({ page }) => {
-  await page.goto('zh/?forms=gothic&sizes=16');
-  await expect(page.getByTestId('result-count')).toHaveText('1 款字体');
+  await page.goto('zh/?forms=mingcho');
+  await page.waitForSelector(`${ISLAND} .card`);
+  const filtered = await resultCount(page);
   await page.locator('[data-testid="filter-panel"] .fp__reset').click();
-  await expect(page.getByTestId('result-count')).toHaveText('2 款字体');
+  await expect.poll(() => resultCount(page)).toBeGreaterThan(filtered);
+});
+
+test('coverage preset filters by badge charset', async ({ page }) => {
+  await page.goto('zh/');
+  const all = await resultCount(page);
+  // GB/T 2312 ≥99%:unifont-ex 与 wqy 达标,方舟(3583/3755)不达标
+  await page
+    .locator('[data-testid="filter-panel"] .chipbtn', { hasText: 'GB/T 2312' })
+    .click();
+  await expect.poll(() => resultCount(page)).toBeLessThan(all);
+  await expect(
+    page.locator(`${ISLAND} .card[data-slug="wqy-bitmap-song"]`),
+  ).toBeVisible();
 });

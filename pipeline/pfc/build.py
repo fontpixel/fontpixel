@@ -379,9 +379,36 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
     write_intervals(runs_by_slug, site_data / "coverage-intervals.bin.gz")
     write_charsets_json(charsets, site_data / "charsets.json")
 
+    _prune_orphans(site_data, downloads_dir, {e["slug"] for e in entries},
+                   {e["file"] for e in all_downloads})
+
     report.data_bytes = sum(p.stat().st_size for p in site_data.rglob("*") if p.is_file())
     report.took_s = time.monotonic() - t0
     return report
+
+
+def _prune_orphans(site_data: Path, downloads_dir: Path, slugs: set[str],
+                   download_files: set[str]) -> None:
+    """移除不再属于任何现存家族的产物(家族改名/删除后)。"""
+    import shutil
+
+    for sub, is_dir in (("details", False), ("previews", True), ("og", False),
+                        ("licenses", False), ("packs", True)):
+        base = site_data / sub
+        if not base.exists():
+            continue
+        for p in base.iterdir():
+            slug = p.name if is_dir else p.stem
+            if slug in slugs:
+                continue
+            if p.is_dir():
+                shutil.rmtree(p)
+            else:
+                p.unlink()
+    keep = download_files | {"manifest.json"}
+    for p in downloads_dir.iterdir():
+        if p.is_file() and p.name not in keep:
+            p.unlink()
 
 
 def main() -> None:

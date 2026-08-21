@@ -1,0 +1,11 @@
+name = "WenQuanYi Bitmap Song"
+name_zh = "文泉驿点阵宋体"
+author = "WenQuanYi Project （Qianqian Fang 等）"
+homepage = "http://wenq.org"
+repository = "https://github.com/carrothu-cn/wqy-bitmapfont-otb"
+description = "经典 Linux 中文点阵宋体，12–16px 五个尺寸，GB18030 级覆盖。"
+form = "mingcho"
+vibes = ["classic"]
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/carrothu-cn--wqy-bitmapfont-otb；上游 https://github.com/carrothu-cn/wqy-bitmapfont-otb；由 otb 转换"
+added = "2026-08-21"

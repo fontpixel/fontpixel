@@ -11,6 +11,7 @@ import re
 from pathlib import Path
 
 from pfc.model import Glyph, ParsedFont, row_bytes
+from pfc.parsers.charset_map import decode_cp, is_unicode_registry
 
 _INT_RE = re.compile(r"^-?\d+$")
 
@@ -175,6 +176,26 @@ def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
         asc = bbox[1] + bbox[3]
         desc = -bbox[3]
         warnings.append("ascent/descent derived from FONTBOUNDINGBOX")
+
+    # 非 Unicode 字符集:按 CHARSET_REGISTRY 重映射码位
+    registry = str(props.get("CHARSET_REGISTRY", ""))
+    if registry and not is_unicode_registry(registry):
+        cenc = str(props.get("CHARSET_ENCODING", "0"))
+        warned: set[str] = set()
+        remapped: dict[int, Glyph] = {}
+        dropped = 0
+        for g in glyphs.values():
+            cp = decode_cp(g.cp, registry, cenc, warnings, warned)
+            if cp is None or cp in remapped:
+                dropped += 1
+                continue
+            g.cp = cp
+            remapped[cp] = g
+        if dropped:
+            warnings.append(
+                f"charset {registry}: {dropped} glyphs unmappable to Unicode, dropped"
+            )
+        glyphs = remapped
 
     file_name = path.name
     return ParsedFont(

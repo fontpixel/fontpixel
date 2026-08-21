@@ -13,6 +13,7 @@ import struct
 from pathlib import Path
 
 from pfc.model import Glyph, ParsedFont, row_bytes
+from pfc.parsers.charset_map import decode_cp
 
 PCF_PROPERTIES = 1 << 0
 PCF_ACCELERATORS = 1 << 1
@@ -82,47 +83,6 @@ def _read_metric(r: _Reader, compressed: bool) -> tuple[int, int, int, int, int]
     desc = r.i16()
     r.skip(2)  # attributes
     return lsb, rsb, w, asc, desc
-
-
-def _decode_cp(code: int, registry: str, encoding: str, warnings: list[str]) -> int | None:
-    reg = f"{registry}-{encoding}".lower()
-    base = registry.lower()
-    if base.startswith("iso10646"):
-        return code
-    if base.startswith("iso8859"):
-        try:
-            n = base.replace("iso8859", "").strip(".-_") or encoding
-            codec = f"iso8859_{int(n)}" if n and n != "1" else "latin-1"
-            return ord(bytes([code]).decode(codec)) if code >= 0x80 else code
-        except Exception:
-            return code if code < 0x80 else None
-    if base.startswith("koi8"):
-        try:
-            return ord(bytes([code]).decode("koi8_r"))
-        except Exception:
-            return None
-    hi, lo = code >> 8, code & 0xFF
-    try:
-        if base.startswith("gb2312"):
-            return ord(bytes([hi | 0x80, lo | 0x80]).decode("gb2312"))
-        if base.startswith("gbk") or base.startswith("gb18030"):
-            return ord(bytes([hi, lo]).decode("gb18030"))
-        if base.startswith("jisx0208"):
-            return ord(bytes([hi | 0x80, lo | 0x80]).decode("euc_jp"))
-        if base.startswith("jisx0201"):
-            if code < 0x80:
-                return code
-            return ord(bytes([0x8E, code]).decode("euc_jp"))
-        if base.startswith("ksc5601") or base.startswith("ksx1001"):
-            return ord(bytes([hi | 0x80, lo | 0x80]).decode("euc_kr"))
-        if base.startswith("big5"):
-            return ord(bytes([hi, lo]).decode("big5"))
-    except Exception:
-        return None
-    if not getattr(_decode_cp, "_warned", False):
-        warnings.append(f"unknown charset registry {reg}; unmapped glyphs dropped")
-        _decode_cp._warned = True  # type: ignore[attr-defined]
-    return None
 
 
 def parse_pcf(path: Path, family_slug: str) -> ParsedFont:
@@ -225,6 +185,7 @@ def parse_pcf(path: Path, family_slug: str) -> ParsedFont:
     cenc = str(props.get("CHARSET_ENCODING", "1"))
 
     glyphs: dict[int, Glyph] = {}
+    warned: set[str] = set()
     total = (max_b1 - min_b1 + 1) * cols
     for i in range(total):
         gi = r.u16()
@@ -234,7 +195,7 @@ def parse_pcf(path: Path, family_slug: str) -> ParsedFont:
             code = min_c2 + i
         else:
             code = ((min_b1 + i // cols) << 8) | (min_c2 + i % cols)
-        cp = _decode_cp(code, registry, cenc, warnings)
+        cp = decode_cp(code, registry, cenc, warnings, warned)
         if cp is None or cp in glyphs:
             continue
         lsb, rsb, w, asc, desc = metrics[gi]

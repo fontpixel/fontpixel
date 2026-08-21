@@ -100,6 +100,7 @@ def load_family_meta(family_dir: Path) -> FamilyMeta:
 _SCRIPT_TOKENS = {
     "zh_hans": "zh-Hans", "zh-hans": "zh-Hans", "sc": "zh-Hans", "cn": "zh-Hans",
     "zh_hant": "zh-Hant", "zh-hant": "zh-Hant", "tc": "zh-Hant", "tw": "zh-Hant",
+    "hk": "zh-Hant", "tr": "zh-Hant",  # zh_hk 港标字形 / zh_tr 传承字形
     "ja": "ja", "jp": "ja", "ko": "ko", "kr": "ko", "latin": "latin",
 }
 

@@ -58,6 +58,19 @@ def test_missing_ascent_derived(tmp_path):
     assert any("ascent" in w.lower() for w in f.warnings)
 
 
+def test_ksx_registry_remapped_to_unicode():
+    """baekmuk batang:ksx1001.1997 GL 编码的 BDF 应重映射到 Unicode。"""
+    f = parse_bdf(FIX / "real-batang10-ksx.bdf", "batang")
+    cps = {g.cp for g in f.glyphs}
+    assert 0xAC00 in cps  # 가
+    assert 0x6C38 in cps  # 永(KS 汉字区)
+    assert 0xB2E4 in cps  # 다
+    hangul = sum(1 for cp in cps if 0xAC00 <= cp <= 0xD7A3)
+    assert hangul >= 2300  # KS X 1001 谚文 2350 应几乎全数映射
+    assert len(cps) > 8000
+    assert any("unmappable" in w for w in f.warnings)  # KS 特殊行无对应,预期丢弃
+
+
 def test_real_galmuri7():
     f = parse_bdf(FIX / "real-galmuri7.bdf", "galmuri7")
     assert len(f.glyphs) > 1000

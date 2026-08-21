@@ -16,10 +16,10 @@ test('about page english version', async ({ page }) => {
 });
 
 test('detail page carries og image', async ({ page }) => {
-  await page.goto('zh/fonts/mini/');
+  await page.goto('zh/fonts/wqy-bitmap-song/');
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     'content',
-    /data\/og\/mini\.png$/,
+    /data\/og\/wqy-bitmap-song\.png$/,
   );
 });
 

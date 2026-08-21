@@ -111,6 +111,22 @@ def test_incremental_cache(tmp_path):
     assert {f["slug"]: f for f in idx["families"]}["mini"]["nameZh"] == "迷你测试2"
 
 
+def test_orphan_outputs_pruned(tmp_path):
+    fonts, data, dl, cache = _setup(tmp_path)
+    build(fonts, data, dl, cache)
+    assert (data / "details" / "nometa.json").exists()
+    shutil.rmtree(fonts / "nometa")
+    build(fonts, data, dl, cache)
+    assert not (data / "details" / "nometa.json").exists()
+    assert not (data / "packs" / "nometa").exists()
+    assert not (data / "og" / "nometa.png").exists()
+    dlm = json.loads((dl / "manifest.json").read_text(encoding="utf-8"))
+    assert all(e["family"] != "nometa" for e in dlm["entries"])
+    assert not list(dl.glob("nometa*"))
+    idx = json.loads((data / "index.json").read_text(encoding="utf-8"))
+    assert [f["slug"] for f in idx["families"]] == ["mini"]
+
+
 def test_only_family(tmp_path):
     fonts, data, dl, cache = _setup(tmp_path)
     report = build(fonts, data, dl, cache, only_family="mini")

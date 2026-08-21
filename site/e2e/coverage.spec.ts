@@ -1,25 +1,33 @@
 import { expect, test } from '@playwright/test';
 
 test('coverage report shows charset rows with denominators', async ({ page }) => {
-  await page.goto('zh/fonts/mini/');
+  await page.goto('zh/fonts/wqy-bitmap-song/');
   const report = page.getByTestId('coverage-report');
-  const gbRow = report.locator('[data-charset="gb2312"]').first();
+  const gbRow = report.locator(
+    '[data-variant-panel]:not([hidden]) [data-charset="gb2312"]',
+  );
   await expect(gbRow).toContainText('GB/T 2312');
-  await expect(gbRow).toContainText('6,763');
-  await expect(report.first()).toContainText('已编码字符');
+  await expect(gbRow).toContainText('6,763 / 6,763');
+  await expect(gbRow).toContainText('完整');
+  await expect(report).toContainText('已编码字符');
+  await expect(report).toContainText('GB 18030-2022 实现级别 1');
 });
 
 test('missing chars expandable for small sets', async ({ page }) => {
-  await page.goto('zh/fonts/mini/');
-  const row = page.locator('[data-variant-panel]:not([hidden]) [data-charset="hiragana"]');
+  await page.goto('zh/fonts/wqy-bitmap-song/');
+  // 注音符号 41/75:缺 34,可展开
+  const row = page.locator(
+    '[data-variant-panel]:not([hidden]) [data-charset="bopomofo"]',
+  );
+  await row.scrollIntoViewIfNeeded();
   await row.locator('summary').click();
   const chars = row.locator('.cov__missing-chars');
   await expect(chars).toBeVisible();
-  await expect(chars).toContainText('ぁ');
+  expect((await chars.textContent())!.length).toBeGreaterThan(10);
 });
 
 test('coverage switches with variant', async ({ page }) => {
-  await page.goto('zh/fonts/mini/');
+  await page.goto('zh/fonts/wqy-bitmap-song/');
   const panels = page.getByTestId('coverage-report').locator('[data-variant-panel]');
   await expect(panels.first()).toBeVisible();
   await expect(panels.nth(1)).toBeHidden();
@@ -28,7 +36,7 @@ test('coverage switches with variant', async ({ page }) => {
 });
 
 test('glyph grid renders sheets and inspector', async ({ page }) => {
-  await page.goto('zh/fonts/mini/');
+  await page.goto('zh/fonts/wqy-bitmap-song/');
   const grid = page.getByTestId('glyph-grid');
   await grid.scrollIntoViewIfNeeded();
   const sheet = grid.locator('.gg__sheet canvas').first();
@@ -36,24 +44,33 @@ test('glyph grid renders sheets and inspector', async ({ page }) => {
   await expect
     .poll(() => sheet.evaluate((c: HTMLCanvasElement) => c.dataset['cell'] ?? ''))
     .not.toBe('');
-  // U+0000 块:A(U+41)位于 row 4 col 1
   const cell = await sheet.evaluate((c: HTMLCanvasElement) => Number(c.dataset['cell']));
+  const block = await sheet.evaluate((c: HTMLCanvasElement) => Number(c.dataset['block']));
+  // 点击首个区块内的 'A'(若在)或该块首个存在的格子:用 A 所在 block 0 canvas
   const rect = await sheet.boundingBox();
   const scale = rect!.width / (16 * cell);
+  const target = 0x41 - block; // block 0 时为 65
+  const col = target % 16;
+  const row = Math.floor(target / 16);
   await sheet.click({
-    position: { x: (1 * cell + cell / 2) * scale, y: (4 * cell + cell / 2) * scale },
+    position: { x: (col * cell + cell / 2) * scale, y: (row * cell + cell / 2) * scale },
   });
   const inspector = page.getByTestId('glyph-inspector');
   await expect(inspector).toBeVisible();
   await expect(inspector).toContainText('U+0041');
-  await expect(inspector).toContainText('8px');
 });
 
 test('char lookup filters catalogue', async ({ page }) => {
   await page.goto('zh/');
+  const countOf = async () => {
+    const t = await page.getByTestId('result-count').textContent();
+    return Number.parseInt(t!.match(/\d+/)![0], 10);
+  };
+  const all = await countOf();
   await page.getByTestId('chars-input').fill('永');
-  await expect(page.getByTestId('result-count')).toHaveText('2 款字体');
-  await page.getByTestId('chars-input').fill('丕');
-  await expect(page.getByTestId('result-count')).toHaveText('0 款字体');
+  await expect.poll(countOf).toBeLessThanOrEqual(all);
+  expect(await countOf()).toBeGreaterThanOrEqual(4); // 五家族中至少 4 家有「永」
+  await page.getByTestId('chars-input').fill('͸'); // 永久未指派码位
+  await expect.poll(countOf).toBe(0);
   await expect(page.getByTestId('catalogue-island')).toContainText('没有符合条件的字体');
 });

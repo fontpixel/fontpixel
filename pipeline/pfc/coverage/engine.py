@@ -102,7 +102,7 @@ def badges(cov: dict[str, tuple[int, int]]) -> list[str]:
 
 def detect_scripts(cov: dict[str, tuple[int, int]]) -> list[str]:
     out: list[str] = []
-    if _ratio(cov, "gb2312-l1") >= 0.5:
+    if max(_ratio(cov, "gb2312-l1"), _ratio(cov, "tongyong-guifan-l1")) >= 0.5:
         out.append("zh-hans")
     if _ratio(cov, "big5-changyong") >= 0.5:
         out.append("zh-hant")
@@ -120,20 +120,21 @@ def detect_scripts(cov: dict[str, tuple[int, int]]) -> list[str]:
 
 
 def pick_sample_lang(cov: dict[str, tuple[int, int]]) -> str:
-    scripts = detect_scripts(cov)
-    strength = {
-        "zh-hans": _ratio(cov, "gb2312-l1"),
-        "zh-hant": _ratio(cov, "big5-changyong"),
-        "ja": (_ratio(cov, "hiragana") + _ratio(cov, "katakana")) / 2
-              * (1.0 + _ratio(cov, "jisx0208-l1")),
-        "ko": max(_ratio(cov, "ksx1001-hangul"), _ratio(cov, "hangul-syllables")),
-        "latin": _ratio(cov, "latin-basic") * 0.5,  # 拉丁几乎人人有,权重降低
-    }
-    best = "latin"
-    best_v = -1.0
-    for s in scripts:
-        v = strength.get(s, 0.0)
+    """样例语言:各脚本强度 0–1 同尺度;固定优先序,平手偏向靠前者。"""
+    scripts = set(detect_scripts(cov))
+    ordered = [
+        ("zh-hans", max(_ratio(cov, "gb2312-l1"), _ratio(cov, "tongyong-guifan-l1"))),
+        ("zh-hant", _ratio(cov, "big5-changyong")),
+        ("ko", max(_ratio(cov, "ksx1001-hangul"), _ratio(cov, "hangul-syllables"))),
+        ("ja", 0.3 * (_ratio(cov, "hiragana") + _ratio(cov, "katakana")) / 2
+               + 0.7 * _ratio(cov, "jisx0208-l1")),  # 汉字覆盖是日文性的判别项
+        ("latin", 0.4 * _ratio(cov, "latin-basic")),
+    ]
+    best, best_v = "latin", -1.0
+    for name, v in ordered:
+        if name not in scripts and not (name == "latin" and not scripts):
+            continue
         if v > best_v:
-            best, best_v = s, v
+            best, best_v = name, v
     return {"zh-hans": "zh-Hans", "zh-hant": "zh-Hant", "ja": "ja", "ko": "ko",
-            "latin": "latin", "cyrillic": "latin", "greek": "latin"}[best]
+            "latin": "latin"}[best]

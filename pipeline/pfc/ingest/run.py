@@ -1,6 +1,6 @@
-"""导入执行器:manifest.toml → fonts/<slug>/,幂等,产出导入报告。
+"""导入执行器：manifest.toml → fonts/<slug>/，幂等，产出导入报告。
 
-用法:python -m pfc.ingest.run --manifest ingest/manifest.toml \
+用法：python -m pfc.ingest.run --manifest ingest/manifest.toml \
         --src ../pixel-font-collection-fonts --dest fonts [--only slug] \
         [--report docs/import-report.md]
 """
@@ -29,7 +29,7 @@ author = "{author}"
 homepage = "{homepage}"
 repository = "{repository}"
 description = ""
-form = "{form}"  # UNVERIFIED:导入时预填,待人工复核
+form = "{form}"  # UNVERIFIED：导入时预填，待人工复核
 vibes = {vibes}  # UNVERIFIED
 converted_from = "{converted_from}"
 provenance = "{provenance}"
@@ -52,7 +52,7 @@ def _sha(p: Path) -> str:
 
 
 def _place(src_bytes: bytes, target: Path, report: IngestReport) -> bool:
-    """写入文件,内容相同则跳过;返回是否有变化。"""
+    """写入文件，内容相同则跳过；返回是否有变化。"""
     if target.exists() and hashlib.sha256(src_bytes).hexdigest() == _sha(target):
         report.files_unchanged += 1
         return False
@@ -127,9 +127,9 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
         provenance = fam.get("provenance_url", "")
         prov = f"导入自 {fam['source']}"
         if provenance:
-            prov += f";上游 {provenance}"
+            prov += f"；上游 {provenance}"
         if convert:
-            prov += f";由 {convert} 转换"
+            prov += f"；由 {convert} 转换"
         toml_path.write_text(
             _TOML_TEMPLATE.format(
                 name=fam.get("name", slug),
@@ -165,7 +165,7 @@ def run_manifest(manifest_path: Path, src_root: Path, dest_root: Path,
             continue
         (report.imported if changed else report.skipped).append(slug)
     for todo in data.get("todo", []):
-        report.notes.append(f"待议:{todo.get('source', '?')} — {todo.get('reason', '')}")
+        report.notes.append(f"待议：{todo.get('source', '?')} — {todo.get('reason', '')}")
     if report_path:
         _write_report(report, report_path, data)
     return report
@@ -175,11 +175,11 @@ def _write_report(report: IngestReport, path: Path, data: dict) -> None:
     lines = [
         "# 导入报告",
         "",
-        f"生成时间:{TODAY}(由 pfc.ingest.run 生成,重跑覆盖)",
+        f"生成时间：{TODAY}（由 pfc.ingest.run 生成，重跑覆盖）",
         "",
-        f"- manifest 家族数:{len(data.get('family', []))}",
-        f"- 本次有变化:{len(report.imported)};无变化跳过:{len(report.skipped)}",
-        f"- 文件写入:{report.files_written};未变:{report.files_unchanged}",
+        f"- manifest 家族数：{len(data.get('family', []))}",
+        f"- 本次有变化：{len(report.imported)}；无变化跳过：{len(report.skipped)}",
+        f"- 文件写入：{report.files_written}；未变：{report.files_unchanged}",
         "",
     ]
     if report.imported:
@@ -197,7 +197,7 @@ def _write_report(report: IngestReport, path: Path, data: dict) -> None:
     lines += [
         "## 风格标注待复核",
         "",
-        "family.toml 中带 `# UNVERIFIED` 注释的 form/vibes 为导入时预填,",
+        "family.toml 中带 `# UNVERIFIED` 注释的 form/vibes 为导入时预填，",
         "请逐一复核后删除该注释。",
         "",
     ]

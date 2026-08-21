@@ -1,0 +1,11 @@
+name = "Baekmuk Batang"
+name_zh = "白墨明朝"
+author = "Kim Jungtae (Baekmuk)"
+homepage = ""
+repository = "https://github.com/chocolatemelt/baekmuk"
+description = "韩文经典衬线（明朝体）点阵，10–24px 七个尺寸各含粗体。"
+form = "mingcho"
+vibes = ["classic"]
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/chocolatemelt--baekmuk；上游 https://github.com/chocolatemelt/baekmuk"
+added = "2026-08-21"

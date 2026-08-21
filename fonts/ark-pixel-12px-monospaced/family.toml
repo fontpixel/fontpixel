@@ -1,0 +1,11 @@
+name = "Ark Pixel 12px Monospaced"
+name_zh = "方舟像素 12px 等宽"
+author = "TakWolf"
+homepage = "https://ark-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/ark-pixel-font"
+description = "开源泛中日韩像素字体，12px 等宽版，含简繁日韩与传承字形七种子集。"
+form = "gothic"
+vibes = ["retro-game"]
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--ark-pixel-font；上游 https://github.com/TakWolf/ark-pixel-font/releases (v2026.08.11)"
+added = "2026-08-21"

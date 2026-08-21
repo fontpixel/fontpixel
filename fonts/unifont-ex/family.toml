@@ -1,0 +1,11 @@
+name = "UnifontEX Mono"
+name_zh = ""
+author = "stgiga (based on GNU Unifont)"
+homepage = "https://stgiga.github.io/UnifontEX/"
+repository = "https://github.com/stgiga/UnifontEX"
+description = "GNU Unifont 的社区扩展版，覆盖极广的 Unicode 后备点阵字体。"
+form = "other"
+vibes = ["fallback"]
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/stgiga--UnifontEX；上游 https://github.com/stgiga/UnifontEX"
+added = "2026-08-21"

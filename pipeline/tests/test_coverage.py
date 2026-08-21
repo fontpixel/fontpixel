@@ -66,6 +66,22 @@ def test_detect_scripts_and_sample_lang():
     assert pick_sample_lang(latin_cov) == "latin"
 
 
+def test_pan_cjk_font_prefers_zh_hans_sample():
+    """wqy 型字体:GB2312 全覆盖 + 假名/JIS 也高 → 样例应为 zh-Hans 而非 ja。"""
+    cps = set(BY_ID["gb2312"].cps) | set(BY_ID["hiragana"].cps) | set(
+        BY_ID["katakana"].cps)
+    cps |= set(sorted(BY_ID["jisx0208-l1"].cps)[:2800])  # jis1 ~0.94
+    cov = coverage_for(frozenset(cps), CHARSETS)
+    assert pick_sample_lang(cov) == "zh-Hans"
+
+
+def test_korean_font_prefers_ko_sample():
+    cps = set(BY_ID["ksx1001-hangul"].cps) | set(BY_ID["hiragana"].cps) | set(
+        BY_ID["katakana"].cps) | set(range(0x20, 0x7F))
+    cov = coverage_for(frozenset(cps), CHARSETS)
+    assert pick_sample_lang(cov) == "ko"
+
+
 def test_overview():
     ov = overview(frozenset({0x41, 0x4E00, 0xE000, 0xFA0E, 0x20000}), UCD)
     assert ov["total"][0] == 5

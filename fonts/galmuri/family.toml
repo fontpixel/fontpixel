@@ -1,0 +1,11 @@
+name = "Galmuri"
+name_zh = ""
+author = "quiple (Lee Yerim)"
+homepage = "https://galmuri.quiple.dev"
+repository = "https://github.com/quiple/galmuri"
+description = "韩文点阵字体家族，7–14px 多尺寸，兼容假名与拉丁，附等宽变体。"
+form = "gothic"
+vibes = ["retro-game"]
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri；上游 https://github.com/quiple/galmuri/releases (v2.40.4)"
+added = "2026-08-21"
