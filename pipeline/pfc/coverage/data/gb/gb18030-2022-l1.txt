@@ -1,0 +1,29 @@
+# id: gb18030-2022-l1
+# section: gb
+# order: 50
+# name_zh: GB 18030-2022 实现级别 1
+# name_en: GB 18030-2022 Implementation Level 1
+# desc_zh: 全部产品的最低强制要求:BMP 内全部汉字与部首(27584 字)
+# desc_en: 
+# source: GB 18030-2022 第9章实现级别;构造依据 docs/research/gb18030-2022-levels.md; generated 2026-08-21
+2E81
+2E84
+2E88
+2E8B..2E8C
+2E97
+2EA7
+2EAA
+2EAE
+2EB3
+2EB6..2EB7
+2EBB
+2ECA
+3400..4DB5
+4E00..9FEF
+FA0E..FA0F
+FA11
+FA13..FA14
+FA1F
+FA21
+FA23..FA24
+FA27..FA29

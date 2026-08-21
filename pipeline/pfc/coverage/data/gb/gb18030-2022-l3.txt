@@ -1,0 +1,35 @@
+# id: gb18030-2022-l3
+# section: gb
+# order: 52
+# name_zh: GB 18030-2022 实现级别 3
+# name_en: GB 18030-2022 Implementation Level 3
+# desc_zh: 政务与公共服务产品要求:全部汉字扩展 A–F 与康熙部首(88115 字)
+# desc_en: 
+# source: GB 18030-2022 第9章实现级别;构造依据 docs/research/gb18030-2022-levels.md; generated 2026-08-21
+2E81
+2E84
+2E88
+2E8B..2E8C
+2E97
+2EA7
+2EAA
+2EAE
+2EB3
+2EB6..2EB7
+2EBB
+2ECA
+2F00..2FD5
+3400..4DB5
+4E00..9FEF
+FA0E..FA0F
+FA11
+FA13..FA14
+FA1F
+FA21
+FA23..FA24
+FA27..FA29
+20000..2A6D6
+2A700..2B734
+2B740..2B81D
+2B820..2CEA1
+2CEB0..2EBE0

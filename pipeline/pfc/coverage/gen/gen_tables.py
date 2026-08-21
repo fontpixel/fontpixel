@@ -321,6 +321,123 @@ def gen_viet() -> None:
                 f"按 Unicode 越南语用字构成定义; generated {TODAY}", cps)
 
 
+# ---------------------------------------------------------------- 外部数据表
+
+EXTERNAL = Path(__file__).resolve().parent / "external"
+
+
+def _chars_of(path: Path) -> set[int]:
+    return {ord(c) for c in path.read_text(encoding="utf-8") if not c.isspace()}
+
+
+def gen_external() -> None:
+    from pfc.coverage.charsets import parse_charset_file
+
+    full = parse_charset_file(DATA / "prc-lit" / "tongyong-guifan.txt").cps
+    l1 = _chars_of(EXTERNAL / "tgh-l1-raw.txt")
+    l2 = _chars_of(EXTERNAL / "tgh-l2-raw.txt")
+    l3 = _chars_of(EXTERNAL / "tgh-l3-raw.txt")
+    assert (len(l1), len(l2), len(l3)) == (3500, 3000, 1605)
+    assert frozenset(l1 | l2 | l3) == full, "三级并集必须等于 8105 整表"
+    src_tgh = ("公开数据集快照(两独立来源交叉核对,并集与 CJK-character-count "
+               f"8105 整表完全一致); generated {TODAY}")
+    write_table("prc-lit", "tongyong-guifan-l1", 11, "通用规范汉字表·一级",
+                "General Standard Chinese Characters Level 1",
+                "一级字表 3500 字,义务教育与出版常用", src_tgh, l1)
+    write_table("prc-lit", "tongyong-guifan-l2", 12, "通用规范汉字表·二级",
+                "General Standard Chinese Characters Level 2",
+                "二级字表 3000 字", src_tgh, l2)
+    write_table("prc-lit", "tongyong-guifan-l3", 13, "通用规范汉字表·三级",
+                "General Standard Chinese Characters Level 3",
+                "三级字表 1605 字,姓氏人名、地名、科技术语用字", src_tgh, l3)
+
+    import json
+
+    jp_meta = json.loads((EXTERNAL / "jp-tables-meta.json").read_text(encoding="utf-8"))
+
+    def jp_src(key: str) -> str:
+        return f"{jp_meta[key]['source_url']}; retrieved {TODAY}"
+
+    joyo = _chars_of(EXTERNAL / "joyo-raw.txt")
+    kyoiku = _chars_of(EXTERNAL / "kyoiku-raw.txt")
+    jinmeiyo = _chars_of(EXTERNAL / "jinmeiyo-raw.txt")
+    assert len(joyo) == 2136 and len(kyoiku) == 1026 and kyoiku <= joyo
+    write_table("jp", "joyo", 15, "常用漢字表", "Joyo Kanji",
+                "2010 年内閣告示,现行日语常用汉字 2136 字", jp_src("joyo"), joyo)
+    write_table("jp", "kyoiku", 16, "教育漢字", "Kyoiku Kanji",
+                "学年別漢字配当表(2020 年度施行),小学 1026 字", jp_src("kyoiku"), kyoiku)
+    write_table("jp", "jinmeiyo", 17, "人名用漢字", "Jinmeiyo Kanji",
+                "戸籍法施行規則别表,常用汉字以外可用于人名的汉字(含 2026 年新增)",
+                jp_src("jinmeiyo"), jinmeiyo)
+
+    import re as _re
+
+    wgl4: set[int] = set()
+    for ln in (EXTERNAL / "wgl4-raw.txt").read_text(encoding="utf-8").splitlines():
+        m = _re.match(r"^([0-9A-Fa-f]{4})\b", ln.strip())
+        if m:
+            wgl4.add(int(m.group(1), 16))
+    assert len(wgl4) == 650
+    write_table("intl", "wgl4", 20, "WGL4 泛欧字符集", "Windows Glyph List 4",
+                "微软泛欧字符集,650 个码位(常见 652 计数含两个重复字形)",
+                f"Adobe WGL4 table; retrieved {TODAY}", wgl4)
+
+    xdhy_c = EXTERNAL / "xdhy-changyong-2500-raw.txt"
+    if xdhy_c.exists():
+        c2500 = _chars_of(xdhy_c)
+        c1000 = _chars_of(EXTERNAL / "xdhy-cichangyong-1000-raw.txt")
+        assert len(c2500) == 2500 and len(c1000) == 1000 and not (c2500 & c1000)
+        src_x = f"公开数据集快照(计数与官方口径一致); generated {TODAY}"
+        write_table("prc-lit", "changyong-2500", 21, "现代汉语常用字表·常用字",
+                    "Modern Chinese Frequently Used (2500)", "常用字 2500 字", src_x, c2500)
+        write_table("prc-lit", "cichangyong-1000", 22, "现代汉语常用字表·次常用字",
+                    "Modern Chinese Less Frequently Used (1000)", "次常用字 1000 字",
+                    src_x, c1000)
+
+
+def gen_gb18030() -> None:
+    """GB 18030-2022 实现级别 1/2/3(汉字及部首口径,非汉字符号 991 个不计入)。
+
+    构造依据 docs/research/gb18030-2022-levels.md(标准条文引用与
+    Unicode L2/22-274 交叉验证);各扩展区按标准冻结于 Unicode 11 的范围。
+    """
+    from pfc.coverage.charsets import parse_charset_file
+
+    uro = set(range(0x4E00, 0x9FF0))          # 20976
+    exta = set(range(0x3400, 0x4DB6))         # 6582
+    compat12 = {0xFA0E, 0xFA0F, 0xFA11, 0xFA13, 0xFA14, 0xFA1F,
+                0xFA21, 0xFA23, 0xFA24, 0xFA27, 0xFA28, 0xFA29}
+    supp14 = {0x2E81, 0x2E84, 0x2E88, 0x2E8B, 0x2E8C, 0x2E97, 0x2EA7,
+              0x2EAA, 0x2EAE, 0x2EB3, 0x2EB6, 0x2EB7, 0x2EBB, 0x2ECA}
+    l1 = uro | exta | compat12 | supp14
+    assert len(l1) == 27584
+
+    tgh = set(parse_charset_file(DATA / "prc-lit" / "tongyong-guifan.txt").cps)
+    l2 = l1 | tgh
+    assert len(l2) == 27780, f"级别2应为27780,得到{len(l2)}"
+
+    ext_bf = (
+        set(range(0x20000, 0x2A6D7)) | set(range(0x2A700, 0x2B735))
+        | set(range(0x2B740, 0x2B81E)) | set(range(0x2B820, 0x2CEA2))
+        | set(range(0x2CEB0, 0x2EBE1))
+    )
+    kangxi = set(range(0x2F00, 0x2FD6))
+    l3 = l2 | ext_bf | kangxi
+    assert len(l3) == 88115, f"级别3应为88115,得到{len(l3)}"
+
+    src = ("GB 18030-2022 第9章实现级别;构造依据 docs/research/"
+           f"gb18030-2022-levels.md; generated {TODAY}")
+    write_table("gb", "gb18030-2022-l1", 50, "GB 18030-2022 实现级别 1",
+                "GB 18030-2022 Implementation Level 1",
+                "全部产品的最低强制要求:BMP 内全部汉字与部首(27584 字)", src, l1)
+    write_table("gb", "gb18030-2022-l2", 51, "GB 18030-2022 实现级别 2",
+                "GB 18030-2022 Implementation Level 2",
+                "系统软件强制要求:级别 1 + 通用规范汉字表位于辅助平面的 196 字", src, l2)
+    write_table("gb", "gb18030-2022-l3", 52, "GB 18030-2022 实现级别 3",
+                "GB 18030-2022 Implementation Level 3",
+                "政务与公共服务产品要求:全部汉字扩展 A–F 与康熙部首(88115 字)", src, l3)
+
+
 # ---------------------------------------------------------------- 旧数据迁移
 
 _MIGRATE = {
@@ -389,6 +506,9 @@ def main() -> None:
         gen_unihan_core()
         gen_viet()
         gen_greek()
+        print("external:")
+        gen_external()
+        gen_gb18030()
         if args.old_dir:
             print("migrate:")
             migrate_old(args.old_dir)

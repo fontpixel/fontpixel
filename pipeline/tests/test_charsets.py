@@ -41,6 +41,33 @@ def test_migrated_tables():
     assert "香港" in cs["hkscs"].name_zh or "HKSCS" in cs["hkscs"].name_zh
 
 
+def test_task5_external_tables():
+    cs = _by_id()
+    assert len(cs["tongyong-guifan-l1"].cps) == 3500
+    assert len(cs["tongyong-guifan-l2"].cps) == 3000
+    assert len(cs["tongyong-guifan-l3"].cps) == 1605
+    union = cs["tongyong-guifan-l1"].cps | cs["tongyong-guifan-l2"].cps | cs[
+        "tongyong-guifan-l3"].cps
+    assert union == cs["tongyong-guifan"].cps
+    assert len(cs["joyo"].cps) == 2136
+    assert len(cs["kyoiku"].cps) == 1026
+    assert cs["kyoiku"].cps <= cs["joyo"].cps
+    assert len(cs["jinmeiyo"].cps) == 864
+    assert len(cs["wgl4"].cps) == 650
+    for cp in (0x20, 0xC5, 0x152, 0x2122, 0x25CA, 0xFB01, 0xFB02):
+        assert cp in cs["wgl4"].cps
+    assert len(cs["unihan-core-2020"].cps) == 20720
+    assert len(cs["viet-latin"].cps) == 186
+
+
+def test_gb18030_2022_levels():
+    cs = _by_id()
+    l1, l2, l3 = (cs[f"gb18030-2022-l{i}"].cps for i in (1, 2, 3))
+    assert (len(l1), len(l2), len(l3)) == (27584, 27780, 88115)
+    assert l1 < l2 < l3  # 严格包含
+    assert cs["tongyong-guifan"].cps <= l2
+
+
 def test_sections_valid():
     valid = {"gb", "prc-lit", "tw", "hk", "jp", "kr", "intl"}
     for c in load_charsets(DATA_DIR):

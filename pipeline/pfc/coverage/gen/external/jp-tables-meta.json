@@ -1,0 +1,17 @@
+{
+  "joyo": {
+    "count": 2136,
+    "source_url": "https://raw.githubusercontent.com/vaiorabbit/everyday_use_kanji/master/regular_use_utf8.csv",
+    "note": "常用漢字表,2010年11月30日内閣告示第2号,共2136字。数据取自GitHub仓库vaiorabbit/everyday_use_kanji的regular_use_utf8.csv(该仓库README注明数据源自文化庁官方公示页 https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kakuki/14/tosin02/index.html )。已用curl直接抓取ja.wikipedia.org/wiki/常用漢字一覧页面交叉验证,页面正文出现'2136'字样与本表吻合。末字为2010年新增的『𠮟』(U+20B9F,常用漢字表中唯一超出2字节码位的字),与其旧字体『叱』不同,取的是现行正字『𠮟』。表内如「弁(辨瓣辯)」一类旧字体括注,数据源已按官方口径只取表内正字,不含括号内容。"
+  },
+  "kyoiku": {
+    "count": 1026,
+    "source_url": "https://raw.githubusercontent.com/fnshr/kyo-kan/master/kyoiku-kanji-2017.csv",
+    "note": "学年別漢字配当表(教育漢字),平成29年(2017年)告示学習指導要領版,自2020年度(令和2年度)起全面施行,共1026字。数据取自GitHub仓库fnshr/kyo-kan的kyoiku-kanji-2017.csv(基于文部科学省学習指導要領)。较1989年版1006字新增20字(为都道府県名用字,如'茨栃埼阪奈梨阜'等)。已用curl抓取ja.wikipedia.org/wiki/学年別漢字配当表页面交叉验证,页面出现'1026'字样与本表吻合。已用Python验证:本表1026字全部包含于常用漢字joyo.txt的2136字集合内,即kyoiku⊆joyo,验证通过。"
+  },
+  "jinmeiyo": {
+    "count": 864,
+    "source_url": "https://ja.wikipedia.org/wiki/人名用漢字一覧",
+    "note": "人名用漢字(常用漢字以外に戸籍法施行規則別表第二で認められる漢字),口径为'常用漢字以外の人名用漢字'清单(即戸籍法施行規則別表第二全部,不含常用漢字本身)。当前有效数字为864字,而非任务预估的约863字——法務省已于2026年6月26日追加「勒」字(改正戸籍法施行規則),使总数从863字增至864字。此次增补经日本経済新聞(https://www.nikkei.com/article/DGXZQOUD260H70W6A620C2000000/)、東京新聞(https://www.tokyo-np.co.jp/article/497612)、共同通信(转载于Yahoo!ニュース/livedoor)、秋田魁新報、西日本新聞等多家媒体报道确认,并与ja.wikipedia.org/wiki/人名用漢字条目'沿革'章节记载'2026年(令和08年)6月26日、「勒」を追加し、合計864字となる'一致。本清单数据取自ja.wikipedia.org/wiki/人名用漢字一覧页面的两张官方引据表格解析而得:『漢字の表(一)』(常用漢字の異体字でないもの)634字種,其中18字種在表内'人2'列另附許容字体/旧字体,合计652字体;『漢字の表(二)』(常用漢字の異体字であるもの,即旧字体/異体字)212字。652+212=864,与ja.wikipedia.org/wiki/人名用漢字页面'字体としては…合わせて3000字体になる'(常用2136+652+212=3000)的官方口径吻合。抓取解析时,对表内以(许容字体)/[旧字体]标注的字符,按人名用漢字表的官方惯例保留字符本体、只清除括号标点符号本身(不同于常用漢字'弁(辨瓣辯)只取正字、括号内容整体丢弃'的清洗规则——因为人名用漢字表中每个带括号标注的字符本身就是可独立申报使用的正式登记字,并非被弃用的历史異体备注)。已用另一独立数据源GitHub仓库vaiorabbit/everyday_use_kanji的personal_name_utf8.csv(README注明源自法務省官方页面'子の名に使える漢字' http://www.moj.go.jp/MINJI/minji86.html ,快照日期不晚于2023年)交叉验证:该仓库863字快照与本清单去掉'勒'字后逐字比对完全一致(863字100%重合,0差异,0缺失),仅'勒'字为2026-06-26新增,增补可信度高。另已用Python验证864字与常用漢字joyo.txt的2136字集合完全不重叠(jinmeiyo∩joyo=空集),符合'常用漢字以外'的定义。"
+  }
+}
