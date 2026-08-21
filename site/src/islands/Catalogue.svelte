@@ -25,6 +25,7 @@
   let invert = $state(false);
   let charLookup = $state<CharLookup | undefined>(undefined);
   let mounted = $state(false);
+  let filtersEl: HTMLDetailsElement | undefined = $state();
 
   let debounceTimer: ReturnType<typeof setTimeout> | undefined;
   $effect(() => {
@@ -36,6 +37,9 @@
   onMount(() => {
     state = decodeState(new URLSearchParams(location.search));
     document.querySelector('[data-ssr-grid]')?.remove();
+    if (filtersEl && matchMedia('(max-width: 900px)').matches) {
+      filtersEl.open = false; // 移动端默认收起筛选
+    }
     mounted = true;
   });
 
@@ -99,7 +103,7 @@
   </div>
 
   <div class="cat__body">
-    <details class="cat__filters" open>
+    <details class="cat__filters" open bind:this={filtersEl}>
       <summary class="cat__filters-summary">{s.catalogue.filters}</summary>
       <FilterPanel {families} bind:state {s} {lang} />
     </details>
