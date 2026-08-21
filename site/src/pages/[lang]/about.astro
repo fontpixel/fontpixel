@@ -1,6 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { t, type Lang } from '../../i18n';
+import { loadCharsetsMeta } from '../../lib/data';
+import * as zhContent from '../../content/about.zh';
+import * as enContent from '../../content/about.en';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'zh' } }, { params: { lang: 'en' } }];
@@ -8,10 +11,110 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const s = t(lang);
+const c = lang === 'zh' ? zhContent : enContent;
+const meta = loadCharsetsMeta();
+const name = (x: (typeof meta.charsets)[number]) =>
+  lang === 'zh' ? x.nameZh : x.nameEn || x.nameZh;
 ---
 
-<Base lang={lang} title={`${s.about.title} · ${s.siteName}`} path="/about/">
-  <h1>{s.about.title}</h1>
-  <p>{s.siteTagline}</p>
-  <!-- 完整方法论内容在 Task 19 填充 -->
+<Base
+  lang={lang}
+  title={`${s.about.title} · ${s.siteName}`}
+  description={c.aboutIntro.slice(0, 120)}
+  path="/about/"
+>
+  <article class="about">
+    <h1>{s.about.title}</h1>
+    <p class="about__intro">{c.aboutIntro}</p>
+
+    {
+      c.aboutSections.map((sec) => (
+        <section id={sec.id}>
+          <h2>{sec.heading}</h2>
+          {sec.paragraphs.map((p) => (
+            <p>{p}</p>
+          ))}
+          {sec.code && <pre class="about__code">{sec.code}</pre>}
+        </section>
+      ))
+    }
+
+    <section id="datasources">
+      <h2>{c.aboutDataSourcesHeading}</h2>
+      <p>{c.aboutDataSourcesIntro}</p>
+      <div class="about__tablewrap" data-testid="datasources">
+        <table>
+          <thead>
+            <tr>
+              <th>{lang === 'zh' ? '字表' : 'Character set'}</th>
+              <th class="mono">{lang === 'zh' ? '码位数' : 'Code points'}</th>
+              <th>{s.coverage.sourceLabel}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              meta.charsets.map((x) => (
+                <tr>
+                  <td>{name(x)}</td>
+                  <td class="mono">{x.total.toLocaleString()}</td>
+                  <td class="about__src mono">{x.source}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </article>
+
+  <style>
+    .about {
+      max-width: 46rem;
+    }
+    .about h1 {
+      font-size: 1.6rem;
+    }
+    .about__intro {
+      color: var(--ink-2);
+      font-size: 1.02rem;
+    }
+    .about section {
+      margin-top: var(--s6);
+    }
+    .about h2 {
+      font-size: 1.05rem;
+      border-bottom: 1px dotted var(--line);
+      padding-bottom: var(--s2);
+    }
+    .about p {
+      line-height: 1.8;
+    }
+    .about__code {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: var(--s4);
+      font-size: 0.8rem;
+      overflow-x: auto;
+    }
+    .about__tablewrap {
+      overflow-x: auto;
+    }
+    .about table {
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      width: 100%;
+    }
+    .about th,
+    .about td {
+      text-align: left;
+      padding: var(--s1) var(--s3) var(--s1) 0;
+      border-top: 1px dotted var(--line);
+      vertical-align: top;
+    }
+    .about__src {
+      color: var(--ink-3);
+      font-size: 0.7rem;
+      max-width: 22rem;
+    }
+  </style>
 </Base>

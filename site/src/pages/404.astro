@@ -1,6 +1,26 @@
 ---
 import '../styles/tokens.css';
 import { withBase } from '../lib/data';
+
+// 5×7 像素数字,手绘点阵——404 页当然要用点阵画
+const DIGITS: Record<string, string[]> = {
+  '4': ['00010', '00110', '01010', '10010', '11111', '00010', '00010'],
+  '0': ['01110', '10001', '10011', '10101', '11001', '10001', '01110'],
+};
+const text = '404';
+const gap = 2;
+const cells: { x: number; y: number }[] = [];
+let ox = 0;
+for (const ch of text) {
+  const rows = DIGITS[ch]!;
+  rows.forEach((row, y) => {
+    [...row].forEach((bit, x) => {
+      if (bit === '1') cells.push({ x: ox + x, y });
+    });
+  });
+  ox += 5 + gap;
+}
+const w = ox - gap;
 ---
 
 <!doctype html>
@@ -9,6 +29,7 @@ import { withBase } from '../lib/data';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>404 · 点阵字库 Pixel Font Collection</title>
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <script is:inline>
       (function () {
         try {
@@ -21,26 +42,45 @@ import { withBase } from '../lib/data';
   </head>
   <body>
     <main class="container nf">
-      <p class="nf__code mono" aria-hidden="true">
-        <!-- 像素风 404，由 CSS 网格绘制 -->
-        <span class="nf__pix"></span>
-      </p>
-      <h1>404</h1>
-      <p>页面不存在 / Page not found。这个码位还没有字形。</p>
-      <p>
+      <svg
+        data-testid="pixel-404"
+        viewBox={`0 0 ${w} 7`}
+        width={w * 14}
+        height={7 * 14}
+        shape-rendering="crispEdges"
+        role="img"
+        aria-label="404"
+      >
+        {cells.map((c) => <rect x={c.x} y={c.y} width="1" height="1" fill="var(--accent)" />)}
+      </svg>
+      <p class="nf__text">页面不存在,这个码位还没有字形。</p>
+      <p class="nf__text nf__text--en">Page not found — no glyph at this code point.</p>
+      <p class="nf__links">
         <a href={withBase('/zh/')}>回到馆藏</a> · <a href={withBase('/en/')}>Catalogue</a>
       </p>
     </main>
     <style>
       .nf {
-        padding-top: 15vh;
+        padding-top: 14vh;
         text-align: center;
       }
-      h1 {
-        font-size: 3rem;
-        letter-spacing: 0.1em;
+      .nf svg {
+        max-width: 70vw;
+        height: auto;
       }
-      a {
+      .nf__text {
+        color: var(--ink-2);
+        margin: var(--s5) 0 0;
+      }
+      .nf__text--en {
+        color: var(--ink-3);
+        font-size: 0.85rem;
+        margin-top: var(--s1);
+      }
+      .nf__links {
+        margin-top: var(--s4);
+      }
+      .nf__links a {
         color: var(--accent);
       }
     </style>
