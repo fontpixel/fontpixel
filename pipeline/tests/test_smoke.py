@@ -2,4 +2,4 @@ import pfc
 
 
 def test_pipeline_version():
-    assert pfc.PIPELINE_VERSION == 6
+    assert pfc.PIPELINE_VERSION == 7

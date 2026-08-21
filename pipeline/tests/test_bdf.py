@@ -86,20 +86,22 @@ def test_ksx_registry_remapped_to_unicode():
     assert any("unmappable" in w for w in f.warnings)  # KS 特殊行无对应,预期丢弃
 
 
-def test_johab_registry_remapped():
-    """hurss DOS 字体:CHARSET_REGISTRY "Johab" 的韩文组合式编码。"""
+def test_fake_johab_registry_detected_by_glyph_names():
+    """hurss DOS 字体:registry 谎称 Johab,字形名证实数据已是 Unicode。"""
     p = Path(__file__).parent.parent.parent / (
         "fonts/dos-iyagi-boldface/DOSIyagiBoldface-16.bdf"
     )
     if not p.exists():
         import pytest
 
-        pytest.skip("johab fixture font not imported")
+        pytest.skip("fixture font not imported")
     f = parse_bdf(p, "iyagi")
-    cps = {g.cp for g in f.glyphs}
-    assert 0xAC00 in cps  # 가
-    assert 0x41 in cps
-    assert len(cps) > 10000
+    by = {g.cp: g for g in f.glyphs}
+    assert 0xAC00 in by  # 가
+    assert by[0xB2E4].name in ("U+B2E4", "uniB2E4")  # 다:码位与字形名一致
+    assert 0x1F100 in by  # 高位区直通,未被 johab 误映射
+    assert any("glyph names confirm Unicode" in w for w in f.warnings)
+    assert len(by) > 15000  # 未丢字形(此前 johab 误映射丢了 2.4 万)
 
 
 def test_real_galmuri7():

@@ -9,3 +9,5 @@ vibes = ["cute"]  # UNVERIFIED
 converted_from = ""
 provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts；上游 https://github.com/hurss/fonts"
 added = "2026-08-21"
+
+sample_lang = "ko"  # 韩文 DOS 字体出身，样例保持谚文

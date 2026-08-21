@@ -193,8 +193,23 @@ def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
             f"{missing_dwidth} glyphs missing DWIDTH, cell-width fallback applied"
         )
 
-    # 非 Unicode 字符集:按 CHARSET_REGISTRY 重映射码位
+    # 非 Unicode 字符集:按 CHARSET_REGISTRY 重映射码位。
+    # 例外:有些字体(如 hurss DOS 系列)registry 写着 Johab,数据却已是
+    # Unicode——用字形名(U+XXXX/uniXXXX)与 ENCODING 的吻合度识破。
     registry = str(props.get("CHARSET_REGISTRY", ""))
+    if registry and not is_unicode_registry(registry):
+        name_re = re.compile(r"^(?:U\+?|uni)([0-9A-Fa-f]{4,6})$")
+        sample = list(glyphs.values())[:200]
+        named = [
+            (g, m) for g in sample if (m := name_re.match(g.name)) is not None
+        ]
+        if len(named) >= 20 and all(
+            int(m.group(1), 16) == g.cp for g, m in named
+        ):
+            warnings.append(
+                f"charset {registry} ignored: glyph names confirm Unicode encoding"
+            )
+            registry = ""
     if registry and not is_unicode_registry(registry):
         cenc = str(props.get("CHARSET_ENCODING", "0"))
         warned: set[str] = set()

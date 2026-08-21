@@ -143,7 +143,7 @@ def _build_family(
         for s in detect_scripts(b.coverage):
             if s not in scripts:
                 scripts.append(s)
-    sample_lang = pick_sample_lang(best.coverage)
+    sample_lang = meta.sample_lang or pick_sample_lang(best.coverage)
     sample_text = meta.samples.get(sample_lang) or SAMPLES.get(sample_lang, SAMPLES["latin"])
 
     # 资产
