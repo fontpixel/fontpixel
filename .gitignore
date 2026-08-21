@@ -12,3 +12,4 @@ dist-downloads/
 site/.astro/
 test-results/
 playwright-report/
+site/public/downloads/

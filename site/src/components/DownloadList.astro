@@ -1,0 +1,110 @@
+---
+import { t, type Lang } from '../i18n';
+import { formatBytes } from '../lib/format';
+import type { FontDetail } from '../lib/schema';
+
+interface Props {
+  lang: Lang;
+  detail: FontDetail;
+  base: string; // 下载基址
+}
+const { lang, detail, base } = Astro.props;
+const s = t(lang);
+const byVariant = new Map<string, typeof detail.downloads>();
+let zip: (typeof detail.downloads)[number] | undefined;
+for (const e of detail.downloads) {
+  if (e.kind === 'zip') zip = e;
+  else {
+    const list = byVariant.get(e.variantId!) ?? [];
+    list.push(e);
+    byVariant.set(e.variantId!, list);
+  }
+}
+const kindLabel: Record<string, string> = {
+  bdf: s.detail.downloadBdf,
+  pcf: s.detail.downloadPcf,
+};
+---
+
+<section class="dl" data-testid="download-list">
+  <h2>{s.detail.downloadsTitle}</h2>
+  <table class="dl__table">
+    <tbody>
+      {
+        [...byVariant.entries()].map(([variantId, entries]) => (
+          <tr>
+            <th scope="row" class="mono">
+              {variantId}
+            </th>
+            <td>
+              {entries.map((e) => (
+                <a
+                  class="dl__link"
+                  href={`${base}/${e.file}`}
+                  data-kind={e.kind}
+                  title={`SHA-256 ${e.sha256}`}
+                >
+                  {kindLabel[e.kind] ?? e.kind}
+                  <span class="dl__size mono">{formatBytes(e.bytes)}</span>
+                </a>
+              ))}
+            </td>
+          </tr>
+        ))
+      }
+      {
+        zip && (
+          <tr>
+            <th scope="row">{s.detail.downloadZip}</th>
+            <td>
+              <a
+                class="dl__link"
+                href={`${base}/${zip.file}`}
+                data-kind="zip"
+                title={`SHA-256 ${zip.sha256}`}
+              >
+                {zip.file}
+                <span class="dl__size mono">{formatBytes(zip.bytes)}</span>
+              </a>
+            </td>
+          </tr>
+        )
+      }
+    </tbody>
+  </table>
+  <p class="dl__note">{s.detail.downloadNote}</p>
+</section>
+
+<style>
+  .dl h2 {
+    font-size: 1rem;
+    margin: 0 0 var(--s3);
+  }
+  .dl__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .dl__table th,
+  .dl__table td {
+    text-align: left;
+    padding: var(--s2) var(--s3) var(--s2) 0;
+    border-top: 1px dotted var(--line);
+    font-weight: 400;
+  }
+  .dl__link {
+    display: inline-flex;
+    gap: var(--s2);
+    align-items: baseline;
+    margin-right: var(--s4);
+    color: var(--accent);
+  }
+  .dl__size {
+    color: var(--ink-3);
+    font-size: 0.75rem;
+  }
+  .dl__note {
+    color: var(--ink-3);
+    font-size: 0.75rem;
+  }
+</style>

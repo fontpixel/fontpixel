@@ -1,0 +1,243 @@
+---
+import Base from '../../../layouts/Base.astro';
+import InkDiagram from '../../../components/InkDiagram.astro';
+import MetaSidebar from '../../../components/MetaSidebar.astro';
+import DownloadList from '../../../components/DownloadList.astro';
+import SampleEditor from '../../../islands/SampleEditor.svelte';
+import { t, type Lang } from '../../../i18n';
+import {
+  downloadsBase,
+  listDetailSlugs,
+  loadDetail,
+  readLicenseText,
+  readPreviewSvg,
+  withBase,
+} from '../../../lib/data';
+
+export function getStaticPaths() {
+  return listDetailSlugs().flatMap((slug) => [
+    { params: { lang: 'zh', slug } },
+    { params: { lang: 'en', slug } },
+  ]);
+}
+
+const lang = Astro.params.lang as Lang;
+const slug = Astro.params.slug!;
+const s = t(lang);
+const detail = loadDetail(slug);
+const m = detail.meta;
+const displayName = lang === 'zh' && m.nameZh ? m.nameZh : m.name;
+const licenseText = readLicenseText(slug);
+let previewSvg = '';
+try {
+  previewSvg = readPreviewSvg(m.preview);
+} catch {
+  /* 无预渲染时忽略 */
+}
+const dlBase = downloadsBase();
+const variantIds = m.variants.map((v) => v.id);
+---
+
+<Base
+  lang={lang}
+  title={`${displayName} · ${s.siteName}`}
+  description={detail.description || `${displayName} — ${s.siteTagline}`}
+  path={`/fonts/${slug}/`}
+  ogImage={withBase(`/data/og/${slug}.png`)}
+>
+  <nav class="crumb">
+    <a href={withBase(`/${lang}/`)}>← {s.detail.backToCatalogue}</a>
+  </nav>
+
+  <header class="hero">
+    <h1>{displayName}</h1>
+    {m.nameZh && lang === 'zh' && <p class="hero__latin mono">{m.name}</p>}
+    {detail.description && <p class="hero__desc">{detail.description}</p>}
+    <div class="hero__preview" set:html={previewSvg} />
+  </header>
+
+  <div class="layout">
+    <div class="layout__main">
+      <SampleEditor
+        client:load
+        slug={slug}
+        variants={m.variants.map((v) => ({
+          id: v.id,
+          size: v.size,
+          weight: v.weight,
+          spacing: v.spacing,
+          script: v.script,
+        }))}
+        s={s}
+        dataBase={withBase('/data')}
+        sampleLang={m.sampleLang}
+      />
+
+      <section class="metrics">
+        <h2>{s.detail.metricsTitle}</h2>
+        {
+          m.variants.map((v, i) => {
+            const mm = detail.metrics[v.id]!;
+            return (
+              <div data-variant-panel={v.id} hidden={i !== 0}>
+                <div class="metrics__flex">
+                  <table class="metrics__table mono" data-testid="metrics-table">
+                    <tbody>
+                      <tr>
+                        <th>{s.detail.claimedSize}</th>
+                        <td>
+                          {mm.pixelSize}
+                          {s.card.px}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>{s.detail.hanInk}</th>
+                        <td>
+                          {mm.hanInk ? `${mm.hanInk[0]}×${mm.hanInk[1]}` : s.detail.hanInkNone}
+                        </td>
+                      </tr>
+                      {mm.capHeight != null && (
+                        <tr>
+                          <th>{s.detail.capHeight}</th>
+                          <td>{mm.capHeight}</td>
+                        </tr>
+                      )}
+                      {mm.xHeight != null && (
+                        <tr>
+                          <th>{s.detail.xHeight}</th>
+                          <td>{mm.xHeight}</td>
+                        </tr>
+                      )}
+                      <tr>
+                        <th>{s.detail.maxInk}</th>
+                        <td title={s.detail.maxInkNote}>
+                          {mm.maxInk[0]}×{mm.maxInk[1]}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>{s.detail.ascentDescent}</th>
+                        <td>
+                          {mm.ascent} / {mm.descent}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>{s.detail.bbox}</th>
+                        <td>{mm.bbox.join(', ')}</td>
+                      </tr>
+                      <tr>
+                        <th>{s.catalogue.spacing}</th>
+                        <td>{mm.monospaced ? s.detail.monospaced : s.detail.proportional}</td>
+                      </tr>
+                      <tr>
+                        <th>{s.detail.dwidthHist}</th>
+                        <td>
+                          {Object.entries(mm.dwidthHistogram)
+                            .map(([w, n]) => `${w}px×${n}`)
+                            .join('  ')}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <InkDiagram
+                    lang={lang}
+                    pixelSize={mm.pixelSize}
+                    hanInk={mm.hanInk as [number, number] | null}
+                    maxInk={mm.maxInk as [number, number]}
+                  />
+                </div>
+              </div>
+            );
+          })
+        }
+      </section>
+
+      <section id="coverage-root" class="coverage-mount" data-testid="coverage-mount">
+        <!-- Task 18:覆盖率报告与字形网格岛屿挂载点 -->
+      </section>
+
+      <DownloadList lang={lang} detail={detail} base={dlBase} />
+    </div>
+
+    <MetaSidebar lang={lang} detail={detail} licenseText={licenseText} />
+  </div>
+
+  <script is:inline define:vars={{ variantIds }}>
+    document.addEventListener('pfc:variantchange', (e) => {
+      const id = e.detail?.id;
+      if (!id || !variantIds.includes(id)) return;
+      document.querySelectorAll('[data-variant-panel]').forEach((el) => {
+        el.toggleAttribute('hidden', el.getAttribute('data-variant-panel') !== id);
+      });
+    });
+  </script>
+
+  <style>
+    .crumb {
+      font-size: 0.85rem;
+      margin-bottom: var(--s4);
+    }
+    .crumb a {
+      color: var(--ink-2);
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    .hero__latin {
+      color: var(--ink-3);
+      margin: var(--s1) 0 0;
+      font-size: 0.85rem;
+    }
+    .hero__desc {
+      color: var(--ink-2);
+      margin: var(--s2) 0 0;
+    }
+    .hero__preview {
+      margin: var(--s4) 0 var(--s5);
+    }
+    .hero__preview :global(svg) {
+      width: 100%;
+      max-width: 40rem;
+      height: auto;
+      color: var(--ink);
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 17rem;
+      gap: var(--s6);
+      align-items: start;
+    }
+    .layout__main > :global(section) {
+      margin-bottom: var(--s6);
+    }
+    .metrics h2 {
+      font-size: 1rem;
+      margin: 0 0 var(--s3);
+    }
+    .metrics__flex {
+      display: flex;
+      gap: var(--s6);
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .metrics__table {
+      font-size: 0.82rem;
+      border-collapse: collapse;
+    }
+    .metrics__table th {
+      text-align: left;
+      color: var(--ink-3);
+      font-weight: 400;
+      padding: var(--s1) var(--s4) var(--s1) 0;
+      font-family: var(--font-ui);
+    }
+    .metrics__table td {
+      padding: var(--s1) 0;
+    }
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</Base>

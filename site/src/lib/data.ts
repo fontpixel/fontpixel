@@ -31,3 +31,16 @@ export function withBase(path: string): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
 }
+
+/** 下载物基址:生产由 CI 注入 Releases 地址,本地退回 /downloads。 */
+export function downloadsBase(): string {
+  return (import.meta.env.PFC_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
+}
+
+export function readLicenseText(slug: string): string | null {
+  try {
+    return readFileSync(join(DATA_DIR, 'licenses', `${slug}.txt`), 'utf-8');
+  } catch {
+    return null;
+  }
+}

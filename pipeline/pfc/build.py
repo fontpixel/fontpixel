@@ -154,6 +154,13 @@ def _build_family(
     )
     og_png(best.font, meta.name, sample_text, site_data / "og" / f"{slug}.png")
 
+    if license_info.file and (family_dir / license_info.file).exists():
+        lic_dir = site_data / "licenses"
+        lic_dir.mkdir(parents=True, exist_ok=True)
+        (lic_dir / f"{slug}.txt").write_bytes(
+            (family_dir / license_info.file).read_bytes()
+        )
+
     dl_entries = build_downloads(
         slug, family_dir, [(b.font, b.desc) for b in built],
         [license_info.file] if license_info.file else [],

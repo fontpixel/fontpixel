@@ -1,0 +1,199 @@
+---
+import { t, type Lang } from '../i18n';
+import type { FontDetail } from '../lib/schema';
+
+interface Props {
+  lang: Lang;
+  detail: FontDetail;
+  licenseText: string | null;
+}
+const { lang, detail, licenseText } = Astro.props;
+const s = t(lang);
+const m = detail.meta;
+const lic = m.license;
+---
+
+<aside class="side">
+  <dl class="side__list">
+    {
+      m.author && (
+        <>
+          <dt>{s.detail.author}</dt>
+          <dd data-testid="meta-author">{m.author}</dd>
+        </>
+      )
+    }
+    {
+      detail.homepage && (
+        <>
+          <dt>{s.detail.homepage}</dt>
+          <dd>
+            <a href={detail.homepage} rel="noopener">
+              {detail.homepage.replace(/^https?:\/\//, '')}
+            </a>
+          </dd>
+        </>
+      )
+    }
+    {
+      detail.repository && (
+        <>
+          <dt>{s.detail.repository}</dt>
+          <dd>
+            <a href={detail.repository} rel="noopener">
+              {detail.repository.replace(/^https?:\/\/(github\.com\/)?/, '')}
+            </a>
+          </dd>
+        </>
+      )
+    }
+    {
+      detail.provenance && (
+        <>
+          <dt>{s.detail.provenance}</dt>
+          <dd>{detail.provenance}</dd>
+        </>
+      )
+    }
+    <dt>{s.detail.glyphCount}</dt>
+    <dd class="mono">{m.glyphCount.toLocaleString()}</dd>
+    {
+      m.scripts.length > 0 && (
+        <>
+          <dt>{s.catalogue.scripts}</dt>
+          <dd>{m.scripts.map((sc) => s.scriptNames[sc] ?? sc).join(' · ')}</dd>
+        </>
+      )
+    }
+    {
+      m.vibes.length > 0 && (
+        <>
+          <dt>{s.catalogue.vibes}</dt>
+          <dd>{m.vibes.join(' · ')}</dd>
+        </>
+      )
+    }
+  </dl>
+
+  {
+    detail.convertedFrom && (
+      <p class="side__converted chip chip--accent">
+        {s.detail.convertedFrom}({detail.convertedFrom})
+      </p>
+    )
+  }
+
+  <section class="side__license" data-testid="license-box">
+    <h3>{s.detail.licenseTitle}</h3>
+    <p class="side__licname">
+      {lic.spdx && <span class="chip mono">{lic.spdx}</span>}
+      <span>{lic.name}</span>
+    </p>
+    <p class="side__licmeta">
+      {s.detail.licenseConfidence[lic.confidence] ?? lic.confidence}
+      {lic.commercial === true && (
+        <span class="chip">{s.detail.licenseCommercial}</span>
+      )}
+      {lic.commercial !== true && (
+        <span class="hint">{s.detail.licenseNonCommercialUnknown}</span>
+      )}
+    </p>
+    {detail.licenseNote && <p class="side__licnote">{detail.licenseNote}</p>}
+    {
+      licenseText && (
+        <details data-testid="license-details">
+          <summary>{s.detail.licenseViewFull}</summary>
+          <pre class="side__lictext">{licenseText}</pre>
+        </details>
+      )
+    }
+    <p class="side__disclaimer">{s.detail.licenseDisclaimer}</p>
+  </section>
+
+  {
+    detail.warnings.length > 0 && (
+      <details class="side__warnings">
+        <summary>
+          {s.detail.warningsTitle}({detail.warnings.length})
+        </summary>
+        <ul>
+          {detail.warnings.slice(0, 20).map((w) => (
+            <li class="mono">{w}</li>
+          ))}
+        </ul>
+      </details>
+    )
+  }
+</aside>
+
+<style>
+  .side {
+    font-size: 0.85rem;
+  }
+  .side__list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s1) var(--s3);
+    margin: 0 0 var(--s4);
+  }
+  .side__list dt {
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .side__list dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .side__license {
+    border-top: 1px dotted var(--line);
+    padding-top: var(--s3);
+  }
+  .side__license h3 {
+    font-size: 0.8rem;
+    color: var(--ink-2);
+    margin: 0 0 var(--s2);
+  }
+  .side__licname {
+    display: flex;
+    gap: var(--s2);
+    align-items: center;
+    margin: 0 0 var(--s1);
+  }
+  .side__licmeta {
+    color: var(--ink-2);
+    display: flex;
+    gap: var(--s2);
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  .side__licnote {
+    color: var(--ink-2);
+    font-size: 0.8rem;
+  }
+  .side__lictext {
+    max-height: 20rem;
+    overflow: auto;
+    font-size: 0.7rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: var(--s3);
+    white-space: pre-wrap;
+  }
+  .side__disclaimer,
+  .hint {
+    color: var(--ink-3);
+    font-size: 0.75rem;
+  }
+  .side__warnings {
+    margin-top: var(--s4);
+    color: var(--ink-2);
+  }
+  .side__warnings ul {
+    font-size: 0.72rem;
+    padding-left: 1.2em;
+  }
+  .side__converted {
+    margin: 0 0 var(--s3);
+  }
+</style>

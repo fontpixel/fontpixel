@@ -1,0 +1,131 @@
+---
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  pixelSize: number;
+  hanInk: [number, number] | null;
+  maxInk: [number, number];
+}
+const { lang, pixelSize, hanInk, maxInk } = Astro.props;
+const s = t(lang);
+const cell = 9;
+const pad = 8;
+const ps = Math.max(pixelSize, 1);
+const w = ps * cell + pad * 2;
+const h = ps * cell + pad * 2;
+const box = (bw: number, bh: number) => {
+  const x = pad + Math.floor(((ps - bw) / 2) * cell);
+  const y = pad + Math.floor((ps - bh) * cell); // 底对齐示意
+  return { x, y, w: bw * cell, h: bh * cell };
+};
+const han = hanInk ? box(hanInk[0], hanInk[1]) : null;
+const mx = box(Math.min(maxInk[0], ps * 2), Math.min(maxInk[1], ps * 2));
+---
+
+<figure class="ink" data-testid="ink-diagram">
+  <svg viewBox={`0 0 ${w} ${h}`} width={w} height={h} shape-rendering="crispEdges">
+    {
+      Array.from({ length: ps + 1 }).map((_, i) => (
+        <>
+          <line
+            x1={pad + i * cell}
+            y1={pad}
+            x2={pad + i * cell}
+            y2={pad + ps * cell}
+            stroke="var(--line-soft)"
+            stroke-width="1"
+          />
+          <line
+            x1={pad}
+            y1={pad + i * cell}
+            x2={pad + ps * cell}
+            y2={pad + i * cell}
+            stroke="var(--line-soft)"
+            stroke-width="1"
+          />
+        </>
+      ))
+    }
+    <rect
+      data-box="claimed"
+      x={pad}
+      y={pad}
+      width={ps * cell}
+      height={ps * cell}
+      fill="none"
+      stroke="var(--ink-2)"
+      stroke-width="1.5"
+    />
+    {
+      han && (
+        <rect
+          data-box="han"
+          x={han.x}
+          y={han.y}
+          width={han.w}
+          height={han.h}
+          fill="var(--accent-soft)"
+          stroke="var(--accent)"
+          stroke-width="1.5"
+        />
+      )
+    }
+    <rect
+      data-box="max"
+      x={mx.x}
+      y={mx.y}
+      width={mx.w}
+      height={mx.h}
+      fill="none"
+      stroke="var(--ink-3)"
+      stroke-width="1"
+      stroke-dasharray="3 2"
+    />
+  </svg>
+  <figcaption class="ink__legend">
+    <span><i class="sw sw--claimed"></i>{s.detail.inkDiagramClaimed} {pixelSize}×{pixelSize}</span>
+    {
+      hanInk && (
+        <span>
+          <i class="sw sw--han" />
+          {s.detail.inkDiagramHan} {hanInk[0]}×{hanInk[1]}
+        </span>
+      )
+    }
+    <span><i class="sw sw--max"></i>{s.detail.inkDiagramMax} {maxInk[0]}×{maxInk[1]}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .ink {
+    margin: 0;
+    display: flex;
+    gap: var(--s4);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ink__legend {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+    font-size: 0.8rem;
+    color: var(--ink-2);
+  }
+  .sw {
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 0.4em;
+  }
+  .sw--claimed {
+    border: 1.5px solid var(--ink-2);
+  }
+  .sw--han {
+    background: var(--accent-soft);
+    border: 1.5px solid var(--accent);
+  }
+  .sw--max {
+    border: 1px dashed var(--ink-3);
+  }
+</style>

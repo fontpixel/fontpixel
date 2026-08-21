@@ -55,6 +55,10 @@ def test_full_build(tmp_path):
     assert any(b[0] == "Basic Latin" for b in detail["unicodeBlocks"][first_variant])
     assert detail["licenseText"] == "OFL.txt"
 
+    assert "SIL OPEN FONT LICENSE" in (
+        data / "licenses" / "mini.txt"
+    ).read_text(encoding="utf-8", errors="replace")
+
     dlm = json.loads((dl / "manifest.json").read_text(encoding="utf-8"))
     kinds = {(e["family"], e["kind"]) for e in dlm["entries"]}
     assert ("mini", "bdf") in kinds and ("mini", "zip") in kinds
