@@ -1,0 +1,70 @@
+import gzip
+import shutil
+from pathlib import Path
+
+from pfc.parsers.bdf import parse_bdf
+
+FIX = Path(__file__).parent / "fixtures"
+
+
+def test_parse_mini_bdf():
+    f = parse_bdf(FIX / "mini.bdf", "mini")
+    assert f.family_slug == "mini"
+    assert f.file_name == "mini.bdf"
+    assert f.pixel_size == 16
+    assert f.ascent == 14
+    assert f.descent == 2
+    assert f.bbox == (16, 16, 0, -2)
+    assert [g.cp for g in f.glyphs] == [65, 27704]  # ENCODING -1 被跳过,升序
+    a = f.glyphs[0]
+    assert (a.name, a.dwidth, a.bbw, a.bbh, a.bbx, a.bby) == ("A", 8, 7, 10, 0, 0)
+    assert len(a.rows) == 10 * 1  # ceil(7/8) == 1
+    assert a.rows[0] == 0x30
+    assert a.rows[5] == 0xFC
+    yong = f.glyphs[1]
+    assert (yong.dwidth, yong.bbw, yong.bbh, yong.bbx, yong.bby) == (16, 16, 15, 0, -1)
+    assert len(yong.rows) == 15 * 2
+    assert f.props["FOUNDRY"] == "test"
+    assert f.props["PIXEL_SIZE"] == 16
+
+
+def test_parse_gz(tmp_path):
+    gz = tmp_path / "mini.bdf.gz"
+    with open(FIX / "mini.bdf", "rb") as s, gzip.open(gz, "wb") as d:
+        shutil.copyfileobj(s, d)
+    f = parse_bdf(gz, "mini")
+    assert len(f.glyphs) == 2
+    assert f.file_name == "mini.bdf.gz"
+
+
+def test_bad_bitmap_lines_warn():
+    f = parse_bdf(FIX / "mini-bad.bdf", "mini")
+    assert len(f.glyphs) == 1
+    g = f.glyphs[0]
+    assert len(g.rows) == 3  # 每行强制归一到 1 字节
+    assert any("bitmap" in w.lower() for w in f.warnings)
+
+
+def test_missing_ascent_derived(tmp_path):
+    src = (FIX / "mini.bdf").read_text()
+    src = src.replace("FONT_ASCENT 14\n", "").replace("FONT_DESCENT 2\n", "")
+    src = src.replace("STARTPROPERTIES 5", "STARTPROPERTIES 3")
+    p = tmp_path / "noasc.bdf"
+    p.write_text(src)
+    f = parse_bdf(p, "mini")
+    # 从 FONTBOUNDINGBOX 16 16 0 -2 推导:ascent = h + yoff = 14, descent = 2
+    assert f.ascent == 14
+    assert f.descent == 2
+    assert any("ascent" in w.lower() for w in f.warnings)
+
+
+def test_real_galmuri7():
+    f = parse_bdf(FIX / "real-galmuri7.bdf", "galmuri7")
+    assert len(f.glyphs) > 1000
+    cps = [g.cp for g in f.glyphs]
+    assert cps == sorted(cps)
+    assert len(cps) == len(set(cps))
+    from pfc.model import row_bytes
+
+    for g in f.glyphs:
+        assert len(g.rows) == g.bbh * row_bytes(g.bbw)
