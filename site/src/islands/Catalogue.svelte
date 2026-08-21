@@ -99,7 +99,10 @@
   </div>
 
   <div class="cat__body">
-    <FilterPanel {families} bind:state {s} {lang} />
+    <details class="cat__filters" open>
+      <summary class="cat__filters-summary">{s.catalogue.filters}</summary>
+      <FilterPanel {families} bind:state {s} {lang} />
+    </details>
     <div class="cat__main">
       <p class="cat__results mono" data-testid="result-count">
         {s.catalogue.results.replace('{n}', String(results.length))}
@@ -181,10 +184,28 @@
     color: var(--ink-3);
     font-size: 0.85rem;
   }
+  .cat__filters-summary {
+    display: none;
+  }
   @media (max-width: 900px) {
     .cat__body {
       grid-template-columns: 1fr;
       gap: var(--s4);
+    }
+    .cat__filters {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: var(--s2) var(--s3);
+      background: var(--surface);
+    }
+    .cat__filters-summary {
+      display: list-item;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .cat__filters:not([open]) {
+      padding-bottom: var(--s2);
     }
   }
 </style>
