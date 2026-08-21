@@ -10,6 +10,10 @@
 
 **Spec:** `docs/superpowers/specs/2026-08-21-pixel-font-collection-design.md`(本计划从该 spec 论证;执行者两者都读)
 
+> **进度(2026-08-21)**:Task 1–21 已完成并逐一提交;Task 24(CI/README)已完成;
+> Task 22 进行中(试点五家族已上线,全量清单由并行代理起草中);Task 23、25 待做。
+> 逐任务提交历史即为追踪记录(git log --oneline)。
+
 ## Global Constraints
 
 - 站点 Pages 产物 ≤ 900MB(构建脚本硬检查);目录页首屏 JS < 150KB gz。
