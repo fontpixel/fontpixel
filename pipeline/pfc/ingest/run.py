@@ -109,6 +109,22 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
                     tmp = Path(td) / "x.bdf"
                     write_bdf(pf, tmp)
                     changed |= _place(tmp.read_bytes(), dest / f"{p.stem}.bdf", report)
+            elif convert == "ttf":
+                from pfc.ingest.rasterize import detect_native_ppem, rasterize_ttf
+
+                ppem = fam.get("ppem") or detect_native_ppem(p)
+                if ppem is None:
+                    report.errors.append(
+                        f"{slug}: {p.name} 原生格点判定失败,不自动转制(可在清单中手填 ppem)"
+                    )
+                    continue
+                pf = rasterize_ttf(p, int(ppem), slug)
+                with tempfile.TemporaryDirectory() as td:
+                    tmp = Path(td) / "x.bdf"
+                    write_bdf(pf, tmp)
+                    changed |= _place(
+                        tmp.read_bytes(), dest / f"{p.stem}-{ppem}px.bdf", report
+                    )
             else:
                 report.errors.append(f"{slug}: 未知 convert 模式 {convert}")
 
