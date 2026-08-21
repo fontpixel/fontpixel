@@ -1,0 +1,11 @@
+name = "DOSSaemmul"
+name_zh = ""
+author = "leedheo（经 hurss 整理为 BDF/TTF 发布）"
+homepage = ""
+repository = "https://github.com/hurss/fonts"
+description = ""
+form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["cute"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts；上游 https://github.com/hurss/fonts"
+added = "2026-08-21"

@@ -39,6 +39,14 @@ def decode_cp(code: int, registry: str, encoding: str,
         except Exception:
             return None
 
+    if reg.startswith("johab"):
+        if code < 0x80:
+            return code
+        try:
+            return ord(bytes([(code >> 8) & 0xFF, code & 0xFF]).decode("johab"))
+        except Exception:
+            return None
+
     hi, lo = (code >> 8) & 0xFF, code & 0xFF
     two = bytes([hi | 0x80, lo | 0x80])
     try:

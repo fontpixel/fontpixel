@@ -1,0 +1,11 @@
+name = "PixelMplus"
+name_zh = ""
+author = "itouhiro（日文假名/汉字取自 M+ BITMAP FONTS）"
+homepage = "http://itouhiro.hatenablog.com/entry/20130602/font"
+repository = "https://github.com/itouhiro/PixelMplus"
+description = ""
+form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--PixelMplus；上游 https://github.com/itouhiro/PixelMplus"
+added = "2026-08-21"

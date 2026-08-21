@@ -1,0 +1,11 @@
+name = "ChangBanDianSong 16"
+name_zh = "长坂点宋 16"
+author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット道玄坂16）"
+homepage = ""
+repository = "https://github.com/yzdnn/ChangBanDianSong-16"
+description = ""
+form = "mingcho"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game", "classic"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ChangBanDianSong-16；上游 https://github.com/yzdnn/ChangBanDianSong-16/releases (v1.3.1)"
+added = "2026-08-21"

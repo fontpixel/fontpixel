@@ -1,0 +1,11 @@
+name = "Fusion Bold Pixel"
+name_zh = "缝合粗像素"
+author = "TakWolf （pixel-font-studio）"
+homepage = "https://pixel-font-studio.github.io/fusion-bold-pixel-font/"
+repository = "https://github.com/pixel-font-studio/fusion-bold-pixel-font"
+description = ""
+form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/pixel-font-studio--fusion-bold-pixel-font；上游 https://github.com/pixel-font-studio/fusion-bold-pixel-font/releases (v2026.08.11)"
+added = "2026-08-21"

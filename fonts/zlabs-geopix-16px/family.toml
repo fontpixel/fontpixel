@@ -1,0 +1,11 @@
+name = "Z Labs GeoPix 16px"
+name_zh = ""
+author = "Astro_2539, ChenhaoUwU, yzdnn（基于 ChenhaoUwU 的 UwU 点矩黑）"
+homepage = ""
+repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
+description = ""
+form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px；上游 https://github.com/Astro-2539/ZLabs-DiamondPix-16px (data/ 目录,未见正式 README 说明或独立 release)；由 kbitx 转换"
+added = "2026-08-21"

@@ -111,6 +111,17 @@ def test_incremental_cache(tmp_path):
     assert {f["slug"]: f for f in idx["families"]}["mini"]["nameZh"] == "迷你测试2"
 
 
+def test_broken_family_isolated(tmp_path):
+    """单个家族的 family.toml 损坏不应拖垮整个构建。"""
+    fonts, data, dl, cache = _setup(tmp_path)
+    (fonts / "mini" / "family.toml").write_text("这不是合法的 TOML ===", encoding="utf-8")
+    report = build(fonts, data, dl, cache)
+    assert report.failed == 1
+    assert any("mini" in w and "失败" in w for w in report.warnings)
+    idx = json.loads((data / "index.json").read_text(encoding="utf-8"))
+    assert [f["slug"] for f in idx["families"]] == ["nometa"]  # 其余家族照常
+
+
 def test_orphan_outputs_pruned(tmp_path):
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)

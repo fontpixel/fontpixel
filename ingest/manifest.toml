@@ -5,20 +5,6 @@
 # 试点五家族(Task 20)；全量清单在 Task 22 分批补齐。
 
 [[family]]
-slug = "ark-pixel-12px-monospaced"
-source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--ark-pixel-font"
-zip = "RELEASE-ASSETS/ark-pixel-font-12px-monospaced-bdf-v2026.08.11.zip"
-zip_take = ["*.bdf", "OFL.txt"]
-name = "Ark Pixel 12px Monospaced"
-name_zh = "方舟像素 12px 等宽"
-author = "TakWolf"
-homepage = "https://ark-pixel-font.takwolf.com"
-repository = "https://github.com/TakWolf/ark-pixel-font"
-provenance_url = "https://github.com/TakWolf/ark-pixel-font/releases (v2026.08.11)"
-form = "gothic"
-vibes = ["retro-game"]
-
-[[family]]
 slug = "galmuri"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri"
 zip = "RELEASE-ASSETS/Galmuri-v2.40.4.zip"
@@ -72,3 +58,886 @@ repository = "https://github.com/carrothu-cn/wqy-bitmapfont-otb"
 provenance_url = "https://github.com/carrothu-cn/wqy-bitmapfont-otb"
 form = "mingcho"
 vibes = ["classic"]
+
+# ==================== 合并片段:manifest-frag-chinese.toml ====================
+# CJK-bitmap-fonts-open-source-2026-08-18/Chinese/ 导入清单片段。
+# carrothu-cn--wqy-bitmapfont-otb 已收录(wqy-bitmap-song),本片段不再处理。
+# 其余 21 个仓库逐一核查如下:16 个 family、6 个 todo。
+
+# ============================================================
+# yzdnn 系列 —— 仓库内 BDF(Sources/)+ OFL.txt,README 给出官方中文名。
+# 均基于门真奈武／KH 点阵字体系列等日文点阵字体二次创作、增补简繁汉字。
+# ============================================================
+
+[[family]]
+slug = "ba-ding-shi-wei-ti-16"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--BaDingShiWeiTi-16"
+take = ["BaDingShiWeiTi-16.bdf"]
+license_files = ["OFL.txt"]
+name = "BaDingShiWeiTi 16"
+name_zh = "八丁饰尾体 16"
+author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット八丁堀16）"
+homepage = ""
+repository = "https://github.com/yzdnn/BaDingShiWeiTi-16"
+provenance_url = "https://github.com/yzdnn/BaDingShiWeiTi-16/releases (v1.1.0)"
+form = "decorative"
+vibes = ["decorative", "retro-game"]
+# 注：README 称原字体风格为「隶书体」,作者依汉字部分风格改称「饰尾体」;
+# 且 README 中「SC／TC 后缀」说明为跨仓库复制粘贴残留,本仓库实际只有单一 BDF。
+
+[[family]]
+slug = "chang-ban-dian-song-12"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ChangBanDianSong-12"
+take = ["ChangBanDianSong-12.bdf", "ChangBanDianSong-SP-12.bdf"]
+license_files = ["OFL.txt"]
+name = "ChangBanDianSong 12"
+name_zh = "长坂点宋 12"
+author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット道玄坂12）"
+homepage = ""
+repository = "https://github.com/yzdnn/ChangBanDianSong-12"
+provenance_url = "https://github.com/yzdnn/ChangBanDianSong-12/releases (v1.4.3)"
+form = "mingcho"
+vibes = ["retro-game", "classic"]
+# 注：SP 后缀为 v1.4.3 新增的「防粘连版」,每字右侧多留 1px 字间距,与常规版同属一个家族。
+# 「长坂点宋 12」与「长坂点宋 16」分属两个独立仓库(无法共用同一 source),故拆成两个 family。
+
+[[family]]
+slug = "chang-ban-dian-song-16"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ChangBanDianSong-16"
+take = ["ChangBanDianSong-SC-16.bdf", "ChangBanDianSong-TC-16.bdf"]
+license_files = ["OFL.txt"]
+name = "ChangBanDianSong 16"
+name_zh = "长坂点宋 16"
+author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット道玄坂16）"
+homepage = ""
+repository = "https://github.com/yzdnn/ChangBanDianSong-16"
+provenance_url = "https://github.com/yzdnn/ChangBanDianSong-16/releases (v1.3.1)"
+form = "mingcho"
+vibes = ["retro-game", "classic"]
+# 注：本仓库分简体字形(SC)与繁体字形(TC)两个版本,同属一个家族。
+
+[[family]]
+slug = "qiu-ye-yuan-ti-16"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--QiuYeYuanTi-16"
+take = ["QiuYeYuanTi-16.bdf"]
+license_files = ["OFL.txt"]
+name = "QiuYeYuanTi 16"
+name_zh = "秋叶圆体 16"
+author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット秋葉原16）"
+homepage = ""
+repository = "https://github.com/yzdnn/QiuYeYuanTi-16"
+provenance_url = "https://github.com/yzdnn/QiuYeYuanTi-16/releases (v1.0.1)"
+form = "rounded"
+vibes = ["cute", "retro-game"]
+
+[[family]]
+slug = "ren-ou-fang-song-16"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--RenOuFangSong-16"
+take = ["RenOuFangSong-16.bdf"]
+license_files = ["OFL.txt"]
+name = "RenOuFangSong 16"
+name_zh = "人偶仿宋 16"
+author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット人形町16）"
+homepage = ""
+repository = "https://github.com/yzdnn/RenOuFangSong-16"
+provenance_url = "https://github.com/yzdnn/RenOuFangSong-16/releases (v1.1.1)"
+form = "fangsong"
+vibes = ["handwriting", "decorative"]
+# 注：仓库另附「OFL(参考用中译)」文件,明确标注仅供参考,故只收录正式 OFL.txt。
+
+[[family]]
+slug = "xiu-zhen-xiang-su-ti"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--XiuZhenXiangSuTi"
+take = ["XiuZhenXiangSuTi-8.bdf"]
+license_files = ["OFL.txt"]
+name = "XiuZhenXiangSuTi"
+name_zh = "袖珍像素体"
+author = "yzdnn（基于 Num Kadoma 的 k6x8）"
+homepage = ""
+repository = "https://github.com/yzdnn/XiuZhenXiangSuTi"
+provenance_url = "https://github.com/yzdnn/XiuZhenXiangSuTi/releases (v1.0.0)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+# 注：6x8(含字间距)规格,README 自称「大概是市面上尺寸最小的中文点阵字体」,
+# form 定为 terminal 属推断,拿不准。
+
+[[family]]
+slug = "zheng-ge-dian-hei-16"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ZhengGeDianHei-16"
+take = ["ZhengGeDianHei-16.bdf"]
+license_files = ["OFL.txt"]
+name = "ZhengGeDianHei 16"
+name_zh = "正格点黑 16"
+author = "yzdnn（基于 DotGothic16 Project／Fontworks 的 DotGothic16）"
+homepage = ""
+repository = "https://github.com/yzdnn/ZhengGeDianHei-16"
+provenance_url = "https://github.com/yzdnn/ZhengGeDianHei-16/releases (v1.0.0)"
+form = "gothic"
+vibes = ["retro-game"]
+
+# ============================================================
+# Astro-2539 / Z Labs 系列 —— kbitx 源(convert="kbitx"),部分另有 ttf/zip。
+# ============================================================
+
+[[family]]
+slug = "zlabs-pixel-12px"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-Pixel-12px"
+convert = "kbitx"
+convert_take = ["ZLabsPixel_12px_M_CN.kbitx", "ZLabsPixel_12px_M_HC.kbitx", "ZLabsPixel_12px_M_JP.kbitx"]
+license_files = ["LICENSE-OFL"]
+name = "Z Labs Pixel 12px"
+name_zh = "Z工坊像素黑体 12px"
+author = "Astro_2539"
+homepage = ""
+repository = "https://github.com/Astro-2539/ZLabs-Pixel-12px"
+provenance_url = "https://github.com/Astro-2539/ZLabs-Pixel-12px/releases (Build_20260519)"
+form = "gothic"
+vibes = ["retro-game"]
+# 注：本仓库原名「Z Labs Bitmap 12px」,即 ZLabs-Bitmap-HC／ZLabs-Bitmap-JP 两仓库
+# README 中所指的「主仓库」,现已改名为「Z Labs Pixel 12px」并统一维护 CN／HC／JP 三种
+# 字形变体(另有 HC_fallback／JP_fallback 混合回退版本,内容为 CN 字形填充缺字,予以跳过)。
+
+[[family]]
+slug = "zlabs-diamondpix-16px"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px"
+convert = "kbitx"
+convert_take = ["ZLabsDiamondPix_16px_SC.kbitx"]
+license_files = ["LICENSE-OFL"]
+name = "Z Labs DiamondPix 16px"
+name_zh = "Z工坊金刚黑体 16px"
+author = "Astro_2539, ChenhaoUwU, Dalict, yzdnn（基于 ChenhaoUwU 的 UwU 点矩黑）"
+homepage = ""
+repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
+provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px/releases (Build_20260309)"
+form = "gothic"
+vibes = ["retro-game"]
+# 注：README 明确标注「仍处于早期开发阶段,缺失大量汉字,尚未达到可用水平」
+# (目前仅约 1064 字),收录时请留意其完成度。仓库同时含 MD／MS 两个粗细的发布 ttf,
+# 但均无对应 kbitx 源,故只取有 kbitx 支持的 M(常规)字重。
+
+[[family]]
+slug = "zlabs-geopix-16px"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px"
+convert = "kbitx"
+convert_take = ["ZLabsGeoPix_16px_SC.kbitx"]
+license_files = ["LICENSE-OFL"]
+name = "Z Labs GeoPix 16px"
+name_zh = ""
+author = "Astro_2539, ChenhaoUwU, yzdnn（基于 ChenhaoUwU 的 UwU 点矩黑）"
+homepage = ""
+repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
+provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px (data/ 目录,未见正式 README 说明或独立 release)"
+form = "gothic"
+vibes = ["retro-game"]
+# 注：与 DiamondPix 同仓库但 README 全文未提及,信息完全来自 kbitx 内嵌 name 表
+# (字体名「Z Labs GeoPix 16px M SC」、作者列表),无发布版 ttf,完成度与定位均不确定,
+# 是本次核查中把握最小的一条,建议人工二次确认是否为可用的独立作品。
+
+[[family]]
+slug = "zlabs-roundpix-12px"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-12px"
+convert = "kbitx"
+convert_take = ["ZLabsRoundPix_12px_CN.kbitx"]
+license_files = ["LICENSE-OFL"]
+name = "Z Labs RoundPix 12px"
+name_zh = "Z工坊像素圆体 12px"
+author = "Astro_2539（基于 hicc／x0y0pxFreeFont 的 x12y12pxMaruMinya）"
+homepage = ""
+repository = "https://github.com/Astro-2539/ZLabs-RoundPix-12px"
+provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-12px/releases (Build_20260813)"
+form = "rounded"
+vibes = ["cute", "retro-game"]
+
+[[family]]
+slug = "zlabs-roundpix-16px"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-16px"
+convert = "kbitx"
+convert_take = ["ZLabsRoundPix_16px_CN.kbitx", "ZLabsRoundPix_16px_JP.kbitx"]
+license_files = ["LICENSE-OFL"]
+name = "Z Labs RoundPix 16px"
+name_zh = "Z工坊像素圆体 16px"
+author = "Astro_2539（取形参考 Zen Maru Gothic）"
+homepage = ""
+repository = "https://github.com/Astro-2539/ZLabs-RoundPix-16px"
+provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501)"
+form = "rounded"
+vibes = ["cute", "retro-game"]
+# 注：README 自称「仍处于开发与调整阶段,目前存在中宫不均匀、汉字部件不一致等问题」;
+# JP 变体 README 正文未正式介绍,但 data/ 目录与发布 ttf 均已提供,一并收录。
+
+# ============================================================
+# DWNfonts 系列 —— 均基于门真奈武(k8x12)或 hicc(マルミーニャ)的日文点阵字体
+# 二次创作为简中点阵字体;仓库根目录直接给出 kbitx 主源。
+# ============================================================
+
+[[family]]
+slug = "muzai-pixel"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--MuzaiPixel"
+convert = "kbitx"
+convert_take = ["MuzaiPixel.kbitx"]
+license_files = ["LICENSE.md"]
+name = "MuzaiPixel"
+name_zh = "目哉像素"
+author = "DWNfonts（基于 Num Kadoma 的 k8x12）"
+homepage = "https://diaowinner.itch.io/muzaipixel"
+repository = "https://github.com/DWNfonts/MuzaiPixel"
+provenance_url = "https://github.com/DWNfonts/MuzaiPixel/releases (2.0.20260705)"
+form = "gothic"
+vibes = ["retro-game"]
+# 注：曾用名 k8x12j。仓库同时发布 MZPXflat／MZPXorig 两种 ttf 变体,
+# 但只有一份 kbitx 主源,故按最高优先级只取 kbitx。form 为推断,拿不准。
+
+[[family]]
+slug = "xiaoya-pixel-classic"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--XiaoyaPixel-Classic"
+convert = "kbitx"
+convert_take = ["XiaoyaPixel.kbitx"]
+license_files = ["LICENSE"]
+name = "XiaoyaPixel"
+name_zh = "小雅像素"
+author = "DWNfonts（基于 hicc／x0y0pxFreeFont 的マルミーニャ）"
+homepage = "https://diaowinner.itch.io/xiaoyapixel"
+repository = "https://github.com/DWNfonts/XiaoyaPixel-Classic"
+provenance_url = "https://github.com/DWNfonts/XiaoyaPixel-Classic (CHANGELOG 0.30821)"
+form = "rounded"
+vibes = ["cute", "retro-game"]
+# 注：LICENSE 为 hicc／DWNfonts 自定的免费使用条款(非 OFL 标准文本),已按仓库实际文件收录。
+# 与 zlabs-roundpix-12px 同源自マルミーニャ／x12y12pxMaruMinya,但为不同作者的独立二次创作,不算重复。
+
+# ============================================================
+# 其余零散仓库
+# ============================================================
+
+[[family]]
+slug = "cmex-ming"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/bluebat--cmexfonts"
+take = ["*.bdf"]
+license_files = ["LICENSE"]
+name = "CMEX Ming"
+name_zh = ""
+author = "Dynalab Inc.／中文電腦推廣基金會(CMEX);BDF 版本由趙惟倫(Wei-Lun Chao)整理"
+homepage = "http://www.cmex.org.tw/"
+repository = "https://github.com/bluebat/cmexfonts"
+provenance_url = "https://github.com/bluebat/cmexfonts"
+form = "mingcho"
+vibes = ["classic"]
+# 注：Big5+ 明体点阵,含 16x16(cmex16m)、24x24(cmex24m)两个尺寸,同属一个家族。
+
+[[family]]
+slug = "wqy-unibit"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/carrothu-cn--wqy-unibit-otb"
+convert = "otb"
+convert_take = ["wqy-unibit.otb"]
+license_files = ["LICENSE"]
+name = "WenQuanYi Unibit"
+name_zh = ""
+author = "WenQuanYi Project"
+homepage = "http://wenq.org"
+repository = "https://github.com/carrothu-cn/wqy-unibit-otb"
+provenance_url = "https://github.com/carrothu-cn/wqy-unibit-otb/releases (v1.1)"
+form = "other"
+vibes = ["fallback"]
+# 注：与已收录的 wqy-bitmap-song(文泉驿点阵宋体)是文泉驿项目下的不同字体,
+# 覆盖近乎全部 Unicode BMP 的等宽点阵字,并非重复内容。README 极简,未给出官方中文名,故留空。
+
+# ============================================================
+# todo —— 无可用素材、与已收录家族重复、或已被作者废弃/合并
+# ============================================================
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-Bitmap-HC"
+reason = "作者在 README 中明确说明本仓库已并入主仓库「Z Labs Bitmap 12px」(现名 Z Labs Pixel 12px,即本片段 zlabs-pixel-12px 家族的 HC 变体),仓库不再更新,内容重复,故跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-Bitmap-JP"
+reason = "同上,已并入 zlabs-pixel-12px 的 JP 变体,仓库不再更新,故跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--Hexin-Pixel-Font"
+reason = "仓库内只有偏旁部件 PNG、构建脚本与上游 k12x8 参考字体(Data/Fonts/ 下的是基础参考件,非「核心像素体」成品),README 说明预构建字体发布在 Codeberg Releases 页面,本次快照未抓取到,当前内容无法直接产出完整字体,故跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/44670--SourceHanSans-Pixel"
+reason = "仓库仅含可变字体源(SourceHanSansSC-VF.otf)、C 头文件示例(examples/C/font.h)与专有二进制 .4FN 字库(16x15／12x11);无 BDF／OTB／kbitx,.4FN 为非常规格式,现有转换管线无法解析,故跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/larryli--u8g2_wqy"
+reason = "README 明确说明以「文泉驿点阵宋体」为源本转制给 u8g2 库使用(9pt/10pt/11pt/12pt/13px 与已收录的 wqy-bitmap-song 尺寸一致),内容重复,故跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/wixette--dotted-chinese-fonts"
+reason = "字体是「文泉驿点阵宋体」经矢量化后再加工出的菱形／圆形／方形三种装饰点阵效果 OTF,已脱离原生像素网格、无法判定原生 ppem 供 convert=\"ttf\" 使用,且字形血缘与已收录的 wqy-bitmap-song 重复,故跳过,留待人工评估是否作为装饰字体单独收录。"
+
+# ==================== 合并片段:manifest-frag-jk.toml ====================
+# 导入清单片段:CJK-bitmap-fonts-open-source-2026-08-18/Japanese/ 与 /Korean/
+# 与 ingest/manifest.toml 同格式,供合并进主清单。
+
+# ============================================================
+# Japanese/
+# ============================================================
+
+[[family]]
+slug = "pixel-mplus"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--PixelMplus"
+take = ["mplus_*.bdf"]
+license_files = ["LICENSE_E", "LICENSE_J"]
+name = "PixelMplus"
+author = "itouhiro（日文假名/汉字取自 M+ BITMAP FONTS）"
+homepage = "http://itouhiro.hatenablog.com/entry/20130602/font"
+repository = "https://github.com/itouhiro/PixelMplus"
+provenance_url = "https://github.com/itouhiro/PixelMplus"
+form = "gothic"
+vibes = ["retro-game"]
+
+[[family]]
+slug = "tekuplus"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--Tekuplus"
+take = ["*.bdf"]
+license_files = ["LICENSE.md"]
+name = "Tekuplus"
+author = "itouhiro（西文取自自制 Teku 字体，日文取自 M+ BITMAP FONTS）"
+repository = "https://github.com/itouhiro/Tekuplus"
+provenance_url = "https://github.com/itouhiro/Tekuplus"
+form = "gothic"
+vibes = []
+
+# x5y8pxNegaClip/x5y8pxNegaTape/x8y12pxDenkiChip:仓库内 fonts/ttf/ 与
+# fonts/ttf_no-bitmap/ 下各有一个同名 ttf(区别仅是否内嵌位图,轮廓与原生格点
+# 相同),convert_take 按 basename 匹配会两个都命中;抽查过 upem/表结构,栅格化
+# 结果应等价,_place() 会因内容相同去重,不影响产物,仅记录以备复核。
+[[family]]
+slug = "x5y8px-nega-clip"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x5y8pxNegaClip"
+convert = "ttf"
+convert_take = ["x5y8pxNegaClip.ttf"]
+ppem = 8
+license_files = ["OFL.txt"]
+name = "x5y8pxNegaClip"
+author = "hicc"
+repository = "https://github.com/hicchicc/x5y8pxNegaClip"
+provenance_url = "https://github.com/hicchicc/x5y8pxNegaClip/releases (v1.000)"
+form = "decorative"
+vibes = ["decorative", "retro-game"]
+
+[[family]]
+slug = "x5y8px-nega-tape"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x5y8pxNegaTape"
+convert = "ttf"
+convert_take = ["x5y8pxNegaTape.ttf"]
+ppem = 8
+license_files = ["OFL.txt"]
+name = "x5y8pxNegaTape"
+author = "hicc"
+repository = "https://github.com/hicchicc/x5y8pxNegaTape"
+provenance_url = "https://github.com/hicchicc/x5y8pxNegaTape/releases (v1.000)"
+form = "decorative"
+vibes = ["decorative", "retro-game"]
+
+[[family]]
+slug = "x8y12px-denki-chip"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x8y12pxDenkiChip"
+convert = "ttf"
+convert_take = ["x8y12pxDenkiChip.ttf"]
+ppem = 12
+license_files = ["OFL.txt"]
+name = "x8y12pxDenkiChip"
+author = "hicc"
+repository = "https://github.com/hicchicc/x8y12pxDenkiChip"
+provenance_url = "https://github.com/hicchicc/x8y12pxDenkiChip/releases (v1.000)"
+form = "gothic"
+vibes = ["retro-game"]
+
+# README 正文没有再复述像素数(只有仓库/文件名 x12y12px 自证),按简报规则未手填
+# ppem,交给管线按原生格点自动判定。
+[[family]]
+slug = "x12y12px-maru-minya"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x12y12pxMaruMinya"
+convert = "ttf"
+convert_take = ["x12y12pxMaruMinya.ttf"]
+license_files = ["OFL.txt"]
+name = "x12y12pxMaruMinya"
+author = "hicc"
+repository = "https://github.com/hicchicc/x12y12pxMaruMinya"
+provenance_url = "https://github.com/hicchicc/x12y12pxMaruMinya"
+form = "rounded"
+vibes = ["cute"]
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/ayamada--mplus-1mn-medium-16-fnt-tir"
+reason = "仅有 libgdx BitmapFont「.fnt」+ distance field PNG 贴图格式(M+ 1m medium 的位图化衍生),不是 BDF/OTB/kbitx/TTF,当前转换管线不支持,跳过"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/code4fukui--shinonome-font"
+reason = "经典东云(Shinonome)字体,但发布形式是 font_src.bit / font_src_diff.bit,需要仓库自带的 autotools + bit2bdf 工具链编译才能得到 BDF,仓库里没有现成 BDF/TTF;convert 只支持 otb/kbitx/ttf 三种,暂不支持「.bit」,先跳过"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/emutyworks--8x8DotJPFont"
+reason = "美咲フォント(Misaki Font)的 Arduboy 移植版,只有 PNG 原图与 C 头文件(misaki_font_f0/f1/f2.h),没有 BDF/TTF,跳过"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hajimehoshi--mplus-bitmap-images"
+reason = "只是把 mplus_f12r.bdf / mplus_j12r.bdf 渲染成的 PNG 图片,原始 BDF 已经通过 itouhiro--PixelMplus(pixel-mplus 家族)收录,属重复,跳过"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--NegaPico"
+reason = "x5y8pxNegaTape 的 PICO-8 游戏机改版,发布形式是 .p8 卡带代码 + PNG 精灵图,没有 BDF/TTF;原字体已经通过 x5y8px-nega-tape 家族收录,跳过"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/Tamakichi--Arduino-misakiUTF16"
+reason = "美咲フォント(Misaki Font)教育汉字子集的 Arduino C++ 库,只有 misakiUTF16FontData.h 头文件数据,没有 BDF/TTF,跳过"
+
+# ============================================================
+# Korean/
+# ============================================================
+
+# chocolatemelt--baekmuk 的 batang 已经作为 baekmuk-batang 收录(见
+# ingest/manifest.toml),这里补齐同一仓库内的 dotum/gulim/hline 三套字体。
+[[family]]
+slug = "baekmuk-dotum"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/chocolatemelt--baekmuk"
+take = ["dotum*.bdf"]
+license_files = ["LICENSE-Baekmuk.txt"]
+name = "Baekmuk Dotum"
+name_zh = "白墨黑体"
+author = "Kim Jungtae (Baekmuk)"
+repository = "https://github.com/chocolatemelt/baekmuk"
+provenance_url = "https://github.com/chocolatemelt/baekmuk"
+form = "gothic"
+vibes = ["classic"]
+
+[[family]]
+slug = "baekmuk-gulim"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/chocolatemelt--baekmuk"
+take = ["gulim*.bdf"]
+license_files = ["LICENSE-Baekmuk.txt"]
+name = "Baekmuk Gulim"
+name_zh = "白墨圆体"
+author = "Kim Jungtae (Baekmuk)"
+repository = "https://github.com/chocolatemelt/baekmuk"
+provenance_url = "https://github.com/chocolatemelt/baekmuk"
+form = "rounded"
+vibes = ["classic"]
+
+[[family]]
+slug = "baekmuk-hline"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/chocolatemelt--baekmuk"
+take = ["hline*.bdf"]
+license_files = ["LICENSE-Baekmuk.txt"]
+name = "Baekmuk Hline"
+name_zh = "白墨细线体"
+author = "Kim Jungtae (Baekmuk)"
+repository = "https://github.com/chocolatemelt/baekmuk"
+provenance_url = "https://github.com/chocolatemelt/baekmuk"
+form = "other"
+vibes = ["classic"]
+
+# hurss--fonts 内含 7 个互不相同的 DOS 风格字体(bdf/ 下各一个 16pt/24pt 的
+# BDF),拆成 7 个 family;form 依据 README 的韩文字体名与 fontsample.PNG 样图
+# 判断,DOSSaemmul/Sam3KRFont/DOSIyagiBoldface 三个分类信心不高,见任务小结。
+[[family]]
+slug = "dos-myungjo"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
+take = ["DOSMyungjo-16.bdf"]
+license_files = ["LICENSE.txt"]
+name = "DOSMyungjo"
+author = "hurss"
+repository = "https://github.com/hurss/fonts"
+provenance_url = "https://github.com/hurss/fonts"
+form = "mingcho"
+vibes = ["classic"]
+
+[[family]]
+slug = "dos-gothic"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
+take = ["DOSGothic-16.bdf"]
+license_files = ["LICENSE.txt"]
+name = "DOSGothic"
+author = "hurss"
+repository = "https://github.com/hurss/fonts"
+provenance_url = "https://github.com/hurss/fonts"
+form = "gothic"
+vibes = ["terminal-hardcore"]
+
+[[family]]
+slug = "dos-saemmul"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
+take = ["DOSSaemmul-16.bdf"]
+license_files = ["LICENSE.txt"]
+name = "DOSSaemmul"
+author = "leedheo（经 hurss 整理为 BDF/TTF 发布）"
+repository = "https://github.com/hurss/fonts"
+provenance_url = "https://github.com/hurss/fonts"
+form = "rounded"
+vibes = ["cute"]
+
+[[family]]
+slug = "sam3kr-font"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
+take = ["Sam3KRFont-16.bdf"]
+license_files = ["LICENSE.txt"]
+name = "Sam3KRFont"
+author = "hurss"
+repository = "https://github.com/hurss/fonts"
+provenance_url = "https://github.com/hurss/fonts"
+form = "decorative"
+vibes = ["retro-game"]
+
+[[family]]
+slug = "dos-iyagi-boldface"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
+take = ["DOSIyagiBoldface-16.bdf"]
+license_files = ["LICENSE.txt"]
+name = "DOSIyagiBoldface"
+author = "hurss"
+repository = "https://github.com/hurss/fonts"
+provenance_url = "https://github.com/hurss/fonts"
+form = "rounded"
+vibes = ["cute"]
+
+[[family]]
+slug = "dos-pilgi"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
+take = ["DOSPilgi-16.bdf"]
+license_files = ["LICENSE.txt"]
+name = "DOSPilgi"
+author = "hurss"
+repository = "https://github.com/hurss/fonts"
+provenance_url = "https://github.com/hurss/fonts"
+form = "script"
+vibes = ["handwriting"]
+
+[[family]]
+slug = "miraero-normal"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
+take = ["MiraeroNormal-24.bdf"]
+license_files = ["LICENSE.txt"]
+name = "MiraeroNormal"
+author = "hurss"
+repository = "https://github.com/hurss/fonts"
+provenance_url = "https://github.com/hurss/fonts"
+form = "gothic"
+vibes = ["classic"]
+
+# neodgm 自己仓库的 README 没有直接写像素数,但姊妹仓库 neodgm-pro 的 README
+# 明确说基底字体「NeoDunggeunmo」是 8x16(西文)/16x16(韩文)网格,故据此手填
+# ppem=16;neodgm_code.ttf 是同一设计的等宽/编程变体,与 neodgm.ttf 同属一个
+# family。RELEASE-ASSETS 下是未压缩的发布产物,convert_take 可以直接扫到。
+[[family]]
+slug = "neodgm"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm"
+convert = "ttf"
+convert_take = ["neodgm.ttf", "neodgm_code.ttf"]
+ppem = 16
+license_files = ["LICENSE.txt"]
+name = "NeoDunggeunmo"
+author = "Eunbin Jeong (Dalgona.)"
+homepage = "http://neodgm.dalgona.dev"
+repository = "https://github.com/neodgm/neodgm"
+provenance_url = "https://github.com/neodgm/neodgm/releases (v1.601)"
+form = "rounded"
+vibes = ["classic", "terminal-hardcore"]
+
+# neodgm-pro 官方定位是「跳出 8x16/16x16 网格」的比例宽度衍生字体,没有单一
+# 原生像素格点,因此不手填 ppem,交给管线自动判定原生格点(有判定失败而不自动
+# 转制的风险,届时需要人工介入手填)。
+[[family]]
+slug = "x10y12px-denki-chip-hangul"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x10y12pxDenkiChipHangul"
+take = ["x10y12pxDenkiChipHangul.bdf"]
+license_files = ["OFL.txt"]
+name = "x10y12pxDenkiChipHangul"
+author = "quiple (Lee Minseo)（改编自 hicc 的 x8y12pxDenkiChip）"
+homepage = "https://blog.quiple.dev/font/denkichip-hangul"
+repository = "https://github.com/quiple/x10y12pxDenkiChipHangul"
+provenance_url = "https://github.com/quiple/x10y12pxDenkiChipHangul/releases (v1.210)"
+form = "gothic"
+vibes = ["retro-game"]
+
+[[family]]
+slug = "x12y12px-maru-minya-hangul"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x12y12pxMaruMinyaHangul"
+take = ["x12y12pxMaruMinyaHangul.bdf"]
+license_files = ["OFL.txt"]
+name = "x12y12pxMaruMinyaHangul"
+author = "quiple (Lee Minseo)（改编自 hicc 的 x12y12pxMaruMinya）"
+homepage = "https://blog.quiple.dev/font/maruminya-hangul"
+repository = "https://github.com/quiple/x12y12pxMaruMinyaHangul"
+provenance_url = "https://github.com/quiple/x12y12pxMaruMinyaHangul"
+form = "rounded"
+vibes = ["cute"]
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/arnoldligtvoet--hangul_bitmap"
+reason = "只有 PNG 位图 + Jimp 专用 XML 描述文件(hangul.xml),不是 BDF/OTB/kbitx/TTF,而且本身是转发自 biud436/MV 仓库的衍生副本,跳过"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/mushsooni--mulmaru"
+reason = "Mulmaru/MulmaruMono 只发布 OTF/TTF/WOFF2(以及 .pfp 源文件),而且这些文件只存在于 RELEASE-ASSETS 下的 Mulmaru.zip/MulmaruMono.zip 内,仓库目录树里没有解压出来的副本;当前管线 convert_take 只递归扫描仓库目录树、不会解开 zip,zip_take 又只做原样拷贝、不会调用 convert,现有 manifest 字段组合不出「zip 内 TTF→BDF」的转换路径,故跳过。README 说物마루与물마루 Mono 分别是变宽与等宽两种排布,一旦管线支持,建议合并成一个 family 用 zips 收两个 zip"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/yangpa-onyon--Mallangche"
+reason = "README 明确说明目前只发布 PNG(png/jamo.png、png/syllables.png 等)且带抗锯齿,作者说明以后才会出其他格式,当前没有 BDF/TTF 可收,跳过"
+
+# ==================== 合并片段:manifest-frag-pancjk.toml ====================
+# 导入清单片段：CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/
+# 覆盖该目录下全部仓库（已收录跳过：quiple--galmuri、stgiga--UnifontEX；
+# 44670 不在本片段范围）。核对方式：ls / find / unzip -l / head，逐仓库确认。
+#
+# 特别说明：
+# 1) ark-pixel：本片段的 [[family]] slug="ark-pixel" 为全尺寸版，
+#    将替换 ingest/manifest.toml 中试点的 slug="ark-pixel-12px-monospaced"
+#    单尺寸条目，合并时请删除旧条目。
+# 2) fusion-pixel / fusion-bold-pixel：这两个仓库的发布 zip 内除根目录
+#    OFL.txt 外，还含 LICENSES/<组件字体>/OFL.txt、LICENSES/<组件字体>/
+#    LICENSE.txt 等同名子许可证（用于致谢内嵌的 boutique-bitmap-7x7、
+#    galmuri、misaki、miseki-bitmap 等组件字体）。由于抽取按 basename
+#    落盘，"OFL.txt"/"LICENSE.txt" 这类字面量会与子目录同名文件冲突、
+#    互相覆盖，所以这两个家族的 zip_take 只取 "*.bdf"，改用 license_files
+#    指向仓库根目录的 LICENSE-OFL / LICENSE-MIT（内容与 zip 内根 OFL.txt
+#    一致，经 diff 头部确认），不收录组件字体的许可证副本。
+# 3) gnu-unifont：multitheftauto--unifont 仓库的官方发布里，真正的
+#    unifont-*.bdf 只存在于 RELEASE-ASSETS/src_unifont-16.0.04.tar.gz
+#    内部（且是 .bdf.gz 双重压缩），现有导入器 extract_zip 只支持 .zip、
+#    take 不做任何解压，故无法直接取到该 bdf。RELEASE-ASSETS 下另有直接
+#    可用的 unifont-16.0.04.otf / unifont_jp-16.0.04.otf（非 zip、非 tar，
+#    直接是矢量 OTF），经本地用 pfc.ingest.rasterize.detect_native_ppem
+#    实测两者均判定为原生 16 格点，故改用 convert="ttf" 栅格化路线收录，
+#    以落实简报里"若有 unifont-*.bdf 就收"的意图（等效替代路径）。
+
+[[family]]
+slug = "ark-pixel"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--ark-pixel-font"
+zips = [
+    "RELEASE-ASSETS/ark-pixel-font-10px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/ark-pixel-font-10px-proportional-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/ark-pixel-font-12px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/ark-pixel-font-12px-proportional-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/ark-pixel-font-16px-monospaced-bdf-v2026.08.11.zip",
+]
+zip_take = ["*.bdf", "OFL.txt"]
+name = "Ark Pixel"
+name_zh = "方舟像素"
+author = "TakWolf"
+homepage = "https://ark-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/ark-pixel-font"
+provenance_url = "https://github.com/TakWolf/ark-pixel-font/releases (v2026.08.11)"
+form = "gothic"
+vibes = ["retro-game"]
+
+[[family]]
+slug = "fusion-pixel"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--fusion-pixel-font"
+zips = [
+    "RELEASE-ASSETS/fusion-pixel-font-8px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-pixel-font-10px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-pixel-font-10px-proportional-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-pixel-font-12px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-pixel-font-12px-proportional-bdf-v2026.08.11.zip",
+]
+zip_take = ["*.bdf"]                       # 见文件头说明 2)：不取 zip 内 OFL.txt，避免与 LICENSES/ 子目录同名文件冲突
+license_files = ["LICENSE-OFL", "LICENSE-MIT"]
+name = "Fusion Pixel"
+name_zh = "缝合像素"
+author = "TakWolf"
+homepage = "https://fusion-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/fusion-pixel-font"
+provenance_url = "https://github.com/TakWolf/fusion-pixel-font/releases (v2026.08.11)"
+form = "gothic"
+vibes = ["retro-game"]
+
+[[family]]
+slug = "fusion-bold-pixel"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/pixel-font-studio--fusion-bold-pixel-font"
+# 注意：README 声明"这不是一个正式项目，仅用于测试，旨在提供思路和验证概念"，
+# 但发布 zip 内含真实可用的 BDF 字形数据（5 语言 × 3 尺寸模式）。
+zips = [
+    "RELEASE-ASSETS/fusion-bold-pixel-font-8px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-bold-pixel-font-10px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-bold-pixel-font-10px-proportional-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-bold-pixel-font-12px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/fusion-bold-pixel-font-12px-proportional-bdf-v2026.08.11.zip",
+]
+zip_take = ["*.bdf"]                       # 同上，避免 LICENSES/ 子目录同名许可证文件冲突
+license_files = ["LICENSE-OFL", "LICENSE-MIT"]
+name = "Fusion Bold Pixel"
+name_zh = "缝合粗像素"
+author = "TakWolf （pixel-font-studio）"
+homepage = "https://pixel-font-studio.github.io/fusion-bold-pixel-font/"
+repository = "https://github.com/pixel-font-studio/fusion-bold-pixel-font"
+provenance_url = "https://github.com/pixel-font-studio/fusion-bold-pixel-font/releases (v2026.08.11)"
+form = "gothic"
+vibes = ["retro-game"]
+
+[[family]]
+slug = "jelly-pixel"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--jelly-pixel-font"
+# 注意：README 声明"该字体目前仅用于概念验证，尚未完工，暂无可用实例"，
+# 但发布 zip 内含真实可用的 BDF 字形数据（7 语言）。仅有 12px 一种尺寸，
+# 故只收等宽/比例两个 BDF zip（22 个 zip 里其余为 dfont/otb/otf/pcf/ttf/
+# woff/woff2 等非 BDF 格式，按格式优先级排除）。
+zips = [
+    "RELEASE-ASSETS/jelly-pixel-font-12px-monospaced-bdf-v2026.08.11.zip",
+    "RELEASE-ASSETS/jelly-pixel-font-12px-proportional-bdf-v2026.08.11.zip",
+]
+zip_take = ["*.bdf", "OFL.txt"]
+name = "Jelly Pixel"
+name_zh = "果冻像素"
+author = "TakWolf"
+homepage = "https://jelly-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/jelly-pixel-font"
+provenance_url = "https://github.com/TakWolf/jelly-pixel-font/releases (v2026.08.11)"
+form = "rounded"
+vibes = ["cute"]
+
+[[family]]
+slug = "gnu-unifont"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/multitheftauto--unifont"
+# 见文件头说明 3)：官方 bdf 仅存在于 tar.gz 内部（双重压缩，当前导入器不支持），
+# 改用 RELEASE-ASSETS 下直接可得的矢量 OTF 栅格化回点阵；两个文件均实测原生
+# 16 格点（detect_native_ppem 验证一致），故显式填写 ppem。
+convert = "ttf"
+convert_take = ["unifont-16.0.04.otf", "unifont_jp-16.0.04.otf"]
+ppem = 16
+license_files = ["LICENSE.txt", "OFL-1.1.txt"]  # 自 13.0.04 起双授权：GNU GPL 2+（含字体嵌入例外）与 OFL-1.1
+name = "GNU Unifont"
+name_zh = ""
+author = "GNU Unifont Project"
+homepage = "http://unifoundry.com/unifont/index.html"
+repository = "https://github.com/multitheftauto/unifont"
+provenance_url = "https://github.com/multitheftauto/unifont/releases (v16.0.04)"
+form = "other"
+vibes = ["fallback"]
+
+# --- TakWolf--retro-pixel-font：11 个 zip 均为同一次发布的格式变体（bdf/dfont/
+# ms.bitmap.ttf/otb/otf/otf.woff/otf.woff2/pcf/ttf/ttf.woff/ttf.woff2），
+# 并非"每 zip 一风格"；真正的风格拆分在 bdf zip 内部的子目录（arcade/
+# cute-mono/cute-prop/petty-5h/petty-5x5/thick）。经查各 bdf 内 XLFD FONT
+# 名与 SPACING 字段：Cute Mono/Cute Prop 为同一字体"Cute"的等宽/比例两种
+# 模式（合并为一个家族）；Petty 5H 与 Petty 5x5 是两个不同署名的独立设计
+# （均 5px，但 FONT 名不同、非 Mono/Prop 命名），故拆成 5 个家族。全部风格
+# 均为拉丁/符号字体（无 CJK 字形），form 采用西文分类。
+
+[[family]]
+slug = "retro-pixel-arcade"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--retro-pixel-font"
+zip = "RELEASE-ASSETS/retro-pixel-font-bdf-v2026.08.11.zip"
+zip_take = ["retro-pixel-arcade.bdf", "OFL.txt"]
+name = "Retro Pixel Arcade"
+name_zh = ""
+author = "TakWolf"
+homepage = "https://retro-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/retro-pixel-font"
+provenance_url = "https://github.com/TakWolf/retro-pixel-font/releases (v2026.08.11)"
+form = "sans"
+vibes = ["retro-game"]
+
+[[family]]
+slug = "retro-pixel-cute"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--retro-pixel-font"
+zip = "RELEASE-ASSETS/retro-pixel-font-bdf-v2026.08.11.zip"
+zip_take = ["retro-pixel-cute-mono.bdf", "retro-pixel-cute-prop.bdf", "OFL.txt"]
+name = "Retro Pixel Cute"
+name_zh = ""
+author = "TakWolf"
+homepage = "https://retro-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/retro-pixel-font"
+provenance_url = "https://github.com/TakWolf/retro-pixel-font/releases (v2026.08.11)"
+form = "sans"
+vibes = ["cute"]
+
+[[family]]
+slug = "retro-pixel-petty-5h"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--retro-pixel-font"
+zip = "RELEASE-ASSETS/retro-pixel-font-bdf-v2026.08.11.zip"
+zip_take = ["retro-pixel-petty-5h.bdf", "OFL.txt"]
+name = "Retro Pixel Petty 5H"
+name_zh = ""
+author = "TakWolf"
+homepage = "https://retro-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/retro-pixel-font"
+provenance_url = "https://github.com/TakWolf/retro-pixel-font/releases (v2026.08.11)"
+form = "sans"
+vibes = ["terminal-hardcore"]
+
+[[family]]
+slug = "retro-pixel-petty-5x5"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--retro-pixel-font"
+zip = "RELEASE-ASSETS/retro-pixel-font-bdf-v2026.08.11.zip"
+zip_take = ["retro-pixel-petty-5x5.bdf", "OFL.txt"]
+name = "Retro Pixel Petty 5x5"
+name_zh = ""
+author = "TakWolf"
+homepage = "https://retro-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/retro-pixel-font"
+provenance_url = "https://github.com/TakWolf/retro-pixel-font/releases (v2026.08.11)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[[family]]
+slug = "retro-pixel-thick"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--retro-pixel-font"
+zip = "RELEASE-ASSETS/retro-pixel-font-bdf-v2026.08.11.zip"
+zip_take = ["retro-pixel-thick.bdf", "OFL.txt"]
+name = "Retro Pixel Thick"
+name_zh = ""
+author = "TakWolf"
+homepage = "https://retro-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/retro-pixel-font"
+provenance_url = "https://github.com/TakWolf/retro-pixel-font/releases (v2026.08.11)"
+form = "sans"
+vibes = ["retro-game"]
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--capsule-pixel-font"
+reason = "胶囊像素字体（瘦高圆体风格）。仓库内无 RELEASE-ASSETS、无任何 zip/bdf，README 明确声明「该字体目前仅用于概念验证，尚未完工，暂无可用实例」。待上游正式发布后再收。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--pulse-pixel-font"
+reason = "脉冲像素字体（瘦高黑体风格）。仓库内无 RELEASE-ASSETS、无任何 zip/bdf，README 明确声明「该字体目前仅用于概念验证，尚未完工，暂无可用实例」。待上游正式发布后再收。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/pixel-font-studio--fusion-poke-pixel-font"
+reason = "为同人游戏「宝可梦无限融合」定制的字体，仅发布 TTF（normal/narrow/small 三变体 × 5 语言，无 BDF/OTB）。README 明确声明「为了适配 mkxp-z 字体渲染相关的一些特殊行为，本字体参数做了一些特殊处理，所以可能无法正常用于普通项目」，即字体度量做过非标准化的游戏引擎特调，不适合作为通用像素字体收录；且衍生自 fusion-pixel（已收）与 ark-pixel/boutique-bitmap-9x9/cubic-11/galmuri 等组件。建议跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/pixel-font-studio--mixed-maruminya-pixel-font"
+reason = "混合咪喵像素圆体：整合 x12y12pxMaruMinya 系列的构建方案，定位与缝合像素类似。仓库内无 RELEASE-ASSETS、无任何发布产物；assets/fonts/ 下只有三个第三方源输入字体（x12y12pxMaruMinya.ttf、x12y12pxMaruMinyaHangul.ttf、ZLabsRoundPix_12px_M_CN.ttf，均为构建原料而非本项目产出的「混合」成品），需要运行仓库自带的构建脚本才能生成实际字体。待上游发布构建产物后再收。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/hajimehoshi--bitmapfont"
+reason = "Go 语言点阵字体库（bitmapfont v4）。实际发布产物 data/*.bin 是自定义 Go 二进制格式，并非标准字体文件，也没有 font.Face 之外的静态字体导出。仓库内确有 13 个 .bdf（+1 个 .ttf）在 internal/ 下，但全部是构建用的第三方组件副本：internal/ark 的 2 个 bdf 是 ark-pixel 12px 等宽子集（已收 ark-pixel 家族覆盖）；internal/galmuri 的 GalmuriMono11.bdf 是 galmuri 的子集（已收）；internal/baekmuk（Gulim）、internal/mplus（M+ Bitmap Fonts，obsolete）、internal/fixed（misc-fixed，Public Domain 经典 X11 字体）、internal/cubic11（Cubic 11 的 ttf）均为其它字体的第三方嵌入副本，各自更适合从其官方上游仓库收录（如在本次全量清单其它分片中）。顶层 LICENSE 为 Apache-2.0（仅覆盖 Go 代码），各嵌入字体许可证见 README（Baekmuk License、M+ Bitmap Font License「free softwares」、OFL、misc-fixed 为 Public Domain）。整体建议跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/olikraus--u8g2"
+reason = "u8g2 是大型渲染库，仓库内 SELECTION-NOTE.txt 已说明只保留了 CJK/Unifont/WenQuanYi/GB 相关 bdf。实测 tools/font/bdf/ 下 10 个 bdf 中：wenquanyi_*.bdf（5 个，9pt/10pt/11pt/12pt/13px）与已收 wqy-bitmapfont 重复；unifont.bdf/unifont_upper.bdf/unifont_jp.bdf（3 个）与本片段新收的 gnu-unifont 重复；gb16st.bdf/gb24st.bdf（2 个）是 1988 年 Academia Sinica（ISAS）宋体点阵字体，许可宽松（允许使用/复制/修改/分发），字形本身有历史价值，但采用 GB2312-1980 GL 编码（COMMENT 内注明「高位字节为 0」的旧式双字节编码），ENCODING 并非 Unicode 码位，当前导入器无字符集转换能力，直接收录会导致码位与实际汉字错位、不可用。建议整体跳过；gb16st/gb24st 若未来要收，需先补一个 GB2312→Unicode 转码步骤，作为独立任务处理。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/scriptwide-fonts--scriptwide-bitmap-cjk-pd"
+reason = "仓库为占位仓库：只有 LICENSE、README 与两个通用 BDF 加粗/斜体化 Perl 脚本（mkbold.pl/mkitalic.pl，公有领域工具，非字体本身），无任何字体文件。README 自述「公有领域 CJK 点阵字体」的姊妹仓库 scriptwide-bitmap-cjk 尚未创建（not created yet）。待上游放出实际字体后再收。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/trevorld--hexfont"
+reason = "R 语言数据包（CRAN 包 hexfont），内容是 GNU Unifont 源码分发里的 .hex 文件重新打包（inst/font 下 62 个文件，均为 .hex.xz 格式，非 bdf/otb/ttf），本质是 Unifont 的另一种再分发形式，与本片段新收的 gnu-unifont 家族重复；且当前导入器不支持 .hex 格式转换。建议跳过。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/DWNfonts--FullPixel"
+reason = "FullPixel：基于方舟像素字体制作、目标覆盖全部中日韩越统一汉字的 12x12 像素字体，README 自述「还在研发…」。仓库内无任何编译产物，只有构建脚本（ase2png.py、make.py、photo2bdf.py、build.bat）与一个 Aseprite 调色板样例文件（design/sample.ase），需要本地安装 Aseprite（付费软件）与 Bits'n'Picas 才能从头构建，无法直接收录。待上游发布可下载的字体产物后再收。"
+
+# ==================== 人工补充 ====================
+
+[[family]]
+slug = "isas-song"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/olikraus--u8g2"
+take = ["gb16st.bdf", "gb24st.bdf"]
+name = "ISAS Song"
+name_zh = "中研院宋体点阵"
+author = "Institute of Software, Academia Sinica (1988)"
+repository = "https://github.com/olikraus/u8g2"
+provenance_url = "https://github.com/olikraus/u8g2 (tools/font/bdf,1988 年 GB2312 宋体点阵,BDF 注释含宽松授权声明)"
+form = "mingcho"
+vibes = ["classic"]
+# 注意:仓库内未见独立许可证文件,授权声明在 BDF COMMENT 中,导入后在 family.toml 手填。
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm-pro"
+reason = "NeoDunggeunmo Pro 官方定位即「跳出 8x16/16x16 网格」的比例宽度衍生字体,原生格点判定失败(实测确无统一格点),不适合栅格化收录;基础版 neodgm 已收。"

@@ -70,7 +70,9 @@ test('char lookup filters catalogue', async ({ page }) => {
   await page.getByTestId('chars-input').fill('永');
   await expect.poll(countOf).toBeLessThanOrEqual(all);
   expect(await countOf()).toBeGreaterThanOrEqual(4); // 五家族中至少 4 家有「永」
-  await page.getByTestId('chars-input').fill('͸'); // 永久未指派码位
+  await page.getByTestId('chars-input').fill('͸'); // U+0378 未指派——但 Unifont 连它都有
+  await expect.poll(countOf).toBeLessThanOrEqual(1);
+  await page.getByTestId('chars-input').fill('\u{40000}'); // 第 4 平面,任何字体都不会编码
   await expect.poll(countOf).toBe(0);
   await expect(page.getByTestId('catalogue-island')).toContainText('没有符合条件的字体');
 });

@@ -1,0 +1,11 @@
+name = "Z Labs RoundPix 16px"
+name_zh = "Z工坊像素圆体 16px"
+author = "Astro_2539（取形参考 Zen Maru Gothic）"
+homepage = ""
+repository = "https://github.com/Astro-2539/ZLabs-RoundPix-16px"
+description = ""
+form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["cute", "retro-game"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-16px；上游 https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501)；由 kbitx 转换"
+added = "2026-08-21"

@@ -60,6 +60,7 @@ class BuildReport:
     families: int = 0
     variants: int = 0
     cached: int = 0
+    failed: int = 0
     data_bytes: int = 0
     warnings: list[str] = field(default_factory=list)
     took_s: float = 0.0
@@ -356,9 +357,15 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
             report.families += 1
             print(f"  {slug}: cached")
             continue
-        entry, payload = _build_family(
-            family_dir, site_data, downloads_dir, charsets, ucd, han_ref, report
-        )
+        try:
+            entry, payload = _build_family(
+                family_dir, site_data, downloads_dir, charsets, ucd, han_ref, report
+            )
+        except Exception as e:  # noqa: BLE001 - 单家族失败不拖垮全站构建
+            report.warnings.append(f"{slug}: 构建失败,已跳过 — {e}")
+            report.failed += 1
+            print(f"  {slug}: FAILED ({e})")
+            continue
         payload["key"] = key
         cache.store(slug, payload)
         entries.append(entry)
@@ -429,6 +436,9 @@ def main() -> None:
     if mb > args.budget_mb:
         print(f"ERROR: 站点数据 {mb:.0f}MB 超过预算 {args.budget_mb}MB", file=sys.stderr)
         sys.exit(2)
+    if report.failed:
+        print(f"ERROR: {report.failed} 个家族构建失败(见 warn 行)", file=sys.stderr)
+        sys.exit(3)
 
 
 if __name__ == "__main__":

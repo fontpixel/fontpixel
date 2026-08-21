@@ -1,0 +1,11 @@
+name = "ZhengGeDianHei 16"
+name_zh = "正格点黑 16"
+author = "yzdnn（基于 DotGothic16 Project／Fontworks 的 DotGothic16）"
+homepage = ""
+repository = "https://github.com/yzdnn/ZhengGeDianHei-16"
+description = ""
+form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ZhengGeDianHei-16；上游 https://github.com/yzdnn/ZhengGeDianHei-16/releases (v1.0.0)"
+added = "2026-08-21"

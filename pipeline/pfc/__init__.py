@@ -2,4 +2,4 @@
 
 # 缓存键包含此版本号:凡是会改变产物的逻辑变更(引擎判定、格式、口径)
 # 都必须递增,否则缓存命中的家族不会重算。
-PIPELINE_VERSION = 5  # v5:DWIDTH 回退改按单元格语义
+PIPELINE_VERSION = 6  # v6:Johab 字符集支持

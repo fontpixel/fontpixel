@@ -1,0 +1,11 @@
+name = "Retro Pixel Arcade"
+name_zh = ""
+author = "TakWolf"
+homepage = "https://retro-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/retro-pixel-font"
+description = ""
+form = "sans"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--retro-pixel-font；上游 https://github.com/TakWolf/retro-pixel-font/releases (v2026.08.11)"
+added = "2026-08-21"

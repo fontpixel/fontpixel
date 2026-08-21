@@ -1,0 +1,11 @@
+name = "QiuYeYuanTi 16"
+name_zh = "秋叶圆体 16"
+author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット秋葉原16）"
+homepage = ""
+repository = "https://github.com/yzdnn/QiuYeYuanTi-16"
+description = ""
+form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["cute", "retro-game"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--QiuYeYuanTi-16；上游 https://github.com/yzdnn/QiuYeYuanTi-16/releases (v1.0.1)"
+added = "2026-08-21"

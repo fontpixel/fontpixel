@@ -1,0 +1,11 @@
+name = "Tekuplus"
+name_zh = ""
+author = "itouhiro（西文取自自制 Teku 字体，日文取自 M+ BITMAP FONTS）"
+homepage = ""
+repository = "https://github.com/itouhiro/Tekuplus"
+description = ""
+form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
+vibes = []  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--Tekuplus；上游 https://github.com/itouhiro/Tekuplus"
+added = "2026-08-21"

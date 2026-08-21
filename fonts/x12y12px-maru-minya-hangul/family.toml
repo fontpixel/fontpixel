@@ -1,0 +1,11 @@
+name = "x12y12pxMaruMinyaHangul"
+name_zh = ""
+author = "quiple (Lee Minseo)（改编自 hicc 的 x12y12pxMaruMinya）"
+homepage = "https://blog.quiple.dev/font/maruminya-hangul"
+repository = "https://github.com/quiple/x12y12pxMaruMinyaHangul"
+description = ""
+form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["cute"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x12y12pxMaruMinyaHangul；上游 https://github.com/quiple/x12y12pxMaruMinyaHangul"
+added = "2026-08-21"

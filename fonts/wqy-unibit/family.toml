@@ -1,0 +1,11 @@
+name = "WenQuanYi Unibit"
+name_zh = ""
+author = "WenQuanYi Project"
+homepage = "http://wenq.org"
+repository = "https://github.com/carrothu-cn/wqy-unibit-otb"
+description = ""
+form = "other"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["fallback"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/carrothu-cn--wqy-unibit-otb；上游 https://github.com/carrothu-cn/wqy-unibit-otb/releases (v1.1)；由 otb 转换"
+added = "2026-08-21"
