@@ -69,3 +69,17 @@
 
 family.toml 中带 `# UNVERIFIED` 注释的 form/vibes 为导入时预填，
 请逐一复核后删除该注释。
+
+## 待人工复核清单（构建后统计）
+
+### 风格标注待复核（93 家，family.toml 内带 `# UNVERIFIED`）
+
+00ff-donguriduel、00ff-gridgazer、00ff-headupdaisy、00ff-linelinker、00ff-scanline、00ff-scoredozer、00ff-solidlinker、00ff-thestronggamer、ark-pixel、ba-ding-shi-wei-ti-16、baekmuk-dotum、baekmuk-gulim、baekmuk-hline、bestten、boutique-bitmap-7x7、boutique-bitmap-9x9、chang-ban-dian-song-12、chang-ban-dian-song-16、chenhao-rp-font、chillmoonmono、chusung、clfn、cmex-ming、cubic-11、departure-mono、dos-gothic、dos-iyagi-boldface、dos-myungjo、dos-pilgi、dos-saemmul、dotgothic16、fairfax、fairfax-hax、fairfax-pona、fairfax-pula、fairfax-serif、fairfax-sm、fashionbitmap16、fusion-bold-pixel、fusion-pixel、gnu-unifont、illusion-book、jelly-pixel、k12x8、k6x8、k8x12、liora-chip-10x12、lyusung、miraero-normal、misaki、misekibitmap、monocraft、mplus-hzk-12、muzai-pixel、nano-dyong-chyang-song、nano-qyoan-da-song、neodgm、nightgazer-bitmap、pixel-mplus、pixeloid-mono、pixeloid-sans、press-start-2p、qiu-ye-yuan-ti-16、ren-ou-fang-song-16、retro-pixel-arcade、retro-pixel-cute、retro-pixel-petty-5h、retro-pixel-petty-5x5、retro-pixel-thick、sam3kr-font、silver、spleen、tekuplus、terrarum-sans-bitmap、tiny5、uranus-pixel、wqy-unibit、x10y12px-denki-chip-hangul、x12y12px-maru-minya、x12y12px-maru-minya-hangul、x5y8px-nega-clip、x5y8px-nega-tape、x8y12px-denki-chip、xiaoya-pixel-classic、xiu-zhen-xiang-su-ti、yarndings-12、yarndings-20、zheng-ge-dian-hei-16、zlabs-diamondpix-16px、zlabs-geopix-16px、zlabs-pixel-12px、zlabs-roundpix-12px、zlabs-roundpix-16px
+
+### 许可证未识别（16 家，站点显示「许可证待确认」）
+
+00ff-donguriduel、00ff-gridgazer、00ff-headupdaisy、00ff-linelinker、00ff-scanline、00ff-scoredozer、00ff-solidlinker、00ff-thestronggamer、chusung、clfn、lyusung、nano-dyong-chyang-song、nano-qyoan-da-song、press-start-2p、silver、xiaoya-pixel-classic
+
+### 仅提供 BDF 下载（bdftopcf 转换失败，已记构建警告）
+
+galmuri、isas-song、unifont-ex、x10y12px-denki-chip-hangul、x12y12px-maru-minya-hangul

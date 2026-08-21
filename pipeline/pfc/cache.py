@@ -19,12 +19,12 @@ def data_dir_hash(data_dir: Path) -> str:
 
 
 def family_key(data_hash: str, family_dir: Path, font_files: list[Path]) -> str:
+    """键覆盖家族目录内全部文件(字体、toml、许可证等),任一变化即重建。"""
     h = hashlib.sha256()
     h.update(data_hash.encode())
-    toml = family_dir / "family.toml"
-    if toml.exists():
-        h.update(hashlib.sha256(toml.read_bytes()).digest())
-    for p in font_files:
+    for p in sorted(family_dir.iterdir()):
+        if not p.is_file():
+            continue
         h.update(p.name.encode())
         h.update(hashlib.sha256(p.read_bytes()).digest())
     return h.hexdigest()
