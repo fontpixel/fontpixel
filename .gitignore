@@ -1,0 +1,14 @@
+.venv/
+node_modules/
+dist/
+.cache/
+__pycache__/
+*.pyc
+site/public/data/
+site/dist/
+dist-downloads/
+.DS_Store
+*.egg-info/
+site/.astro/
+test-results/
+playwright-report/
