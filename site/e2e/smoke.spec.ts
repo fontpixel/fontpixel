@@ -35,7 +35,9 @@ test('root redirects by browser language', async ({ page }) => {
   await page.waitForURL(/\/(zh|en)\//);
 });
 
-test('card preview svg is inlined', async ({ page }) => {
+test('island card renders sample canvas', async ({ page }) => {
   await page.goto('zh/');
-  await expect(page.locator('.card__preview svg').first()).toBeVisible();
+  await expect(
+    page.locator('[data-testid="catalogue-island"] .card__sample canvas').first(),
+  ).toBeVisible();
 });

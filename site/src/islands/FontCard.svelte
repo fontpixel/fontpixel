@@ -94,7 +94,7 @@
           nameEl.style.display = 'none';
         }
       }
-    })().catch(() => {});
+    })().catch((e) => console.error(e));
     return () => {
       cancelled = true;
     };

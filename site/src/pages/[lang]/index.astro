@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Catalogue from '../../islands/Catalogue.svelte';
 import { t, type Lang } from '../../i18n';
 import { loadIndex, readPreviewSvg, withBase } from '../../lib/data';
 
@@ -30,8 +31,17 @@ const previews = new Map(
 >
   <p class="tagline">{s.siteTagline}</p>
 
-  <section class="catalogue" data-testid="catalogue">
-    <p class="results mono">{s.catalogue.results.replace('{n}', String(families.length))}</p>
+  <Catalogue
+    client:load
+    families={families}
+    lang={lang}
+    s={s}
+    dataBase={withBase('/data')}
+    fontsBase={withBase(`/${lang}/fonts/`)}
+  />
+
+  <!-- 无 JS 首屏与 SEO:岛屿水合后移除 -->
+  <section class="ssr" data-ssr-grid data-testid="catalogue">
     <div class="grid">
       {
         families.map((f) => (
@@ -50,8 +60,6 @@ const previews = new Map(
                 ))}
                 {f.form && <span class="chip">{s.forms[f.form] ?? f.form}</span>}
                 {f.license.spdx && <span class="chip">{f.license.spdx}</span>}
-                {f.converted && <span class="chip chip--accent">{s.card.converted}</span>}
-                {!f.curated && <span class="chip">{s.card.uncurated}</span>}
                 <span class="chip mono">
                   {f.glyphCount.toLocaleString()} {s.card.glyphs}
                 </span>
@@ -68,13 +76,9 @@ const previews = new Map(
       color: var(--ink-2);
       margin: 0 0 var(--s5);
     }
-    .results {
-      color: var(--ink-3);
-      font-size: 0.8rem;
-    }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
       gap: var(--s4);
     }
     .card {
@@ -82,15 +86,12 @@ const previews = new Map(
       border-radius: var(--radius);
       background: var(--surface);
     }
-    .card:hover {
-      border-color: var(--ink-3);
-    }
     .card__link {
       display: block;
       padding: var(--s4);
     }
     .card__name {
-      font-size: 1.05rem;
+      font-size: 1rem;
       margin: 0 0 var(--s3);
     }
     .card__preview :global(svg) {
@@ -98,7 +99,6 @@ const previews = new Map(
       height: auto;
       max-height: 5.5rem;
       color: var(--ink);
-      image-rendering: pixelated;
     }
     .card__meta {
       display: flex;

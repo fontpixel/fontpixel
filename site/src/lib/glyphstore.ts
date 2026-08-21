@@ -20,11 +20,16 @@ export class GlyphStore {
   private cores = new Map<string, Promise<GlyphChunk>>();
   private chunks = new Map<string, Promise<GlyphChunk>>(); // 插入序即 LRU 序
 
+  private readonly fetchFn: typeof fetch;
+
   constructor(
     private readonly dataBase: string,
-    private readonly fetchFn: typeof fetch = fetch,
+    fetchFn?: typeof fetch,
     private readonly capacity = 64,
-  ) {}
+  ) {
+    // 不能直接存全局 fetch:经 this 调用会 Illegal invocation
+    this.fetchFn = fetchFn ?? ((input, init) => globalThis.fetch(input, init));
+  }
 
   private url(slug: string, variantId: string, file: string): string {
     return `${this.dataBase}/packs/${slug}/${variantId}/${file}`;
