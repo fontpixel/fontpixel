@@ -40,6 +40,28 @@ try {
 const dlBase = downloadsBase();
 const variantIds = m.variants.map((v) => v.id);
 const charsetsMeta = loadCharsetsMeta();
+
+// 变体分组:签名相同的变体共用一个 SSR 面板,把 ark-pixel(35 变体)这类
+// 家族的页面从数百 KB 压回正常。度量随尺寸变、覆盖率往往不变,故分两套分组。
+function groupBy(sig: (vid: string) => string) {
+  const map = new Map<string, string[]>();
+  for (const v of m.variants) {
+    const key = sig(v.id);
+    const list = map.get(key) ?? [];
+    list.push(v.id);
+    map.set(key, list);
+  }
+  return [...map.values()].map((ids) => ({ ids, repId: ids[0]!, attr: ids.join(' ') }));
+}
+const metricsGroups = groupBy((vid) => JSON.stringify(detail.metrics[vid]));
+const coverageGroups = groupBy((vid) =>
+  JSON.stringify([
+    detail.coverage[vid],
+    detail.unicodeBlocks[vid],
+    detail.missingChars[vid] ?? {},
+    detail.overview[vid],
+  ]),
+);
 ---
 
 <Base
@@ -80,10 +102,10 @@ const charsetsMeta = loadCharsetsMeta();
       <section class="metrics">
         <h2>{s.detail.metricsTitle}</h2>
         {
-          m.variants.map((v, i) => {
-            const mm = detail.metrics[v.id]!;
+          metricsGroups.map((g, i) => {
+            const mm = detail.metrics[g.repId]!;
             return (
-              <div data-variant-panel={v.id} hidden={i !== 0}>
+              <div data-variant-panel={g.attr} hidden={i !== 0}>
                 <div class="metrics__flex">
                   <table class="metrics__table mono" data-testid="metrics-table">
                     <tbody>
@@ -160,6 +182,7 @@ const charsetsMeta = loadCharsetsMeta();
         detail={detail}
         sections={charsetsMeta.sections}
         charsets={charsetsMeta.charsets}
+        groups={coverageGroups}
       />
 
       <GlyphGrid
@@ -181,7 +204,8 @@ const charsetsMeta = loadCharsetsMeta();
       const id = e.detail?.id;
       if (!id || !variantIds.includes(id)) return;
       document.querySelectorAll('[data-variant-panel]').forEach((el) => {
-        el.toggleAttribute('hidden', el.getAttribute('data-variant-panel') !== id);
+        const ids = (el.getAttribute('data-variant-panel') || '').split(' ');
+        el.toggleAttribute('hidden', !ids.includes(id));
       });
     });
   </script>

@@ -8,8 +8,10 @@ interface Props {
   detail: FontDetail;
   sections: string[];
   charsets: CharsetMeta[];
+  /** 变体分组:同签名变体共用一个面板(attr 为空格分隔的变体 id 列表) */
+  groups: { ids: string[]; repId: string; attr: string }[];
 }
-const { lang, detail, sections, charsets } = Astro.props;
+const { lang, detail, sections, charsets, groups } = Astro.props;
 const s = t(lang);
 const m = detail.meta;
 const name = (c: CharsetMeta) => (lang === 'zh' ? c.nameZh : c.nameEn || c.nameZh);
@@ -27,13 +29,13 @@ const pct = (have: number, total: number) =>
 <section class="cov" data-testid="coverage-report">
   <h2>{s.detail.coverageTitle}</h2>
   {
-    m.variants.map((v, vi) => {
-      const cov = detail.coverage[v.id]!;
-      const ov = detail.overview[v.id]!;
-      const blocks = detail.unicodeBlocks[v.id]!;
-      const missing = detail.missingChars[v.id] ?? {};
+    groups.map((g, vi) => {
+      const cov = detail.coverage[g.repId]!;
+      const ov = detail.overview[g.repId]!;
+      const blocks = detail.unicodeBlocks[g.repId]!;
+      const missing = detail.missingChars[g.repId] ?? {};
       return (
-        <div data-variant-panel={v.id} hidden={vi !== 0}>
+        <div data-variant-panel={g.attr} hidden={vi !== 0}>
           <section class="cov__overview">
             <h3>{s.coverage.sections['overview']}</h3>
             <table class="cov__table">
