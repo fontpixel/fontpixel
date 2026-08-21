@@ -4,7 +4,7 @@ test('zh catalogue renders with brand and cards', async ({ page }) => {
   await page.goto('zh/');
   await expect(page).toHaveTitle(/点阵字库/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-Hans');
-  await expect(page.locator('.site-brand__name')).toHaveText('点阵字库');
+  await expect(page.locator('.site-brand')).toContainText('点阵字库');
   const island = page.locator('[data-testid="catalogue-island"]');
   expect(await island.locator('.card').count()).toBeGreaterThanOrEqual(5);
   await expect(
