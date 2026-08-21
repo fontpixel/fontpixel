@@ -275,6 +275,52 @@ def gen_ucd() -> None:
     print(f"  ucd: {len(assigned)} assigned cps")
 
 
+# ---------------------------------------------------------------- Unihan / 越南语
+
+def gen_unihan_core() -> None:
+    import io
+    import zipfile
+
+    with urllib.request.urlopen(UCD_BASE + "Unihan.zip") as resp:
+        z = zipfile.ZipFile(io.BytesIO(resp.read()))
+    cps: set[int] = set()
+    with z.open("Unihan_DictionaryLikeData.txt") as fh:
+        for line in io.TextIOWrapper(fh, encoding="utf-8"):
+            if "\tkUnihanCore2020\t" in line:
+                cps.add(int(line.split("\t")[0][2:], 16))
+    write_table("intl", "unihan-core-2020", 11, "UnihanCore2020 核心集",
+                "Unihan Core 2020",
+                "Unihan 数据库定义的现代通用核心汉字集,覆盖中日韩越及港台用字",
+                f"{UCD_BASE}Unihan.zip kUnihanCore2020; generated {TODAY}", cps,
+                license_="Unicode License v3")
+
+
+def gen_greek() -> None:
+    from pfc.coverage.ucd import load_ucd
+
+    u = load_ucd(DATA / "ucd")
+    cps = {cp for cp in range(0x370, 0x400) if cp in u.assigned}
+    write_table("intl", "greek-coptic", 41, "希腊和科普特字母", "Greek and Coptic",
+                "U+0370–03FF 区段中已指派的字符",
+                f"Unicode 17.0 Blocks/UnicodeData; generated {TODAY}", cps)
+
+
+def gen_viet() -> None:
+    upper_l1 = [0xC0, 0xC1, 0xC2, 0xC3, 0xC8, 0xC9, 0xCA, 0xCC, 0xCD,
+                0xD2, 0xD3, 0xD4, 0xD5, 0xD9, 0xDA, 0xDD]
+    ext = [0x102, 0x103, 0x110, 0x111, 0x128, 0x129, 0x168, 0x169,
+           0x1A0, 0x1A1, 0x1AF, 0x1B0]
+    cps: set[int] = set(range(0x41, 0x5B)) | set(range(0x61, 0x7B))
+    cps.update(upper_l1)
+    cps.update(c + 0x20 for c in upper_l1)
+    cps.update(ext)
+    cps.update(range(0x1EA0, 0x1EFA))
+    write_table("intl", "viet-latin", 50, "越南语拉丁字符", "Vietnamese Latin",
+                "越南语国语字全部字母:基本拉丁 + 带符字母(Latin-1/扩展 A/B)"
+                " + 拉丁扩展附加 U+1EA0–1EF9",
+                f"按 Unicode 越南语用字构成定义; generated {TODAY}", cps)
+
+
 # ---------------------------------------------------------------- 旧数据迁移
 
 _MIGRATE = {
@@ -339,6 +385,10 @@ def main() -> None:
         gen_codec_tables()
         print("static tables:")
         gen_static_tables()
+        print("unihan/viet/greek:")
+        gen_unihan_core()
+        gen_viet()
+        gen_greek()
         if args.old_dir:
             print("migrate:")
             migrate_old(args.old_dir)

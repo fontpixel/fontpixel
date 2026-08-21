@@ -1,0 +1,29 @@
+# id: viet-latin
+# section: intl
+# order: 50
+# name_zh: 越南语拉丁字符
+# name_en: Vietnamese Latin
+# desc_zh: 越南语国语字全部字母:基本拉丁 + 带符字母(Latin-1/扩展 A/B) + 拉丁扩展附加 U+1EA0–1EF9
+# desc_en: 
+# source: 按 Unicode 越南语用字构成定义; generated 2026-08-21
+0041..005A
+0061..007A
+00C0..00C3
+00C8..00CA
+00CC..00CD
+00D2..00D5
+00D9..00DA
+00DD
+00E0..00E3
+00E8..00EA
+00EC..00ED
+00F2..00F5
+00F9..00FA
+00FD
+0102..0103
+0110..0111
+0128..0129
+0168..0169
+01A0..01A1
+01AF..01B0
+1EA0..1EF9

@@ -1,0 +1,13 @@
+# id: greek-coptic
+# section: intl
+# order: 41
+# name_zh: 希腊和科普特字母
+# name_en: Greek and Coptic
+# desc_zh: U+0370–03FF 区段中已指派的字符
+# desc_en: 
+# source: Unicode 17.0 Blocks/UnicodeData; generated 2026-08-21
+0370..0377
+037A..037F
+0384..038A
+038E..03A1
+03A3..03FF
