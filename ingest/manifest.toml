@@ -941,3 +941,967 @@ vibes = ["classic"]
 [[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm-pro"
 reason = "NeoDunggeunmo Pro 官方定位即「跳出 8x16/16x16 网格」的比例宽度衍生字体,原生格点判定失败(实测确无统一格点),不适合栅格化收录;基础版 neodgm 已收。"
+
+# ==================== 合并片段:manifest-frag-supplement.toml ====================
+# 导入清单片段：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/
+# 覆盖 Upstream-GitHub、Upstream-Direct、Maoken-Direct、Google-Fonts 四个子目录（全部核查完毕），
+# 以及 ZeoSeven-Webfonts 的孤儿字体检查（未整体处理该目录，仅确认有无上游对应）。
+# 状态：全部核查完毕。family 49 个，todo 25 个（8 个仓库内容合并/排除说明 + 3 个非点阵/彩色
+# 字体排除 + 14 个 ZeoSeven-Webfonts 孤儿字体）。TOML 语法已用 python -c "import tomllib" 校验通过。
+
+# ============ Upstream-GitHub ============
+
+[[family]]
+slug = "cubic-11"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/ACh-K--Cubic-11"
+convert = "ttf"
+convert_take = ["Cubic_11.woff"]
+license_files = ["OFL.txt"]
+name = "Cubic 11"
+name_zh = "俐方體11號"
+author = "ACh-K"
+homepage = ""
+repository = "https://github.com/ACh-K/Cubic-11"
+provenance_url = "https://github.com/ACh-K/Cubic-11 (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["retro-game"]
+# 备注：仓库 fonts/ttf 为空目录（未提交编译产物），实取 fonts/web/Cubic_11.woff（TTF-flavored WOFF，
+# fontTools/freetype 可直接读取转换）。README 未给出数字化原生 ppem；经 detect_native_ppem 实测
+# 格点判定稳定为 12（而非名称中的"11"，11 应为字重/字面设计代号），故不在此处手填 ppem，交由自动判定。
+
+[[family]]
+slug = "chenhao-rp-font"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/ChenhaoUwU--ChenhaoRPFont"
+convert = "kbitx"
+convert_take = ["Chenhao_RP_Font.kbitx", "Chenhao_RP_Font_Enchant.kbitx", "Chenhao_RP_Font_Supplement.kbitx"]
+license_files = ["OFL.md"]
+name = "ChenhaoRPFont"
+name_zh = ""
+author = "ChenhaoUwU"
+homepage = ""
+repository = "https://github.com/ChenhaoUwU/ChenhaoRPFont"
+provenance_url = "https://github.com/ChenhaoUwU/ChenhaoRPFont (HEAD 快照，收录于 2026-08-18)"
+form = "other"
+vibes = ["retro-game"]
+# 备注：仓库无 README.md，name_zh/homepage 无法核实故留空。三个 kbitx（本体/Enchant 附魔符号/
+# Supplement 补充）为同一字体的三个字符集模块，kbitx 优先于同名 ttf。
+
+[[family]]
+slug = "clfn"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/DWNfonts--CLFN"
+convert = "kbitx"
+convert_take = ["c16xcnb.kbitx", "c16xcnr.kbitx", "c24xcn.kbitx"]
+license_files = ["COPYING"]
+name = "CLFN"
+name_zh = "粗柳坊新"
+author = "DWNfonts"
+homepage = ""
+repository = "https://github.com/DWNfonts/CLFN"
+provenance_url = "https://github.com/DWNfonts/CLFN (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["retro-game"]
+# 备注：README 明示 kbitx 为源文件，woff2 仅为 CDN 托管用；16x 常规/粗体 + 24x 常规共三个 kbitx。
+
+[[family]]
+slug = "dotgothic16"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fontworks-fonts--DotGothic16"
+convert = "ttf"
+convert_take = ["DotGothic16-Regular.ttf"]
+ppem = 16
+license_files = ["OFL.txt"]
+name = "DotGothic16"
+name_zh = ""
+author = "Fontworks Inc."
+homepage = "https://fontworks.co.jp/fontsearch/dotgothic16std-m/"
+repository = "https://github.com/fontworks-fonts/DotGothic16"
+provenance_url = "https://github.com/fontworks-fonts/DotGothic16 (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["retro-game"]
+# 备注：README 明确"old 16x16 Gothic bitmap font"，故手填 ppem=16；detect_native_ppem 对该 ttf
+# （已 ttfautohint 处理）判定失败，属预期。仓库只有 .glyphs 矢量源，无位图源，故用 ttf 转制。
+
+[[family]]
+slug = "tiny5"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Gissio--font_tiny5"
+take = ["Tiny5.bdf", "Tiny5Duo.bdf"]
+license_files = ["OFL.txt"]
+name = "Tiny5"
+name_zh = ""
+author = "Stefan Schmidt (Gissio)"
+homepage = "http://www.stefanschmidtart.com"
+repository = "https://github.com/Gissio/font_tiny5"
+provenance_url = "https://github.com/Gissio/font_tiny5 (HEAD 快照，收录于 2026-08-18)"
+form = "terminal"
+vibes = ["terminal-hardcore", "retro-game"]
+# 备注：fonts/bdf/ 下有原生 BDF（Tiny5.bdf 与加粗变体 Tiny5Duo.bdf），优先于变量字体/静态实例 ttf。
+# sources/ 下有同名重复 BDF（内容一致），take 会重复匹配但覆盖写入同一目标，无影响。
+
+[[family]]
+slug = "monocraft"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/IdreesInc--Monocraft"
+convert = "ttf"
+convert_take = ["Monocraft.ttf"]
+license_files = ["LICENSE"]
+name = "Monocraft"
+name_zh = ""
+author = "IdreesInc"
+homepage = ""
+repository = "https://github.com/IdreesInc/Monocraft"
+provenance_url = "https://github.com/IdreesInc/Monocraft (HEAD 快照，收录于 2026-08-18)"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+# 备注：dist/Monocraft-ttf/Monocraft.ttf 为主发布物，ppem 自动判定=18。weights/ 下另有 12 款
+# 字重/斜体变体，因多数无法通过格点判定（非 None 的仅主文件），暂不收录，只取主 Regular。
+
+[[family]]
+slug = "misekibitmap"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/ItMarki--MisekiBitmap"
+convert = "ttf"
+convert_take = ["MisekiBitmapMincho.ttf"]
+license_files = ["LICENSE"]
+name = "MisekiBitmap"
+name_zh = "美績点陣體"
+author = "ItMarki"
+homepage = ""
+repository = "https://github.com/ItMarki/MisekiBitmap"
+provenance_url = "https://github.com/ItMarki/MisekiBitmap (HEAD 快照，收录于 2026-08-18)"
+form = "mingcho"
+vibes = ["classic"]
+# 备注：仓库内仅有 Mincho 一款字重（fonts/ 下唯一 ttf），ppem 自动判定=8。
+
+[[family]]
+slug = "liora-chip-10x12"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/LioraChen09--LioraChip10x12"
+convert = "kbitx"
+convert_take = ["LioraChip10x12.kbitx"]
+license_files = ["license.md"]
+name = "Liora Chip 10x12"
+name_zh = "辰芯像素體 10x12"
+author = "Liora Chen"
+homepage = ""
+repository = "https://github.com/LioraChen09/LioraChip10x12"
+provenance_url = "https://github.com/LioraChen09/LioraChip10x12 (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["cute", "retro-game"]
+# 备注：fonts/ 下有 12 个按日期命名的每日构建 ttf（开发中字体，仍缺字），sources/ 下有对应的
+# 单一最新 kbitx 源文件，kbitx 优先，避免在多个日期快照间选择。
+
+[[family]]
+slug = "mplus-hzk-12"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Luckeee--mplus_hzk_12"
+convert = "ttf"
+convert_take = ["mplus_hzk_12.ttf"]
+license_files = ["LICENSE"]
+name = "mplus_hzk_12"
+name_zh = ""
+author = "Luckeee"
+homepage = ""
+repository = "https://github.com/Luckeee/mplus_hzk_12"
+provenance_url = "https://github.com/Luckeee/mplus_hzk_12 (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["classic"]
+# 备注：仓库内 mplus_jf12r.bdf 只是日文 JIS X0208 底料（源材料之一，7187 字），不含 hzk12 补入的
+# 简体汉字，属半成品，不能代表最终合成字体；故改用已合并完成的 mplus_hzk_12.ttf（10898 字形，
+# ppem 自动判定=12）。License 为 Unlicense（公有领域）。mplus_hzk_13.ttf 为另一构建快照
+# （字形数略多但字体家族名相同），未采用。
+
+[[family]]
+slug = "departure-mono"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/rektdeckard--departure-mono"
+convert = "ttf"
+convert_take = ["DepartureMono-Regular.otf"]
+license_files = []
+name = "Departure Mono"
+name_zh = ""
+author = "Helena Zhang"
+homepage = "http://departuremono.com"
+repository = "https://github.com/rektdeckard/departure-mono"
+provenance_url = "https://github.com/rektdeckard/departure-mono (HEAD 快照，收录于 2026-08-18)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+# 注意：许可证文件名冲突——仓库根目录 LICENSE 是网站代码的 MIT 许可，字体本身的真实许可
+# （SIL OFL，已通过字体 name 表 nameID 13/14 核实）文本位于 public/assets/LICENSE，
+# 二者同名，license_files 的 basename glob 机制无法区分，故此处留空，需人工从
+# public/assets/LICENSE 复制正确的 OFL 文本。ppem 自动判定=11，全部变体一致。
+
+[[family]]
+slug = "yarndings-12"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scfried--soft-type-yarndings"
+convert = "ttf"
+convert_take = ["Yarndings12-Regular.ttf"]
+license_files = ["OFL.txt"]
+name = "Yarndings 12"
+name_zh = ""
+author = "Sarah Cadigan-Fried"
+homepage = ""
+repository = "https://github.com/scfried/soft-type-yarndings"
+provenance_url = "https://github.com/scfried/soft-type-yarndings (HEAD 快照，收录于 2026-08-18)"
+form = "decorative"
+vibes = ["decorative", "cute"]
+# 备注：编织图案 dingbat 符号字体，非文字字体。README 称"12"指大写字母高度（像素），但该指标与
+# 实际渲染栅格不同；ppem 自动判定=16，采信判定值。Charted（带图表格线）变体格点判定失败，不收录。
+
+[[family]]
+slug = "yarndings-20"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scfried--soft-type-yarndings"
+convert = "ttf"
+convert_take = ["Yarndings20-Regular.ttf"]
+license_files = ["OFL.txt"]
+name = "Yarndings 20"
+name_zh = ""
+author = "Sarah Cadigan-Fried"
+homepage = ""
+repository = "https://github.com/scfried/soft-type-yarndings"
+provenance_url = "https://github.com/scfried/soft-type-yarndings (HEAD 快照，收录于 2026-08-18)"
+form = "decorative"
+vibes = ["decorative", "cute"]
+# 备注：与 Yarndings 12 同仓库但字体家族名不同（视为独立家族）。ppem 自动判定=24。
+
+[[family]]
+slug = "boutique-bitmap-7x7"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--BoutiqueBitmap7x7"
+convert = "ttf"
+convert_take = ["BoutiqueBitmap7x7_1.7.ttf"]
+license_files = ["OFL.txt"]
+name = "BoutiqueBitmap7x7"
+name_zh = "精品點陣體7×7"
+author = "scott0107000"
+homepage = "https://fontspeech.blogspot.com/"
+repository = "https://github.com/scott0107000/BoutiqueBitmap7x7"
+provenance_url = "https://github.com/scott0107000/BoutiqueBitmap7x7 (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["retro-game"]
+# 备注：仓库内无版本号的 BoutiqueBitmap7x7.ttf 实为最旧的 1.499 版（字形最少），真正最新版是
+# _1.7.ttf（经字体内部 version 字段核实），故取此文件，ppem 自动判定=8。FUN/ 下 3 款花式点变体
+# （圆点/方点/扫描线）格点判定失败，不收录。
+
+[[family]]
+slug = "boutique-bitmap-9x9"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--BoutiqueBitmap9x9"
+convert = "ttf"
+convert_take = ["BoutiqueBitmap9x9_1.92.ttf", "BoutiqueBitmap9x9HK_1.93.ttf"]
+ppem = 10
+license_files = ["OFL.txt"]
+name = "BoutiqueBitmap9x9"
+name_zh = "精品點陣體9×9"
+author = "scott0107000"
+homepage = "https://fontspeech.blogspot.com/"
+repository = "https://github.com/scott0107000/BoutiqueBitmap9x9"
+provenance_url = "https://github.com/scott0107000/BoutiqueBitmap9x9 (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["retro-game"]
+# 注意：全字符集 detect_native_ppem 判定失败（可能因合并了 M+ BITMAP/BestTen-DOT/缝合像素三个
+# 来源，个别字形破坏了全局格点公约数）；改用仅拉丁字母+数字子集手动核算，稳定得 ppem=10，
+# 已手填。README 版本表中的"普通版 1.93"实际不在本快照内（仓库只到 1.92），故普通版取 1.92，
+# HK 版取仓库内最高的 1.93。Bold 字重在 Bold_Add_Spacing/ 目录下存在同名但内容不同的"加大字距"
+# 版本，basename glob 无法区分两个同名文件，故本次不收 Bold，留待人工处理。
+
+[[family]]
+slug = "fashionbitmap16"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--FashionBitmap16"
+convert = "ttf"
+convert_take = ["FashionBitmap16_0.092.ttf"]
+license_files = ["OFL.txt"]
+name = "FashionBitmap16"
+name_zh = "流行點陣體16"
+author = "scott0107000"
+homepage = "https://fontspeech.blogspot.com/"
+repository = "https://github.com/scott0107000/FashionBitmap16"
+provenance_url = "https://github.com/scott0107000/FashionBitmap16 (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["retro-game"]
+# 备注：基于 jikasei.me KH ドットフォント系列的"兜町16"改作。三个版本号中取最新 0.092
+# （ppem 自动判定=16，稳定）；0.09/0.091 判定为 64（不稳，弃用）。
+
+[[family]]
+slug = "nightgazer-bitmap"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--Nightgazer-Bitmap"
+convert = "ttf"
+convert_take = ["Nightgazer12.ttf", "Nightgazer12B.ttf", "Nightgazer13.ttf", "Nightgazer13B.ttf", "Nightgazer14.ttf", "Nightgazer14B.ttf", "Nightgazer15.ttf", "Nightgazer15B.ttf"]
+# 注意：Nightgazer16/16B 因 upem=16 触发保守拒绝，已人工确认 ppem=16 手动转制入库。
+license_files = ["GPL.txt", "LICENSE"]
+name = "Nightgazer-Bitmap"
+name_zh = "夜照飛點陣字型系列"
+author = "scott0107000（原字模：螢火飛 FireFly）"
+homepage = ""
+repository = "https://github.com/scott0107000/Nightgazer-Bitmap"
+provenance_url = "https://github.com/scott0107000/Nightgazer-Bitmap (HEAD 快照，收录于 2026-08-18)"
+form = "gothic"
+vibes = ["classic"]
+# 备注：GPL 授权（转制自螢火飛 bdf）。5 种尺寸(12/13/14/15/16)×2 字重(Regular/Bold)共 10 个
+# ttf，glob 一次性匹配。12/13/14/15 各尺寸 ppem 自动判定与文件名完全一致；16/16B 因 upem 恰好
+# 等于 16（gcd=1 触发判定算法的保守拒绝规则）而判定失败，属已知限制，实际就是 16px，留待
+# 人工在导入报告里确认或后续加 ppem 覆盖。
+
+[[family]]
+slug = "uranus-pixel"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--Uranus-Pixel"
+convert = "ttf"
+convert_take = ["Uranus_Pixel_11Px.ttf"]
+ppem = 11
+license_files = ["LICENSE"]
+name = "Uranus Pixel"
+name_zh = "天王星像素"
+author = "scott0107000（基于文泉驿点阵宋体）"
+homepage = ""
+repository = "https://github.com/scott0107000/Uranus-Pixel"
+provenance_url = "https://github.com/scott0107000/Uranus-Pixel (HEAD 快照，收录于 2026-08-18)"
+form = "mingcho"
+vibes = ["classic"]
+# 注意：detect_native_ppem 对拉丁与 CJK 抽样均判定失败（gcd=1，非干净格点——推测因"不产生
+# 粘连的粗体"描边加粗处理破坏了原始 WenQuanYi 点阵的整数网格）。文件名明确标注"11Px"，
+# 已手填 ppem=11，但转制结果可能有轻微锯齿失真风险，建议人工复核。GPLv2（继承自文泉驿）。
+
+[[family]]
+slug = "terrarum-sans-bitmap"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Terrarum-Sans-Bitmap"
+convert = "ttf"
+convert_take = ["TerrarumSansBitmap.otf"]
+license_files = ["LICENSE.md"]
+name = "Terrarum Sans Bitmap"
+name_zh = ""
+author = "CuriousTorvald"
+homepage = "https://curioustorvald.com"
+repository = "https://github.com/curioustorvald/Terrarum-sans-bitmap"
+provenance_url = "https://github.com/curioustorvald/Terrarum-sans-bitmap/releases （猫啃网直链下载包，收录于 2026-08-18）"
+form = "sans"
+vibes = ["retro-game"]
+# 注意：Upstream-GitHub/curioustorvald--Terrarum-sans-bitmap 的 HEAD 快照内经核实不含任何编译
+# 产物（无 otf/ttf/woff/jar，README 本身也提示"不建议使用仓库内的 .jar，请去 release 页下载"），
+# 故改为源自此处的 Upstream-Direct 直链包（同目录下还有 猫啃网 相关素材文件，字体本体为
+# "Terrarum Sans Bitmap/TerrarumSansBitmap.otf"）。ppem 自动判定=20。许可证文本形式为
+# MIT 但含『Reserved Font Name』字样（近似 OFL 惯例但条款主体是标准 MIT）。
+
+[[family]]
+slug = "spleen"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fcambus--spleen"
+take = ["spleen-5x8.bdf", "spleen-6x12.bdf", "spleen-8x16.bdf", "spleen-12x24.bdf", "spleen-16x32.bdf", "spleen-32x64.bdf"]
+license_files = ["LICENSE"]
+name = "Spleen"
+name_zh = ""
+author = "Frederic Cambus"
+homepage = ""
+repository = "https://github.com/fcambus/spleen"
+provenance_url = "https://github.com/fcambus/spleen (HEAD 快照，收录于 2026-08-18)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+# 备注：经典终端点阵字体，5 个主尺寸的原生 BDF，显式列出文件名以避免匹配到 cp437/ 子目录下
+# 同前缀但字符集不同的 IBM-437 变体（如 spleen-16x32-ibm-437.bdf）。BSD-2-Clause 许可。
+
+# ============ Upstream-Direct（与上方 GitHub 仓库合并的 4 个）============
+
+[[family]]
+slug = "chillmoonmono"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/ChillMoonMono-v1.000"
+convert = "ttf"
+convert_take = ["ChillMoonMono.otf"]
+license_files = ["license.txt"]
+name = "ChillMoonmono"
+name_zh = ""
+author = "Warren2060"
+homepage = ""
+repository = "https://github.com/Warren2060/ChillMoonmono"
+provenance_url = "https://github.com/Warren2060/ChillMoonmono/releases (v1.000)"
+form = "script"
+vibes = ["handwriting"]
+# 备注：GitHub 仓库快照（Upstream-GitHub/Warren2060--ChillMoonmono）只有 README+license，无编译
+# 产物（"请查看 Releases"），故改用此处 v1.000 直链发布包。README 称"更具有手写感的人文像素
+# 字体"，故 form=script。官方中文名未见，留空。ppem 自动判定=16。OFL。
+
+[[family]]
+slug = "illusion-book"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/IllusionBook-v1.0.2"
+convert = "ttf"
+convert_take = ["IllusionBook-Regular.ttf"]
+ppem = 12
+license_files = ["LICENSE.md"]
+name = "Illusion Book"
+name_zh = "幻象像素书体"
+author = "StevenLZH (Steven Liu)"
+homepage = "http://studiountagged.top/Projects/IllusionBook.html"
+repository = "https://github.com/StevenLZH/IllusionBook"
+provenance_url = "https://github.com/StevenLZH/IllusionBook/releases (v1.0.2)"
+form = "serif-pixel"
+vibes = ["classic"]
+# 备注：GitHub 仓库快照（Upstream-GitHub/StevenLZH--IllusionBook）只有 FontForge 源文件（.sfd/
+# .fea），无编译产物，故改用此处 v1.0.2 直链发布包（otf/ttf/woff/woff2 齐全）。README 明确
+# "该字体基于 12px 的大小设计"，UPM=1200，已手填 ppem=12（detect_native_ppem 判定失败，
+# 官方 README 亦提及字距调整未严格取整数倍单元格，属已知限制）。仅拉丁/希腊/西里尔字符，无 CJK。
+
+[[family]]
+slug = "nano-dyong-chyang-song"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoDyongChyangSong"
+convert = "ttf"
+convert_take = ["nfdcsCN16.ttf", "nfdcsCN24.ttf", "nfdcsJP16.ttf", "nfdcsKR24.ttf", "nfdcsTCN16.ttf", "nfdcsTCN24.ttf"]
+license_files = []
+name = "NanoDyongChyangSong"
+name_zh = "纳米点墙宋"
+author = "H.S.S. 寒沙 (Hansha2011)"
+homepage = ""
+repository = "https://github.com/Hansha2011/NanoDyongChyangSong"
+provenance_url = "https://www.maoken.com/ （猫啃网直链下载包，纳米点墙宋 1.1；GitHub 仓库 Upstream-GitHub/Hansha2011--NanoDyongChyangSong 无编译产物，仅 README，已合并至此）"
+form = "mingcho"
+vibes = ["classic"]
+# 注意：目录内附带的"字体授权说明.txt"仅为猫啃网通用免责声明模板（非真实许可证条款），
+# license_files 留空。据上游 GitHub README：西文取自 hurss 字体，中文取自 ISAS 点阵包，
+# 并附加"不可为字体收费"的自定义条款，非标准 MIT/OFL；审计表（INCLUDED.csv 532 行）许可证
+# 字段为空但判定"许可核验通过"，此处照录，请人工复核许可条款是否可接受。CN16/JP16/TCN16 =
+# ppem 16，CN24/KR24/TCN24 = ppem 24，均自动判定稳定。TCN24 缺 KR16/JP24/JP32/JP48（README
+# 标注"制作中未发布"）。
+
+[[family]]
+slug = "nano-qyoan-da-song"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoQyoanDaSong"
+convert = "ttf"
+convert_take = ["1.ttf", "2.ttf"]
+license_files = []
+name = "NanoQyoanDaSong"
+name_zh = "纳米全大宋"
+author = "H.S.S. 寒沙 (Hansha2011)"
+homepage = ""
+repository = "https://github.com/Hansha2011/NanoQyoanDaSong"
+provenance_url = "https://www.maoken.com/ （猫啃网直链下载包；GitHub 仓库 Upstream-GitHub/Hansha2011--NanoQyoanDaSong 无编译产物，仅 README，已合并至此）"
+form = "mingcho"
+vibes = ["classic"]
+# 注意：目录内"字体授权说明.txt"为猫啃网通用免责声明模板，非真实许可证文本，license_files
+# 留空。据上游 GitHub README：v1.0 为 ISAS 字体包许可，v2.0 起改为 SIL OFL 1.1，本包版本号
+# 未标注，按 INCLUDED.csv（575 行，标 OFL）处理。仅收 1.ttf/2.ttf（各自 ppem 自动判定=46，
+# 与 README 所述"44x44 设计尺寸"不同，以格点判定为准，44 应为字面设计尺寸非渲染网格）；
+# 3.ttf 仅含 11 个字形且判定失败，内容不明，不收录。
+
+# ============ Upstream-Direct（00ff：hicchicc 个人站点，8 个各自独立的像素字体）============
+# 注意：00ff 目录内无任何 README/许可证文件，仅 8 个裸 ttf；INCLUDED.csv 标注均为 OFL
+# （来自 ZeoSeven 目录页 2134-2142，upstream_url=https://hicchicc.github.io/00ff/），但本地
+# 未见许可证文件实体，以下 8 个 family 均加注释说明。ZeoSeven 目录中的 2136(x12y12pxMaruMinyaM)
+# 未见于本目录（该字体在 ZeoSeven-Webfonts/2136--x12y12pxMaruMinyaM 才有），留待孤儿检查处理。
+# 文件名 "x{宽}y{高}px{名称}" 中的高度均与 detect_native_ppem 判定结果一致（除
+# TheStrongGamer 判定为 24，为文件名 12 的两倍，以判定结果为准，不手填 ppem）。
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-donguriduel"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x10y12pxDonguriDuel.ttf"]
+name = "x10y12pxDonguriDuel"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-linelinker"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x12y16pxLineLinker.ttf"]
+name = "x12y16pxLineLinker"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-solidlinker"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x12y16pxSolidLinker.ttf"]
+name = "x12y16pxSolidLinker"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-scanline"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x12y20pxScanLine.ttf"]
+name = "x12y20pxScanLine"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-scoredozer"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x14y20pxScoreDozer.ttf"]
+name = "x14y20pxScoreDozer"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-headupdaisy"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x14y24pxHeadUpDaisy.ttf"]
+name = "x14y24pxHeadUpDaisy"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-gridgazer"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x16y32pxGridGazer.ttf"]
+name = "x16y32pxGridGazer"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# 注意：仓库内未见许可证文件
+[[family]]
+slug = "00ff-thestronggamer"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
+convert = "ttf"
+convert_take = ["x8y12pxTheStrongGamer.ttf"]
+name = "x8y12pxTheStrongGamer"
+name_zh = ""
+author = "hicchicc"
+homepage = "https://hicchicc.github.io/00ff/"
+repository = ""
+provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
+form = "decorative"
+vibes = ["retro-game"]
+
+# ============ Upstream-Direct（Fairfax：Kreative Korp，OFL，14 个 ttf 拆成 6 个家族）============
+# 依据 INCLUDED.csv 的 6 个独立 ZeoSeven 目录条目（964-969）拆分；FairfaxSerifHax/FairfaxSerifSM
+# 并入 fairfax-serif（未见 ZeoSeven 单列）。全部 ppem 自动判定=12，一致稳定。
+
+[[family]]
+slug = "fairfax"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax"
+convert = "ttf"
+convert_take = ["Fairfax.ttf", "FairfaxBold.ttf", "FairfaxItalic.ttf"]
+license_files = ["OFL.txt"]
+name = "Fairfax"
+name_zh = ""
+author = "Kreative Software (Kreative Korp)"
+homepage = "https://www.kreativekorp.com/software/fonts/fairfax/"
+repository = ""
+provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[[family]]
+slug = "fairfax-hax"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax"
+convert = "ttf"
+convert_take = ["FairfaxHax.ttf", "FairfaxHaxBold.ttf", "FairfaxHaxItalic.ttf"]
+license_files = ["OFL.txt"]
+name = "Fairfax Hax"
+name_zh = ""
+author = "Kreative Software (Kreative Korp)"
+homepage = "https://www.kreativekorp.com/software/fonts/fairfax/"
+repository = ""
+provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[[family]]
+slug = "fairfax-pona"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax"
+convert = "ttf"
+convert_take = ["FairfaxPona.ttf"]
+license_files = ["OFL.txt"]
+name = "Fairfax Pona"
+name_zh = ""
+author = "Kreative Software (Kreative Korp)"
+homepage = "https://www.kreativekorp.com/software/fonts/fairfax/"
+repository = ""
+provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+# 备注：Pona = Toki Pona 人工语言符号支持变体。
+
+[[family]]
+slug = "fairfax-pula"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax"
+convert = "ttf"
+convert_take = ["FairfaxPula.ttf"]
+license_files = ["OFL.txt"]
+name = "Fairfax Pula"
+name_zh = ""
+author = "Kreative Software (Kreative Korp)"
+homepage = "https://www.kreativekorp.com/software/fonts/fairfax/"
+repository = ""
+provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[[family]]
+slug = "fairfax-serif"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax"
+convert = "ttf"
+convert_take = ["FairfaxSerif.ttf", "FairfaxSerifHax.ttf", "FairfaxSerifSM.ttf"]
+license_files = ["OFL.txt"]
+name = "Fairfax Serif"
+name_zh = ""
+author = "Kreative Software (Kreative Korp)"
+homepage = "https://www.kreativekorp.com/software/fonts/fairfax/"
+repository = ""
+provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）"
+form = "serif-pixel"
+vibes = ["classic"]
+
+[[family]]
+slug = "fairfax-sm"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax"
+convert = "ttf"
+convert_take = ["FairfaxSM.ttf", "FairfaxSMBold.ttf", "FairfaxSMItalic.ttf"]
+license_files = ["OFL.txt"]
+name = "Fairfax SM"
+name_zh = ""
+author = "Kreative Software (Kreative Korp)"
+homepage = "https://www.kreativekorp.com/software/fonts/fairfax/"
+repository = ""
+provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+# ============ Upstream-Direct（littlelimit.net 门真なむ 三款：k6x8/k8x12/k12x8）============
+
+[[family]]
+slug = "k6x8"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/k6x8"
+convert = "ttf"
+convert_take = ["k6x8_gothic.ttf", "k6x8_mincho.ttf"]
+license_files = ["k6x8.txt"]
+name = "k6x8"
+name_zh = ""
+author = "門真なむ (Num Kadoma)"
+homepage = "http://littlelimit.net/"
+repository = ""
+provenance_url = "https://littlelimit.net/k6x8.htm （直链下载包，2023-10-19 版，收录于 2026-08-18）"
+form = "gothic"
+vibes = ["classic"]
+# 备注：k6x8ゴシック（原始/Gothic）与 k6x8明朝（非汉字部分替换为明朝风格，汉字部分与
+# ゴシック版相同）为同一产品的两种字形变体，归为一个家族，以 Gothic 为主 form。
+# ppem 自动判定=8，两者一致。许可证为 k6x8.txt 内自由软件条款（近似 MIT/zlib）。
+
+[[family]]
+slug = "k8x12"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/k8x12"
+convert = "ttf"
+convert_take = ["k8x12.ttf", "k8x12L.ttf", "k8x12S.ttf"]
+ppem = 12
+license_files = ["k8x12.txt"]
+name = "k8x12"
+name_zh = ""
+author = "門真なむ (Num Kadoma)"
+homepage = "http://littlelimit.net/"
+repository = ""
+provenance_url = "https://littlelimit.net/k8x12.htm （直链下载包，收录于 2026-08-18）"
+form = "gothic"
+vibes = ["classic"]
+# 注意：detect_native_ppem 对三个变体均判定失败（upem=2047 为奇数，导致格点公约数计算异常），
+# 但兄弟项目 k6x8/k12x8 均自动判定成功且与文件名一致，故此处按文件名明确标注的高度手填
+# ppem=12（k8x12 = 宽 8 高 12）。k8x12/k8x12L/k8x12S 为常规/L/S 三种变体（具体差异见
+# k8x12.txt，未逐一深究）。
+
+[[family]]
+slug = "k12x8"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/k12x8"
+convert = "ttf"
+convert_take = ["k12x8.ttf"]
+license_files = ["k12x8.txt"]
+name = "k12x8"
+name_zh = ""
+author = "門真なむ (Num Kadoma)"
+homepage = "http://littlelimit.net/"
+repository = ""
+provenance_url = "https://littlelimit.net/k12x8.htm （直链下载包，收录于 2026-08-18）"
+form = "gothic"
+vibes = ["classic"]
+# 备注：ppem 自动判定=8，与文件名高度一致。
+
+[[family]]
+slug = "misaki"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Misaki"
+convert = "ttf"
+convert_take = ["misaki_gothic_2nd.ttf", "misaki_mincho.ttf"]
+license_files = ["misaki.txt"]
+name = "Misaki"
+name_zh = "美咲フォント"
+author = "門真なむ (Num Kadoma)"
+homepage = "http://littlelimit.net/"
+repository = ""
+provenance_url = "https://littlelimit.net/misaki.htm （直链下载包，收录于 2026-08-18）"
+form = "gothic"
+vibes = ["classic"]
+# 备注：ゴシック第2（Gothic 2nd）与明朝（Mincho）两种字形变体，归一家族。ppem 自动判定=8，
+# 与经典"美咲 8px"说法一致。原版 misaki_gothic.ttf（非"第2"版）本目录未提供，故未收。
+
+# ============ Upstream-Direct（Pixeloid：GGBotNet，OFL）============
+
+[[family]]
+slug = "pixeloid-sans"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Pixeloid-Sans"
+convert = "ttf"
+convert_take = ["PixeloidSans.ttf", "PixeloidSans-Bold.ttf"]
+license_files = ["License.txt"]
+name = "Pixeloid Sans"
+name_zh = ""
+author = "GGBotNet"
+homepage = "https://ggbot.itch.io/pixeloid-font"
+repository = ""
+provenance_url = "https://ggbot.itch.io/pixeloid-font （直链下载包，收录于 2026-08-18）"
+form = "sans"
+vibes = ["retro-game"]
+# 备注：ppem 自动判定=9，Regular/Bold 一致。
+
+[[family]]
+slug = "pixeloid-mono"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Pixeloid-Mono"
+convert = "ttf"
+convert_take = ["PixeloidMono.ttf"]
+license_files = ["License.txt"]
+name = "Pixeloid Mono"
+name_zh = ""
+author = "GGBotNet"
+homepage = "https://ggbot.itch.io/pixeloid-font"
+repository = ""
+provenance_url = "https://ggbot.itch.io/pixeloid-font （直链下载包，收录于 2026-08-18）"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+# 备注：ppem 自动判定=9。
+
+# ============ Maoken-Direct ============
+# 4 个目录内子文件夹/部分文件名因原始 zip 采用 GBK 编码、在本机被按其他编码展开而乱码，
+# 但字体文件本身 basename 为纯 ASCII，不影响 glob 匹配。
+
+[[family]]
+slug = "silver"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/7577"
+convert = "ttf"
+convert_take = ["Silver.ttf"]
+license_files = ["字体授权(CCBY4.0).mhtml"]
+name = "Silver"
+name_zh = "像素Silver"
+author = "Poppy Works"
+homepage = "http://poppy.works/"
+repository = ""
+provenance_url = "https://www.maoken.com/freefonts/7577.html"
+form = "gothic"
+vibes = ["retro-game"]
+# 备注：许可证文件为浏览器另存的 mhtml 网页快照（CC BY-SA 4.0 简体中文法律文本，
+# Snapshot-Content-Location 指向 creativecommons.org/licenses/by-sa/4.0/legalcode.zh-Hans），
+# 注意实际是 BY-SA（附相同方式共享），而 INCLUDED.csv 标注为"CC-BY"，两者有细微出入，
+# 建议人工核实。ppem 自动判定=19（稳定）。字体内嵌版权 "2019 Poppy Works"。
+
+# 注意：仓库内未见许可证文件（仅猫啃网通用免责声明模板，非真实许可证条款）
+[[family]]
+slug = "chusung"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11089"
+convert = "ttf"
+convert_take = ["Chusung-210529.ttf"]
+ppem = 16
+name = "Chusung"
+name_zh = "粗宋"
+author = "diaowinner"
+homepage = "https://diaowinner.itch.io/chusung"
+repository = ""
+provenance_url = "https://www.maoken.com/freefonts/11089.html"
+form = "mingcho"
+vibes = ["classic"]
+# 备注：字体 name 表家族名/全名分别为 "Chusung"/"Chusung 16"，明确标注 16，
+# detect_native_ppem 判定失败（gcd=1），故手填 ppem=16。版权继承 1988 Academia Sinica 点阵字库。
+
+# 注意：仓库内未见许可证文件（仅猫啃网通用免责声明模板，非真实许可证条款）
+[[family]]
+slug = "lyusung"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11271"
+convert = "ttf"
+convert_take = ["Lyusung-210618.ttf"]
+name = "Lyusung"
+name_zh = "柳宋"
+author = "diaowinner"
+homepage = "https://diaowinner.itch.io/lyusung"
+repository = ""
+provenance_url = "https://www.maoken.com/freefonts/11271.html"
+form = "mingcho"
+vibes = ["classic"]
+# 备注：ppem 自动判定=24，与字体 name 表全名 "Lyusung 24" 一致。
+
+[[family]]
+slug = "bestten"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/15489"
+convert = "ttf"
+convert_take = ["BestTen-CRT.otf", "BestTen-DOT.otf"]
+ppem = 10
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "BestTen"
+name_zh = ""
+author = "FLOP DESIGN"
+homepage = "https://flopdesign.booth.pm/items/2747965"
+repository = ""
+provenance_url = "https://www.maoken.com/freefonts/15489.html"
+form = "gothic"
+vibes = ["classic"]
+# 备注：ReadMe.txt（UTF-16 编码）确认为「ベストテン」，基于 M+ BITMAP FONTS 与 PixelMplus10
+# 改作，"10×10のドットフォントです"，已手填 ppem=10（detect_native_ppem 判定失败）。
+# DOT = 未加工简单点阵版（Regular），CRT = 圆角视觉调整版（Bold），两者均收。
+
+# ============ Google-Fonts ============
+# 两目录均为 ZeoSeven FontsAPI 式的 CSS + WOFF2 Unicode-range 切片导出（result.css +
+# font-NN.woff2），并非官方 google/fonts 仓库的完整 ttf；已核对每个切片的 Unicode 覆盖，
+# 选取含基本拉丁字母(U+0000-00FF)的切片。
+
+[[family]]
+slug = "press-start-2p"
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P"
+convert = "ttf"
+convert_take = ["font-05.woff2"]
+ppem = 8
+name = "Press Start 2P"
+name_zh = ""
+author = ""
+homepage = "https://fonts.google.com/specimen/Press+Start+2P"
+repository = "https://github.com/google/fonts/tree/main/ofl/pressstart2p"
+provenance_url = "https://fonts.google.com/specimen/Press+Start+2P （CSS Unicode-range 切片镜像，v16，latin 子集，收录于 2026-08-18）"
+form = "sans"
+vibes = ["retro-game"]
+# 备注：result.css 共 5 个 @font-face 切片（cyrillic-ext/cyrillic/greek/latin-ext/latin），
+# font-05.woff2 对应最后一个"latin"切片（已用 cmap 核实含 'A'）。其余 4 个切片（西里尔/希腊/
+# 拉丁扩展）未收录，如需完整字符集需另行合并。detect_native_ppem 对 latin 切片判定失败，
+# 但同一字体的 cyrillic-ext/greek 切片（font-01/font-03）判定稳定=8，Press Start 2P 8px
+# 网格设计已是公认事实，故手填 ppem=8。
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/1--font"
+reason = "孤儿字体：JinzisheTongfang（金字社统方体），上游 https://gitee.com/typeface-cn/typeface_open_font ，未见于 Upstream-GitHub/Upstream-Direct/Maoken-Direct/Google-Fonts 任一目录（Gitee 源不在快照范围内）。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/4--font"
+reason = "孤儿字体：JinzisheTongyuan（金字社统圆体），上游 https://gitee.com/typeface-cn/typeface_open_font ，同 1--font，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/316--LanaPixel"
+reason = "孤儿字体：LanaPixel，上游 https://opengameart.org/content/lanapixel-localization-friendly-pixel-font ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/870--font"
+reason = "孤儿字体：PoxiaoPixel（破晓像素），上游 https://forge.poxiao-labs.work/Fonts/fzg ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/898--font"
+reason = "孤儿字体：KH Dot Akihabara 16（秋叶原），上游 jikasei.me KH ドットフォントシリーズ（http://jikasei.me/font/kh-dotfont/），未见于四目录任一处。注：scott0107000/FashionBitmap16 是基于该系列『兜町16』的中文化改作衍生字体，并非原版，不能替代。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/899--font"
+reason = "孤儿字体：KH Dot Dougenzaka 12（道玄坂），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/900--font"
+reason = "孤儿字体：KH Dot Hatcyoubori 16（八丁堀），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/901--font"
+reason = "孤儿字体：KH Dot Hibiya 24（日比谷），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/902--font"
+reason = "孤儿字体：KH Dot Kabutochou 16（兜町），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。注：scott0107000/FashionBitmap16 是基于此字体的中文化改作衍生版，非原版。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/903--font"
+reason = "孤儿字体：KH Dot kagurazaka 12（神乐坂），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/904--font"
+reason = "孤儿字体：KH Dot Kodenmachou 12（小传马町），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/905--font"
+reason = "孤儿字体：KH Dot Ningyouchou 16（人形町），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/992--UwU"
+reason = "孤儿字体：UwU Matrix 16U（UwU 点矩黑，先行预览），上游 https://github.com/ChenhaoUwU/UwUMatrix ，与 Upstream-GitHub/ChenhaoUwU--ChenhaoRPFont（同作者但不同仓库/不同字体 ChenhaoRPFont）不是同一项目，未见于四目录任一处。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/2136--x12y12pxMaruMinyaM"
+reason = "孤儿字体：x12y12pxMaruMinyaM，上游 https://hicchicc.github.io/00ff/ ，是 Upstream-Direct/00ff 目录内 9 款 hicchicc 像素字体中唯一缺失的一款（该目录仅有其余 8 款），未见于四目录任一处。"
+
+# ============ TODO ============
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Geist-Font-v1.7.2"
+reason = "Geist/GeistMono 为纯几何无衬线体/等宽体，与点阵无关（DESCRIPTION.en_us.html 自述『geometric typeface』，非位图字体），按简报要求确认非点阵字体不收录。GeistPixel（含 Circle/Grid/Line/Square/Triangle 五种点形与一个可变字体）虽名带 Pixel、外观点状，但对拉丁字母抽样做轮廓坐标最大公约数检查，结果均为非干净小整数网格（如 Circle/Line/Triangle 变体隐含 ppem≈52.6，Grid≈500，Square≈26.3，皆非典型像素尺寸），detect_native_ppem 对全部变体也判定失败，说明其『像素』只是圆点/方块/三角装饰造型的矢量近似，并非严格网格对齐的位图字体，性质与已 todo 的 oliverlalan/Doto 相同。建议整包不收录。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Sango"
+reason = "珊瑚字体是彩色像素马赛克风格字体，但技术实现为 OpenType-SVG 彩色字体与 COLR/CPAL 彩色字体（据 readme_sango.txt），并非传统单色点阵/位图字体；本收藏的 convert=ttf 栅格化管线基于 FreeType FT_LOAD_MONOCHROME 单色渲染，无法正确处理彩色图层，会破坏字体的核心视觉设计（马赛克色块）。目录内 Sango-JA-FALLBACK.ttf 单色回退版 detect_native_ppem 判定同样失败，不能确认是否为真正点阵网格。ZeoSeven-Webfonts 内另有 355(Sango-JA-FALLBACK)/356(Sango-JA-SVG) 的 WOFF2 切片镜像，性质相同不建议使用。建议本字体排除在本收藏之外，或后续为彩色字体设计单独的处理管线。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/curioustorvald--Terrarum-sans-bitmap"
+reason = "已与 Upstream-Direct/Terrarum-Sans-Bitmap 合并处理（见上方 family 'terrarum-sans-bitmap'）。本仓库 HEAD 快照经核实不含任何编译产物（无 otf/ttf/woff/jar），只有源码/工程文件，故改用 Upstream-Direct 的直链下载包（内含同一份 TerrarumSansBitmap.otf 与 LICENSE.md），不单独收录。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/oliverlalan--Doto"
+reason = "可变字体（wght+ROND 轴）。虽有静态 Black 实例 fonts/ttf/Doto.ttf，但那只是圆点显示体的 一个字重快照，本质是装饰性圆点字重字体而非严格像素网格字体（detect_native_ppem 判定失败）， 按简报要求可变字体一律 todo。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/petrvanblokland--TYPETR-Bitcount"
+reason = "完全是可变字体（10 个变量 ttf，CRSV/ELSH/ELXP/slnt/wght 等多轴，无任何静态实例）， 按简报要求 todo，不写 family。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/RandomMaerks--Trmnl-Cubic"
+reason = "并非真正的点阵/位图字体：README 强调的是'metrically square'（宽高比例接近正方形， 便于 ASCII-art 排版），而非位图网格设计。经坐标抽样检查（如字母 A/B 的轮廓点集）与预览图 （documentation/tc-a1.png）确认，字形是带 45° 斜切的矢量几何造型，边缘平滑非阶梯状；8 个 字重文件（otf+ttf × Bold/Medium/Regular/SemiBold）detect_native_ppem 全部判定失败（None）。 建议不收录，或人工复核后按'other/非像素'方式处理。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Warren2060--ChillBitmap"
+reason = "GitHub 仓库快照内 4 个 zip（ChillBitmap7x_v2.500.zip、Version 2.200/2.300/2.400.zip） 解压后均只含 ChillBitmap7x（7px 版）。而 7px 版基于 GuanZhi 8px 修改，猫啃网标注'作者声明'， 审计已排除（见 EXCLUDED.csv ZeoSeven 360 行）。已通过审计的 16px 版（基于 Unifont，纯 OFL+GPL，INCLUDED.csv 359 行）不在本仓库快照、也不在 Upstream-Direct 内，唯一副本是 ZeoSeven-Webfonts/359--ChillBitmap-16px 的 WOFF2 切片镜像。建议后续从该镜像还原字体，或 联系上游单独取得 16px 版本编译产物。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/StevenLZH--IllusionBook"
+reason = "已与 Upstream-Direct/IllusionBook-v1.0.2 合并处理（见上方 family 'illusion-book'）。 本仓库 HEAD 快照只有 FontForge 源文件（.sfd/.fea）与许可证，无编译产物，不单独收录。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Warren2060--ChillMoonmono"
+reason = "已与 Upstream-Direct/ChillMoonMono-v1.000 合并处理（见上方 family 'chillmoonmono'）。 本仓库 HEAD 快照只有 README 与 license 文本，无编译产物（README 提示'请查看 Releases'）， 不单独收录。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Hansha2011--NanoDyongChyangSong"
+reason = "已与 Upstream-Direct/NanoDyongChyangSong 合并处理（见上方 family 'nano-dyong-chyang-song'）。本仓库 HEAD 快照只有 README 与两张示意图，无编译产物，不单独收录。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Hansha2011--NanoQyoanDaSong"
+reason = "已与 Upstream-Direct/NanoQyoanDaSong 合并处理（见上方 family 'nano-qyoan-da-song'）。 本仓库 HEAD 快照只有 README 与一张示意图，无编译产物，不单独收录。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/VT323"
+reason = "VT323 的轮廓坐标不在任何格点上（gcd=1，设计即带软化边角的「像素风」矢量字体），不符合原生点阵收录口径，不转制。"

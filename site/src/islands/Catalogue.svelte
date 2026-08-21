@@ -43,7 +43,7 @@
     mounted = true;
   });
 
-  // Task 18 接线:chars 查字懒加载覆盖区间索引
+  // Task 18 接线：chars 查字懒加载覆盖区间索引
   $effect(() => {
     if (!state.chars.trim() || charLookup) return;
     import('../lib/intervals')

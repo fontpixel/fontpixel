@@ -2,7 +2,7 @@
 import '../styles/tokens.css';
 import { withBase } from '../lib/data';
 
-// 5×7 像素数字,手绘点阵——404 页当然要用点阵画
+// 5×7 像素数字，手绘点阵——404 页当然要用点阵画
 const DIGITS: Record<string, string[]> = {
   '4': ['00010', '00110', '01010', '10010', '11111', '00010', '00010'],
   '0': ['01110', '10001', '10011', '10101', '11001', '10001', '01110'],
@@ -53,7 +53,7 @@ const w = ox - gap;
       >
         {cells.map((c) => <rect x={c.x} y={c.y} width="1" height="1" fill="var(--accent)" />)}
       </svg>
-      <p class="nf__text">页面不存在,这个码位还没有字形。</p>
+      <p class="nf__text">页面不存在，这个码位还没有字形。</p>
       <p class="nf__text nf__text--en">Page not found — no glyph at this code point.</p>
       <p class="nf__links">
         <a href={withBase('/zh/')}>回到馆藏</a> · <a href={withBase('/en/')}>Catalogue</a>

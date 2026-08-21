@@ -1,0 +1,11 @@
+name = "Illusion Book"
+name_zh = "幻象像素书体"
+author = "StevenLZH (Steven Liu)"
+homepage = "http://studiountagged.top/Projects/IllusionBook.html"
+repository = "https://github.com/StevenLZH/IllusionBook"
+description = ""
+form = "serif-pixel"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["classic"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/IllusionBook-v1.0.2；上游 https://github.com/StevenLZH/IllusionBook/releases (v1.0.2)；由 ttf 转换"
+added = "2026-08-21"

@@ -1,4 +1,4 @@
-/** 像素光栅化(契约 C4):纯函数输出 RGBA 缓冲,paint 负责放大绘制。 */
+/** 像素光栅化（契约 C4）：纯函数输出 RGBA 缓冲，paint 负责放大绘制。 */
 
 import type { DecodedGlyph } from './glyphpack';
 import { rowBytes } from './glyphpack';
@@ -108,7 +108,7 @@ export function rasterize(
   for (const p of placed) {
     const baseline = p.line * (lineHeight + LINE_GAP) + font.ascent;
     if (!p.glyph) {
-      // 缺字:占位虚线框(高 = ascent,宽 = missAdv-1)
+      // 缺字：占位虚线框（高 = ascent，宽 = missAdv-1）
       const w = missAdv - 1;
       const top = baseline - font.ascent + 1;
       const bottom = baseline - 1;

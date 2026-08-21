@@ -114,7 +114,7 @@
   }
 
   function sheetAction(canvas: HTMLCanvasElement, blockStart: number) {
-    // svelte action:可见时绘制,主题/变体变化时由 #key 重建
+    // svelte action：可见时绘制，主题/变体变化时由 #key 重建
     const io = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         drawSheet(canvas, blockStart);

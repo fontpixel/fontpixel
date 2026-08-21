@@ -1,0 +1,11 @@
+name = "Chusung"
+name_zh = "粗宋"
+author = "diaowinner"
+homepage = "https://diaowinner.itch.io/chusung"
+repository = ""
+description = ""
+form = "mingcho"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["classic"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11089；上游 https://www.maoken.com/freefonts/11089.html；由 ttf 转换"
+added = "2026-08-21"

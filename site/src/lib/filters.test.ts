@@ -76,7 +76,7 @@ describe('applyFilters', () => {
     expect(
       applyFilters(ALL, { ...emptyState(), chars: '永' }, lookup).map((f) => f.slug),
     ).toEqual(['b']);
-    // 无 lookup 时不筛(等待懒加载)
+    // 无 lookup 时不筛（等待懒加载）
     expect(run({ chars: '永' })).toEqual(['b', 'a']);
   });
   test('sorts', () => {

@@ -26,7 +26,7 @@
     return hs.length ? [Math.min(...hs), Math.max(...hs)] : [0, 0];
   });
 
-  // 覆盖达标预设:官方标准名不译(引用),阈值见 spec §5.1
+  // 覆盖达标预设：官方标准名不译（引用），阈值见 spec §5.1
   const PRESETS: { key: string; zh: string; en: string; reqs: { id: string; min: number }[] }[] = [
     { key: 'gb2312', zh: 'GB/T 2312 ≥99%', en: 'GB/T 2312 ≥99%', reqs: [{ id: 'gb2312', min: 0.99 }] },
     { key: 'tgh', zh: '通用规范汉字表 ≥99%', en: 'General Standard ≥99%', reqs: [{ id: 'tongyong-guifan', min: 0.99 }] },

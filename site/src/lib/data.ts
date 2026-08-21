@@ -1,4 +1,4 @@
-/** 构建期数据加载(node fs + zod 校验)与 base 路径工具。 */
+/** 构建期数据加载（node fs + zod 校验）与 base 路径工具。 */
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
@@ -26,13 +26,13 @@ export function readPreviewSvg(relPath: string): string {
   return readFileSync(join(DATA_DIR, relPath), 'utf-8');
 }
 
-/** 客户端/服务端通用:拼接 base 路径。 */
+/** 客户端/服务端通用：拼接 base 路径。 */
 export function withBase(path: string): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
-/** 下载物基址:生产由 CI 注入 Releases 地址,本地退回 /downloads。 */
+/** 下载物基址：生产由 CI 注入 Releases 地址，本地退回 /downloads。 */
 export function downloadsBase(): string {
   return (import.meta.env.PFC_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
 }

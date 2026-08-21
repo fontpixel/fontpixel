@@ -1,0 +1,11 @@
+name = "MisekiBitmap"
+name_zh = "美績点陣體"
+author = "ItMarki"
+homepage = ""
+repository = "https://github.com/ItMarki/MisekiBitmap"
+description = ""
+form = "mingcho"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["classic"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/ItMarki--MisekiBitmap；上游 https://github.com/ItMarki/MisekiBitmap (HEAD 快照，收录于 2026-08-18)；由 ttf 转换"
+added = "2026-08-21"

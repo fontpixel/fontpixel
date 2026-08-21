@@ -8,7 +8,7 @@ interface Props {
   detail: FontDetail;
   sections: string[];
   charsets: CharsetMeta[];
-  /** 变体分组:同签名变体共用一个面板(attr 为空格分隔的变体 id 列表) */
+  /** 变体分组：同签名变体共用一个面板（attr 为空格分隔的变体 id 列表） */
   groups: { ids: string[]; repId: string; attr: string }[];
 }
 const { lang, detail, sections, charsets, groups } = Astro.props;
@@ -222,7 +222,7 @@ const pct = (have: number, total: number) =>
   .cov__barcell {
     width: 30%;
   }
-  /* 像素方块进度条:纯 CSS,两层渐变 */
+  /* 像素方块进度条：纯 CSS，两层渐变 */
   .pxbar {
     display: inline-block;
     vertical-align: middle;

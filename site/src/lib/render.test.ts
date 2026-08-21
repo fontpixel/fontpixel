@@ -65,7 +65,7 @@ test('maxWidth wraps at char boundary', () => {
 test('cjk glyph with negative yoff extends below baseline', () => {
   const r = rasterize('永', glyphs(), FONT, { invert: false, highlightMissing: false });
   expect(r.width).toBe(16);
-  // 永 bby=-1,最底行 py = 14 - (-1) - 1 = 14
+  // 永 bby=-1，最底行 py = 14 - (-1) - 1 = 14
   let anyInkRow14 = false;
   for (let x = 0; x < 16; x++) if (px(r, x, 14)[3] === 255 && px(r, x, 14)[0] < 64) anyInkRow14 = true;
   expect(anyInkRow14).toBe(true);

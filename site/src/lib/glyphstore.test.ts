@@ -63,7 +63,7 @@ test('lru evicts old chunks', async () => {
   const { fetchFn, calls } = makeFetch();
   const store = new GlyphStore('/data', fetchFn as unknown as typeof fetch, 1);
   await store.glyphsFor('mini', 'mini', '永'); // chunk 6c00 进入容量 1 的缓存
-  await store.glyphsFor('mini', 'mini', 'A'); // core 不占 LRU;再取 65 无新 chunk
+  await store.glyphsFor('mini', 'mini', 'A'); // core 不占 LRU；再取 65 无新 chunk
   await store.glyphsFor('mini', 'mini', '天'); // 0x5929 无区块 → 无 fetch
   await store.glyphsFor('mini', 'mini', '永');
   const chunkCalls = calls.filter((c) => c.includes('00006c00-00006d00'));

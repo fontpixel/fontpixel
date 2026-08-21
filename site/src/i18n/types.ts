@@ -1,4 +1,4 @@
-/** 全站 UI 文案的类型定义。zh.ts 为源文本;en.ts 由 Opus/Sonnet 翻译流程产出。 */
+/** 全站 UI 文案的类型定义。zh.ts 为源文本；en.ts 由 Opus/Sonnet 翻译流程产出。 */
 
 export type Lang = 'zh' | 'en';
 

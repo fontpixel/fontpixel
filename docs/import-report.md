@@ -2,63 +2,14 @@
 
 生成时间：2026-08-21（由 pfc.ingest.run 生成，重跑覆盖）
 
-- manifest 家族数：51
-- 本次有变化：47；无变化跳过：4
-- 文件写入：252；未变：44
+- manifest 家族数：98
+- 本次有变化：2；无变化跳过：96
+- 文件写入：4；未变：414
 
 ## 本次导入/更新
 
-- ba-ding-shi-wei-ti-16
-- chang-ban-dian-song-12
-- chang-ban-dian-song-16
-- qiu-ye-yuan-ti-16
-- ren-ou-fang-song-16
-- xiu-zhen-xiang-su-ti
-- zheng-ge-dian-hei-16
-- zlabs-pixel-12px
-- zlabs-diamondpix-16px
-- zlabs-geopix-16px
-- zlabs-roundpix-12px
-- zlabs-roundpix-16px
-- muzai-pixel
-- xiaoya-pixel-classic
-- cmex-ming
-- wqy-unibit
-- pixel-mplus
-- tekuplus
 - x5y8px-nega-clip
-- x5y8px-nega-tape
 - x8y12px-denki-chip
-- x12y12px-maru-minya
-- baekmuk-dotum
-- baekmuk-gulim
-- baekmuk-hline
-- dos-myungjo
-- dos-gothic
-- dos-saemmul
-- sam3kr-font
-- dos-iyagi-boldface
-- dos-pilgi
-- miraero-normal
-- neodgm
-- neodgm-pro
-- x10y12px-denki-chip-hangul
-- x12y12px-maru-minya-hangul
-- ark-pixel
-- fusion-pixel
-- fusion-bold-pixel
-- jelly-pixel
-- gnu-unifont
-- retro-pixel-arcade
-- retro-pixel-cute
-- retro-pixel-petty-5h
-- retro-pixel-petty-5x5
-- retro-pixel-thick
-- isas-song
-
-## 错误
-
-- neodgm-pro: NeoDunggeunmoPro-Regular.ttf 原生格点判定失败,不自动转制(可在清单中手填 ppem)
 
 ## 待人工决定
 
@@ -86,6 +37,33 @@
 - 待议：CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/scriptwide-fonts--scriptwide-bitmap-cjk-pd — 仓库为占位仓库：只有 LICENSE、README 与两个通用 BDF 加粗/斜体化 Perl 脚本（mkbold.pl/mkitalic.pl，公有领域工具，非字体本身），无任何字体文件。README 自述「公有领域 CJK 点阵字体」的姊妹仓库 scriptwide-bitmap-cjk 尚未创建（not created yet）。待上游放出实际字体后再收。
 - 待议：CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/trevorld--hexfont — R 语言数据包（CRAN 包 hexfont），内容是 GNU Unifont 源码分发里的 .hex 文件重新打包（inst/font 下 62 个文件，均为 .hex.xz 格式，非 bdf/otb/ttf），本质是 Unifont 的另一种再分发形式，与本片段新收的 gnu-unifont 家族重复；且当前导入器不支持 .hex 格式转换。建议跳过。
 - 待议：CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/DWNfonts--FullPixel — FullPixel：基于方舟像素字体制作、目标覆盖全部中日韩越统一汉字的 12x12 像素字体，README 自述「还在研发…」。仓库内无任何编译产物，只有构建脚本（ase2png.py、make.py、photo2bdf.py、build.bat）与一个 Aseprite 调色板样例文件（design/sample.ase），需要本地安装 Aseprite（付费软件）与 Bits'n'Picas 才能从头构建，无法直接收录。待上游发布可下载的字体产物后再收。
+- 待议：CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm-pro — NeoDunggeunmo Pro 官方定位即「跳出 8x16/16x16 网格」的比例宽度衍生字体,原生格点判定失败(实测确无统一格点),不适合栅格化收录;基础版 neodgm 已收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/1--font — 孤儿字体：JinzisheTongfang（金字社统方体），上游 https://gitee.com/typeface-cn/typeface_open_font ，未见于 Upstream-GitHub/Upstream-Direct/Maoken-Direct/Google-Fonts 任一目录（Gitee 源不在快照范围内）。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/4--font — 孤儿字体：JinzisheTongyuan（金字社统圆体），上游 https://gitee.com/typeface-cn/typeface_open_font ，同 1--font，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/316--LanaPixel — 孤儿字体：LanaPixel，上游 https://opengameart.org/content/lanapixel-localization-friendly-pixel-font ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/870--font — 孤儿字体：PoxiaoPixel（破晓像素），上游 https://forge.poxiao-labs.work/Fonts/fzg ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/898--font — 孤儿字体：KH Dot Akihabara 16（秋叶原），上游 jikasei.me KH ドットフォントシリーズ（http://jikasei.me/font/kh-dotfont/），未见于四目录任一处。注：scott0107000/FashionBitmap16 是基于该系列『兜町16』的中文化改作衍生字体，并非原版，不能替代。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/899--font — 孤儿字体：KH Dot Dougenzaka 12（道玄坂），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/900--font — 孤儿字体：KH Dot Hatcyoubori 16（八丁堀），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/901--font — 孤儿字体：KH Dot Hibiya 24（日比谷），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/902--font — 孤儿字体：KH Dot Kabutochou 16（兜町），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。注：scott0107000/FashionBitmap16 是基于此字体的中文化改作衍生版，非原版。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/903--font — 孤儿字体：KH Dot kagurazaka 12（神乐坂），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/904--font — 孤儿字体：KH Dot Kodenmachou 12（小传马町），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/905--font — 孤儿字体：KH Dot Ningyouchou 16（人形町），上游 jikasei.me KH ドットフォントシリーズ，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/992--UwU — 孤儿字体：UwU Matrix 16U（UwU 点矩黑，先行预览），上游 https://github.com/ChenhaoUwU/UwUMatrix ，与 Upstream-GitHub/ChenhaoUwU--ChenhaoRPFont（同作者但不同仓库/不同字体 ChenhaoRPFont）不是同一项目，未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/2136--x12y12pxMaruMinyaM — 孤儿字体：x12y12pxMaruMinyaM，上游 https://hicchicc.github.io/00ff/ ，是 Upstream-Direct/00ff 目录内 9 款 hicchicc 像素字体中唯一缺失的一款（该目录仅有其余 8 款），未见于四目录任一处。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Geist-Font-v1.7.2 — Geist/GeistMono 为纯几何无衬线体/等宽体，与点阵无关（DESCRIPTION.en_us.html 自述『geometric typeface』，非位图字体），按简报要求确认非点阵字体不收录。GeistPixel（含 Circle/Grid/Line/Square/Triangle 五种点形与一个可变字体）虽名带 Pixel、外观点状，但对拉丁字母抽样做轮廓坐标最大公约数检查，结果均为非干净小整数网格（如 Circle/Line/Triangle 变体隐含 ppem≈52.6，Grid≈500，Square≈26.3，皆非典型像素尺寸），detect_native_ppem 对全部变体也判定失败，说明其『像素』只是圆点/方块/三角装饰造型的矢量近似，并非严格网格对齐的位图字体，性质与已 todo 的 oliverlalan/Doto 相同。建议整包不收录。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Sango — 珊瑚字体是彩色像素马赛克风格字体，但技术实现为 OpenType-SVG 彩色字体与 COLR/CPAL 彩色字体（据 readme_sango.txt），并非传统单色点阵/位图字体；本收藏的 convert=ttf 栅格化管线基于 FreeType FT_LOAD_MONOCHROME 单色渲染，无法正确处理彩色图层，会破坏字体的核心视觉设计（马赛克色块）。目录内 Sango-JA-FALLBACK.ttf 单色回退版 detect_native_ppem 判定同样失败，不能确认是否为真正点阵网格。ZeoSeven-Webfonts 内另有 355(Sango-JA-FALLBACK)/356(Sango-JA-SVG) 的 WOFF2 切片镜像，性质相同不建议使用。建议本字体排除在本收藏之外，或后续为彩色字体设计单独的处理管线。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/curioustorvald--Terrarum-sans-bitmap — 已与 Upstream-Direct/Terrarum-Sans-Bitmap 合并处理（见上方 family 'terrarum-sans-bitmap'）。本仓库 HEAD 快照经核实不含任何编译产物（无 otf/ttf/woff/jar），只有源码/工程文件，故改用 Upstream-Direct 的直链下载包（内含同一份 TerrarumSansBitmap.otf 与 LICENSE.md），不单独收录。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/oliverlalan--Doto — 可变字体（wght+ROND 轴）。虽有静态 Black 实例 fonts/ttf/Doto.ttf，但那只是圆点显示体的 一个字重快照，本质是装饰性圆点字重字体而非严格像素网格字体（detect_native_ppem 判定失败）， 按简报要求可变字体一律 todo。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/petrvanblokland--TYPETR-Bitcount — 完全是可变字体（10 个变量 ttf，CRSV/ELSH/ELXP/slnt/wght 等多轴，无任何静态实例）， 按简报要求 todo，不写 family。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/RandomMaerks--Trmnl-Cubic — 并非真正的点阵/位图字体：README 强调的是'metrically square'（宽高比例接近正方形， 便于 ASCII-art 排版），而非位图网格设计。经坐标抽样检查（如字母 A/B 的轮廓点集）与预览图 （documentation/tc-a1.png）确认，字形是带 45° 斜切的矢量几何造型，边缘平滑非阶梯状；8 个 字重文件（otf+ttf × Bold/Medium/Regular/SemiBold）detect_native_ppem 全部判定失败（None）。 建议不收录，或人工复核后按'other/非像素'方式处理。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Warren2060--ChillBitmap — GitHub 仓库快照内 4 个 zip（ChillBitmap7x_v2.500.zip、Version 2.200/2.300/2.400.zip） 解压后均只含 ChillBitmap7x（7px 版）。而 7px 版基于 GuanZhi 8px 修改，猫啃网标注'作者声明'， 审计已排除（见 EXCLUDED.csv ZeoSeven 360 行）。已通过审计的 16px 版（基于 Unifont，纯 OFL+GPL，INCLUDED.csv 359 行）不在本仓库快照、也不在 Upstream-Direct 内，唯一副本是 ZeoSeven-Webfonts/359--ChillBitmap-16px 的 WOFF2 切片镜像。建议后续从该镜像还原字体，或 联系上游单独取得 16px 版本编译产物。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/StevenLZH--IllusionBook — 已与 Upstream-Direct/IllusionBook-v1.0.2 合并处理（见上方 family 'illusion-book'）。 本仓库 HEAD 快照只有 FontForge 源文件（.sfd/.fea）与许可证，无编译产物，不单独收录。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Warren2060--ChillMoonmono — 已与 Upstream-Direct/ChillMoonMono-v1.000 合并处理（见上方 family 'chillmoonmono'）。 本仓库 HEAD 快照只有 README 与 license 文本，无编译产物（README 提示'请查看 Releases'）， 不单独收录。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Hansha2011--NanoDyongChyangSong — 已与 Upstream-Direct/NanoDyongChyangSong 合并处理（见上方 family 'nano-dyong-chyang-song'）。本仓库 HEAD 快照只有 README 与两张示意图，无编译产物，不单独收录。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Hansha2011--NanoQyoanDaSong — 已与 Upstream-Direct/NanoQyoanDaSong 合并处理（见上方 family 'nano-qyoan-da-song'）。 本仓库 HEAD 快照只有 README 与一张示意图，无编译产物，不单独收录。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/VT323 — VT323 的轮廓坐标不在任何格点上（gcd=1，设计即带软化边角的「像素风」矢量字体），不符合原生点阵收录口径，不转制。
 
 ## 风格标注待复核
 

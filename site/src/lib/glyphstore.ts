@@ -1,4 +1,4 @@
-/** 字形数据存取:manifest 缓存 + 分块 LRU + 并发去重(契约 C4)。 */
+/** 字形数据存取：manifest 缓存 + 分块 LRU + 并发去重（契约 C4）。 */
 
 import { gunzip } from './decompress';
 import { GlyphChunk, type DecodedGlyph } from './glyphpack';
@@ -27,7 +27,7 @@ export class GlyphStore {
     fetchFn?: typeof fetch,
     private readonly capacity = 64,
   ) {
-    // 不能直接存全局 fetch:经 this 调用会 Illegal invocation
+    // 不能直接存全局 fetch：经 this 调用会 Illegal invocation
     this.fetchFn = fetchFn ?? ((input, init) => globalThis.fetch(input, init));
   }
 
@@ -89,7 +89,7 @@ export class GlyphStore {
     return p;
   }
 
-  /** 直接取某个区间分块(字形网格用)。 */
+  /** 直接取某个区间分块（字形网格用）。 */
   loadChunk(slug: string, variantId: string, file: string): Promise<GlyphChunk> {
     return this.rangeChunk(slug, variantId, file);
   }

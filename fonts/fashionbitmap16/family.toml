@@ -1,0 +1,11 @@
+name = "FashionBitmap16"
+name_zh = "流行點陣體16"
+author = "scott0107000"
+homepage = "https://fontspeech.blogspot.com/"
+repository = "https://github.com/scott0107000/FashionBitmap16"
+description = ""
+form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--FashionBitmap16；上游 https://github.com/scott0107000/FashionBitmap16 (HEAD 快照，收录于 2026-08-18)；由 ttf 转换"
+added = "2026-08-21"

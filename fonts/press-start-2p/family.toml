@@ -1,0 +1,11 @@
+name = "Press Start 2P"
+name_zh = ""
+author = ""
+homepage = "https://fonts.google.com/specimen/Press+Start+2P"
+repository = "https://github.com/google/fonts/tree/main/ofl/pressstart2p"
+description = ""
+form = "sans"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P；上游 https://fonts.google.com/specimen/Press+Start+2P （CSS Unicode-range 切片镜像，v16，latin 子集，收录于 2026-08-18）；由 ttf 转换"
+added = "2026-08-21"

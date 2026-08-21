@@ -3,7 +3,7 @@ import type { UIStrings } from './types';
 export const zh: UIStrings = {
   siteName: '点阵字库',
   siteNameLatin: 'Pixel Font Collection',
-  siteTagline: '开源点阵字体的标本馆：逐字形收录、度量与覆盖率一目了然。',
+  siteTagline: '开源点阵字体的标本馆：每一款都拆到字形、量到像素、数清覆盖。',
   langLabel: '中文',
   langSwitch: 'English',
   themeToggle: '切换明暗主题',

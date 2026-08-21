@@ -1,0 +1,11 @@
+name = "ChillMoonmono"
+name_zh = ""
+author = "Warren2060"
+homepage = ""
+repository = "https://github.com/Warren2060/ChillMoonmono"
+description = ""
+form = "script"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["handwriting"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/ChillMoonMono-v1.000；上游 https://github.com/Warren2060/ChillMoonmono/releases (v1.000)；由 ttf 转换"
+added = "2026-08-21"

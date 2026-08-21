@@ -1,0 +1,11 @@
+name = "Fairfax Pula"
+name_zh = ""
+author = "Kreative Software (Kreative Korp)"
+homepage = "https://www.kreativekorp.com/software/fonts/fairfax/"
+repository = ""
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal-hardcore"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax；上游 https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）；由 ttf 转换"
+added = "2026-08-21"

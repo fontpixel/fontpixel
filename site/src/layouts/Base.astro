@@ -8,7 +8,7 @@ interface Props {
   lang: Lang;
   title: string;
   description?: string;
-  /** 不含语言前缀的路径,如 "/fonts/galmuri/",用于 hreflang 与语言切换 */
+  /** 不含语言前缀的路径，如 "/fonts/galmuri/"，用于 hreflang 与语言切换 */
   path: string;
   ogImage?: string;
 }
@@ -18,7 +18,7 @@ const s = t(lang);
 const other = otherLang(lang);
 const canonical = withBase(`/${lang}${path}`);
 
-// 站名由馆藏字体自渲染(签名元素):挑选一款覆盖中文的家族
+// 站名由馆藏字体自渲染（签名元素）：挑选一款覆盖中文的家族
 let brandFont: { slug: string; variantId: string } | null = null;
 try {
   const idx = loadIndex();

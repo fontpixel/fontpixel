@@ -1,0 +1,11 @@
+name = "Departure Mono"
+name_zh = ""
+author = "Helena Zhang"
+homepage = "http://departuremono.com"
+repository = "https://github.com/rektdeckard/departure-mono"
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal-hardcore"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/rektdeckard--departure-mono；上游 https://github.com/rektdeckard/departure-mono (HEAD 快照，收录于 2026-08-18)；由 ttf 转换"
+added = "2026-08-21"

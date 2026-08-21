@@ -1,0 +1,11 @@
+name = "Uranus Pixel"
+name_zh = "天王星像素"
+author = "scott0107000（基于文泉驿点阵宋体）"
+homepage = ""
+repository = "https://github.com/scott0107000/Uranus-Pixel"
+description = ""
+form = "mingcho"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["classic"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--Uranus-Pixel；上游 https://github.com/scott0107000/Uranus-Pixel (HEAD 快照，收录于 2026-08-18)；由 ttf 转换"
+added = "2026-08-21"

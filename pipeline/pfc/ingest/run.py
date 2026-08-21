@@ -141,6 +141,7 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
         else:
             report.errors.append(f"{slug}: 许可证文件未找到 {lf}")
 
+    dest.mkdir(parents=True, exist_ok=True)
     toml_path = dest / "family.toml"
     if not toml_path.exists():
         provenance = fam.get("provenance_url", "")

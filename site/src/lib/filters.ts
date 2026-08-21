@@ -1,4 +1,4 @@
-/** 目录页筛选纯函数(契约见计划 Task 16)。 */
+/** 目录页筛选纯函数（契约见计划 Task 16）。 */
 
 import type { FamilyIndex } from './schema';
 

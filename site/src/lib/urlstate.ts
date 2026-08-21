@@ -1,4 +1,4 @@
-/** FilterState ↔ URL query 序列化(可分享链接)。未知参数忽略。 */
+/** FilterState ↔ URL query 序列化（可分享链接）。未知参数忽略。 */
 
 import { emptyState, type FilterState, type SortKey } from './filters';
 

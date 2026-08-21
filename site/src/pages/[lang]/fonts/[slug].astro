@@ -41,8 +41,8 @@ const dlBase = downloadsBase();
 const variantIds = m.variants.map((v) => v.id);
 const charsetsMeta = loadCharsetsMeta();
 
-// 变体分组:签名相同的变体共用一个 SSR 面板,把 ark-pixel(35 变体)这类
-// 家族的页面从数百 KB 压回正常。度量随尺寸变、覆盖率往往不变,故分两套分组。
+// 变体分组：签名相同的变体共用一个 SSR 面板，把 ark-pixel（35 变体）这类
+// 家族的页面从数百 KB 压回正常。度量随尺寸变、覆盖率往往不变，故分两套分组。
 function groupBy(sig: (vid: string) => string) {
   const map = new Map<string, string[]>();
   for (const v of m.variants) {

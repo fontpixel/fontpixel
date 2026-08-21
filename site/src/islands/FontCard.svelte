@@ -79,7 +79,7 @@
       missing = r.missing.length;
       paint(canvasEl, r, z);
 
-      // 家族名自渲染:仅当该字体覆盖名称全部字符
+      // 家族名自渲染：仅当该字体覆盖名称全部字符
       if (nameEl) {
         const nameGlyphs = await store.glyphsFor(family.slug, variant.id, displayName);
         if (cancelled || !nameEl) return;

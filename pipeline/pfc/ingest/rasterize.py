@@ -62,10 +62,25 @@ def detect_native_ppem(path: Path) -> int | None:
     return ppem
 
 
+def _materialize_sfnt(path: Path) -> Path:
+    """woff/woff2 → 解包成临时 ttf(freetype 不带 brotli 时无法直读)。"""
+    if path.suffix.lower() not in (".woff", ".woff2"):
+        return path
+    import tempfile
+
+    from fontTools.ttLib import TTFont
+
+    font = TTFont(path)
+    font.flavor = None
+    tmp = Path(tempfile.mkstemp(suffix=".ttf")[1])
+    font.save(tmp)
+    return tmp
+
+
 def rasterize_ttf(path: Path, ppem: int, family_slug: str) -> ParsedFont:
     import freetype
 
-    face = freetype.Face(str(path))
+    face = freetype.Face(str(_materialize_sfnt(path)))
     face.set_pixel_sizes(0, ppem)
     flags = (freetype.FT_LOAD_RENDER | freetype.FT_LOAD_MONOCHROME
              | freetype.FT_LOAD_TARGET_MONO)

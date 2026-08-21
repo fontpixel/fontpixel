@@ -1,0 +1,11 @@
+name = "BoutiqueBitmap9x9"
+name_zh = "精品點陣體9×9"
+author = "scott0107000"
+homepage = "https://fontspeech.blogspot.com/"
+repository = "https://github.com/scott0107000/BoutiqueBitmap9x9"
+description = ""
+form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game"]  # UNVERIFIED
+converted_from = "ttf"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--BoutiqueBitmap9x9；上游 https://github.com/scott0107000/BoutiqueBitmap9x9 (HEAD 快照，收录于 2026-08-18)；由 ttf 转换"
+added = "2026-08-21"
