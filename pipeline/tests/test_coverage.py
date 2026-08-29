@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from pfc.coverage.charsets import DATA_DIR, load_charsets
-from pfc.coverage.engine import (
+from fbf.coverage.charsets import DATA_DIR, load_charsets
+from fbf.coverage.engine import (
     badges,
     coverage_for,
     detect_scripts,
@@ -10,8 +10,8 @@ from pfc.coverage.engine import (
     pick_sample_lang,
     unicode_block_coverage,
 )
-from pfc.coverage.ucd import load_ucd
-from pfc.model import Glyph, ParsedFont
+from fbf.coverage.ucd import load_ucd
+from fbf.model import Glyph, ParsedFont
 
 CHARSETS = load_charsets(DATA_DIR)
 UCD = load_ucd(DATA_DIR / "ucd")

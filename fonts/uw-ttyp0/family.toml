@@ -1,0 +1,17 @@
+name = "UW ttyp0"
+name_zh = ""
+author = "Uwe Waldmann"
+homepage = "http://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/"
+repository = ""
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal-hardcore"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/uw-ttyp0-1.2；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "MIT"
+name = "MIT 许可证（自定义措辞，MIT 风格）"
+commercial = true
+note = "TTY 控制台等宽字体，含 11-18px 与 22px 共 10 档尺寸、regular/bold 两种字重，15-18px 另有斜体（i）变体，共 22 个 BDF 文件。BDF COMMENT 内嵌完整许可文本（Copyright (C) 2012, 2013 Uwe Waldmann；permission granted to use/copy/modify/merge/publish/distribute/embed/sublicense/sell，附带“修改字形需改名”的条件），属 MIT 风格自定义措辞。"

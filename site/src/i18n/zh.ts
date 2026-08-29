@@ -1,8 +1,8 @@
 import type { UIStrings } from './types';
 
 export const zh: UIStrings = {
-  siteName: '点阵字库',
-  siteNameLatin: 'Pixel Font Collection',
+  siteName: '免费开源位图（像素）字体',
+  siteNameLatin: 'Free & Open Source Bitmap (Pixel) Fonts',
   siteTagline: '开源点阵字体的标本馆：每一款都拆到字形、量到像素、数清覆盖。',
   langLabel: '中文',
   langSwitch: 'English',
@@ -37,7 +37,6 @@ export const zh: UIStrings = {
     inkHeight: '墨迹高度',
     scripts: '书写系统',
     license: '许可证',
-    commercialOnly: '仅看可商用',
     spacing: '排布',
     weights: '字重',
     origin: '来源',
@@ -123,6 +122,8 @@ export const zh: UIStrings = {
     downloadsTitle: '下载',
     downloadBdf: 'BDF',
     downloadPcf: 'PCF',
+    downloadTtf: '位图 TTF',
+    downloadTtfNote: '位图 TTF 把该字体的所有尺寸打进一个文件（只含点阵，不含矢量轮廓），装上即可在支持位图 strike 的系统里按尺寸使用。',
     downloadZip: '全家族 ZIP',
     downloadNote: '文件为 gzip 压缩；校验值 SHA-256。',
     fileSize: '大小',

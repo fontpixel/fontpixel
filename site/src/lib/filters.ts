@@ -17,7 +17,6 @@ export interface FilterState {
   inkH: [number, number] | null;
   scripts: string[];
   licenses: string[];
-  commercialOnly: boolean;
   spacing: string[];
   weights: string[];
   origin: 'all' | 'native' | 'converted';
@@ -35,7 +34,6 @@ export function emptyState(): FilterState {
     inkH: null,
     scripts: [],
     licenses: [],
-    commercialOnly: false,
     spacing: [],
     weights: [],
     origin: 'all',
@@ -60,8 +58,8 @@ export function applyFilters(
   const chars = [...s.chars].filter((c) => !/\s/.test(c)).join('');
   let out = fams.filter((f) => {
     if (q) {
-      const hay = `${f.name} ${f.nameZh} ${f.author} ${f.slug} ${f.vibes.join(' ')}`
-        .toLowerCase();
+      // searchText 由构建期生成，已把家族名做过简繁异体展开
+      const hay = `${f.searchText} ${f.name} ${f.nameZh} ${f.author} ${f.slug}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     if (s.forms.length && !s.forms.includes(f.form)) return false;
@@ -73,7 +71,6 @@ export function applyFilters(
       const lic = f.license.spdx ?? 'unknown';
       if (!s.licenses.includes(lic)) return false;
     }
-    if (s.commercialOnly && f.license.commercial !== true) return false;
     if (s.spacing.length && !intersects(s.spacing, f.spacing)) return false;
     if (s.weights.length && !intersects(s.weights, f.weights)) return false;
     if (s.origin === 'native' && f.converted) return false;

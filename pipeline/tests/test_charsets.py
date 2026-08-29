@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from pfc.coverage.charsets import DATA_DIR, load_charsets
-from pfc.coverage.ucd import load_ucd
+from fbf.coverage.charsets import DATA_DIR, load_charsets
+from fbf.coverage.ucd import load_ucd
 
 
 def _by_id():

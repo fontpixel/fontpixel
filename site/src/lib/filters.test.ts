@@ -28,12 +28,13 @@ function fam(over: Partial<FamilyIndex>): FamilyIndex {
     ],
     preview: '',
     sampleLang: 'latin',
+    searchText: '',
     added: '2026-08-01',
     ...over,
   };
 }
 
-const A = fam({ slug: 'a', name: 'Alpha', nameZh: '阿尔法', author: 'quiple', sizes: [8, 16], inkHeight: 7, vibes: ['cute'], glyphCount: 500, added: '2026-08-10' });
+const A = fam({ searchText: '東雲 东云 Alpha 阿尔法', slug: 'a', name: 'Alpha', nameZh: '阿尔法', author: 'quiple', sizes: [8, 16], inkHeight: 7, vibes: ['cute'], glyphCount: 500, added: '2026-08-10' });
 const B = fam({ slug: 'b', name: 'Beta', form: 'mingcho', scripts: ['zh-hans'], license: { spdx: 'GPL-2.0-only', name: 'GPL', commercial: null, confidence: 'auto-high' }, coverageSummary: { gb2312: 1 }, converted: true, spacing: ['monospaced'], weights: ['bold'], glyphCount: 7000, added: '2026-08-20' });
 const ALL = [A, B];
 
@@ -44,6 +45,11 @@ function run(over: Partial<FilterState>) {
 describe('applyFilters', () => {
   test('empty state keeps all, sorted by name', () => {
     expect(run({})).toEqual(['b', 'a']); // 阿尔法 vs Beta:localeCompare
+  });
+  test('q matches simplified form of a traditional name', () => {
+    // searchText 由构建期做过简繁展开：家族名是「東雲」，搜「东云」也应命中
+    expect(run({ q: '东云' })).toEqual(['a']);
+    expect(run({ q: '東雲' })).toEqual(['a']);
   });
   test('q matches name/nameZh/author', () => {
     expect(run({ q: 'alpha' })).toEqual(['a']);
@@ -61,7 +67,6 @@ describe('applyFilters', () => {
     const c = fam({ slug: 'c', license: { spdx: null, name: '未识别', commercial: null, confidence: 'unknown' } });
     expect(applyFilters([c], { ...emptyState(), licenses: ['unknown'] })).toHaveLength(1);
   });
-  test('commercialOnly', () => expect(run({ commercialOnly: true })).toEqual(['a']));
   test('spacing & weights', () => {
     expect(run({ spacing: ['monospaced'] })).toEqual(['b']);
     expect(run({ weights: ['bold'] })).toEqual(['b']);
@@ -96,7 +101,6 @@ describe('urlstate', () => {
       inkH: [7, 15],
       scripts: ['ja'],
       licenses: ['OFL-1.1', 'unknown'],
-      commercialOnly: true,
       spacing: ['monospaced'],
       weights: ['bold'],
       origin: 'native',

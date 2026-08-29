@@ -1,0 +1,17 @@
+name = "Terminus"
+name_zh = ""
+author = "Dimitar Toshkov Zhekov"
+homepage = ""
+repository = ""
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["classic", "terminal-hardcore"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/terminus-font-4.39；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "知名等宽终端字体，v4.39。含 12/14/16/18/20/22/24/28/32px 九档尺寸、regular/bold 两种字重，14px 另有 ter-u14v.bdf（framebuffer 控制台适配变体），共 20 个 BDF 文件。BDF COPYRIGHT 字段为 “Copyright (C) 2014 Dimitar Toshkov Zhekov”，NOTICE 字段明确 “Licensed under the SIL Open Font License, Version 1.1”。项目主页公开可查（terminus-font.sourceforge.net），但因未见于本仓库 README，未填入 homepage 字段，仅供参考。"

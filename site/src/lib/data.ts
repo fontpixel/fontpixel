@@ -34,7 +34,7 @@ export function withBase(path: string): string {
 
 /** 下载物基址：生产由 CI 注入 Releases 地址，本地退回 /downloads。 */
 export function downloadsBase(): string {
-  return (import.meta.env.PFC_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
+  return (import.meta.env.FBF_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
 }
 
 export interface CharsetMeta {

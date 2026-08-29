@@ -1,5 +1,5 @@
 # 导入清单：源路径 → fonts/ 家族。运行：
-#   .venv/bin/python -m pfc.ingest.run --manifest ingest/manifest.toml \
+#   .venv/bin/python -m fbf.ingest.run --manifest ingest/manifest.toml \
 #     --src ../pixel-font-collection-fonts --dest fonts --report docs/import-report.md
 #
 # 试点五家族(Task 20)；全量清单在 Task 22 分批补齐。
@@ -679,7 +679,7 @@ reason = "README 明确说明目前只发布 PNG(png/jamo.png、png/syllables.pn
 #    内部（且是 .bdf.gz 双重压缩），现有导入器 extract_zip 只支持 .zip、
 #    take 不做任何解压，故无法直接取到该 bdf。RELEASE-ASSETS 下另有直接
 #    可用的 unifont-16.0.04.otf / unifont_jp-16.0.04.otf（非 zip、非 tar，
-#    直接是矢量 OTF），经本地用 pfc.ingest.rasterize.detect_native_ppem
+#    直接是矢量 OTF），经本地用 fbf.ingest.rasterize.detect_native_ppem
 #    实测两者均判定为原生 16 格点，故改用 convert="ttf" 栅格化路线收录，
 #    以落实简报里"若有 unifont-*.bdf 就收"的意图（等效替代路径）。
 
@@ -1552,7 +1552,7 @@ provenance_url = "https://www.maoken.com/freefonts/11089.html"
 form = "mingcho"
 vibes = ["classic"]
 # 备注：字体 name 表家族名/全名分别为 "Chusung"/"Chusung 16"，明确标注 16，
-# detect_native_ppem 判定失败（gcd=1），故手填 ppem=16。版权继承 1988 Academia Sinica 点阵字库。
+# detect_native_ppem 判定失败（gcd=1），故手填 ppem=16。版权继承 1988 Academia Sinica 免费开源位图（像素）字体。
 
 # 注意：仓库内未见许可证文件（仅猫啃网通用免责声明模板，非真实许可证条款）
 [[family]]
@@ -1766,3 +1766,909 @@ reason = "README 允许免费使用、复制、修改、分发，但另写「不
 [[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--XiaoyaPixel-Classic（小雅像素）"
 reason = "itch.io 元数据显示 Code license: BSD 3-Clause，但仓库实际 LICENSE 与 TTF 内嵌许可均为 00FF 式自定义条款，二者冲突。该条款虽允许商用、修改与再分发，但许可可变更、修改版权归属特殊，只能算宽松自定义许可，不符合严格 libre 白名单标准。"
+
+# ==================== 合并片段：masaeedu/bitmap-fonts（2026-08-29）====================
+# masaeedu/bitmap-fonts（clone 于 2026-08-29）导入清单片段。
+# 源目录：github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/，用户已完成自由许可核查，
+# 只处理以下 23 个目录：bitocra, cherry, clearlyu, creep, ctrld-font, dina, dylex, gohufont,
+# kakwa, leggie, lode, mplus, orp-font, siji, spleen, sq, tamsyn-font-1.11, tamzen-font,
+# terminus-font-4.39, tewi-font, unscii, uw-ttyp0-1.2, xbmicons。其余目录（artwiz、boxxy、
+# jmk-x11-fonts 等）不在核查范围内，本片段一律不碰。
+#
+# 家族拆分说明：
+#  - bitocra/ 目录内实际含 4 款不同设计（均为 Aaron Christianson / ninjaaron 所作，同一 OFL-1.1
+#    许可）：4thD、5thElement、bitbuntu、bitocra（含 7/11/13px 与 full 字符集变体），拆成 4 个家族。
+#  - dylex/ 目录内含 2 款不同设计：6x10/7x13/10x20 三档尺寸是 X11 misc-fixed（"Fixed"/"terminal"）
+#    的 dylex 分支，14x14 是另一款名为 "crawl" 的字体（FONT XLFD 内 FAMILY_NAME 不同），拆成
+#    dylex-terminal 与 dylex-crawl 两个家族。
+#  - mplus/ 按用户指定合并为单一家族 mplus-bitmap（slug 由用户指定），涵盖 fxd/hlv/qub/sys 四种
+#    字重字号变体；mplus_cursors.bdf 是 X11 光标字体（FONT cursor），非文本字体，进 todo。
+#  - tamzen-font/ 目录除核心 Tamzen 家族外，另含 Powerline（纯符号补充字体）与 TamzenForPowerline
+#    （Tamzen 正文缝合 Powerline 符号的衍生版），均判定为非独立设计，进 todo 不收录。
+#  - spleen 已收录（slug spleen，来自 fcambus 官方仓库），本片段仅记一条 todo。
+#
+# 许可证文件核查：23 个目录中仅 clearlyu/README 内嵌许可证全文（MIT/X11 风格），其余全部目录
+# 均无独立 LICENSE/COPYING 文件；授权依据来自 BDF/PCF 头 COPYRIGHT/COMMENT/NOTICE 字段，或用户
+# 对上游仓库的预先核查（各 family 块上方均有注释说明依据来源）。
+#
+# 共 26 个 family、4 个 todo。
+
+# ============================================================
+# bitocra/ 目录 —— Aaron Christianson (ninjaaron) 作品合集，拆成 4 个家族
+# ============================================================
+
+# 注意：许可声明在 BDF COMMENT 中（"licenced under the OFL 1.1"，见 bitocra.bdf / bitocra-13.bdf /
+# bitbuntu.bdf / bitbuntu-full.bdf / bitocra-13-full.bdf）；4thD.bdf 本身无任何版权/许可字段，
+# 按同仓库同作者 bitocra 合集整体 OFL-1.1 处理。
+[[family]]
+slug = "4thd"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
+take = ["4thD.bdf"]
+license_files = []
+name = "4thD"
+name_zh = ""
+author = "Aaron Christianson（ninjaaron）"
+homepage = ""
+repository = "https://github.com/ninjaaron/bitocra"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["retro-game"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "4thD 是极小尺寸（4px）像素字体，随 ninjaaron/bitocra 合集一同发布；文件本身无版权/许可字段，但同仓库的 bitocra.bdf 等文件明确注明 licenced under the OFL 1.1，故按同一许可对待。README 中列为 “bitocra by ninjaaron”，仓库地址见 repository。"
+
+# 注意：许可声明同上（同仓库同作者，5thElement.bdf 本身亦无版权/许可字段）。
+[[family]]
+slug = "5thelement"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
+take = ["5thElement.bdf"]
+license_files = []
+name = "5thElement"
+name_zh = ""
+author = "Aaron Christianson（ninjaaron）"
+homepage = ""
+repository = "https://github.com/ninjaaron/bitocra"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["retro-game"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "5thElement 是极小尺寸（5px）像素字体，随 ninjaaron/bitocra 合集一同发布，许可依据同 4thD 家族说明。"
+
+# 注意：许可声明在 BDF COMMENT 中（bitbuntu.bdf 与 bitbuntu-full.bdf 均含 "licenced under the OFL 1.1"）。
+[[family]]
+slug = "bitbuntu"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
+take = ["bitbuntu.bdf", "bitbuntu-full.bdf"]
+license_files = []
+name = "Bitbuntu"
+name_zh = ""
+author = "Aaron Christianson（ninjaaron）"
+homepage = ""
+repository = "https://github.com/ninjaaron/bitocra"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "Bitbuntu 是 10px 等宽终端字体，bitbuntu.bdf 为 ISO8859-1 字符集、bitbuntu-full.bdf 为 UTF8 全字符集变体，同属一款设计。COMMENT 字段明确 Copyright (c) 2011 Aaron Christianson，licenced under the OFL 1.1。"
+
+# 注意：许可声明在 BDF COMMENT 中（bitocra.bdf / bitocra-full.bdf / bitocra-13.bdf / bitocra-13-full.bdf
+# 均含 "licenced under the OFL 1.1"；bitocra7.bdf 仅有 COPYRIGHT "Aaron Christianson 2011" 字段，
+# 按同一合集整体许可对待）。
+[[family]]
+slug = "bitocra"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
+take = ["bitocra.bdf", "bitocra-full.bdf", "bitocra-13.bdf", "bitocra-13-full.bdf", "bitocra7.bdf"]
+license_files = []
+name = "Bitocra"
+name_zh = ""
+author = "Aaron Christianson（ninjaaron）"
+homepage = ""
+repository = "https://github.com/ninjaaron/bitocra"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "Bitocra 主设计，含 7px/11px/13px 三档尺寸，11px 与 13px 各有 ISO8859-1 与 full（UTF8）字符集两种变体。README 列为 “bitocra by ninjaaron”。"
+
+# ============================================================
+# cherry/ —— MarinHoc 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件，BDF 头亦无明确许可声明（仅含 FONT/FAMILY_NAME 等基础属性）；
+# MIT 认定依据用户对上游 MarinHoc/cherry 仓库的预先核查。
+[[family]]
+slug = "cherry"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/cherry"
+take = ["cherry-*.bdf"]
+license_files = []
+name = "Cherry"
+name_zh = ""
+author = "MarinHoc"
+homepage = ""
+repository = "https://github.com/MarinHoc/cherry"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+commercial = true
+note = "含 10/11/13px 三档尺寸、regular/bold 两种字重，共 6 个 BDF 文件。仓库内与 BDF 头均无许可证文本，MIT 判定依据用户对上游仓库的核查结果。"
+
+# ============================================================
+# clearlyu/ —— Mark Leisher 作品，多文种点阵字体
+# ============================================================
+
+[[family]]
+slug = "clearlyu"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/clearlyu"
+take = ["cu12.bdf", "cu-alt12.bdf", "cu-arabic12.bdf", "cu-lig12.bdf", "cu-pua12.bdf"]
+license_files = ["README"]
+name = "ClearlyU"
+name_zh = ""
+author = "Mark Leisher"
+homepage = "https://web.archive.org/web/20090223214014/http://crl.nmsu.edu/~mleisher/cu.html"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "other"
+vibes = ["classic"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证（X11 风格）"
+file = "README"
+commercial = true
+note = "12pt/100dpi 比例宽度字体，覆盖 Unicode 多文种（拉丁、西里尔、希腊、阿拉伯、天城文等），受 Donald Knuth 的 Computer Modern 影响。README 内嵌完整许可证全文（Copyright 2000 Computing Research Lab, New Mexico State University，MIT/X11 风格用语）。cu12 为主字体，cu-alt12/cu-arabic12/cu-lig12/cu-pua12 分别是备用字形、阿拉伯文、连字与 PUA 扩展，同属一套设计的字符集拆分文件，非独立设计。目录内另有 ORIGIN 文件说明本地文件实际提取自 XFree86 4.0.2 源码包。"
+
+# ============================================================
+# creep/ —— romeovs 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；BDF 头仅有 COPYRIGHT "Copyright romeovs 2013" 字段，无明确许可
+# 声明；MIT 认定依据用户对上游 romeovs/creep 仓库的预先核查。
+[[family]]
+slug = "creep"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/creep"
+take = ["creep.bdf"]
+license_files = []
+name = "Creep"
+name_zh = ""
+author = "romeovs"
+homepage = ""
+repository = "https://github.com/romeovs/creep"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+commercial = true
+note = "16px 等宽终端字体，单一尺寸单文件。BDF 头仅有 COPYRIGHT 字段无许可声明，MIT 判定依据用户核查。"
+
+# ============================================================
+# ctrld-font/ —— bjin 作品，Proggy Tiny 分支
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件，BDF 头亦无明确许可声明（仅 COMMENT 注明 fork 自 Proggy Tiny）；
+# MIT 认定依据用户对上游 bjin/ctrld-font 仓库的预先核查。
+[[family]]
+slug = "ctrld"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/ctrld-font"
+take = ["ctrld-fixed-*.bdf"]
+license_files = []
+name = "CtrlD"
+name_zh = ""
+author = "bjin"
+homepage = ""
+repository = "https://github.com/bjin/ctrld-font"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+commercial = true
+note = "由 fontforge 生成，BDF COMMENT 注明 “forked from Proggy Tiny”。含 10/13/16px 三档尺寸，每档含 regular/bold，13px 与 16px 另有斜体（-i）变体，共 10 个 BDF 文件。MIT 判定依据用户核查。"
+
+# ============================================================
+# dina/ —— Jørgen Ibsen 作品
+# ============================================================
+
+[[family]]
+slug = "dina"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dina"
+take = ["Dina_*.bdf"]
+license_files = []
+name = "Dina"
+name_zh = ""
+author = "Jørgen Ibsen"
+homepage = "http://www.donationcoder.com/Software/Jibz/Dina/index.html"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+commercial = true
+note = "经典等宽终端字体，含 r400/r700（roman 常规/粗体）与 i400/i700（斜体 常规/粗体）四组字重字型，尺寸覆盖 6/8/9/10px，共 13 个 BDF 文件。各文件 COPYRIGHT 字段明确写明 “Copyright 2013 Joergen Ibsen, MIT license”。"
+
+# ============================================================
+# dylex/ 目录 —— dylex 作品合集，实含 2 款不同设计
+# ============================================================
+
+# 注意：许可声明在 BDF COPYRIGHT 中（"Public domain font. Share and enjoy." /
+# "Public domain terminal emulator font. Share and enjoy."）。
+[[family]]
+slug = "dylex-terminal"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex"
+take = ["6x10*.bdf", "7x13*.bdf", "10x20*.bdf"]
+license_files = []
+name = "Dylex Terminal"
+name_zh = ""
+author = "dylex"
+homepage = ""
+repository = "https://github.com/dylex/fonts"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+
+[family.license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+commercial = true
+note = "X11 misc-fixed（俗称 “Fixed”/“Terminal”）字体的 dylex 分支，源自 Markus Kuhn 的 ucs-fonts 工程（BDF COMMENT 标注 “Source: -Misc-Fixed-Medium-R-Normal…$ucs-fonts”），含 6x10/7x13/10x20 三档尺寸、regular/bold/oblique/bold-oblique 四种字型，共 12 个 BDF 文件。各文件 COPYRIGHT 字段声明 Public domain。与同目录内 14x14（crawl，见 dylex-crawl 家族）是不同设计，故拆分。"
+
+# 注意：许可声明同上（同一 BDF COPYRIGHT 声明文本）。
+[[family]]
+slug = "dylex-crawl"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex"
+take = ["14x14*.bdf"]
+license_files = []
+name = "Dylex Crawl"
+name_zh = ""
+author = "dylex"
+homepage = ""
+repository = "https://github.com/dylex/fonts"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["retro-game"]
+
+[family.license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+commercial = true
+note = "14px 尺寸，FONT XLFD 内 FAMILY_NAME 为 “crawl”（与同目录 “terminal”/“Fixed” 家族的 FONT 名不同，是独立设计，推测源自 Dungeon Crawl 类终端游戏用字体），含 regular/bold/oblique/bold-oblique 四种字型，共 4 个 BDF 文件。COPYRIGHT 字段同样声明 Public domain。"
+
+# ============================================================
+# gohufont/ —— Hugo Chargois 作品
+# ============================================================
+
+# 注意：许可声明在 BDF COMMENT 中（"Copyright by Hugo Chargois" / "Licensed under the WTFPL"）。
+[[family]]
+slug = "gohufont"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/gohufont"
+take = ["*.bdf"]
+license_files = []
+name = "GohuFont"
+name_zh = ""
+author = "Hugo Chargois"
+homepage = "http://font.gohu.org/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "WTFPL"
+name = "WTFPL（Do What The F*ck You Want To Public License）"
+commercial = true
+note = "含 11px/14px 两档尺寸、regular/bold 两种字重，每档另有 -uni（ISO10646/Unicode 字符集）变体，共 8 个 BDF 文件（取自 gohufont/bdf/，同名 gohufont/pcf/ 下的 .pcf.gz 未取用，优先取 BDF）。COMMENT 字段明确 Licensed under the WTFPL。"
+
+# ============================================================
+# kakwa/ —— kakwa 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；BDF 头仅含 COPYRIGHT "Copyright (C) 2010 kakwa" 字段，无明确
+# 许可声明；OFL-1.1 认定依据用户对上游 kakwafont 主页的预先核查。
+[[family]]
+slug = "kakwa"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/kakwa"
+take = ["kakwafont-12-n.bdf", "kakwafont-12-b.bdf"]
+license_files = []
+name = "Kakwafont"
+name_zh = ""
+author = "kakwa"
+homepage = "http://carpenti.iiens.net/kakwafont/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "12px 等宽终端字体，含 normal/bold 两种字重（取 BDF，同名 .pcf.gz 未取用）。OFL-1.1 判定依据用户核查。"
+
+# ============================================================
+# leggie/ —— Wiktor W Brodlo 作品
+# ============================================================
+
+[[family]]
+slug = "leggie"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/leggie"
+take = ["leggie.bdf"]
+license_files = []
+name = "Leggie"
+name_zh = ""
+author = "Wiktor W Brodlo"
+homepage = "http://wiktorb.eu/leggie"
+repository = "https://github.com/wiktor-b/leggie"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "12px 等宽终端字体，单文件。BDF COPYRIGHT 字段明确 “2012-2015 Wiktor W Brodlo. Released under SIL OFL”，COMMENT 附作者主页链接。"
+
+# ============================================================
+# lode/ —— Hisham Muhammad 作品
+# ============================================================
+
+# 注意：目录内只有 PCF，无 BDF；许可声明在 PCF COPYRIGHT 属性中。
+[[family]]
+slug = "lode"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/lode"
+take = ["lode.pcf"]
+license_files = []
+name = "Lode"
+name_zh = ""
+author = "Hisham Muhammad"
+homepage = ""
+repository = "https://github.com/hishamhm/lode-fonts"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 2.0"
+commercial = true
+note = "单一 PCF 文件（无 BDF 版本，管线支持直接取 PCF）。PCF COPYRIGHT 属性明确 “(C)2007 Hisham Muhammad. GNU GPL with font exception”，附带字体嵌入例外条款，允许将本字体嵌入文档而不导致文档整体受 GPL 约束。"
+
+# ============================================================
+# mplus/ —— M+ BITMAP FONTS（原版，非 itouhiro 的 PixelMplus 衍生版）
+# 用户指定 slug：mplus-bitmap；合并 fxd/hlv/qub/sys 四种变体为单一家族。
+# ============================================================
+
+[[family]]
+# BDF 内 FAMILY_NAME "fxd"，与同目录其它三族是不同设计，按真实家族拆分
+slug = "mplus-fixed"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
+take = ["mplus_f*.bdf"]
+license_files = []
+name = "M+ Bitmap Fixed"
+name_zh = ""
+author = "M+ FONTS PROJECT（Coji Morishita）"
+homepage = "https://mplusfonts.github.io/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29)；上游 M+ BITMAP FONTS"
+form = "terminal"
+vibes = ["classic"]
+
+[family.license]
+spdx = "LicenseRef-Mplus"
+name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
+commercial = true
+note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
+
+# ============================================================
+# orp-font/ —— Micah Elliott 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+
+[[family]]
+# BDF 内 FAMILY_NAME "hlv"，与同目录其它三族是不同设计，按真实家族拆分
+slug = "mplus-helv"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
+take = ["mplus_h*.bdf"]
+license_files = []
+name = "M+ Bitmap Helv"
+name_zh = ""
+author = "M+ FONTS PROJECT（Coji Morishita）"
+homepage = "https://mplusfonts.github.io/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29)；上游 M+ BITMAP FONTS"
+form = "sans"
+vibes = ["classic"]
+
+[family.license]
+spdx = "LicenseRef-Mplus"
+name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
+commercial = true
+note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
+
+# ============================================================
+# orp-font/ —— Micah Elliott 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+
+[[family]]
+# BDF 内 FAMILY_NAME "qub"，与同目录其它三族是不同设计，按真实家族拆分
+slug = "mplus-qub"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
+take = ["mplus_q*.bdf"]
+license_files = []
+name = "M+ Bitmap Qub"
+name_zh = ""
+author = "M+ FONTS PROJECT（Coji Morishita）"
+homepage = "https://mplusfonts.github.io/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29)；上游 M+ BITMAP FONTS"
+form = "terminal"
+vibes = ["classic"]
+
+[family.license]
+spdx = "LicenseRef-Mplus"
+name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
+commercial = true
+note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
+
+# ============================================================
+# orp-font/ —— Micah Elliott 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+
+[[family]]
+# BDF 内 FAMILY_NAME "sys"，与同目录其它三族是不同设计，按真实家族拆分
+slug = "mplus-sys"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
+take = ["mplus_s*.bdf"]
+license_files = []
+name = "M+ Bitmap Sys"
+name_zh = ""
+author = "M+ FONTS PROJECT（Coji Morishita）"
+homepage = "https://mplusfonts.github.io/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29)；上游 M+ BITMAP FONTS"
+form = "sans"
+vibes = ["classic"]
+
+[family.license]
+spdx = "LicenseRef-Mplus"
+name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
+commercial = true
+note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
+
+# ============================================================
+# orp-font/ —— Micah Elliott 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+
+[[family]]
+slug = "orp"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/orp-font"
+take = ["orp-bold.bdf", "orp-book.bdf", "orp-italic.bdf", "orp-medium.bdf", "profont.bdf"]
+license_files = []
+name = "Orp"
+name_zh = ""
+author = "Micah Elliott"
+homepage = ""
+repository = "https://github.com/MicahElliott/Orp-Font"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+commercial = true
+note = "12px 半窄体（SemiCondensed）等宽终端字体，含 bold/book/italic/medium 四种字型，另有 profont.bdf（FONT XLFD 内 FAMILY_NAME 为 “profont”，但尺寸、SemiCondensed 特征与 COPYRIGHT 文本均与 orp 系列完全一致，判定为同一设计下的附加变体而非独立的 Tobias Jung ProFont），共 5 个 BDF 文件（取 BDF，同名 .pcf.gz 未取用）。各文件 COPYRIGHT 字段为 “Public domain terminal emulator font. Share and enjoy.”（源自 Markus Kuhn 的 ucs-fonts 工程用语）。"
+
+# ============================================================
+# siji/ —— gstk 作品，图标字体
+# ============================================================
+
+[[family]]
+slug = "siji"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/siji"
+take = ["siji.bdf"]
+license_files = []
+name = "Siji"
+name_zh = ""
+author = "gstk"
+homepage = ""
+repository = "https://github.com/gstk/siji"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "decorative"
+vibes = ["decorative"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 2.0"
+commercial = true
+note = "10px 图标字体（取 bdf/siji.bdf，同名顶层 siji.pcf 未取用），BDF COMMENT 说明 “基于 Stlarch 字体、Sm4tik 的 xbm 图标包、FontAwesome 与 Lokaltog Symbol Font 制作的图标字体”。COPYRIGHT 字段为 “GPLv2”。"
+
+# ============================================================
+# sq/ —— Christian Neukirchen 作品
+# ============================================================
+
+[[family]]
+slug = "sq"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/sq"
+take = ["sq.bdf", "sqb.bdf"]
+license_files = []
+name = "Sq"
+name_zh = ""
+author = "Christian Neukirchen"
+homepage = ""
+repository = "https://github.com/chneukirchen/sq"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+commercial = true
+note = "15px 等宽终端字体，含 regular（sq）与 bold（sqb）两个 BDF 文件（同名 .pcf 未取用）。BDF COMMENT 注明 “Based upon Codec Terminal Text by Chris Cannam”，COPYRIGHT 字段为 “Public domain”。"
+
+# ============================================================
+# tamsyn-font-1.11/ —— Scott Fial 作品
+# ============================================================
+
+# 注意：目录内只有 PCF/PSF，无 BDF；许可声明在 PCF COPYRIGHT 属性中，PSF 格式不受管线支持，未取用。
+[[family]]
+slug = "tamsyn"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamsyn-font-1.11"
+take = ["Tamsyn*.pcf"]
+license_files = []
+name = "Tamsyn"
+name_zh = ""
+author = "Scott Fial"
+homepage = "http://www.fial.com/~scott/tamsyn-font/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "LicenseRef-Tamsyn"
+name = "Tamsyn 字体许可（BSD 风格）"
+commercial = true
+note = "经典等宽终端字体，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 PCF 文件（同名 .psf.gz 为 Linux 控制台 PSF 格式，管线不支持，未取用）。PCF COPYRIGHT 属性为 “(c) 2015 Scott Fial”。Tamsyn License 为 BSD 风格自由许可。"
+
+# ============================================================
+# tamzen-font/ —— sunaku 作品，Tamsyn 衍生
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中，且按 Tamsyn License 的衍生条款
+# 保留原作者版权归属。
+[[family]]
+slug = "tamzen"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font"
+take = ["Tamzen10x20b.bdf", "Tamzen10x20r.bdf", "Tamzen5x9b.bdf", "Tamzen5x9r.bdf", "Tamzen6x12b.bdf", "Tamzen6x12r.bdf", "Tamzen7x13b.bdf", "Tamzen7x13r.bdf", "Tamzen7x14b.bdf", "Tamzen7x14r.bdf", "Tamzen8x15b.bdf", "Tamzen8x15r.bdf", "Tamzen8x16b.bdf", "Tamzen8x16r.bdf"]
+license_files = []
+name = "Tamzen"
+name_zh = ""
+author = "sunaku（基于 Scott Fial 的 Tamsyn 字体再设计）"
+homepage = ""
+repository = "https://github.com/sunaku/tamzen-font"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "LicenseRef-Tamsyn"
+name = "Tamsyn 字体许可（BSD 风格，衍生须保留原许可与归属）"
+commercial = true
+note = "Tamsyn 的像素级重绘衍生版，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 BDF 文件（取自 bdf/ 子目录，同名 pcf/ 下的 .pcf 未取用）。各文件 COPYRIGHT 字段沿用 “(c) 2015 Scott Fial”，符合 Tamsyn License 对衍生作品保留原作者版权声明的要求。目录内另有 Powerline*.bdf（纯 Powerline 分隔符号补充字体）与 TamzenForPowerline*.bdf（Tamzen 正文缝合 Powerline 符号的衍生版），判定为非独立设计，未收录，见 todo。"
+
+# ============================================================
+# terminus-font-4.39/ —— Dimitar Toshkov Zhekov 作品
+# ============================================================
+
+# 注意：本仓库 README 未列出 terminus 词条（仅列出其修改版 “terminusmod by stlarch”），故 homepage/
+# repository 留空，未按公开常识臆造；许可声明在 BDF COPYRIGHT/NOTICE 中。
+[[family]]
+slug = "terminus"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/terminus-font-4.39"
+take = ["ter-u*.bdf"]
+license_files = []
+name = "Terminus"
+name_zh = ""
+author = "Dimitar Toshkov Zhekov"
+homepage = ""
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "知名等宽终端字体，v4.39。含 12/14/16/18/20/22/24/28/32px 九档尺寸、regular/bold 两种字重，14px 另有 ter-u14v.bdf（framebuffer 控制台适配变体），共 20 个 BDF 文件。BDF COPYRIGHT 字段为 “Copyright (C) 2014 Dimitar Toshkov Zhekov”，NOTICE 字段明确 “Licensed under the SIL Open Font License, Version 1.1”。项目主页公开可查（terminus-font.sourceforge.net），但因未见于本仓库 README，未填入 homepage 字段，仅供参考。"
+
+# ============================================================
+# tewi-font/ —— lucy 作品
+# ============================================================
+
+# 注意：许可声明在 BDF COMMENT 中（完整 GPL-3.0-or-later 文本，含字体嵌入例外条款）。
+[[family]]
+slug = "tewi"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tewi-font"
+take = ["Tewi-bold-11.bdf", "Tewi-normal-11.bdf", "Tewi2a-bold-11.bdf", "Tewi2a-normal-11.bdf"]
+license_files = []
+name = "Tewi"
+name_zh = ""
+author = "lucy"
+homepage = ""
+repository = "https://github.com/lucy/tewi-font"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-3.0-or-later"
+name = "GNU 通用公共许可证 3.0 或更高版本"
+commercial = true
+note = "11px 终端字体，含 Tewi（常规设计）与 Tewi2a（数字 2、字母 a 等字形的替代风格变体）两个子款，各含 normal/bold 字重，共 4 个 BDF 文件。BDF COMMENT 内嵌完整 GPLv3 许可文本（“either version 3 of the License, or (at your option) any later version”），并附带字体嵌入例外条款（内嵌本字体不会导致文档整体受 GPL 约束）。"
+
+# ============================================================
+# unscii/ —— Viznut 作品
+# ============================================================
+
+# 注意：目录内只有 PCF，无 BDF；PCF COPYRIGHT 属性存在但值为空，未见明确许可文本；Public Domain
+# 认定依据用户对上游 unscii 主页的预先核查。unscii-16-full.pcf 是 GPL 授权文件，按用户要求排除。
+[[family]]
+slug = "unscii"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/unscii"
+take = ["unscii-16.pcf", "unscii-8.pcf", "unscii-8-alt.pcf", "unscii-8-fantasy.pcf", "unscii-8-mcr.pcf", "unscii-8-tall.pcf", "unscii-8-thin.pcf"]
+license_files = []
+name = "Unscii"
+name_zh = ""
+author = "Viznut"
+homepage = "http://pelulamu.net/unscii/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["retro-game", "classic"]
+
+[family.license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+commercial = true
+note = "8px/16px 两档基础尺寸，8px 另有 alt/fantasy/mcr/tall/thin 五种风格变体，共取 7 个 PCF 文件（管线支持直接取 PCF）。已排除 unscii-16-full.pcf ——该文件是唯一的 GPL 授权文件（含完整 Unicode 字符集的扩展版本），与其余 Public Domain 文件许可不同，按用户要求不予收录。"
+
+# ============================================================
+# uw-ttyp0-1.2/ —— Uwe Waldmann 作品
+# ============================================================
+
+# 注意：仓库内未见独立许可证文件；许可声明在 BDF COMMENT 中（完整 MIT 风格许可文本）。
+[[family]]
+slug = "uw-ttyp0"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/uw-ttyp0-1.2"
+take = ["t0-*.bdf"]
+license_files = []
+name = "UW ttyp0"
+name_zh = ""
+author = "Uwe Waldmann"
+homepage = "http://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/"
+repository = ""
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证（自定义措辞，MIT 风格）"
+commercial = true
+note = "TTY 控制台等宽字体，含 11-18px 与 22px 共 10 档尺寸、regular/bold 两种字重，15-18px 另有斜体（i）变体，共 22 个 BDF 文件。BDF COMMENT 内嵌完整许可文本（Copyright (C) 2012, 2013 Uwe Waldmann；permission granted to use/copy/modify/merge/publish/distribute/embed/sublicense/sell，附带“修改字形需改名”的条件），属 MIT 风格自定义措辞。"
+
+# ============================================================
+# xbmicons/ —— holomorph 作品，图标字体
+# ============================================================
+
+[[family]]
+slug = "xbmicons"
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/xbmicons"
+take = ["xbmicons.bdf"]
+license_files = []
+name = "Xbmicons"
+name_zh = ""
+author = "holomorph"
+homepage = ""
+repository = "https://github.com/holomorph/xbmicons"
+provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+form = "decorative"
+vibes = ["decorative"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 2.0"
+commercial = true
+note = "12px 图标字体，单一 BDF 文件。COPYRIGHT 字段为 “GPLv2”。"
+
+# ============================================================
+# todo
+# ============================================================
+
+[[todo]]
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/spleen"
+reason = "已收录（slug spleen，来自 fcambus 官方仓库 https://github.com/fcambus/spleen，BSD-2-Clause），本仓库内的副本不再重复处理。"
+
+[[todo]]
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus/mplus_cursors.bdf"
+reason = "FONT XLFD 名为 “cursor”，是 X11 鼠标光标字形集合，不是文本字体，不适合收入像素字体收藏，跳过。"
+
+[[todo]]
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font/bdf/Powerline*.bdf"
+reason = "纯 Powerline 分隔符号补充字体（不含常规拉丁字形），是 Tamzen 的配套符号集而非独立设计，不单独收录。"
+
+[[todo]]
+source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font/bdf/TamzenForPowerline*.bdf"
+reason = "Tamzen 正文缝合 Powerline 符号的衍生版，与已收录的 tamzen 家族内容重复（仅多了符号字形），不单独收录。"
+
+# ==================== 合并片段：farsil/ibmfonts（2026-08-29）====================
+# farsil/ibmfonts — IBM PC/XT/EGA/CGA/MDA/VGA 文本模式 ROM 字库的 BDF 复刻集合。
+# 仓库 LICENSE(根目录 LICENSE 文件)明确:全部 bdf/ 下的 BDF 字体采用 CC BY-SA 4.0,
+# 许可证全文见 licenses/CC-BY-SA-4.0;configure 脚本另采用 MIT 许可,与字体无关,不收录。
+# 家族划分依据 README.md 的「Font Preview」章节与各 BDF 文件内 STARTPROPERTIES 的
+# FOUNDRY/FAMILY_NAME 字段:同一来源机型(BIOS/CGA/CGA Light/EGA/MDA/VGA)下的不同
+# 点阵尺寸(如 8x8、8x16、9x14 等)属同一字体的不同分辨率变体,合并为一个家族;
+# 不同机型来源彼此是不同字体,拆成不同家族。bdf/ 目录共 19 个文件,6 个家族的
+# take 列表合计恰好覆盖全部 19 个文件,无遗漏、无重复。
+
+[[family]]
+slug = "ibm-bios"
+source = "github-clones-2026-08-29/farsil-ibmfonts"
+take = ["ib8x8u.bdf", "ib16x8u.bdf", "ib8x16u.bdf", "ib16x16u.bdf"]
+license_files = ["CC-BY-SA-4.0"]
+name = "IBM BIOS"
+name_zh = ""
+author = "VileR（The Ultimate Oldschool PC Font Pack，像素复原）；farsil / Marco Buzzanca（BDF 转换与整理，2016）"
+homepage = "https://farsil.github.io/ibmfonts/"
+repository = "https://github.com/farsil/ibmfonts"
+provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+
+[family.license]
+spdx = "CC-BY-SA-4.0"
+name = "Creative Commons 署名-相同方式共享 4.0 国际"
+file = "CC-BY-SA-4.0"
+commercial = true
+note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM PC/XT 主板 BIOS ROM 内置的文本模式字库（并非独立显卡字库，是显卡尚未接管前的系统级后备字体），由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
+
+[[family]]
+slug = "ibm-cga"
+source = "github-clones-2026-08-29/farsil-ibmfonts"
+take = ["ic8x8u.bdf", "ic16x16u.bdf", "ic8x16u.bdf"]
+license_files = ["CC-BY-SA-4.0"]
+name = "IBM CGA"
+name_zh = ""
+author = "VileR（The Ultimate Oldschool PC Font Pack，像素复原）；farsil / Marco Buzzanca（BDF 转换与整理，2016）"
+homepage = "https://farsil.github.io/ibmfonts/"
+repository = "https://github.com/farsil/ibmfonts"
+provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+
+[family.license]
+spdx = "CC-BY-SA-4.0"
+name = "Creative Commons 署名-相同方式共享 4.0 国际"
+file = "CC-BY-SA-4.0"
+commercial = true
+note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM CGA（彩色图形适配器）显卡 ROM 内置的文本模式字库，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
+
+[[family]]
+slug = "ibm-cga-light"
+source = "github-clones-2026-08-29/farsil-ibmfonts"
+take = ["icl8x8u.bdf", "icl16x16u.bdf", "icl8x16u.bdf"]
+license_files = ["CC-BY-SA-4.0"]
+name = "IBM CGA Light"
+name_zh = ""
+author = "VileR（The Ultimate Oldschool PC Font Pack，像素复原）；farsil / Marco Buzzanca（BDF 转换与整理，2016）"
+homepage = "https://farsil.github.io/ibmfonts/"
+repository = "https://github.com/farsil/ibmfonts"
+provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+
+[family.license]
+spdx = "CC-BY-SA-4.0"
+name = "Creative Commons 署名-相同方式共享 4.0 国际"
+file = "CC-BY-SA-4.0"
+commercial = true
+note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM CGA 显卡 ROM 内置字库中笔画较细的「Light」变体（BDF 内 WEIGHT_NAME 标注为 Light，是与 IBM CGA 家族同源但字重不同的独立字体，故单列为一个家族），由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
+
+[[family]]
+slug = "ibm-ega"
+source = "github-clones-2026-08-29/farsil-ibmfonts"
+take = ["ie8x14u.bdf", "ie9x14u.bdf", "ie16x14u.bdf", "ie18x14u.bdf"]
+license_files = ["CC-BY-SA-4.0"]
+name = "IBM EGA"
+name_zh = ""
+author = "VileR（The Ultimate Oldschool PC Font Pack，像素复原）；farsil / Marco Buzzanca（BDF 转换与整理，2016）"
+homepage = "https://farsil.github.io/ibmfonts/"
+repository = "https://github.com/farsil/ibmfonts"
+provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+
+[family.license]
+spdx = "CC-BY-SA-4.0"
+name = "Creative Commons 署名-相同方式共享 4.0 国际"
+file = "CC-BY-SA-4.0"
+commercial = true
+note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM EGA（增强图形适配器）显卡 ROM 内置的文本模式字库，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
+
+[[family]]
+slug = "ibm-mda"
+source = "github-clones-2026-08-29/farsil-ibmfonts"
+take = ["im9x14u.bdf"]
+license_files = ["CC-BY-SA-4.0"]
+name = "IBM MDA"
+name_zh = ""
+author = "VileR（The Ultimate Oldschool PC Font Pack，像素复原）；farsil / Marco Buzzanca（BDF 转换与整理，2016）"
+homepage = "https://farsil.github.io/ibmfonts/"
+repository = "https://github.com/farsil/ibmfonts"
+provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+
+[family.license]
+spdx = "CC-BY-SA-4.0"
+name = "Creative Commons 署名-相同方式共享 4.0 国际"
+file = "CC-BY-SA-4.0"
+commercial = true
+note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM MDA（单色显示适配器）显卡 ROM 内置的文本模式字库，README 中仅收录 9x14 一种点阵尺寸，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
+
+[[family]]
+slug = "ibm-vga"
+source = "github-clones-2026-08-29/farsil-ibmfonts"
+take = ["iv8x16u.bdf", "iv9x16u.bdf", "iv16x16u.bdf", "iv18x16u.bdf"]
+license_files = ["CC-BY-SA-4.0"]
+name = "IBM VGA"
+name_zh = ""
+author = "VileR（The Ultimate Oldschool PC Font Pack，像素复原）；farsil / Marco Buzzanca（BDF 转换与整理，2016）"
+homepage = "https://farsil.github.io/ibmfonts/"
+repository = "https://github.com/farsil/ibmfonts"
+provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
+form = "terminal"
+vibes = ["retro-game", "terminal-hardcore"]
+
+[family.license]
+spdx = "CC-BY-SA-4.0"
+name = "Creative Commons 署名-相同方式共享 4.0 国际"
+file = "CC-BY-SA-4.0"
+commercial = true
+note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM VGA（视频图形阵列）显卡 ROM 内置的文本模式字库，即最广为人知的经典 PC/PS2 终端字体，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"

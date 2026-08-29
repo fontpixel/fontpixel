@@ -1,4 +1,4 @@
-# 点阵字库 Pixel Font Collection 实现计划
+# 免费开源位图（像素）字体 实现计划
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Python 3.12 + fonttools + freetype-py + Pillow + pytest;Node 24 + Astro 5 + Svelte 5 + TypeScript strict + vitest + Playwright;bdftopcf。
 
-**Spec:** `docs/superpowers/specs/2026-08-21-pixel-font-collection-design.md`(本计划从该 spec 论证;执行者两者都读)
+**Spec:** `docs/superpowers/specs/2026-08-21-foss-bitmap-fonts-design.md`(本计划从该 spec 论证;执行者两者都读)
 
 > **进度(2026-08-21)**:Task 1–21 已完成并逐一提交;Task 24(CI/README)已完成;
 > Task 22 进行中(试点五家族已上线,全量清单由并行代理起草中);Task 23、25 待做。
@@ -23,7 +23,7 @@
 - 字表数据文件必须带头部注释:来源、版本、获取日期、许可;第三方数据登记 `THIRD_PARTY_NOTICES.md`。
 - 管线确定性:同输入同输出(字典序遍历、固定 gzip mtime=0);增量缓存键 = 文件 sha256 + PIPELINE_VERSION。
 - Python 包名 `pfc`(位于 `pipeline/`,`pip install -e pipeline`);站点库代码 `site/src/lib/`。
-- 站点 base 路径可配(`PFC_BASE`,默认 `/pixel-font-collection`);所有 fetch 经 `withBase()`。
+- 站点 base 路径可配(`FBF_BASE`,默认 `/foss-bitmap-fonts`);所有 fetch 经 `withBase()`。
 - 旧项目代码仅作参考,不复制;旧项目 `scripts/data/cjk-tables/*.txt` 数据文件可迁移(MIT,保留声明)。
 
 ---
@@ -207,11 +207,11 @@ dist-downloads/
 
 **Files:**
 - Create: `.gitignore`, `Makefile`, `README.md`
-- Create: `pipeline/pyproject.toml`, `pipeline/pfc/__init__.py`(`PIPELINE_VERSION = 1`), `pipeline/tests/test_smoke.py`
+- Create: `pipeline/pyproject.toml`, `pipeline/fbf/__init__.py`(`PIPELINE_VERSION = 1`), `pipeline/tests/test_smoke.py`
 - Create: `site/package.json`, `site/astro.config.mjs`, `site/tsconfig.json`, `site/svelte.config.js`, `site/vitest.config.ts`, `site/src/lib/version.ts`, `site/src/lib/version.test.ts`, `site/src/pages/index.astro`(临时占位)
 
 **Interfaces:**
-- Produces: `make py-test`(pipeline pytest)、`make ts-test`(site vitest)、`make dev`、`make build`;Python venv `.venv`;`import pfc` 可用。
+- Produces: `make py-test`(pipeline pytest)、`make ts-test`(site vitest)、`make dev`、`make build`;Python venv `.venv`;`import fbf` 可用。
 
 - [x] **Step 1: Python 侧脚手架 + 冒烟测试**
 
@@ -219,7 +219,7 @@ dist-downloads/
 
 ```toml
 [project]
-name = "pfc"
+name = "foss-bitmap-fonts"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = ["fonttools>=4.60", "freetype-py>=2.5", "Pillow>=10"]
@@ -231,15 +231,15 @@ testpaths = ["tests"]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
-include = ["pfc*"]
+include = ["fbf*"]
 ```
 
 `pipeline/tests/test_smoke.py`:
 
 ```python
-import pfc
+import fbf
 def test_pipeline_version():
-    assert pfc.PIPELINE_VERSION == 1
+    assert fbf.PIPELINE_VERSION == 1
 ```
 
 - [x] **Step 2: 创建 venv 并验证 pytest 通过**
@@ -251,7 +251,7 @@ python3 -m venv .venv && .venv/bin/pip -q install -e "pipeline[dev]"
 
 - [x] **Step 3: 站点脚手架(Astro5+Svelte5+TS strict+vitest)+ 冒烟测试**
 
-`site/src/lib/version.ts` 导出 `export const SITE_VERSION = 1`;`version.test.ts` 断言之。`npm create astro` 交互不可用,手写最小 `package.json`(deps: astro@^5, @astrojs/svelte@^7, svelte@^5;dev: typescript, vitest, playwright 于 Task 15 再加)与 `astro.config.mjs`(svelte 集成,`base: process.env.PFC_BASE ?? '/pixel-font-collection'`)。
+`site/src/lib/version.ts` 导出 `export const SITE_VERSION = 1`;`version.test.ts` 断言之。`npm create astro` 交互不可用,手写最小 `package.json`(deps: astro@^5, @astrojs/svelte@^7, svelte@^5;dev: typescript, vitest, playwright 于 Task 15 再加)与 `astro.config.mjs`(svelte 集成,`base: process.env.FBF_BASE ?? '/foss-bitmap-fonts'`)。
 
 - [x] **Step 4: 验证 `npm install && npx vitest run` 通过、`npx astro build` 成功**
 
@@ -264,7 +264,7 @@ git add -A && git commit -m "chore: 仓库脚手架(pfc 包 + Astro/Svelte 站�
 ### Task 2: BDF 解析器
 
 **Files:**
-- Create: `pipeline/pfc/model.py`(契约 C3)、`pipeline/pfc/parsers/__init__.py`、`pipeline/pfc/parsers/bdf.py`
+- Create: `pipeline/fbf/model.py`(契约 C3)、`pipeline/fbf/parsers/__init__.py`、`pipeline/fbf/parsers/bdf.py`
 - Create: `pipeline/tests/fixtures/mini.bdf`(手工构造,3 字形:A、汉字「永」、组合符)、`pipeline/tests/test_bdf.py`
 
 **Interfaces:**
@@ -278,7 +278,7 @@ git add -A && git commit -m "chore: 仓库脚手架(pfc 包 + Astro/Svelte 站�
 
 ```python
 from pathlib import Path
-from pfc.parsers.bdf import parse_bdf
+from fbf.parsers.bdf import parse_bdf
 FIX = Path(__file__).parent / "fixtures"
 
 def test_parse_mini_bdf():
@@ -322,7 +322,7 @@ cp "/home/chen/githubprojects/pixelfontworkshop/pixel-font-collection-fonts/CJK-
 ### Task 3: 尺寸与墨迹度量
 
 **Files:**
-- Create: `pipeline/pfc/metrics.py`、`pipeline/tests/test_metrics.py`
+- Create: `pipeline/fbf/metrics.py`、`pipeline/tests/test_metrics.py`
 
 **Interfaces:**
 - Consumes: `ParsedFont`, `Glyph`
@@ -371,11 +371,11 @@ def test_monospace_tolerance():  # 100 字形 99 个 dwidth=8、1 个 4 → True
 ### Task 4: 字表数据基础(编解码派生 + 旧数据迁移 + UCD)
 
 **Files:**
-- Create: `pipeline/pfc/coverage/__init__.py`、`charsets.py`(契约 C7)、`ucd.py`
-- Create: `pipeline/pfc/coverage/gen/gen_codec_tables.py`(生成器,提交生成物)
-- Create: `pipeline/pfc/coverage/data/…`(生成/迁移的 .txt)、`pipeline/pfc/coverage/data/ucd/`(Blocks.txt + assigned-ranges.txt)
+- Create: `pipeline/fbf/coverage/__init__.py`、`charsets.py`(契约 C7)、`ucd.py`
+- Create: `pipeline/fbf/coverage/gen/gen_codec_tables.py`(生成器,提交生成物)
+- Create: `pipeline/fbf/coverage/data/…`(生成/迁移的 .txt)、`pipeline/fbf/coverage/data/ucd/`(Blocks.txt + assigned-ranges.txt)
 - Create: `pipeline/tests/test_charsets.py`、`THIRD_PARTY_NOTICES.md`
-- 迁移:`cp ../pixel-font-collection-old/scripts/data/cjk-tables/*.txt` → 转换为 C7 格式入 `data/`(gb12345、tongyong-guifan(整表)、7000tongyong、3500changyong、yiwu-jiaoyu、guji、iicore、hanyi、fangzheng、4808、6343、big5changyong、big5、hkchangyong、hkscs、suppchara)
+- 迁移:`cp ../foss-bitmap-fonts-old/scripts/data/cjk-tables/*.txt` → 转换为 C7 格式入 `data/`(gb12345、tongyong-guifan(整表)、7000tongyong、3500changyong、yiwu-jiaoyu、guji、iicore、hanyi、fangzheng、4808、6343、big5changyong、big5、hkchangyong、hkscs、suppchara)
 
 **Interfaces:**
 - Produces: `load_charsets(data_dir) -> list[Charset]`;`Ucd`(`blocks: list[tuple[str,int,int]]`、`assigned: frozenset[int]`、`block_assigned_counts`);生成器可重跑且幂等。
@@ -418,7 +418,7 @@ def test_ucd_blocks():
 ### Task 5: 外部字表获取(联网研究,产物离线提交)
 
 **Files:**
-- Create: `pipeline/pfc/coverage/data/jp/joyo-2136.txt`、`jp/kyoiku-1026.txt`、`jp/jinmeiyo.txt`、`gb/gb18030-2022-l1.txt`、`-l2.txt`、`-l3.txt`、`intl/unihan-core-2020.txt`、`intl/wgl4.txt`、`intl/viet-latin.txt`、`prc-lit/tongyong-guifan-l1/-l2/-l3.txt`、`prc-lit/changyong-2500.txt`、`prc-lit/cichangyong-1000.txt`
+- Create: `pipeline/fbf/coverage/data/jp/joyo-2136.txt`、`jp/kyoiku-1026.txt`、`jp/jinmeiyo.txt`、`gb/gb18030-2022-l1.txt`、`-l2.txt`、`-l3.txt`、`intl/unihan-core-2020.txt`、`intl/wgl4.txt`、`intl/viet-latin.txt`、`prc-lit/tongyong-guifan-l1/-l2/-l3.txt`、`prc-lit/changyong-2500.txt`、`prc-lit/cichangyong-1000.txt`
 - Modify: `pipeline/tests/test_charsets.py`(追加计数断言)、`THIRD_PARTY_NOTICES.md`
 
 **Interfaces:**
@@ -432,7 +432,7 @@ def test_ucd_blocks():
 ### Task 6: 覆盖率引擎
 
 **Files:**
-- Create: `pipeline/pfc/coverage/engine.py`、`pipeline/tests/test_coverage.py`
+- Create: `pipeline/fbf/coverage/engine.py`、`pipeline/tests/test_coverage.py`
 
 **Interfaces:**
 - Consumes: `Charset`、`Ucd`、`ParsedFont`
@@ -453,7 +453,7 @@ def detect_scripts(cov) -> list[str]                                  # 阈值:g
 ### Task 7: 许可证识别
 
 **Files:**
-- Create: `pipeline/pfc/licenses.py`、`pipeline/pfc/licenses_data/`(已知许可证规范文本片段)、`pipeline/tests/test_licenses.py`、`pipeline/tests/fixtures/licenses/`(从收集夹复制 OFL.txt、MIT、Apache、IPA、M+、Baekmuk 等真实文本)
+- Create: `pipeline/fbf/licenses.py`、`pipeline/fbf/licenses_data/`(已知许可证规范文本片段)、`pipeline/tests/test_licenses.py`、`pipeline/tests/fixtures/licenses/`(从收集夹复制 OFL.txt、MIT、Apache、IPA、M+、Baekmuk 等真实文本)
 
 **Interfaces:**
 - Produces:
@@ -477,7 +477,7 @@ COMMERCIAL_OK = {"OFL-1.1","OFL-1.0","MIT","Apache-2.0","CC0-1.0","Unlicense",
 ### Task 8: family.toml 与变体解析
 
 **Files:**
-- Create: `pipeline/pfc/familymeta.py`、`pipeline/tests/test_familymeta.py`
+- Create: `pipeline/fbf/familymeta.py`、`pipeline/tests/test_familymeta.py`
 
 **Interfaces:**
 - Consumes: `ParsedFont`、`LicenseInfo`
@@ -505,7 +505,7 @@ def resolve_variant(f: ParsedFont, meta: FamilyMeta) -> VariantDesc
 ### Task 9: 字形包写入器
 
 **Files:**
-- Create: `pipeline/pfc/glyphpack.py`、`pipeline/tests/test_glyphpack.py`
+- Create: `pipeline/fbf/glyphpack.py`、`pipeline/tests/test_glyphpack.py`
 
 **Interfaces:**
 - Consumes: `ParsedFont`、`VariantDesc`;契约 C1/C2/C8
@@ -562,7 +562,7 @@ test("parses python-written chunk", () => {
 ### Task 12: SVG 预渲染与 og 图
 
 **Files:**
-- Create: `pipeline/pfc/prerender.py`、`pipeline/tests/test_prerender.py`
+- Create: `pipeline/fbf/prerender.py`、`pipeline/tests/test_prerender.py`
 
 **Interfaces:**
 - Consumes: `ParsedFont`、样例句常量 `SAMPLES: dict[str, str]`(spec §5.2 默认句,定义于本模块,`glyphpack.CORE_TEXT` 引用之)
@@ -574,7 +574,7 @@ test("parses python-written chunk", () => {
 ### Task 13: 下载物构建
 
 **Files:**
-- Create: `pipeline/pfc/downloads.py`、`pipeline/tests/test_downloads.py`
+- Create: `pipeline/fbf/downloads.py`、`pipeline/tests/test_downloads.py`
 
 **Interfaces:**
 - Produces: `build_downloads(families: list[BuiltFamily], out: Path) -> dict`(manifest;`BuiltFamily` 见 Task 14)。产物按 C8:`<slug>--<variantId>.bdf.gz`、`.pcf.gz`(`bdftopcf` 子进程,失败记警告仅出 bdf)、`<slug>.zip`(BDF 原文 + 许可证 + README.txt 含 provenance)。gzip/zip 时间戳固定(1980-01-01)保证确定性。
@@ -585,7 +585,7 @@ test("parses python-written chunk", () => {
 ### Task 14: 构建编排器与索引产出
 
 **Files:**
-- Create: `pipeline/pfc/build.py`(入口 `python -m pfc.build`)、`pipeline/pfc/emit.py`、`pipeline/pfc/cache.py`、`pipeline/tests/test_build.py`
+- Create: `pipeline/fbf/build.py`(入口 `python -m fbf.build`)、`pipeline/fbf/emit.py`、`pipeline/fbf/cache.py`、`pipeline/tests/test_build.py`
 - Create: `pipeline/tests/fixtures/fonts-tree/`(两个家族:mini + galmuri 真实文件,含一个无 toml 家族)
 - Create: `site/src/lib/schema.ts`(zod)与 `site/src/lib/schema.test.ts`
 
@@ -626,8 +626,8 @@ CLI:`--fonts fonts/ --out site/public/data --downloads dist-downloads --cache .c
 - Consumes: Task 14 产物(fixture 数据构建)
 - Produces: `UIStrings` 接口与 `t()`;`Base.astro` slot 布局;`withBase`;e2e 基座(`npx playwright test`,webServer 起 `astro preview`)。
 
-- [x] **Step 1: 用 fixtures 跑管线生成 `site/public/data/`**:`.venv/bin/python -m pfc.build --fonts pipeline/tests/fixtures/fonts-tree --out site/public/data --downloads dist-downloads --cache .cache`
-- [x] **Step 2: 失败 e2e**:`/zh/` 200 且含站名「点阵字库」、html[lang=zh]、hreflang en 链接存在;`/en/` 英文站名;`/` 跳转脚本存在;暗色切换写 localStorage 且 html[data-theme] 变化。
+- [x] **Step 1: 用 fixtures 跑管线生成 `site/public/data/`**:`.venv/bin/python -m fbf.build --fonts pipeline/tests/fixtures/fonts-tree --out site/public/data --downloads dist-downloads --cache .cache`
+- [x] **Step 2: 失败 e2e**:`/zh/` 200 且含站名「免费开源位图（像素）字体」、html[lang=zh]、hreflang en 链接存在;`/en/` 英文站名;`/` 跳转脚本存在;暗色切换写 localStorage 且 html[data-theme] 变化。
 - [x] **Step 3: 实现骨架与样式基座(令牌:`--bg`纸白/`--ink`炭黑/`--accent`朱砂红 #c3272b 系,dark 反转;进度条方块与 1px 分隔线组件类)**
 - [x] **Step 4: 派发 Opus/Sonnet 子代理翻译 `zh.ts` → `en.ts`(含复核);本任务内完成集成**
 - [x] **Step 5: e2e 通过;提交** `feat: 站点骨架、双语路由与主题基座`
@@ -687,7 +687,7 @@ export function decodeState(p: URLSearchParams): FilterState
 - Create: `site/src/islands/CoverageReport.svelte`(分板块折叠、像素方块进度条、变体切换、≤500 缺字展开列表、Unicode 全区段折叠表)
 - Create: `site/src/islands/GlyphGrid.svelte`(区段跳转、虚拟滚动、点击检视器弹层:放大位图 canvas + 码位/名称/度量)
 - Create: `site/src/lib/intervals.ts` + `intervals.test.ts`(查字数据:格式 = gzip 后的 `u32 familyCount, 每家族: u16 slugLen+utf8, u32 runCount, runCount×(u32 start,u32 end)`;`export class CoverageIndex { static parse(buf): CoverageIndex; covers(slug, text): boolean }`)
-- Modify: `pipeline/pfc/emit.py`(输出 `coverage-intervals.bin.gz`)+ `pipeline/tests/test_build.py` 追加断言
+- Modify: `pipeline/fbf/emit.py`(输出 `coverage-intervals.bin.gz`)+ `pipeline/tests/test_build.py` 追加断言
 - Modify: `site/src/islands/Catalogue.svelte`(chars 筛选接入,懒加载 CoverageIndex)
 - Create: `site/e2e/coverage.spec.ts`
 
@@ -715,7 +715,7 @@ export function decodeState(p: URLSearchParams): FilterState
 ### Task 20: 导入工具(zip/BDF/OTB/kbitx)与试点五家族
 
 **Files:**
-- Create: `pipeline/pfc/ingest/__init__.py`、`manifest.py`(读 `ingest/manifest.toml`)、`extract.py`(zip 解包取 BDF)、`otb.py`(fonttools EBDT/EBLC→Glyph→BDF 写出)、`kbitx.py`(XML→BDF)、`bdfwrite.py`(`write_bdf(f: ParsedFont, out: Path)`)、`run.py`(CLI `python -m pfc.ingest.run --manifest … --src … --dest fonts/ [--only slug]`)
+- Create: `pipeline/fbf/ingest/__init__.py`、`manifest.py`(读 `ingest/manifest.toml`)、`extract.py`(zip 解包取 BDF)、`otb.py`(fonttools EBDT/EBLC→Glyph→BDF 写出)、`kbitx.py`(XML→BDF)、`bdfwrite.py`(`write_bdf(f: ParsedFont, out: Path)`)、`run.py`(CLI `python -m fbf.ingest.run --manifest … --src … --dest fonts/ [--only slug]`)
 - Create: `pipeline/tests/test_ingest.py`(真实文件:galmuri zip 一个、wqy otb、一个 kbitx)
 - Create: `ingest/manifest.toml`(先只含试点)+ `docs/import-report.md`(工具生成)
 
@@ -743,7 +743,7 @@ convert = ""                       # ""|"otb"|"kbitx"|"ttf"
 ### Task 21: TTF 栅格化转制
 
 **Files:**
-- Create: `pipeline/pfc/ingest/rasterize.py`、`pipeline/tests/test_rasterize.py`
+- Create: `pipeline/fbf/ingest/rasterize.py`、`pipeline/tests/test_rasterize.py`
 
 **Interfaces:**
 - Produces: `detect_native_ppem(ttf: Path) -> int | None`(轮廓格点 GCD:采样 ≤200 字形全部 on-curve 坐标对 em 的公约数,`em/gcd` 为候选;与 name/upem 启发式互校,不一致返回 None);`rasterize_ttf(ttf: Path, ppem: int) -> ParsedFont`(freetype-py `FT_LOAD_TARGET_MONO|FT_LOAD_RENDER`,位图转 Glyph);`verify_sheet(f: ParsedFont, out: Path)`(渲染代表字对照 PNG 供人工抽查)。
@@ -798,7 +798,7 @@ convert = ""                       # ""|"otb"|"kbitx"|"ttf"
 ### Task 2b: PCF 解析器(位于 Task 2 之后执行)
 
 **Files:**
-- Create: `pipeline/pfc/parsers/pcf.py`、`pipeline/tests/test_pcf.py`、fixture:`pipeline/tests/fixtures/mini.pcf`(由 `bdftopcf mini.bdf` 生成并提交)
+- Create: `pipeline/fbf/parsers/pcf.py`、`pipeline/tests/test_pcf.py`、fixture:`pipeline/tests/fixtures/mini.pcf`(由 `bdftopcf mini.bdf` 生成并提交)
 
 **Interfaces:**
 - Produces: `parse_pcf(path: Path, family_slug: str) -> ParsedFont`(properties/metrics/bitmaps/encoding/glyph-names 表;字节序/位序/scan-unit 处理;编码表 ISO10646 直通,gb2312/jisx0208/ksc5601/big5 经 Python codecs 映射,未知 registry 记警告并丢弃非映射字形)。

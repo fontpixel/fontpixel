@@ -54,7 +54,7 @@ try {
     <script is:inline>
       (function () {
         try {
-          var t = localStorage.getItem('pfc-theme');
+          var t = localStorage.getItem('fbf-theme');
           var m =
             t ||
             (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -82,7 +82,9 @@ try {
               <span class="site-brand__name">{s.siteName}</span>
             )
           }
-          <span class="site-brand__latin mono">{s.siteNameLatin}</span>
+          {s.siteNameLatin && s.siteNameLatin !== s.siteName && (
+            <span class="site-brand__latin mono">{s.siteNameLatin}</span>
+          )}
         </a>
         <nav class="site-nav" aria-label="site">
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
@@ -116,7 +118,7 @@ try {
         <p>
           <a href={withBase(`/${lang}/about/`)}>{s.footer.dataSources}</a>
           ·
-          <a href="https://github.com/pixelfontworkshop/pixel-font-collection"
+          <a href="https://github.com/pixelfontworkshop/foss-bitmap-fonts"
             >{s.footer.sourceCode}</a
           >
         </p>
@@ -129,7 +131,7 @@ try {
         const cur = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
         document.documentElement.dataset.theme = cur;
         try {
-          localStorage.setItem('pfc-theme', cur);
+          localStorage.setItem('fbf-theme', cur);
         } catch {
           /* 私隐模式等场景忽略 */
         }
@@ -157,8 +159,13 @@ try {
       }
       .site-brand__latin {
         color: var(--ink-3);
-        font-size: 0.8rem;
-        letter-spacing: 0.06em;
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+      }
+      @media (max-width: 1100px) {
+        .site-brand__latin {
+          display: none;
+        }
       }
       .site-nav {
         display: flex;

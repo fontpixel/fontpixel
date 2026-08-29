@@ -1,8 +1,8 @@
 import type { UIStrings } from './types';
 
 export const en: UIStrings = {
-  siteName: 'Pixel Font Collection',
-  siteNameLatin: 'Pixel Font Collection',
+  siteName: 'Free & Open Source Bitmap (Pixel) Fonts',
+  siteNameLatin: '',
   siteTagline:
     'A specimen collection of open-source bitmap fonts: catalogued glyph by glyph, with metrics and coverage at a glance.',
   langLabel: 'English',
@@ -38,7 +38,6 @@ export const en: UIStrings = {
     inkHeight: 'Ink height',
     scripts: 'Scripts',
     license: 'License',
-    commercialOnly: 'Commercial use only',
     spacing: 'Spacing',
     weights: 'Weights',
     origin: 'Origin',
@@ -125,6 +124,9 @@ export const en: UIStrings = {
     downloadsTitle: 'Downloads',
     downloadBdf: 'BDF',
     downloadPcf: 'PCF',
+    downloadTtf: 'Bitmap TTF',
+    downloadTtfNote:
+      'One file with every size of this font packed in as bitmap strikes, no vector outlines. Install it and each size is there to use on any system that renders bitmap strikes.',
     downloadZip: 'Full family ZIP',
     downloadNote: 'Files are gzip-compressed; checksums are SHA-256.',
     fileSize: 'Size',

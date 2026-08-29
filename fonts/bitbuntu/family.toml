@@ -1,0 +1,17 @@
+name = "Bitbuntu"
+name_zh = ""
+author = "Aaron Christianson（ninjaaron）"
+homepage = ""
+repository = "https://github.com/ninjaaron/bitocra"
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal-hardcore"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "Bitbuntu 是 10px 等宽终端字体，bitbuntu.bdf 为 ISO8859-1 字符集、bitbuntu-full.bdf 为 UTF8 全字符集变体，同属一款设计。COMMENT 字段明确 Copyright (c) 2011 Aaron Christianson，licenced under the OFL 1.1。"

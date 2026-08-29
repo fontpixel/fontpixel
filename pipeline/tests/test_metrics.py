@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from pfc.metrics import claimed_size, compute_ink, glyph_ink_size, is_monospaced
-from pfc.model import Glyph, ParsedFont
+from fbf.metrics import claimed_size, compute_ink, glyph_ink_size, is_monospaced
+from fbf.model import Glyph, ParsedFont
 
 
 def _row(r: str) -> bytes:

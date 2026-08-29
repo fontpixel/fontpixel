@@ -1,4 +1,4 @@
-/** 默认样例句 —— 与 pipeline/pfc/samples.py 保持同步(spec §5.2)。 */
+/** 默认样例句 —— 与 pipeline/fbf/samples.py 保持同步(spec §5.2)。 */
 
 export const SAMPLES: Record<string, string> = {
   'zh-Hans': '天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。',

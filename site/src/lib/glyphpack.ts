@@ -1,4 +1,4 @@
-/** 字形包 v1 解码器（契约 C1/C4）。与 pipeline/pfc/glyphpack.py 互为镜像。 */
+/** 字形包 v1 解码器（契约 C1/C4）。与 pipeline/fbf/glyphpack.py 互为镜像。 */
 
 export interface DecodedGlyph {
   cp: number;

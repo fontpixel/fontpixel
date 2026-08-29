@@ -97,3 +97,27 @@ test('coverage preset filters by badge charset', async ({ page }) => {
     page.locator(`${ISLAND} .card[data-slug="wqy-bitmap-song"]`),
   ).toBeVisible();
 });
+
+test('search matches across simplified and traditional forms', async ({ page }) => {
+  await page.goto('zh/');
+  // 家族名是「東雲ゴシック」，搜简体「东云」应能命中
+  await page.getByTestId('search-input').fill('东云');
+  await expect
+    .poll(() =>
+      page.locator(`${ISLAND} .card[data-slug="shinonome-gothic"]`).count(),
+    )
+    .toBe(1);
+  await page.getByTestId('search-input').fill('東雲');
+  await expect
+    .poll(() =>
+      page.locator(`${ISLAND} .card[data-slug="shinonome-gothic"]`).count(),
+    )
+    .toBe(1);
+});
+
+test('commercial-only filter is gone', async ({ page }) => {
+  await page.goto('zh/');
+  const panel = page.locator('[data-testid="filter-panel"]');
+  await expect(panel).not.toContainText('仅看可商用');
+  await expect(panel.locator('input[type="checkbox"]')).toHaveCount(0);
+});

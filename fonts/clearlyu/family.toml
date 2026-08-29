@@ -1,0 +1,18 @@
+name = "ClearlyU"
+name_zh = ""
+author = "Mark Leisher"
+homepage = "https://web.archive.org/web/20090223214014/http://crl.nmsu.edu/~mleisher/cu.html"
+repository = ""
+description = ""
+form = "other"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["classic"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/clearlyu；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "MIT"
+name = "MIT 许可证（X11 风格）"
+commercial = true
+note = "12pt/100dpi 比例宽度字体，覆盖 Unicode 多文种（拉丁、西里尔、希腊、阿拉伯、天城文等），受 Donald Knuth 的 Computer Modern 影响。README 内嵌完整许可证全文（Copyright 2000 Computing Research Lab, New Mexico State University，MIT/X11 风格用语）。cu12 为主字体，cu-alt12/cu-arabic12/cu-lig12/cu-pua12 分别是备用字形、阿拉伯文、连字与 PUA 扩展，同属一套设计的字符集拆分文件，非独立设计。目录内另有 ORIGIN 文件说明本地文件实际提取自 XFree86 4.0.2 源码包。"
+file = "README"

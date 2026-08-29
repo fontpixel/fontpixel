@@ -33,10 +33,10 @@
         inspected = null;
       }
     };
-    document.addEventListener('pfc:variantchange', onVariant);
+    document.addEventListener('fbf:variantchange', onVariant);
     const off = onThemeChange(() => (themeTick += 1));
     return () => {
-      document.removeEventListener('pfc:variantchange', onVariant);
+      document.removeEventListener('fbf:variantchange', onVariant);
       off();
     };
   });

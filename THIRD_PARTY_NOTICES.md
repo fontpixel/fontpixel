@@ -2,7 +2,7 @@
 
 ## CJK-character-count 字表数据
 
-`pipeline/pfc/coverage/data/` 中标注 `license: MIT (CJK-character-count, © NFSL2001)`
+`pipeline/fbf/coverage/data/` 中标注 `license: MIT (CJK-character-count, © NFSL2001)`
 的字表文件迁移自 CJK-character-count 项目整理的规范字表数据
 （通用规范汉字表、现代汉语常用字表、现代汉语通用字表、义务教育语文课程常用字表、
 古籍印刷通用字规范字形表、GB/T 12345、IICore、汉仪/方正简繁字表、
@@ -12,7 +12,7 @@ MIT License — Copyright © 2020-2025 NFSL2001。原始许可证全文见其项
 
 ## Unicode Character Database
 
-`pipeline/pfc/coverage/data/ucd/` 数据来自 Unicode 17.0.0 UCD
+`pipeline/fbf/coverage/data/ucd/` 数据来自 Unicode 17.0.0 UCD
 (https://www.unicode.org/Public/17.0.0/ucd/)，依据
 Unicode License v3(https://www.unicode.org/license.txt)使用。
 

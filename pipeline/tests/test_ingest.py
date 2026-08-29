@@ -2,12 +2,12 @@ from pathlib import Path
 
 import pytest
 
-from pfc.ingest.extract import extract_zip
-from pfc.ingest.kbitx import convert_kbitx
-from pfc.ingest.otb import convert_otb
-from pfc.ingest.run import run_manifest
-from pfc.metrics import glyph_ink_size
-from pfc.parsers.bdf import parse_bdf
+from fbf.ingest.extract import extract_zip
+from fbf.ingest.kbitx import convert_kbitx
+from fbf.ingest.otb import convert_otb
+from fbf.ingest.run import run_manifest
+from fbf.metrics import glyph_ink_size
+from fbf.parsers.bdf import parse_bdf
 
 COLLECTION = Path("/home/chen/githubprojects/pixelfontworkshop/pixel-font-collection-fonts")
 GALMURI = COLLECTION / "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri"
@@ -56,7 +56,7 @@ def test_kbitx_matches_official_bdf():
     assert len(common) > 10000
 
     def lit(g):
-        from pfc.model import row_bytes
+        from fbf.model import row_bytes
 
         nb = row_bytes(g.bbw)
         return {

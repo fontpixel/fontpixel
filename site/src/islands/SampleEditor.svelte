@@ -48,7 +48,7 @@
 
   $effect(() => {
     document.dispatchEvent(
-      new CustomEvent('pfc:variantchange', { detail: { id: variantId } }),
+      new CustomEvent('fbf:variantchange', { detail: { id: variantId } }),
     );
   });
 

@@ -1,7 +1,7 @@
 [project]
-name = "pfc"
+name = "foss-bitmap-fonts"
 version = "0.1.0"
-description = "点阵字库 Pixel Font Collection 构建管线"
+description = "免费开源位图（像素）字体 构建管线"
 requires-python = ">=3.12"
 dependencies = ["fonttools>=4.60", "freetype-py>=2.5", "Pillow>=10"]
 
@@ -16,4 +16,4 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["pfc*"]
+include = ["fbf*"]

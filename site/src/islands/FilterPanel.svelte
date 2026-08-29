@@ -74,7 +74,6 @@
       inkH: null,
       scripts: [],
       licenses: [],
-      commercialOnly: false,
       spacing: [],
       weights: [],
       origin: 'all',
@@ -212,10 +211,6 @@
 
   <section>
     <h3>{s.catalogue.license}</h3>
-    <label class="check">
-      <input type="checkbox" bind:checked={state.commercialOnly} />
-      {s.catalogue.commercialOnly}
-    </label>
     <div class="chips">
       {#each licenses as lic (lic)}
         <button

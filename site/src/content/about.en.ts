@@ -3,14 +3,15 @@
 import type { AboutSection } from './about.zh';
 
 export const aboutIntro =
-  'Pixel Font Collection gathers open-source bitmap fonts from wherever they happen to live and files them in one specimen cabinet: parsed glyph by glyph, measured to one consistent standard, tallied for character coverage, and paired with previews you can type into. The fonts belong to the people who made them; all that happens here is cataloguing and display.';
+  'Free & Open Source Bitmap (Pixel) Fonts gathers open-source bitmap fonts from wherever they happen to live and files them in one specimen cabinet: parsed glyph by glyph, measured to one consistent standard, tallied for character coverage, and paired with previews you can type into. The fonts belong to the people who made them; all that happens here is cataloguing and display.';
 
 export const aboutSections: AboutSection[] = [
   {
     id: 'criteria',
     heading: 'Inclusion criteria',
     paragraphs: [
-      'The collection takes only open-source or free-licensed fonts that permit redistribution, mostly CJK bitmap faces. Native bitmap formats come first: BDF and PCF, along with formats that convert to them losslessly such as OTB and kbitx. Some authors publish only a vectorized pixel outline font (TTF/OTF); those are rasterized back onto their native pixel grid, and the page marks them “Converted” and notes how they were derived.',
+      'Only freely licensed fonts make it in, and the bar is a strict one: the license must explicitly allow anyone to use, copy, modify, and redistribute the font, commercial use included, and it must clearly cover the exact file catalogued here, through a chain of provenance that can be checked. Wording like “free”, “free for commercial use”, or “freeware”, and licenses that permit copying alone, do not qualify; neither does a stated intention to “switch to an open-source license later” that the author has not yet carried out. Everything on the site is therefore safe to use commercially, with no exceptions to sift out.',
+      'The collection is mostly CJK bitmap faces. Native bitmap formats come first: BDF and PCF, along with formats that convert to them losslessly such as OTB and kbitx. Some authors publish only a vectorized pixel outline font (TTF/OTF); those are rasterized back onto their native pixel grid, and the page marks them “Converted” and notes how they were derived.',
       "Each font's detail page records its provenance. If you spot something included in error, or you would like a font taken down, please open an issue in the repository.",
     ],
   },

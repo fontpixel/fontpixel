@@ -200,7 +200,7 @@ const coverageGroups = groupBy((vid) =>
   </div>
 
   <script is:inline define:vars={{ variantIds }}>
-    document.addEventListener('pfc:variantchange', (e) => {
+    document.addEventListener('fbf:variantchange', (e) => {
       const id = e.detail?.id;
       if (!id || !variantIds.includes(id)) return;
       document.querySelectorAll('[data-variant-panel]').forEach((el) => {

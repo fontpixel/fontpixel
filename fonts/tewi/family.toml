@@ -1,0 +1,17 @@
+name = "Tewi"
+name_zh = ""
+author = "lucy"
+homepage = ""
+repository = "https://github.com/lucy/tewi-font"
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal-hardcore"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tewi-font；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "GPL-3.0-or-later"
+name = "GNU 通用公共许可证 3.0 或更高版本"
+commercial = true
+note = "11px 终端字体，含 Tewi（常规设计）与 Tewi2a（数字 2、字母 a 等字形的替代风格变体）两个子款，各含 normal/bold 字重，共 4 个 BDF 文件。BDF COMMENT 内嵌完整 GPLv3 许可文本（“either version 3 of the License, or (at your option) any later version”），并附带字体嵌入例外条款（内嵌本字体不会导致文档整体受 GPL 约束）。"

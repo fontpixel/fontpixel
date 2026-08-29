@@ -14,7 +14,6 @@ export function encodeState(s: FilterState): URLSearchParams {
   if (s.inkH) p.set('ink', `${s.inkH[0]}-${s.inkH[1]}`);
   if (s.scripts.length) p.set('scripts', s.scripts.join(','));
   if (s.licenses.length) p.set('lic', s.licenses.join(','));
-  if (s.commercialOnly) p.set('com', '1');
   if (s.spacing.length) p.set('sp', s.spacing.join(','));
   if (s.weights.length) p.set('wt', s.weights.join(','));
   if (s.origin !== d.origin) p.set('or', s.origin);
@@ -45,7 +44,6 @@ export function decodeState(p: URLSearchParams): FilterState {
   }
   s.scripts = list(p, 'scripts');
   s.licenses = list(p, 'lic');
-  s.commercialOnly = p.get('com') === '1';
   s.spacing = list(p, 'sp');
   s.weights = list(p, 'wt');
   const or = p.get('or');

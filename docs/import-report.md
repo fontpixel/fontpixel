@@ -1,15 +1,50 @@
 # 导入报告
 
-生成时间：2026-08-21（由 pfc.ingest.run 生成，重跑覆盖）
+生成时间：2026-08-21（由 fbf.ingest.run 生成，重跑覆盖）
 
-- manifest 家族数：98
-- 本次有变化：2；无变化跳过：96
-- 文件写入：4；未变：414
+- manifest 家族数：122
+- 本次有变化：37；无变化跳过：85
+- 文件写入：203；未变：396
 
 ## 本次导入/更新
 
 - x5y8px-nega-clip
 - x8y12px-denki-chip
+- 4thd
+- 5thelement
+- bitbuntu
+- bitocra
+- cherry
+- clearlyu
+- creep
+- ctrld
+- dina
+- dylex-terminal
+- dylex-crawl
+- gohufont
+- kakwa
+- leggie
+- lode
+- mplus-fixed
+- mplus-helv
+- mplus-qub
+- mplus-sys
+- orp
+- siji
+- sq
+- tamsyn
+- tamzen
+- terminus
+- tewi
+- unscii
+- uw-ttyp0
+- xbmicons
+- ibm-bios
+- ibm-cga
+- ibm-cga-light
+- ibm-ega
+- ibm-mda
+- ibm-vga
 
 ## 待人工决定
 
@@ -64,49 +99,23 @@
 - 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Hansha2011--NanoDyongChyangSong — 已与 Upstream-Direct/NanoDyongChyangSong 合并处理（见上方 family 'nano-dyong-chyang-song'）。本仓库 HEAD 快照只有 README 与两张示意图，无编译产物，不单独收录。
 - 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Hansha2011--NanoQyoanDaSong — 已与 Upstream-Direct/NanoQyoanDaSong 合并处理（见上方 family 'nano-qyoan-da-song'）。 本仓库 HEAD 快照只有 README 与一张示意图，无编译产物，不单独收录。
 - 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/VT323 — VT323 的轮廓坐标不在任何格点上（gcd=1，设计即带软化边角的「像素风」矢量字体），不符合原生点阵收录口径，不转制。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-thestronggamer） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-donguriduel） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-linelinker） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-solidlinker） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-scanline） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-scoredozer） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-headupdaisy） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-gridgazer） — hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/7577（像素 Silver） — 作者页面一方面指定 CC BY 4.0，另一方面又要求「制作预算或收入超过 100,000 美元须联系取得许可」。CC BY 4.0 本身允许不限规模的商业使用且合规后不可撤回，两者相互冲突。在作者明确说明该门槛只是自愿联系请求、而非使用条件之前，不纳入严格自由字体集合。
+- 待议：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoDyongChyangSong（纳米点墙宋） — README 允许免费使用、复制、修改、分发，但另写「不可为字体收费」，与自由许可要求的商用自由相抵触；仓库无完整 LICENSE，发布包 TTF 也缺版权与许可信息，且日文、繁体、韩文字形的上游来源未完整说明，无法认定为 MIT／HPND／OFL 中任何一种。存疑，排除。注意同作者的 NanoQyoanDaSong v2.0+ 为 OFL 1.1，已收录。
+- 待议：CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--XiaoyaPixel-Classic（小雅像素） — itch.io 元数据显示 Code license: BSD 3-Clause，但仓库实际 LICENSE 与 TTF 内嵌许可均为 00FF 式自定义条款，二者冲突。该条款虽允许商用、修改与再分发，但许可可变更、修改版权归属特殊，只能算宽松自定义许可，不符合严格 libre 白名单标准。
+- 待议：github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/spleen — 已收录（slug spleen，来自 fcambus 官方仓库 https://github.com/fcambus/spleen，BSD-2-Clause），本仓库内的副本不再重复处理。
+- 待议：github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus/mplus_cursors.bdf — FONT XLFD 名为 “cursor”，是 X11 鼠标光标字形集合，不是文本字体，不适合收入像素字体收藏，跳过。
+- 待议：github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font/bdf/Powerline*.bdf — 纯 Powerline 分隔符号补充字体（不含常规拉丁字形），是 Tamzen 的配套符号集而非独立设计，不单独收录。
+- 待议：github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font/bdf/TamzenForPowerline*.bdf — Tamzen 正文缝合 Powerline 符号的衍生版，与已收录的 tamzen 家族内容重复（仅多了符号字形），不单独收录。
 
 ## 风格标注待复核
 
 family.toml 中带 `# UNVERIFIED` 注释的 form/vibes 为导入时预填，
 请逐一复核后删除该注释。
-
-## 待人工复核清单（构建后统计）
-
-### 风格标注待复核（93 家，family.toml 内带 `# UNVERIFIED`）
-
-00ff-donguriduel、00ff-gridgazer、00ff-headupdaisy、00ff-linelinker、00ff-scanline、00ff-scoredozer、00ff-solidlinker、00ff-thestronggamer、ark-pixel、ba-ding-shi-wei-ti-16、baekmuk-dotum、baekmuk-gulim、baekmuk-hline、bestten、boutique-bitmap-7x7、boutique-bitmap-9x9、chang-ban-dian-song-12、chang-ban-dian-song-16、chenhao-rp-font、chillmoonmono、chusung、clfn、cmex-ming、cubic-11、departure-mono、dos-gothic、dos-iyagi-boldface、dos-myungjo、dos-pilgi、dos-saemmul、dotgothic16、fairfax、fairfax-hax、fairfax-pona、fairfax-pula、fairfax-serif、fairfax-sm、fashionbitmap16、fusion-bold-pixel、fusion-pixel、gnu-unifont、illusion-book、jelly-pixel、k12x8、k6x8、k8x12、liora-chip-10x12、lyusung、miraero-normal、misaki、misekibitmap、monocraft、mplus-hzk-12、muzai-pixel、nano-dyong-chyang-song、nano-qyoan-da-song、neodgm、nightgazer-bitmap、pixel-mplus、pixeloid-mono、pixeloid-sans、press-start-2p、qiu-ye-yuan-ti-16、ren-ou-fang-song-16、retro-pixel-arcade、retro-pixel-cute、retro-pixel-petty-5h、retro-pixel-petty-5x5、retro-pixel-thick、sam3kr-font、silver、spleen、tekuplus、terrarum-sans-bitmap、tiny5、uranus-pixel、wqy-unibit、x10y12px-denki-chip-hangul、x12y12px-maru-minya、x12y12px-maru-minya-hangul、x5y8px-nega-clip、x5y8px-nega-tape、x8y12px-denki-chip、xiaoya-pixel-classic、xiu-zhen-xiang-su-ti、yarndings-12、yarndings-20、zheng-ge-dian-hei-16、zlabs-diamondpix-16px、zlabs-geopix-16px、zlabs-pixel-12px、zlabs-roundpix-12px、zlabs-roundpix-16px
-
-### 仅提供 BDF 下载（bdftopcf 转换失败，已记构建警告）
-
-galmuri、isas-song、unifont-ex、x10y12px-denki-chip-hangul、x12y12px-maru-minya-hangul
-
-## 2026-08-29 自由许可复核
-
-判定标准：字体须允许任何人商用、修改、再分发，授权须明确适用于当前收录文件，且来源链可核验。
-「自由字体」不等于公有领域，也不等于作者放弃版权。
-
-### 移出收录（11 款）
-
-| 字体 | 原因 |
-|---|---|
-| 00ff 系列 8 款（TheStrongGamer / DonguriDuel / LineLinker / SolidLinker / ScanLine / ScoreDozer / HeadUpDaisy / GridGazer） | 当前仍为 00FF Original License，作者标注为 proprietary，2026 年迁移 OFL 尚未完成。条款虽允许商用与修改，但修改数据版权归原作者、条款可不经通知变更，缺不可撤回性与下游授权传递机制。待正式发布 OFL 版本后再收。 |
-| 像素 Silver | 作者同时声明 CC BY 4.0 与「预算／收入超过 10 万美元须另行取得许可」，两者冲突。 |
-| 纳米点墙宋 NanoDyongChyangSong | README 另写「不可为字体收费」，与商用自由抵触；无完整 LICENSE，TTF 缺版权信息，多语字形来源不明。 |
-| 小雅像素 XiaoyaPixel Classic | itch.io 标 BSD 3-Clause，仓库实际 LICENSE 与内嵌许可为 00FF 式自定义条款，二者冲突。 |
-
-### 确认收录并已在站点写明授权（5 款）
-
-| 字体 | 许可证 | 收录版本与授权依据 |
-|---|---|---|
-| 粗宋 Chusung | CC BY-SA 4.0 | Chusung-210529；依据作者 itch.io 页面（猫啃网转载页误标 CC BY，不采信） |
-| 柳宋 Lyusung | CC BY-SA 4.0 | Lyusung-210618；同上 |
-| 纳米全大宋 NanoQyoanDaSong | SIL OFL 1.1 | v2.1（name 表 Version 2.1）；上游 README 明示 v2.0 起为 OFL，v1.0 的 ISAS 授权版不在收录范围 |
-| 粗柳坊新 CLFN | HPND | GitHub HEAD 快照的 COPYING（ISAS 1988 ／ Sony 1989 ／ DWNfonts 2024）；itch.io 发行版为 CC BY-SA 4.0，属不同来源，未混写 |
-| Press Start 2P | SIL OFL 1.1 | Google Fonts v16 latin 切片转制；OFL.txt 取自 google/fonts 仓库 |
-
-五款的许可证全文均已随字体保存在各自 `fonts/<slug>/` 目录内，站点详情页可展开查看；
-`family.toml` 的 `[license]` 块记录 SPDX、可商用标记与判定依据，站点置信级显示为「人工确认」。
-
-### 后续跟踪
-
-00ff 八款一旦正式发布 SIL OFL 版本可重新评估；届时须重新下载带 OFL 的发行包，不能沿用当前文件。

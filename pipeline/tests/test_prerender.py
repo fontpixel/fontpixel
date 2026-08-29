@@ -1,8 +1,8 @@
 import re
 from pathlib import Path
 
-from pfc.parsers.bdf import parse_bdf
-from pfc.prerender import og_png, sample_svg
+from fbf.parsers.bdf import parse_bdf
+from fbf.prerender import og_png, sample_svg
 
 FIX = Path(__file__).parent / "fixtures"
 

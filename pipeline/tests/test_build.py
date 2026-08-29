@@ -2,7 +2,7 @@ import json
 import shutil
 from pathlib import Path
 
-from pfc.build import build
+from fbf.build import build
 
 FIX = Path(__file__).parent / "fixtures"
 
@@ -65,7 +65,7 @@ def test_full_build(tmp_path):
 
 
 def test_coverage_intervals_and_missing(tmp_path):
-    from pfc.emit import read_intervals
+    from fbf.emit import read_intervals
 
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)

@@ -1,8 +1,8 @@
 import shutil
 from pathlib import Path
 
-from pfc.licenses import COMMERCIAL_OK, LicenseInfo, detect_license
-from pfc.model import ParsedFont
+from fbf.licenses import COMMERCIAL_OK, LicenseInfo, detect_license
+from fbf.model import ParsedFont
 
 FIX = Path(__file__).parent / "fixtures" / "licenses"
 

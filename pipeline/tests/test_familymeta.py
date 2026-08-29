@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from pfc.familymeta import load_family_meta, resolve_variant
-from pfc.model import ParsedFont
+from fbf.familymeta import load_family_meta, resolve_variant
+from fbf.model import ParsedFont
 
 TOML = """
 name = "Fusion Pixel"
@@ -30,7 +30,7 @@ weight = "regular"
 
 def _font(file_name: str, props: dict, pixel_size: int = 10,
           dwidths: list[int] | None = None) -> ParsedFont:
-    from pfc.model import Glyph
+    from fbf.model import Glyph
 
     glyphs = []
     for i, dw in enumerate(dwidths or [8, 8, 8, 8]):

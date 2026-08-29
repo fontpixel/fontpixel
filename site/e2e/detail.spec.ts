@@ -27,6 +27,12 @@ test('downloads list has per-variant files with sizes', async ({ page }) => {
     'href',
     /wqy-bitmap-song\.zip$/,
   );
+  // 位图 TTF：同一字体的全部尺寸打进一个文件
+  await expect(dl.locator('a[data-kind="ttf"]').first()).toHaveAttribute(
+    'href',
+    /wqy-bitmap-song.*\.ttf$/,
+  );
+  await expect(dl).toContainText('位图 TTF');
   await expect(dl).toContainText('MB');
 });
 

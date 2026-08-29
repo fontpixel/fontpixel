@@ -8,7 +8,7 @@ setup:
 	cd site && npm install
 
 fonts:
-	$(PY) -m pfc.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
+	$(PY) -m fbf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
 	mkdir -p site/public/downloads && cp -f dist-downloads/* site/public/downloads/
 
 dev: fonts

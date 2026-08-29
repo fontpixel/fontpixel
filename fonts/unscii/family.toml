@@ -1,0 +1,17 @@
+name = "Unscii"
+name_zh = ""
+author = "Viznut"
+homepage = "http://pelulamu.net/unscii/"
+repository = ""
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["retro-game", "classic"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/unscii；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+commercial = true
+note = "8px/16px 两档基础尺寸，8px 另有 alt/fantasy/mcr/tall/thin 五种风格变体，共取 7 个 PCF 文件（管线支持直接取 PCF）。已排除 unscii-16-full.pcf ——该文件是唯一的 GPL 授权文件（含完整 Unicode 字符集的扩展版本），与其余 Public Domain 文件许可不同，按用户要求不予收录。"

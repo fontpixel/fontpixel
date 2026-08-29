@@ -1,0 +1,19 @@
+name = "Shinonome Marumoji"
+name_zh = "東雲丸文字"
+author = "The Electronic Font Open Laboratory（/efont/）；原始设计 古川泰之 ほか，见 AUTHORS"
+homepage = "http://openlab.ring.gr.jp/efont/shinonome/"
+repository = "https://github.com/code4fukui/shinonome-font"
+description = "東雲字体的丸文字（圆形）版，上游仅提供 12px。"
+form = "rounded"
+vibes = ["classic"]
+converted_from = ""
+provenance = "由上游 .bit 源码重建：code4fukui/shinonome-font（clone 于 2026-08-29），用上游自带的公有领域工具 tools/bit2bdf 与 tools/bdfmerge 还原各字符集 BDF，再按 latin1（ISO 8859-1 全部）＋ hankaku（仅 U+FF61–FF9F 半角片假名）＋ kanji（JIS X 0208 全部）合并为单个 Unicode BDF，重建代码见 pipeline/pfc/ingest/shinonome.py"
+added = "2026-08-29"
+sample_lang = "ja"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域（東雲フォントライセンス）"
+file = "LICENSE-Shinonome.txt"
+commercial = true
+note = "上游 LICENSE（東雲フォントライセンス，2001，The Electronic Font Open Laboratory）声明：档案内全部字体数据、文档与脚本均以 Public Domain 提供；因日本法下无法在法律上放弃著作权，由 AUTHORS 列出的作者声明不行使权利，实质等同公有领域，明确允许自由改造、转换格式、嵌入与再分发。注意：本字体不是 MIT，收录时不得按 MIT 标注。"

@@ -1,0 +1,17 @@
+name = "Leggie"
+name_zh = ""
+author = "Wiktor W Brodlo"
+homepage = "http://wiktorb.eu/leggie"
+repository = "https://github.com/wiktor-b/leggie"
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal-hardcore"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/leggie；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "12px 等宽终端字体，单文件。BDF COPYRIGHT 字段明确 “2012-2015 Wiktor W Brodlo. Released under SIL OFL”，COMMENT 附作者主页链接。"

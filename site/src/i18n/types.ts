@@ -39,7 +39,6 @@ export interface UIStrings {
     inkHeight: string;
     scripts: string;
     license: string;
-    commercialOnly: string;
     spacing: string;
     weights: string;
     origin: string;
@@ -94,6 +93,8 @@ export interface UIStrings {
     downloadsTitle: string;
     downloadBdf: string;
     downloadPcf: string;
+    downloadTtf: string;
+    downloadTtfNote: string;
     downloadZip: string;
     downloadNote: string;
     fileSize: string;

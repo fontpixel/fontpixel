@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from pfc.parsers.bdf import parse_bdf
-from pfc.parsers.pcf import parse_pcf
+from fbf.parsers.bdf import parse_bdf
+from fbf.parsers.pcf import parse_pcf
 
 FIX = Path(__file__).parent / "fixtures"
 

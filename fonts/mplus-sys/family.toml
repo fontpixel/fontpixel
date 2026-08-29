@@ -1,0 +1,17 @@
+name = "M+ Bitmap Sys"
+name_zh = ""
+author = "M+ FONTS PROJECT（Coji Morishita）"
+homepage = "https://mplusfonts.github.io/"
+repository = ""
+description = ""
+form = "sans"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["classic"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29)；上游 M+ BITMAP FONTS"
+added = "2026-08-21"
+
+[license]
+spdx = "LicenseRef-Mplus"
+name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
+commercial = true
+note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"

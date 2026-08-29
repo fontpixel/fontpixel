@@ -42,6 +42,7 @@ export const FamilyIndexSchema = z.object({
   preview: z.string(),
   sampleLang: z.string(),
   added: z.string(),
+  searchText: z.string(),
 });
 
 export const IndexSchema = z.object({
@@ -92,7 +93,7 @@ export const DetailSchema = z.object({
   downloads: z.array(z.object({
     family: z.string(),
     variantId: z.string().nullable(),
-    kind: z.enum(['bdf', 'pcf', 'zip']),
+    kind: z.enum(['bdf', 'pcf', 'zip', 'ttf']),
     file: z.string(),
     bytes: z.number().int(),
     sha256: z.string(),

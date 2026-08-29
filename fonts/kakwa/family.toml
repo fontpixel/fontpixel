@@ -1,0 +1,17 @@
+name = "Kakwafont"
+name_zh = ""
+author = "kakwa"
+homepage = "http://carpenti.iiens.net/kakwafont/"
+repository = ""
+description = ""
+form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal-hardcore"]  # UNVERIFIED
+converted_from = ""
+provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/kakwa；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+added = "2026-08-21"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+commercial = true
+note = "12px 等宽终端字体，含 normal/bold 两种字重（取 BDF，同名 .pcf.gz 未取用）。OFL-1.1 判定依据用户核查。"

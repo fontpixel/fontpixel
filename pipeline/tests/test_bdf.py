@@ -2,7 +2,7 @@ import gzip
 import shutil
 from pathlib import Path
 
-from pfc.parsers.bdf import parse_bdf
+from fbf.parsers.bdf import parse_bdf
 
 FIX = Path(__file__).parent / "fixtures"
 
@@ -110,7 +110,7 @@ def test_real_galmuri7():
     cps = [g.cp for g in f.glyphs]
     assert cps == sorted(cps)
     assert len(cps) == len(set(cps))
-    from pfc.model import row_bytes
+    from fbf.model import row_bytes
 
     for g in f.glyphs:
         assert len(g.rows) == g.bbh * row_bytes(g.bbw)

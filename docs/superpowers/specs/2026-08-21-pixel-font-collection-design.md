@@ -1,13 +1,13 @@
-# 点阵字库 Pixel Font Collection — 设计规格
+# 免费开源位图（像素）字体 — 设计规格
 
 日期:2026-08-21
 状态:已与项目所有者逐节确认通过
-站名:点阵字库 / Pixel Font Collection
+站名:免费开源位图（像素）字体 / Free & Open Source Bitmap (Pixel) Fonts
 部署:GitHub Pages(展示资产)+ GitHub Releases(下载物)
 
 ## 1. 背景与目标
 
-把收集来的开源点阵字体(以 CJK 为主)整理成一个自动构建的静态目录网站。字体源以 BDF/PCF 放进 `fonts/` 目录即自动收录。旧项目 `../pixel-font-collection-old` 整体废弃重做;其覆盖率思路保留并大幅扩展,视觉、交互、工程全部重来。旧项目确认的三大败因:视觉有 AI 味、交互与功能不足、工程质量差(含 hash 路由不利分享)。
+把收集来的开源点阵字体(以 CJK 为主)整理成一个自动构建的静态目录网站。字体源以 BDF/PCF 放进 `fonts/` 目录即自动收录。旧项目 `../foss-bitmap-fonts-old` 整体废弃重做;其覆盖率思路保留并大幅扩展,视觉、交互、工程全部重来。旧项目确认的三大败因:视觉有 AI 味、交互与功能不足、工程质量差(含 hash 路由不利分享)。
 
 **成功标准**
 
@@ -40,7 +40,7 @@
 ## 3. 仓库与目录约定
 
 ```
-pixel-font-collection/
+foss-bitmap-fonts/
 ├── fonts/                        # 字体源,git 追踪
 │   └── <family-slug>/
 │       ├── family.toml           # 手填元数据(可缺省,构建器生成 stub)
@@ -165,7 +165,7 @@ script_subset = ""                # zh-Hans|zh-Hant|ja|ko|latin|…(fusion-pixel
 
 ## 5. 站点信息架构
 
-路由(`ASTRO_BASE` 可配,默认 `/pixel-font-collection`):
+路由(`ASTRO_BASE` 可配,默认 `/foss-bitmap-fonts`):
 
 - `/` — 按 `navigator.language` 跳转 zh/en 的极小页,带 hreflang。
 - `/zh/`、`/en/` — 目录页(即首页)。
