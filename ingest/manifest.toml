@@ -288,27 +288,6 @@ vibes = ["retro-game"]
 # 但只有一份 kbitx 主源,故按最高优先级只取 kbitx。form 为推断,拿不准。
 
 [[family]]
-slug = "xiaoya-pixel-classic"
-source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--XiaoyaPixel-Classic"
-convert = "kbitx"
-convert_take = ["XiaoyaPixel.kbitx"]
-license_files = ["LICENSE"]
-name = "XiaoyaPixel"
-name_zh = "小雅像素"
-author = "DWNfonts（基于 hicc／x0y0pxFreeFont 的マルミーニャ）"
-homepage = "https://diaowinner.itch.io/xiaoyapixel"
-repository = "https://github.com/DWNfonts/XiaoyaPixel-Classic"
-provenance_url = "https://github.com/DWNfonts/XiaoyaPixel-Classic (CHANGELOG 0.30821)"
-form = "rounded"
-vibes = ["cute", "retro-game"]
-# 注：LICENSE 为 hicc／DWNfonts 自定的免费使用条款(非 OFL 标准文本),已按仓库实际文件收录。
-# 与 zlabs-roundpix-12px 同源自マルミーニャ／x12y12pxMaruMinya,但为不同作者的独立二次创作,不算重复。
-
-# ============================================================
-# 其余零散仓库
-# ============================================================
-
-[[family]]
 slug = "cmex-ming"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/bluebat--cmexfonts"
 take = ["*.bdf"]
@@ -1329,27 +1308,6 @@ vibes = ["classic"]
 # 官方 README 亦提及字距调整未严格取整数倍单元格，属已知限制）。仅拉丁/希腊/西里尔字符，无 CJK。
 
 [[family]]
-slug = "nano-dyong-chyang-song"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoDyongChyangSong"
-convert = "ttf"
-convert_take = ["nfdcsCN16.ttf", "nfdcsCN24.ttf", "nfdcsJP16.ttf", "nfdcsKR24.ttf", "nfdcsTCN16.ttf", "nfdcsTCN24.ttf"]
-license_files = []
-name = "NanoDyongChyangSong"
-name_zh = "纳米点墙宋"
-author = "H.S.S. 寒沙 (Hansha2011)"
-homepage = ""
-repository = "https://github.com/Hansha2011/NanoDyongChyangSong"
-provenance_url = "https://www.maoken.com/ （猫啃网直链下载包，纳米点墙宋 1.1；GitHub 仓库 Upstream-GitHub/Hansha2011--NanoDyongChyangSong 无编译产物，仅 README，已合并至此）"
-form = "mingcho"
-vibes = ["classic"]
-# 注意：目录内附带的"字体授权说明.txt"仅为猫啃网通用免责声明模板（非真实许可证条款），
-# license_files 留空。据上游 GitHub README：西文取自 hurss 字体，中文取自 ISAS 点阵包，
-# 并附加"不可为字体收费"的自定义条款，非标准 MIT/OFL；审计表（INCLUDED.csv 532 行）许可证
-# 字段为空但判定"许可核验通过"，此处照录，请人工复核许可条款是否可接受。CN16/JP16/TCN16 =
-# ppem 16，CN24/KR24/TCN24 = ppem 24，均自动判定稳定。TCN24 缺 KR16/JP24/JP32/JP48（README
-# 标注"制作中未发布"）。
-
-[[family]]
 slug = "nano-qyoan-da-song"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoQyoanDaSong"
 convert = "ttf"
@@ -1376,130 +1334,6 @@ vibes = ["classic"]
 # 未见于本目录（该字体在 ZeoSeven-Webfonts/2136--x12y12pxMaruMinyaM 才有），留待孤儿检查处理。
 # 文件名 "x{宽}y{高}px{名称}" 中的高度均与 detect_native_ppem 判定结果一致（除
 # TheStrongGamer 判定为 24，为文件名 12 的两倍，以判定结果为准，不手填 ppem）。
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-donguriduel"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x10y12pxDonguriDuel.ttf"]
-name = "x10y12pxDonguriDuel"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-linelinker"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x12y16pxLineLinker.ttf"]
-name = "x12y16pxLineLinker"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-solidlinker"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x12y16pxSolidLinker.ttf"]
-name = "x12y16pxSolidLinker"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-scanline"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x12y20pxScanLine.ttf"]
-name = "x12y20pxScanLine"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-scoredozer"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x14y20pxScoreDozer.ttf"]
-name = "x14y20pxScoreDozer"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-headupdaisy"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x14y24pxHeadUpDaisy.ttf"]
-name = "x14y24pxHeadUpDaisy"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-gridgazer"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x16y32pxGridGazer.ttf"]
-name = "x16y32pxGridGazer"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# 注意：仓库内未见许可证文件
-[[family]]
-slug = "00ff-thestronggamer"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff"
-convert = "ttf"
-convert_take = ["x8y12pxTheStrongGamer.ttf"]
-name = "x8y12pxTheStrongGamer"
-name_zh = ""
-author = "hicchicc"
-homepage = "https://hicchicc.github.io/00ff/"
-repository = ""
-provenance_url = "https://hicchicc.github.io/00ff/ （直链下载包，收录于 2026-08-18）"
-form = "decorative"
-vibes = ["retro-game"]
-
-# ============ Upstream-Direct（Fairfax：Kreative Korp，OFL，14 个 ttf 拆成 6 个家族）============
-# 依据 INCLUDED.csv 的 6 个独立 ZeoSeven 目录条目（964-969）拆分；FairfaxSerifHax/FairfaxSerifSM
-# 并入 fairfax-serif（未见 ZeoSeven 单列）。全部 ppem 自动判定=12，一致稳定。
 
 [[family]]
 slug = "fairfax"
@@ -1704,26 +1538,6 @@ vibes = ["retro-game", "terminal-hardcore"]
 # 但字体文件本身 basename 为纯 ASCII，不影响 glob 匹配。
 
 [[family]]
-slug = "silver"
-source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/7577"
-convert = "ttf"
-convert_take = ["Silver.ttf"]
-license_files = ["字体授权(CCBY4.0).mhtml"]
-name = "Silver"
-name_zh = "像素Silver"
-author = "Poppy Works"
-homepage = "http://poppy.works/"
-repository = ""
-provenance_url = "https://www.maoken.com/freefonts/7577.html"
-form = "gothic"
-vibes = ["retro-game"]
-# 备注：许可证文件为浏览器另存的 mhtml 网页快照（CC BY-SA 4.0 简体中文法律文本，
-# Snapshot-Content-Location 指向 creativecommons.org/licenses/by-sa/4.0/legalcode.zh-Hans），
-# 注意实际是 BY-SA（附相同方式共享），而 INCLUDED.csv 标注为"CC-BY"，两者有细微出入，
-# 建议人工核实。ppem 自动判定=19（稳定）。字体内嵌版权 "2019 Poppy Works"。
-
-# 注意：仓库内未见许可证文件（仅猫啃网通用免责声明模板，非真实许可证条款）
-[[family]]
 slug = "chusung"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11089"
 convert = "ttf"
@@ -1905,3 +1719,50 @@ reason = "已与 Upstream-Direct/NanoQyoanDaSong 合并处理（见上方 family
 [[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/VT323"
 reason = "VT323 的轮廓坐标不在任何格点上（gcd=1，设计即带软化边角的「像素风」矢量字体），不符合原生点阵收录口径，不转制。"
+
+# ==================== 2026-08-29 自由许可复核：以下 11 款移出收录 ====================
+# 判定标准：须允许任何人商用、修改、再分发，且授权明确适用于当前文件、来源链可核验。
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-thestronggamer）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-donguriduel）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-linelinker）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-solidlinker）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-scanline）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-scoredozer）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-headupdaisy）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-gridgazer）"
+reason = "hicchicc「00ff」系列当前仍适用 00FF Original License，作者 GitHub 项目表将其标为 Original／proprietary license，2026 年正在逐步迁移至 SIL OFL 但尚未完成。其自定义条款虽允许商用、修改与再分发，但规定修改数据的版权归原作者、条款可不经通知变更，缺少标准许可的不可撤回性、下游授权传递与版本固定机制，因此归类为权限较宽的 proprietary 自定义许可，不能按作者宣布的「未来迁移 OFL」倒推当前文件。待其正式发布 OFL 版本后再收。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/7577（像素 Silver）"
+reason = "作者页面一方面指定 CC BY 4.0，另一方面又要求「制作预算或收入超过 100,000 美元须联系取得许可」。CC BY 4.0 本身允许不限规模的商业使用且合规后不可撤回，两者相互冲突。在作者明确说明该门槛只是自愿联系请求、而非使用条件之前，不纳入严格自由字体集合。"
+
+[[todo]]
+source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoDyongChyangSong（纳米点墙宋）"
+reason = "README 允许免费使用、复制、修改、分发，但另写「不可为字体收费」，与自由许可要求的商用自由相抵触；仓库无完整 LICENSE，发布包 TTF 也缺版权与许可信息，且日文、繁体、韩文字形的上游来源未完整说明，无法认定为 MIT／HPND／OFL 中任何一种。存疑，排除。注意同作者的 NanoQyoanDaSong v2.0+ 为 OFL 1.1，已收录。"
+
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--XiaoyaPixel-Classic（小雅像素）"
+reason = "itch.io 元数据显示 Code license: BSD 3-Clause，但仓库实际 LICENSE 与 TTF 内嵌许可均为 00FF 式自定义条款，二者冲突。该条款虽允许商用、修改与再分发，但许可可变更、修改版权归属特殊，只能算宽松自定义许可，不符合严格 libre 白名单标准。"

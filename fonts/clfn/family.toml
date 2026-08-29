@@ -7,5 +7,12 @@ description = ""
 form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/DWNfonts--CLFN；上游 https://github.com/DWNfonts/CLFN (HEAD 快照，收录于 2026-08-18)；由 kbitx 转换"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/DWNfonts--CLFN；上游 https://github.com/DWNfonts/CLFN (HEAD 快照，收录于 2026-08-18)；由 kbitx 转换；授权以本目录 COPYING（HPND 型）为准，itch.io 发行版另采用 CC BY-SA 4.0"
 added = "2026-08-21"
+
+[license]
+spdx = "HPND"
+name = "Historical Permission Notice and Disclaimer"
+file = "COPYING"
+commercial = true
+note = "本站收录的是 GitHub 版（HEAD 快照，2026-08-18），其 COPYING 为 HPND 型条款（版权方：1988 Institute of Software, Academia Sinica；1989 Sony Corp；2024 DWNfonts），属 OSI 认可的自由许可，允许任何目的的使用、复制、修改与分发。注意：作者的 itch.io 发行版（https://diaowinner.itch.io/clfn）标注为 CC BY-SA 4.0，与此为不同来源的不同授权，两者不可混写；使用本站文件请以本目录内 COPYING 为准。"

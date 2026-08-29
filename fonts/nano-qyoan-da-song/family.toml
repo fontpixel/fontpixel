@@ -7,5 +7,12 @@ description = ""
 form = "mingcho"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["classic"]  # UNVERIFIED
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoQyoanDaSong；上游 https://www.maoken.com/ （猫啃网直链下载包；GitHub 仓库 Upstream-GitHub/Hansha2011--NanoQyoanDaSong 无编译产物，仅 README，已合并至此）；由 ttf 转换"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoQyoanDaSong；上游 https://www.maoken.com/ （猫啃网直链下载包；GitHub 仓库 Upstream-GitHub/Hansha2011--NanoQyoanDaSong 无编译产物，仅 README，已合并至此）；由 ttf 转换；收录文件版本 v2.1（字体 name 表 Version 2.1），v1.0 为 ISAS 授权、不在收录范围"
 added = "2026-08-21"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL Open Font License 1.1"
+file = "OFL.txt"
+commercial = true
+note = "上游 README 明确分版本授权：v1.0 为 ISAS 字体包授权，v2.0 起改用 SIL OFL 1.1。本站收录文件内嵌 name 表为 Version 2.1，故适用 OFL 1.1。上游仓库未随附许可证文件，本目录内 OFL.txt 为 SIL 官方标准文本，开头附有本站添加的来源说明（已明确标注）。可商用、可修改、可再分发；不得单独销售字体本身，衍生版须同样以 OFL 分发。"

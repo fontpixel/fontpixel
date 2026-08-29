@@ -7,5 +7,12 @@ description = ""
 form = "sans"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P；上游 https://fonts.google.com/specimen/Press+Start+2P （CSS Unicode-range 切片镜像，v16，latin 子集，收录于 2026-08-18）；由 ttf 转换"
+provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P；上游 https://fonts.google.com/specimen/Press+Start+2P （CSS Unicode-range 切片镜像，v16，latin 子集，收录于 2026-08-18）；由 ttf 转换；收录的是 Google Fonts v16 的 latin 切片转制版，OFL.txt 取自 google/fonts"
 added = "2026-08-21"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL Open Font License 1.1"
+file = "OFL.txt"
+commercial = true
+note = "SIL OFL 1.1，保留字体名（Reserved Font Name）为 “Press Start 2P”，修改版须改用其它名称后方可分发。可商用、可嵌入、可修改、可再分发；随字体须保留版权声明与许可证全文。本目录 OFL.txt 取自 google/fonts 仓库 ofl/pressstart2p。"
