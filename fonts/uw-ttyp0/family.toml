@@ -1,17 +1,18 @@
 name = "UW ttyp0"
 name_zh = ""
 author = "Uwe Waldmann"
-homepage = "http://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/"
+homepage = "https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/"
 repository = ""
-description = ""
-form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
-vibes = ["terminal-hardcore"]  # UNVERIFIED
+description = "覆盖极广的等宽点阵终端字体，含拉丁、希腊、西里尔、越南语、亚美尼亚语、格鲁吉亚语与制表符，11–22px 多档尺寸并含粗体与斜体。"
+form = "terminal"
+vibes = ["terminal-hardcore"]
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/uw-ttyp0-1.2；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
-added = "2026-08-21"
+provenance = "官方发行版 uw-ttyp0-1.3.tar.gz（https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/，取于 2026-08-29）。上游以字体自有编码的主控 BDF 分发，本站用其 mgl/unicode.mgl 按字形名重映射为 Unicode BDF，重建代码见 pipeline/fbf/ingest/uwttyp0.py。masaeedu/bitmap-fonts 的 1.2 快照因缺 mgl 目录无法重建，未采用。"
+added = "2026-08-29"
 
 [license]
-spdx = "MIT"
-name = "MIT 许可证（自定义措辞，MIT 风格）"
+spdx = "LicenseRef-UW-ttyp0"
+name = "UW ttyp0 许可证（MIT 风格）"
+file = "LICENSE"
 commercial = true
-note = "TTY 控制台等宽字体，含 11-18px 与 22px 共 10 档尺寸、regular/bold 两种字重，15-18px 另有斜体（i）变体，共 22 个 BDF 文件。BDF COMMENT 内嵌完整许可文本（Copyright (C) 2012, 2013 Uwe Waldmann；permission granted to use/copy/modify/merge/publish/distribute/embed/sublicense/sell，附带“修改字形需改名”的条件），属 MIT 风格自定义措辞。"
+note = "BDF 内嵌与随包 LICENSE 一致：允许任何人免费使用、复制、修改、合并、发布、分发、嵌入、再许可与销售，条件是保留版权与许可声明；另附一条改名要求——若修改字形设计或增补字形，必须为字体改名且新名不得含 “UW”。该改名条款与 OFL 的保留字体名机制同类，不影响自由许可判定。"

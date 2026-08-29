@@ -51,7 +51,9 @@ def _normalize_row(hexline: str, nbytes: int, warnings: list[str], glyph: str) -
     return raw
 
 
-def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
+def parse_bdf(path: Path, family_slug: str, *,
+              remap_charset: bool = True) -> ParsedFont:
+    """remap_charset=False 时保留原始 ENCODING（供按字形名自行重映射的场景）。"""
     lines = _read_lines(path)
     warnings: list[str] = []
     props: dict[str, str | int] = {}
@@ -196,7 +198,7 @@ def parse_bdf(path: Path, family_slug: str) -> ParsedFont:
     # 非 Unicode 字符集:按 CHARSET_REGISTRY 重映射码位。
     # 例外:有些字体(如 hurss DOS 系列)registry 写着 Johab,数据却已是
     # Unicode——用字形名(U+XXXX/uniXXXX)与 ENCODING 的吻合度识破。
-    registry = str(props.get("CHARSET_REGISTRY", ""))
+    registry = str(props.get("CHARSET_REGISTRY", "")) if remap_charset else ""
     if registry and not is_unicode_registry(registry):
         name_re = re.compile(r"^(?:U\+?|uni)([0-9A-Fa-f]{4,6})$")
         sample = list(glyphs.values())[:200]

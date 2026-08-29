@@ -108,3 +108,25 @@ form = "gothic"
     p.write_text(toml.replace('form = "gothic"', 'form = "rounded"'), encoding="utf-8")
     run_manifest(manifest, COLLECTION, dest)
     assert 'form = "rounded"' in p.read_text(encoding="utf-8")
+
+
+def test_uwttyp0_unicode_remap(tmp_path):
+    """UW ttyp0 用字体自有编码分发，须按 mgl/unicode.mgl 的字形名映射重建。"""
+    from fbf.ingest.uwttyp0 import convert, load_unicode_map
+
+    repo = COLLECTION / "github-clones-2026-08-29/uw-ttyp0-1.3"
+    if not repo.exists():
+        pytest.skip("uw-ttyp0 upstream not downloaded")
+    mgl = repo / "mgl" / "unicode.mgl"
+    table = load_unicode_map(mgl)
+    assert table["LtCapA"] == 0x41
+    assert table["LtCapALdot"] == 0x1EA0  # Ạ
+
+    f = convert(repo / "bdf" / "t0-16.bdf", mgl, "uw-ttyp0")
+    cps = {g.cp for g in f.glyphs}
+    assert len(cps) > 2000
+    for cp in (0x41, 0xE9, 0x1EA0, 0x3B1, 0x2500):
+        assert cp in cps, hex(cp)
+    assert f.props["CHARSET_REGISTRY"] == "ISO10646"
+    # 原始自有编码不得残留
+    assert 735 not in cps or 0x2DF == 735

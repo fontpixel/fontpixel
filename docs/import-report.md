@@ -119,3 +119,44 @@
 
 family.toml 中带 `# UNVERIFIED` 注释的 form/vibes 为导入时预填，
 请逐一复核后删除该注释。
+
+## 2026-08-29 第三批收录
+
+新增三个来源,共 38 个家族;全部为自由许可,授权依据逐族记录在 `family.toml` 的 `[license]` 块。
+
+### masaeedu/bitmap-fonts(29 族)
+
+按用户核定的 23 个目录收录,其中两处按「一个真实字体一个家族」的规则做了拆分:
+`bitocra` 目录含 4 套不同设计(Bitocra／Bitbuntu／4thD／5thElement);
+`mplus` 目录内 BDF 的 `FAMILY_NAME` 分别是 fxd／hlv／qub／sys,拆成
+M+ Bitmap Fixed／Helv／Qub／Sys 四族。`spleen` 与已收录的 fcambus 官方版重复,跳过。
+许可证覆盖 OFL-1.1、MIT、GPL-2.0／3.0、WTFPL、BSD-2-Clause、Tamsyn License、
+M+ 自定义宽松许可与公有领域声明,均满足自由许可标准。
+
+### farsil/ibmfonts(6 族)
+
+IBM PC 文本模式 ROM 字库的 BDF 复刻:BIOS／CGA／CGA Light／EGA／MDA／VGA,
+共 19 个 BDF。仓库 LICENSE 声明全部 BDF 为 CC BY-SA 4.0;像素复原归 VileR,
+BDF 转换归 farsil(Marco Buzzanca)。
+
+### code4fukui/shinonome-font(3 族)
+
+東雲フォント。上游以 `.bit`(ASCII 点阵画版的 BDF)分发,按字符集拆目录并用 diff
+表达派生字形,因此不能直接收录,需重建:用上游自带的公有领域 Perl 工具
+`tools/bit2bdf` 与 `tools/bdfmerge` 还原各字符集 BDF,再按
+latin1(ISO 8859-1 全部)＋ hankaku(仅 U+FF61–FF9F 半角片假名)＋ kanji(JIS X 0208 全部)
+合并成单个 Unicode BDF。重建代码:`pipeline/fbf/ingest/shinonome.py`,可重跑。
+
+- 東雲ゴシック:12／14／16px 含汉字(约 7150 字形),18px 上游无汉字基底,仅半角与拉丁
+- 東雲明朝:12／14／16px
+- 東雲丸文字:上游仅提供 12px
+
+**授权更正**:東雲フォント是 **Public Domain**(東雲フォントライセンス,2001,
+The Electronic Font Open Laboratory),不是 MIT。日本法下无法在法律上放弃著作权,
+故由 AUTHORS 列出的作者声明不行使权利,实质等同公有领域,明确允许自由改造、
+转换格式、嵌入与再分发。收录时已按公有领域标注,并随字体附上 LICENSE 与 AUTHORS 原文。
+
+### TakWolf/retro-pixel-font
+
+早前已随第一批收录(arcade／cute／petty-5h／petty-5x5／thick 五族),
+许可证为 OFL-1.1(自动识别,置信 auto-high),无需重复处理。

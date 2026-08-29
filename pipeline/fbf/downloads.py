@@ -113,18 +113,25 @@ def build_downloads(
         suffix = "-".join([slug] + parts) if parts else slug
         style = " ".join(p.capitalize() for p in parts) if parts else weight.capitalize()
         name = f"{suffix}.ttf"
-        try:
-            import io as _io
-            import tempfile as _tf
+        import tempfile as _tf
 
-            with _tf.TemporaryDirectory() as td:
-                tmp = Path(td) / "f.ttf"
-                build_ttf([f for f, _ in items], family_display, style or "Regular",
-                          tmp, copyright_=copyright_line)
-                entries.append(_entry(slug, None, "ttf", name, tmp.read_bytes(), out))
-        except Exception as e:  # noqa: BLE001 - TTF 失败不影响 BDF/PCF 下载
-            for f, _ in items:
-                f.warnings.append(f"TTF 导出失败（{name}）：{e}")
+        from fbf.ttfexport import MAX_GLYPHS
+
+        union = len({g.cp for f, _ in items for g in f.glyphs})
+        # 上游有时把超大字体拆成多份（合起来会超过 TTF 的字形数上限），此时逐份导出
+        batches = ([(name, [it for it in items])] if union + 1 <= MAX_GLYPHS
+                   else [(f"{suffix}-{v.id}.ttf", [(f, v)]) for f, v in items])
+        for fname, batch in batches:
+            try:
+                with _tf.TemporaryDirectory() as td:
+                    tmp = Path(td) / "f.ttf"
+                    build_ttf([f for f, _ in batch], family_display,
+                              style or "Regular", tmp, copyright_=copyright_line)
+                    entries.append(_entry(slug, None, "ttf", fname,
+                                          tmp.read_bytes(), out))
+            except Exception as e:  # noqa: BLE001 - TTF 失败不影响 BDF/PCF 下载
+                for f, _ in batch:
+                    f.warnings.append(f"TTF 导出失败（{fname}）：{e}")
 
     for lf in license_files:
         p = family_dir / lf

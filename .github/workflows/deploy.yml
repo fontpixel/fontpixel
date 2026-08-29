@@ -42,18 +42,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .cache
-          key: pfc-cache-${{ hashFiles('fonts/**', 'pipeline/pfc/**') }}
-          restore-keys: pfc-cache-
+          key: fbf-cache-${{ hashFiles('fonts/**', 'pipeline/fbf/**') }}
+          restore-keys: fbf-cache-
 
       - name: 构建字体数据(体积红线 900MB)
-        run: .venv/bin/python -m pfc.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
+        run: .venv/bin/python -m fbf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
 
       - name: Astro 构建
         run: |
           rm -rf site/public/downloads   # 下载物只走 Releases,绝不进 Pages
           cd site && npm ci && npx astro build
         env:
-          PFC_DOWNLOADS_BASE: https://github.com/${{ github.repository }}/releases/download/downloads
+          FBF_DOWNLOADS_BASE: https://github.com/${{ github.repository }}/releases/download/downloads
 
       - name: 上传 Pages 构建物
         uses: actions/upload-pages-artifact@v3

@@ -12,6 +12,7 @@ from pathlib import Path
 from fbf.model import ParsedFont, row_bytes
 
 UPEM = 1000
+MAX_GLYPHS = 65535  # TTF 字形数上限（含 .notdef）
 
 
 def glyph_name(cp: int) -> str:
@@ -38,6 +39,9 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
     cps = sorted({g.cp for f in fonts for g in f.glyphs})
     if not cps:
         raise ValueError("没有字形")
+    if len(cps) + 1 > MAX_GLYPHS:
+        raise ValueError(
+            f"字形数 {len(cps)} 超过 TTF 上限 {MAX_GLYPHS - 1}，需按变体分别导出")
     order = [".notdef"] + [glyph_name(cp) for cp in cps]
 
     fb = FontBuilder(UPEM, isTTF=True)
@@ -81,7 +85,8 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
     })
     fb.setupOS2(sTypoAscender=asc, sTypoDescender=desc, usWinAscent=asc,
                 usWinDescent=abs(desc))
-    fb.setupPost(isFixedPitch=0)
+    # 位图字体不需要字形名；post 2.0 用 16 位索引存名字，6.5 万字形会溢出
+    fb.setupPost(keepGlyphNames=False, isFixedPitch=0)
 
     font = fb.font
     eblc = newTable("EBLC")
