@@ -76,10 +76,37 @@ family.toml 中带 `# UNVERIFIED` 注释的 form/vibes 为导入时预填，
 
 00ff-donguriduel、00ff-gridgazer、00ff-headupdaisy、00ff-linelinker、00ff-scanline、00ff-scoredozer、00ff-solidlinker、00ff-thestronggamer、ark-pixel、ba-ding-shi-wei-ti-16、baekmuk-dotum、baekmuk-gulim、baekmuk-hline、bestten、boutique-bitmap-7x7、boutique-bitmap-9x9、chang-ban-dian-song-12、chang-ban-dian-song-16、chenhao-rp-font、chillmoonmono、chusung、clfn、cmex-ming、cubic-11、departure-mono、dos-gothic、dos-iyagi-boldface、dos-myungjo、dos-pilgi、dos-saemmul、dotgothic16、fairfax、fairfax-hax、fairfax-pona、fairfax-pula、fairfax-serif、fairfax-sm、fashionbitmap16、fusion-bold-pixel、fusion-pixel、gnu-unifont、illusion-book、jelly-pixel、k12x8、k6x8、k8x12、liora-chip-10x12、lyusung、miraero-normal、misaki、misekibitmap、monocraft、mplus-hzk-12、muzai-pixel、nano-dyong-chyang-song、nano-qyoan-da-song、neodgm、nightgazer-bitmap、pixel-mplus、pixeloid-mono、pixeloid-sans、press-start-2p、qiu-ye-yuan-ti-16、ren-ou-fang-song-16、retro-pixel-arcade、retro-pixel-cute、retro-pixel-petty-5h、retro-pixel-petty-5x5、retro-pixel-thick、sam3kr-font、silver、spleen、tekuplus、terrarum-sans-bitmap、tiny5、uranus-pixel、wqy-unibit、x10y12px-denki-chip-hangul、x12y12px-maru-minya、x12y12px-maru-minya-hangul、x5y8px-nega-clip、x5y8px-nega-tape、x8y12px-denki-chip、xiaoya-pixel-classic、xiu-zhen-xiang-su-ti、yarndings-12、yarndings-20、zheng-ge-dian-hei-16、zlabs-diamondpix-16px、zlabs-geopix-16px、zlabs-pixel-12px、zlabs-roundpix-12px、zlabs-roundpix-16px
 
-### 许可证未识别（16 家，站点显示「许可证待确认」）
-
-00ff-donguriduel、00ff-gridgazer、00ff-headupdaisy、00ff-linelinker、00ff-scanline、00ff-scoredozer、00ff-solidlinker、00ff-thestronggamer、chusung、clfn、lyusung、nano-dyong-chyang-song、nano-qyoan-da-song、press-start-2p、silver、xiaoya-pixel-classic
-
 ### 仅提供 BDF 下载（bdftopcf 转换失败，已记构建警告）
 
 galmuri、isas-song、unifont-ex、x10y12px-denki-chip-hangul、x12y12px-maru-minya-hangul
+
+## 2026-08-29 自由许可复核
+
+判定标准：字体须允许任何人商用、修改、再分发，授权须明确适用于当前收录文件，且来源链可核验。
+「自由字体」不等于公有领域，也不等于作者放弃版权。
+
+### 移出收录（11 款）
+
+| 字体 | 原因 |
+|---|---|
+| 00ff 系列 8 款（TheStrongGamer / DonguriDuel / LineLinker / SolidLinker / ScanLine / ScoreDozer / HeadUpDaisy / GridGazer） | 当前仍为 00FF Original License，作者标注为 proprietary，2026 年迁移 OFL 尚未完成。条款虽允许商用与修改，但修改数据版权归原作者、条款可不经通知变更，缺不可撤回性与下游授权传递机制。待正式发布 OFL 版本后再收。 |
+| 像素 Silver | 作者同时声明 CC BY 4.0 与「预算／收入超过 10 万美元须另行取得许可」，两者冲突。 |
+| 纳米点墙宋 NanoDyongChyangSong | README 另写「不可为字体收费」，与商用自由抵触；无完整 LICENSE，TTF 缺版权信息，多语字形来源不明。 |
+| 小雅像素 XiaoyaPixel Classic | itch.io 标 BSD 3-Clause，仓库实际 LICENSE 与内嵌许可为 00FF 式自定义条款，二者冲突。 |
+
+### 确认收录并已在站点写明授权（5 款）
+
+| 字体 | 许可证 | 收录版本与授权依据 |
+|---|---|---|
+| 粗宋 Chusung | CC BY-SA 4.0 | Chusung-210529；依据作者 itch.io 页面（猫啃网转载页误标 CC BY，不采信） |
+| 柳宋 Lyusung | CC BY-SA 4.0 | Lyusung-210618；同上 |
+| 纳米全大宋 NanoQyoanDaSong | SIL OFL 1.1 | v2.1（name 表 Version 2.1）；上游 README 明示 v2.0 起为 OFL，v1.0 的 ISAS 授权版不在收录范围 |
+| 粗柳坊新 CLFN | HPND | GitHub HEAD 快照的 COPYING（ISAS 1988 ／ Sony 1989 ／ DWNfonts 2024）；itch.io 发行版为 CC BY-SA 4.0，属不同来源，未混写 |
+| Press Start 2P | SIL OFL 1.1 | Google Fonts v16 latin 切片转制；OFL.txt 取自 google/fonts 仓库 |
+
+五款的许可证全文均已随字体保存在各自 `fonts/<slug>/` 目录内，站点详情页可展开查看；
+`family.toml` 的 `[license]` 块记录 SPDX、可商用标记与判定依据，站点置信级显示为「人工确认」。
+
+### 后续跟踪
+
+00ff 八款一旦正式发布 SIL OFL 版本可重新评估；届时须重新下载带 OFL 的发行包，不能沿用当前文件。
