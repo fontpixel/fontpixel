@@ -169,6 +169,7 @@ def _build_family(
             f, notes, rejected = merge_subsets(
                 f, [_parse(x, slug) for x in groups[p]]
             )
+            f.merged = True
             f.warnings.extend(notes)
             fonts.extend(rejected)
         fonts.append(f)

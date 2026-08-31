@@ -30,6 +30,10 @@ class ParsedFont:
     bbox: tuple[int, int, int, int]  # (w, h, xoff, yoff)
     glyphs: list[Glyph] = field(default_factory=list)  # ascending by cp, ENCODING>=0 only
     warnings: list[str] = field(default_factory=list)
+    # True once other files' glyphs were merged in: the in-memory font then no
+    # longer matches the bytes at `path`, so downloads must be written from
+    # memory instead of copying the source file.
+    merged: bool = False
 
 
 def row_bytes(bbw: int) -> int:

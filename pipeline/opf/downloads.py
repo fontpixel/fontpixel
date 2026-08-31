@@ -129,11 +129,17 @@ def _entry(slug: str, variant_id: str | None, kind: str, file: str, data: bytes,
 
 
 def _source_bdf_bytes(f: ParsedFont) -> bytes:
-    """The variant's original BDF text; decompress first if the source is .gz, or write it back out from ParsedFont if the source is PCF."""
+    """The variant's BDF text.
+
+    Original file bytes when the source is a plain BDF, decompressed for .bdf.gz,
+    written back out from ParsedFont for PCF sources — and always written from
+    ParsedFont when the font was merged, otherwise glyphs merged in from other
+    files (encoding subsets, Powerline supplements) would be missing from the
+    download."""
     name = f.path.name.lower()
-    if name.endswith(".bdf"):
+    if not f.merged and name.endswith(".bdf"):
         return f.path.read_bytes()
-    if name.endswith(".bdf.gz"):
+    if not f.merged and name.endswith(".bdf.gz"):
         return gzip.decompress(f.path.read_bytes())
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td) / "x.bdf"
@@ -143,9 +149,10 @@ def _source_bdf_bytes(f: ParsedFont) -> bytes:
 
 def _pcf_bytes(f: ParsedFont, bdf_data: bytes) -> bytes | None:
     name = f.path.name.lower()
-    if name.endswith(".pcf"):
+    # A merged font must be regenerated from the merged BDF, not copied
+    if not f.merged and name.endswith(".pcf"):
         return f.path.read_bytes()
-    if name.endswith(".pcf.gz"):
+    if not f.merged and name.endswith(".pcf.gz"):
         return gzip.decompress(f.path.read_bytes())
     if shutil.which("bdftopcf") is None:
         return None

@@ -373,20 +373,26 @@ const brandCss = brand
       .skip-link:focus {
         top: var(--s2);
       }
+      /* Interactive header items carry their own padding so the hit areas are
+         generous; the row's padding shrinks by the same amount to keep the
+         visual height, and the two edge items pull back with negative margins
+         so text still aligns with the container. */
       .site-header__row {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
         gap: var(--s4);
         flex-wrap: wrap;
-        padding-top: var(--s4);
-        padding-bottom: var(--s3);
+        padding-top: var(--s2);
+        padding-bottom: var(--s1);
       }
       .site-brand {
         display: flex;
         align-items: baseline;
         gap: var(--s2);
         min-width: 0;
+        padding: var(--s2);
+        margin-left: calc(-1 * var(--s2));
       }
       .site-brand__name {
         font-size: 1.35rem;
@@ -409,9 +415,12 @@ const brandCss = brand
         display: flex;
         align-items: center;
         flex-wrap: wrap; /* the four items don't fit at 300px wide, so allow wrapping */
-        gap: var(--s2) var(--s4);
+        gap: var(--s1) 0; /* the items' own padding provides the visual spacing */
         font-size: 0.9rem;
         color: var(--ink-2);
+      }
+      .site-nav > a {
+        padding: var(--s2);
       }
       .langmenu {
         position: relative;
@@ -419,6 +428,8 @@ const brandCss = brand
       .langmenu summary {
         cursor: pointer;
         list-style: none;
+        display: block;
+        padding: var(--s2);
       }
       .langmenu summary::-webkit-details-marker {
         display: none;
@@ -426,7 +437,7 @@ const brandCss = brand
       .langmenu ul {
         position: absolute;
         right: 0;
-        top: 1.6em;
+        top: 100%; /* flush under the padded summary */
         z-index: 20;
         margin: 0;
         padding: var(--s2) 0;
@@ -464,14 +475,15 @@ const brandCss = brand
       }
       .theme-toggle {
         border: none;
-        padding: 0 var(--s1);
+        padding: var(--s2);
         font-size: 1rem;
         color: var(--ink-2);
       }
       .nav-icon {
         display: flex;
         align-items: center;
-        padding: 0 var(--s1);
+        padding: var(--s2);
+        margin-right: calc(-1 * var(--s2)); /* right edge stays aligned with the container */
         color: var(--ink-2);
       }
       .site-main {
