@@ -1,6 +1,6 @@
 name = "OpenDesktop / Firefly"
 name_zh = "OpenDesktop / 萤火飞"
-authors = ["Firefly（萤火飞）"]
+authors = ["Firefly (萤火飞)"]
 homepage = "https://www.freebsdsoftware.org/chinese/opendesktop-fonts.html"
 repository = ""
 description = "2004年问世的中文点阵字体，由文鼎科技开源的细上海宋、简报宋修改而成，由作者萤火飞（Firefly）以自己的网名命名，点阵层为作者制作（GPL v2），后由台湾OpenDesktop计划接续发布，作者不变。收入Arch、FreeBSD等发行版。本站收录点阵终版1.4.2：11-16px六档字面。"
@@ -12,7 +12,7 @@ provenance = "导入自 direct-downloads-2026-08-31/opendesktop-firefly-bitmaps-
 added = "2026-08-31"
 
 name_en = "OpenDesktop / Firefly"
-authors_en = ["Firefly（萤火飞）"]
+authors_en = ["Firefly (萤火飞)"]
 description_en = "A Chinese bitmap font first released in 2004, reworked from Arphic's open-sourced Fine Shanghai Song and Bulletin Song faces and named after the online handle of its author, Firefly, who drew the bitmap layer (GPL v2). Publication later moved to Taiwan's OpenDesktop project, with the same author at work. It ships in distributions such as Arch and FreeBSD. Catalogued here is the final bitmap release, 1.4.2, in six sizes from 11 to 16px."
 provenance_en = "Imported from direct-downloads-2026-08-31/opendesktop-firefly-bitmaps-1.4.2; upstream https://ftp.kh.edu.tw/odp/ODOFonts/Bitmaps/bdf/; the older Firefly 1.3.0, from before the OpenDesktop project took over, remains at http://www.study-area.org/apt/firefly-font/"
 
@@ -23,4 +23,4 @@ confidence = "manual"
 file = "License.txt"
 note = "来源中，点阵部分的发布目录内License.txt为GPL第2版全文（中译在前、英文原文在后），作者为Firefly。可见作者将点阵层视为自己的制作，而没有使用文鼎公众授权书（Arphic Public License）1999年版（这和GPL一样是一个自由开源、copyleft的许可，但是与GPL不兼容），仅矢量层被视为基于文鼎科技的细上海宋与简报宋、遵守文鼎公众授权书的字体。不过在点阵BDF字体文件的COMMENT依然保留着“(c) Copyright 1994-1999, Arphic Technology Co., Ltd.”"
 name_en = "GNU General Public License v2.0 only"
-note_en = "In the source, the License.txt in the bitmap release directory is the full GPL version 2 (Chinese translation first, English original after), and the author is Firefly. Evidently the author regarded the bitmap layer as their own work and did not place it under the Arphic Public License, 1999 version (like the GPL a free, open-source, copyleft licence, but incompatible with the GPL); only the outline layer is treated as derived from Arphic's Fine Shanghai Song and Bulletin Song and governed by the Arphic Public License. The bitmap BDF files nonetheless retain the COMMENT \"(c) Copyright 1994-1999, Arphic Technology Co., Ltd.\""
+note_en = "In the source, the License.txt in the bitmap release directory is the full GPL version 2 (Chinese translation first, English original after), and the author is Firefly. Evidently the author regarded the bitmap layer as their own work and did not place it under the Arphic Public License, 1999 version (a free, open-source, copyleft licence like the GPL, but incompatible with the GPL); only the outline layer is treated as derived from Arphic's Fine Shanghai Song and Bulletin Song and governed by the Arphic Public License. The bitmap BDF files nonetheless retain the COMMENT \"(c) Copyright 1994-1999, Arphic Technology Co., Ltd.\""

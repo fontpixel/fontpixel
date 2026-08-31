@@ -81,6 +81,7 @@ const brandCss = brand
     {description && <meta name="twitter:description" content={description} />}
     {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />}
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="16x16" />
     {/* Structured data: lets search engines recognize this as a font collection with site search */}
     <script
       type="application/ld+json"

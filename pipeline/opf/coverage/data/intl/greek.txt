@@ -1,0 +1,12 @@
+# id: greek
+# section: intl
+# order: 41
+# name_zh: 希腊字母常用字符
+# name_en: Greek Everyday Characters
+# desc_zh: 书写现代希腊语实际需要的字符：字母表、词尾 sigma、带重音元音与分音符形式、以及重音符号；不含科普特字母与古体字母——整个 U+0370–03FF 区块的覆盖率另见字体页的 Unicode 区块一节
+# desc_en: The characters actually needed to write modern Greek: the alphabet, final sigma, accented vowels and diaeresis forms, and the tonos marks. Coptic and archaic letters are excluded — coverage of the whole U+0370–03FF block is reported separately in a font's Unicode blocks section.
+# source: Modern monotonic Greek orthography; matches the ISO/IEC 8859-7 repertoire minus generic punctuation and currency signs; generated 2026-08-21
+0384..038A
+038C
+038E..03A1
+03A3..03CE

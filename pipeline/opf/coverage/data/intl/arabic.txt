@@ -1,9 +1,29 @@
 # id: arabic
 # section: intl
 # order: 42
-# name_zh: 阿拉伯字母
-# name_en: Arabic
-# desc_zh: U+0600–06FF 基本区，含波斯文、乌尔都文的扩展字母
-# desc_en: The basic block U+0600–06FF, including the extra letters used by Persian and Urdu.
-# source: Unicode block ranges; generated 2026-08-31
-0600..06FF
+# name_zh: 阿拉伯文常用字符
+# name_en: Arabic Everyday Characters
+# desc_zh: 书写阿拉伯语、波斯语、乌尔都语实际需要的 92 个字符：基本字母与 tatweel、日常元音符号、两套数字、常用标点，以及波斯文、乌尔都文特有字母。不含古兰经诵读标记与冷僻区域字母——整个 U+0600–06FF 区块的覆盖率另见字体页的 Unicode 区块一节。
+# desc_en: The 92 characters actually needed to write Arabic, Persian and Urdu: the basic letters and tatweel, everyday vowel marks, both digit sets, common punctuation, and the letters specific to Persian and Urdu. Quranic annotation marks and rare regional letters are excluded — coverage of the whole U+0600–06FF block is reported separately in a font's Unicode blocks section.
+# source: Unicode 17.0 core Arabic/Persian/Urdu letters, marks, digits and punctuation (deliberately not Windows-1256, which omits both digit sets); selection generated 2026-08-31
+060C
+061B
+061F
+0621..063A
+0640..0655
+0660..0669
+0679
+0688
+0691
+066A..066D
+067E
+0686
+0698
+06A9
+06AF
+06BA
+06BE
+06C1..06C3
+06CC
+06D2..06D4
+06F0..06F9

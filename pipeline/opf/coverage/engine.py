@@ -124,7 +124,7 @@ SCRIPT_REFERENCE_CHARSETS: dict[str, tuple[str, ...]] = {
     "latin-supp": ("latin1-supp",),
     "latin-ext": ("latin-ext-a",),
     "cyrillic": ("cyrillic",),
-    "greek": ("greek-coptic",),
+    "greek": ("greek",),
     "arabic": ("arabic",),
 }
 

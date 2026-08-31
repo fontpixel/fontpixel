@@ -227,8 +227,20 @@ def gen_static_tables() -> None:
                 "U+0100–017F，中东欧语言字符", src, set(range(0x100, 0x180)))
     write_table("intl", "latin-ext-b", 33, "拉丁字母扩展-B", "Latin Extended-B",
                 "U+0180–024F", src, set(range(0x180, 0x250)))
-    write_table("intl", "cyrillic", 40, "西里尔字母", "Cyrillic",
-                "U+0400–04FF 基本区", src, set(range(0x400, 0x500)))
+    # Slavic everyday set, not the whole U+0400-04FF block: the block also holds
+    # Old Church Slavonic and minority-language letters that no modern text needs,
+    # so scoring against it marks solid Russian fonts (Terminus, Ark Pixel) as
+    # "incomplete". Whole-block coverage stays visible in a font's Unicode blocks
+    # section. Russian А-я + Ё, Ukrainian Є І Ї Ґ, Belarusian Ў, Serbian Ђ Ј Љ Њ
+    # Ћ Џ, Macedonian Ѓ Ѕ Ќ.
+    cyrillic = set(range(0x401, 0x460)) | {0x490, 0x491}
+    write_table("intl", "cyrillic", 40, "西里尔字母常用字符",
+                "Cyrillic Everyday Characters",
+                "书写俄语、乌克兰语、白俄罗斯语、塞尔维亚语、马其顿语、保加利亚语实际需要的字符；"
+                "不含古教会斯拉夫语字母与少数民族语言扩展——整个 U+0400–04FF 区块的覆盖率另见字体页的 Unicode 区块一节",
+                "ISO/IEC 8859-5 Cyrillic repertoire minus U+2116, plus Ghe-with-upturn "
+                f"(U+0490/0491, restored in Ukrainian orthography in 1990); generated {TODAY}",
+                cyrillic)
     write_table("intl", "box-drawing", 71, "制表符", "Box Drawing",
                 "U+2500–257F，终端表格线", src, set(range(0x2500, 0x2580)))
     write_table("intl", "block-elements", 72, "方块元素", "Block Elements",
@@ -306,13 +318,20 @@ def gen_unihan_core() -> None:
 
 
 def gen_greek() -> None:
-    from opf.coverage.ucd import load_ucd
-
-    u = load_ucd(DATA / "ucd")
-    cps = {cp for cp in range(0x370, 0x400) if cp in u.assigned}
-    write_table("intl", "greek-coptic", 41, "希腊和科普特字母", "Greek and Coptic",
-                "U+0370–03FF 区段中已指派的字符",
-                f"Unicode 17.0 Blocks/UnicodeData; generated {TODAY}", cps)
+    # Modern Greek, not the whole U+0370-03FF block: that block also carries the
+    # Coptic letters (a separate script with its own block these days), archaic
+    # letters and symbol variants, so scoring against it marks fonts with a
+    # complete Greek alphabet as "incomplete". Alphabet, final sigma, accented
+    # vowels, diaeresis forms and the tonos marks.
+    cps = set(range(0x384, 0x38B)) | {0x38C} | set(range(0x38E, 0x3A2)) \
+        | set(range(0x3A3, 0x3CF))
+    write_table("intl", "greek", 41, "希腊字母常用字符",
+                "Greek Everyday Characters",
+                "书写现代希腊语实际需要的字符：字母表、词尾 sigma、带重音元音与分音符形式、"
+                "以及重音符号；不含科普特字母与古体字母——整个 U+0370–03FF 区块的覆盖率"
+                "另见字体页的 Unicode 区块一节",
+                "Modern monotonic Greek orthography; matches the ISO/IEC 8859-7 "
+                f"repertoire minus generic punctuation and currency signs; generated {TODAY}", cps)
 
 
 def gen_viet() -> None:

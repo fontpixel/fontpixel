@@ -1,9 +1,10 @@
 # id: cyrillic
 # section: intl
 # order: 40
-# name_zh: 西里尔字母
-# name_en: Cyrillic
-# desc_zh: U+0400–04FF 基本区
-# desc_en: The basic block, U+0400–04FF.
-# source: Unicode block ranges; generated 2026-08-21
-0400..04FF
+# name_zh: 西里尔字母常用字符
+# name_en: Cyrillic Everyday Characters
+# desc_zh: 书写俄语、乌克兰语、白俄罗斯语、塞尔维亚语、马其顿语、保加利亚语实际需要的字符；不含古教会斯拉夫语字母与少数民族语言扩展——整个 U+0400–04FF 区块的覆盖率另见字体页的 Unicode 区块一节
+# desc_en: The characters actually needed to write Russian, Ukrainian, Belarusian, Serbian, Macedonian and Bulgarian. Old Church Slavonic letters and minority-language extensions are excluded — coverage of the whole U+0400–04FF block is reported separately in a font's Unicode blocks section.
+# source: ISO/IEC 8859-5 Cyrillic repertoire minus U+2116, plus Ghe-with-upturn (U+0490/0491, restored in Ukrainian orthography in 1990); generated 2026-08-21
+0401..045F
+0490..0491

@@ -1,258 +1,262 @@
 {
- "gb2312": {
-  "desc_en": "Every hanzi in the 1980 national standard basic set — 6,763 characters across Levels 1 and 2.",
-  "name_en": "GB/T 2312 Hanzi"
- },
- "gb2312-l1": {
-  "desc_en": "3,755 frequently used characters, ordered by pinyin.",
-  "name_en": "GB/T 2312 Level 1 Hanzi"
- },
- "gb2312-l2": {
-  "desc_en": "3,008 less frequently used characters, ordered by radical.",
-  "name_en": "GB/T 2312 Level 2 Hanzi"
- },
- "gbk-hanzi": {
-  "desc_en": "Every hanzi encoded by GBK, compatibility ideographs included.",
-  "name_en": "GBK Hanzi"
- },
- "gb12345": {
-  "desc_en": "Issued in 1990; the traditional-form counterpart to GB/T 2312.",
-  "name_en": "GB/T 12345 Traditional Hanzi"
- },
- "gb18030-2022-l1": {
-  "desc_en": "The minimum mandatory conformance level for all products: every hanzi and radical in the BMP (27,584 characters).",
-  "name_en": "GB 18030-2022 Implementation Level 1"
- },
- "gb18030-2022-l2": {
-  "desc_en": "Mandatory for system software: Level 1 plus the 196 General Standard characters that sit in the supplementary planes.",
-  "name_en": "GB 18030-2022 Implementation Level 2"
- },
- "gb18030-2022-l3": {
-  "desc_en": "Required of government and public-service products: CJK Extensions A–F and the Kangxi radicals in full (88,115 characters).",
-  "name_en": "GB 18030-2022 Implementation Level 3"
- },
- "tongyong-guifan": {
-  "desc_en": "The standard now in force, issued by the State Council in 2013: 8,105 characters in three levels.",
-  "name_en": "Table of General Standard Chinese Characters"
- },
- "tongyong-guifan-l1": {
-  "desc_en": "3,500 characters — the working set for compulsory education and publishing.",
-  "name_en": "General Standard Chinese Characters Level 1"
- },
- "tongyong-guifan-l2": {
-  "desc_en": "3,000 characters.",
-  "name_en": "General Standard Chinese Characters Level 2"
- },
- "tongyong-guifan-l3": {
-  "desc_en": "1,605 characters used in surnames and given names, place names, and technical terminology.",
-  "name_en": "General Standard Chinese Characters Level 3"
- },
- "changyong-3500": {
-  "desc_en": "Issued in 1988: 2,500 frequently used characters plus 1,000 less frequently used ones.",
-  "name_en": "List of Frequently Used Characters in Modern Chinese"
- },
- "changyong-2500": {
-  "desc_en": "The 2,500 frequently used characters.",
-  "name_en": "Frequently Used Characters in Modern Chinese (2500)"
- },
- "cichangyong-1000": {
-  "desc_en": "The 1,000 less frequently used characters.",
-  "name_en": "Less Frequently Used Characters in Modern Chinese (1000)"
- },
- "tongyong-7000": {
-  "desc_en": "Issued in 1988; 7,000 characters.",
-  "name_en": "List of Commonly Used Characters in Modern Chinese"
- },
- "yijiao-3500": {
-  "desc_en": "Appendix to the 2022 curriculum standard; 3,500 characters.",
-  "name_en": "Compulsory Education Chinese Character List"
- },
- "guji-yinshua": {
-  "desc_en": "The 2021 standard for characters used in printing ancient Chinese books.",
-  "name_en": "Standard Glyph Forms for Ancient Book Printing"
- },
- "kangxi-radicals": {
-  "desc_en": "All 214 radicals, U+2F00–2FD5.",
-  "name_en": "Kangxi Radicals"
- },
- "radicals-supplement": {
-  "desc_en": "The 115 assigned radical variants in U+2E80–2EF3.",
-  "name_en": "CJK Radicals Supplement"
- },
- "hanyi-jianfan": {
-  "desc_en": "The simplified-plus-traditional coverage the Hanyi foundry quotes for its fonts.",
-  "name_en": "Hanyi Simplified & Traditional Set"
- },
- "fangzheng-jianfan": {
-  "desc_en": "The simplified-plus-traditional coverage the FounderType foundry quotes for its fonts.",
-  "name_en": "FounderType Simplified & Traditional Set"
- },
- "tw-changyong-4808": {
-  "desc_en": "Taiwan's Chart A; 4,808 characters.",
-  "name_en": "Standard Forms of Common National Characters"
- },
- "tw-cichangyong-6343": {
-  "desc_en": "Taiwan's Chart B; 6,343 characters.",
-  "name_en": "Standard Forms of Less-Common National Characters"
- },
- "big5-changyong": {
-  "desc_en": "The Big5 frequently used range A440–C67E; 5,401 characters.",
-  "name_en": "Big5 Frequently Used Hanzi"
- },
- "big5-cichangyong": {
-  "desc_en": "The Big5 less frequently used range C940–F9D5.",
-  "name_en": "Big5 Less Frequently Used Hanzi"
- },
- "big5": {
-  "desc_en": "Both ranges combined, de-duplicated by Unicode code point.",
-  "name_en": "Big5 All Hanzi"
- },
- "bopomofo": {
-  "desc_en": "Bopomofo and its extensions, as used for Min Nan and Hakka.",
-  "name_en": "Bopomofo"
- },
- "hk-changyong": {
-  "desc_en": "The Hong Kong Education Bureau's table of standard character forms.",
-  "name_en": "List of Graphemes of Commonly-Used Chinese Characters"
- },
- "hkscs": {
-  "desc_en": "The hanzi portion of HKSCS-2016.",
-  "name_en": "Hong Kong Supplementary Character Set Hanzi"
- },
- "hk-suppchara": {
-  "desc_en": "The Education Bureau's commonly used supplementary characters, Levels 1–6.",
-  "name_en": "Hong Kong Supplementary Characters in Common Use"
- },
- "jisx0208-nonkanji": {
-  "desc_en": "Kana, symbols, and Roman, Greek and Cyrillic letters.",
-  "name_en": "JIS X 0208 Non-Kanji"
- },
- "jisx0208-l1": {
-  "desc_en": "2,965 Level 1 kanji, ordered by on'yomi reading.",
-  "name_en": "JIS X 0208 Level 1 Kanji"
- },
- "jisx0208-l2": {
-  "desc_en": "3,390 Level 2 kanji, ordered by radical.",
-  "name_en": "JIS X 0208 Level 2 Kanji"
- },
- "jisx0213-l3": {
-  "desc_en": "The kanji added on plane 1 by the 2000/2004 extensions.",
-  "name_en": "JIS X 0213 Level 3 Kanji"
- },
- "jisx0213-l4": {
-  "desc_en": "The kanji on plane 2.",
-  "name_en": "JIS X 0213 Level 4 Kanji"
- },
- "joyo": {
-  "desc_en": "The 2,136 kanji in general use today, per the 2010 Cabinet notification.",
-  "name_en": "Joyo Kanji"
- },
- "kyoiku": {
-  "desc_en": "The 1,026 elementary-school kanji in the by-grade allocation table in force since 2020.",
-  "name_en": "Kyoiku Kanji"
- },
- "jinmeiyo": {
-  "desc_en": "Kanji outside the Joyo set permitted in personal names, per the appendix to the Family Register Act rules (2026 additions included).",
-  "name_en": "Jinmeiyo Kanji"
- },
- "hiragana": {
-  "desc_en": "Every hiragana letter, U+3041–3096.",
-  "name_en": "Hiragana"
- },
- "katakana": {
-  "desc_en": "Every katakana letter, U+30A1–30FA.",
-  "name_en": "Katakana"
- },
- "halfwidth-kana": {
-  "desc_en": "Halfwidth katakana and punctuation, U+FF61–FF9F.",
-  "name_en": "Halfwidth Katakana"
- },
- "jisx0201": {
-  "desc_en": "Roman characters and halfwidth kana — the 7-bit / 8-bit single-byte set.",
-  "name_en": "JIS X 0201"
- },
- "ksx1001-hangul": {
-  "desc_en": "The 2,350 syllables in common use in modern Korean.",
-  "name_en": "KS X 1001 Hangul Syllables"
- },
- "ksx1001-hanja": {
-  "desc_en": "4,888 hanja, with duplicated hanja mapped into the compatibility block.",
-  "name_en": "KS X 1001 Hanja"
- },
- "ksx1001-symbols": {
-  "desc_en": "The non-hangul, non-hanja part: symbols, letters, Japanese kana and the like.",
-  "name_en": "KS X 1001 Symbols"
- },
- "hangul-syllables": {
-  "desc_en": "All 11,172 syllables, U+AC00–D7A3.",
-  "name_en": "Hangul Syllables (All Modern)"
- },
- "hangul-compat-jamo": {
-  "desc_en": "Hangul compatibility jamo, U+3131–318E.",
-  "name_en": "Hangul Compatibility Jamo"
- },
- "hangul-jamo": {
-  "desc_en": "Conjoining hangul jamo, U+1100–11FF, archaic letters included.",
-  "name_en": "Hangul Jamo"
- },
- "iicore": {
-  "desc_en": "An ISO/IEC 10646 annex: a core han set aimed at resource-constrained environments.",
-  "name_en": "International Ideographs Core (IICore)"
- },
- "unihan-core-2020": {
-  "desc_en": "The Unihan database's core set for modern general use, covering Chinese, Japanese, Korean and Vietnamese usage as well as Hong Kong and Taiwan.",
-  "name_en": "Unihan Core 2020"
- },
- "wgl4": {
-  "desc_en": "Microsoft's pan-European character set: 650 code points (the commonly cited 652 counts two duplicated glyphs).",
-  "name_en": "Windows Glyph List 4"
- },
- "latin-basic": {
-  "desc_en": "Printable ASCII, U+0020–007E.",
-  "name_en": "Basic Latin"
- },
- "latin1-supp": {
-  "desc_en": "U+00A0–00FF, the Western European characters.",
-  "name_en": "Latin-1 Supplement"
- },
- "latin-ext-a": {
-  "desc_en": "U+0100–017F, the Central and Eastern European characters.",
-  "name_en": "Latin Extended-A"
- },
- "latin-ext-b": {
-  "desc_en": "U+0180–024F.",
-  "name_en": "Latin Extended-B"
- },
- "cyrillic": {
-  "desc_en": "The basic block, U+0400–04FF.",
-  "name_en": "Cyrillic"
- },
- "greek-coptic": {
-  "desc_en": "The assigned characters in U+0370–03FF.",
-  "name_en": "Greek and Coptic"
- },
- "viet-latin": {
-  "desc_en": "Every letter of Vietnamese quốc ngữ: basic Latin, the accented letters from Latin-1 and Latin Extended-A/B, and Latin Extended Additional U+1EA0–1EF9.",
-  "name_en": "Vietnamese Latin"
- },
- "cp437": {
-  "desc_en": "The DOS and retro-terminal character set, graphics interpretation: 255 characters, 0x01–0xFF.",
-  "name_en": "IBM Code Page 437"
- },
- "box-drawing": {
-  "desc_en": "U+2500–257F, the terminal rules and table borders.",
-  "name_en": "Box Drawing"
- },
- "block-elements": {
-  "desc_en": "U+2580–259F, the solid and shaded terminal blocks.",
-  "name_en": "Block Elements"
- },
- "powerline": {
-  "desc_en": "The 41 symbols Powerline and its extensions occupy in the private use area, U+E0A0–E0D4.",
-  "name_en": "Powerline Symbols"
- },
- "braille": {
-  "desc_en": "All 256 braille patterns, U+2800–28FF.",
-  "name_en": "Braille Patterns"
- }
+  "gb2312": {
+    "desc_en": "Every hanzi in the 1980 national standard basic set — 6,763 characters across Levels 1 and 2.",
+    "name_en": "GB/T 2312 Hanzi"
+  },
+  "gb2312-l1": {
+    "desc_en": "3,755 frequently used characters, ordered by pinyin.",
+    "name_en": "GB/T 2312 Level 1 Hanzi"
+  },
+  "gb2312-l2": {
+    "desc_en": "3,008 less frequently used characters, ordered by radical.",
+    "name_en": "GB/T 2312 Level 2 Hanzi"
+  },
+  "gbk-hanzi": {
+    "desc_en": "Every hanzi encoded by GBK, compatibility ideographs included.",
+    "name_en": "GBK Hanzi"
+  },
+  "gb12345": {
+    "desc_en": "Issued in 1990; the traditional-form counterpart to GB/T 2312.",
+    "name_en": "GB/T 12345 Traditional Hanzi"
+  },
+  "gb18030-2022-l1": {
+    "desc_en": "The minimum mandatory conformance level for all products: every hanzi and radical in the BMP (27,584 characters).",
+    "name_en": "GB 18030-2022 Implementation Level 1"
+  },
+  "gb18030-2022-l2": {
+    "desc_en": "Mandatory for system software: Level 1 plus the 196 General Standard characters that sit in the supplementary planes.",
+    "name_en": "GB 18030-2022 Implementation Level 2"
+  },
+  "gb18030-2022-l3": {
+    "desc_en": "Required of government and public-service products: CJK Extensions A–F and the Kangxi radicals in full (88,115 characters).",
+    "name_en": "GB 18030-2022 Implementation Level 3"
+  },
+  "tongyong-guifan": {
+    "desc_en": "The standard now in force, issued by the State Council in 2013: 8,105 characters in three levels.",
+    "name_en": "Table of General Standard Chinese Characters"
+  },
+  "tongyong-guifan-l1": {
+    "desc_en": "3,500 characters — the working set for compulsory education and publishing.",
+    "name_en": "General Standard Chinese Characters Level 1"
+  },
+  "tongyong-guifan-l2": {
+    "desc_en": "3,000 characters.",
+    "name_en": "General Standard Chinese Characters Level 2"
+  },
+  "tongyong-guifan-l3": {
+    "desc_en": "1,605 characters used in surnames and given names, place names, and technical terminology.",
+    "name_en": "General Standard Chinese Characters Level 3"
+  },
+  "changyong-3500": {
+    "desc_en": "Issued in 1988: 2,500 frequently used characters plus 1,000 less frequently used ones.",
+    "name_en": "List of Frequently Used Characters in Modern Chinese"
+  },
+  "changyong-2500": {
+    "desc_en": "The 2,500 frequently used characters.",
+    "name_en": "Frequently Used Characters in Modern Chinese (2500)"
+  },
+  "cichangyong-1000": {
+    "desc_en": "The 1,000 less frequently used characters.",
+    "name_en": "Less Frequently Used Characters in Modern Chinese (1000)"
+  },
+  "tongyong-7000": {
+    "desc_en": "Issued in 1988; 7,000 characters.",
+    "name_en": "List of Commonly Used Characters in Modern Chinese"
+  },
+  "yijiao-3500": {
+    "desc_en": "Appendix to the 2022 curriculum standard; 3,500 characters.",
+    "name_en": "Compulsory Education Chinese Character List"
+  },
+  "guji-yinshua": {
+    "desc_en": "The 2021 standard for characters used in printing ancient Chinese books.",
+    "name_en": "Standard Glyph Forms for Ancient Book Printing"
+  },
+  "kangxi-radicals": {
+    "desc_en": "All 214 radicals, U+2F00–2FD5.",
+    "name_en": "Kangxi Radicals"
+  },
+  "radicals-supplement": {
+    "desc_en": "The 115 assigned radical variants in U+2E80–2EF3.",
+    "name_en": "CJK Radicals Supplement"
+  },
+  "hanyi-jianfan": {
+    "desc_en": "The simplified-plus-traditional coverage the Hanyi foundry quotes for its fonts.",
+    "name_en": "Hanyi Simplified & Traditional Set"
+  },
+  "fangzheng-jianfan": {
+    "desc_en": "The simplified-plus-traditional coverage the FounderType foundry quotes for its fonts.",
+    "name_en": "FounderType Simplified & Traditional Set"
+  },
+  "tw-changyong-4808": {
+    "desc_en": "Taiwan's Chart A; 4,808 characters.",
+    "name_en": "Standard Forms of Common National Characters"
+  },
+  "tw-cichangyong-6343": {
+    "desc_en": "Taiwan's Chart B; 6,343 characters.",
+    "name_en": "Standard Forms of Less-Common National Characters"
+  },
+  "big5-changyong": {
+    "desc_en": "The Big5 frequently used range A440–C67E; 5,401 characters.",
+    "name_en": "Big5 Frequently Used Hanzi"
+  },
+  "big5-cichangyong": {
+    "desc_en": "The Big5 less frequently used range C940–F9D5.",
+    "name_en": "Big5 Less Frequently Used Hanzi"
+  },
+  "big5": {
+    "desc_en": "Both ranges combined, de-duplicated by Unicode code point.",
+    "name_en": "Big5 All Hanzi"
+  },
+  "bopomofo": {
+    "desc_en": "Bopomofo and its extensions, as used for Min Nan and Hakka.",
+    "name_en": "Bopomofo"
+  },
+  "hk-changyong": {
+    "desc_en": "The Hong Kong Education Bureau's table of standard character forms.",
+    "name_en": "List of Graphemes of Commonly-Used Chinese Characters"
+  },
+  "hkscs": {
+    "desc_en": "The hanzi portion of HKSCS-2016.",
+    "name_en": "Hong Kong Supplementary Character Set Hanzi"
+  },
+  "hk-suppchara": {
+    "desc_en": "The Education Bureau's commonly used supplementary characters, Levels 1–6.",
+    "name_en": "Hong Kong Supplementary Characters in Common Use"
+  },
+  "jisx0208-nonkanji": {
+    "desc_en": "Kana, symbols, and Roman, Greek and Cyrillic letters.",
+    "name_en": "JIS X 0208 Non-Kanji"
+  },
+  "jisx0208-l1": {
+    "desc_en": "2,965 Level 1 kanji, ordered by on'yomi reading.",
+    "name_en": "JIS X 0208 Level 1 Kanji"
+  },
+  "jisx0208-l2": {
+    "desc_en": "3,390 Level 2 kanji, ordered by radical.",
+    "name_en": "JIS X 0208 Level 2 Kanji"
+  },
+  "jisx0213-l3": {
+    "desc_en": "The kanji added on plane 1 by the 2000/2004 extensions.",
+    "name_en": "JIS X 0213 Level 3 Kanji"
+  },
+  "jisx0213-l4": {
+    "desc_en": "The kanji on plane 2.",
+    "name_en": "JIS X 0213 Level 4 Kanji"
+  },
+  "joyo": {
+    "desc_en": "The 2,136 kanji in general use today, per the 2010 Cabinet notification.",
+    "name_en": "Joyo Kanji"
+  },
+  "kyoiku": {
+    "desc_en": "The 1,026 elementary-school kanji in the by-grade allocation table in force since 2020.",
+    "name_en": "Kyoiku Kanji"
+  },
+  "jinmeiyo": {
+    "desc_en": "Kanji outside the Joyo set permitted in personal names, per the appendix to the Family Register Act rules (2026 additions included).",
+    "name_en": "Jinmeiyo Kanji"
+  },
+  "hiragana": {
+    "desc_en": "Every hiragana letter, U+3041–3096.",
+    "name_en": "Hiragana"
+  },
+  "katakana": {
+    "desc_en": "Every katakana letter, U+30A1–30FA.",
+    "name_en": "Katakana"
+  },
+  "halfwidth-kana": {
+    "desc_en": "Halfwidth katakana and punctuation, U+FF61–FF9F.",
+    "name_en": "Halfwidth Katakana"
+  },
+  "jisx0201": {
+    "desc_en": "Roman characters and halfwidth kana — the 7-bit / 8-bit single-byte set.",
+    "name_en": "JIS X 0201"
+  },
+  "ksx1001-hangul": {
+    "desc_en": "The 2,350 syllables in common use in modern Korean.",
+    "name_en": "KS X 1001 Hangul Syllables"
+  },
+  "ksx1001-hanja": {
+    "desc_en": "4,888 hanja, with duplicated hanja mapped into the compatibility block.",
+    "name_en": "KS X 1001 Hanja"
+  },
+  "ksx1001-symbols": {
+    "desc_en": "The non-hangul, non-hanja part: symbols, letters, Japanese kana and the like.",
+    "name_en": "KS X 1001 Symbols"
+  },
+  "hangul-syllables": {
+    "desc_en": "All 11,172 syllables, U+AC00–D7A3.",
+    "name_en": "Hangul Syllables (All Modern)"
+  },
+  "hangul-compat-jamo": {
+    "desc_en": "Hangul compatibility jamo, U+3131–318E.",
+    "name_en": "Hangul Compatibility Jamo"
+  },
+  "hangul-jamo": {
+    "desc_en": "Conjoining hangul jamo, U+1100–11FF, archaic letters included.",
+    "name_en": "Hangul Jamo"
+  },
+  "iicore": {
+    "desc_en": "An ISO/IEC 10646 annex: a core han set aimed at resource-constrained environments.",
+    "name_en": "International Ideographs Core (IICore)"
+  },
+  "unihan-core-2020": {
+    "desc_en": "The Unihan database's core set for modern general use, covering Chinese, Japanese, Korean and Vietnamese usage as well as Hong Kong and Taiwan.",
+    "name_en": "Unihan Core 2020"
+  },
+  "wgl4": {
+    "desc_en": "Microsoft's pan-European character set: 650 code points (the commonly cited 652 counts two duplicated glyphs).",
+    "name_en": "Windows Glyph List 4"
+  },
+  "latin-basic": {
+    "desc_en": "Printable ASCII, U+0020–007E.",
+    "name_en": "Basic Latin"
+  },
+  "latin1-supp": {
+    "desc_en": "U+00A0–00FF, the Western European characters.",
+    "name_en": "Latin-1 Supplement"
+  },
+  "latin-ext-a": {
+    "desc_en": "U+0100–017F, the Central and Eastern European characters.",
+    "name_en": "Latin Extended-A"
+  },
+  "latin-ext-b": {
+    "desc_en": "U+0180–024F.",
+    "name_en": "Latin Extended-B"
+  },
+  "cyrillic": {
+    "desc_en": "The characters actually needed to write Russian, Ukrainian, Belarusian, Serbian, Macedonian and Bulgarian. Old Church Slavonic letters and minority-language extensions are excluded — coverage of the whole U+0400–04FF block is reported separately in a font's Unicode blocks section.",
+    "name_en": "Cyrillic Everyday Characters"
+  },
+  "viet-latin": {
+    "desc_en": "Every letter of Vietnamese quốc ngữ: basic Latin, the accented letters from Latin-1 and Latin Extended-A/B, and Latin Extended Additional U+1EA0–1EF9.",
+    "name_en": "Vietnamese Latin"
+  },
+  "cp437": {
+    "desc_en": "The DOS and retro-terminal character set, graphics interpretation: 255 characters, 0x01–0xFF.",
+    "name_en": "IBM Code Page 437"
+  },
+  "box-drawing": {
+    "desc_en": "U+2500–257F, the terminal rules and table borders.",
+    "name_en": "Box Drawing"
+  },
+  "block-elements": {
+    "desc_en": "U+2580–259F, the solid and shaded terminal blocks.",
+    "name_en": "Block Elements"
+  },
+  "powerline": {
+    "desc_en": "The 41 symbols Powerline and its extensions occupy in the private use area, U+E0A0–E0D4.",
+    "name_en": "Powerline Symbols"
+  },
+  "braille": {
+    "desc_en": "All 256 braille patterns, U+2800–28FF.",
+    "name_en": "Braille Patterns"
+  },
+  "greek": {
+    "desc_en": "The characters actually needed to write modern Greek: the alphabet, final sigma, accented vowels and diaeresis forms, and the tonos marks. Coptic and archaic letters are excluded — coverage of the whole U+0370–03FF block is reported separately in a font's Unicode blocks section.",
+    "name_en": "Greek Everyday Characters"
+  },
+  "arabic": {
+    "desc_en": "The 92 characters actually needed to write Arabic, Persian and Urdu: the basic letters and tatweel, everyday vowel marks, both digit sets, common punctuation, and the letters specific to Persian and Urdu. Quranic annotation marks and rare regional letters are excluded — coverage of the whole U+0600–06FF block is reported separately in a font's Unicode blocks section.",
+    "name_en": "Arabic Everyday Characters"
+  }
 }
