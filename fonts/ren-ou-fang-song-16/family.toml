@@ -1,11 +1,14 @@
 name = "RenOuFangSong 16"
-name_zh = "人偶仿宋 16"
-author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット人形町16）"
+name_zh_hans = "人偶仿宋16"
+authors = ["yzdnn"]
 homepage = ""
 repository = "https://github.com/yzdnn/RenOuFangSong-16"
 description = ""
 form = "fangsong"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["handwriting", "decorative"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--RenOuFangSong-16；上游 https://github.com/yzdnn/RenOuFangSong-16/releases (v1.1.1)"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--RenOuFangSong-16；上游https://github.com/yzdnn/RenOuFangSong-16/releases (v1.1.1)；字形基于平木敬太郎／自家製フォント工房的KH ドット人形町16。"
 added = "2026-08-21"
+name_en = "RenOuFangSong 16"
+authors_en = ["yzdnn"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--RenOuFangSong-16; upstream https://github.com/yzdnn/RenOuFangSong-16/releases (v1.1.1); Glyphs are based on KH Dot Ningyocho 16 by Keitaro Hiraki / Jikasei Font Kobo."

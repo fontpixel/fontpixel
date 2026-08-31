@@ -1,0 +1,24 @@
+name = "Hexin Pixel Font"
+name_zh_hans = "核心像素体"
+authors = ["DWNfonts (diaowinner)"]
+homepage = "https://diaowinner.itch.io/hexinpixel"
+repository = "https://github.com/DWNfonts/Hexin-Pixel-Font"
+description = "宽12高8像素的点阵字体，主打简体中文，字形基于門真なむ的k12x8。名字取自动画《开心超人联盟》中的反派“核心”。"
+form = "gothic"
+vibes = ["retro-game"]
+aliases = ["Hexin-Pixel-Font", "核心像素字体"]
+converted_from = ""
+provenance = "上游主仓在Codeberg（https://codeberg.org/DWNfonts/Hexin-Pixel-Font），GitHub为镜像。字形基于https://littlelimit.net/k12x8.htm，后者以等同公有领域的旧版M+ 授权发布；风格参考Fusion Pixel。上游直接提供BDF，未经转换。"
+added = "2026-08-30"
+name_en = "Hexin Pixel Font"
+authors_en = ["DWNfonts (diaowinner)"]
+description_en = "A 12x8 pixel bitmap font aimed mainly at Simplified Chinese, with glyphs based on Num Kadoma's k12x8. Named after a villain in the Chinese animated series Happy Heroes."
+provenance_en = "The upstream repository lives on Codeberg (https://codeberg.org/DWNfonts/Hexin-Pixel-Font ); the GitHub copy is a mirror. Glyphs are based on k12x8 (https://littlelimit.net/k12x8.htm ), released under the old, public-domain-equivalent M+ license, with Fusion Pixel as a style reference. Upstream ships BDF directly; no conversion was needed."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+note = "上游LICENSE.md：字体文件（Data/ 与Output/）为SIL OFL 1.1，构建脚本为3句BSD。本站收录的是字体文件。"
+name_en = "SIL Open Font License 1.1"
+note_en = "Upstream LICENSE.md: the font files (Data/ and Output/) are under SIL OFL 1.1, the build scripts under the 3-Clause BSD License. This catalogue holds the font files."

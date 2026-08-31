@@ -1,17 +1,22 @@
 name = "Lode"
-name_zh = ""
-author = "Hisham Muhammad"
+authors = ["Hisham Muhammad"]
 homepage = ""
 repository = "https://github.com/hishamhm/lode-fonts"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore"]  # UNVERIFIED
+aliases = ["lode-fonts"]
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/lode；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/lode；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "Lode"
+authors_en = ["Hisham Muhammad"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/lode; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for the original upstream project)"
 
 [license]
 spdx = "GPL-2.0-only"
-name = "GNU 通用公共许可证 2.0"
-commercial = true
-note = "单一 PCF 文件（无 BDF 版本，管线支持直接取 PCF）。PCF COPYRIGHT 属性明确 “(C)2007 Hisham Muhammad. GNU GPL with font exception”，附带字体嵌入例外条款，允许将本字体嵌入文档而不导致文档整体受 GPL 约束。"
+name = "GNU通用公共许可证2.0"
+note = "单一PCF文件（无BDF版本，管线支持直接取PCF）。PCF COPYRIGHT属性明确 “(C)2007 Hisham Muhammad. GNU GPL with font exception”，附带字体嵌入例外条款，允许将本字体嵌入文档而不导致文档整体受GPL约束。"
+name_en = "GNU General Public License v2.0"
+note_en = "A single PCF file (no BDF version available; the pipeline supports taking PCF directly). The PCF COPYRIGHT attribute explicitly states \"(C)2007 Hisham Muhammad. GNU GPL with font exception,\" which includes a font-embedding exception permitting the font to be embedded in a document without placing the whole document under the GPL."

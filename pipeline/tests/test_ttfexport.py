@@ -2,10 +2,10 @@ from pathlib import Path
 
 import pytest
 
-from fbf.ingest.otb import convert_otb
-from fbf.metrics import glyph_ink_size
-from fbf.parsers.bdf import parse_bdf
-from fbf.ttfexport import build_ttf, glyph_name
+from opf.ingest.otb import convert_otb
+from opf.metrics import glyph_ink_size
+from opf.parsers.bdf import parse_bdf
+from opf.ttfexport import build_ttf, glyph_name
 
 FIX = Path(__file__).parent / "fixtures"
 

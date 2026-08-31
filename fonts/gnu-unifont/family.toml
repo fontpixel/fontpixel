@@ -1,11 +1,14 @@
 name = "GNU Unifont"
-name_zh = ""
-author = "GNU Unifont Project"
+authors = ["GNU Unifont Project"]
 homepage = "http://unifoundry.com/unifont/index.html"
 repository = "https://github.com/multitheftauto/unifont"
 description = ""
 form = "other"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["fallback"]  # UNVERIFIED
+aliases = ["unifont_jp", "unifoundry"]
 converted_from = "ttf"
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/multitheftauto--unifont；上游 https://github.com/multitheftauto/unifont/releases (v16.0.04)；由 ttf 转换"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/multitheftauto--unifont；上游https://github.com/multitheftauto/unifont/releases (v16.0.04)；由ttf转换"
 added = "2026-08-21"
+name_en = "GNU Unifont"
+authors_en = ["GNU Unifont Project"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/multitheftauto--unifont; upstream https://github.com/multitheftauto/unifont/releases (v16.0.04); converted from ttf"

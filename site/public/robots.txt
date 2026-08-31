@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# 构建产物与原始数据不需要被索引：字形包是二进制分块，
+# 下载物走 R2、不在本站
+Disallow: /data/packs/
+Disallow: /data/details/
+
+Sitemap: https://pixelfont.github.io/sitemap-index.xml

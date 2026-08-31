@@ -1,9 +1,9 @@
 import hashlib
 from pathlib import Path
 
-from fbf.familymeta import FamilyMeta, resolve_variant
-from fbf.glyphpack import plan_chunks, read_chunk, write_packs
-from fbf.parsers.bdf import parse_bdf
+from opf.familymeta import FamilyMeta, resolve_variant
+from opf.glyphpack import plan_chunks, read_chunk, write_packs
+from opf.parsers.bdf import parse_bdf
 
 FIX = Path(__file__).parent / "fixtures"
 

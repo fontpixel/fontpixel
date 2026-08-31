@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from fbf.coverage.charsets import DATA_DIR, load_charsets
-from fbf.coverage.ucd import load_ucd
+from opf.coverage.charsets import DATA_DIR, load_charsets
+from opf.coverage.ucd import load_ucd
 
 
 def _by_id():
@@ -109,3 +109,20 @@ def test_ucd_blocks():
     assert 0xE000 in u.assigned
     names = [b[0] for b in u.blocks]
     assert "CJK Unified Ideographs Extension J" in names  # Unicode 17.0
+
+
+def test_single_byte_registry_with_unicode_codepoints():
+    """自报 ISO8859 却含 >0xFF 码位的字体（lemon／bitocra／envypn）不得丢字形。"""
+    from opf.parsers.charset_map import decode_cp
+
+    warnings: list[str] = []
+    warned: set[str] = set()
+    # 单字节区照常按 latin-1 解
+    assert decode_cp(0xE9, "ISO8859", "1", warnings, warned) == 0xE9
+    # >0xFF 只可能是 registry 写错，按 Unicode 透传
+    assert decode_cp(0xFF63, "ISO8859", "1", warnings, warned) == 0xFF63
+    assert decode_cp(0xE0B3, "iSO8859", "1", warnings, warned) == 0xE0B3
+    assert decode_cp(0x4E00, "ISO646.1991", "IRV", warnings, warned) == 0x4E00
+    assert len(warnings) >= 1 and "Unicode" in warnings[0]
+    # 双字节 CJK 字符集不受影响，仍走各自的编解码器
+    assert decode_cp(0x3021, "jisx0208.1990", "0", [], set()) == 0x4E9C

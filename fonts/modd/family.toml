@@ -1,0 +1,25 @@
+name = "Modd"
+authors = ["Jim Knoble"]
+homepage = "http://www.jmknoble.net/fonts/"
+repository = ""
+description = "与Neep同出jmk-x11-fonts的等宽点阵字体，README自述“笔画利落、造型偏当代”。6×11与6×13两档，各含常规与粗体，仅ISO 8859-1编码。"
+form = "terminal"
+vibes = ["classic", "terminal-hardcore"]
+aliases = ["jmk-x11-fonts", "jmk modd"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/jmk-x11-fonts-3.0；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Modd"
+authors_en = ["Jim Knoble"]
+description_en = "A monospace bitmap font shipped alongside Neep in jmk-x11-fonts, described upstream as having \"sleek, contemporary styling\". Two sizes, 6x11 and 6x13, each in regular and bold, ISO 8859-1 only."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/jmk-x11-fonts-3.0; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-or-later"
+name = "GNU通用公共许可证 第2版或更新版本"
+confidence = "manual"
+file = "README"
+note = "包内README的 “Copying, Copyright, and Open Source” 一节写明：字体版权归Jim Knoble 1998年所有，依GNU通用公共许可证2.0版“或者，由你选择，任何更新的版本”发布。本族随字体附上该README原文作为授权依据。"
+name_en = "GNU General Public License v2.0 or later"
+note_en = "The bundled README, section \"Copying, Copyright, and Open Source\", states that the fonts are copyright Jim Knoble 1998 and released under the GNU General Public License version 2.0, \"or, at your option, any later version\". That README is bundled here as the licensing evidence."

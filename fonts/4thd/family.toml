@@ -1,17 +1,21 @@
 name = "4thD"
-name_zh = ""
-author = "Aaron Christianson（ninjaaron）"
+authors = ["Aaron Christianson (ninjaaron)"]
 homepage = ""
 repository = "https://github.com/ninjaaron/bitocra"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "4thD"
+authors_en = ["Aaron Christianson (ninjaaron)"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; original upstream project noted below)"
 
 [license]
 spdx = "OFL-1.1"
-name = "SIL 开放字体许可证 1.1"
-commercial = true
-note = "4thD 是极小尺寸（4px）像素字体，随 ninjaaron/bitocra 合集一同发布；文件本身无版权/许可字段，但同仓库的 bitocra.bdf 等文件明确注明 licenced under the OFL 1.1，故按同一许可对待。README 中列为 “bitocra by ninjaaron”，仓库地址见 repository。"
+name = "SIL开放字体许可证1.1"
+note = "4thD是极小尺寸（4px）像素字体，随ninjaaron/bitocra合集一同发布；文件本身无版权/许可字段，但同仓库的bitocra.bdf等文件明确注明licenced under the OFL 1.1，故按同一许可对待。README中列为 “bitocra by ninjaaron”，仓库地址见repository。"
+name_en = "SIL Open Font License 1.1"
+note_en = "4thD is a very small (4px) pixel font distributed as part of the ninjaaron/bitocra collection. The file itself carries no copyright/license field, but other files in the same repository, such as bitocra.bdf, are explicitly marked as licensed under the OFL 1.1, so the same license is applied here. The README lists it as \"bitocra by ninjaaron\"; see repository for the source address."

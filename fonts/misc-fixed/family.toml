@@ -1,0 +1,33 @@
+name = "Misc Fixed"
+authors = ["X.Org Foundation"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/misc-misc"
+repository = "https://gitlab.freedesktop.org/xorg/font/misc-misc"
+description = "X11自带的经典点阵等宽字体，从4×6到18×18共15档字面，含粗体与斜体。Unix终端上用了几十年，覆盖拉丁、希腊、西里尔与制表符；12×13、18×18三档另含日文与韩文的汉字与谚文。"
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+aliases = ["misc-fixed", "X11 fixed", "Fixed", "xfonts-base", "font-misc-misc", "6x13", "9x15", "10x20"]
+converted_from = ""
+provenance = "上游https://gitlab.freedesktop.org/xorg/font/misc-misc（clone于2026-08-30），直接收录其BDF源文件，未经转换。仓库内27个BDF中排除两个：k14.bdf是JISX0208.1983编码（本站管线按Unicode读ENCODING，不做旧编码重映射，收进来字形会落到错误码位）；nil2.bdf属 -misc-nil- 家族、只有1×2像素，不是Fixed家族。"
+added = "2026-08-30"
+name_en = "Misc Fixed"
+authors_en = ["X.Org Foundation"]
+description_en = "The classic X11 bitmap monospace font, in 15 face sizes from 4x6 to 18x18 with bold and oblique styles. A fixture of Unix terminals for decades, covering Latin, Greek, Cyrillic and box drawing; the 12x13 and 18x18 faces also carry Japanese kanji and Korean hangul."
+provenance_en = "Upstream https://gitlab.freedesktop.org/xorg/font/misc-misc (cloned 2026-08-30), catalogued directly from its BDF sources with no conversion. Two of the repository's 27 BDFs are excluded: k14.bdf is JISX0208.1983-encoded (this pipeline reads ENCODING as Unicode and does not remap legacy encodings, so its glyphs would land on wrong code points), and nil2.bdf belongs to the -misc-nil- family at 1x2 pixels rather than to Fixed."
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域"
+confidence = "manual"
+file = "COPYING"
+note = "仓库的COPYING全文为“Public domain font.  Share and enjoy.”；收录的25个BDF每一个的COPYRIGHT行也都逐字写着同一句（6x10与6x12作“Public domain terminal emulator font.”）。"
+name_en = "Public domain"
+note_en = "The repository's COPYING reads in full: \"Public domain font.  Share and enjoy.\" Every one of the 25 catalogued BDFs carries the same statement on its own COPYRIGHT line (6x10 and 6x12 say \"Public domain terminal emulator font.\")."
+
+[variants."12x13ja.bdf"]
+script_subset = "ja"
+
+[variants."18x18ja.bdf"]
+script_subset = "ja"
+
+[variants."18x18ko.bdf"]
+script_subset = "ko"

@@ -1,0 +1,70 @@
+Terminusmod provides a true bold for the popular terminus 12 pt font, a modified version of the 12 pt with bold, and versions with status icons.
+
+The versions with status icons are the ascii sets with some "icons" I drew to use in status bars.
+
+There are 6 fonts included:
+
+terminusmod12b.pcf (bold to be used with terminus 12)
+terminusmod12r.icons.pcf (terminus 12 with status icons)
+terminusmodx12r.pcf (modded version of terminus 12)
+terminusmodx12b.pcf (modded bold version of terminus 12)
+terminusmodx12r.icons.pcf (modded version of terminus 12 with status icons)
+terminusmodx12r.psfu (consolefont for terminusmodx)
+ISO8859-1 only for now.
+
+You can use something like this for your .Xresources:
+
+urxvt*font:         -*-terminus-medium-r-normal-*-12-*-*-*-*-*-*-*
+urxvt*boldFont:     -*-terminusmod-bold-r-normal-*-12-*-*-*-*-*-*-*
+
+To use the consolefont for terminusmodx, do:
+
+#setfont terminusmodx12r
+
+See your distro's documentation for a more permanent solution.
+
+The full names of the .pcf fonts are:
+-misc-terminusmod-bold-r-normal-*-12-120-72-72-c-60-iso8859-1
+-misc-terminusmod.icons-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 
+-misc-terminusmodx-medium-r-normal-*-12-120-72-72-c-60-iso8859-1
+-misc-terminusmodx-bold-r-normal-*-12-120-72-72-c-60-iso8859-1
+-misc-terminusmodx.icons-medium-r-normal-*-12-120-72-72-c-60-iso8859-1
+
+To install manually, copy the .pcf files to /usr/share/fonts/local and copy the .psfu files to /usr/share/kbd/consolefonts.
+
+Then, do:
+
+$fc-cache -f
+$mkfontscale /usr/share/fonts/local
+$mkfontdir /usr/share/fonts/local
+
+Add this to your .xinitrc if you don't have it already:
+xset +fp /usr/share/fonts/local
+xset fp rehash
+
+You can view the font with xorg-xfd or xorg-xfontsel.
+
+You can also view and modify the font with gbdfed (http://sofia.nmsu.edu/~mleisher/Software/gbdfed/). You'll need bdftopcf and pcf2bdf.
+First, convert the .pcf file to .bdf (#pcf2bdf -o terminusmod12r.icons.bdf terminusmod12r.icons.pcf).
+Next, open the bdf file with gbdfed and edit to suit.
+Then, convert it back to .pcf (#bdftopcf -o terminusmod12r.icons.pcf terminusmod12r.bdf).
+Reinstall it.
+
+To use the icons, (from a terminal) you can do something like (#echo -e '\xC9') to display a clock for example, and then copy the output to a script.
+
+The inspiration for the icons came from lokaltog (https://github.com/Lokaltog) and his post in the dwm hackers thread (https://bbs.archlinux.org/viewtopic.php?pid=724236#p724236) on Arch Linux Forums.
+
+A better solution for icons (in dwm at least) might be to use stlarch_font (http://sourceforge.net/projects/stlarchfont/).
+It's a font that only contains icons and uses the Unicode Private Use area. See the README.stlarch for more info.
+
+Created by stlarch (stlarchie@gmail.com)
+
+Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)
+
+Changes in version 1.9.7: Fixed a few things and removed the bold versions with icons. I don't think many people will use those.
+Also put back the multiply symbol in the icon versions and moved that glyph to the empty space at 00A0.
+Everything should work now.
+
+Changes in version 1.9.8: Fixed a couple things I missed last time and completed as much of the bold as I could.
+
+Changes in version 1.9.9: Added a consolefont for terminusmodx.

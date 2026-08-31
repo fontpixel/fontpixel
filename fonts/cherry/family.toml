@@ -1,17 +1,21 @@
 name = "Cherry"
-name_zh = ""
-author = "MarinHoc"
+authors = ["MarinHoc"]
 homepage = ""
 repository = "https://github.com/MarinHoc/cherry"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore", "classic"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/cherry；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/cherry；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "Cherry"
+authors_en = ["MarinHoc"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/cherry; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for original upstream project)"
 
 [license]
 spdx = "MIT"
-name = "MIT 许可证"
-commercial = true
-note = "含 10/11/13px 三档尺寸、regular/bold 两种字重，共 6 个 BDF 文件。仓库内与 BDF 头均无许可证文本，MIT 判定依据用户对上游仓库的核查结果。"
+name = "MIT许可证"
+note = "含10/11/13px三档尺寸、regular/bold两种字重，共6个BDF文件。仓库内与BDF头均无许可证文本，MIT判定依据用户对上游仓库的核查结果。"
+name_en = "MIT License"
+note_en = "Includes 10px, 11px, and 13px sizes in regular and bold weights, six BDF files in total. Neither the repository nor the BDF headers contain license text; the MIT designation is based on the user's verification of the upstream repository."

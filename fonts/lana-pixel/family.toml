@@ -1,0 +1,24 @@
+name = "LanaPixel"
+authors = ["eishiya"]
+homepage = "https://opengameart.org/content/lanapixel-localization-friendly-pixel-font"
+repository = ""
+description = "为像素游戏本地化而作的11px点阵字体，约19500字符：拉丁、希腊、西里尔、谚文全覆盖，日文与简体中文覆盖良好，繁体中文尚可。汉字为9×9，拉丁大写高7px。"
+form = "gothic"
+vibes = ["retro-game"]
+aliases = ["Lana Pixel", "LanaPixel NoKorean", "LanaPixel BitmapOnly"]
+converted_from = "ttf"
+provenance = "上游eishiya（https://mastodon.art/@eishiya）发布的LanaPixel包，本站收录lanapixel_everything中的LanaPixel.ttf（含谚文的完整版，2023-02-22），由ttf按11px栅格化——上游说明该字体设计于11px及其整数倍显示。发行包另有NoKorean（去谚文）与BitmapOnly（仅内嵌点阵、无轮廓）两个构建，字形相同，本站未另行收录。"
+added = "2026-08-30"
+name_en = "LanaPixel"
+authors_en = ["eishiya"]
+description_en = "An 11px bitmap font made for localising pixel-art games, with roughly 19,500 characters: full Latin, Greek, Cyrillic and Hangul, good Japanese and Simplified Chinese coverage, and decent Traditional Chinese. CJK characters are 9x9; Latin has a 7px cap height."
+provenance_en = "Upstream package by eishiya (https://mastodon.art/@eishiya ). This entry uses LanaPixel.ttf from lanapixel_everything, the complete build including Hangul (2023-02-22), rasterised from TTF at 11px — upstream states the font is designed to be displayed at 11px and multiples thereof. The release also ships NoKorean (Hangul removed) and BitmapOnly (embedded bitmaps only, no outlines) builds with identical glyphs; those are not catalogued separately."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "上游LanaPixel.md写明可任选SIL Open Font License或CC BY 4.0，两份授权原文随包分发。本站按OFL收录，随附LanaPixel_OpenFontLicense.txt。"
+name_en = "SIL Open Font License 1.1"
+note_en = "Upstream's LanaPixel.md states you may choose either the SIL Open Font License or CC BY 4.0, and ships both license texts. This catalogue takes the OFL, bundling LanaPixel_OpenFontLicense.txt."

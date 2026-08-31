@@ -1,11 +1,14 @@
 name = "x12y12pxMaruMinya"
-name_zh = ""
-author = "hicc"
+authors = ["hicc"]
 homepage = ""
 repository = "https://github.com/hicchicc/x12y12pxMaruMinya"
 description = ""
 form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["cute"]  # UNVERIFIED
+aliases = ["マルミーニャ", "Maru Minya"]
 converted_from = "ttf"
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x12y12pxMaruMinya；上游 https://github.com/hicchicc/x12y12pxMaruMinya；由 ttf 转换"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x12y12pxMaruMinya；上游https://github.com/hicchicc/x12y12pxMaruMinya；由ttf转换"
 added = "2026-08-21"
+name_en = "x12y12pxMaruMinya"
+authors_en = ["hicc"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x12y12pxMaruMinya; upstream https://github.com/hicchicc/x12y12pxMaruMinya; converted from ttf"

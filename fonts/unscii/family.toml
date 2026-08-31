@@ -1,17 +1,21 @@
 name = "Unscii"
-name_zh = ""
-author = "Viznut"
+authors = ["Viznut"]
 homepage = "http://pelulamu.net/unscii/"
 repository = ""
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game", "classic"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/unscii；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/unscii；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "Unscii"
+authors_en = ["Viznut"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/unscii; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for the original upstream project)"
 
 [license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
-note = "8px/16px 两档基础尺寸，8px 另有 alt/fantasy/mcr/tall/thin 五种风格变体，共取 7 个 PCF 文件（管线支持直接取 PCF）。已排除 unscii-16-full.pcf ——该文件是唯一的 GPL 授权文件（含完整 Unicode 字符集的扩展版本），与其余 Public Domain 文件许可不同，按用户要求不予收录。"
+note = "8px/16px两档基础尺寸，8px另有alt/fantasy/mcr/tall/thin五种风格变体，共取7个PCF文件（管线支持直接取PCF）。已排除unscii-16-full.pcf ——该文件是唯一的GPL授权文件（含完整Unicode字符集的扩展版本），与其余Public Domain文件许可不同，按用户要求不予收录。"
+name_en = "Public Domain"
+note_en = "Two base sizes, 8px and 16px, with five style variants at 8px, alt/fantasy/mcr/tall/thin, for 7 PCF files in total (the pipeline supports taking PCF directly). unscii-16-full.pcf was excluded: it is the only GPL-licensed file (an extended version covering the full Unicode range), licensed differently from the rest of the Public Domain files, and was left out per the maintainer's request."

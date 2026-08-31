@@ -1,0 +1,25 @@
+name = "Erusfont"
+authors = []
+homepage = ""
+repository = ""
+description = "11px等宽点阵字体，含常规与粗体，覆盖1621个Unicode码位——在同尺寸的终端点阵字体里覆盖面相当宽。"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+aliases = ["erus font"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/erusfont；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Erusfont"
+authors_en = []
+description_en = "An 11px monospace bitmap font in regular and bold covering 1,621 Unicode code points, unusually broad coverage for a terminal bitmap font of this size."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/erusfont; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "WTFPL"
+name = "想干嘛干嘛公共许可证 第2版"
+confidence = "manual"
+file = "COPYING-LICENSE"
+note = "源码包内COPYING-LICENSE为WTFPL第2版全文（“You just DO WHAT THE FUCK YOU WANT TO.”），无附加条件。上游未署名作者（Tecate仓库README记为 “erusfont by unknown”，发布渠道为AUR的erusfont包）。"
+name_en = "Do What The F*ck You Want To Public License v2"
+note_en = "The source tarball's COPYING-LICENSE is the full WTFPL version 2 text (\"You just DO WHAT THE FUCK YOU WANT TO.\") with no additional conditions. Upstream names no author; the Tecate repository README records it as \"erusfont by unknown\", distributed via the AUR erusfont package."

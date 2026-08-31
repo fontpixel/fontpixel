@@ -2,13 +2,37 @@
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { DetailSchema, IndexSchema, type FontDetail, type FontIndex } from './schema';
+import {
+  DATA_SCHEMA_VERSION,
+  DetailSchema,
+  IndexSchema,
+  type FontDetail,
+  type FontIndex,
+} from './schema';
 
 const DATA_DIR = new URL('../../public/data/', import.meta.url).pathname;
 
 export function loadIndex(): FontIndex {
-  const raw = readFileSync(join(DATA_DIR, 'index.json'), 'utf-8');
-  return IndexSchema.parse(JSON.parse(raw));
+  let raw: string;
+  try {
+    raw = readFileSync(join(DATA_DIR, 'index.json'), 'utf-8');
+  } catch {
+    throw new Error(
+      '站点数据尚未构建：public/data/index.json 不存在。请在仓库根目录运行 make fonts。\n' +
+        'Site data has not been built yet (public/data/index.json is missing). Run `make fonts` at the repo root.',
+    );
+  }
+  const parsed = JSON.parse(raw) as { schemaVersion?: number };
+  // 数据契约一变、旧数据还躺在磁盘上时，先给出一句能照做的提示——
+  // 直接交给 zod 的话，开发者看到的是一页读不懂的校验堆栈
+  if (parsed.schemaVersion !== DATA_SCHEMA_VERSION) {
+    throw new Error(
+      `站点数据是旧格式（schemaVersion=${parsed.schemaVersion ?? '无'}，需要 ${DATA_SCHEMA_VERSION}）。` +
+        '请在仓库根目录运行 make fonts 重建。\n' +
+        `Site data is in an old format (schemaVersion=${parsed.schemaVersion ?? 'none'}, expected ${DATA_SCHEMA_VERSION}). Run \`make fonts\` at the repo root to rebuild.`,
+    );
+  }
+  return IndexSchema.parse(parsed);
 }
 
 export function loadDetail(slug: string): FontDetail {
@@ -34,7 +58,7 @@ export function withBase(path: string): string {
 
 /** 下载物基址：生产由 CI 注入 Releases 地址，本地退回 /downloads。 */
 export function downloadsBase(): string {
-  return (import.meta.env.FBF_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
+  return (import.meta.env.OPF_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
 }
 
 export interface CharsetMeta {

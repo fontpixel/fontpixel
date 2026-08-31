@@ -1,17 +1,22 @@
 name = "Dylex Terminal"
-name_zh = ""
-author = "dylex"
+authors = ["dylex"]
 homepage = ""
 repository = "https://github.com/dylex/fonts"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore", "classic"]  # UNVERIFIED
+aliases = ["dylex terminal"]
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "Dylex Terminal"
+authors_en = ["dylex"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for original upstream project)"
 
 [license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
-note = "X11 misc-fixed（俗称 “Fixed”/“Terminal”）字体的 dylex 分支，源自 Markus Kuhn 的 ucs-fonts 工程（BDF COMMENT 标注 “Source: -Misc-Fixed-Medium-R-Normal…$ucs-fonts”），含 6x10/7x13/10x20 三档尺寸、regular/bold/oblique/bold-oblique 四种字型，共 12 个 BDF 文件。各文件 COPYRIGHT 字段声明 Public domain。与同目录内 14x14（crawl，见 dylex-crawl 家族）是不同设计，故拆分。"
+note = "X11 misc-fixed（俗称 “Fixed”/“Terminal”）字体的dylex分支，源自Markus Kuhn的ucs-fonts工程（BDF COMMENT标注 “Source: -Misc-Fixed-Medium-R-Normal…$ucs-fonts”），含6x10/7x13/10x20三档尺寸、regular/bold/oblique/bold-oblique四种字型，共12个BDF文件。各文件COPYRIGHT字段声明Public domain。与同目录内14x14（crawl，见dylex-crawl家族）是不同设计，故拆分。"
+name_en = "Public Domain Declaration"
+note_en = "The dylex fork of the X11 misc-fixed font (commonly known as \"Fixed\"/\"Terminal\"), derived from Markus Kuhn's ucs-fonts project (the BDF COMMENT notes \"Source: -Misc-Fixed-Medium-R-Normal...$ucs-fonts\"). Includes 6x10, 7x13, and 10x20 sizes in regular, bold, oblique, and bold-oblique styles, 12 BDF files in total. Each file's COPYRIGHT field declares Public domain. Distinguished from the 14x14 design in the same directory (crawl, see the dylex-crawl family), which is a separate design and was therefore split out."

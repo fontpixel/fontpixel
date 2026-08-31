@@ -13,10 +13,12 @@ const s = t(lang);
 const byVariant = new Map<string, typeof detail.downloads>();
 let zip: (typeof detail.downloads)[number] | undefined;
 const ttfs: typeof detail.downloads = [];
+// 矢量 TTF 每个字面只出一份（不逐变体），和位图 TTF、ZIP 一样属家族级
+const vecs: typeof detail.downloads = [];
 for (const e of detail.downloads) {
   if (e.kind === 'zip') zip = e;
   else if (e.kind === 'ttf') ttfs.push(e);
-  else {
+  else if (e.kind === 'ttf-square' || e.kind === 'ttf-round') vecs.push(e); else {
     const list = byVariant.get(e.variantId!) ?? [];
     list.push(e);
     byVariant.set(e.variantId!, list);
@@ -25,6 +27,8 @@ for (const e of detail.downloads) {
 const kindLabel: Record<string, string> = {
   bdf: s.detail.downloadBdf,
   pcf: s.detail.downloadPcf,
+  'ttf-square': s.detail.downloadTtfSquare,
+  'ttf-round': s.detail.downloadTtfRound,
 };
 ---
 
@@ -55,6 +59,24 @@ const kindLabel: Record<string, string> = {
         ))
       }
       {
+        zip && (
+          <tr>
+            <th scope="row">{s.detail.downloadZip}</th>
+            <td>
+              <a
+                class="dl__link"
+                href={`${base}/${zip.file}`}
+                data-kind="zip"
+                title={`SHA-256 ${zip.sha256}`}
+              >
+                {zip.file}
+                <span class="dl__size mono">{formatBytes(zip.bytes)}</span>
+              </a>
+            </td>
+          </tr>
+        )
+      }
+      {
         ttfs.map((e) => (
           <tr>
             <th scope="row">{s.detail.downloadTtf}</th>
@@ -73,33 +95,40 @@ const kindLabel: Record<string, string> = {
         ))
       }
       {
-        zip && (
+        vecs.map((e) => (
           <tr>
-            <th scope="row">{s.detail.downloadZip}</th>
+            <th scope="row">{kindLabel[e.kind] ?? e.kind}</th>
             <td>
               <a
                 class="dl__link"
-                href={`${base}/${zip.file}`}
-                data-kind="zip"
-                title={`SHA-256 ${zip.sha256}`}
+                href={`${base}/${e.file}`}
+                data-kind={e.kind}
+                title={`SHA-256 ${e.sha256}`}
               >
-                {zip.file}
-                <span class="dl__size mono">{formatBytes(zip.bytes)}</span>
+                {e.file}
+                <span class="dl__size mono">{formatBytes(e.bytes)}</span>
               </a>
             </td>
           </tr>
-        )
+        ))
       }
     </tbody>
   </table>
   <p class="dl__note">{s.detail.downloadNote}</p>
   {ttfs.length > 0 && <p class="dl__note">{s.detail.downloadTtfNote}</p>}
+  {vecs.length > 0 && <p class="dl__note">{s.detail.downloadVectorNote}</p>}
 </section>
 
 <style>
   .dl h2 {
     font-size: 1rem;
     margin: 0 0 var(--s3);
+  }
+  .dl {
+    /* 文件名 + 体积在 300px 屏上压不住，让下载表自己横向滚动，
+       不要把整页顶破 */
+    overflow-x: auto;
+    max-width: 100%;
   }
   .dl__table {
     width: 100%;

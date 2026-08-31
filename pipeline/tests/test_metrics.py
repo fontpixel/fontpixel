@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from fbf.metrics import claimed_size, compute_ink, glyph_ink_size, is_monospaced
-from fbf.model import Glyph, ParsedFont
+from opf.metrics import claimed_size, compute_ink, glyph_ink_size, is_monospaced
+from opf.model import Glyph, ParsedFont
 
 
 def _row(r: str) -> bytes:
@@ -73,10 +73,12 @@ def test_max_ink_and_argmax():
 
 def test_monospace_tolerance():
     g99 = [_g(0x2000 + i, 8, 8, ["11111111"] * 8, dwidth=8) for i in range(99)]
-    one = [_g(0x3000, 8, 8, ["11111111"] * 8, dwidth=4)]
+    one = [_g(0x3000, 8, 8, ["11111111"] * 8, dwidth=5)]
     assert is_monospaced(_font(g99 + one)) is True
+    # 少数派宽度取 5 而非 4：4 正好是 8 的一半，那是合法的半宽/全宽格，
+    # 不该被当成「零散的少数派」
     g95 = g99[:95]
-    five = [_g(0x3000 + i, 8, 8, ["11111111"] * 8, dwidth=4) for i in range(5)]
+    five = [_g(0x3000 + i, 8, 8, ["11111111"] * 8, dwidth=5) for i in range(5)]
     assert is_monospaced(_font(g95 + five)) is False
 
 
@@ -88,3 +90,40 @@ def test_zero_dwidth_combining_ignored():
 
 def test_claimed_size():
     assert claimed_size(_font([], pixel_size=12)) == 12
+
+
+class _FakeGlyphs:
+    """只需要 dwidth——is_monospaced 不看别的。"""
+
+    def __init__(self, widths):
+        self.glyphs = [type("G", (), {"dwidth": w})() for w in widths]
+
+
+def test_monospace_accepts_cjk_half_and_full_width_grid():
+    """CJK 等宽字体有半宽与全宽两档，不该被判成比例。
+
+    只看单一众数的话，拉丁那 800 多个半宽字形会把占比压到 96%，
+    所有 CJK 等宽字体都会被误判。
+    """
+    from opf.metrics import is_monospaced
+
+    grid = _FakeGlyphs([12] * 19467 + [6] * 847 + [4] * 8)
+    assert is_monospaced(grid)
+
+
+def test_monospace_still_rejects_genuinely_proportional():
+    """真比例字体宽度散落多档，不能因为有个大众数就算等宽。"""
+    from opf.metrics import is_monospaced
+
+    spread = _FakeGlyphs(
+        [12] * 19443 + [6] * 418 + [8] * 433 + [7] * 222 + [9] * 150
+        + [4] * 106 + [10] * 106 + [5] * 49
+    )
+    assert not is_monospaced(spread)
+
+
+def test_monospace_single_width_still_works():
+    from opf.metrics import is_monospaced
+
+    assert is_monospaced(_FakeGlyphs([8] * 500))
+    assert not is_monospaced(_FakeGlyphs([]))

@@ -1,0 +1,26 @@
+name = "ChillBitmap"
+name_zh_hans = "寒蝉点阵体"
+name_zh_hant = "寒蟬點陣體"
+authors = ["Warren2060", "ChillType"]
+homepage = "https://github.com/Warren2060/ChillBitmap"
+repository = "https://github.com/Warren2060/ChillBitmap"
+description = "8px点阵字体，7px字面。以美咲字体为底改造，融合部分精品点阵体7×7与GuanZhi 8px字形，重绘西文与标点，收录日文、繁体、简体共约13600字符。"
+form = "gothic"
+vibes = ["retro-game"]
+aliases = ["ChillBitmap7x", "Chill Bitmap", "寒蝉字型", "寒蟬字型"]
+converted_from = "ttf"
+provenance = "上游https://github.com/Warren2060/ChillBitmap，取自仓库内ChillBitmap7x_v2.500.zip（收录于2026-08-30）。由ttf按原生8px格点栅格化。README另述有16px一档（基于Unifont），但该仓库未分发其字体文件，故本站只收7px。"
+added = "2026-08-30"
+name_en = "ChillBitmap"
+authors_en = ["Warren2060", "ChillType"]
+description_en = "An 8px bitmap font with a 7px face. Reworked from Misaki, blending some glyphs from Boutique Bitmap 7x7 and GuanZhi 8px, with redrawn Latin and punctuation; about 13,600 characters covering Japanese, Traditional and Simplified Chinese."
+provenance_en = "Upstream https://github.com/Warren2060/ChillBitmap , taken from ChillBitmap7x_v2.500.zip in the repository (catalogued 2026-08-30). Rasterised from TTF at its native 8px grid. The README also describes a 16px face based on Unifont, but that repository does not ship its font file, so only the 7px face is catalogued here."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "仓库根目录的License文件（2024）写明“© 2024 ChillType, with Reserved Font Name 'ChillBitmap' '7px & 16px'. This Font Software is licensed under the SIL Open Font License, Version 1.1.”。仓库内另有一份2022年的LICENSE.md旧声明及上游字体（美咲等）附带的通知，以根目录License为准。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The License file at the repository root (2024) states: \"© 2024 ChillType, with Reserved Font Name 'ChillBitmap' '7px & 16px'. This Font Software is licensed under the SIL Open Font License, Version 1.1.\" The repository also contains an older 2022 LICENSE.md statement and notices bundled from upstream fonts such as Misaki; the root License file governs."

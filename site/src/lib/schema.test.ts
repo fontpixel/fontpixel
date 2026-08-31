@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
-import { DetailSchema, IndexSchema } from './schema';
+import { DATA_SCHEMA_VERSION, DetailSchema, IndexSchema } from './schema';
 
 function load(name: string): unknown {
   return JSON.parse(
@@ -10,6 +10,7 @@ function load(name: string): unknown {
 
 test('pipeline index.json satisfies contract', () => {
   const parsed = IndexSchema.parse(load('index.fixture.json'));
+  expect(parsed.schemaVersion).toBe(DATA_SCHEMA_VERSION);
   expect(parsed.families.length).toBe(2);
   const mini = parsed.families.find((f) => f.slug === 'mini')!;
   expect(mini.license.spdx).toBe('OFL-1.1');

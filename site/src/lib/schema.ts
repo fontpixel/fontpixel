@@ -5,7 +5,7 @@ import { z } from 'zod';
 export const LicenseSchema = z.object({
   spdx: z.string().nullable(),
   name: z.string(),
-  commercial: z.boolean().nullable(),
+  nameEn: z.string(),
   confidence: z.enum(['auto-high', 'auto-low', 'manual', 'unknown']),
 });
 
@@ -15,6 +15,9 @@ export const VariantSchema = z.object({
   size: z.number().int(),
   weight: z.string(),
   spacing: z.string(),
+  width: z.string().default('normal'),
+  /** 上游文档标注的推荐显示尺寸（px）；0 表示上游未说明 */
+  displaySize: z.number().default(0),
   script: z.string().nullable(),
   glyphs: z.number().int(),
 });
@@ -22,8 +25,9 @@ export const VariantSchema = z.object({
 export const FamilyIndexSchema = z.object({
   slug: z.string(),
   name: z.string(),
-  nameZh: z.string(),
-  author: z.string(),
+  names: z.record(z.string(), z.string()),
+  authors: z.array(z.string()),
+  authorsEn: z.array(z.string()),
   form: z.string(),
   vibes: z.array(z.string()),
   scripts: z.array(z.string()),
@@ -36,17 +40,36 @@ export const FamilyIndexSchema = z.object({
   glyphCount: z.number().int(),
   hanInk: z.record(z.string(), z.array(z.number().int()).length(2)).nullable(),
   inkHeight: z.number().int(),
+  /** 逐变体的墨迹高度（去重升序）；筛选按「任一变体落在区间」判定 */
+  inkHeights: z.array(z.number().int()),
   badges: z.array(z.string()),
   coverageSummary: z.record(z.string(), z.number()),
+  coverage: z.array(z.number()),
   variants: z.array(VariantSchema).min(1),
   preview: z.string(),
   sampleLang: z.string(),
+  sampleText: z.string().default(''),
+  previewVariant: z.string().default(''),
   added: z.string(),
   searchText: z.string(),
 });
 
+export const CharsetMetaSchema = z.object({
+  zh: z.string(),
+  en: z.string(),
+  section: z.string(),
+  total: z.number().int(),
+});
+
+/** 站点数据契约版本，与 pipeline/opf/__init__.py 的 DATA_SCHEMA_VERSION 同步。
+ *  index.json 的形状一变就双侧 +1；不同步会被 schema.test.ts 拦住。 */
+export const DATA_SCHEMA_VERSION = 2;
+
 export const IndexSchema = z.object({
+  schemaVersion: z.number().int(),
   generatedAt: z.string(),
+  charsetIds: z.array(z.string()),
+  charsetNames: z.record(z.string(), CharsetMetaSchema),
   families: z.array(FamilyIndexSchema),
 });
 
@@ -58,10 +81,13 @@ export const DetailSchema = z.object({
   homepage: z.string(),
   repository: z.string(),
   description: z.string(),
+  descriptionEn: z.string(),
   provenance: z.string(),
+  provenanceEn: z.string(),
   convertedFrom: z.string(),
   licenseText: z.string().nullable(),
   licenseNote: z.string(),
+  licenseNoteEn: z.string(),
   warnings: z.array(z.string()),
   metrics: z.record(z.string(), z.object({
     pixelSize: z.number().int(),
@@ -93,7 +119,7 @@ export const DetailSchema = z.object({
   downloads: z.array(z.object({
     family: z.string(),
     variantId: z.string().nullable(),
-    kind: z.enum(['bdf', 'pcf', 'zip', 'ttf']),
+    kind: z.enum(['bdf', 'pcf', 'zip', 'ttf', 'ttf-square', 'ttf-round']),
     file: z.string(),
     bytes: z.number().int(),
     sha256: z.string(),

@@ -1,11 +1,24 @@
 name = "MuzaiPixel"
-name_zh = "目哉像素"
-author = "DWNfonts（基于 Num Kadoma 的 k8x12）"
+name_zh_hans = "目哉像素"
+authors = ["DWNfonts (diaowinner)"]
 homepage = "https://diaowinner.itch.io/muzaipixel"
 repository = "https://github.com/DWNfonts/MuzaiPixel"
-description = ""
-form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
-vibes = ["retro-game"]  # UNVERIFIED
+description = "基于門真なむ k8x12的8×12中日文点阵字体，即“k8x12补简计划”，曾用名k8x12j。"
+form = "gothic"
+vibes = ["retro-game"]
+aliases = ["k8x12j", "MZPX", "MZPXorig", "k8x12 补简计划"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--MuzaiPixel；上游 https://github.com/DWNfonts/MuzaiPixel/releases (2.0.20260705)；由 kbitx 转换"
-added = "2026-08-21"
+provenance = "上游https://github.com/DWNfonts/MuzaiPixel；字形基于https://littlelimit.net/k8x12.htm。发布包内MZPXorig.ttf针对方形像素调校，MZPXflat.ttf是给无法处理的工具用的全角变通版（上游说明两者元数据相同、不能同时安装），本站只收录orig。由ttf按原生12px格点栅格化。"
+added = "2026-08-30"
+name_en = "Muzai Pixel"
+authors_en = ["DWNfonts (diaowinner)"]
+description_en = "An 8x12 Chinese/Japanese bitmap font based on Num Kadoma's k8x12, extending it with Simplified Chinese. Formerly named k8x12j."
+provenance_en = "Upstream https://github.com/DWNfonts/MuzaiPixel ; glyphs are based on k8x12 (https://littlelimit.net/k8x12.htm ). The release ships MZPXorig.ttf, tuned for square pixels, and MZPXflat.ttf, a full-width workaround for tools that cannot handle the former; upstream notes the two share metadata and cannot both be installed. Only the orig build is catalogued here. Rasterised from TTF at its native 12px grid."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+note = "上游LICENSE.md为SIL OFL 1.1，版权同时署DWNfonts与Num Kadoma。"
+name_en = "SIL Open Font License 1.1"
+note_en = "Upstream LICENSE.md is SIL OFL 1.1, with copyright credited to both DWNfonts and Num Kadoma."

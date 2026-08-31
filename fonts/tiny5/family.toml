@@ -1,11 +1,14 @@
 name = "Tiny5"
-name_zh = ""
-author = "Stefan Schmidt (Gissio)"
+authors = ["Stefan Schmidt (Gissio)"]
 homepage = "http://www.stefanschmidtart.com"
 repository = "https://github.com/Gissio/font_tiny5"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore", "retro-game"]  # UNVERIFIED
+aliases = ["font_tiny5", "Tiny5 Duo"]
 converted_from = ""
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Gissio--font_tiny5；上游 https://github.com/Gissio/font_tiny5 (HEAD 快照，收录于 2026-08-18)"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Gissio--font_tiny5；上游https://github.com/Gissio/font_tiny5（HEAD快照，收录于2026-08-18）"
 added = "2026-08-21"
+name_en = "Tiny5"
+authors_en = ["Stefan Schmidt (Gissio)"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Gissio--font_tiny5; upstream https://github.com/Gissio/font_tiny5 (HEAD snapshot, collected 2026-08-18)"

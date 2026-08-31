@@ -1,0 +1,24 @@
+name = "Progsole"
+authors = ["Glenn Schemenauer"]
+homepage = ""
+repository = ""
+description = "Glenn Schemenauer 2007年做的10px点阵编程字体，最初发布在proggyfonts.net的投稿区。"
+form = "terminal"
+vibes = ["classic", "terminal-hardcore"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/progsole；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Progsole"
+authors_en = ["Glenn Schemenauer"]
+description_en = "A 10px bitmap programming font made by Glenn Schemenauer in 2007, originally published in the contributions section of proggyfonts.net."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/progsole; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "MIT"
+name = "MIT许可证"
+confidence = "manual"
+file = "Licence.txt"
+note = "发布包内Licence.txt为MIT全文，署名 “Copyright (c) 2007 Glenn Schemenauer”。"
+name_en = "MIT License"
+note_en = "The Licence.txt in the release archive is the full MIT text, attributed to \"Copyright (c) 2007 Glenn Schemenauer\"."

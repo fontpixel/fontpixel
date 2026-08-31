@@ -1,10 +1,10 @@
-# 免费开源位图（像素）字体 / Free & Open Source Bitmap (Pixel) Fonts
+# 开源像素字体馆 / Open Pixel Fonts
 
 自由许可位图字体的标本馆：把 BDF/PCF 字体放进 `fonts/`，自动构建出一个可检索的
 静态目录站——逐字形解析、宣称／墨迹双口径度量、六十余张字表的覆盖率报告、
 canvas 像素级样例试写，以及 BDF／PCF／位图 TTF 打包下载。
 
-- 站点：`/zh/`（中文）· `/en/`（English）
+- 站点：<https://pixelfonts.dev> — `/zh/`（中文）· `/en/`（English）
 - 设计规格：`docs/superpowers/specs/`
 - 收录标准、度量与覆盖率口径：见站点「关于」页
 
@@ -43,13 +43,23 @@ fonts/my-font/
 `form`（字形分类）与 `vibes`（气质标签）是仅有的建议人工填写项；
 授权无法自动识别时，在 `[license]` 块里手填 SPDX、可商用标记与判定依据。
 
+`aliases` 收这款字体自己的其它名字——曾用名、上游项目名、字体文件自报的名字、
+原生语言名、分词写法不同的同名。只进搜索文本，不在站上显示；中文别名不必写
+简繁两份，构建期会自动展开。不收「它所基于的另一款字体」的名字，那类信息写进
+`provenance`。
+
+改这些展示字段不会触发字形重算：缓存只认字体文件与 `family.toml` 的结构性
+字段（`merge` / `exclude` / `[variants]` / `[license]` / `name` 等），其余改动
+走秒级的元数据刷新。真正的重建按 CPU 并行（默认最多 8 进程，`OPF_JOBS` 可调），
+单独迭代一个家族用 `--family <slug>`。
+
 ## 批量导入
 
 `ingest/manifest.toml` 描述来源仓库到家族的映射，支持 zip 抽取、OTB／kbitx 转换、
 矢量像素 TTF 按原生格点栅格化，以及清单内直接声明 `[family.license]`：
 
 ```bash
-.venv/bin/python -m fbf.ingest.run \
+.venv/bin/python -m opf.ingest.run \
   --manifest ingest/manifest.toml \
   --src ../pixel-font-collection-fonts \
   --dest fonts --report docs/import-report.md
@@ -58,7 +68,7 @@ fonts/my-font/
 東雲フォント另有专用重建流程（上游以 `.bit` 源码分发）：
 
 ```bash
-.venv/bin/python -m fbf.ingest.shinonome --repo <shinonome-font 仓库> --dest fonts
+.venv/bin/python -m opf.ingest.shinonome --repo <shinonome-font 仓库> --dest fonts
 ```
 
 ## 下载格式
@@ -89,8 +99,8 @@ dist-downloads/       下载物 → CI 上传 GitHub Releases
 ```
 
 部署：GitHub Actions 构建 → GitHub Pages（展示资产）+ Releases 滚动标签
-`downloads`（下载物，增量同步）。站点基路径由 `FBF_BASE` 控制，
-下载基址由 `FBF_DOWNLOADS_BASE` 控制。
+`downloads`（下载物，增量同步）。站点基路径由 `OPF_BASE` 控制，
+下载基址由 `OPF_DOWNLOADS_BASE` 控制。
 
 ## 许可证
 
@@ -100,7 +110,7 @@ dist-downloads/       下载物 → CI 上传 GitHub Releases
 
 ---
 
-# Free & Open Source Bitmap (Pixel) Fonts (English)
+# Open Pixel Fonts (English)
 
 A specimen cabinet for freely-licensed bitmap fonts. Drop BDF/PCF files into
 `fonts/` and the build produces a static, searchable catalogue: per-glyph

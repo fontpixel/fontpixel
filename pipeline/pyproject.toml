@@ -1,9 +1,9 @@
 [project]
-name = "foss-bitmap-fonts"
+name = "open-pixel-fonts"
 version = "0.1.0"
-description = "免费开源位图（像素）字体 构建管线"
+description = "开源像素字体馆 构建管线"
 requires-python = ">=3.12"
-dependencies = ["fonttools>=4.60", "freetype-py>=2.5", "Pillow>=10"]
+dependencies = ["fonttools>=4.60", "freetype-py>=2.5", "Pillow>=10", "brotli>=1.1"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
@@ -16,4 +16,4 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["fbf*"]
+include = ["opf*"]

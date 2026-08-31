@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from fbf.coverage.charsets import DATA_DIR, load_charsets
-from fbf.coverage.engine import (
+from opf.coverage.charsets import DATA_DIR, load_charsets
+from opf.coverage.engine import (
     badges,
     coverage_for,
     detect_scripts,
@@ -10,8 +10,8 @@ from fbf.coverage.engine import (
     pick_sample_lang,
     unicode_block_coverage,
 )
-from fbf.coverage.ucd import load_ucd
-from fbf.model import Glyph, ParsedFont
+from opf.coverage.ucd import load_ucd
+from opf.model import Glyph, ParsedFont
 
 CHARSETS = load_charsets(DATA_DIR)
 UCD = load_ucd(DATA_DIR / "ucd")
@@ -53,14 +53,23 @@ def test_badges():
 
 
 def test_detect_scripts_and_sample_lang():
-    cov = coverage_for(frozenset(BY_ID["gb2312-l1"].cps), CHARSETS)
+    # 简体中文要整份 GB/T 2312（≥90%），只有一级字表不够
+    cov = coverage_for(frozenset(BY_ID["gb2312"].cps), CHARSETS)
     assert "zh-hans" in detect_scripts(cov)
     assert pick_sample_lang(cov) == "zh-Hans"
-    kana_cov = coverage_for(
+    partial = coverage_for(frozenset(BY_ID["gb2312-l1"].cps), CHARSETS)
+    assert "zh-hans" not in detect_scripts(partial), "一级字表仅占 55%，不该算简体中文"
+
+    kana_only = coverage_for(
         frozenset(BY_ID["hiragana"].cps | BY_ID["katakana"].cps), CHARSETS
     )
-    assert "ja" in detect_scripts(kana_cov)
-    assert pick_sample_lang(kana_cov) == "ja"
+    assert "ja" not in detect_scripts(kana_only), "只有假名没有汉字不算日文"
+    ja_cov = coverage_for(
+        frozenset(BY_ID["hiragana"].cps | BY_ID["katakana"].cps
+                  | BY_ID["jisx0208-l1"].cps), CHARSETS
+    )
+    assert "ja" in detect_scripts(ja_cov)
+    assert pick_sample_lang(ja_cov) == "ja"
     latin_cov = coverage_for(frozenset(range(0x20, 0x7F)), CHARSETS)
     assert detect_scripts(latin_cov) == ["latin"]
     assert pick_sample_lang(latin_cov) == "latin"
@@ -78,6 +87,7 @@ def test_pan_cjk_font_prefers_zh_hans_sample():
 def test_korean_font_prefers_ko_sample():
     cps = set(BY_ID["ksx1001-hangul"].cps) | set(BY_ID["hiragana"].cps) | set(
         BY_ID["katakana"].cps) | set(range(0x20, 0x7F))
+    # 白墨那类韩文字体带一部分汉字，但不该被标成中文
     cov = coverage_for(frozenset(cps), CHARSETS)
     assert pick_sample_lang(cov) == "ko"
 

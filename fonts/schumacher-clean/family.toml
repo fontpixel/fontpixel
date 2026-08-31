@@ -1,0 +1,25 @@
+name = "Schumacher Clean"
+authors = ["Dale Schumacher"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+repository = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+description = "X11自带的另一套经典等宽点阵字体，1989年Dale Schumacher作，31个字面覆盖4×6到9×15，含常规、粗体与斜体。其中6×12常规一档已扩到ISO 10646（1194字形），其余各档为ISO 646 IRV的128字形。"
+form = "terminal"
+vibes = ["classic", "terminal-hardcore"]
+aliases = ["Clean", "font-schumacher-misc", "clR6x12", "xfonts-100dpi"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/xorg-font-schumacher-misc；上游https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+added = "2026-08-31"
+
+name_en = "Schumacher Clean"
+authors_en = ["Dale Schumacher"]
+description_en = "The other classic monospace bitmap family bundled with X11, made by Dale Schumacher in 1989. Thirty-one faces from 4x6 to 9x15 in regular, bold and italic. The 6x12 regular face has been extended to ISO 10646 (1,194 glyphs); the rest carry the 128 glyphs of ISO 646 IRV."
+provenance_en = "Imported from github-clones-2026-08-31/xorg-font-schumacher-misc; upstream https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+
+[license]
+spdx = "HPND"
+name = "历史性许可与免责声明（HPND）"
+confidence = "manual"
+file = "COPYING"
+note = "仓库的COPYING为HPND式许可，署名 “Copyright 1989 Dale Schumacher”，明确授予“为任何目的使用、复制、修改与分发本软件及其文档，且无需付费”，唯一条件是保留版权声明与许可声明，并不得未经书面许可以作者名义作宣传。每个BDF的COMMENT块内也逐字重复了同一段文字。"
+name_en = "Historical Permission Notice and Disclaimer"
+note_en = "The repository's COPYING is an HPND-style permission notice attributed to \"Copyright 1989 Dale Schumacher\", granting permission \"to use, copy, modify, and distribute this software and its documentation for any purpose and without fee\", conditioned only on retaining the copyright and permission notices and on not using the author's name in advertising without written permission. Every BDF repeats the same text verbatim in its COMMENT block."

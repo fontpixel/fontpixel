@@ -1,0 +1,26 @@
+name = "KH Dot Ningyouchou"
+name_zh = "KH点阵人形町"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+repository = ""
+description = "KH点阵系列里的教科书体，16px。笔形取自手写楷法，在点阵尺寸上做教科书体相当少见。含JIS第二水准全部汉字。"
+form = "kai"
+vibes = ["classic"]
+aliases = ["KHドット人形町", "KH Dot Ningyouchou", "KHドットフォント", "khdotfont", "電脳フォント"]
+converted_from = "ttf"
+provenance = "导入自 direct-downloads-2026-08-31/jikasei-khdotfont-20150527；上游 http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)；由 ttf 转换"
+added = "2026-08-31"
+
+name_en = "KH Dot Ningyouchou"
+authors_en = ["平木敬太郎", "自家製フォント工房"]
+description_en = "The textbook face of the KH Dot series at 16px. Its stroke shapes follow handwritten models; a textbook style at bitmap sizes is a rarity. Covers the whole of JIS level 2."
+provenance_en = "Imported from direct-downloads-2026-08-31/jikasei-khdotfont-20150527; upstream http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."

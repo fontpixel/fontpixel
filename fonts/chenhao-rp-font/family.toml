@@ -1,11 +1,14 @@
 name = "ChenhaoRPFont"
-name_zh = ""
-author = "ChenhaoUwU"
+authors = ["ChenhaoUwU"]
 homepage = ""
 repository = "https://github.com/ChenhaoUwU/ChenhaoRPFont"
 description = ""
 form = "other"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["ChenhaoUwU RP Font", "Chenhao RP Font"]
 converted_from = ""
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/ChenhaoUwU--ChenhaoRPFont；上游 https://github.com/ChenhaoUwU/ChenhaoRPFont (HEAD 快照，收录于 2026-08-18)；由 kbitx 转换"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/ChenhaoUwU--ChenhaoRPFont；上游https://github.com/ChenhaoUwU/ChenhaoRPFont（HEAD快照，收录于2026-08-18）；由kbitx转换"
 added = "2026-08-21"
+name_en = "ChenhaoRPFont"
+authors_en = ["ChenhaoUwU"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/ChenhaoUwU--ChenhaoRPFont; upstream https://github.com/ChenhaoUwU/ChenhaoRPFont (HEAD snapshot, collected 2026-08-18); converted from kbitx"

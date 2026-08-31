@@ -1,0 +1,24 @@
+name = "QuanPixel"
+name_zh_hans = "全小素"
+authors = ["DWNfonts (diaowinner)"]
+homepage = "https://diaowinner.itch.io/galmuri-extended"
+repository = ""
+description = "8px点阵字体，收录大量中日韩文字。曾用名GalmuriExtended。"
+form = "gothic"
+vibes = ["retro-game"]
+aliases = ["GalmuriExtended", "Galmuri Extended"]
+converted_from = ""
+provenance = "上游https://diaowinner.itch.io/galmuri-extended；页面自述“全小素是一个8×8的像素字体，包含了很多中文、日文、韩文。使用字体：Galmuri、Chill点阵体。使用OFL授权”。上游直接提供BDF，未经转换。"
+added = "2026-08-30"
+name_en = "Quan Pixel"
+authors_en = ["DWNfonts (diaowinner)"]
+description_en = "An 8px bitmap font with broad CJK coverage. Formerly named GalmuriExtended."
+provenance_en = "Upstream https://diaowinner.itch.io/galmuri-extended . The page states it is an 8x8 bitmap font with many CJK glyphs, built from Galmuri and Chill Bitmap under the OFL. Upstream ships BDF directly; no conversion was needed."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+note = "BDF版权行为“(c) Galmuri8, Chill Bitmap, diaowinner, 2022. OFL”；Galmuri与Chill点阵体在本站均为OFL-1.1。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The BDF copyright line reads \"(c) Galmuri8, Chill Bitmap, diaowinner, 2022. OFL\"; both Galmuri and Chill Bitmap are OFL-1.1 in this catalogue."

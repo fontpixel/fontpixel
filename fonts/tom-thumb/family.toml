@@ -1,0 +1,24 @@
+name = "Tom Thumb"
+authors = ["Robey Pointer", "Brian Swetland"]
+homepage = "https://robey.lag.net/2010/01/23/tiny-monospace-font.html"
+repository = ""
+description = "4×6点阵字体，字面高6px、字形只占3×5——小得几乎到了拉丁字母可辨认的下限，常用于LED点阵屏与超小屏幕。共204字形。"
+form = "terminal"
+vibes = ["terminal-hardcore", "cute"]
+aliases = ["Fixed4x6", "tom thumb", "4x6"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/it-studio-rech-bdf-fonts；上游https://github.com/IT-Studio-Rech/bdf-fonts"
+added = "2026-08-31"
+
+name_en = "Tom Thumb"
+authors_en = ["Robey Pointer", "Brian Swetland"]
+description_en = "A 4x6 bitmap font: a 6px face whose glyphs occupy just 3x5 pixels, about as small as Latin letters can get and still be legible. Widely used on LED matrix panels and tiny displays. 204 glyphs."
+provenance_en = "Imported from github-clones-2026-08-31/it-studio-rech-bdf-fonts; upstream https://github.com/IT-Studio-Rech/bdf-fonts"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0公共领域贡献"
+confidence = "manual"
+note = "不附许可证文件，判定依据为作者公开页面。Robey Pointer的发布页写明本字体改自Brian Swetland的字体，并在正文更新中写道：“Brian has authorized his font to be released under the CC0 or CC-BY 3.0 license. Therefore, this font may also be used under either CC0 or CC-BY 3.0 license.” 取其中最无歧义的CC0 1.0记录。注意：IT-Studio-Rech/bdf-fonts的README.md称本字体为MIT并链到http://vt100.tarunz.org/LICENSE，但该链接实际是vt100项目（Brian J. Swetland／Vassilii Khachaturov，1999）的BSD-3-Clause声明，并未提及本字体，不能作为授权依据；BDF的COPYRIGHT字段也只有一个没有权利人的 “MIT” 字样。"
+name_en = "CC0 1.0 Universal (public domain dedication)"
+note_en = "No licence file is bundled; the determination rests on the author's public page. Robey Pointer's release post states that the font is derived from Brian Swetland's font and adds, in an update: \"Brian has authorized his font to be released under the CC0 or CC-BY 3.0 license. Therefore, this font may also be used under either CC0 or CC-BY 3.0 license.\" The least ambiguous of these, CC0 1.0, is recorded here. Note that the README.md of IT-Studio-Rech/bdf-fonts calls the font MIT and links to http://vt100.tarunz.org/LICENSE, but that link is in fact the BSD-3-Clause notice of the vt100 project (Brian J. Swetland / Vassilii Khachaturov, 1999), which does not mention this font and cannot serve as the licence; the BDF's COPYRIGHT field likewise contains only the bare word \"MIT\" with no rights holder."

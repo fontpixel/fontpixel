@@ -1,5 +1,7 @@
 ---
-import { t, type Lang } from '../i18n';
+import { licenseShortLabel } from '../lib/licenselabel';
+import { pickText, t, toHant, type Lang } from '../i18n';
+import { withBase } from '../lib/data';
 import type { FontDetail } from '../lib/schema';
 
 interface Props {
@@ -11,15 +13,35 @@ const { lang, detail, licenseText } = Astro.props;
 const s = t(lang);
 const m = detail.meta;
 const lic = m.license;
+// 取值统一走 pickText：繁体由简体转换，其余语言回落英文
+// 中日文用全角括号，其余用半角
+const cjk = lang === 'zh' || lang === 'zh-Hant' || lang === 'ja';
+// 作者列表整份切换语言（不逐项配对：中英两份的拆分粒度不一定一样）；
+// 繁体和站内其它中文一样由简体转出
+const authors = (
+  lang === 'zh' || lang === 'zh-Hant'
+    ? m.authors
+    : m.authorsEn.length
+      ? m.authorsEn
+      : m.authors
+).map((a) => (lang === 'zh-Hant' ? toHant(a) : a));
+const licName = pickText(lang, lic.name, lic.nameEn);
+const licNote = pickText(lang, detail.licenseNote, detail.licenseNoteEn);
+const prov = pickText(lang, detail.provenance, detail.provenanceEn);
 ---
 
 <aside class="side">
   <dl class="side__list">
     {
-      m.author && (
+      authors.length > 0 && (
         <>
           <dt>{s.detail.author}</dt>
-          <dd data-testid="meta-author">{m.author}</dd>
+          {/* 每位作者链到按其名字搜索的目录页，便于顺藤摸到同作者的其它字体 */}
+          <dd data-testid="meta-author">
+            {authors.map((a, i) => (
+              <>{i > 0 ? (cjk ? '、' : ', ') : ''}<a href={withBase(`/${lang}/?q=${encodeURIComponent(a)}`)}>{a}</a></>
+            ))}
+          </dd>
         </>
       )
     }
@@ -47,21 +69,18 @@ const lic = m.license;
         </>
       )
     }
-    {
-      detail.provenance && (
-        <>
-          <dt>{s.detail.provenance}</dt>
-          <dd>{detail.provenance}</dd>
-        </>
-      )
-    }
     <dt>{s.detail.glyphCount}</dt>
     <dd class="mono">{m.glyphCount.toLocaleString()}</dd>
     {
       m.scripts.length > 0 && (
         <>
           <dt>{s.catalogue.scripts}</dt>
-          <dd>{m.scripts.map((sc) => s.scriptNames[sc] ?? sc).join(' · ')}</dd>
+          {/* 每项链到按该文字筛选的目录页 */}
+          <dd>
+            {m.scripts.map((sc, i) => (
+              <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?scripts=${encodeURIComponent(sc)}`)} title={s.scriptRules[sc] ?? ''}>{s.scriptNames[sc] ?? sc}</a></>
+            ))}
+          </dd>
         </>
       )
     }
@@ -69,36 +88,25 @@ const lic = m.license;
       m.vibes.length > 0 && (
         <>
           <dt>{s.catalogue.vibes}</dt>
-          <dd>{m.vibes.join(' · ')}</dd>
+          {/* 同上：链到按该气质标签筛选的目录页 */}
+          <dd>
+            {m.vibes.map((v, i) => (
+              <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?vibes=${encodeURIComponent(v)}`)}>{s.vibeNames[v] ?? v}</a></>
+            ))}
+          </dd>
         </>
       )
     }
   </dl>
 
-  {
-    detail.convertedFrom && (
-      <p class="side__converted chip chip--accent">
-        {s.detail.convertedFrom}({detail.convertedFrom})
-      </p>
-    )
-  }
 
   <section class="side__license" data-testid="license-box">
     <h3>{s.detail.licenseTitle}</h3>
     <p class="side__licname">
-      {lic.spdx && <span class="chip mono">{lic.spdx}</span>}
-      <span>{lic.name}</span>
+      {lic.spdx && <span class="chip mono">{licenseShortLabel(lic.spdx)}</span>}
+      <span>{licName}</span>
     </p>
-    <p class="side__licmeta">
-      {s.detail.licenseConfidence[lic.confidence] ?? lic.confidence}
-      {lic.commercial === true && (
-        <span class="chip">{s.detail.licenseCommercial}</span>
-      )}
-      {lic.commercial !== true && (
-        <span class="hint">{s.detail.licenseNonCommercialUnknown}</span>
-      )}
-    </p>
-    {detail.licenseNote && <p class="side__licnote">{detail.licenseNote}</p>}
+    {licNote && <p class="side__licnote">{licNote}</p>}
     {
       licenseText && (
         <details data-testid="license-details">
@@ -111,16 +119,23 @@ const lic = m.license;
   </section>
 
   {
-    detail.warnings.length > 0 && (
-      <details class="side__warnings">
-        <summary>
-          {s.detail.warningsTitle}({detail.warnings.length})
-        </summary>
-        <ul>
-          {detail.warnings.slice(0, 20).map((w) => (
-            <li class="mono">{w}</li>
-          ))}
-        </ul>
+    (prov || detail.warnings.length > 0) && (
+      <details class="side__notes" data-testid="build-notes">
+        <summary>{s.detail.buildNotes}</summary>
+        {prov && <p class="side__prov">{prov}</p>}
+        {detail.warnings.length > 0 && (
+          <>
+            <p class="side__warnhead">
+              {s.detail.warningsTitle}
+              {cjk ? `（${detail.warnings.length}）` : ` (${detail.warnings.length})`}
+            </p>
+            <ul class="side__warnlist">
+              {detail.warnings.slice(0, 20).map((w) => (
+                <li class="mono">{w}</li>
+              ))}
+            </ul>
+          </>
+        )}
       </details>
     )
   }
@@ -185,11 +200,26 @@ const lic = m.license;
     color: var(--ink-3);
     font-size: 0.75rem;
   }
-  .side__warnings {
+  .side__notes {
     margin-top: var(--s4);
     color: var(--ink-2);
   }
-  .side__warnings ul {
+  .side__notes summary {
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--ink-3);
+  }
+  .side__prov {
+    font-size: 0.75rem;
+    color: var(--ink-3);
+    overflow-wrap: anywhere;
+  }
+  .side__warnhead {
+    font-size: 0.75rem;
+    color: var(--ink-3);
+    margin: var(--s2) 0 var(--s1);
+  }
+  .side__warnlist {
     font-size: 0.72rem;
     padding-left: 1.2em;
   }

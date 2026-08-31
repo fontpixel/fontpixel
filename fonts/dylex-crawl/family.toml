@@ -1,17 +1,22 @@
 name = "Dylex Crawl"
-name_zh = ""
-author = "dylex"
+authors = ["dylex"]
 homepage = ""
 repository = "https://github.com/dylex/fonts"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["crawl"]
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "Dylex Crawl"
+authors_en = ["dylex"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; original upstream project noted below)"
 
 [license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
-note = "14px 尺寸，FONT XLFD 内 FAMILY_NAME 为 “crawl”（与同目录 “terminal”/“Fixed” 家族的 FONT 名不同，是独立设计，推测源自 Dungeon Crawl 类终端游戏用字体），含 regular/bold/oblique/bold-oblique 四种字型，共 4 个 BDF 文件。COPYRIGHT 字段同样声明 Public domain。"
+note = "14px尺寸，FONT XLFD内FAMILY_NAME为 “crawl”（与同目录 “terminal”/“Fixed” 家族的FONT名不同，是独立设计，推测源自Dungeon Crawl类终端游戏用字体），含regular/bold/oblique/bold-oblique四种字型，共4个BDF文件。COPYRIGHT字段同样声明Public domain。"
+name_en = "Public Domain"
+note_en = "14px size. The FAMILY_NAME in the FONT XLFD is \"crawl\" (distinct from the \"terminal\"/\"Fixed\" family names in the same directory, indicating an independent design, likely originating as a font for Dungeon Crawl-style terminal games), comprising regular, bold, oblique, and bold-oblique styles across 4 BDF files. The COPYRIGHT field likewise declares Public domain."

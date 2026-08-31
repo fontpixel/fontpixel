@@ -1,11 +1,14 @@
 name = "x10y12pxDenkiChipHangul"
-name_zh = ""
-author = "quiple (Lee Minseo)（改编自 hicc 的 x8y12pxDenkiChip）"
+authors = ["quiple (Lee Minseo)"]
 homepage = "https://blog.quiple.dev/font/denkichip-hangul"
 repository = "https://github.com/quiple/x10y12pxDenkiChipHangul"
 description = ""
 form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["DenkiChip Hangul", "Denki Chip Hangul"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x10y12pxDenkiChipHangul；上游 https://github.com/quiple/x10y12pxDenkiChipHangul/releases (v1.210)"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x10y12pxDenkiChipHangul；上游https://github.com/quiple/x10y12pxDenkiChipHangul/releases (v1.210)；由quiple改编自hicc的x8y12pxDenkiChip。"
 added = "2026-08-21"
+name_en = "x10y12pxDenkiChipHangul"
+authors_en = ["quiple (Lee Minseo)"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x10y12pxDenkiChipHangul; upstream https://github.com/quiple/x10y12pxDenkiChipHangul/releases (v1.210); Adapted by quiple from hicc's x8y12pxDenkiChip."

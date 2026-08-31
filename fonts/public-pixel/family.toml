@@ -1,0 +1,25 @@
+name = "Public Pixel"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/public-pixel-font"
+repository = ""
+description = "GGBotNet做的8×8等宽像素字体，1324个字形覆盖98种语言的拉丁、希腊与西里尔文，是这批CC0像素字体里覆盖面最广的一款。"
+form = "sans"
+vibes = ["retro-game", "classic"]
+aliases = ["PublicPixel", "Public Pixel Font"]
+converted_from = "ttf"
+provenance = "导入自 direct-downloads-2026-08-31/ggbot-public-pixel-1.24；上游 https://ggbot.itch.io/public-pixel-font；由 ttf 转换"
+added = "2026-08-31"
+
+name_en = "Public Pixel"
+authors_en = ["GGBotNet"]
+description_en = "An 8x8 monospaced pixel font by GGBotNet. Its 1,324 glyphs cover Latin, Greek and Cyrillic for 98 languages, the broadest coverage among this set of CC0 pixel fonts."
+provenance_en = "Imported from direct-downloads-2026-08-31/ggbot-public-pixel-1.24; upstream https://ggbot.itch.io/public-pixel-font; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "License.txt"
+note = "发布包内附 CC0 1.0 全文（License.txt），字体 name 表的 License 字段亦写明“Creative Commons Zero v1.0 Universal”，itch.io 页面同样标注 CC0。CC0 是版权及邻接权的彻底放弃，商用、修改、再分发均无限制，亦无署名要求。"
+name_en = "CC0 1.0 Universal (public domain dedication)"
+note_en = "The release archive bundles the full CC0 1.0 text (License.txt); the font's name table records the licence as \"Creative Commons Zero v1.0 Universal\", and the itch.io page states CC0 as well. CC0 is an outright waiver of copyright and neighbouring rights: no restriction on commercial use, modification or redistribution, and no attribution requirement."

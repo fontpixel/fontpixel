@@ -1,11 +1,13 @@
 name = "Spleen"
-name_zh = ""
-author = "Frederic Cambus"
+authors = ["Frederic Cambus"]
 homepage = ""
 repository = "https://github.com/fcambus/spleen"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fcambus--spleen；上游 https://github.com/fcambus/spleen (HEAD 快照，收录于 2026-08-18)"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fcambus--spleen；上游https://github.com/fcambus/spleen（HEAD快照，收录于2026-08-18）"
 added = "2026-08-21"
+name_en = "Spleen"
+authors_en = ["Frederic Cambus"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fcambus--spleen; upstream https://github.com/fcambus/spleen (HEAD snapshot, collected 2026-08-18)"

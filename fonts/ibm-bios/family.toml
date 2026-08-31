@@ -1,18 +1,22 @@
 name = "IBM BIOS"
-name_zh = ""
-author = "VileR（The Ultimate Oldschool PC Font Pack，像素复原）；farsil / Marco Buzzanca（BDF 转换与整理，2016）"
+authors = ["VileR", "farsil (Marco Buzzanca)"]
 homepage = "https://farsil.github.io/ibmfonts/"
 repository = "https://github.com/farsil/ibmfonts"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game", "terminal-hardcore"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/farsil-ibmfonts；上游 https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
+provenance = "导入自github-clones-2026-08-29/farsil-ibmfonts；上游https://github.com/farsil/ibmfonts（clone于2026-08-29）；像素复原出自VileR的The Ultimate Oldschool PC Font Pack；BDF转换与整理由farsil（Marco Buzzanca）于2016年完成。"
 added = "2026-08-21"
+
+name_en = "IBM BIOS"
+authors_en = ["VileR", "farsil (Marco Buzzanca)"]
+provenance_en = "Imported from github-clones-2026-08-29/farsil-ibmfonts; upstream https://github.com/farsil/ibmfonts (cloned 2026-08-29); Pixel restoration comes from VileR's The Ultimate Oldschool PC Font Pack; the BDF conversion and packaging were done by farsil (Marco Buzzanca) in 2016."
 
 [license]
 spdx = "CC-BY-SA-4.0"
-name = "Creative Commons 署名-相同方式共享 4.0 国际"
-commercial = true
-note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM PC/XT 主板 BIOS ROM 内置的文本模式字库（并非独立显卡字库，是显卡尚未接管前的系统级后备字体），由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
+name = "Creative Commons署名-相同方式共享4.0国际"
+note = "仓库LICENSE声明全部BDF字体采用CC BY-SA 4.0；本家族复刻自IBM PC/XT主板BIOS ROM内置的文本模式字库（并非独立显卡字库，是显卡尚未接管前的系统级后备字体），由VileR在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于2016年转换为BDF格式并整理发布（各BDF文件内COPYRIGHT字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 file = "CC-BY-SA-4.0"
+name_en = "CC BY-SA 4.0"
+note_en = "The repository's LICENSE states that all BDF fonts are released under CC BY-SA 4.0. This family reproduces the text-mode font built into the IBM PC/XT motherboard BIOS ROM (a system-level fallback font used before the graphics card takes over, not a graphics-card font in its own right). VileR performed the pixel-level restoration for The Ultimate Oldschool PC Font Pack, and farsil (Marco Buzzanca) converted it to BDF format and packaged it for release in 2016 (each BDF file's COPYRIGHT field notes: \"BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0\"). Redistribution must retain attribution and a link to the license, and derivative works must be released under a compatible share-alike license."

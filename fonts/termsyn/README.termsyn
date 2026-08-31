@@ -1,0 +1,74 @@
+Termsyn is a clean monospaced bitmap font based on Terminus (http://terminus-font.sourceforge.net/) and Tamsyn (http://www.fial.com/~scott/tamsyn-font/).
+
+There are four sizes now: 6x11, 7x12, 6x13 and 7x14. There are iso8859-1 and 2 versions, versions with status "icons", consolefonts, and I started working on iso10646-1 
+versions. All have bold too.
+
+Each size has 12 fonts, for example:
+termsyn6x11r.pcf (6x11 medium)
+termsyn6x11b.pcf (6x11 bold)
+termsyn6x11r2.pcf (6x11 medium iso8859-2)
+termsyn6x11b2.pcf (6x11 bold iso8859-2)
+termsyn6x11r.icons.pcf (6x11 medium with status icons)
+termsyn6x11b.icons.pcf (6x11 bold with status icons)
+termsyn6x11r.psfu (6x11 medium consolefont)
+termsyn6x11b.psfu (6x11 bold consolefont)
+termsyn6x11r2.psfu (6x11 medium iso8859-2 consolefont)
+termsyn6x11b2.psfu (6x11 bold iso8859-2 consolefont)
+termsynu6x11r.pcf (6x11 medium iso10646-1)
+termsynu6x11b.pcf (6x11 bold iso10646-1)
+
+You can use xfontsel to get the full names.
+
+To install manually system-wide, copy the .pcf files to /usr/share/fonts/local and copy the .psfu files to /usr/share/kbd/consolefonts.
+Then do:
+sudo fc-cache -f
+sudo mkfontscale /usr/share/fonts/local
+sudo mkfontdir /usr/share/fonts/local
+
+And make sure you have something like this in your .xinitrc:
+xset +fp /usr/share/fonts/local
+xset fp rehash
+
+I would recommend trying to use the ISO10646-1 versions first and use the ISO8859-1 or 2 versions as fallback.
+
+To use the ISO10646-1:
+-*-termsynu-medium-r-*-*-11-*-*-*-*-*-*-*
+-*-termsynu-bold-r-*-*-11-*-*-*-*-*-*-*
+
+For the ISO8859-1 or 2:
+-*-termsyn-medium-r-*-*-11-*-*-*-*-*-*-*
+-*-termsyn-bold-r-*-*-11-*-*-*-*-*-*-*
+
+The icon versions have status "icons" that I drew into the font. The inspiration for the icons came from lokaltog (https://github.com/Lokaltog) and his post in the dwm 
+(http://dwm.suckless.org) hackers thread on the Arch Linux forum (https://bbs.archlinux.org/viewtopic.php?pid=724236#p724236).
+
+To use the icon versions:
+-*-termsyn.icons-medium-r-*-*-11-*-*-*-*-*-*-*
+-*-termsyn.icons-bold-r-*-*-11-*-*-*-*-*-*-*
+
+You can use xfd to view the font. (xfd -fn -misc-termsyn.icons-medium-r-normal--11-79-100-100-c-60-iso8859-1).
+
+From a terminal, you can do something like:
+(echo -e '\xB8') to display a clock icon for example and then copy the output to a script or config.h.
+
+You can also use pcf2bdf to convert the .pcf fonts to .bdf and then use gbdfed to view and edit the font (http://sofia.nmsu.edu/~mleisher/Software/gbdfed/).
+To convert from .pcf to .bdf: (pcf2bdf -o termsyn6x11r.bdf termsyn6x11r.pcf).
+Then use bdftopcf to convert it back: (bdftopcf -o termsyn6x11r.pcf termsyn6x11r.bdf).
+
+Or an easy way is to check out the screenshots in the termsyn thread on the Arch Linux forum (https://bbs.archlinux.org/viewtopic.php?pid=1112799#p1112799).
+
+A better solution for icons (at least for dwm, which I originally made these for) might be to use stlarch_font (http://sourceforge.net/projects/stlarchfont/).
+See the README.stlarch_font for more info.
+
+To try a consolefont, you can do: (setfont termsyn6x11r) for example. See your distros documentation for a more permanent solution.
+
+Created by stlarch (stlarchie@gmail.com)
+
+Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)
+
+Changes in version 1.8.5: Added consolefonts and started working on iso10646-1 versions. Dropped the 8x15 and 8x17 sizes. I'm not happy with them and not interested in 
+developing them any further. For something in this size range, I would recommend using Terminus 16 or Tamsyn 15/17.
+
+Changes in version 1.8.6: Added a missing glyph in termsynu7x14b.
+
+Changes in version 1.8.7: Fixed the mapping table for the iso8859-1 consolefonts.

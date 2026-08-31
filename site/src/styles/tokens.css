@@ -66,6 +66,11 @@ body {
   font-size: 15px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  /* 中西文之间的间距交给排版引擎，不在文案里写死空格：源文里加的空格会
+     跟着进搜索索引与下载物的说明文字，而且宽度固定、无法随字号缩放。
+     text-autospace 让浏览器按 CSS Text 4 的规则自动插入这段间距。
+     不支持的浏览器会忽略这条，退化成中西文紧挨——那正是中文印刷的常规排法。 */
+  text-autospace: normal;
 }
 
 a {

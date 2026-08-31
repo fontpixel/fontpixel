@@ -1,0 +1,28 @@
+name = "Lemon"
+authors = ["king benis (phallus)"]
+homepage = ""
+repository = "https://github.com/phallus/fonts"
+description = "10px等宽点阵字体。上游分两份发布：ISO 8859-1的基础版与码位更全的ISO 10646版（XLFD名 “lemon abunai abunai”），本站已合并成单一变体。"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+aliases = ["lemon-j", "lemon abunai abunai"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/phallus；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Lemon"
+authors_en = ["king benis (phallus)"]
+description_en = "A 10px monospace bitmap font. Upstream ships two files - a base ISO 8859-1 build and a broader ISO 10646 build (XLFD name \"lemon abunai abunai\") - merged here into a single variant."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/phallus; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "WTFPL"
+name = "想干嘛干嘛公共许可证 第2版"
+confidence = "manual"
+file = "license"
+note = "仓库快照内的license文件为WTFPL第2版全文，署名 “Copyright (C) 2013 king benis”。注意上游phallus/fonts此后已改用GPL-3.0；本站收录的是快照当时的WTFPL版本，两者都允许商用、修改与再分发。"
+name_en = "Do What The F*ck You Want To Public License v2"
+note_en = "The license file in the repository snapshot is the full WTFPL version 2 text, attributed to \"Copyright (C) 2013 king benis\". Note that upstream phallus/fonts has since moved to GPL-3.0; what is catalogued here is the WTFPL-era snapshot. Both permit commercial use, modification and redistribution."
+
+[merge]
+"lemon.bdf" = ["lemon-j.bdf"]

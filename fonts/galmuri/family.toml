@@ -1,11 +1,45 @@
 name = "Galmuri"
-name_zh = ""
-author = "quiple (Lee Yerim)"
+authors = ["quiple (Lee Minseo)"]
 homepage = "https://galmuri.quiple.dev"
 repository = "https://github.com/quiple/galmuri"
-description = "韩文点阵字体家族，7–14px 多尺寸，兼容假名与拉丁，附等宽变体。"
+description = "韩文点阵字体家族，7–14px多尺寸，兼容假名与拉丁，附等宽变体。"
 form = "gothic"
 vibes = ["retro-game"]
+aliases = ["갈무리", "Galmuri7", "Galmuri9", "Galmuri11", "Galmuri14", "GalmuriMono"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri；上游 https://github.com/quiple/galmuri/releases (v2.40.4)"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri；上游https://github.com/quiple/galmuri/releases (v2.40.4)"
 added = "2026-08-21"
+name_en = "Galmuri"
+authors_en = ["quiple (Lee Minseo)"]
+description_en = "A Korean bitmap font family spanning 7-14px, with kana and Latin support and a monospace variant."
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri; upstream https://github.com/quiple/galmuri/releases (v2.40.4)"
+
+# 上游README的“Summary of Supported Ranges”表里标注了各款的推荐显示尺寸
+# （https://github.com/quiple/galmuri）。该数值等于字面高 + 1行像素，与
+# BDF声明的em（ascent + descent）不是一回事，故单列。Mono系列上游未说明。
+[variants."Galmuri7.bdf"]
+display_size = 8
+
+[variants."Galmuri9.bdf"]
+display_size = 10
+
+[variants."Galmuri11.bdf"]
+display_size = 12
+
+[variants."Galmuri11-Bold.bdf"]
+display_size = 12
+
+[variants."Galmuri11-Condensed.bdf"]
+display_size = 12
+
+[variants."Galmuri14.bdf"]
+display_size = 15
+
+[variants."GalmuriMono7.bdf"]
+display_size = 8
+
+[variants."GalmuriMono9.bdf"]
+display_size = 10
+
+[variants."GalmuriMono11.bdf"]
+display_size = 12

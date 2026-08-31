@@ -1,0 +1,24 @@
+name = "Taipei"
+name_zh_hans = "台北字体"
+authors = ["DWNfonts (diaowinner)"]
+homepage = "https://diaowinner.itch.io/taipei-fonts"
+repository = ""
+description = "繁体中文点阵字体，由X.org的taipei16.bdf与taipei24.bdf重制而成，两档尺寸。"
+form = "mingcho"
+vibes = ["classic"]
+aliases = ["Taipei Fonts", "Taipei16", "Taipei24"]
+converted_from = ""
+provenance = "上游https://diaowinner.itch.io/taipei-fonts；页面自述“A vector bitmap Trad. Chinese 16/24px font original by X.org's taipei16/24.bdf”，制作工具为FontForge与Bits'n'Picas。由ttf按原生格点栅格化；16档的实际格点为15px。"
+added = "2026-08-30"
+name_en = "Taipei"
+authors_en = ["DWNfonts (diaowinner)"]
+description_en = "A Traditional Chinese bitmap font remade from X.org's taipei16.bdf and taipei24.bdf, in two sizes."
+provenance_en = "Upstream https://diaowinner.itch.io/taipei-fonts . The page states: \"A vector bitmap Trad. Chinese 16/24px font original by X.org's taipei16/24.bdf\", made with FontForge and Bits'n'Picas. Rasterised from TTF at its native grid; the \"16\" build measures 15px."
+
+[license]
+spdx = "CC-BY-SA-4.0"
+name = "知识共享 署名-相同方式共享4.0国际"
+confidence = "manual"
+note = "上游页面标注CC-BY SA 4.0。原始字形来自X.org的taipei16/24.bdf。"
+name_en = "Creative Commons Attribution-ShareAlike 4.0 International"
+note_en = "The upstream page states CC-BY SA 4.0. The original glyphs come from X.org's taipei16/24.bdf."

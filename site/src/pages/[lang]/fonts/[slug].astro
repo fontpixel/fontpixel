@@ -6,7 +6,7 @@ import MetaSidebar from '../../../components/MetaSidebar.astro';
 import DownloadList from '../../../components/DownloadList.astro';
 import GlyphGrid from '../../../islands/GlyphGrid.svelte';
 import SampleEditor from '../../../islands/SampleEditor.svelte';
-import { t, type Lang } from '../../../i18n';
+import { LANGS, pickName, pickText, t, type Lang } from '../../../i18n';
 import {
   downloadsBase,
   listDetailSlugs,
@@ -19,8 +19,7 @@ import {
 
 export function getStaticPaths() {
   return listDetailSlugs().flatMap((slug) => [
-    { params: { lang: 'zh', slug } },
-    { params: { lang: 'en', slug } },
+    ...LANGS.map((lang) => ({ params: { lang, slug } })),
   ]);
 }
 
@@ -29,7 +28,25 @@ const slug = Astro.params.slug!;
 const s = t(lang);
 const detail = loadDetail(slug);
 const m = detail.meta;
-const displayName = lang === 'zh' && m.nameZh ? m.nameZh : m.name;
+const displayName = pickName(lang, m.names, m.name);
+
+// 尺寸一览：多变体家族在介绍下方给一张对照表。Galmuri 这类「上游编号、
+// 推荐尺寸、声明行高、字面」四个数各说各话的家族，靠它一眼看清。
+const hasDisplaySize = m.variants.some((v) => v.displaySize > 0);
+// 行序沿用 meta.variants 的原始顺序（build.py 按尺寸→字重→排布排好），
+// 与页面上的变体下拉框严格一致，不另设一套规则
+const sizeRows = m.variants
+  .map((v) => {
+    const mm = detail.metrics[v.id];
+    return {
+      id: v.id,
+      size: v.size,
+      displaySize: v.displaySize,
+      hanInk: mm?.hanInk ? `${mm.hanInk[0]}×${mm.hanInk[1]}` : s.detail.hanInkNone,
+      maxInk: mm?.maxInk ? `${mm.maxInk[0]}×${mm.maxInk[1]}` : '—',
+    };
+  });
+const displayDesc = pickText(lang, detail.description, detail.descriptionEn);
 const licenseText = readLicenseText(slug);
 let previewSvg = '';
 try {
@@ -39,6 +56,12 @@ try {
 }
 const dlBase = downloadsBase();
 const variantIds = m.variants.map((v) => v.id);
+const blocksByVariant = Object.fromEntries(
+  Object.entries(detail.unicodeBlocks).map(([vid, bs]) => [
+    vid,
+    bs.filter(([, covered]) => covered > 0).map(([name]) => name),
+  ]),
+);
 const charsetsMeta = loadCharsetsMeta();
 
 // 变体分组：签名相同的变体共用一个 SSR 面板，把 ark-pixel（35 变体）这类
@@ -67,7 +90,7 @@ const coverageGroups = groupBy((vid) =>
 <Base
   lang={lang}
   title={`${displayName} · ${s.siteName}`}
-  description={detail.description || `${displayName} — ${s.siteTagline}`}
+  description={displayDesc || `${displayName} — ${s.siteTagline}`}
   path={`/fonts/${slug}/`}
   ogImage={withBase(`/data/og/${slug}.png`)}
 >
@@ -77,21 +100,65 @@ const coverageGroups = groupBy((vid) =>
 
   <header class="hero">
     <h1>{displayName}</h1>
-    {m.nameZh && lang === 'zh' && <p class="hero__latin mono">{m.name}</p>}
-    {detail.description && <p class="hero__desc">{detail.description}</p>}
+    {displayName !== m.name && <p class="hero__latin mono">{m.name}</p>}
+    {displayDesc && <p class="hero__desc">{displayDesc}</p>}
     <div class="hero__preview lattice" set:html={previewSvg} />
   </header>
+
+  {
+    m.variants.length > 1 && (
+      <section class="metrics sizes">
+        <details data-testid="sizes-details">
+          <summary>
+            <h2>{s.detail.sizesOverview}</h2>
+          </summary>
+          <div class="sizes__scroll">
+          <table class="metrics__table mono" data-testid="sizes-overview">
+            <thead>
+              <tr>
+                <th>{s.detail.variants}</th>
+                {hasDisplaySize && <th>{s.detail.displaySize}</th>}
+                <th>{s.detail.claimedSize}</th>
+                <th>{s.detail.hanInk}</th>
+                <th>{s.detail.maxInk}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sizeRows.map((r) => (
+                <tr>
+                  <td>{r.id}</td>
+                  {hasDisplaySize && (
+                    <td>{r.displaySize > 0 ? `${r.displaySize}${s.card.px}` : '—'}</td>
+                  )}
+                  <td>
+                    {r.size}
+                    {s.card.px}
+                  </td>
+                  <td>{r.hanInk}</td>
+                  <td>{r.maxInk}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          </div>
+        </details>
+      </section>
+    )
+  }
 
   <div class="layout">
     <div class="layout__main">
       <SampleEditor
         client:load
         slug={slug}
+        sampleText={m.sampleText}
+        previewVariant={m.previewVariant}
         variants={m.variants.map((v) => ({
           id: v.id,
           size: v.size,
           weight: v.weight,
           spacing: v.spacing,
+          width: v.width,
           script: v.script,
         }))}
         s={s}
@@ -116,6 +183,20 @@ const coverageGroups = groupBy((vid) =>
                           {s.card.px}
                         </td>
                       </tr>
+                      {/* 上游若标了推荐显示尺寸就并排列出：它量的是字面高 + 行距，
+                          与字体声明的 em 不是一回事，两个都给读者 */}
+                      {(() => {
+                        const dv = m.variants.find((v) => v.id === g.repId);
+                        return dv && dv.displaySize > 0 ? (
+                          <tr>
+                            <th>{s.detail.displaySize}</th>
+                            <td>
+                              {dv.displaySize}
+                              {s.card.px}
+                            </td>
+                          </tr>
+                        ) : null;
+                      })()}
                       <tr>
                         <th>{s.detail.hanInk}</th>
                         <td>
@@ -183,12 +264,19 @@ const coverageGroups = groupBy((vid) =>
         sections={charsetsMeta.sections}
         charsets={charsetsMeta.charsets}
         groups={coverageGroups}
-      />
+        variants={m.variants.map((v) => ({
+    id: v.id,
+    label: `${v.size}px · ${s.weightNames[v.weight] ?? v.weight} · ${
+      s.spacingNames[v.spacing] ?? v.spacing
+    }${v.script ? ` · ${v.script}` : ''}`,
+  }))}
+/>
 
       <GlyphGrid
         client:visible
         slug={slug}
         variantIds={variantIds}
+        blocksByVariant={blocksByVariant}
         s={s}
         dataBase={withBase('/data')}
       />
@@ -200,7 +288,7 @@ const coverageGroups = groupBy((vid) =>
   </div>
 
   <script is:inline define:vars={{ variantIds }}>
-    document.addEventListener('fbf:variantchange', (e) => {
+    document.addEventListener('opf:variantchange', (e) => {
       const id = e.detail?.id;
       if (!id || !variantIds.includes(id)) return;
       document.querySelectorAll('[data-variant-panel]').forEach((el) => {
@@ -249,6 +337,10 @@ const coverageGroups = groupBy((vid) =>
       gap: var(--s6);
       align-items: start;
     }
+    /* grid item 默认 min-width:auto，会被最宽的子元素撑破，窄屏整页横向滚动 */
+    .layout__main {
+      min-width: 0;
+    }
     .layout__main > :global(section) {
       margin-bottom: var(--s6);
     }
@@ -261,6 +353,18 @@ const coverageGroups = groupBy((vid) =>
       gap: var(--s6);
       flex-wrap: wrap;
       align-items: flex-start;
+      /* 窄屏下 flex 子项要允许收缩到 0，否则表格与示意图各自把整页撑破 */
+      min-width: 0;
+    }
+    .metrics__flex > * {
+      min-width: 0;
+      max-width: 100%;
+    }
+    /* 度量表在极窄屏（300px）放不下时自己横向滚动，不撑破页面 */
+    .metrics__table {
+      display: block;
+      overflow-x: auto;
+      max-width: 100%;
     }
     .metrics__table {
       font-size: 0.82rem;
@@ -275,6 +379,55 @@ const coverageGroups = groupBy((vid) =>
     }
     .metrics__table td {
       padding: var(--s1) 0;
+    }
+    /* 尺寸一览：数据列右对齐留间距；窄屏横向滚动，不许把页面撑宽 */
+    .sizes {
+      margin-bottom: var(--s6);
+    }
+    /* 折叠标题：原生 marker 跟大号 h2 对不齐基线，隐藏后用 flex 自绘，
+       与语言菜单同一做法 */
+    .sizes summary {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+      list-style: none;
+    }
+    .sizes summary::-webkit-details-marker {
+      display: none;
+    }
+    .sizes summary::before {
+      content: '▸';
+      /* 全黑（暗色主题下随正文色反白），不用灰阶弱化 */
+      color: var(--ink);
+      transition: transform 0.15s;
+    }
+    .sizes details[open] > summary::before {
+      transform: rotate(90deg);
+    }
+    .sizes summary h2 {
+      margin: 0;
+    }
+    .sizes__scroll {
+      overflow-x: auto;
+      /* 光有 overflow 不够：这个容器没有宽度约束时，表格照样把它撑开，
+         再顶破整页。max-width 给出上限，滚动才真的发生在容器内部 */
+      max-width: 100%;
+    }
+    /* 尺寸表的滚动由外层 .sizes__scroll 负责，表格自身保持表格布局；
+       width:max-content 让它按内容自然展开，超出的部分由容器滚动消化 */
+    .sizes .metrics__table {
+      display: table;
+      overflow-x: visible;
+      width: max-content;
+      max-width: none;
+    }
+    .sizes .metrics__table td {
+      padding-right: var(--s4);
+      white-space: nowrap;
+    }
+    .sizes thead th {
+      border-bottom: 1px solid var(--line);
     }
     @media (max-width: 900px) {
       .layout {

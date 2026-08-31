@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { licenseShortLabel } from '../lib/licenselabel';
   import { onMount } from 'svelte';
   import { themeInkPaper, onThemeChange } from '../lib/colors';
   import type { GlyphStore } from '../lib/glyphstore';
   import { paint, rasterize } from '../lib/render';
   import { defaultSample } from '../lib/samples';
   import type { FamilyIndex } from '../lib/schema';
+  import { pickName, pickText } from '../i18n';
   import type { UIStrings } from '../i18n/types';
 
   interface Props {
@@ -20,10 +22,12 @@
   const { family, lang, s, sampleText, zoom, invert, store, href }: Props = $props();
 
   const displayName = $derived(
-    lang === 'zh' && family.nameZh ? family.nameZh : family.name,
+    pickName(lang, family.names, family.name),
   );
   const variant = family.variants.reduce((a, b) => (b.glyphs > a.glyphs ? b : a));
-  const text = $derived(sampleText.trim() || defaultSample(family.sampleLang));
+  const text = $derived(
+    sampleText.trim() || family.sampleText || defaultSample(family.sampleLang),
+  );
   const sizeLabel = $derived(
     family.sizes.length > 3
       ? `${family.sizes[0]}–${family.sizes[family.sizes.length - 1]}${s.card.px}`
@@ -71,7 +75,6 @@
       const { ink, paper } = themeInkPaper();
       const r = rasterize(t, glyphs, m, {
         invert: inv,
-        highlightMissing: true,
         maxWidth: Math.max(48, Math.floor((canvasEl.parentElement?.clientWidth ?? 320) / z)),
         ink,
         paper,
@@ -89,7 +92,6 @@
         if (!anyMissing) {
           const nr = rasterize(displayName, nameGlyphs, m, {
             invert: inv,
-            highlightMissing: false,
             ink,
             paper,
           });
@@ -111,7 +113,6 @@
     <header class="card__head">
       <h2 class="card__name">{displayName}</h2>
       <span class="card__marks">
-        {#if family.converted}<span class="chip chip--accent">{s.card.converted}</span>{/if}
         {#if !family.curated}<span class="chip">{s.card.uncurated}</span>{/if}
         {#if missing > 0}
           <span class="chip chip--accent mono" data-testid="missing-chip"
@@ -123,7 +124,7 @@
     <canvas class="card__namecanvas" bind:this={nameEl} style="display:none" aria-hidden="true"
     ></canvas>
     <div class="card__sample lattice">
-      <canvas bind:this={canvasEl} aria-label={text}></canvas>
+      <canvas bind:this={canvasEl} aria-hidden="true"></canvas>
     </div>
     <p class="card__meta mono">
       <span>{sizeLabel}</span>
@@ -133,7 +134,9 @@
       <span class="card__sep">·</span>
       <span>{family.glyphCount.toLocaleString()} {s.card.glyphs}</span>
       <span class="card__lic" class:card__lic--warn={!family.license.spdx}>
-        {family.license.spdx ?? s.card.licenseUnknown}
+        {family.license.spdx
+          ? licenseShortLabel(family.license.spdx)
+          : s.card.licenseUnknown}
       </span>
     </p>
   </a>

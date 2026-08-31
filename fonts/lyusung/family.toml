@@ -1,18 +1,23 @@
 name = "Lyusung"
-name_zh = "柳宋"
-author = "diaowinner"
+name_zh_hans = "柳宋"
+authors = ["DWNfonts (diaowinner)"]
 homepage = "https://diaowinner.itch.io/lyusung"
 repository = ""
 description = ""
 form = "mingcho"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["classic"]  # UNVERIFIED
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11271；上游 https://www.maoken.com/freefonts/11271.html；由 ttf 转换；收录文件版本 Lyusung-210618，授权依据作者 itch.io 页面（CC BY-SA 4.0）"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11271；上游https://www.maoken.com/freefonts/11271.html；由ttf转换；收录文件版本Lyusung-210618，授权依据作者itch.io页面（CC BY-SA 4.0）"
 added = "2026-08-21"
+
+name_en = "Lyusung"
+authors_en = ["DWNfonts (diaowinner)"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11271; upstream https://www.maoken.com/freefonts/11271.html; converted from ttf; the collected file is version Lyusung-210618, licensing based on the author's itch.io page (CC BY-SA 4.0)"
 
 [license]
 spdx = "CC-BY-SA-4.0"
-name = "Creative Commons 署名-相同方式共享 4.0 国际"
+name = "Creative Commons署名-相同方式共享4.0国际"
 file = "LICENSE-CC-BY-SA-4.0.txt"
-commercial = true
-note = "授权以作者第一方页面（https://diaowinner.itch.io/lyusung）为准：CC BY-SA 4.0；猫啃网转载页曾误标为 CC BY，不作依据。汉字部分上游为 X.Org ISAS 点阵字体（允许任何目的的使用、复制、修改与分发），西文部分上游为 VileR 的 Oldschool PC Fonts（CC BY-SA 4.0）。可商用、可修改、可再分发；再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。本站收录版本：Lyusung-210618。"
+note = "授权以作者第一方页面（https://diaowinner.itch.io/lyusung）为准：CC BY-SA 4.0；猫啃网转载页曾误标为CC BY，不作依据。汉字部分上游为X.Org ISAS点阵字体（允许任何目的的使用、复制、修改与分发），西文部分上游为VileR的Oldschool PC Fonts（CC BY-SA 4.0）。可商用、可修改、可再分发；再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。本站收录版本：Lyusung-210618。"
+name_en = "CC BY-SA 4.0"
+note_en = "Licensing follows the author's own page (https://diaowinner.itch.io/lyusung): CC BY-SA 4.0. The Maoken reposting page once mislabeled it as CC BY; that label is not authoritative. The CJK glyphs derive from the X.Org ISAS bitmap fonts (use, copying, modification, and distribution permitted for any purpose), while the Latin glyphs derive from VileR's Oldschool PC Fonts (CC BY-SA 4.0). Commercial use, modification, and redistribution are all permitted; redistribution must retain attribution and a link to the license, and derivative works must continue to use a compatible share-alike license. Version collected on this site: Lyusung-210618."

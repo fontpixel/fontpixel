@@ -1,0 +1,25 @@
+name = "Ohsnap"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/osnapfont/"
+repository = ""
+description = "以Artwiz Snap为基础改作的等宽点阵字体，四档尺寸（6×11／7×12／6×13／7×14）各含常规与粗体。收录ISO 10646版本（各255字形）；上游另有ISO 8859-1版、带状态栏图标的版本与主机控制台字体，均未重复收录。"
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+aliases = ["ohsnapu", "oh snap"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/ohsnap-1.8.0；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Ohsnap"
+authors_en = ["stlarch"]
+description_en = "A monospace bitmap font derived from Artwiz Snap, in four sizes (6x11, 7x12, 6x13, 7x14), each with a regular and a bold weight. The ISO 10646 builds are catalogued here (255 glyphs each); upstream's ISO 8859-1 builds, status-icon builds and console fonts are not duplicated."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/ohsnap-1.8.0; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-only"
+name = "GNU通用公共许可证 第2版"
+confidence = "manual"
+file = "README.ohsnap"
+note = "包内README末尾写明 “Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)”，且每个PCF的COPYRIGHT属性都写着 “GPLv2”。本族随字体附上该README原文。"
+name_en = "GNU General Public License v2.0 only"
+note_en = "The bundled README ends with \"Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. That README is bundled here as the licensing evidence."

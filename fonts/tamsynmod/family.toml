@@ -1,0 +1,24 @@
+name = "Tamsynmod"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/tamsynmod/"
+repository = ""
+description = "stlarch对Tamsyn的改作版，四档尺寸（6×12／7×14／8×15／8×17）各含常规与粗体，ISO 8859-1编码（各223字形）。"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+aliases = ["tamsyn mod"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/tamsynmod-1.7；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Tamsynmod"
+authors_en = ["stlarch"]
+description_en = "stlarch's modified take on Tamsyn, in four sizes (6x12, 7x14, 8x15, 8x17), each with a regular and a bold weight, ISO 8859-1 encoded (223 glyphs each)."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/tamsynmod-1.7; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-or-later"
+name = "GNU通用公共许可证 第2版或更新版本"
+confidence = "manual"
+note = "发布包内只有8个PCF，没有任何许可证或说明文件；授权依据有三条，互相印证：① 每个PCF的COPYRIGHT属性写着 “GPL”（未写版本号）；② 同一作者stlarch的其余字体包（ohsnap／termsyn／terminusmod／stlarch）README均写明 “Released under GPLv2 license.”；③ 被改作的原字体Tamsyn其LICENSE原文为 “Tamsyn font is free. You are hereby granted permission to use, copy, modify, and distribute it as you see fit.”，本身即无条件允许修改与再分发。因未写版本号，按GPL惯例记为GPL-2.0-or-later。"
+name_en = "GNU General Public License v2.0 or later"
+note_en = "The release archive contains only eight PCF files, with no licence or readme. Three mutually corroborating pieces of evidence establish the terms: (1) every PCF carries \"GPL\" (no version number) in its COPYRIGHT property; (2) the same author's other font packages (ohsnap, termsyn, terminusmod, stlarch) all state \"Released under GPLv2 license.\" in their READMEs; (3) the base font it modifies, Tamsyn, is licensed with \"Tamsyn font is free. You are hereby granted permission to use, copy, modify, and distribute it as you see fit.\", which itself permits modification and redistribution unconditionally. As no version is stated, it is recorded as GPL-2.0-or-later per the GPL's own convention."

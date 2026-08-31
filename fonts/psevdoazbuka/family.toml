@@ -1,0 +1,25 @@
+name = "PsevdoAzbuka"
+authors = ["Cyril Hrubis (metan)"]
+homepage = ""
+repository = "https://github.com/metan-ucw/fonts"
+description = "与Haxor同出一个仓库的12px等宽点阵字体，覆盖ISO 8859-2（199字形）。"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+aliases = ["psevdo azbuka"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/haxor；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "PsevdoAzbuka"
+authors_en = ["Cyril Hrubis (metan)"]
+description_en = "A 12px monospace bitmap font from the same repository as Haxor, covering ISO 8859-2 (199 glyphs)."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/haxor; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-or-later"
+name = "GNU通用公共许可证 第2版或更新版本"
+confidence = "manual"
+file = "README"
+note = "上游仓库metan-ucw/fonts的README首句即 “Distributed under GPLv2+.”，覆盖仓库内全部bdf/pcf。本族随字体附上该README原文作为授权依据。"
+name_en = "GNU General Public License v2.0 or later"
+note_en = "The upstream repository metan-ucw/fonts states in the opening line of its README: \"Distributed under GPLv2+.\", covering every bdf/pcf in the repository. That README is bundled here as the licensing evidence."

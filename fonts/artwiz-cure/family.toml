@@ -1,0 +1,24 @@
+name = "Artwiz Cure"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+repository = ""
+description = "Artwiz系列的11px比例像素字体，覆盖ASCII与部分西欧字符（128字形）。"
+form = "sans"
+vibes = ["classic"]
+aliases = ["cure", "artwiz cure"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Artwiz Cure"
+authors_en = ["Artwiz", "Alec Zapka"]
+description_en = "An 11px proportional pixel font from the Artwiz set covering ASCII and some Western European characters (128 glyphs)."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-only"
+name = "GNU通用公共许可证 第2版"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF的COPYRIGHT字段仅为 “artwiz, fixed by aleczapka”。依据Fedora的artwiz-aleczapka-fonts系列软件包（license字段GPL-2.0-only，Fedora对每个包做过许可审查）与Gentoo的media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为GPL-2.0-only。上游项目页http://artwizaleczapka.sourceforge.net/"
+name_en = "GNU General Public License v2.0 only"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"

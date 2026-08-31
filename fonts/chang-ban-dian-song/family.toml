@@ -1,0 +1,26 @@
+name = "ChangBanDianSong"
+name_zh = "长坂点宋"
+authors = ["yzdnn"]
+homepage = ""
+repository = "https://github.com/yzdnn/ChangBanDianSong-12"
+description = "yzdnn基于平木敬太郎／自家製フォント工房的KH ドット道玄坂系列增补简繁汉字而成的点阵宋体。12px一档含常规版与“防粘连”版（SP后缀，每字右侧多留1px字间距），16px一档分简体（SC）与繁体（TC）两套字形。两档字面上游分属两个独立仓库，本站合并为一个家族。"
+form = "mingcho"
+vibes = ["retro-game", "classic"]
+aliases = ["ChangBanDianSong 12", "ChangBanDianSong 16", "长坂点宋12", "长坂点宋16"]
+converted_from = ""
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Chinese；上游https://github.com/yzdnn/ChangBanDianSong-12/releases (v1.4.3), https://github.com/yzdnn/ChangBanDianSong-16/releases (v1.3.1)"
+added = "2026-08-31"
+
+name_en = "ChangBanDianSong"
+authors_en = ["yzdnn"]
+description_en = "A bitmap Song typeface by yzdnn, extending the KH Dot Dogenzaka series by Keitaro Hiraki / Jikasei Font Kobo with simplified and traditional Chinese characters. The 12px size comes in a regular and an anti-blur cut (the SP suffix, which leaves an extra pixel of sidebearing to the right of each character); the 16px size comes in simplified (SC) and traditional (TC) glyph sets. Upstream publishes the two sizes from two separate repositories; they are catalogued here as one family."
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Chinese; upstream https://github.com/yzdnn/ChangBanDianSong-12/releases (v1.4.3), https://github.com/yzdnn/ChangBanDianSong-16/releases (v1.3.1)"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "两个上游仓库各自附带OFL.txt，正文完全相同，仅版权年份一处不同（12px仓库为2025-2026，16px仓库为2025），均署名yzdnn。此处收录年份范围较宽的12px仓库那一份。"
+name_en = "SIL Open Font License 1.1"
+note_en = "Both upstream repositories ship their own OFL.txt. The texts are identical apart from the copyright year (2025-2026 in the 12px repository, 2025 in the 16px one) and both are attributed to yzdnn. The copy catalogued here is the one from the 12px repository, whose year range covers both."

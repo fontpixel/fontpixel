@@ -1,11 +1,14 @@
 name = "DotGothic16"
-name_zh = ""
-author = "Fontworks Inc."
+authors = ["Fontworks Inc."]
 homepage = "https://fontworks.co.jp/fontsearch/dotgothic16std-m/"
 repository = "https://github.com/fontworks-fonts/DotGothic16"
 description = ""
 form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["DotGothic16 Std", "Dot Gothic 16", "ドットゴシック16"]
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fontworks-fonts--DotGothic16；上游 https://github.com/fontworks-fonts/DotGothic16 (HEAD 快照，收录于 2026-08-18)；由 ttf 转换"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fontworks-fonts--DotGothic16；上游https://github.com/fontworks-fonts/DotGothic16（HEAD快照，收录于2026-08-18）；由ttf转换"
 added = "2026-08-21"
+name_en = "DotGothic16"
+authors_en = ["Fontworks Inc."]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/fontworks-fonts--DotGothic16; upstream https://github.com/fontworks-fonts/DotGothic16 (HEAD snapshot, catalogued 2026-08-18); converted from ttf"

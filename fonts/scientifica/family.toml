@@ -1,0 +1,25 @@
+name = "Scientifica"
+authors = ["Akshay Oppiliappan (NerdyPepper)"]
+homepage = ""
+repository = "https://github.com/NerdyPepper/scientifica"
+description = "11px等宽点阵字体，字面窄、行高紧，含常规、粗体与斜体三款（常规与斜体各1070字形，粗体973）。"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+aliases = ["scientifica-11"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/scientifica；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Scientifica"
+authors_en = ["Akshay Oppiliappan (NerdyPepper)"]
+description_en = "An 11px monospace bitmap font with a narrow face and tight line height, in regular, bold and italic (1,070 glyphs each for regular and italic, 973 for bold)."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/scientifica; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "LICENSE"
+note = "字体文件取自Tecate/bitmap-fonts的快照；许可证取自上游仓库NerdyPepper/scientifica的LICENSE，为OFL 1.1全文，署名 “Copyright (c) 2020 Akshay Oppiliappan (nerdy@peppe.rs)”。上游HEAD只有FontForge源文件（.sfd），编译产物在Releases，故字体本身未从上游直接取。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The font files come from the Tecate/bitmap-fonts snapshot; the licence comes from the LICENSE in the upstream NerdyPepper/scientifica repository, the full OFL 1.1 text attributed to \"Copyright (c) 2020 Akshay Oppiliappan (nerdy@peppe.rs)\". Upstream HEAD carries only FontForge sources (.sfd) with built artifacts in Releases, which is why the fonts themselves were not taken from upstream."

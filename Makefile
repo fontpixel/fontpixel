@@ -8,8 +8,9 @@ setup:
 	cd site && npm install
 
 fonts:
-	$(PY) -m fbf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
-	mkdir -p site/public/downloads && cp -f dist-downloads/* site/public/downloads/
+	$(PY) -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
+	$(PY) -m opf.brandfont --fonts fonts --data site/public/data --names site/src/i18n/sitenames.json
+	mkdir -p site/public/downloads && rsync -a --delete dist-downloads/ site/public/downloads/
 
 dev: fonts
 	cd site && npm run dev

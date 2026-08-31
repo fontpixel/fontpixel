@@ -1,11 +1,14 @@
 name = "Z Labs GeoPix 16px"
-name_zh = ""
-author = "Astro_2539, ChenhaoUwU, yzdnn（基于 ChenhaoUwU 的 UwU 点矩黑）"
+authors = ["Astro_2539", "ChenhaoUwU", "yzdnn"]
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
 description = ""
 form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["ZLabs GeoPix", "ZLabs-GeoPix-16px"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px；上游 https://github.com/Astro-2539/ZLabs-DiamondPix-16px (data/ 目录,未见正式 README 说明或独立 release)；由 kbitx 转换"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px；上游https://github.com/Astro-2539/ZLabs-DiamondPix-16px（data/ 目录，未见正式README说明或独立release）；由kbitx转换；字形基于ChenhaoUwU的UwU点矩黑。"
 added = "2026-08-21"
+name_en = "Z Labs GeoPix 16px"
+authors_en = ["Astro_2539", "ChenhaoUwU", "yzdnn"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px; upstream https://github.com/Astro-2539/ZLabs-DiamondPix-16px (data/ directory; no formal README or standalone release found); converted from kbitx; Glyphs are based on ChenhaoUwU's UwU DotMatrix Black."

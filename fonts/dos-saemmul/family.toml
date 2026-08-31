@@ -1,11 +1,14 @@
 name = "DOSSaemmul"
-name_zh = ""
-author = "leedheo（经 hurss 整理为 BDF/TTF 发布）"
+authors = ["leedheo", "hurss"]
 homepage = ""
 repository = "https://github.com/hurss/fonts"
 description = ""
 form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["cute"]  # UNVERIFIED
+aliases = ["DOS Saemmul", "도스샘물"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts；上游 https://github.com/hurss/fonts"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts；上游https://github.com/hurss/fonts；原作者leedheo，由hurss整理为BDF/TTF发布。"
 added = "2026-08-21"
+name_en = "DOSSaemmul"
+authors_en = ["leedheo", "hurss"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts; upstream https://github.com/hurss/fonts; Originally by leedheo; compiled and released as BDF/TTF by hurss."

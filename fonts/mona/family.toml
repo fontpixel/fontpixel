@@ -1,0 +1,24 @@
+name = "Mona"
+authors = ["Monad ABXY"]
+homepage = "https://monadabxy.com/fonts/mona/"
+repository = "https://github.com/MonadABXY/mona-font"
+description = "支持多语言、特殊符号与表情的像素字体，10px与12px两档共四个字面（10、10×12、12、8×12），除8×12外各含粗体。拉丁部分带字距调整。12px另有SC／TC／HK／JP／KR五个地区字形版本。"
+form = "gothic"
+vibes = ["retro-game"]
+aliases = ["Mona Font", "mona-font", "Mona10", "Mona12", "Mona8x12", "Mona10x12"]
+converted_from = "ttf"
+provenance = "上游https://github.com/MonadABXY/mona-font，取自release 2026.08.16的MonaFont-ttf.zip（收录于2026-08-30）。收录“01 Main”（含文字与表情的完整字体，四档字面）与“02 Text Only”（12px的HK/JP/KR/SC/TC五个地区字形版，表情较少）；发行包另有“03 Emoji Only”纯表情字体，未收录。由ttf按各自原生格点栅格化。上游的完整TTF带OpenType locl，可按文本语言切换中日韩字形；但点阵格式表达不了“同一码位的多个地区写法”，本站导出的位图TTF也没有GSUB。所以地区字形只能按文件分开收：12px的SC／TC／HK／JP／KR五份各自是固定字形，Main那几档固化的是上游默认字形（实测与KR版仅差0.42%，与SC版差13.9%）。Main的表情覆盖更全（1979对777）。"
+added = "2026-08-30"
+name_en = "Mona"
+authors_en = ["Monad ABXY"]
+description_en = "A pixel font covering multilingual text, special symbols and emoji, in four faces across 10px and 12px (10, 10x12, 12, 8x12); all but 8x12 include a bold weight. Latin has kerning. The 12px size additionally ships SC/TC/HK/JP/KR regional glyph-form builds."
+provenance_en = "Upstream https://github.com/MonadABXY/mona-font , taken from MonaFont-ttf.zip in release 2026.08.16 (catalogued 2026-08-30). Only the \"01 Main\" group is catalogued here, i.e. the complete fonts with both text and emoji; the release also ships \"02 Text Only\" (text-only builds with HK/JP/KR/SC/TC regional glyph forms) and \"03 Emoji Only\", which are not catalogued separately. Rasterised from TTF at each face's native grid. The upstream complete TTF carries the OpenType locl feature and can switch CJK forms by text language. Bitmap formats cannot express several regional forms for one code point, and the bitmap TTFs exported here carry no GSUB, so regional forms are catalogued as separate files: the five 12px SC/TC/HK/JP/KR builds each have fixed forms, while the Main faces freeze upstream's default forms (measured 0.42% different from the KR build, 13.9% from SC). Main has broader emoji coverage (1,979 vs 777)."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "LICENSE/mona.txt：“Copyright (c) 2025, Monad ABXY, with Reserved Font Name \"Mona\". This Font Software is licensed under the SIL Open Font License, Version 1.1.”字形取材自Noto Emoji（OFL-1.1／Apache-2.0）、方舟像素（OFL-1.1）、PixelMplus（M+ FONT LICENSE）与k8x12（旧版M+ 授权，等同公有领域），均为自由授权。"
+name_en = "SIL Open Font License 1.1"
+note_en = "LICENSE/mona.txt reads: \"Copyright (c) 2025, Monad ABXY, with Reserved Font Name \\\"Mona\\\". This Font Software is licensed under the SIL Open Font License, Version 1.1.\" Glyphs draw on Noto Emoji (OFL-1.1 / Apache-2.0), Ark Pixel (OFL-1.1), PixelMplus (M+ FONT LICENSE) and k8x12 (old M+ license, public-domain-equivalent) — all free licenses."

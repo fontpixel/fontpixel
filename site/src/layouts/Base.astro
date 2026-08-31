@@ -1,8 +1,8 @@
 ---
 import '../styles/tokens.css';
-import BrandMark from '../islands/BrandMark.svelte';
-import { t, otherLang, type Lang } from '../i18n';
-import { loadIndex, withBase } from '../lib/data';
+import { readFileSync } from 'node:fs';
+import { LANGS, LANG_NAMES, LANG_TAGS, t, otherLang, type Lang } from '../i18n';
+import { withBase } from '../lib/data';
 
 interface Props {
   lang: Lang;
@@ -13,48 +13,94 @@ interface Props {
   ogImage?: string;
 }
 
+const REPO_URL = 'https://github.com/pixelfont/open-pixel-fonts';
+
 const { lang, title, description, path, ogImage } = Astro.props;
 const s = t(lang);
 const other = otherLang(lang);
-const canonical = withBase(`/${lang}${path}`);
+// canonical / og:url / hreflang 必须是绝对地址，相对路径搜索引擎不认。
+// Astro.site 由 astro.config 的 site 提供（CI 注入 OPF_SITE）。
+const abs = (p: string) => new URL(withBase(p), Astro.site).href;
+const canonical = abs(`/${lang}${path}`);
+const alternates = LANGS.map((l) => ({ tag: LANG_TAGS[l], href: abs(`/${l}${path}`) }));
+const isHome = path === '/';
 
-// 站名由馆藏字体自渲染（签名元素）：挑选一款覆盖中文的家族
-let brandFont: { slug: string; variantId: string } | null = null;
+// 站名用构建期子集出的像素 web 字体（brand.woff2，几 KB 全站缓存一份），
+// 取代旧的 canvas 逐页渲染。数据未构建时 brand 为 null，退回系统字体。
+let brand: { file: string; px: number; family: string } | null = null;
 try {
-  const idx = loadIndex();
-  const preferred = ['fusion-pixel', 'ark-pixel', 'ark-pixel-12px-monospaced',
-    'wqy-bitmap-song', 'unifont-ex'];
-  const fam =
-    preferred.map((p) => idx.families.find((f) => f.slug === p)).find(Boolean) ??
-    idx.families.find((f) => f.scripts.includes('zh-hans'));
-  if (fam) {
-    const v = fam.variants.reduce((a, b) => (b.glyphs > a.glyphs ? b : a));
-    brandFont = { slug: fam.slug, variantId: v.id };
-  }
+  brand = JSON.parse(
+    readFileSync(new URL('../../public/data/brand.json', import.meta.url), 'utf-8'),
+  );
 } catch {
   /* 数据未构建时退回纯文字 */
 }
+const brandCss = brand
+  ? `@font-face{font-family:${JSON.stringify(brand.family)};` +
+    `src:url(${JSON.stringify(withBase(`/data/${brand.file}`))}) format("woff2");` +
+    `font-display:swap;}`
+  : '';
 ---
 
 <!doctype html>
-<html lang={lang === 'zh' ? 'zh-Hans' : 'en'}>
+<html lang={LANG_TAGS[lang]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="zh-Hans" href={withBase(`/zh${path}`)} />
-    <link rel="alternate" hreflang="en" href={withBase(`/en${path}`)} />
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.tag} href={a.href} />
+    ))}
     <link rel="alternate" hreflang="x-default" href={withBase(`/zh${path}`)} />
+    <meta property="og:type" content={isHome ? 'website' : 'article'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={s.siteName} />
+    <meta property="og:locale" content={LANG_TAGS[lang].replace('-', '_')} />
+    {LANGS.filter((l) => l !== lang).map((l) => (
+      <meta property="og:locale:alternate" content={LANG_TAGS[l].replace('-', '_')} />
+    ))}
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site).href} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />}
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    {/* 结构化数据：让搜索引擎认出这是一个可站内检索的字体合集 */}
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': isHome ? 'WebSite' : 'WebPage',
+        name: s.siteName,
+        description,
+        url: canonical,
+        inLanguage: LANG_TAGS[lang],
+        license: 'https://opensource.org/licenses/MIT',
+        ...(isHome && {
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: {
+              '@type': 'EntryPoint',
+              urlTemplate: `${abs(`/${lang}/`)}?q={search_term_string}`,
+            },
+            'query-input': 'required name=search_term_string',
+          },
+        }),
+      })}
+    />
+    {brand && (
+      <link rel="preload" as="font" type="font/woff2" crossorigin
+            href={withBase(`/data/${brand.file}`)} />
+    )}
+    {brand && <style set:html={brandCss} />}
     <script is:inline>
       (function () {
         try {
-          var t = localStorage.getItem('fbf-theme');
+          var t = localStorage.getItem('opf-theme');
           var m =
             t ||
             (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -66,62 +112,215 @@ try {
     </script>
   </head>
   <body>
+    {/* 键盘/读屏用户绕过整个页头直达正文；仅在获得焦点时可见 */}
+    <a class="skip-link" href="#main">{s.skipToContent}</a>
     <header class="site-header">
       <div class="container site-header__row">
         <a class="site-brand" href={withBase(`/${lang}/`)}>
-          {
-            brandFont ? (
-              <BrandMark
-                client:load
-                slug={brandFont.slug}
-                variantId={brandFont.variantId}
-                dataBase={withBase('/data')}
-                text={s.siteName}
-              />
-            ) : (
-              <span class="site-brand__name">{s.siteName}</span>
-            )
-          }
-          {s.siteNameLatin && s.siteNameLatin !== s.siteName && (
-            <span class="site-brand__latin mono">{s.siteNameLatin}</span>
-          )}
+          <span
+            class:list={['site-brand__name', brand && 'site-brand__name--pix']}
+            style={brand ? `font-size:${brand.px * 2}px` : undefined}
+          >
+            {s.siteName}
+          </span>
         </a>
-        <nav class="site-nav" aria-label="site">
+        <nav class="site-nav" aria-label={s.siteNavLabel}>
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
           <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
-          <a
-            href={withBase(`/${other}${path}`)}
-            data-testid="lang-switch"
-            rel="alternate"
-            hreflang={other === 'zh' ? 'zh-Hans' : 'en'}>{s.langSwitch}</a
-          >
+          <details class="langmenu" data-testid="lang-menu">
+            <summary aria-label={s.langLabel} title={s.langLabel}>
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m5 8 6 6" />
+                <path d="m4 14 6-6 2-3" />
+                <path d="M2 5h12" />
+                <path d="M7 2h1" />
+                <path d="m22 22-5-10-5 10" />
+                <path d="M14 18h6" />
+              </svg>
+            </summary>
+            <ul>
+              {LANGS.filter((l) => l !== lang).map((l) => (
+                <li>
+                  <a
+                    href={withBase(`/${l}${path}`)}
+                    data-lang-link
+                    data-testid={l === other ? 'lang-switch' : undefined}
+                    rel="alternate"
+                    hreflang={LANG_TAGS[l]}>{LANG_NAMES[l]}</a
+                  >
+                </li>
+              ))}
+            </ul>
+          </details>
           <button
             type="button"
             class="theme-toggle"
             data-testid="theme-toggle"
             aria-label={s.themeToggle}
-            title={s.themeToggle}>◐</button
+            title={s.themeToggle}
           >
+            <svg
+              class="icon icon--sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+            <svg
+              class="icon icon--moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
+              />
+            </svg>
+          </button>
+          <a
+            class="nav-icon"
+            href={REPO_URL}
+            data-testid="github-link"
+            aria-label={s.nav.github}
+            title={s.nav.github}
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+              />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+          </a>
         </nav>
       </div>
       <hr class="hairline" style="margin:0" />
     </header>
 
-    <main class="container site-main">
+    <script>
+      // 切语言要留在「当页」——包括目录页的搜索与筛选状态。链接是服务端
+      // 渲染的，不知道客户端的 query，点击时按当前 URL 补上。
+      document
+        .querySelectorAll('[data-lang-link]')
+        .forEach((el) =>
+          el.addEventListener('click', (e) => {
+            const a = e.currentTarget as HTMLAnchorElement;
+            const extra = location.search + location.hash;
+            if (extra) {
+              e.preventDefault();
+              location.href = a.pathname + extra;
+            }
+          }),
+        );
+    </script>
+
+    <script>
+      // 语言菜单跟着指针与焦点走：悬停即展开，移开即收起。<details> 原生只认
+      // 点击，所以这里补上——但把原生点击留着，触屏与不支持 hover 的设备仍能用。
+      document.querySelectorAll<HTMLDetailsElement>('.langmenu').forEach((menu) => {
+        const summary = menu.querySelector('summary');
+        if (!summary) return;
+        let closeTimer = 0;
+        const open = () => {
+          clearTimeout(closeTimer);
+          menu.open = true;
+        };
+        const close = () => {
+          clearTimeout(closeTimer);
+          menu.open = false;
+        };
+
+        if (matchMedia('(hover: hover)').matches) {
+          menu.addEventListener('mouseenter', open);
+          // 指针从 summary 划到菜单要越过一小段空隙，留点缓冲免得半路收起
+          menu.addEventListener('mouseleave', () => {
+            closeTimer = window.setTimeout(close, 120);
+          });
+          // 悬停已经展开了，这一下点击若走原生 toggle 反而会把它关掉
+          summary.addEventListener('click', (e) => {
+            if (menu.open) e.preventDefault();
+          });
+        }
+
+        menu.addEventListener('focusin', () => {
+          // 只认键盘来的焦点；鼠标/触屏点出来的焦点交给 <details> 自己处理，
+          // 否则 focusin 先展开、紧接着的原生 toggle 又会把它收回去
+          if (summary.matches(':focus-visible')) open();
+        });
+        menu.addEventListener('focusout', (e) => {
+          const next = (e as FocusEvent).relatedTarget;
+          if (!(next instanceof Node) || !menu.contains(next)) close();
+        });
+        menu.addEventListener('keydown', (e) => {
+          if ((e as KeyboardEvent).key === 'Escape') {
+            close();
+            summary.focus();
+          }
+        });
+      });
+    </script>
+
+    <main id="main" class="container site-main">
       <slot />
     </main>
 
     <footer class="site-footer">
       <hr class="dotline" style="margin:0" />
-      <div class="container site-footer__row">
-        <p>{s.footer.disclaimer}</p>
-        <p>
-          <a href={withBase(`/${lang}/about/`)}>{s.footer.dataSources}</a>
-          ·
-          <a href="https://github.com/pixelfontworkshop/foss-bitmap-fonts"
-            >{s.footer.sourceCode}</a
-          >
-        </p>
+      <div class="container site-footer__inner">
+        <div class="site-footer__blurb">
+          <p class="site-footer__name">{s.siteName}</p>
+          <p>{s.siteTagline}</p>
+        </div>
+        <nav class="site-footer__links" aria-label={s.footer.navLabel}>
+          <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
+          <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
+          <a href={withBase(`/${lang}/about/#datasources`)}>{s.footer.dataSources}</a>
+          <a href={REPO_URL} rel="noopener">{s.footer.sourceCode}</a>
+        </nav>
+        <div class="site-footer__legal">
+          <p>{s.footer.disclaimer}</p>
+          <p>
+            {s.footer.siteLicense}{' '}
+            {/* 版权行不走 i18n：年份与人名各语言相同，而其中要嵌链接 */}
+            <span class="site-footer__copy">
+              © 2026 <a href="https://tomchen.org/" rel="noopener">Tom Chen</a>
+            </span>
+          </p>
+        </div>
       </div>
     </footer>
 
@@ -131,7 +330,7 @@ try {
         const cur = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
         document.documentElement.dataset.theme = cur;
         try {
-          localStorage.setItem('fbf-theme', cur);
+          localStorage.setItem('opf-theme', cur);
         } catch {
           /* 私隐模式等场景忽略 */
         }
@@ -139,11 +338,25 @@ try {
     </script>
 
     <style>
+      .skip-link {
+        position: absolute;
+        left: var(--s3);
+        top: -3rem;
+        z-index: 100;
+        padding: var(--s2) var(--s3);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        transition: top 0.15s;
+      }
+      .skip-link:focus {
+        top: var(--s2);
+      }
       .site-header__row {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
         gap: var(--s4);
+        flex-wrap: wrap;
         padding-top: var(--s4);
         padding-bottom: var(--s3);
       }
@@ -151,22 +364,24 @@ try {
         display: flex;
         align-items: baseline;
         gap: var(--s2);
+        min-width: 0;
       }
       .site-brand__name {
         font-size: 1.35rem;
         font-weight: 700;
         letter-spacing: 0.02em;
       }
-      .site-brand__latin {
-        color: var(--ink-3);
-        font-size: 0.75rem;
-        letter-spacing: 0.04em;
+      /* 像素 web 字体：字号必须是原生像素的整数倍（inline style 给 2×），
+         合成粗体与字距都会毁掉像素网格 */
+      .site-brand__name--pix {
+        font-family: 'FBF Brand', system-ui, sans-serif;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 1;
+        font-synthesis: none;
       }
       @media (max-width: 1100px) {
-        .site-brand__latin {
-          display: none;
         }
-      }
       .site-nav {
         display: flex;
         align-items: center;
@@ -174,10 +389,64 @@ try {
         font-size: 0.9rem;
         color: var(--ink-2);
       }
+      .langmenu {
+        position: relative;
+      }
+      .langmenu summary {
+        cursor: pointer;
+        list-style: none;
+      }
+      .langmenu summary::-webkit-details-marker {
+        display: none;
+      }
+      .langmenu ul {
+        position: absolute;
+        right: 0;
+        top: 1.6em;
+        z-index: 20;
+        margin: 0;
+        padding: var(--s2) 0;
+        list-style: none;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        min-width: 8rem;
+      }
+      .langmenu li a {
+        display: block;
+        padding: var(--s1) var(--s3);
+        white-space: nowrap;
+      }
+      .langmenu li a:hover {
+        background: var(--accent-soft);
+      }
+      /* summary 与菜单之间有段视觉留白，指针穿过时会离开 .langmenu、触发收起。
+         用一块透明区域补上——只贴在 summary 正下方，免得展开时盖住左边的导航链接。 */
+      .langmenu[open]::after {
+        content: '';
+        position: absolute;
+        inset: 100% 0 auto 0;
+        height: 0.8em;
+      }
+      .icon {
+        width: 1.15em;
+        height: 1.15em;
+        display: block;
+      }
+      /* 按钮显示「当前」主题的图标：亮色时太阳，暗色时月亮 */
+      :root[data-theme='dark'] .icon--sun,
+      :root:not([data-theme='dark']) .icon--moon {
+        display: none;
+      }
       .theme-toggle {
         border: none;
         padding: 0 var(--s1);
         font-size: 1rem;
+        color: var(--ink-2);
+      }
+      .nav-icon {
+        display: flex;
+        align-items: center;
+        padding: 0 var(--s1);
         color: var(--ink-2);
       }
       .site-main {
@@ -185,15 +454,37 @@ try {
         padding-top: var(--s5);
         padding-bottom: var(--s7);
       }
-      .site-footer__row {
-        display: flex;
-        justify-content: space-between;
-        gap: var(--s4);
-        flex-wrap: wrap;
+      .site-footer__inner {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        gap: var(--s3) var(--s6);
         font-size: 0.8rem;
         color: var(--ink-3);
+        padding-top: var(--s4);
+        padding-bottom: var(--s5);
+      }
+      .site-footer__name {
+        color: var(--ink-2);
+        font-weight: 700;
+      }
+      .site-footer__inner p {
+        margin: 0 0 var(--s1);
+      }
+      .site-footer__links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s1);
+        align-items: flex-start;
+      }
+      .site-footer__legal {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--line);
         padding-top: var(--s3);
-        padding-bottom: var(--s4);
+      }
+      @media (max-width: 640px) {
+        .site-footer__inner {
+          grid-template-columns: 1fr;
+        }
       }
       @media (max-width: 640px) {
         .site-header__row {

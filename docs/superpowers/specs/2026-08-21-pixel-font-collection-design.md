@@ -1,13 +1,13 @@
-# 免费开源位图（像素）字体 — 设计规格
+# 开源像素字体馆 — 设计规格
 
 日期:2026-08-21
 状态:已与项目所有者逐节确认通过
-站名:免费开源位图（像素）字体 / Free & Open Source Bitmap (Pixel) Fonts
+站名:开源像素字体馆 / Open Pixel Fonts
 部署:GitHub Pages(展示资产)+ GitHub Releases(下载物)
 
 ## 1. 背景与目标
 
-把收集来的开源点阵字体(以 CJK 为主)整理成一个自动构建的静态目录网站。字体源以 BDF/PCF 放进 `fonts/` 目录即自动收录。旧项目 `../foss-bitmap-fonts-old` 整体废弃重做;其覆盖率思路保留并大幅扩展,视觉、交互、工程全部重来。旧项目确认的三大败因:视觉有 AI 味、交互与功能不足、工程质量差(含 hash 路由不利分享)。
+把收集来的开源点阵字体(以 CJK 为主)整理成一个自动构建的静态目录网站。字体源以 BDF/PCF 放进 `fonts/` 目录即自动收录。旧项目 `../open-pixel-fonts-old` 整体废弃重做;其覆盖率思路保留并大幅扩展,视觉、交互、工程全部重来。旧项目确认的三大败因:视觉有 AI 味、交互与功能不足、工程质量差(含 hash 路由不利分享)。
 
 **成功标准**
 
@@ -47,7 +47,7 @@
 ## 3. 仓库与目录约定
 
 ```
-foss-bitmap-fonts/
+open-pixel-fonts/
 ├── fonts/                        # 字体源,git 追踪
 │   └── <family-slug>/
 │       ├── family.toml           # 手填元数据(可缺省,构建器生成 stub)
@@ -93,7 +93,6 @@ provenance = ""                   # 来源与获取说明(导入工具自动写�
 spdx = "OFL-1.1"                  # 或 LicenseRef-<name>
 name = ""                         # 自定义许可证显示名
 file = "OFL.txt"                  # 指向目录内文本
-commercial = true                 # 可商用(自动识别已知 SPDX 时自动推;自定义须手填)
 note = ""                         # 附加限制说明
 
 [samples]                         # 可选,覆盖默认样例句
@@ -144,7 +143,7 @@ script_subset = ""                # zh-Hans|zh-Hant|ja|ko|latin|…(fusion-pixel
 2. **auto-低**:仅从 BDF `COPYRIGHT`/`NOTICE` 属性得到提示,站点显示「待确认」。
 3. **manual**:`family.toml` `[license]` 覆写一切。
 
-未识别 → 构建警告 + 站点「许可证未确认」警示条。`commercial` 字段:已知 SPDX 自动推导,自定义许可证必须手填。站点全站脚注:许可证信息仅供参考,以上游原文为准。
+未识别 → 构建警告 + 站点「许可证未确认」警示条。（原有的 `commercial` 字段已于 2026-08-31 移除:收录标准本身就要求授权允许商用,站上不存在不可商用的字体,逐字体再记一个恒为真的字段是冗余,也曾因白名单不全而误报「未知」。）站点全站脚注:许可证信息仅供参考,以上游原文为准。
 
 ### 4.5 字形包(canvas 渲染数据源)
 
@@ -161,19 +160,19 @@ script_subset = ""                # zh-Hans|zh-Hant|ja|ko|latin|…(fusion-pixel
 ### 4.7 下载物与 Releases
 
 - 每变体:`<family>--<file>.bdf.gz`、`<family>--<file>.pcf.gz`(bdftopcf 生成;转换失败记警告并只提供 BDF)。每家族:`<family>.zip`(全部变体 BDF + 许可证 + 来源说明 README)。
-- **位图 TTF**(2026-08-29 新增):按(字重 × 排布 × 语言子集)分组,同组的全部像素尺寸打进一个 TTF,以 EBDT/EBLC strike 承载,`glyf` 内为空轮廓、不含矢量数据。文件名只带组间真正有差异的维度(单组家族即 `<family>.ttf`)。实现见 `pipeline/fbf/ttfexport.py`,以「构建 → 用 OTB 解析器读回 → 与源 BDF 逐字节比对」验证。
+- **位图 TTF**(2026-08-29 新增):按(字重 × 排布 × 语言子集)分组,同组的全部像素尺寸打进一个 TTF,以 EBDT/EBLC strike 承载,`glyf` 内为空轮廓、不含矢量数据。文件名只带组间真正有差异的维度(单组家族即 `<family>.ttf`)。实现见 `pipeline/opf/ttfexport.py`,以「构建 → 用 OTB 解析器读回 → 与源 BDF 逐字节比对」验证。
 - CI 上传到滚动 Release(tag `downloads`),按 manifest sha256 只替换有变化的资产;站点链接指向 `releases/download/downloads/<asset>`,并显示文件大小与 sha256。
 - 本地 dev:链接指向本地 `dist-downloads/`(dev 服务器静态挂载);生产由环境变量切换基址。
 
 ### 4.8 索引产物
 
-- `index.json`(目录页,目标 ≤ 50KB gz):每家族 slug、双语名、form/vibes、尺寸列表、粗细、等宽性、书写系统、许可证(spdx+commercial)、关键覆盖摘要、汉字墨迹与宣称尺寸、字形数、作者、是否转制、核心包与预渲染路径、变体清单。
+- `index.json`(目录页,目标 ≤ 50KB gz):每家族 slug、双语名、form/vibes、尺寸列表、粗细、等宽性、书写系统、许可证(spdx)、关键覆盖摘要、汉字墨迹与宣称尺寸、字形数、作者、是否转制、核心包与预渲染路径、变体清单。
 - 每家族 `detail.json`:完整覆盖率树(逐变体)、全部度量、构建警告、下载 manifest。
 - `coverage-intervals.bin.gz`:全部家族的覆盖码位区间(家族级并集),查字功能与缺字高亮按需加载一次。
 
 ## 5. 站点信息架构
 
-路由(`ASTRO_BASE` 可配,默认 `/foss-bitmap-fonts`):
+路由(`ASTRO_BASE` 可配,默认 `/open-pixel-fonts`):
 
 - `/` — 按 `navigator.language` 跳转 zh/en 的极小页,带 hreflang。
 - `/zh/`、`/en/` — 目录页(即首页)。

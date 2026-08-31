@@ -1,11 +1,14 @@
 name = "x8y12pxDenkiChip"
-name_zh = ""
-author = "hicc"
+authors = ["hicc"]
 homepage = ""
 repository = "https://github.com/hicchicc/x8y12pxDenkiChip"
 description = ""
 form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["Denki Chip"]
 converted_from = "ttf"
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x8y12pxDenkiChip；上游 https://github.com/hicchicc/x8y12pxDenkiChip/releases (v1.000)；由 ttf 转换"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x8y12pxDenkiChip；上游https://github.com/hicchicc/x8y12pxDenkiChip/releases (v1.000)；由ttf转换"
 added = "2026-08-21"
+name_en = "x8y12pxDenkiChip"
+authors_en = ["hicc"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x8y12pxDenkiChip; upstream https://github.com/hicchicc/x8y12pxDenkiChip/releases (v1.000); converted from ttf"

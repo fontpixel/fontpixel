@@ -1,11 +1,14 @@
 name = "NeoDunggeunmo"
-name_zh = ""
-author = "Eunbin Jeong (Dalgona.)"
+authors = ["Eunbin Jeong (Dalgona.)"]
 homepage = "http://neodgm.dalgona.dev"
 repository = "https://github.com/neodgm/neodgm"
 description = ""
 form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["classic", "terminal-hardcore"]  # UNVERIFIED
+aliases = ["네오둥근모", "둥근모꼴", "neodgm_code", "Neo Dunggeunmo"]
 converted_from = "ttf"
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm；上游 https://github.com/neodgm/neodgm/releases (v1.601)；由 ttf 转换"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm；上游https://github.com/neodgm/neodgm/releases (v1.601)；由ttf转换"
 added = "2026-08-21"
+name_en = "NeoDunggeunmo"
+authors_en = ["Eunbin Jeong (Dalgona.)"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm; upstream https://github.com/neodgm/neodgm/releases (v1.601); converted from ttf"

@@ -1,0 +1,25 @@
+name = "Pixtile"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/pixtile-font"
+repository = ""
+description = "GGBotNet做的8px像素字体，385个字形覆盖52种语言的拉丁字母。上游建议按8px的整数倍使用。"
+form = "sans"
+vibes = ["retro-game"]
+aliases = ["Pixtile Font"]
+converted_from = "ttf"
+provenance = "导入自 direct-downloads-2026-08-31/ggbot-pixtile-1.10；上游 https://ggbot.itch.io/pixtile-font；由 ttf 转换"
+added = "2026-08-31"
+
+name_en = "Pixtile"
+authors_en = ["GGBotNet"]
+description_en = "An 8px pixel font by GGBotNet with 385 glyphs covering the Latin alphabet for 52 languages. Upstream recommends using it at multiples of 8px."
+provenance_en = "Imported from direct-downloads-2026-08-31/ggbot-pixtile-1.10; upstream https://ggbot.itch.io/pixtile-font; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "License.txt"
+note = "发布包内附 CC0 1.0 全文（License.txt），字体 name 表的 License 字段亦写明“Creative Commons Zero v1.0 Universal”，itch.io 页面同样标注 CC0。CC0 是版权及邻接权的彻底放弃，商用、修改、再分发均无限制，亦无署名要求。"
+name_en = "CC0 1.0 Universal (public domain dedication)"
+note_en = "The release archive bundles the full CC0 1.0 text (License.txt); the font's name table records the licence as \"Creative Commons Zero v1.0 Universal\", and the itch.io page states CC0 as well. CC0 is an outright waiver of copyright and neighbouring rights: no restriction on commercial use, modification or redistribution, and no attribution requirement."

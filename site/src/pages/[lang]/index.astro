@@ -1,11 +1,12 @@
 ---
+import { licenseShortLabel } from '../../lib/licenselabel';
 import Base from '../../layouts/Base.astro';
 import Catalogue from '../../islands/Catalogue.svelte';
-import { t, type Lang } from '../../i18n';
+import { LANGS, pickName, pickText, t, type Lang } from '../../i18n';
 import { loadIndex, readPreviewSvg, withBase } from '../../lib/data';
 
 export function getStaticPaths() {
-  return [{ params: { lang: 'zh' } }, { params: { lang: 'en' } }];
+  return LANGS.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Lang;
@@ -26,7 +27,7 @@ const previews = new Map(
 
 <Base
   lang={lang}
-  title={`${s.siteName} ${s.siteNameLatin}`}
+  title={s.siteName}
   description={s.siteTagline}
   path="/"
 >
@@ -39,6 +40,8 @@ const previews = new Map(
     s={s}
     dataBase={withBase('/data')}
     fontsBase={withBase(`/${lang}/fonts/`)}
+    charsetIds={index.charsetIds}
+    charsetNames={index.charsetNames}
   />
 
   <!-- 无 JS 首屏与 SEO：岛屿水合后移除 -->
@@ -49,7 +52,7 @@ const previews = new Map(
           <article class="card" data-slug={f.slug}>
             <a href={withBase(`/${lang}/fonts/${f.slug}/`)} class="card__link">
               <h2 class="card__name">
-                {lang === 'zh' && f.nameZh ? f.nameZh : f.name}
+                {pickName(lang, f.names, f.name)}
               </h2>
               <div class="card__preview" set:html={previews.get(f.slug)} />
               <p class="card__meta">
@@ -60,7 +63,9 @@ const previews = new Map(
                   </span>
                 ))}
                 {f.form && <span class="chip">{s.forms[f.form] ?? f.form}</span>}
-                {f.license.spdx && <span class="chip">{f.license.spdx}</span>}
+                {f.license.spdx && (
+                  <span class="chip">{licenseShortLabel(f.license.spdx)}</span>
+                )}
                 <span class="chip mono">
                   {f.glyphCount.toLocaleString()} {s.card.glyphs}
                 </span>

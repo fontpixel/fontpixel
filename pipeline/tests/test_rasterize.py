@@ -3,9 +3,9 @@ from pathlib import Path
 
 import pytest
 
-from fbf.ingest.rasterize import detect_native_ppem, rasterize_ttf
-from fbf.model import row_bytes
-from fbf.parsers.bdf import parse_bdf
+from opf.ingest.rasterize import detect_native_ppem, rasterize_ttf
+from opf.model import row_bytes
+from opf.parsers.bdf import parse_bdf
 
 COLLECTION = Path("/home/chen/githubprojects/pixelfontworkshop/pixel-font-collection-fonts")
 GALMURI_ZIP = COLLECTION / (

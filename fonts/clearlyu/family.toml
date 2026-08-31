@@ -1,18 +1,29 @@
 name = "ClearlyU"
-name_zh = ""
-author = "Mark Leisher"
+authors = ["Mark Leisher"]
 homepage = "https://web.archive.org/web/20090223214014/http://crl.nmsu.edu/~mleisher/cu.html"
 repository = ""
 description = ""
 form = "other"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["classic"]  # UNVERIFIED
+aliases = ["Clearly U"]
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/clearlyu；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/clearlyu；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "ClearlyU"
+authors_en = ["Mark Leisher"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/clearlyu; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for original upstream project)"
 
 [license]
 spdx = "MIT"
-name = "MIT 许可证（X11 风格）"
-commercial = true
-note = "12pt/100dpi 比例宽度字体，覆盖 Unicode 多文种（拉丁、西里尔、希腊、阿拉伯、天城文等），受 Donald Knuth 的 Computer Modern 影响。README 内嵌完整许可证全文（Copyright 2000 Computing Research Lab, New Mexico State University，MIT/X11 风格用语）。cu12 为主字体，cu-alt12/cu-arabic12/cu-lig12/cu-pua12 分别是备用字形、阿拉伯文、连字与 PUA 扩展，同属一套设计的字符集拆分文件，非独立设计。目录内另有 ORIGIN 文件说明本地文件实际提取自 XFree86 4.0.2 源码包。"
+name = "MIT许可证（X11风格）"
+note = "12pt/100dpi比例宽度字体，覆盖Unicode多文种（拉丁、西里尔、希腊、阿拉伯、天城文等），受Donald Knuth的Computer Modern影响。README内嵌完整许可证全文（Copyright 2000 Computing Research Lab, New Mexico State University，MIT/X11风格用语）。cu12为主字体，cu-alt12/cu-arabic12/cu-lig12/cu-pua12分别是备用字形、阿拉伯文、连字与PUA扩展，同属一套设计的字符集拆分文件，非独立设计。目录内另有ORIGIN文件说明本地文件实际提取自XFree86 4.0.2源码包。"
 file = "README"
+name_en = "MIT License (X11-style)"
+note_en = "A 12pt/100dpi proportional-width font covering multiple Unicode scripts (Latin, Cyrillic, Greek, Arabic, Devanagari, and others), influenced by Donald Knuth's Computer Modern. The README embeds the full license text (Copyright 2000 Computing Research Lab, New Mexico State University, MIT/X11-style wording). cu12 is the main font; cu-alt12, cu-arabic12, cu-lig12, and cu-pua12 are alternate-glyph, Arabic, ligature, and PUA extension files split from the same design rather than separate fonts. The directory also includes an ORIGIN file noting that the local files were actually extracted from the XFree86 4.0.2 source package."
+
+# 上游另发四个附属字体（替代字形、连字、私用区、阿拉伯字形），各只有
+# 几十到一百多个字形，单列会显示成几个残缺字体。合并进主文件，重复码位
+# 以主文件为准，只补进它没有的那123个。
+[merge]
+"cu12.bdf" = ["cu-alt12.bdf", "cu-arabic12.bdf", "cu-lig12.bdf", "cu-pua12.bdf"]

@@ -1,11 +1,18 @@
 name = "PixelMplus"
-name_zh = ""
-author = "itouhiro（日文假名/汉字取自 M+ BITMAP FONTS）"
+authors = ["itouhiro"]
 homepage = "http://itouhiro.hatenablog.com/entry/20130602/font"
 repository = "https://github.com/itouhiro/PixelMplus"
 description = ""
 form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["Pixel Mplus", "ピクセルMplus", "PixelMplus10", "PixelMplus12"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--PixelMplus；上游 https://github.com/itouhiro/PixelMplus"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--PixelMplus；上游https://github.com/itouhiro/PixelMplus；日文假名与汉字取自M+ BITMAP FONTS。"
+# 上游按X11惯例把同一字面拆成几份：汉字假名一份、拉丁一份（-iso）、
+# 半角假名一份（-jisx0201）、补充符号一份（-jisx0213）。主文件里连ASCII
+# 空格都没有，分别收录会显示成几个残缺字体。
+merge_subsets = true
 added = "2026-08-21"
+name_en = "PixelMplus"
+authors_en = ["itouhiro"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--PixelMplus; upstream https://github.com/itouhiro/PixelMplus; Japanese kana and kanji glyphs are taken from M+ BITMAP FONTS."

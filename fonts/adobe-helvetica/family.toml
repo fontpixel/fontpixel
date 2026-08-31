@@ -1,0 +1,25 @@
+name = "Adobe Helvetica"
+authors = ["Adobe Systems", "Digital Equipment Corporation"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+description = "Adobe为X11制作的Helvetica位图字面，1984–1994年间随X Window System分发，是Unix桌面上用了几十年的比例无衬线体。含常规／粗体／斜体／粗斜四款，75dpi与100dpi两套合计12档像素尺寸（8–34px），每个字面756字形、ISO 10646编码。"
+form = "sans"
+vibes = ["classic"]
+aliases = ["helvR", "Helvetica bitmap", "X11 Helvetica", "xfonts-100dpi", "xfonts-75dpi"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31；上游https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+added = "2026-08-31"
+
+name_en = "Adobe Helvetica"
+authors_en = ["Adobe Systems", "Digital Equipment Corporation"]
+description_en = "Adobe's Helvetica bitmap faces for X11, shipped with the X Window System between 1984 and 1994 and a fixture of Unix desktops for decades. Four styles - roman, bold, oblique and bold oblique - across the 75dpi and 100dpi sets for twelve pixel sizes in total (8-34px), each face carrying 756 glyphs in ISO 10646."
+provenance_en = "Imported from github-clones-2026-08-31; upstream https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+
+[license]
+spdx = "HPND"
+name = "历史性许可与免责声明（HPND）"
+confidence = "manual"
+file = "COPYING"
+note = "两个上游仓库（font-adobe-100dpi与font-adobe-75dpi）的COPYING内容相同，为Adobe与DEC的HPND式许可：“Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.”，随后授予“为任何目的使用、复制、修改、分发与出售本软件及其文档，且无需付费”，条件为保留版权与许可声明、不得以Adobe与DEC之名作宣传。每个BDF的COMMENT块内也逐字重复同一段文字。Debian的xfonts-100dpi／75dpi与Fedora的xorg-x11-fonts三十年来即按此条款分发本套字体。注：字体名Helvetica、Times、New Century Schoolbook等系第三方注册商标，此处属指明来源的指称性使用，本站的收录判定只针对著作权授权，不代表商标权利人的背书。"
+name_en = "Historical Permission Notice and Disclaimer"
+note_en = "Both upstream repositories (font-adobe-100dpi and font-adobe-75dpi) carry the same COPYING: an Adobe/DEC HPND-style notice - \"Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.\" - granting permission \"to use, copy, modify, distribute and sell this software and its documentation for any purpose and without fee\", conditioned on retaining the copyright and permission notices and on not using the Adobe and Digital Equipment names in advertising. Every BDF repeats the same text verbatim in its COMMENT block. Debian's xfonts-100dpi/75dpi and Fedora's xorg-x11-fonts have distributed this set under these terms for three decades. Note: typeface names such as Helvetica, Times and New Century Schoolbook are third-party registered trademarks; their use here is nominative, identifying what the fonts are. This catalogue's inclusion test covers copyright licensing only and implies no endorsement by any trademark owner."

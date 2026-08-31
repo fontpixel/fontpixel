@@ -1,17 +1,22 @@
 name = "GohuFont"
-name_zh = ""
-author = "Hugo Chargois"
+authors = ["Hugo Chargois"]
 homepage = "http://font.gohu.org/"
 repository = ""
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore"]  # UNVERIFIED
+aliases = ["Gohu Font"]
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/gohufont；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/gohufont；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "GohuFont"
+authors_en = ["Hugo Chargois"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/gohufont; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for original upstream project)"
 
 [license]
 spdx = "WTFPL"
 name = "WTFPL（Do What The F*ck You Want To Public License）"
-commercial = true
-note = "含 11px/14px 两档尺寸、regular/bold 两种字重，每档另有 -uni（ISO10646/Unicode 字符集）变体，共 8 个 BDF 文件（取自 gohufont/bdf/，同名 gohufont/pcf/ 下的 .pcf.gz 未取用，优先取 BDF）。COMMENT 字段明确 Licensed under the WTFPL。"
+note = "含11px/14px两档尺寸、regular/bold两种字重，每档另有 -uni（ISO10646/Unicode字符集）变体，共8个BDF文件（取自gohufont/bdf/，同名gohufont/pcf/ 下的 .pcf.gz未取用，优先取BDF）。COMMENT字段明确Licensed under the WTFPL。"
+name_en = "WTFPL (Do What The F*ck You Want To Public License)"
+note_en = "Includes 11px and 14px sizes in regular and bold weights, each with an additional -uni (ISO10646/Unicode charset) variant, eight BDF files in total (taken from gohufont/bdf/; the .pcf.gz files under the matching gohufont/pcf/ were not used, BDF was preferred). The COMMENT field explicitly states \"Licensed under the WTFPL\"."

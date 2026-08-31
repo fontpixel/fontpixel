@@ -1,0 +1,24 @@
+name = "Terminusmod"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/terminusmod/"
+repository = ""
+description = "给Terminus 12px补的一款真粗体——Terminus该尺寸原本没有粗体字面，本字体专为与它配对使用而作，因此只有粗体一个字面。"
+form = "terminal"
+vibes = ["terminal-hardcore"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/terminusmod-1.9.9；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Terminusmod"
+authors_en = ["stlarch"]
+description_en = "A true bold companion for Terminus at 12px, a size for which Terminus itself ships no bold face. It exists to be paired with Terminus and therefore contains a bold face only."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/terminusmod-1.9.9; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-only"
+name = "GNU通用公共许可证 第2版"
+confidence = "manual"
+file = "README.terminusmod"
+note = "包内README末尾写明 “Released under GPLv2 license.”，每个PCF的COPYRIGHT属性亦为 “GPLv2”。被改作的Terminus在terminusmod成文的年代（1.9.9）尚为GPL-2.0授权，与本字体的GPLv2声明一致，不存在许可冲突。"
+name_en = "GNU General Public License v2.0 only"
+note_en = "The bundled README ends with \"Released under GPLv2 license.\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. Terminus, the font it modifies, was itself under GPL-2.0 at the time terminusmod 1.9.9 was written, so its GPLv2 declaration is consistent and raises no licence conflict."

@@ -1,5 +1,5 @@
 # 导入清单：源路径 → fonts/ 家族。运行：
-#   .venv/bin/python -m fbf.ingest.run --manifest ingest/manifest.toml \
+#   .venv/bin/python -m opf.ingest.run --manifest ingest/manifest.toml \
 #     --src ../pixel-font-collection-fonts --dest fonts --report docs/import-report.md
 #
 # 试点五家族(Task 20)；全量清单在 Task 22 分批补齐。
@@ -85,36 +85,13 @@ vibes = ["decorative", "retro-game"]
 # 注：README 称原字体风格为「隶书体」,作者依汉字部分风格改称「饰尾体」;
 # 且 README 中「SC／TC 后缀」说明为跨仓库复制粘贴残留,本仓库实际只有单一 BDF。
 
-[[family]]
-slug = "chang-ban-dian-song-12"
+[[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ChangBanDianSong-12"
-take = ["ChangBanDianSong-12.bdf", "ChangBanDianSong-SP-12.bdf"]
-license_files = ["OFL.txt"]
-name = "ChangBanDianSong 12"
-name_zh = "长坂点宋 12"
-author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット道玄坂12）"
-homepage = ""
-repository = "https://github.com/yzdnn/ChangBanDianSong-12"
-provenance_url = "https://github.com/yzdnn/ChangBanDianSong-12/releases (v1.4.3)"
-form = "mingcho"
-vibes = ["retro-game", "classic"]
-# 注：SP 后缀为 v1.4.3 新增的「防粘连版」,每字右侧多留 1px 字间距,与常规版同属一个家族。
-# 「长坂点宋 12」与「长坂点宋 16」分属两个独立仓库(无法共用同一 source),故拆成两个 family。
+reason = "已与另一上游仓库合并为单一家族 chang-ban-dian-song（长坂点宋 12 与 16 是同一作者的同一套设计的两档字面，上游分两个仓库发布）。此处保留 todo 条目，防止全量重跑时把旧 slug 重新建出来。"
 
-[[family]]
-slug = "chang-ban-dian-song-16"
+[[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ChangBanDianSong-16"
-take = ["ChangBanDianSong-SC-16.bdf", "ChangBanDianSong-TC-16.bdf"]
-license_files = ["OFL.txt"]
-name = "ChangBanDianSong 16"
-name_zh = "长坂点宋 16"
-author = "yzdnn（基于平木敬太郎／自家製フォント工房的 KH ドット道玄坂16）"
-homepage = ""
-repository = "https://github.com/yzdnn/ChangBanDianSong-16"
-provenance_url = "https://github.com/yzdnn/ChangBanDianSong-16/releases (v1.3.1)"
-form = "mingcho"
-vibes = ["retro-game", "classic"]
-# 注：本仓库分简体字形(SC)与繁体字形(TC)两个版本,同属一个家族。
+reason = "已与另一上游仓库合并为单一家族 chang-ban-dian-song（长坂点宋 12 与 16 是同一作者的同一套设计的两档字面，上游分两个仓库发布）。此处保留 todo 条目，防止全量重跑时把旧 slug 重新建出来。"
 
 [[family]]
 slug = "qiu-ye-yuan-ti-16"
@@ -183,8 +160,8 @@ vibes = ["retro-game"]
 slug = "zlabs-pixel-12px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-Pixel-12px"
 convert = "kbitx"
-convert_take = ["ZLabsPixel_12px_M_CN.kbitx", "ZLabsPixel_12px_M_HC.kbitx", "ZLabsPixel_12px_M_JP.kbitx"]
-license_files = ["LICENSE-OFL"]
+convert_take = ["data/ZLabsPixel_12px_M_CN.kbitx", "data/ZLabsPixel_12px_M_HC.kbitx", "data/ZLabsPixel_12px_M_JP.kbitx"]
+license_files = ["./LICENSE-OFL"]
 name = "Z Labs Pixel 12px"
 name_zh = "Z工坊像素黑体 12px"
 author = "Astro_2539"
@@ -202,7 +179,7 @@ slug = "zlabs-diamondpix-16px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px"
 convert = "kbitx"
 convert_take = ["ZLabsDiamondPix_16px_SC.kbitx"]
-license_files = ["LICENSE-OFL"]
+license_files = ["./LICENSE-OFL"]
 name = "Z Labs DiamondPix 16px"
 name_zh = "Z工坊金刚黑体 16px"
 author = "Astro_2539, ChenhaoUwU, Dalict, yzdnn（基于 ChenhaoUwU 的 UwU 点矩黑）"
@@ -220,7 +197,7 @@ slug = "zlabs-geopix-16px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px"
 convert = "kbitx"
 convert_take = ["ZLabsGeoPix_16px_SC.kbitx"]
-license_files = ["LICENSE-OFL"]
+license_files = ["./LICENSE-OFL"]
 name = "Z Labs GeoPix 16px"
 name_zh = ""
 author = "Astro_2539, ChenhaoUwU, yzdnn（基于 ChenhaoUwU 的 UwU 点矩黑）"
@@ -237,8 +214,8 @@ vibes = ["retro-game"]
 slug = "zlabs-roundpix-12px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-12px"
 convert = "kbitx"
-convert_take = ["ZLabsRoundPix_12px_CN.kbitx"]
-license_files = ["LICENSE-OFL"]
+convert_take = ["data/ZLabsRoundPix_12px_CN.kbitx"]
+license_files = ["./LICENSE-OFL"]
 name = "Z Labs RoundPix 12px"
 name_zh = "Z工坊像素圆体 12px"
 author = "Astro_2539（基于 hicc／x0y0pxFreeFont 的 x12y12pxMaruMinya）"
@@ -252,8 +229,8 @@ vibes = ["cute", "retro-game"]
 slug = "zlabs-roundpix-16px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-16px"
 convert = "kbitx"
-convert_take = ["ZLabsRoundPix_16px_CN.kbitx", "ZLabsRoundPix_16px_JP.kbitx"]
-license_files = ["LICENSE-OFL"]
+convert_take = ["data/ZLabsRoundPix_16px_CN.kbitx", "data/ZLabsRoundPix_16px_JP.kbitx"]
+license_files = ["./LICENSE-OFL"]
 name = "Z Labs RoundPix 16px"
 name_zh = "Z工坊像素圆体 16px"
 author = "Astro_2539（取形参考 Zen Maru Gothic）"
@@ -287,26 +264,14 @@ vibes = ["retro-game"]
 # 注：曾用名 k8x12j。仓库同时发布 MZPXflat／MZPXorig 两种 ttf 变体,
 # 但只有一份 kbitx 主源,故按最高优先级只取 kbitx。form 为推断,拿不准。
 
-[[family]]
-slug = "cmex-ming"
+[[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/bluebat--cmexfonts"
-take = ["*.bdf"]
-license_files = ["LICENSE"]
-name = "CMEX Ming"
-name_zh = ""
-author = "Dynalab Inc.／中文電腦推廣基金會(CMEX);BDF 版本由趙惟倫(Wei-Lun Chao)整理"
-homepage = "http://www.cmex.org.tw/"
-repository = "https://github.com/bluebat/cmexfonts"
-provenance_url = "https://github.com/bluebat/cmexfonts"
-form = "mingcho"
-vibes = ["classic"]
-# 注：Big5+ 明体点阵,含 16x16(cmex16m)、24x24(cmex24m)两个尺寸,同属一个家族。
-
+reason = "字形质量不足，人工复核后从馆藏移除（2026-08-30）；保留此条以免再次导入。"
 [[family]]
 slug = "wqy-unibit"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/carrothu-cn--wqy-unibit-otb"
 convert = "otb"
-convert_take = ["wqy-unibit.otb"]
+convert_take = ["./wqy-unibit.otb"]
 license_files = ["LICENSE"]
 name = "WenQuanYi Unibit"
 name_zh = ""
@@ -388,7 +353,7 @@ vibes = []
 slug = "x5y8px-nega-clip"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x5y8pxNegaClip"
 convert = "ttf"
-convert_take = ["x5y8pxNegaClip.ttf"]
+convert_take = ["fonts/ttf_no-bitmap/x5y8pxNegaClip.ttf"]
 ppem = 8
 license_files = ["OFL.txt"]
 name = "x5y8pxNegaClip"
@@ -402,7 +367,7 @@ vibes = ["decorative", "retro-game"]
 slug = "x5y8px-nega-tape"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x5y8pxNegaTape"
 convert = "ttf"
-convert_take = ["x5y8pxNegaTape.ttf"]
+convert_take = ["fonts/ttf_no-bitmap/x5y8pxNegaTape.ttf"]
 ppem = 8
 license_files = ["OFL.txt"]
 name = "x5y8pxNegaTape"
@@ -416,7 +381,7 @@ vibes = ["decorative", "retro-game"]
 slug = "x8y12px-denki-chip"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x8y12pxDenkiChip"
 convert = "ttf"
-convert_take = ["x8y12pxDenkiChip.ttf"]
+convert_take = ["fonts/ttf_no-bitmap/x8y12pxDenkiChip.ttf"]
 ppem = 12
 license_files = ["OFL.txt"]
 name = "x8y12pxDenkiChip"
@@ -622,7 +587,7 @@ vibes = ["classic", "terminal-hardcore"]
 [[family]]
 slug = "x10y12px-denki-chip-hangul"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x10y12pxDenkiChipHangul"
-take = ["x10y12pxDenkiChipHangul.bdf"]
+take = ["fonts/x10y12pxDenkiChipHangul.bdf"]
 license_files = ["OFL.txt"]
 name = "x10y12pxDenkiChipHangul"
 author = "quiple (Lee Minseo)（改编自 hicc 的 x8y12pxDenkiChip）"
@@ -679,7 +644,7 @@ reason = "README 明确说明目前只发布 PNG(png/jamo.png、png/syllables.pn
 #    内部（且是 .bdf.gz 双重压缩），现有导入器 extract_zip 只支持 .zip、
 #    take 不做任何解压，故无法直接取到该 bdf。RELEASE-ASSETS 下另有直接
 #    可用的 unifont-16.0.04.otf / unifont_jp-16.0.04.otf（非 zip、非 tar，
-#    直接是矢量 OTF），经本地用 fbf.ingest.rasterize.detect_native_ppem
+#    直接是矢量 OTF），经本地用 opf.ingest.rasterize.detect_native_ppem
 #    实测两者均判定为原生 16 格点，故改用 convert="ttf" 栅格化路线收录，
 #    以落实简报里"若有 unifont-*.bdf 就收"的意图（等效替代路径）。
 
@@ -1002,7 +967,7 @@ vibes = ["retro-game"]
 [[family]]
 slug = "tiny5"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Gissio--font_tiny5"
-take = ["Tiny5.bdf", "Tiny5Duo.bdf"]
+take = ["font_Tiny5-HEAD/sources/Tiny5.bdf", "font_Tiny5-HEAD/sources/Tiny5Duo.bdf"]
 license_files = ["OFL.txt"]
 name = "Tiny5"
 name_zh = ""
@@ -1020,7 +985,7 @@ slug = "monocraft"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/IdreesInc--Monocraft"
 convert = "ttf"
 convert_take = ["Monocraft.ttf"]
-license_files = ["LICENSE"]
+license_files = ["Monocraft-HEAD/LICENSE"]
 name = "Monocraft"
 name_zh = ""
 author = "IdreesInc"
@@ -1136,44 +1101,13 @@ form = "decorative"
 vibes = ["decorative", "cute"]
 # 备注：与 Yarndings 12 同仓库但字体家族名不同（视为独立家族）。ppem 自动判定=24。
 
-[[family]]
-slug = "boutique-bitmap-7x7"
+[[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--BoutiqueBitmap7x7"
-convert = "ttf"
-convert_take = ["BoutiqueBitmap7x7_1.7.ttf"]
-license_files = ["OFL.txt"]
-name = "BoutiqueBitmap7x7"
-name_zh = "精品點陣體7×7"
-author = "scott0107000"
-homepage = "https://fontspeech.blogspot.com/"
-repository = "https://github.com/scott0107000/BoutiqueBitmap7x7"
-provenance_url = "https://github.com/scott0107000/BoutiqueBitmap7x7 (HEAD 快照，收录于 2026-08-18)"
-form = "gothic"
-vibes = ["retro-game"]
-# 备注：仓库内无版本号的 BoutiqueBitmap7x7.ttf 实为最旧的 1.499 版（字形最少），真正最新版是
-# _1.7.ttf（经字体内部 version 字段核实），故取此文件，ppem 自动判定=8。FUN/ 下 3 款花式点变体
-# （圆点/方点/扫描线）格点判定失败，不收录。
+reason = "已与另一上游仓库合并为单一家族 boutique-bitmap（精品点阵 7×7 与 9×9 是同一作者同一设计的两档字面，上游分两个仓库发布）。此处保留 todo 条目，防止全量重跑时把旧 slug boutique-bitmap-7x7 重新建出来。"
 
-[[family]]
-slug = "boutique-bitmap-9x9"
+[[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--BoutiqueBitmap9x9"
-convert = "ttf"
-convert_take = ["BoutiqueBitmap9x9_1.92.ttf", "BoutiqueBitmap9x9HK_1.93.ttf"]
-ppem = 10
-license_files = ["OFL.txt"]
-name = "BoutiqueBitmap9x9"
-name_zh = "精品點陣體9×9"
-author = "scott0107000"
-homepage = "https://fontspeech.blogspot.com/"
-repository = "https://github.com/scott0107000/BoutiqueBitmap9x9"
-provenance_url = "https://github.com/scott0107000/BoutiqueBitmap9x9 (HEAD 快照，收录于 2026-08-18)"
-form = "gothic"
-vibes = ["retro-game"]
-# 注意：全字符集 detect_native_ppem 判定失败（可能因合并了 M+ BITMAP/BestTen-DOT/缝合像素三个
-# 来源，个别字形破坏了全局格点公约数）；改用仅拉丁字母+数字子集手动核算，稳定得 ppem=10，
-# 已手填。README 版本表中的"普通版 1.93"实际不在本快照内（仓库只到 1.92），故普通版取 1.92，
-# HK 版取仓库内最高的 1.93。Bold 字重在 Bold_Add_Spacing/ 目录下存在同名但内容不同的"加大字距"
-# 版本，basename glob 无法区分两个同名文件，故本次不收 Bold，留待人工处理。
+reason = "已与另一上游仓库合并为单一家族 boutique-bitmap（精品点阵 7×7 与 9×9 是同一作者同一设计的两档字面，上游分两个仓库发布）。此处保留 todo 条目，防止全量重跑时把旧 slug boutique-bitmap-9x9 重新建出来。"
 
 [[family]]
 slug = "fashionbitmap16"
@@ -1307,34 +1241,9 @@ vibes = ["classic"]
 # "该字体基于 12px 的大小设计"，UPM=1200，已手填 ppem=12（detect_native_ppem 判定失败，
 # 官方 README 亦提及字距调整未严格取整数倍单元格，属已知限制）。仅拉丁/希腊/西里尔字符，无 CJK。
 
-[[family]]
-slug = "nano-qyoan-da-song"
+[[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoQyoanDaSong"
-convert = "ttf"
-convert_take = ["1.ttf", "2.ttf"]
-license_files = []
-name = "NanoQyoanDaSong"
-name_zh = "纳米全大宋"
-author = "H.S.S. 寒沙 (Hansha2011)"
-homepage = ""
-repository = "https://github.com/Hansha2011/NanoQyoanDaSong"
-provenance_url = "https://www.maoken.com/ （猫啃网直链下载包；GitHub 仓库 Upstream-GitHub/Hansha2011--NanoQyoanDaSong 无编译产物，仅 README，已合并至此）"
-form = "mingcho"
-vibes = ["classic"]
-# 注意：目录内"字体授权说明.txt"为猫啃网通用免责声明模板，非真实许可证文本，license_files
-# 留空。据上游 GitHub README：v1.0 为 ISAS 字体包许可，v2.0 起改为 SIL OFL 1.1，本包版本号
-# 未标注，按 INCLUDED.csv（575 行，标 OFL）处理。仅收 1.ttf/2.ttf（各自 ppem 自动判定=46，
-# 与 README 所述"44x44 设计尺寸"不同，以格点判定为准，44 应为字面设计尺寸非渲染网格）；
-# 3.ttf 仅含 11 个字形且判定失败，内容不明，不收录。
-
-# ============ Upstream-Direct（00ff：hicchicc 个人站点，8 个各自独立的像素字体）============
-# 注意：00ff 目录内无任何 README/许可证文件，仅 8 个裸 ttf；INCLUDED.csv 标注均为 OFL
-# （来自 ZeoSeven 目录页 2134-2142，upstream_url=https://hicchicc.github.io/00ff/），但本地
-# 未见许可证文件实体，以下 8 个 family 均加注释说明。ZeoSeven 目录中的 2136(x12y12pxMaruMinyaM)
-# 未见于本目录（该字体在 ZeoSeven-Webfonts/2136--x12y12pxMaruMinyaM 才有），留待孤儿检查处理。
-# 文件名 "x{宽}y{高}px{名称}" 中的高度均与 detect_native_ppem 判定结果一致（除
-# TheStrongGamer 判定为 24，为文件名 12 的两倍，以判定结果为准，不手填 ppem）。
-
+reason = "字形质量不足，人工复核后从馆藏移除（2026-08-30）；保留此条以免再次导入。"
 [[family]]
 slug = "fairfax"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Fairfax"
@@ -1552,7 +1461,7 @@ provenance_url = "https://www.maoken.com/freefonts/11089.html"
 form = "mingcho"
 vibes = ["classic"]
 # 备注：字体 name 表家族名/全名分别为 "Chusung"/"Chusung 16"，明确标注 16，
-# detect_native_ppem 判定失败（gcd=1），故手填 ppem=16。版权继承 1988 Academia Sinica 免费开源位图（像素）字体。
+# detect_native_ppem 判定失败（gcd=1），故手填 ppem=16。版权继承 1988 Academia Sinica 字体。
 
 # 注意：仓库内未见许可证文件（仅猫啃网通用免责声明模板，非真实许可证条款）
 [[family]]
@@ -1579,6 +1488,7 @@ ppem = 10
 license_files = ["SIL_Open_Font_License_1.1.txt"]
 name = "BestTen"
 name_zh = ""
+aliases = ["BestTen-DOT", "BestTen-CRT", "Best Ten", "ベストテン"]
 author = "FLOP DESIGN"
 homepage = "https://flopdesign.booth.pm/items/2747965"
 repository = ""
@@ -1714,7 +1624,7 @@ reason = "已与 Upstream-Direct/NanoDyongChyangSong 合并处理（见上方 fa
 
 [[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Hansha2011--NanoQyoanDaSong"
-reason = "已与 Upstream-Direct/NanoQyoanDaSong 合并处理（见上方 family 'nano-qyoan-da-song'）。 本仓库 HEAD 快照只有 README 与一张示意图，无编译产物，不单独收录。"
+reason = "NanoQyoanDaSong 已从馆藏移除（字形质量不足，2026-08-30），此仓库快照本就只有 README 与一张示意图，无编译产物，不收录。"
 
 [[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/VT323"
@@ -1817,7 +1727,6 @@ vibes = ["retro-game"]
 [family.license]
 spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
-commercial = true
 note = "4thD 是极小尺寸（4px）像素字体，随 ninjaaron/bitocra 合集一同发布；文件本身无版权/许可字段，但同仓库的 bitocra.bdf 等文件明确注明 licenced under the OFL 1.1，故按同一许可对待。README 中列为 “bitocra by ninjaaron”，仓库地址见 repository。"
 
 # 注意：许可声明同上（同仓库同作者，5thElement.bdf 本身亦无版权/许可字段）。
@@ -1838,7 +1747,6 @@ vibes = ["retro-game"]
 [family.license]
 spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
-commercial = true
 note = "5thElement 是极小尺寸（5px）像素字体，随 ninjaaron/bitocra 合集一同发布，许可依据同 4thD 家族说明。"
 
 # 注意：许可声明在 BDF COMMENT 中（bitbuntu.bdf 与 bitbuntu-full.bdf 均含 "licenced under the OFL 1.1"）。
@@ -1859,7 +1767,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
-commercial = true
 note = "Bitbuntu 是 10px 等宽终端字体，bitbuntu.bdf 为 ISO8859-1 字符集、bitbuntu-full.bdf 为 UTF8 全字符集变体，同属一款设计。COMMENT 字段明确 Copyright (c) 2011 Aaron Christianson，licenced under the OFL 1.1。"
 
 # 注意：许可声明在 BDF COMMENT 中（bitocra.bdf / bitocra-full.bdf / bitocra-13.bdf / bitocra-13-full.bdf
@@ -1882,7 +1789,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
-commercial = true
 note = "Bitocra 主设计，含 7px/11px/13px 三档尺寸，11px 与 13px 各有 ISO8859-1 与 full（UTF8）字符集两种变体。README 列为 “bitocra by ninjaaron”。"
 
 # ============================================================
@@ -1908,7 +1814,6 @@ vibes = ["terminal-hardcore", "classic"]
 [family.license]
 spdx = "MIT"
 name = "MIT 许可证"
-commercial = true
 note = "含 10/11/13px 三档尺寸、regular/bold 两种字重，共 6 个 BDF 文件。仓库内与 BDF 头均无许可证文本，MIT 判定依据用户对上游仓库的核查结果。"
 
 # ============================================================
@@ -1933,7 +1838,6 @@ vibes = ["classic"]
 spdx = "MIT"
 name = "MIT 许可证（X11 风格）"
 file = "README"
-commercial = true
 note = "12pt/100dpi 比例宽度字体，覆盖 Unicode 多文种（拉丁、西里尔、希腊、阿拉伯、天城文等），受 Donald Knuth 的 Computer Modern 影响。README 内嵌完整许可证全文（Copyright 2000 Computing Research Lab, New Mexico State University，MIT/X11 风格用语）。cu12 为主字体，cu-alt12/cu-arabic12/cu-lig12/cu-pua12 分别是备用字形、阿拉伯文、连字与 PUA 扩展，同属一套设计的字符集拆分文件，非独立设计。目录内另有 ORIGIN 文件说明本地文件实际提取自 XFree86 4.0.2 源码包。"
 
 # ============================================================
@@ -1959,7 +1863,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "MIT"
 name = "MIT 许可证"
-commercial = true
 note = "16px 等宽终端字体，单一尺寸单文件。BDF 头仅有 COPYRIGHT 字段无许可声明，MIT 判定依据用户核查。"
 
 # ============================================================
@@ -1985,7 +1888,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "MIT"
 name = "MIT 许可证"
-commercial = true
 note = "由 fontforge 生成，BDF COMMENT 注明 “forked from Proggy Tiny”。含 10/13/16px 三档尺寸，每档含 regular/bold，13px 与 16px 另有斜体（-i）变体，共 10 个 BDF 文件。MIT 判定依据用户核查。"
 
 # ============================================================
@@ -2009,7 +1911,6 @@ vibes = ["classic", "terminal-hardcore"]
 [family.license]
 spdx = "MIT"
 name = "MIT 许可证"
-commercial = true
 note = "经典等宽终端字体，含 r400/r700（roman 常规/粗体）与 i400/i700（斜体 常规/粗体）四组字重字型，尺寸覆盖 6/8/9/10px，共 13 个 BDF 文件。各文件 COPYRIGHT 字段明确写明 “Copyright 2013 Joergen Ibsen, MIT license”。"
 
 # ============================================================
@@ -2035,7 +1936,6 @@ vibes = ["terminal-hardcore", "classic"]
 [family.license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
 note = "X11 misc-fixed（俗称 “Fixed”/“Terminal”）字体的 dylex 分支，源自 Markus Kuhn 的 ucs-fonts 工程（BDF COMMENT 标注 “Source: -Misc-Fixed-Medium-R-Normal…$ucs-fonts”），含 6x10/7x13/10x20 三档尺寸、regular/bold/oblique/bold-oblique 四种字型，共 12 个 BDF 文件。各文件 COPYRIGHT 字段声明 Public domain。与同目录内 14x14（crawl，见 dylex-crawl 家族）是不同设计，故拆分。"
 
 # 注意：许可声明同上（同一 BDF COPYRIGHT 声明文本）。
@@ -2056,7 +1956,6 @@ vibes = ["retro-game"]
 [family.license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
 note = "14px 尺寸，FONT XLFD 内 FAMILY_NAME 为 “crawl”（与同目录 “terminal”/“Fixed” 家族的 FONT 名不同，是独立设计，推测源自 Dungeon Crawl 类终端游戏用字体），含 regular/bold/oblique/bold-oblique 四种字型，共 4 个 BDF 文件。COPYRIGHT 字段同样声明 Public domain。"
 
 # ============================================================
@@ -2081,7 +1980,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "WTFPL"
 name = "WTFPL（Do What The F*ck You Want To Public License）"
-commercial = true
 note = "含 11px/14px 两档尺寸、regular/bold 两种字重，每档另有 -uni（ISO10646/Unicode 字符集）变体，共 8 个 BDF 文件（取自 gohufont/bdf/，同名 gohufont/pcf/ 下的 .pcf.gz 未取用，优先取 BDF）。COMMENT 字段明确 Licensed under the WTFPL。"
 
 # ============================================================
@@ -2107,7 +2005,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
-commercial = true
 note = "12px 等宽终端字体，含 normal/bold 两种字重（取 BDF，同名 .pcf.gz 未取用）。OFL-1.1 判定依据用户核查。"
 
 # ============================================================
@@ -2131,7 +2028,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
-commercial = true
 note = "12px 等宽终端字体，单文件。BDF COPYRIGHT 字段明确 “2012-2015 Wiktor W Brodlo. Released under SIL OFL”，COMMENT 附作者主页链接。"
 
 # ============================================================
@@ -2156,7 +2052,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "GPL-2.0-only"
 name = "GNU 通用公共许可证 2.0"
-commercial = true
 note = "单一 PCF 文件（无 BDF 版本，管线支持直接取 PCF）。PCF COPYRIGHT 属性明确 “(C)2007 Hisham Muhammad. GNU GPL with font exception”，附带字体嵌入例外条款，允许将本字体嵌入文档而不导致文档整体受 GPL 约束。"
 
 # ============================================================
@@ -2182,7 +2077,6 @@ vibes = ["classic"]
 [family.license]
 spdx = "LicenseRef-Mplus"
 name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
-commercial = true
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
@@ -2209,7 +2103,6 @@ vibes = ["classic"]
 [family.license]
 spdx = "LicenseRef-Mplus"
 name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
-commercial = true
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
@@ -2236,7 +2129,6 @@ vibes = ["classic"]
 [family.license]
 spdx = "LicenseRef-Mplus"
 name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
-commercial = true
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
@@ -2263,7 +2155,6 @@ vibes = ["classic"]
 [family.license]
 spdx = "LicenseRef-Mplus"
 name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）"
-commercial = true
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
@@ -2289,7 +2180,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
 note = "12px 半窄体（SemiCondensed）等宽终端字体，含 bold/book/italic/medium 四种字型，另有 profont.bdf（FONT XLFD 内 FAMILY_NAME 为 “profont”，但尺寸、SemiCondensed 特征与 COPYRIGHT 文本均与 orp 系列完全一致，判定为同一设计下的附加变体而非独立的 Tobias Jung ProFont），共 5 个 BDF 文件（取 BDF，同名 .pcf.gz 未取用）。各文件 COPYRIGHT 字段为 “Public domain terminal emulator font. Share and enjoy.”（源自 Markus Kuhn 的 ucs-fonts 工程用语）。"
 
 # ============================================================
@@ -2313,7 +2203,6 @@ vibes = ["decorative"]
 [family.license]
 spdx = "GPL-2.0-only"
 name = "GNU 通用公共许可证 2.0"
-commercial = true
 note = "10px 图标字体（取 bdf/siji.bdf，同名顶层 siji.pcf 未取用），BDF COMMENT 说明 “基于 Stlarch 字体、Sm4tik 的 xbm 图标包、FontAwesome 与 Lokaltog Symbol Font 制作的图标字体”。COPYRIGHT 字段为 “GPLv2”。"
 
 # ============================================================
@@ -2337,7 +2226,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
 note = "15px 等宽终端字体，含 regular（sq）与 bold（sqb）两个 BDF 文件（同名 .pcf 未取用）。BDF COMMENT 注明 “Based upon Codec Terminal Text by Chris Cannam”，COPYRIGHT 字段为 “Public domain”。"
 
 # ============================================================
@@ -2362,7 +2250,6 @@ vibes = ["classic", "terminal-hardcore"]
 [family.license]
 spdx = "LicenseRef-Tamsyn"
 name = "Tamsyn 字体许可（BSD 风格）"
-commercial = true
 note = "经典等宽终端字体，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 PCF 文件（同名 .psf.gz 为 Linux 控制台 PSF 格式，管线不支持，未取用）。PCF COPYRIGHT 属性为 “(c) 2015 Scott Fial”。Tamsyn License 为 BSD 风格自由许可。"
 
 # ============================================================
@@ -2388,7 +2275,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "LicenseRef-Tamsyn"
 name = "Tamsyn 字体许可（BSD 风格，衍生须保留原许可与归属）"
-commercial = true
 note = "Tamsyn 的像素级重绘衍生版，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 BDF 文件（取自 bdf/ 子目录，同名 pcf/ 下的 .pcf 未取用）。各文件 COPYRIGHT 字段沿用 “(c) 2015 Scott Fial”，符合 Tamsyn License 对衍生作品保留原作者版权声明的要求。目录内另有 Powerline*.bdf（纯 Powerline 分隔符号补充字体）与 TamzenForPowerline*.bdf（Tamzen 正文缝合 Powerline 符号的衍生版），判定为非独立设计，未收录，见 todo。"
 
 # ============================================================
@@ -2414,7 +2300,6 @@ vibes = ["classic", "terminal-hardcore"]
 [family.license]
 spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
-commercial = true
 note = "知名等宽终端字体，v4.39。含 12/14/16/18/20/22/24/28/32px 九档尺寸、regular/bold 两种字重，14px 另有 ter-u14v.bdf（framebuffer 控制台适配变体），共 20 个 BDF 文件。BDF COPYRIGHT 字段为 “Copyright (C) 2014 Dimitar Toshkov Zhekov”，NOTICE 字段明确 “Licensed under the SIL Open Font License, Version 1.1”。项目主页公开可查（terminus-font.sourceforge.net），但因未见于本仓库 README，未填入 homepage 字段，仅供参考。"
 
 # ============================================================
@@ -2439,7 +2324,6 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "GPL-3.0-or-later"
 name = "GNU 通用公共许可证 3.0 或更高版本"
-commercial = true
 note = "11px 终端字体，含 Tewi（常规设计）与 Tewi2a（数字 2、字母 a 等字形的替代风格变体）两个子款，各含 normal/bold 字重，共 4 个 BDF 文件。BDF COMMENT 内嵌完整 GPLv3 许可文本（“either version 3 of the License, or (at your option) any later version”），并附带字体嵌入例外条款（内嵌本字体不会导致文档整体受 GPL 约束）。"
 
 # ============================================================
@@ -2465,7 +2349,6 @@ vibes = ["retro-game", "classic"]
 [family.license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
 note = "8px/16px 两档基础尺寸，8px 另有 alt/fantasy/mcr/tall/thin 五种风格变体，共取 7 个 PCF 文件（管线支持直接取 PCF）。已排除 unscii-16-full.pcf ——该文件是唯一的 GPL 授权文件（含完整 Unicode 字符集的扩展版本），与其余 Public Domain 文件许可不同，按用户要求不予收录。"
 
 # ============================================================
@@ -2490,7 +2373,6 @@ vibes = ["decorative"]
 [family.license]
 spdx = "GPL-2.0-only"
 name = "GNU 通用公共许可证 2.0"
-commercial = true
 note = "12px 图标字体，单一 BDF 文件。COPYRIGHT 字段为 “GPLv2”。"
 
 # ============================================================
@@ -2541,7 +2423,6 @@ vibes = ["retro-game", "terminal-hardcore"]
 spdx = "CC-BY-SA-4.0"
 name = "Creative Commons 署名-相同方式共享 4.0 国际"
 file = "CC-BY-SA-4.0"
-commercial = true
 note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM PC/XT 主板 BIOS ROM 内置的文本模式字库（并非独立显卡字库，是显卡尚未接管前的系统级后备字体），由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 
 [[family]]
@@ -2562,7 +2443,6 @@ vibes = ["retro-game", "terminal-hardcore"]
 spdx = "CC-BY-SA-4.0"
 name = "Creative Commons 署名-相同方式共享 4.0 国际"
 file = "CC-BY-SA-4.0"
-commercial = true
 note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM CGA（彩色图形适配器）显卡 ROM 内置的文本模式字库，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 
 [[family]]
@@ -2583,7 +2463,6 @@ vibes = ["retro-game", "terminal-hardcore"]
 spdx = "CC-BY-SA-4.0"
 name = "Creative Commons 署名-相同方式共享 4.0 国际"
 file = "CC-BY-SA-4.0"
-commercial = true
 note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM CGA 显卡 ROM 内置字库中笔画较细的「Light」变体（BDF 内 WEIGHT_NAME 标注为 Light，是与 IBM CGA 家族同源但字重不同的独立字体，故单列为一个家族），由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 
 [[family]]
@@ -2604,7 +2483,6 @@ vibes = ["retro-game", "terminal-hardcore"]
 spdx = "CC-BY-SA-4.0"
 name = "Creative Commons 署名-相同方式共享 4.0 国际"
 file = "CC-BY-SA-4.0"
-commercial = true
 note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM EGA（增强图形适配器）显卡 ROM 内置的文本模式字库，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 
 [[family]]
@@ -2625,7 +2503,6 @@ vibes = ["retro-game", "terminal-hardcore"]
 spdx = "CC-BY-SA-4.0"
 name = "Creative Commons 署名-相同方式共享 4.0 国际"
 file = "CC-BY-SA-4.0"
-commercial = true
 note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM MDA（单色显示适配器）显卡 ROM 内置的文本模式字库，README 中仅收录 9x14 一种点阵尺寸，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 
 [[family]]
@@ -2646,7 +2523,6 @@ vibes = ["retro-game", "terminal-hardcore"]
 spdx = "CC-BY-SA-4.0"
 name = "Creative Commons 署名-相同方式共享 4.0 国际"
 file = "CC-BY-SA-4.0"
-commercial = true
 note = "仓库 LICENSE 声明全部 BDF 字体采用 CC BY-SA 4.0；本家族复刻自 IBM VGA（视频图形阵列）显卡 ROM 内置的文本模式字库，即最广为人知的经典 PC/PS2 终端字体，由 VileR 在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于 2016 年转换为 BDF 格式并整理发布（各 BDF 文件内 COPYRIGHT 字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 
 [[todo]]
@@ -2654,4 +2530,1480 @@ source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/uw-ttyp0-1.2"
 reason = """masaeedu 快照里只有 fontspecific 主控 BDF(CHARSET_REGISTRY 为 UW,ENCODING 是字体内部序号),
 上游要靠 genbdf 配合 mgl/*.mgl 在安装时生成有编码的版本,而该快照没带 mgl 目录。
 改从官方 1.3 发行版收录:用 mgl/unicode.mgl 按字形名重映射为 Unicode,
-见 fonts/uw-ttyp0 与 pipeline/fbf/ingest/uwttyp0.py(可重跑)。"""
+见 fonts/uw-ttyp0 与 pipeline/opf/ingest/uwttyp0.py(可重跑)。"""
+
+# ==================== 合并片段:manifest-frag-tecate-2026-08-31.toml ====================
+# Tecate/bitmap-fonts + IT-Studio-Rech/bdf-fonts 自由许可复核后的补收（第四批）。
+# 两个仓库共 54 + 48 个条目,此前只收了 masaeedu 快照核定的 23 个目录;
+# 本片段补齐其余经核实为自由许可的部分,不合格者记入 [[todo]]。
+#
+# artwiz-aleczapka:仓库快照内无 COPYING,BDF 的 COPYRIGHT 只写
+# “artwiz, fixed by aleczapka”。授权依据为发行版的逐包许可审查结论:
+# Fedora 的 artwiz-aleczapka-*-fonts 系列 license 字段为 GPL-2.0-only,
+# Gentoo 的 media-fonts/artwiz-aleczapka-* 同样标 GPL-2。故 confidence=manual、
+# 不附许可证文件,判定依据逐族写在 note 里。
+# 目录内 16 个 BDF 是 14 套彼此独立的设计(glisp 含常规+粗体,mints 含 mild+strong
+# 两档字重),按“一个真实字体一个家族”拆成 14 个家族。
+
+[[family]]
+slug = "artwiz-anorexia"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["anorexia.bdf"]
+name = "Artwiz Anorexia"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["anorexia", "artwiz anorexia"]
+description = "Artwiz 系列的 11px 比例像素字体，字面极瘦，仅含 ASCII（95 字形）。"
+description_en = "An 11px proportional pixel font from the Artwiz set, extremely narrow, ASCII only (95 glyphs)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-aqui"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["aqui.bdf"]
+name = "Artwiz Aqui"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["aqui", "artwiz aqui"]
+description = "Artwiz 系列的 11px 比例像素字体，笔画方硬带斜切，仅含 ASCII（95 字形）。"
+description_en = "An 11px proportional pixel font from the Artwiz set with hard, bevelled strokes; ASCII only (95 glyphs)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-cure"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["cure.bdf"]
+name = "Artwiz Cure"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["cure", "artwiz cure"]
+description = "Artwiz 系列的 11px 比例像素字体，覆盖 ASCII 与部分西欧字符（128 字形）。"
+description_en = "An 11px proportional pixel font from the Artwiz set covering ASCII and some Western European characters (128 glyphs)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-drift"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["drift.bdf"]
+name = "Artwiz Drift"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["drift", "artwiz drift"]
+description = "Artwiz 系列的 10px 像素字体，覆盖 ASCII 与西欧字符（201 字形）。"
+description_en = "A 10px pixel font from the Artwiz set covering ASCII and Western European characters (201 glyphs)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-edges"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["edges.bdf"]
+name = "Artwiz Edges"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["edges", "artwiz edges"]
+description = "Artwiz 系列的 10px 等宽像素字体，完整覆盖 Latin-1（256 字形）。"
+description_en = "A 10px monospace pixel font from the Artwiz set with full Latin-1 coverage (256 glyphs)."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-fkp"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["fkp.bdf"]
+name = "Artwiz FKP"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["fkp", "artwiz fkp"]
+description = "Artwiz 系列里字面最大的一款，16px 等宽，完整覆盖 Latin-1（256 字形）。"
+description_en = "The largest face in the Artwiz set: 16px monospace with full Latin-1 coverage (256 glyphs)."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-gelly"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["gelly.bdf"]
+name = "Artwiz Gelly"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["gelly", "artwiz gelly"]
+description = "Artwiz 系列的 10px 比例像素字体，仅含 ASCII（95 字形）。"
+description_en = "A 10px proportional pixel font from the Artwiz set, ASCII only (95 glyphs)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-glisp"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["glisp.bdf", "glisp-bold.bdf"]
+name = "Artwiz Glisp"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["glisp", "artwiz glisp"]
+description = "Artwiz 系列的 11px 比例像素字体，含常规与粗体两档字重，仅含 ASCII（各 95 字形）。"
+description_en = "An 11px proportional pixel font from the Artwiz set in regular and bold, ASCII only (95 glyphs each)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-kates"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["kates.bdf"]
+name = "Artwiz Kates"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["kates", "artwiz kates"]
+description = "Artwiz 系列的 14px 等宽像素字体，完整覆盖 Latin-1（256 字形）。"
+description_en = "A 14px monospace pixel font from the Artwiz set with full Latin-1 coverage (256 glyphs)."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-lime"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["lime.bdf"]
+name = "Artwiz Lime"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["lime", "artwiz lime"]
+description = "Artwiz 系列的 10px 等宽像素字体，覆盖 ASCII 与西欧字符（208 字形）。"
+description_en = "A 10px monospace pixel font from the Artwiz set covering ASCII and Western European characters (208 glyphs)."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-mints"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["mints-mild.bdf", "mints-strong.bdf"]
+name = "Artwiz Mints"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["mints", "artwiz mints"]
+description = "Artwiz 系列里字面最小的一款，8px 比例，分 mild 与 strong 两档轻重，仅含 ASCII（各 95 字形）。"
+description_en = "The smallest face in the Artwiz set: 8px proportional in two weights, mild and strong; ASCII only (95 glyphs each)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[family.variants."mints-strong.bdf"]
+weight = "bold"
+
+[[family]]
+slug = "artwiz-nu"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["nu.bdf"]
+name = "Artwiz Nu"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["nu", "artwiz nu"]
+description = "Artwiz 系列的 11px 比例像素字体，覆盖 ASCII 与西欧字符（191 字形）。"
+description_en = "An 11px proportional pixel font from the Artwiz set covering ASCII and Western European characters (191 glyphs)."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-smoothansi"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["smoothansi.bdf"]
+name = "Artwiz Smoothansi"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["smoothansi", "artwiz smoothansi"]
+description = "Artwiz 系列的 13px 等宽像素字体，完整覆盖 Latin-1（256 字形）。"
+description_en = "A 13px monospace pixel font from the Artwiz set with full Latin-1 coverage (256 glyphs)."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "artwiz-snap"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/artwiz/bdf"
+take = ["snap.bdf"]
+name = "Artwiz Snap"
+authors = ["Artwiz", "Alec Zapka"]
+homepage = "http://artwizaleczapka.sourceforge.net/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["snap", "artwiz snap"]
+description = "Artwiz 系列的 10px 比例像素字体，仅含 ASCII（95 字形）；ohsnap 即以它为基础改作。"
+description_en = "A 10px proportional pixel font from the Artwiz set, ASCII only (95 glyphs); ohsnap is derived from it."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+note = "仓库快照内无许可证文件，BDF 的 COPYRIGHT 字段仅为 “artwiz, fixed by aleczapka”。依据 Fedora 的 artwiz-aleczapka-fonts 系列软件包（license 字段 GPL-2.0-only，Fedora 对每个包做过许可审查）与 Gentoo 的 media-fonts/artwiz-aleczapka-*（LICENSE=GPL-2）判定为 GPL-2.0-only。上游项目页 http://artwizaleczapka.sourceforge.net/"
+note_en = "The repository snapshot ships no license file; the BDF COPYRIGHT field reads only \"artwiz, fixed by aleczapka\". Classified as GPL-2.0-only on the basis of Fedora's artwiz-aleczapka-fonts packages (license field GPL-2.0-only; Fedora reviews the license of every package) and Gentoo's media-fonts/artwiz-aleczapka-* (LICENSE=GPL-2). Upstream project page: http://artwizaleczapka.sourceforge.net/"
+
+[[family]]
+slug = "envypn"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/envypn-font"
+take = ["envypn*.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/envypn-font-1.6.2.tar.gz"
+license_take = ["LICENSE"]
+name = "Envypn"
+authors = ["Ypnose"]
+homepage = "https://ywstd.fr"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["envypn-font", "envy pn"]
+description = "Ypnose 制作的 7×13 与 7×15 两档等宽点阵终端字体。上游按 ISO 8859-1 与 ISO 8859-2 分成两份文件发布，本站已合并成单一 Unicode 变体（各 193 字形起）。"
+description_en = "A monospace bitmap terminal font by Ypnose in two sizes, 7x13 and 7x15. Upstream ships each size as separate ISO 8859-1 and ISO 8859-2 files; they are merged here into a single Unicode variant per size."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore", "classic"]
+
+[family.license]
+spdx = "MirOS"
+name = "MirOS 许可证"
+name_en = "The MirOS Licence"
+confidence = "manual"
+file = "LICENSE"
+note = "包内 LICENSE 为 MirOS 许可证全文，署名 “Copyright © 2012, 2013, 2014 Ypnose”，明确授予不受限制的使用、公开演出、分发、出售、修改、合并、赠与与再许可权利。BDF 的 COPYRIGHT 字段亦致谢 MirOS 的 mirabilos。"
+note_en = "The bundled LICENSE is the full MirOS Licence text, attributed to \"Copyright © 2012, 2013, 2014 Ypnose\", granting unrestricted rights to use, publicly perform, distribute, sell, modify, merge, give away and sublicence. The BDF COPYRIGHT field also credits mirabilos of MirOS."
+
+[family.merge]
+"envypn7x13.bdf" = ["envypn7x13e.bdf"]
+"envypn7x15.bdf" = ["envypn7x15e.bdf"]
+
+[[family]]
+slug = "erusfont"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/erusfont"
+take = ["erusfont.pcf.gz", "erusfontbold.pcf.gz"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/erusfont.src.tar.gz"
+license_take = ["COPYING-LICENSE"]
+name = "Erusfont"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["erus font"]
+description = "11px 等宽点阵字体，含常规与粗体，覆盖 1621 个 Unicode 码位——在同尺寸的终端点阵字体里覆盖面相当宽。"
+description_en = "An 11px monospace bitmap font in regular and bold covering 1,621 Unicode code points, unusually broad coverage for a terminal bitmap font of this size."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "WTFPL"
+name = "想干嘛干嘛公共许可证 第 2 版"
+name_en = "Do What The F*ck You Want To Public License v2"
+confidence = "manual"
+file = "COPYING-LICENSE"
+note = "源码包内 COPYING-LICENSE 为 WTFPL 第 2 版全文（“You just DO WHAT THE FUCK YOU WANT TO.”），无附加条件。上游未署名作者（Tecate 仓库 README 记为 “erusfont by unknown”，发布渠道为 AUR 的 erusfont 包）。"
+note_en = "The source tarball's COPYING-LICENSE is the full WTFPL version 2 text (\"You just DO WHAT THE FUCK YOU WANT TO.\") with no additional conditions. Upstream names no author; the Tecate repository README records it as \"erusfont by unknown\", distributed via the AUR erusfont package."
+
+[[family]]
+slug = "haxor"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/haxor"
+take = ["HaxorMedium-*.bdf", "HaxorNarrow-*.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/metan-uxw-fonts-master.zip"
+license_take = ["README"]
+name = "Haxor"
+authors = ["Cyril Hrubis (metan)"]
+repository = "https://github.com/metan-ucw/fonts"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["haxor medium", "haxor narrow"]
+description = "等宽点阵终端字体，含 Medium 四档与 Narrow 三档共七个字面，均覆盖 ISO 8859-2（199 字形）。"
+description_en = "A monospace bitmap terminal font in seven faces - four Medium and three Narrow - each covering ISO 8859-2 (199 glyphs)."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-or-later"
+name = "GNU 通用公共许可证 第 2 版或更新版本"
+name_en = "GNU General Public License v2.0 or later"
+confidence = "manual"
+file = "README"
+note = "上游仓库 metan-ucw/fonts 的 README 首句即 “Distributed under GPLv2+.”，覆盖仓库内全部 bdf/pcf。本族随字体附上该 README 原文作为授权依据。"
+note_en = "The upstream repository metan-ucw/fonts states in the opening line of its README: \"Distributed under GPLv2+.\", covering every bdf/pcf in the repository. That README is bundled here as the licensing evidence."
+
+[family.variants."HaxorMedium-11.bdf"]
+size = 13
+
+[family.variants."HaxorMedium-12.bdf"]
+size = 14
+
+[family.variants."HaxorMedium-13.bdf"]
+size = 15
+
+[[family]]
+slug = "psevdoazbuka"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/haxor"
+take = ["PsevdoAzbukaMedium-12.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/metan-uxw-fonts-master.zip"
+license_take = ["README"]
+name = "PsevdoAzbuka"
+authors = ["Cyril Hrubis (metan)"]
+repository = "https://github.com/metan-ucw/fonts"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["psevdo azbuka"]
+description = "与 Haxor 同出一个仓库的 12px 等宽点阵字体，覆盖 ISO 8859-2（199 字形）。"
+description_en = "A 12px monospace bitmap font from the same repository as Haxor, covering ISO 8859-2 (199 glyphs)."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-or-later"
+name = "GNU 通用公共许可证 第 2 版或更新版本"
+name_en = "GNU General Public License v2.0 or later"
+confidence = "manual"
+file = "README"
+note = "上游仓库 metan-ucw/fonts 的 README 首句即 “Distributed under GPLv2+.”，覆盖仓库内全部 bdf/pcf。本族随字体附上该 README 原文作为授权依据。"
+note_en = "The upstream repository metan-ucw/fonts states in the opening line of its README: \"Distributed under GPLv2+.\", covering every bdf/pcf in the repository. That README is bundled here as the licensing evidence."
+
+[[family]]
+slug = "neep"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/jmk-x11-fonts-3.0"
+take = ["neep-iso8859-1-??x??.bdf", "neep-iso8859-2-??x??.bdf", "neep-iso8859-9-??x??.bdf", "neep-iso8859-15-??x??.bdf", "neep-iso8859-1-??x??-bold.bdf", "neep-iso8859-2-??x??-bold.bdf", "neep-iso8859-9-??x??-bold.bdf", "neep-iso8859-15-??x??-bold.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/jmk-x11-fonts-3.0.tar.gz"
+license_take = ["README"]
+name = "Neep"
+authors = ["Jim Knoble"]
+homepage = "http://www.jmknoble.net/fonts/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["jmk-x11-fonts", "NouveauGothic", "jmk neep"]
+description = "Jim Knoble 1998 年做的 X11 等宽点阵字体（旧名 NouveauGothic），比 X11 自带的 fixed 更易读。七档尺寸从 5×10 到 12×24，除最小档外均含粗体。上游按 ISO 8859-1/2/9/15 四个字符集分别发布，本站已合并成单一 Unicode 变体。"
+description_en = "A monospace X11 bitmap font made by Jim Knoble in 1998 (formerly NouveauGothic), a more legible take on the standard X11 fixed fonts. Seven sizes from 5x10 to 12x24, all but the smallest with a bold weight. Upstream ships each face as four separate ISO 8859-1/2/9/15 files; they are merged here into a single Unicode variant per face."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-or-later"
+name = "GNU 通用公共许可证 第 2 版或更新版本"
+name_en = "GNU General Public License v2.0 or later"
+confidence = "manual"
+file = "README"
+note = "包内 README 的 “Copying, Copyright, and Open Source” 一节写明：字体版权归 Jim Knoble 1998 年所有，依 GNU 通用公共许可证 2.0 版“或者，由你选择，任何更新的版本”发布。本族随字体附上该 README 原文作为授权依据。"
+note_en = "The bundled README, section \"Copying, Copyright, and Open Source\", states that the fonts are copyright Jim Knoble 1998 and released under the GNU General Public License version 2.0, \"or, at your option, any later version\". That README is bundled here as the licensing evidence."
+
+[family.merge]
+"neep-iso8859-1-05x10.bdf" = ["neep-iso8859-2-05x10.bdf", "neep-iso8859-9-05x10.bdf", "neep-iso8859-15-05x10.bdf"]
+"neep-iso8859-1-05x11.bdf" = ["neep-iso8859-2-05x11.bdf", "neep-iso8859-9-05x11.bdf", "neep-iso8859-15-05x11.bdf"]
+"neep-iso8859-1-05x11-bold.bdf" = ["neep-iso8859-2-05x11-bold.bdf", "neep-iso8859-9-05x11-bold.bdf", "neep-iso8859-15-05x11-bold.bdf"]
+"neep-iso8859-1-06x11.bdf" = ["neep-iso8859-2-06x11.bdf", "neep-iso8859-9-06x11.bdf", "neep-iso8859-15-06x11.bdf"]
+"neep-iso8859-1-06x11-bold.bdf" = ["neep-iso8859-2-06x11-bold.bdf", "neep-iso8859-9-06x11-bold.bdf", "neep-iso8859-15-06x11-bold.bdf"]
+"neep-iso8859-1-06x13.bdf" = ["neep-iso8859-2-06x13.bdf", "neep-iso8859-9-06x13.bdf", "neep-iso8859-15-06x13.bdf"]
+"neep-iso8859-1-06x13-bold.bdf" = ["neep-iso8859-2-06x13-bold.bdf", "neep-iso8859-9-06x13-bold.bdf", "neep-iso8859-15-06x13-bold.bdf"]
+"neep-iso8859-1-08x15.bdf" = ["neep-iso8859-2-08x15.bdf", "neep-iso8859-9-08x15.bdf", "neep-iso8859-15-08x15.bdf"]
+"neep-iso8859-1-08x15-bold.bdf" = ["neep-iso8859-2-08x15-bold.bdf", "neep-iso8859-9-08x15-bold.bdf", "neep-iso8859-15-08x15-bold.bdf"]
+"neep-iso8859-1-10x20.bdf" = ["neep-iso8859-2-10x20.bdf", "neep-iso8859-9-10x20.bdf", "neep-iso8859-15-10x20.bdf"]
+"neep-iso8859-1-10x20-bold.bdf" = ["neep-iso8859-2-10x20-bold.bdf", "neep-iso8859-9-10x20-bold.bdf", "neep-iso8859-15-10x20-bold.bdf"]
+"neep-iso8859-1-12x24.bdf" = ["neep-iso8859-2-12x24.bdf", "neep-iso8859-9-12x24.bdf", "neep-iso8859-15-12x24.bdf"]
+"neep-iso8859-1-12x24-bold.bdf" = ["neep-iso8859-2-12x24-bold.bdf", "neep-iso8859-9-12x24-bold.bdf", "neep-iso8859-15-12x24-bold.bdf"]
+
+[[family]]
+slug = "modd"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/jmk-x11-fonts-3.0"
+take = ["modd-iso8859-1-??x??.bdf", "modd-iso8859-1-??x??-bold.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/jmk-x11-fonts-3.0.tar.gz"
+license_take = ["README"]
+name = "Modd"
+authors = ["Jim Knoble"]
+homepage = "http://www.jmknoble.net/fonts/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["jmk-x11-fonts", "jmk modd"]
+description = "与 Neep 同出 jmk-x11-fonts 的等宽点阵字体，README 自述“笔画利落、造型偏当代”。6×11 与 6×13 两档，各含常规与粗体，仅 ISO 8859-1 编码。"
+description_en = "A monospace bitmap font shipped alongside Neep in jmk-x11-fonts, described upstream as having \"sleek, contemporary styling\". Two sizes, 6x11 and 6x13, each in regular and bold, ISO 8859-1 only."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-or-later"
+name = "GNU 通用公共许可证 第 2 版或更新版本"
+name_en = "GNU General Public License v2.0 or later"
+confidence = "manual"
+file = "README"
+note = "包内 README 的 “Copying, Copyright, and Open Source” 一节写明：字体版权归 Jim Knoble 1998 年所有，依 GNU 通用公共许可证 2.0 版“或者，由你选择，任何更新的版本”发布。本族随字体附上该 README 原文作为授权依据。"
+note_en = "The bundled README, section \"Copying, Copyright, and Open Source\", states that the fonts are copyright Jim Knoble 1998 and released under the GNU General Public License version 2.0, \"or, at your option, any later version\". That README is bundled here as the licensing evidence."
+
+[[family]]
+slug = "proggy-clean"
+source = "github-clones-2026-08-31/bluescan-proggyfonts"
+take = ["ProggyCleanSZ.pcf.gz"]
+license_files = ["LICENSE"]
+name = "Proggy Clean SZ"
+authors = ["Tristan Grimmer"]
+homepage = "https://github.com/bluescan/proggyfonts"
+repository = "https://github.com/bluescan/proggyfonts"
+provenance_url = "https://github.com/bluescan/proggyfonts"
+aliases = ["Proggy Clean", "proggycleansz", "proggyfonts"]
+description = "Tristan Grimmer 2004 年做的经典编程点阵字体，长年是代码编辑器里的常见点阵选择。收录 13px 的斜杠零（slashed zero）版本，完整覆盖 Latin-1（256 字形）。上游另有不带斜杠零的常规版与 CP／BP 等编码变体，与本变体仅个别字形不同，未重复收录。"
+description_en = "The classic programming bitmap font made by Tristan Grimmer in 2004, long a staple in code editors. Catalogued here in its 13px slashed-zero version with full Latin-1 coverage (256 glyphs). Upstream also ships a version without the slashed zero and CP/BP encoding variants; they differ from this one by a handful of glyphs and are not catalogued separately."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+name_en = "MIT License"
+confidence = "manual"
+file = "LICENSE"
+note = "上游 bluescan/proggyfonts 仓库根目录的 LICENSE 为 MIT 全文，署名 “Copyright (c) 2004, 2005 Tristan Grimmer”，覆盖 ProggyOriginal 目录下的全部 Proggy 字体。"
+note_en = "The LICENSE at the root of the upstream bluescan/proggyfonts repository is the full MIT text, attributed to \"Copyright (c) 2004, 2005 Tristan Grimmer\", covering all Proggy fonts under ProggyOriginal."
+
+[[family]]
+slug = "proggy-square"
+source = "github-clones-2026-08-31/bluescan-proggyfonts"
+take = ["ProggySquareSZ.pcf.gz"]
+license_files = ["LICENSE"]
+name = "Proggy Square SZ"
+authors = ["Tristan Grimmer"]
+homepage = "https://github.com/bluescan/proggyfonts"
+repository = "https://github.com/bluescan/proggyfonts"
+provenance_url = "https://github.com/bluescan/proggyfonts"
+aliases = ["Proggy Square", "proggysquaresz", "proggyfonts"]
+description = "Proggy 系列里字面接近正方形的一款，11px，斜杠零版本，完整覆盖 Latin-1（256 字形）。上游另有不带斜杠零的常规版与 CP／BP 等编码变体，与本变体仅个别字形不同，未重复收录。"
+description_en = "The near-square face of the Proggy series, 11px, slashed-zero version, with full Latin-1 coverage (256 glyphs). Upstream also ships a version without the slashed zero and CP/BP encoding variants; they differ from this one by a handful of glyphs and are not catalogued separately."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+name_en = "MIT License"
+confidence = "manual"
+file = "LICENSE"
+note = "上游 bluescan/proggyfonts 仓库根目录的 LICENSE 为 MIT 全文，署名 “Copyright (c) 2004, 2005 Tristan Grimmer”，覆盖 ProggyOriginal 目录下的全部 Proggy 字体。"
+note_en = "The LICENSE at the root of the upstream bluescan/proggyfonts repository is the full MIT text, attributed to \"Copyright (c) 2004, 2005 Tristan Grimmer\", covering all Proggy fonts under ProggyOriginal."
+
+[[family]]
+slug = "proggy-tiny"
+source = "github-clones-2026-08-31/bluescan-proggyfonts"
+take = ["ProggyTinySZ.pcf.gz"]
+license_files = ["LICENSE"]
+name = "Proggy Tiny SZ"
+authors = ["Tristan Grimmer"]
+homepage = "https://github.com/bluescan/proggyfonts"
+repository = "https://github.com/bluescan/proggyfonts"
+provenance_url = "https://github.com/bluescan/proggyfonts"
+aliases = ["Proggy Tiny", "proggytinysz", "proggyfonts"]
+description = "Proggy 系列里最小的一款，10px，斜杠零版本，完整覆盖 Latin-1（256 字形）。上游另有不带斜杠零的常规版与 CP／BP 等编码变体，与本变体仅个别字形不同，未重复收录。"
+description_en = "The smallest face of the Proggy series, 10px, slashed-zero version, with full Latin-1 coverage (256 glyphs). Upstream also ships a version without the slashed zero and CP/BP encoding variants; they differ from this one by a handful of glyphs and are not catalogued separately."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+name_en = "MIT License"
+confidence = "manual"
+file = "LICENSE"
+note = "上游 bluescan/proggyfonts 仓库根目录的 LICENSE 为 MIT 全文，署名 “Copyright (c) 2004, 2005 Tristan Grimmer”，覆盖 ProggyOriginal 目录下的全部 Proggy 字体。"
+note_en = "The LICENSE at the root of the upstream bluescan/proggyfonts repository is the full MIT text, attributed to \"Copyright (c) 2004, 2005 Tristan Grimmer\", covering all Proggy fonts under ProggyOriginal."
+
+[[family]]
+slug = "ohsnap"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/ohsnap-1.8.0"
+take = ["ohsnapu*.pcf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/ohsnap-1.8.0.tar.gz"
+license_take = ["README.ohsnap"]
+name = "Ohsnap"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/osnapfont/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["ohsnapu", "oh snap"]
+description = "以 Artwiz Snap 为基础改作的等宽点阵字体，四档尺寸（6×11／7×12／6×13／7×14）各含常规与粗体。收录 ISO 10646 版本（各 255 字形）；上游另有 ISO 8859-1 版、带状态栏图标的版本与主机控制台字体，均未重复收录。"
+description_en = "A monospace bitmap font derived from Artwiz Snap, in four sizes (6x11, 7x12, 6x13, 7x14), each with a regular and a bold weight. The ISO 10646 builds are catalogued here (255 glyphs each); upstream's ISO 8859-1 builds, status-icon builds and console fonts are not duplicated."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore", "classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+file = "README.ohsnap"
+note = "包内 README 末尾写明 “Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)”，且每个 PCF 的 COPYRIGHT 属性都写着 “GPLv2”。本族随字体附上该 README 原文。"
+note_en = "The bundled README ends with \"Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. That README is bundled here as the licensing evidence."
+
+[[family]]
+slug = "termsyn"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/termsyn-1.8.7"
+take = ["termsynu*.pcf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/termsyn-1.8.7.tar.gz"
+license_take = ["README.termsyn"]
+name = "Termsyn"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/termsyn/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["termsynu"]
+description = "基于 Terminus 与 Tamsyn 改作的等宽点阵字体，四档尺寸（6×11／7×12／6×13／7×14）各含常规与粗体。收录 ISO 10646 版本（各 382 字形）；上游另有 ISO 8859-1／-2 版、图标版与控制台字体，未重复收录。"
+description_en = "A monospace bitmap font derived from Terminus and Tamsyn, in four sizes (6x11, 7x12, 6x13, 7x14), each with a regular and a bold weight. The ISO 10646 builds are catalogued here (382 glyphs each); upstream's ISO 8859-1/-2 builds, icon builds and console fonts are not duplicated."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore", "classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+file = "README.termsyn"
+note = "包内 README 末尾写明 “Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)”，且每个 PCF 的 COPYRIGHT 属性都写着 “GPLv2”。本族随字体附上该 README 原文。"
+note_en = "The bundled README ends with \"Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. That README is bundled here as the licensing evidence."
+
+[[family]]
+slug = "stlarch"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/stlarch"
+take = ["stlarch.pcf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/stlarch_font-1.5.tar.gz"
+license_take = ["README.stlarch"]
+name = "STLarch"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/stlarchfont/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["stlarch_font", "stlarch font"]
+description = "状态栏图标字体，336 个图标全部落在 Unicode 私用区（U+E000–U+F8FF），配合 dwm、dzen2 一类状态栏与常规点阵字体搭配使用。不含常规文字字形。"
+description_en = "An icon font for status bars: 336 icons placed in the Unicode Private Use Area (U+E000-U+F8FF), designed to be paired with a regular bitmap font in status bars such as dwm and dzen2. It contains no text glyphs."
+form = "decorative"
+form_verified = true
+vibes = ["decorative"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+file = "README.stlarch"
+note = "包内 README 末尾写明 “Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)”，且每个 PCF 的 COPYRIGHT 属性都写着 “GPLv2”。本族随字体附上该 README 原文。"
+note_en = "The bundled README ends with \"Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. That README is bundled here as the licensing evidence."
+
+[[family]]
+slug = "lemon"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/phallus"
+take = ["lemon.bdf", "lemon-j.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/fonts-master-phallus.zip"
+license_take = ["license"]
+name = "Lemon"
+authors = ["king benis (phallus)"]
+repository = "https://github.com/phallus/fonts"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["lemon-j", "lemon abunai abunai"]
+description = "10px 等宽点阵字体。上游分两份发布：ISO 8859-1 的基础版与码位更全的 ISO 10646 版（XLFD 名 “lemon abunai abunai”），本站已合并成单一变体。"
+description_en = "A 10px monospace bitmap font. Upstream ships two files - a base ISO 8859-1 build and a broader ISO 10646 build (XLFD name \"lemon abunai abunai\") - merged here into a single variant."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "WTFPL"
+name = "想干嘛干嘛公共许可证 第 2 版"
+name_en = "Do What The F*ck You Want To Public License v2"
+confidence = "manual"
+file = "license"
+note = "仓库快照内的 license 文件为 WTFPL 第 2 版全文，署名 “Copyright (C) 2013 king benis”。注意上游 phallus/fonts 此后已改用 GPL-3.0；本站收录的是快照当时的 WTFPL 版本，两者都允许商用、修改与再分发。"
+note_en = "The license file in the repository snapshot is the full WTFPL version 2 text, attributed to \"Copyright (C) 2013 king benis\". Note that upstream phallus/fonts has since moved to GPL-3.0; what is catalogued here is the WTFPL-era snapshot. Both permit commercial use, modification and redistribution."
+
+[family.merge]
+"lemon.bdf" = ["lemon-j.bdf"]
+
+[[family]]
+slug = "uushi"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/phallus"
+take = ["uushi.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/fonts-master-phallus.zip"
+license_take = ["license"]
+name = "Uushi"
+authors = ["king benis (phallus)"]
+repository = "https://github.com/phallus/fonts"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+description = "11px 比例点阵字体，覆盖 1074 个 Unicode 码位，与 Lemon 出自同一仓库。"
+description_en = "An 11px proportional bitmap font covering 1,074 Unicode code points, from the same repository as Lemon."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "WTFPL"
+name = "想干嘛干嘛公共许可证 第 2 版"
+name_en = "Do What The F*ck You Want To Public License v2"
+confidence = "manual"
+file = "license"
+note = "仓库快照内的 license 文件为 WTFPL 第 2 版全文，署名 “Copyright (C) 2013 king benis”。注意上游 phallus/fonts 此后已改用 GPL-3.0；本站收录的是快照当时的 WTFPL 版本，两者都允许商用、修改与再分发。"
+note_en = "The license file in the repository snapshot is the full WTFPL version 2 text, attributed to \"Copyright (C) 2013 king benis\". Note that upstream phallus/fonts has since moved to GPL-3.0; what is catalogued here is the WTFPL-era snapshot. Both permit commercial use, modification and redistribution."
+
+[[family]]
+slug = "progsole"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/progsole"
+take = ["progsole-10.bdf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/Progsole.bdf.zip"
+license_take = ["Licence.txt"]
+name = "Progsole"
+authors = ["Glenn Schemenauer"]
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+description = "Glenn Schemenauer 2007 年做的 10px 点阵编程字体，最初发布在 proggyfonts.net 的投稿区。"
+description_en = "A 10px bitmap programming font made by Glenn Schemenauer in 2007, originally published in the contributions section of proggyfonts.net."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+name_en = "MIT License"
+confidence = "manual"
+file = "Licence.txt"
+note = "发布包内 Licence.txt 为 MIT 全文，署名 “Copyright (c) 2007 Glenn Schemenauer”。"
+note_en = "The Licence.txt in the release archive is the full MIT text, attributed to \"Copyright (c) 2007 Glenn Schemenauer\"."
+
+[[family]]
+slug = "tobi"
+source = "github-clones-2026-08-31/bluescan-proggyfonts"
+zip = "Contributed/CodingFontTobi.pcf.zip"
+zip_take = ["cft.pcf"]
+license_from = "Contributed/CodingFontTobi.zip"
+license_take = ["Licence.txt"]
+name = "Coding Font Tobi"
+authors = ["Tobias Werner"]
+provenance_url = "https://github.com/bluescan/proggyfonts"
+aliases = ["cft", "CodingFontTobi", "tobi"]
+description = "Tobias Werner 2006 年做的 16px 点阵编程字体（251 字形），最初发布在 proggyfonts.net 的投稿区。"
+description_en = "A 16px bitmap programming font (251 glyphs) made by Tobias Werner in 2006, originally published in the contributions section of proggyfonts.net."
+form = "terminal"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+name_en = "MIT License"
+confidence = "manual"
+file = "Licence.txt"
+note = "上游 proggyfonts 仓库 Contributed/CodingFontTobi.zip 内附 Licence.txt，为 MIT 全文，署名 “Copyright (c) 2006 Tobias Werner”。该仓库 README 说明投稿字体各自适用包内自带的许可证，不套用仓库根目录的 MIT。"
+note_en = "Contributed/CodingFontTobi.zip in the upstream proggyfonts repository bundles a Licence.txt that is the full MIT text, attributed to \"Copyright (c) 2006 Tobias Werner\". The repository README states that contributed fonts are covered by whatever licence ships inside their own archive, not by the repository-root MIT file."
+
+[[family]]
+slug = "scientifica"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/scientifica"
+take = ["scientifica*.bdf"]
+license_from = "github-clones-2026-08-31/nerdypepper-scientifica/LICENSE"
+name = "Scientifica"
+authors = ["Akshay Oppiliappan (NerdyPepper)"]
+repository = "https://github.com/NerdyPepper/scientifica"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["scientifica-11"]
+description = "11px 等宽点阵字体，字面窄、行高紧，含常规、粗体与斜体三款（常规与斜体各 1070 字形，粗体 973）。"
+description_en = "An 11px monospace bitmap font with a narrow face and tight line height, in regular, bold and italic (1,070 glyphs each for regular and italic, 973 for bold)."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "LICENSE"
+note = "字体文件取自 Tecate/bitmap-fonts 的快照；许可证取自上游仓库 NerdyPepper/scientifica 的 LICENSE，为 OFL 1.1 全文，署名 “Copyright (c) 2020 Akshay Oppiliappan (nerdy@peppe.rs)”。上游 HEAD 只有 FontForge 源文件（.sfd），编译产物在 Releases，故字体本身未从上游直接取。"
+note_en = "The font files come from the Tecate/bitmap-fonts snapshot; the licence comes from the LICENSE in the upstream NerdyPepper/scientifica repository, the full OFL 1.1 text attributed to \"Copyright (c) 2020 Akshay Oppiliappan (nerdy@peppe.rs)\". Upstream HEAD carries only FontForge sources (.sfd) with built artifacts in Releases, which is why the fonts themselves were not taken from upstream."
+
+[[family]]
+slug = "tamsynmod"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/tamsynmod-1.7"
+take = ["tamsynmod*.pcf"]
+name = "Tamsynmod"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/tamsynmod/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+aliases = ["tamsyn mod"]
+description = "stlarch 对 Tamsyn 的改作版，四档尺寸（6×12／7×14／8×15／8×17）各含常规与粗体，ISO 8859-1 编码（各 223 字形）。"
+description_en = "stlarch's modified take on Tamsyn, in four sizes (6x12, 7x14, 8x15, 8x17), each with a regular and a bold weight, ISO 8859-1 encoded (223 glyphs each)."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-or-later"
+name = "GNU 通用公共许可证 第 2 版或更新版本"
+name_en = "GNU General Public License v2.0 or later"
+confidence = "manual"
+note = "发布包内只有 8 个 PCF，没有任何许可证或说明文件；授权依据有三条，互相印证：① 每个 PCF 的 COPYRIGHT 属性写着 “GPL”（未写版本号）；② 同一作者 stlarch 的其余字体包（ohsnap／termsyn／terminusmod／stlarch）README 均写明 “Released under GPLv2 license.”；③ 被改作的原字体 Tamsyn 其 LICENSE 原文为 “Tamsyn font is free. You are hereby granted permission to use, copy, modify, and distribute it as you see fit.”，本身即无条件允许修改与再分发。因未写版本号，按 GPL 惯例记为 GPL-2.0-or-later。"
+note_en = "The release archive contains only eight PCF files, with no licence or readme. Three mutually corroborating pieces of evidence establish the terms: (1) every PCF carries \"GPL\" (no version number) in its COPYRIGHT property; (2) the same author's other font packages (ohsnap, termsyn, terminusmod, stlarch) all state \"Released under GPLv2 license.\" in their READMEs; (3) the base font it modifies, Tamsyn, is licensed with \"Tamsyn font is free. You are hereby granted permission to use, copy, modify, and distribute it as you see fit.\", which itself permits modification and redistribution unconditionally. As no version is stated, it is recorded as GPL-2.0-or-later per the GPL's own convention."
+
+[[family]]
+slug = "terminusmod"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/terminusmod-1.9.9"
+take = ["terminusmod12b.pcf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/terminusmod-1.9.9.tar.gz"
+license_take = ["README.terminusmod"]
+name = "Terminusmod"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/terminusmod/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+description = "给 Terminus 12px 补的一款真粗体——Terminus 该尺寸原本没有粗体字面，本字体专为与它配对使用而作，因此只有粗体一个字面。"
+description_en = "A true bold companion for Terminus at 12px, a size for which Terminus itself ships no bold face. It exists to be paired with Terminus and therefore contains a bold face only."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+file = "README.terminusmod"
+note = "包内 README 末尾写明 “Released under GPLv2 license.”，每个 PCF 的 COPYRIGHT 属性亦为 “GPLv2”。被改作的 Terminus 在 terminusmod 成文的年代（1.9.9）尚为 GPL-2.0 授权，与本字体的 GPLv2 声明一致，不存在许可冲突。"
+note_en = "The bundled README ends with \"Released under GPLv2 license.\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. Terminus, the font it modifies, was itself under GPL-2.0 at the time terminusmod 1.9.9 was written, so its GPLv2 declaration is consistent and raises no licence conflict."
+
+[[family]]
+slug = "terminusmodx"
+source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/terminusmod-1.9.9"
+take = ["terminusmodx12r.pcf", "terminusmodx12b.pcf"]
+license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/terminusmod-1.9.9.tar.gz"
+license_take = ["README.terminusmod"]
+name = "Terminusmodx"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/terminusmod/"
+provenance_url = "https://github.com/Tecate/bitmap-fonts"
+description = "stlarch 对 Terminus 12px 的改字版，含常规与粗体两个字面，ISO 8859-1 编码（各 251 字形）。与只补粗体的 Terminusmod 是同一发布包内的两套不同字面。"
+description_en = "stlarch's reworked glyphs for Terminus at 12px, in a regular and a bold face, ISO 8859-1 encoded (251 glyphs each). It ships in the same archive as Terminusmod but is a distinct set of faces."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+file = "README.terminusmod"
+note = "包内 README 末尾写明 “Released under GPLv2 license.”，每个 PCF 的 COPYRIGHT 属性亦为 “GPLv2”。被改作的 Terminus 在 terminusmod 成文的年代（1.9.9）尚为 GPL-2.0 授权，与本字体的 GPLv2 声明一致，不存在许可冲突。"
+note_en = "The bundled README ends with \"Released under GPLv2 license.\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. Terminus, the font it modifies, was itself under GPL-2.0 at the time terminusmod 1.9.9 was written, so its GPLv2 declaration is consistent and raises no licence conflict."
+
+[[family]]
+slug = "schumacher-clean"
+source = "github-clones-2026-08-31/xorg-font-schumacher-misc"
+take = ["cl*.bdf"]
+license_files = ["COPYING"]
+name = "Schumacher Clean"
+authors = ["Dale Schumacher"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+repository = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+provenance_url = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+aliases = ["Clean", "font-schumacher-misc", "clR6x12", "xfonts-100dpi"]
+description = "X11 自带的另一套经典等宽点阵字体，1989 年 Dale Schumacher 作，31 个字面覆盖 4×6 到 9×15，含常规、粗体与斜体。其中 6×12 常规一档已扩到 ISO 10646（1194 字形），其余各档为 ISO 646 IRV 的 128 字形。"
+description_en = "The other classic monospace bitmap family bundled with X11, made by Dale Schumacher in 1989. Thirty-one faces from 4x6 to 9x15 in regular, bold and italic. The 6x12 regular face has been extended to ISO 10646 (1,194 glyphs); the rest carry the 128 glyphs of ISO 646 IRV."
+form = "terminal"
+form_verified = true
+vibes = ["classic", "terminal-hardcore"]
+
+[family.license]
+spdx = "HPND"
+name = "历史性许可与免责声明（HPND）"
+name_en = "Historical Permission Notice and Disclaimer"
+confidence = "manual"
+file = "COPYING"
+note = "仓库的 COPYING 为 HPND 式许可，署名 “Copyright 1989 Dale Schumacher”，明确授予“为任何目的使用、复制、修改与分发本软件及其文档，且无需付费”，唯一条件是保留版权声明与许可声明，并不得未经书面许可以作者名义作宣传。每个 BDF 的 COMMENT 块内也逐字重复了同一段文字。"
+note_en = "The repository's COPYING is an HPND-style permission notice attributed to \"Copyright 1989 Dale Schumacher\", granting permission \"to use, copy, modify, and distribute this software and its documentation for any purpose and without fee\", conditioned only on retaining the copyright and permission notices and on not using the author's name in advertising without written permission. Every BDF repeats the same text verbatim in its COMMENT block."
+
+[[family]]
+slug = "tom-thumb"
+source = "github-clones-2026-08-31/it-studio-rech-bdf-fonts"
+take = ["tom-thumb.bdf"]
+name = "Tom Thumb"
+authors = ["Robey Pointer", "Brian Swetland"]
+homepage = "https://robey.lag.net/2010/01/23/tiny-monospace-font.html"
+provenance_url = "https://github.com/IT-Studio-Rech/bdf-fonts"
+aliases = ["Fixed4x6", "tom thumb", "4x6"]
+description = "4×6 点阵字体，字面高 6px、字形只占 3×5——小得几乎到了拉丁字母可辨认的下限，常用于 LED 点阵屏与超小屏幕。共 204 字形。"
+description_en = "A 4x6 bitmap font: a 6px face whose glyphs occupy just 3x5 pixels, about as small as Latin letters can get and still be legible. Widely used on LED matrix panels and tiny displays. 204 glyphs."
+form = "terminal"
+form_verified = true
+vibes = ["terminal-hardcore", "cute"]
+
+[family.license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+name_en = "CC0 1.0 Universal (public domain dedication)"
+confidence = "manual"
+note = "不附许可证文件，判定依据为作者公开页面。Robey Pointer 的发布页写明本字体改自 Brian Swetland 的字体，并在正文更新中写道：“Brian has authorized his font to be released under the CC0 or CC-BY 3.0 license. Therefore, this font may also be used under either CC0 or CC-BY 3.0 license.” 取其中最无歧义的 CC0 1.0 记录。注意：IT-Studio-Rech/bdf-fonts 的 README.md 称本字体为 MIT 并链到 http://vt100.tarunz.org/LICENSE，但该链接实际是 vt100 项目（Brian J. Swetland／Vassilii Khachaturov，1999）的 BSD-3-Clause 声明，并未提及本字体，不能作为授权依据；BDF 的 COPYRIGHT 字段也只有一个没有权利人的 “MIT” 字样。"
+note_en = "No licence file is bundled; the determination rests on the author's public page. Robey Pointer's release post states that the font is derived from Brian Swetland's font and adds, in an update: \"Brian has authorized his font to be released under the CC0 or CC-BY 3.0 license. Therefore, this font may also be used under either CC0 or CC-BY 3.0 license.\" The least ambiguous of these, CC0 1.0, is recorded here. Note that the README.md of IT-Studio-Rech/bdf-fonts calls the font MIT and links to http://vt100.tarunz.org/LICENSE, but that link is in fact the BSD-3-Clause notice of the vt100 project (Brian J. Swetland / Vassilii Khachaturov, 1999), which does not mention this font and cannot serve as the licence; the BDF's COPYRIGHT field likewise contains only the bare word \"MIT\" with no rights holder."
+
+# ---- Adobe 的 X11 位图字体（xorg font-adobe-75dpi / 100dpi）。
+# 两套是同一设计按 75dpi 与 100dpi 渲染的不同像素档，文件名完全相同，
+# 用 take_from 加前缀区分后合成一个家族——按本站口径，尺寸不同即同族变体。
+
+[[family]]
+slug = "adobe-helvetica"
+source = "github-clones-2026-08-31"
+license_files = ["xorg-font-adobe-100dpi/COPYING"]
+name = "Adobe Helvetica"
+authors = ["Adobe Systems", "Digital Equipment Corporation"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+aliases = ["helvR", "Helvetica bitmap", "X11 Helvetica", "xfonts-100dpi", "xfonts-75dpi"]
+description = "Adobe 为 X11 制作的 Helvetica 位图字面，1984–1994 年间随 X Window System 分发，是 Unix 桌面上用了几十年的比例无衬线体。含常规／粗体／斜体／粗斜四款，75dpi 与 100dpi 两套合计 12 档像素尺寸（8–34px），每个字面 756 字形、ISO 10646 编码。"
+description_en = "Adobe's Helvetica bitmap faces for X11, shipped with the X Window System between 1984 and 1994 and a fixture of Unix desktops for decades. Four styles - roman, bold, oblique and bold oblique - across the 75dpi and 100dpi sets for twelve pixel sizes in total (8-34px), each face carrying 756 glyphs in ISO 10646."
+form = "sans"
+form_verified = true
+vibes = ["classic"]
+
+[family.take_from]
+"75dpi-" = ["xorg-font-adobe-75dpi/helv*.bdf"]
+"100dpi-" = ["xorg-font-adobe-100dpi/helv*.bdf"]
+
+[family.license]
+spdx = "HPND"
+name = "历史性许可与免责声明（HPND）"
+name_en = "Historical Permission Notice and Disclaimer"
+confidence = "manual"
+file = "COPYING"
+note = "两个上游仓库（font-adobe-100dpi 与 font-adobe-75dpi）的 COPYING 内容相同，为 Adobe 与 DEC 的 HPND 式许可：“Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.”，随后授予“为任何目的使用、复制、修改、分发与出售本软件及其文档，且无需付费”，条件为保留版权与许可声明、不得以 Adobe 与 DEC 之名作宣传。每个 BDF 的 COMMENT 块内也逐字重复同一段文字。Debian 的 xfonts-100dpi／75dpi 与 Fedora 的 xorg-x11-fonts 三十年来即按此条款分发本套字体。注：字体名 Helvetica、Times、New Century Schoolbook 等系第三方注册商标，此处属指明来源的指称性使用，本站的收录判定只针对著作权授权，不代表商标权利人的背书。"
+note_en = "Both upstream repositories (font-adobe-100dpi and font-adobe-75dpi) carry the same COPYING: an Adobe/DEC HPND-style notice - \"Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.\" - granting permission \"to use, copy, modify, distribute and sell this software and its documentation for any purpose and without fee\", conditioned on retaining the copyright and permission notices and on not using the Adobe and Digital Equipment names in advertising. Every BDF repeats the same text verbatim in its COMMENT block. Debian's xfonts-100dpi/75dpi and Fedora's xorg-x11-fonts have distributed this set under these terms for three decades. Note: typeface names such as Helvetica, Times and New Century Schoolbook are third-party registered trademarks; their use here is nominative, identifying what the fonts are. This catalogue's inclusion test covers copyright licensing only and implies no endorsement by any trademark owner."
+
+[[family]]
+slug = "adobe-times"
+source = "github-clones-2026-08-31"
+license_files = ["xorg-font-adobe-100dpi/COPYING"]
+name = "Adobe Times"
+authors = ["Adobe Systems", "Digital Equipment Corporation"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+aliases = ["timR", "Times bitmap", "X11 Times"]
+description = "Adobe 为 X11 制作的 Times 位图字面，衬线体，与 Helvetica 同批随 X Window System 分发。含常规／粗体／斜体／粗斜四款，75dpi 与 100dpi 合计 12 档像素尺寸（8–34px），ISO 10646 编码。"
+description_en = "Adobe's Times bitmap faces for X11, a serif companion shipped with the X Window System alongside Helvetica. Four styles - roman, bold, italic and bold italic - across the 75dpi and 100dpi sets for twelve pixel sizes (8-34px), ISO 10646 encoded."
+form = "serif-pixel"
+form_verified = true
+vibes = ["classic"]
+
+[family.take_from]
+"75dpi-" = ["xorg-font-adobe-75dpi/tim*.bdf"]
+"100dpi-" = ["xorg-font-adobe-100dpi/tim*.bdf"]
+
+[family.license]
+spdx = "HPND"
+name = "历史性许可与免责声明（HPND）"
+name_en = "Historical Permission Notice and Disclaimer"
+confidence = "manual"
+file = "COPYING"
+note = "两个上游仓库（font-adobe-100dpi 与 font-adobe-75dpi）的 COPYING 内容相同，为 Adobe 与 DEC 的 HPND 式许可：“Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.”，随后授予“为任何目的使用、复制、修改、分发与出售本软件及其文档，且无需付费”，条件为保留版权与许可声明、不得以 Adobe 与 DEC 之名作宣传。每个 BDF 的 COMMENT 块内也逐字重复同一段文字。Debian 的 xfonts-100dpi／75dpi 与 Fedora 的 xorg-x11-fonts 三十年来即按此条款分发本套字体。注：字体名 Helvetica、Times、New Century Schoolbook 等系第三方注册商标，此处属指明来源的指称性使用，本站的收录判定只针对著作权授权，不代表商标权利人的背书。"
+note_en = "Both upstream repositories (font-adobe-100dpi and font-adobe-75dpi) carry the same COPYING: an Adobe/DEC HPND-style notice - \"Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.\" - granting permission \"to use, copy, modify, distribute and sell this software and its documentation for any purpose and without fee\", conditioned on retaining the copyright and permission notices and on not using the Adobe and Digital Equipment names in advertising. Every BDF repeats the same text verbatim in its COMMENT block. Debian's xfonts-100dpi/75dpi and Fedora's xorg-x11-fonts have distributed this set under these terms for three decades. Note: typeface names such as Helvetica, Times and New Century Schoolbook are third-party registered trademarks; their use here is nominative, identifying what the fonts are. This catalogue's inclusion test covers copyright licensing only and implies no endorsement by any trademark owner."
+
+[[family]]
+slug = "adobe-courier"
+source = "github-clones-2026-08-31"
+license_files = ["xorg-font-adobe-100dpi/COPYING"]
+name = "Adobe Courier"
+authors = ["Adobe Systems", "Digital Equipment Corporation"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+aliases = ["courR", "Courier bitmap", "X11 Courier"]
+description = "Adobe 为 X11 制作的 Courier 位图字面，等宽打字机风格，是 X11 时代终端与代码显示的默认比例字体之一。含常规／粗体／斜体／粗斜四款，75dpi 与 100dpi 合计 12 档像素尺寸（8–34px），ISO 10646 编码。"
+description_en = "Adobe's Courier bitmap faces for X11, a monospace typewriter design and one of the defaults for terminals and code display in the X11 era. Four styles - roman, bold, oblique and bold oblique - across the 75dpi and 100dpi sets for twelve pixel sizes (8-34px), ISO 10646 encoded."
+form = "terminal"
+form_verified = true
+vibes = ["classic"]
+
+[family.take_from]
+"75dpi-" = ["xorg-font-adobe-75dpi/cour*.bdf"]
+"100dpi-" = ["xorg-font-adobe-100dpi/cour*.bdf"]
+
+[family.license]
+spdx = "HPND"
+name = "历史性许可与免责声明（HPND）"
+name_en = "Historical Permission Notice and Disclaimer"
+confidence = "manual"
+file = "COPYING"
+note = "两个上游仓库（font-adobe-100dpi 与 font-adobe-75dpi）的 COPYING 内容相同，为 Adobe 与 DEC 的 HPND 式许可：“Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.”，随后授予“为任何目的使用、复制、修改、分发与出售本软件及其文档，且无需付费”，条件为保留版权与许可声明、不得以 Adobe 与 DEC 之名作宣传。每个 BDF 的 COMMENT 块内也逐字重复同一段文字。Debian 的 xfonts-100dpi／75dpi 与 Fedora 的 xorg-x11-fonts 三十年来即按此条款分发本套字体。注：字体名 Helvetica、Times、New Century Schoolbook 等系第三方注册商标，此处属指明来源的指称性使用，本站的收录判定只针对著作权授权，不代表商标权利人的背书。"
+note_en = "Both upstream repositories (font-adobe-100dpi and font-adobe-75dpi) carry the same COPYING: an Adobe/DEC HPND-style notice - \"Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.\" - granting permission \"to use, copy, modify, distribute and sell this software and its documentation for any purpose and without fee\", conditioned on retaining the copyright and permission notices and on not using the Adobe and Digital Equipment names in advertising. Every BDF repeats the same text verbatim in its COMMENT block. Debian's xfonts-100dpi/75dpi and Fedora's xorg-x11-fonts have distributed this set under these terms for three decades. Note: typeface names such as Helvetica, Times and New Century Schoolbook are third-party registered trademarks; their use here is nominative, identifying what the fonts are. This catalogue's inclusion test covers copyright licensing only and implies no endorsement by any trademark owner."
+
+[[family]]
+slug = "adobe-new-century-schoolbook"
+source = "github-clones-2026-08-31"
+license_files = ["xorg-font-adobe-100dpi/COPYING"]
+name = "Adobe New Century Schoolbook"
+authors = ["Adobe Systems", "Digital Equipment Corporation"]
+homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+aliases = ["ncenR", "New Century Schoolbook bitmap", "X11 New Century Schoolbook"]
+description = "Adobe 为 X11 制作的 New Century Schoolbook 位图字面，字面开阔的教科书体衬线设计。含常规／粗体／斜体／粗斜四款，75dpi 与 100dpi 合计 12 档像素尺寸（8–34px），ISO 10646 编码。"
+description_en = "Adobe's New Century Schoolbook bitmap faces for X11, a wide-set schoolbook serif design. Four styles - roman, bold, italic and bold italic - across the 75dpi and 100dpi sets for twelve pixel sizes (8-34px), ISO 10646 encoded."
+form = "serif-pixel"
+form_verified = true
+vibes = ["classic"]
+
+[family.take_from]
+"75dpi-" = ["xorg-font-adobe-75dpi/ncen*.bdf"]
+"100dpi-" = ["xorg-font-adobe-100dpi/ncen*.bdf"]
+
+[family.license]
+spdx = "HPND"
+name = "历史性许可与免责声明（HPND）"
+name_en = "Historical Permission Notice and Disclaimer"
+confidence = "manual"
+file = "COPYING"
+note = "两个上游仓库（font-adobe-100dpi 与 font-adobe-75dpi）的 COPYING 内容相同，为 Adobe 与 DEC 的 HPND 式许可：“Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.”，随后授予“为任何目的使用、复制、修改、分发与出售本软件及其文档，且无需付费”，条件为保留版权与许可声明、不得以 Adobe 与 DEC 之名作宣传。每个 BDF 的 COMMENT 块内也逐字重复同一段文字。Debian 的 xfonts-100dpi／75dpi 与 Fedora 的 xorg-x11-fonts 三十年来即按此条款分发本套字体。注：字体名 Helvetica、Times、New Century Schoolbook 等系第三方注册商标，此处属指明来源的指称性使用，本站的收录判定只针对著作权授权，不代表商标权利人的背书。"
+note_en = "Both upstream repositories (font-adobe-100dpi and font-adobe-75dpi) carry the same COPYING: an Adobe/DEC HPND-style notice - \"Copyright 1984-1989, 1994 Adobe Systems Incorporated. Copyright 1988, 1994 Digital Equipment Corporation.\" - granting permission \"to use, copy, modify, distribute and sell this software and its documentation for any purpose and without fee\", conditioned on retaining the copyright and permission notices and on not using the Adobe and Digital Equipment names in advertising. Every BDF repeats the same text verbatim in its COMMENT block. Debian's xfonts-100dpi/75dpi and Fedora's xorg-x11-fonts have distributed this set under these terms for three decades. Note: typeface names such as Helvetica, Times and New Century Schoolbook are third-party registered trademarks; their use here is nominative, identifying what the fonts are. This catalogue's inclusion test covers copyright licensing only and implies no endorsement by any trademark owner."
+
+[[todo]]
+source = "github-clones-2026-08-31/xorg-font-adobe-100dpi (symb*.bdf)"
+reason = "Adobe Symbol 的 BDF 用 CHARSET_REGISTRY \"Adobe\" / CHARSET_ENCODING \"FontSpecific\" 分发，是 Adobe 自有的符号编码而非 Unicode；当前 decode_cp 无对应映射，收进来每个字面都是零字形。要收录须先补一张 Adobe Symbol→Unicode 映射表（希腊字母、数学运算符等，Adobe 与 Unicode 联盟均有公开的标准对照），作为独立任务处理。许可证与同目录其余 Adobe 字体相同（HPND），不是授权问题。"
+
+[[family]]
+slug = "chang-ban-dian-song"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese"
+take = [
+  "yzdnn--ChangBanDianSong-12/Sources/ChangBanDianSong-12.bdf",
+  "yzdnn--ChangBanDianSong-12/Sources/ChangBanDianSong-SP-12.bdf",
+  "yzdnn--ChangBanDianSong-16/Sources/ChangBanDianSong-SC-16.bdf",
+  "yzdnn--ChangBanDianSong-16/Sources/ChangBanDianSong-TC-16.bdf",
+]
+license_files = ["yzdnn--ChangBanDianSong-12/OFL.txt"]
+name = "ChangBanDianSong"
+name_zh = "长坂点宋"
+authors = ["yzdnn"]
+repository = "https://github.com/yzdnn/ChangBanDianSong-12"
+provenance_url = "https://github.com/yzdnn/ChangBanDianSong-12/releases (v1.4.3), https://github.com/yzdnn/ChangBanDianSong-16/releases (v1.3.1)"
+aliases = ["ChangBanDianSong 12", "ChangBanDianSong 16", "长坂点宋12", "长坂点宋16"]
+description = "yzdnn基于平木敬太郎／自家製フォント工房的KH ドット道玄坂系列增补简繁汉字而成的点阵宋体。12px一档含常规版与“防粘连”版（SP后缀，每字右侧多留1px字间距），16px一档分简体（SC）与繁体（TC）两套字形。两档字面上游分属两个独立仓库，本站合并为一个家族。"
+description_en = "A bitmap Song typeface by yzdnn, extending the KH Dot Dogenzaka series by Keitaro Hiraki / Jikasei Font Kobo with simplified and traditional Chinese characters. The 12px size comes in a regular and an anti-blur cut (the SP suffix, which leaves an extra pixel of sidebearing to the right of each character); the 16px size comes in simplified (SC) and traditional (TC) glyph sets. Upstream publishes the two sizes from two separate repositories; they are catalogued here as one family."
+form = "mingcho"
+form_verified = true
+vibes = ["retro-game", "classic"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "两个上游仓库各自附带 OFL.txt，正文完全相同，仅版权年份一处不同（12px 仓库为 2025-2026，16px 仓库为 2025），均署名 yzdnn。此处收录年份范围较宽的 12px 仓库那一份。"
+note_en = "Both upstream repositories ship their own OFL.txt. The texts are identical apart from the copyright year (2025-2026 in the 12px repository, 2025 in the 16px one) and both are attributed to yzdnn. The copy catalogued here is the one from the 12px repository, whose year range covers both."
+
+# ==================== 合并片段:manifest-frag-direct-2026-08-31.toml ====================
+# 官网／itch.io 直接下载的字体（第五批）。KH ドットフォント解掉了此前 8 条孤儿 todo。
+# KH 全系 TTF 内嵌等倍点阵（EBLC/EBDT），按标称档位栅格化取到的即是内嵌位图本身；
+# 注意 detect_native_ppem 对这批返回 64（1024upem/16 单位格），是错的，必须逐文件手填 ppem。
+
+[[family]]
+slug = "kh-dot-kodenmachou"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Kodenmachou-12.ttf", "KH-Dot-Kodenmachou-12-Ki.ttf", "KH-Dot-Kodenmachou-12-Ko.ttf", "KH-Dot-Kodenmachou-16.ttf", "KH-Dot-Kodenmachou-16-Ki.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Kodenmachou"
+name_zh = "KH点阵小传马町"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット小伝馬町", "KH Dot Kodenmachou", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里的方黑体，12px与16px两档。除常规版外另有两种假名改款：Ki为几何风假名（幾何学的カナ），Ko为小假名（小かな）；汉字部分相同。含JIS第二水准全部汉字。"
+description_en = "The square gothic face of the KH Dot series, at 12px and 16px. Besides the regular cut there are two alternative kana designs: Ki uses geometric kana and Ko uses small kana; the kanji are shared. Covers the whole of JIS level 2."
+form = "gothic"
+form_verified = true
+vibes = ["retro-game", "classic"]
+
+[family.ppem]
+"KH-Dot-Kodenmachou-12.ttf" = 12
+"KH-Dot-Kodenmachou-12-Ki.ttf" = 12
+"KH-Dot-Kodenmachou-12-Ko.ttf" = 12
+"KH-Dot-Kodenmachou-16.ttf" = 16
+"KH-Dot-Kodenmachou-16-Ki.ttf" = 16
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+[[family]]
+slug = "kh-dot-kagurazaka"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Kagurazaka-12.ttf", "KH-Dot-Kagurazaka-16.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Kagurazaka"
+name_zh = "KH点阵神乐坂"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット神楽坂", "KH Dot Kagurazaka", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里的明朝体，12px与16px两档。在这个尺寸上仍能看出横细竖粗与起笔收笔的顿挫。含JIS第二水准全部汉字。"
+description_en = "The mincho face of the KH Dot series, at 12px and 16px. Even at this size the thin horizontals, thick verticals and stroke-end serifs remain legible. Covers the whole of JIS level 2."
+form = "mingcho"
+form_verified = true
+vibes = ["classic", "retro-game"]
+
+[family.ppem]
+"KH-Dot-Kagurazaka-12.ttf" = 12
+"KH-Dot-Kagurazaka-16.ttf" = 16
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+[[family]]
+slug = "kh-dot-dougenzaka"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Dougenzaka-12.ttf", "KH-Dot-Dougenzaka-16.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Dougenzaka"
+name_zh = "KH点阵道玄坂"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット道玄坂", "KH Dot Dougenzaka", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里的粗明朝体，12px与16px两档，比同系列的神乐坂更重更实。中文点阵字体“长坂点宋”即以本字体为底增补简繁汉字而成。含JIS第二水准全部汉字。"
+description_en = "The bold mincho face of the KH Dot series, at 12px and 16px, heavier and more solid than Kagurazaka in the same series. The Chinese bitmap font ChangBanDianSong is built on this face with added simplified and traditional characters. Covers the whole of JIS level 2."
+form = "mingcho"
+form_verified = true
+vibes = ["classic", "retro-game"]
+
+[family.ppem]
+"KH-Dot-Dougenzaka-12.ttf" = 12
+"KH-Dot-Dougenzaka-16.ttf" = 16
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+[[family]]
+slug = "kh-dot-akihabara"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Akihabara-16.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Akihabara"
+name_zh = "KH点阵秋叶原"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット秋葉原", "KH Dot Akihabara", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里的圆黑体，16px。笔画端头收圆，是系列里最柔和的一款。含JIS第二水准全部汉字。"
+description_en = "The rounded gothic face of the KH Dot series at 16px. Stroke ends are rounded off, making it the softest face in the series. Covers the whole of JIS level 2."
+form = "rounded"
+form_verified = true
+vibes = ["cute", "retro-game"]
+
+[family.ppem]
+"KH-Dot-Akihabara-16.ttf" = 16
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+[[family]]
+slug = "kh-dot-ningyouchou"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Ningyouchou-16.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Ningyouchou"
+name_zh = "KH点阵人形町"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット人形町", "KH Dot Ningyouchou", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里的教科书体，16px。笔形取自手写楷法，在点阵尺寸上做教科书体相当少见。含JIS第二水准全部汉字。"
+description_en = "The textbook face of the KH Dot series at 16px. Its stroke shapes follow handwritten models; a textbook style at bitmap sizes is a rarity. Covers the whole of JIS level 2."
+form = "kai"
+form_verified = true
+vibes = ["classic"]
+
+[family.ppem]
+"KH-Dot-Ningyouchou-16.ttf" = 16
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+[[family]]
+slug = "kh-dot-hatchoubori"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Hatchoubori-16.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Hatchoubori"
+name_zh = "KH点阵八丁堀"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット八丁堀", "KH Dot Hatchoubori", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里的隶书体，16px，横画收尾带明显的波磔。中文点阵字体“八丁饰尾体16”即以本字体为底改作。含JIS第二水准全部汉字。"
+description_en = "The clerical script face of the KH Dot series at 16px, with the pronounced flared horizontals of the style. The Chinese bitmap font BaDingShiWeiTi 16 is a reworking of this face. Covers the whole of JIS level 2."
+form = "decorative"
+form_verified = true
+vibes = ["decorative", "classic"]
+
+[family.ppem]
+"KH-Dot-Hatchoubori-16.ttf" = 16
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+[[family]]
+slug = "kh-dot-kabutochou"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Kabutochou-16.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Kabutochou"
+name_zh = "KH点阵兜町"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット兜町", "KH Dot Kabutochou", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里的装饰体，16px，上游称之为“ファンテール”（Fantail）。中文点阵字体FashionBitmap16即以本字体为底中文化改作。含JIS第二水准全部汉字。"
+description_en = "The display face of the KH Dot series at 16px, called Fantail upstream. The Chinese bitmap font FashionBitmap16 is a Chinese-language reworking of this face. Covers the whole of JIS level 2."
+form = "decorative"
+form_verified = true
+vibes = ["decorative", "retro-game"]
+
+[family.ppem]
+"KH-Dot-Kabutochou-16.ttf" = 16
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+[[family]]
+slug = "kh-dot-hibiya"
+source = "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
+convert = "ttf"
+convert_take = ["KH-Dot-Hibiya-24.ttf", "KH-Dot-Hibiya-32.ttf"]
+license_files = ["SIL_Open_Font_License_1.1.txt"]
+name = "KH Dot Hibiya"
+name_zh = "KH点阵日比谷"
+authors = ["平木敬太郎", "自家製フォント工房"]
+homepage = "http://jikasei.me/font/kh-dotfont/"
+provenance_url = "http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)"
+aliases = ["KHドット日比谷", "KH Dot Hibiya", "KHドットフォント", "khdotfont", "電脳フォント"]
+description = "KH点阵系列里字面最大的一款明朝体，24px与32px两档。尺寸放大后笔画的粗细对比与顿挫都能完整表现。含JIS第二水准全部汉字。"
+description_en = "The largest mincho face of the KH Dot series, at 24px and 32px. The extra size lets the stroke contrast and the serif details come through in full. Covers the whole of JIS level 2."
+form = "mingcho"
+form_verified = true
+vibes = ["classic"]
+
+[family.ppem]
+"KH-Dot-Hibiya-24.ttf" = 24
+"KH-Dot-Hibiya-32.ttf" = 32
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "SIL_Open_Font_License_1.1.txt"
+note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
+note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
+
+# ---- GGBotNet 的像素字体（itch.io 直接下载）。detect_native_ppem 对前三款判定正确，
+# QuinqueFive 判定失败，按上游说明的 5×5 格点手填。
+
+[[family]]
+slug = "public-pixel"
+source = "direct-downloads-2026-08-31/ggbot-public-pixel-1.24"
+convert = "ttf"
+convert_take = ["PublicPixel.ttf"]
+ppem = 8
+license_files = ["License.txt"]
+name = "Public Pixel"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/public-pixel-font"
+provenance_url = "https://ggbot.itch.io/public-pixel-font"
+aliases = ["PublicPixel", "Public Pixel Font"]
+description = "GGBotNet做的8×8等宽像素字体，1324个字形覆盖98种语言的拉丁、希腊与西里尔文，是这批CC0像素字体里覆盖面最广的一款。"
+description_en = "An 8x8 monospaced pixel font by GGBotNet. Its 1,324 glyphs cover Latin, Greek and Cyrillic for 98 languages, the broadest coverage among this set of CC0 pixel fonts."
+form = "sans"
+form_verified = true
+vibes = ["retro-game", "classic"]
+
+[family.license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+name_en = "CC0 1.0 Universal (public domain dedication)"
+confidence = "manual"
+file = "License.txt"
+note = "发布包内附 CC0 1.0 全文（License.txt），字体 name 表的 License 字段亦写明“Creative Commons Zero v1.0 Universal”，itch.io 页面同样标注 CC0。CC0 是版权及邻接权的彻底放弃，商用、修改、再分发均无限制，亦无署名要求。"
+note_en = "The release archive bundles the full CC0 1.0 text (License.txt); the font's name table records the licence as \"Creative Commons Zero v1.0 Universal\", and the itch.io page states CC0 as well. CC0 is an outright waiver of copyright and neighbouring rights: no restriction on commercial use, modification or redistribution, and no attribution requirement."
+
+[[family]]
+slug = "pixtile"
+source = "direct-downloads-2026-08-31/ggbot-pixtile-1.10"
+convert = "ttf"
+convert_take = ["Pixtile.ttf"]
+ppem = 8
+license_files = ["License.txt"]
+name = "Pixtile"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/pixtile-font"
+provenance_url = "https://ggbot.itch.io/pixtile-font"
+aliases = ["Pixtile Font"]
+description = "GGBotNet做的8px像素字体，385个字形覆盖52种语言的拉丁字母。上游建议按8px的整数倍使用。"
+description_en = "An 8px pixel font by GGBotNet with 385 glyphs covering the Latin alphabet for 52 languages. Upstream recommends using it at multiples of 8px."
+form = "sans"
+form_verified = true
+vibes = ["retro-game"]
+
+[family.license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+name_en = "CC0 1.0 Universal (public domain dedication)"
+confidence = "manual"
+file = "License.txt"
+note = "发布包内附 CC0 1.0 全文（License.txt），字体 name 表的 License 字段亦写明“Creative Commons Zero v1.0 Universal”，itch.io 页面同样标注 CC0。CC0 是版权及邻接权的彻底放弃，商用、修改、再分发均无限制，亦无署名要求。"
+note_en = "The release archive bundles the full CC0 1.0 text (License.txt); the font's name table records the licence as \"Creative Commons Zero v1.0 Universal\", and the itch.io page states CC0 as well. CC0 is an outright waiver of copyright and neighbouring rights: no restriction on commercial use, modification or redistribution, and no attribution requirement."
+
+[[family]]
+slug = "3x3-mono"
+source = "direct-downloads-2026-08-31/ggbot-3x3-mono-1.01"
+convert = "ttf"
+convert_take = ["3x3-Mono.ttf"]
+ppem = 4
+license_files = ["License.txt"]
+name = "3x3 Mono"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/3x3-mono-font"
+provenance_url = "https://ggbot.itch.io/3x3-mono-font"
+aliases = ["3x3 Mono Font", "3x3Mono"]
+description = "GGBotNet做的极小等宽像素字体，字形设计在3×3的格子里，字面高4px——差不多是拉丁字母还能辨认的下限。91个字形，覆盖英语等6种语言。"
+description_en = "An extremely small monospaced pixel font by GGBotNet, drawn on a 3x3 grid within a 4px em - about as small as Latin letters can get and stay legible. 91 glyphs covering six languages."
+form = "sans"
+form_verified = true
+vibes = ["retro-game"]
+
+[family.license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+name_en = "CC0 1.0 Universal (public domain dedication)"
+confidence = "manual"
+file = "License.txt"
+note = "发布包内附 CC0 1.0 全文（License.txt），字体 name 表的 License 字段亦写明“Creative Commons Zero v1.0 Universal”，itch.io 页面同样标注 CC0。CC0 是版权及邻接权的彻底放弃，商用、修改、再分发均无限制，亦无署名要求。"
+note_en = "The release archive bundles the full CC0 1.0 text (License.txt); the font's name table records the licence as \"Creative Commons Zero v1.0 Universal\", and the itch.io page states CC0 as well. CC0 is an outright waiver of copyright and neighbouring rights: no restriction on commercial use, modification or redistribution, and no attribution requirement."
+
+[[family]]
+slug = "quinquefive"
+source = "direct-downloads-2026-08-31/ggbot-quinquefive-1.20"
+convert = "ttf"
+convert_take = ["QuinqueFive.ttf"]
+ppem = 5
+license_files = ["License.txt"]
+name = "QuinqueFive"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/quinquefive-font"
+provenance_url = "https://ggbot.itch.io/quinquefive-font"
+aliases = ["QuinqueFive Font", "Quinque Five"]
+description = "GGBotNet做的5×5等宽像素字体，1047个字形覆盖58种语言的拉丁、希腊、西里尔与亚美尼亚文。上游说明只应按5px的整数倍使用并关闭抗锯齿。"
+description_en = "A 5x5 monospaced pixel font by GGBotNet. Its 1,047 glyphs cover Latin, Greek, Cyrillic and Armenian for 58 languages. Upstream advises using it only at multiples of 5px with anti-aliasing off."
+form = "sans"
+form_verified = true
+vibes = ["retro-game"]
+
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "License.txt"
+note = "发布包内 License.txt 为 OFL 1.1 全文，署名“Copyright © 2019-2025 GGBotNet (https://ggbot.net), with Reserved Font Name \"QuinqueFive\"”，字体 name 表内嵌同一声明。保留字体名意味着改作版不得沿用“QuinqueFive”这个名字，不影响原样使用与商用。"
+note_en = "The License.txt in the release archive is the full OFL 1.1 text, attributed to \"Copyright (c) 2019-2025 GGBotNet (https://ggbot.net), with Reserved Font Name 'QuinqueFive'\"; the same declaration is embedded in the font's name table. The reserved font name means a modified version may not keep the name QuinqueFive; it places no restriction on using the font as-is, commercially or otherwise."
+
+[[todo]]
+source = "direct-downloads-2026-08-31/websites/Silver, a font for games by Poppy Works.html"
+reason = "Silver（Poppy Works / Wolfgang Wozniak）。2026-08-31 依用户提供的 itch.io 页面快照重新复核，结论与此前 Maoken-Direct/7577 一致，条款一字未改：页面把授权写作“Free* License — Attribution 4.0 International (CC BY 4.0)”，随后以星号附加“However, if the budget of your production exceeds $100,000 USD in total spend or earnings, or if you require urgent support, please contact hello@poppy.works to license this font.”。CC BY 4.0 本身允许不限规模的商业使用且合规后不可撤回，而该星号把预算门槛写成了“Free* License”的组成部分（要求另行 license this font），二者直接冲突；使用者无从判断以哪个为准。按本站收录标准——授权须明确、无歧义地允许任何人为任何目的使用与商用，且不因使用者规模设限——不予收录。注：其中“urgent support（加急支持）”属服务收费，本身不影响授权；有问题的是预算门槛这一条。作者若明确该门槛只是自愿联系的请求而非使用条件，可重新评估。另：Silver 的致谢列出 PixelMPlus（itouhiro）与 DOSGothic（leedheo）为主要贡献者，这两款本站均已收录。"
+
+# ---- OpenDesktop / 萤火飞点阵字体。原生 BDF，无需转制。
+[[family]]
+slug = "opendesktop-firefly"
+source = "direct-downloads-2026-08-31/opendesktop-firefly-bitmaps-1.4.2"
+take = ["fireflyR1?.bdf"]
+license_files = ["License.txt"]
+name = "OpenDesktop / Firefly"
+name_zh = "OpenDesktop / 萤火飞"
+authors = ["Firefly（萤火飞）"]
+homepage = "https://www.freebsdsoftware.org/chinese/opendesktop-fonts.html"
+provenance_url = "https://ftp.kh.edu.tw/odp/ODOFonts/Bitmaps/bdf/"
+aliases = ["Firefly", "Firefly Sung", "Firefly New Sung", "文鼎 PL 新宋", "AR PL New Sung", "ODO", "opendesktop-fonts", "fireflyR"]
+description = "2004年问世的中文点阵字体，由文鼎科技开源的细上海宋、简报宋修改而成，由作者萤火飞（Firefly）以自己的网名命名，点阵层为作者制作（GPL v2），后由台湾OpenDesktop计划接续发布，作者不变。收入Arch、FreeBSD等发行版。本站收录点阵终版1.4.2：11-16px六档字面。"
+description_en = "A Chinese bitmap font first released in 2004, reworked from Arphic's open-sourced Fine Shanghai Song and Bulletin Song faces and named after the online handle of its author, Firefly, who drew the bitmap layer (GPL v2). Publication later moved to Taiwan's OpenDesktop project, with the same author at work. It ships in distributions such as Arch and FreeBSD. Catalogued here is the final bitmap release, 1.4.2, in six sizes from 11 to 16px."
+form = "mingcho"
+form_verified = true
+vibes = ["classic"]
+
+[family.license]
+spdx = "GPL-2.0-only"
+name = "GNU 通用公共许可证 第 2 版"
+name_en = "GNU General Public License v2.0 only"
+confidence = "manual"
+file = "License.txt"
+note = "来源中，点阵部分的发布目录内License.txt为GPL第2版全文（中译在前、英文原文在后），作者为Firefly。可见作者将点阵层视为自己的制作，而没有使用文鼎公众授权书（Arphic Public License）1999年版（这和GPL一样是一个自由开源、copyleft的许可，但是与GPL不兼容），仅矢量层被视为基于文鼎科技的细上海宋与简报宋、遵守文鼎公众授权书的字体。不过在点阵BDF字体文件的COMMENT依然保留着“(c) Copyright 1994-1999, Arphic Technology Co., Ltd.”"
+note_en = "In the source, the License.txt in the bitmap release directory is the full GPL version 2 (Chinese translation first, English original after), and the author is Firefly. Evidently the author regarded the bitmap layer as their own work and did not place it under the Arphic Public License, 1999 version (like the GPL a free, open-source, copyleft licence, but incompatible with the GPL); only the outline layer is treated as derived from Arphic's Fine Shanghai Song and Bulletin Song and governed by the Arphic Public License. The bitmap BDF files nonetheless retain the COMMENT \"(c) Copyright 1994-1999, Arphic Technology Co., Ltd.\""

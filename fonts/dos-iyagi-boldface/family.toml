@@ -1,13 +1,16 @@
 name = "DOSIyagiBoldface"
-name_zh = ""
-author = "hurss"
+authors = ["hurss"]
 homepage = ""
 repository = "https://github.com/hurss/fonts"
 description = ""
 form = "rounded"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["cute"]  # UNVERIFIED
+aliases = ["DOS Iyagi Boldface", "도스이야기"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts；上游 https://github.com/hurss/fonts"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts；上游https://github.com/hurss/fonts"
 added = "2026-08-21"
 
-sample_lang = "ko"  # 韩文 DOS 字体出身，样例保持谚文
+sample_lang = "ko"  # 韩文DOS字体出身，样例保持谚文
+name_en = "DOSIyagiBoldface"
+authors_en = ["hurss"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts; upstream https://github.com/hurss/fonts"

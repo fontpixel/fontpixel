@@ -1,5 +1,5 @@
-import fbf
+import opf
 
 
 def test_pipeline_version():
-    assert fbf.PIPELINE_VERSION == 10
+    assert opf.PIPELINE_VERSION == 20

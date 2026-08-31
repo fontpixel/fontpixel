@@ -1,0 +1,24 @@
+name = "PoxiaoPixel"
+name_zh_hans = "破晓像素"
+authors = ["DWNfonts (diaowinner)"]
+homepage = "https://diaowinner.itch.io/poxiaopixel"
+repository = ""
+description = "12px泛Unicode像素字体，由Fairfax、ZLabs Bitmap、Galmuri三家合并而成，曾用代号FZG。CN与Hax两款分别取用不同的拉丁字形。"
+form = "gothic"
+vibes = ["retro-game"]
+aliases = ["FZG", "FZG_CN", "FZG_HAX"]
+converted_from = ""
+provenance = "上游https://diaowinner.itch.io/poxiaopixel；页面自述“基于Fairfax、ZLabs Bitmap和Galmuri的字体集合，编译脚本fork自ZLabs Bitmap”，三者在本站均为OFL-1.1（见fairfax、zlabs-* 、galmuri）。PUA区块经过重排：ZLabs与Galmuri原U+E000起的私用区移至U+10E000起，Powerline符号归回原位。由ttf按原生12px格点栅格化。"
+added = "2026-08-30"
+name_en = "Poxiao Pixel"
+authors_en = ["DWNfonts (diaowinner)"]
+description_en = "A 12px pan-Unicode pixel font merged from Fairfax, ZLabs Bitmap and Galmuri, formerly code-named FZG. The CN and Hax builds differ in which Latin glyphs they draw on."
+provenance_en = "Upstream https://diaowinner.itch.io/poxiaopixel . The page describes it as \"a font collection based on Fairfax, ZLabs Bitmap, and Galmuri\", with the compilation script forked from ZLabs Bitmap; all three are OFL-1.1 in this catalogue. Private-use areas were remapped: the U+E000 PUA of ZLabs and Galmuri moved to U+10E000, and Powerline symbols returned to their original positions. Rasterised from TTF at its native 12px grid."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+note = "合并自Fairfax、ZLabs Bitmap、Galmuri，三者均为OFL-1.1，衍生作品沿用OFL-1.1。"
+name_en = "SIL Open Font License 1.1"
+note_en = "Merged from Fairfax, ZLabs Bitmap and Galmuri, all OFL-1.1; the derivative stays under OFL-1.1."

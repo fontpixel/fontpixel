@@ -1,17 +1,21 @@
 name = "Creep"
-name_zh = ""
-author = "romeovs"
+authors = ["romeovs"]
 homepage = ""
 repository = "https://github.com/romeovs/creep"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/creep；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/creep；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "Creep"
+authors_en = ["romeovs"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/creep; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for original upstream project)"
 
 [license]
 spdx = "MIT"
-name = "MIT 许可证"
-commercial = true
-note = "16px 等宽终端字体，单一尺寸单文件。BDF 头仅有 COPYRIGHT 字段无许可声明，MIT 判定依据用户核查。"
+name = "MIT许可证"
+note = "16px等宽终端字体，单一尺寸单文件。BDF头仅有COPYRIGHT字段无许可声明，MIT判定依据用户核查。"
+name_en = "MIT License"
+note_en = "A 16px monospace terminal font, single size, single file. The BDF header has only a COPYRIGHT field with no license statement; the MIT designation is based on the user's verification."

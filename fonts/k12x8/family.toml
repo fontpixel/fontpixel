@@ -1,11 +1,13 @@
 name = "k12x8"
-name_zh = ""
-author = "門真なむ (Num Kadoma)"
+authors = ["門真なむ (Num Kadoma)"]
 homepage = "http://littlelimit.net/"
 repository = ""
 description = ""
 form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["classic"]  # UNVERIFIED
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/k12x8；上游 https://littlelimit.net/k12x8.htm （直链下载包，收录于 2026-08-18）；由 ttf 转换"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/k12x8；上游https://littlelimit.net/k12x8.htm（直链下载包，收录于2026-08-18）；由ttf转换"
 added = "2026-08-21"
+name_en = "k12x8"
+authors_en = ["門真なむ (Num Kadoma)"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/k12x8; upstream https://littlelimit.net/k12x8.htm (direct download package, catalogued 2026-08-18); converted from ttf"

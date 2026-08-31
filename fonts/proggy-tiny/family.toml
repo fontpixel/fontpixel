@@ -1,0 +1,25 @@
+name = "Proggy Tiny SZ"
+authors = ["Tristan Grimmer"]
+homepage = "https://github.com/bluescan/proggyfonts"
+repository = "https://github.com/bluescan/proggyfonts"
+description = "Proggy系列里最小的一款，10px，斜杠零版本，完整覆盖Latin-1（256字形）。上游另有不带斜杠零的常规版与CP／BP等编码变体，与本变体仅个别字形不同，未重复收录。"
+form = "terminal"
+vibes = ["classic", "terminal-hardcore"]
+aliases = ["Proggy Tiny", "proggytinysz", "proggyfonts"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/bluescan-proggyfonts；上游https://github.com/bluescan/proggyfonts"
+added = "2026-08-31"
+
+name_en = "Proggy Tiny SZ"
+authors_en = ["Tristan Grimmer"]
+description_en = "The smallest face of the Proggy series, 10px, slashed-zero version, with full Latin-1 coverage (256 glyphs). Upstream also ships a version without the slashed zero and CP/BP encoding variants; they differ from this one by a handful of glyphs and are not catalogued separately."
+provenance_en = "Imported from github-clones-2026-08-31/bluescan-proggyfonts; upstream https://github.com/bluescan/proggyfonts"
+
+[license]
+spdx = "MIT"
+name = "MIT许可证"
+confidence = "manual"
+file = "LICENSE"
+note = "上游bluescan/proggyfonts仓库根目录的LICENSE为MIT全文，署名 “Copyright (c) 2004, 2005 Tristan Grimmer”，覆盖ProggyOriginal目录下的全部Proggy字体。"
+name_en = "MIT License"
+note_en = "The LICENSE at the root of the upstream bluescan/proggyfonts repository is the full MIT text, attributed to \"Copyright (c) 2004, 2005 Tristan Grimmer\", covering all Proggy fonts under ProggyOriginal."

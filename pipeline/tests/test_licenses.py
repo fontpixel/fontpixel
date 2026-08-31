@@ -1,8 +1,8 @@
 import shutil
 from pathlib import Path
 
-from fbf.licenses import COMMERCIAL_OK, LicenseInfo, detect_license
-from fbf.model import ParsedFont
+from opf.licenses import LicenseInfo, detect_license
+from opf.model import ParsedFont
 
 FIX = Path(__file__).parent / "fixtures" / "licenses"
 
@@ -28,21 +28,18 @@ def test_ofl11_auto_high(tmp_path):
     assert li.spdx == "OFL-1.1"
     assert li.confidence == "auto-high"
     assert li.file == "OFL.txt"
-    assert li.commercial is True
 
 
 def test_mit_auto_high(tmp_path):
     d = _dir_with(tmp_path, "LICENSE", "mit.txt")
     li = detect_license(d, [_font({})], None)
     assert li.spdx == "MIT"
-    assert li.commercial is True
 
 
 def test_gpl2_no_font_exception(tmp_path):
     d = _dir_with(tmp_path, "COPYING", "gpl2.txt")
     li = detect_license(d, [_font({})], None)
     assert li.spdx == "GPL-2.0-only"
-    assert li.commercial is None
 
 
 def test_bsd2_and_ccby(tmp_path):
@@ -87,14 +84,26 @@ def test_manual_override_wins(tmp_path):
     li = detect_license(
         d, [_font({})],
         {"spdx": "LicenseRef-Custom", "name": "自定义", "file": "OFL.txt",
-         "commercial": False, "note": "仅限个人"},
+         "note": "仅限个人"},
     )
     assert li == LicenseInfo(
         spdx="LicenseRef-Custom", name="自定义", file="OFL.txt",
-        commercial=False, confidence="manual", note="仅限个人",
+        confidence="manual", note="仅限个人",
+        name_en="自定义", note_en="",
     )
 
 
-def test_commercial_set_contents():
-    assert "OFL-1.1" in COMMERCIAL_OK
-    assert "GPL-2.0-only" not in COMMERCIAL_OK
+def test_manual_override_keeps_english_name():
+    """英文界面要显示英文许可证名，人工覆写时可单独给 name_en／note_en。"""
+    from pathlib import Path as _P
+
+    li = detect_license(
+        _P("/nonexistent"), [],
+        {"spdx": "LicenseRef-PublicDomain", "name": "公有领域（東雲フォントライセンス）",
+         "name_en": "Public Domain (Shinonome Font License)",
+         "note": "中文说明", "note_en": "English note"},
+    )
+    assert li.name_en == "Public Domain (Shinonome Font License)"
+    assert li.note_en == "English note"
+    assert li.name == "公有领域（東雲フォントライセンス）"
+

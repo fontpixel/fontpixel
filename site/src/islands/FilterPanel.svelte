@@ -1,21 +1,66 @@
 <script lang="ts">
   import type { FilterState } from '../lib/filters';
   import type { FamilyIndex } from '../lib/schema';
+  import { pickText } from '../i18n';
   import type { UIStrings } from '../i18n/types';
+  import { COVERAGE_PICKS } from '../lib/coveragepicks';
+  import { licenseShortLabel } from '../lib/licenselabel';
 
   interface Props {
     families: FamilyIndex[];
-    state: FilterState;
+    filters: FilterState;
     s: UIStrings;
     lang: string;
+    charsetIds: string[];
+    charsetNames: Record<string, { zh: string; en: string; section: string; total: number }>;
   }
-  let { families, state = $bindable(), s, lang }: Props = $props();
+  let { families, filters = $bindable(), s, lang, charsetIds, charsetNames }: Props =
+    $props();
+
+  // 覆盖率筛选：一条「字表 ≥ 百分比」的规则，改动即筛
+  let covId = $state('');
+  // 预填 90%：这是书写系统达标判定用的门槛，也是最常问的那个数
+  let covPct = $state<number | null>(90);
+  const csLabel = (id: string) =>
+    pickText(lang, charsetNames[id]?.zh ?? id, charsetNames[id]?.en ?? id);
+  // 按 COVERAGE_PICKS 的次序（简→繁→日→韩→拉丁）列出，不按字母排
+  const csOptions = $derived(
+    COVERAGE_PICKS.filter((id) => charsetNames[id] && charsetIds.includes(id)),
+  );
+  $effect(() => {
+    const pct = covPct;
+    const id = covId;
+    filters.coverage = id && pct != null && pct > 0
+      ? [{ id, min: Math.min(Math.max(pct, 0), 100) / 100 }]
+      : [];
+  });
 
   const uniq = <T,>(xs: T[]) => [...new Set(xs)];
   const forms = $derived(uniq(families.map((f) => f.form)).sort());
   const sizes = $derived(uniq(families.flatMap((f) => f.sizes)).sort((a, b) => a - b));
   const vibes = $derived(uniq(families.flatMap((f) => f.vibes)).sort());
-  const scripts = $derived(uniq(families.flatMap((f) => f.scripts)));
+  // 书写系统：达标的排在前面，「不完整」的排在后面，各组内按固定顺序，
+  // 免得列表顺序随收录字体的多寡乱跳
+  const SCRIPT_ORDER = [
+    'latin',
+    'latin-supp',
+    'latin-ext',
+    'zh-hans',
+    'zh-hant',
+    'ja',
+    'ko',
+    'cyrillic',
+    'greek',
+  ];
+  const scriptRank = (sc: string) => {
+    const partial = sc.endsWith('-partial');
+    const base = partial ? sc.slice(0, -'-partial'.length) : sc;
+    const i = SCRIPT_ORDER.indexOf(base);
+    return (partial ? 100 : 0) + (i < 0 ? 99 : i);
+  };
+  const scripts = $derived(
+    uniq(families.flatMap((f) => f.scripts)).sort((a, b) => scriptRank(a) - scriptRank(b)),
+  );
   const licenses = $derived(
     uniq(families.map((f) => f.license.spdx ?? 'unknown')).sort(),
   );
@@ -26,47 +71,19 @@
     return hs.length ? [Math.min(...hs), Math.max(...hs)] : [0, 0];
   });
 
-  // 覆盖达标预设：官方标准名不译（引用），阈值见 spec §5.1
-  const PRESETS: { key: string; zh: string; en: string; reqs: { id: string; min: number }[] }[] = [
-    { key: 'gb2312', zh: 'GB/T 2312 ≥99%', en: 'GB/T 2312 ≥99%', reqs: [{ id: 'gb2312', min: 0.99 }] },
-    { key: 'tgh', zh: '通用规范汉字表 ≥99%', en: 'General Standard ≥99%', reqs: [{ id: 'tongyong-guifan', min: 0.99 }] },
-    { key: 'big5', zh: 'Big5 常用 ≥99%', en: 'Big5 frequent ≥99%', reqs: [{ id: 'big5-changyong', min: 0.99 }] },
-    { key: 'tw4808', zh: '常用国字 ≥99%', en: 'TW common ≥99%', reqs: [{ id: 'tw-changyong-4808', min: 0.99 }] },
-    { key: 'jis1', zh: 'JIS 第一水準 ≥99%', en: 'JIS level 1 ≥99%', reqs: [{ id: 'jisx0208-l1', min: 0.99 }] },
-    { key: 'kana', zh: '假名 100%', en: 'Kana 100%', reqs: [{ id: 'hiragana', min: 1 }, { id: 'katakana', min: 1 }] },
-    { key: 'ksx', zh: 'KS X 1001 谚文 ≥99%', en: 'KS X 1001 hangul ≥99%', reqs: [{ id: 'ksx1001-hangul', min: 0.99 }] },
-    { key: 'wgl4', zh: 'WGL4 ≥99%', en: 'WGL4 ≥99%', reqs: [{ id: 'wgl4', min: 0.99 }] },
-    { key: 'cp437', zh: 'CP437 ≥99%', en: 'CP437 ≥99%', reqs: [{ id: 'cp437', min: 0.99 }] },
-  ];
-
   function toggle(list: string[], v: string): string[] {
     return list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
   }
   function toggleNum(list: number[], v: number): number[] {
     return list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
   }
-  function presetActive(p: (typeof PRESETS)[number]): boolean {
-    return p.reqs.every((r) =>
-      state.coverage.some((c) => c.id === r.id && c.min === r.min),
-    );
-  }
-  function togglePreset(p: (typeof PRESETS)[number]) {
-    if (presetActive(p)) {
-      state.coverage = state.coverage.filter(
-        (c) => !p.reqs.some((r) => r.id === c.id && r.min === c.min),
-      );
-    } else {
-      state.coverage = [
-        ...state.coverage.filter((c) => !p.reqs.some((r) => r.id === c.id)),
-        ...p.reqs,
-      ];
-    }
-  }
   function reset() {
-    const chars = state.chars;
-    const q = state.q;
-    const sort = state.sort;
-    state = {
+    covId = '';
+    covPct = 90;
+    const chars = filters.chars;
+    const q = filters.q;
+    const sort = filters.sort;
+    filters = {
       q,
       forms: [],
       vibes: [],
@@ -76,7 +93,6 @@
       licenses: [],
       spacing: [],
       weights: [],
-      origin: 'all',
       coverage: [],
       chars,
       sort,
@@ -91,47 +107,67 @@
   </div>
 
   <section>
-    <h3>{s.catalogue.charsLookup}</h3>
-    <input
-      type="text"
-      placeholder={s.catalogue.charsPlaceholder}
-      bind:value={state.chars}
-      data-testid="chars-input"
-    />
-    <p class="hint">{s.catalogue.charsHint}</p>
-  </section>
-
-  <section>
-    <h3>{s.catalogue.form}</h3>
+    <h3>{s.catalogue.scripts}</h3>
     <div class="chips">
-      {#each forms as f (f)}
+      {#each scripts as sc (sc)}
         <button
           type="button"
           class="chip chipbtn"
-          class:on={state.forms.includes(f)}
-          data-form={f}
-          onclick={() => (state.forms = toggle(state.forms, f))}
-          >{s.forms[f] ?? f}</button
+          class:on={filters.scripts.includes(sc)}
+          title={s.scriptRules[sc] ?? ''}
+          onclick={() => (filters.scripts = toggle(filters.scripts, sc))}
+          >{s.scriptNames[sc] ?? sc}</button
         >
       {/each}
     </div>
   </section>
 
-  {#if vibes.length}
-    <section>
-      <h3>{s.catalogue.vibes}</h3>
-      <div class="chips">
-        {#each vibes as v (v)}
-          <button
-            type="button"
-            class="chip chipbtn"
-            class:on={state.vibes.includes(v)}
-            onclick={() => (state.vibes = toggle(state.vibes, v))}>{v}</button
-          >
+  <section>
+    <h3>{s.catalogue.coveragePresets}</h3>
+    <div class="cov" data-testid="coverage-filter">
+      <select bind:value={covId} data-testid="coverage-charset" aria-label={s.catalogue.coveragePresets}>
+        <option value="">{s.catalogue.coverageAny}</option>
+        {#each csOptions as id (id)}
+          <option value={id}>{csLabel(id)}</option>
         {/each}
-      </div>
-    </section>
-  {/if}
+      </select>
+      <span class="cov__op mono">≥</span>
+      <input
+        class="cov__pct mono"
+        type="number"
+        min="0"
+        max="100"
+        step="1"
+        placeholder="90"
+        data-testid="coverage-pct"
+        value={covPct ?? ''}
+        oninput={(e) => {
+          const v = Number.parseFloat(e.currentTarget.value);
+          covPct = Number.isFinite(v) ? v : null;
+        }}
+      />
+      <span class="cov__op mono">%</span>
+      {#if covId}
+        <button
+          type="button"
+          class="cov__clear"
+          data-testid="coverage-clear"
+          onclick={() => { covId = ''; covPct = 90; }}>{s.catalogue.reset}</button
+        >
+      {/if}
+    </div>
+  </section>
+
+  <section>
+    <h3>{s.catalogue.charsLookup}</h3>
+    <input
+      type="text"
+      placeholder={s.catalogue.charsPlaceholder}
+      bind:value={filters.chars}
+      data-testid="chars-input"
+    />
+    <p class="hint">{s.catalogue.charsHint}</p>
+  </section>
 
   <section>
     <h3>{s.catalogue.sizes}</h3>
@@ -140,9 +176,9 @@
         <button
           type="button"
           class="chip chipbtn mono"
-          class:on={state.sizes.includes(sz)}
+          class:on={filters.sizes.includes(sz)}
           data-size={sz}
-          onclick={() => (state.sizes = toggleNum(state.sizes, sz))}
+          onclick={() => (filters.sizes = toggleNum(filters.sizes, sz))}
           >{sz}{s.card.px}</button
         >
       {/each}
@@ -157,11 +193,11 @@
         min={inkRange[0]}
         max={inkRange[1]}
         placeholder={String(inkRange[0])}
-        value={state.inkH?.[0] ?? ''}
+        value={filters.inkH?.[0] ?? ''}
         oninput={(e) => {
           const v = Number.parseInt(e.currentTarget.value, 10);
-          const hi = state.inkH?.[1] ?? inkRange[1]!;
-          state.inkH = Number.isFinite(v) ? [v, hi] : null;
+          const hi = filters.inkH?.[1] ?? inkRange[1]!;
+          filters.inkH = Number.isFinite(v) ? [v, hi] : null;
         }}
       />
       –
@@ -170,55 +206,27 @@
         min={inkRange[0]}
         max={inkRange[1]}
         placeholder={String(inkRange[1])}
-        value={state.inkH?.[1] ?? ''}
+        value={filters.inkH?.[1] ?? ''}
         oninput={(e) => {
           const v = Number.parseInt(e.currentTarget.value, 10);
-          const lo = state.inkH?.[0] ?? inkRange[0]!;
-          state.inkH = Number.isFinite(v) ? [lo, v] : null;
+          const lo = filters.inkH?.[0] ?? inkRange[0]!;
+          filters.inkH = Number.isFinite(v) ? [lo, v] : null;
         }}
       />
     </div>
   </section>
 
   <section>
-    <h3>{s.catalogue.scripts}</h3>
+    <h3>{s.catalogue.form}</h3>
     <div class="chips">
-      {#each scripts as sc (sc)}
+      {#each forms as f (f)}
         <button
           type="button"
           class="chip chipbtn"
-          class:on={state.scripts.includes(sc)}
-          onclick={() => (state.scripts = toggle(state.scripts, sc))}
-          >{s.scriptNames[sc] ?? sc}</button
-        >
-      {/each}
-    </div>
-  </section>
-
-  <section>
-    <h3>{s.catalogue.coveragePresets}</h3>
-    <div class="chips">
-      {#each PRESETS as p (p.key)}
-        <button
-          type="button"
-          class="chip chipbtn"
-          class:on={presetActive(p)}
-          onclick={() => togglePreset(p)}>{lang === 'zh' ? p.zh : p.en}</button
-        >
-      {/each}
-    </div>
-  </section>
-
-  <section>
-    <h3>{s.catalogue.license}</h3>
-    <div class="chips">
-      {#each licenses as lic (lic)}
-        <button
-          type="button"
-          class="chip chipbtn mono"
-          class:on={state.licenses.includes(lic)}
-          onclick={() => (state.licenses = toggle(state.licenses, lic))}
-          >{lic === 'unknown' ? s.card.licenseUnknown : lic}</button
+          class:on={filters.forms.includes(f)}
+          data-form={f}
+          onclick={() => (filters.forms = toggle(filters.forms, f))}
+          >{s.forms[f] ?? f}</button
         >
       {/each}
     </div>
@@ -231,8 +239,8 @@
         <button
           type="button"
           class="chip chipbtn"
-          class:on={state.spacing.includes(sp)}
-          onclick={() => (state.spacing = toggle(state.spacing, sp))}
+          class:on={filters.spacing.includes(sp)}
+          onclick={() => (filters.spacing = toggle(filters.spacing, sp))}
           >{s.spacingNames[sp] ?? sp}</button
         >
       {/each}
@@ -240,28 +248,49 @@
         <button
           type="button"
           class="chip chipbtn"
-          class:on={state.weights.includes(w)}
-          onclick={() => (state.weights = toggle(state.weights, w))}
+          class:on={filters.weights.includes(w)}
+          onclick={() => (filters.weights = toggle(filters.weights, w))}
           >{s.weightNames[w] ?? w}</button
         >
       {/each}
     </div>
   </section>
 
+  {#if vibes.length}
+    <section>
+      <h3>{s.catalogue.vibes}</h3>
+      <div class="chips">
+        {#each vibes as v (v)}
+          <button
+            type="button"
+            class="chip chipbtn"
+            class:on={filters.vibes.includes(v)}
+            onclick={() => (filters.vibes = toggle(filters.vibes, v))}
+            >{s.vibeNames[v] ?? v}</button
+          >
+        {/each}
+      </div>
+    </section>
+  {/if}
+
   <section>
-    <h3>{s.catalogue.origin}</h3>
+    <h3>{s.catalogue.license}</h3>
     <div class="chips">
-      {#each [['all', s.catalogue.originAll], ['native', s.catalogue.originNative], ['converted', s.catalogue.originConverted]] as [key, label] (key)}
+      {#each licenses as lic (lic)}
         <button
           type="button"
-          class="chip chipbtn"
-          class:on={state.origin === key}
-          onclick={() => (state.origin = key as FilterState['origin'])}>{label}</button
+          class="chip chipbtn mono"
+          class:on={filters.licenses.includes(lic)}
+          onclick={() => (filters.licenses = toggle(filters.licenses, lic))}
+          >{lic === 'unknown'
+            ? s.card.licenseUnknown
+            : licenseShortLabel(lic)}</button
         >
       {/each}
     </div>
   </section>
-</aside>
+
+  </aside>
 
 <style>
   .fp {
@@ -304,6 +333,10 @@
   .chipbtn {
     cursor: pointer;
     background: none;
+    /* 许可证全名很长（如 WTFPL、CC BY-SA），必须能折行，否则会被面板裁掉 */
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
   }
   .chipbtn.on {
     border-color: var(--accent);
@@ -322,6 +355,33 @@
   }
   .range input {
     width: 4.5em;
+  }
+  .cov {
+    display: flex;
+    align-items: center;
+    gap: var(--s1);
+    flex-wrap: wrap;
+  }
+  .cov select {
+    flex: 1 1 100%;
+    min-width: 0;
+    font-size: 0.78rem;
+  }
+  .cov__pct {
+    width: 4em;
+    flex: 0 0 auto;
+  }
+  .cov__op {
+    color: var(--ink-3);
+  }
+  .cov__clear {
+    border: none;
+    color: var(--ink-3);
+    font-size: 0.75rem;
+    padding: 0 var(--s1);
+  }
+  .cov__clear:hover {
+    color: var(--accent);
   }
   .check {
     display: flex;

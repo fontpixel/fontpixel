@@ -1,0 +1,29 @@
+name = "Envypn"
+authors = ["Ypnose"]
+homepage = "https://ywstd.fr"
+repository = ""
+description = "Ypnose制作的7×13与7×15两档等宽点阵终端字体。上游按ISO 8859-1与ISO 8859-2分成两份文件发布，本站已合并成单一Unicode变体（各193字形起）。"
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+aliases = ["envypn-font", "envy pn"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/envypn-font；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Envypn"
+authors_en = ["Ypnose"]
+description_en = "A monospace bitmap terminal font by Ypnose in two sizes, 7x13 and 7x15. Upstream ships each size as separate ISO 8859-1 and ISO 8859-2 files; they are merged here into a single Unicode variant per size."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/envypn-font; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "MirOS"
+name = "MirOS许可证"
+confidence = "manual"
+file = "LICENSE"
+note = "包内LICENSE为MirOS许可证全文，署名 “Copyright © 2012, 2013, 2014 Ypnose”，明确授予不受限制的使用、公开演出、分发、出售、修改、合并、赠与与再许可权利。BDF的COPYRIGHT字段亦致谢MirOS的mirabilos。"
+name_en = "The MirOS Licence"
+note_en = "The bundled LICENSE is the full MirOS Licence text, attributed to \"Copyright © 2012, 2013, 2014 Ypnose\", granting unrestricted rights to use, publicly perform, distribute, sell, modify, merge, give away and sublicence. The BDF COPYRIGHT field also credits mirabilos of MirOS."
+
+[merge]
+"envypn7x13.bdf" = ["envypn7x13e.bdf"]
+"envypn7x15.bdf" = ["envypn7x15e.bdf"]

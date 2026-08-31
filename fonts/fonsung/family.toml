@@ -1,0 +1,23 @@
+name = "Fonsung"
+name_zh_hans = "坊宋"
+authors = ["DWNfonts (diaowinner)"]
+homepage = "https://diaowinner.itch.io/fonsung"
+repository = ""
+description = "16px简体中文仿宋点阵字体，由X.org的gb16fs.bdf重制而成。"
+form = "fangsong"
+vibes = ["classic"]
+converted_from = ""
+provenance = "上游https://diaowinner.itch.io/fonsung；页面自述“A vector bitmap Simp. Chinese 16px font original by X.org's gb16fs.bdf”，制作工具为FontForge与Bits'n'Picas。字体文件内保留了原始的中国科学院软件研究所1988年版权声明。由ttf按原生16px格点栅格化。"
+added = "2026-08-30"
+name_en = "Fonsung"
+authors_en = ["DWNfonts (diaowinner)"]
+description_en = "A 16px Simplified Chinese Fangsong bitmap font remade from X.org's gb16fs.bdf."
+provenance_en = "Upstream https://diaowinner.itch.io/fonsung . The page states: \"A vector bitmap Simp. Chinese 16px font original by X.org's gb16fs.bdf\", made with FontForge and Bits'n'Picas. The font file preserves the original 1988 copyright notice of the Institute of Software, Academia Sinica. Rasterised from TTF at its native 16px grid."
+
+[license]
+spdx = "CC-BY-SA-4.0"
+name = "知识共享 署名-相同方式共享4.0国际"
+confidence = "manual"
+note = "上游页面标注CC-BY SA 4.0；字体内嵌的版权行仍署中国科学院软件研究所（1988），原始条款允许使用、复制、修改与分发。"
+name_en = "Creative Commons Attribution-ShareAlike 4.0 International"
+note_en = "The upstream page states CC-BY SA 4.0; the embedded copyright line still credits the Institute of Software, Academia Sinica (1988), whose original terms permit use, copying, modification and distribution."

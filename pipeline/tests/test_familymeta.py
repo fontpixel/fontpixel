@@ -1,17 +1,18 @@
 from pathlib import Path
 
-from fbf.familymeta import load_family_meta, resolve_variant
-from fbf.model import ParsedFont
+from opf.familymeta import load_family_meta, resolve_variant
+from opf.model import ParsedFont
 
 TOML = """
 name = "Fusion Pixel"
 name_zh = "缝合像素"
-author = "TakWolf"
+authors = ["TakWolf", "pixel-font-studio"]
 homepage = "https://fusion-pixel-font.takwolf.com"
 repository = "https://github.com/TakWolf/fusion-pixel-font"
 description = "多来源缝合的像素字体"
 form = "gothic"
 vibes = ["retro-game", "cute"]
+aliases = ["FZG", "缝合怪"]
 converted_from = ""
 provenance = "官方 release BDF"
 
@@ -30,7 +31,7 @@ weight = "regular"
 
 def _font(file_name: str, props: dict, pixel_size: int = 10,
           dwidths: list[int] | None = None) -> ParsedFont:
-    from fbf.model import Glyph
+    from opf.model import Glyph
 
     glyphs = []
     for i, dw in enumerate(dwidths or [8, 8, 8, 8]):
@@ -53,10 +54,37 @@ def test_load_full_toml(tmp_path):
     assert m.name_zh == "缝合像素"
     assert m.form == "gothic"
     assert m.vibes == ["retro-game", "cute"]
+    assert m.aliases == ["FZG", "缝合怪"]
+    assert m.authors == ["TakWolf", "pixel-font-studio"]
     assert m.curated is True
     assert m.license_override == {"spdx": "OFL-1.1", "file": "LICENSE-OFL"}
     assert m.samples == {"zh-Hans": "缝合怪也有春天"}
     assert "fusion-pixel-10px-monospaced-zh_hans.bdf" in m.variant_overrides
+
+
+def test_legacy_singular_author_still_loads(tmp_path):
+    # 旧写法 author = "..." 仍要能读，免得漏改一个文件就把作者悄悄清空
+    d = tmp_path / "old"
+    d.mkdir()
+    (d / "family.toml").write_text('name = "Old"\nauthor = "TakWolf"\n',
+                                   encoding="utf-8")
+    m = load_family_meta(d)
+    assert m.authors == ["TakWolf"]
+
+
+def test_authors_default_to_empty(tmp_path):
+    d = tmp_path / "anon"
+    d.mkdir()
+    (d / "family.toml").write_text('name = "Anon"\n', encoding="utf-8")
+    assert load_family_meta(d).authors == []
+
+
+def test_aliases_default_to_empty(tmp_path):
+    # 绝大多数家族没有别名，缺这个键不该出错
+    d = tmp_path / "plain"
+    d.mkdir()
+    (d / "family.toml").write_text('name = "Plain"\n', encoding="utf-8")
+    assert load_family_meta(d).aliases == []
 
 
 def test_missing_toml_writes_stub(tmp_path):

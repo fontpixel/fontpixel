@@ -6,9 +6,9 @@ from pathlib import Path
 
 import pytest
 
-from fbf.downloads import build_downloads
-from fbf.familymeta import FamilyMeta, resolve_variant
-from fbf.parsers.bdf import parse_bdf
+from opf.downloads import build_downloads
+from opf.familymeta import FamilyMeta, resolve_variant
+from opf.parsers.bdf import parse_bdf
 
 FIX = Path(__file__).parent / "fixtures"
 HAVE_BDFTOPCF = shutil.which("bdftopcf") is not None
@@ -57,7 +57,7 @@ def test_build_downloads_outputs(tmp_path):
 
 def test_ttf_bundles_all_sizes(tmp_path):
     """同一字体的多个尺寸应合并进一个位图 TTF。"""
-    from fbf.ingest.otb import convert_otb
+    from opf.ingest.otb import convert_otb
 
     d = _family(tmp_path)
     shutil.copy(FIX / "real-galmuri7.bdf", d / "small.bdf")
@@ -73,8 +73,8 @@ def test_ttf_bundles_all_sizes(tmp_path):
 
 
 def _fonts_multi(d):
-    from fbf.familymeta import FamilyMeta, resolve_variant
-    from fbf.parsers.bdf import parse_bdf as _p
+    from opf.familymeta import FamilyMeta, resolve_variant
+    from opf.parsers.bdf import parse_bdf as _p
 
     meta = FamilyMeta(slug="mini", name="Mini")
     out = []
@@ -97,7 +97,7 @@ def test_deterministic(tmp_path):
 
 @pytest.mark.skipif(not HAVE_BDFTOPCF, reason="bdftopcf missing")
 def test_pcf_roundtrip(tmp_path):
-    from fbf.parsers.pcf import parse_pcf
+    from opf.parsers.pcf import parse_pcf
 
     d = _family(tmp_path)
     out = tmp_path / "dl"
@@ -111,7 +111,7 @@ def test_pcf_roundtrip(tmp_path):
 
 
 def test_write_bdf_roundtrip(tmp_path):
-    from fbf.ingest.bdfwrite import write_bdf
+    from opf.ingest.bdfwrite import write_bdf
 
     f = parse_bdf(FIX / "mini.bdf", "mini")
     out = tmp_path / "rt.bdf"
@@ -124,3 +124,47 @@ def test_write_bdf_roundtrip(tmp_path):
         assert a.rows == b.rows
     assert f2.pixel_size == f.pixel_size
     assert f2.ascent == f.ascent
+
+
+def test_metadata_refresh_matches_a_full_rebuild_byte_for_byte(tmp_path):
+    """快路径改出来的 TTF/zip，必须与「用新元数据全量重建」字节完全一致。
+
+    产物的 sha256 会随下载页发布出去。若两条路径产出不同字节，同一份字体
+    的校验和就取决于它当时走了哪条路——那这个优化就不能用。
+    """
+    from opf.downloads import refresh_downloads_metadata
+
+    fam = _family(tmp_path)
+    fonts = _fonts(fam)
+
+    old_out = tmp_path / "old"
+    entries = build_downloads("mini", fam, fonts, ["OFL.txt"], "旧 README\n",
+                              old_out, family_display="Mini",
+                              copyright_line="Mini — 旧作者")
+
+    # 参照组：直接用新元数据整个重建一遍
+    want_out = tmp_path / "want"
+    want = build_downloads("mini", fam, _fonts(fam), ["OFL.txt"], "新 README\n",
+                           want_out, family_display="Mini",
+                           copyright_line="Mini — 新作者（handle）")
+
+    # 快路径：只把新元数据刷进旧产物
+    got = refresh_downloads_metadata(entries, old_out, "新 README\n",
+                                     "Mini", "Mini — 新作者（handle）")
+
+    assert [e["file"] for e in got] == [e["file"] for e in want]
+    for g, w in zip(got, want):
+        assert g["sha256"] == w["sha256"], f"{g['file']} 字节不一致"
+        assert (old_out / g["file"]).read_bytes() == (want_out / w["file"]).read_bytes()
+
+
+def test_metadata_refresh_gives_up_when_outputs_are_gone(tmp_path):
+    # 产物被清掉时要退回全量重建，而不是silently 交出半份下载物
+    from opf.downloads import refresh_downloads_metadata
+
+    fam = _family(tmp_path)
+    out = tmp_path / "out"
+    entries = build_downloads("mini", fam, _fonts(fam), ["OFL.txt"],
+                              "README\n", out, family_display="Mini")
+    (out / entries[0]["file"]).unlink()
+    assert refresh_downloads_metadata(entries, out, "README\n", "Fam", "c") == []

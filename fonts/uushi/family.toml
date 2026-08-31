@@ -1,0 +1,24 @@
+name = "Uushi"
+authors = ["king benis (phallus)"]
+homepage = ""
+repository = "https://github.com/phallus/fonts"
+description = "11px比例点阵字体，覆盖1074个Unicode码位，与Lemon出自同一仓库。"
+form = "sans"
+vibes = ["classic"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/phallus；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Uushi"
+authors_en = ["king benis (phallus)"]
+description_en = "An 11px proportional bitmap font covering 1,074 Unicode code points, from the same repository as Lemon."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/phallus; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "WTFPL"
+name = "想干嘛干嘛公共许可证 第2版"
+confidence = "manual"
+file = "license"
+note = "仓库快照内的license文件为WTFPL第2版全文，署名 “Copyright (C) 2013 king benis”。注意上游phallus/fonts此后已改用GPL-3.0；本站收录的是快照当时的WTFPL版本，两者都允许商用、修改与再分发。"
+name_en = "Do What The F*ck You Want To Public License v2"
+note_en = "The license file in the repository snapshot is the full WTFPL version 2 text, attributed to \"Copyright (C) 2013 king benis\". Note that upstream phallus/fonts has since moved to GPL-3.0; what is catalogued here is the WTFPL-era snapshot. Both permit commercial use, modification and redistribution."

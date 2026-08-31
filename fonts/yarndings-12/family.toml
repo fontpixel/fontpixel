@@ -1,11 +1,14 @@
 name = "Yarndings 12"
-name_zh = ""
-author = "Sarah Cadigan-Fried"
+authors = ["Sarah Cadigan-Fried"]
 homepage = ""
 repository = "https://github.com/scfried/soft-type-yarndings"
 description = ""
 form = "decorative"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["decorative", "cute"]  # UNVERIFIED
+aliases = ["Soft Type Yarndings", "Yarndings12"]
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scfried--soft-type-yarndings；上游 https://github.com/scfried/soft-type-yarndings (HEAD 快照，收录于 2026-08-18)；由 ttf 转换"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scfried--soft-type-yarndings；上游https://github.com/scfried/soft-type-yarndings（HEAD快照，收录于2026-08-18）；由ttf转换"
 added = "2026-08-21"
+name_en = "Yarndings 12"
+authors_en = ["Sarah Cadigan-Fried"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scfried--soft-type-yarndings; upstream https://github.com/scfried/soft-type-yarndings (HEAD snapshot, collected 2026-08-18); converted from ttf"

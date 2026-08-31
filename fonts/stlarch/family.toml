@@ -1,0 +1,25 @@
+name = "STLarch"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/stlarchfont/"
+repository = ""
+description = "状态栏图标字体，336个图标全部落在Unicode私用区（U+E000–U+F8FF），配合dwm、dzen2一类状态栏与常规点阵字体搭配使用。不含常规文字字形。"
+form = "decorative"
+vibes = ["decorative"]
+aliases = ["stlarch_font", "stlarch font"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/stlarch；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "STLarch"
+authors_en = ["stlarch"]
+description_en = "An icon font for status bars: 336 icons placed in the Unicode Private Use Area (U+E000-U+F8FF), designed to be paired with a regular bitmap font in status bars such as dwm and dzen2. It contains no text glyphs."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/stlarch; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-only"
+name = "GNU通用公共许可证 第2版"
+confidence = "manual"
+file = "README.stlarch"
+note = "包内README末尾写明 “Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)”，且每个PCF的COPYRIGHT属性都写着 “GPLv2”。本族随字体附上该README原文。"
+name_en = "GNU General Public License v2.0 only"
+note_en = "The bundled README ends with \"Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. That README is bundled here as the licensing evidence."

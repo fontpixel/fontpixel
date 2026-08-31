@@ -1,11 +1,14 @@
 name = "XiuZhenXiangSuTi"
-name_zh = "袖珍像素体"
-author = "yzdnn（基于 Num Kadoma 的 k6x8）"
+name_zh_hans = "袖珍像素体"
+authors = ["yzdnn"]
 homepage = ""
 repository = "https://github.com/yzdnn/XiuZhenXiangSuTi"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--XiuZhenXiangSuTi；上游 https://github.com/yzdnn/XiuZhenXiangSuTi/releases (v1.0.0)"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--XiuZhenXiangSuTi；上游https://github.com/yzdnn/XiuZhenXiangSuTi/releases (v1.0.0)；字形基于Num Kadoma的k6x8。"
 added = "2026-08-21"
+name_en = "XiuZhenXiangSuTi"
+authors_en = ["yzdnn"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--XiuZhenXiangSuTi; upstream https://github.com/yzdnn/XiuZhenXiangSuTi/releases (v1.0.0); Glyphs are based on k6x8 by Num Kadoma."

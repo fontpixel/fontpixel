@@ -1,0 +1,25 @@
+name = "Coding Font Tobi"
+authors = ["Tobias Werner"]
+homepage = ""
+repository = ""
+description = "Tobias Werner 2006年做的16px点阵编程字体（251字形），最初发布在proggyfonts.net的投稿区。"
+form = "terminal"
+vibes = ["classic"]
+aliases = ["cft", "CodingFontTobi", "tobi"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/bluescan-proggyfonts；上游https://github.com/bluescan/proggyfonts"
+added = "2026-08-31"
+
+name_en = "Coding Font Tobi"
+authors_en = ["Tobias Werner"]
+description_en = "A 16px bitmap programming font (251 glyphs) made by Tobias Werner in 2006, originally published in the contributions section of proggyfonts.net."
+provenance_en = "Imported from github-clones-2026-08-31/bluescan-proggyfonts; upstream https://github.com/bluescan/proggyfonts"
+
+[license]
+spdx = "MIT"
+name = "MIT许可证"
+confidence = "manual"
+file = "Licence.txt"
+note = "上游proggyfonts仓库Contributed/CodingFontTobi.zip内附Licence.txt，为MIT全文，署名 “Copyright (c) 2006 Tobias Werner”。该仓库README说明投稿字体各自适用包内自带的许可证，不套用仓库根目录的MIT。"
+name_en = "MIT License"
+note_en = "Contributed/CodingFontTobi.zip in the upstream proggyfonts repository bundles a Licence.txt that is the full MIT text, attributed to \"Copyright (c) 2006 Tobias Werner\". The repository README states that contributed fonts are covered by whatever licence ships inside their own archive, not by the repository-root MIT file."

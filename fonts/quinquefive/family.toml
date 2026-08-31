@@ -1,0 +1,25 @@
+name = "QuinqueFive"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/quinquefive-font"
+repository = ""
+description = "GGBotNet做的5×5等宽像素字体，1047个字形覆盖58种语言的拉丁、希腊、西里尔与亚美尼亚文。上游说明只应按5px的整数倍使用并关闭抗锯齿。"
+form = "sans"
+vibes = ["retro-game"]
+aliases = ["QuinqueFive Font", "Quinque Five"]
+converted_from = "ttf"
+provenance = "导入自 direct-downloads-2026-08-31/ggbot-quinquefive-1.20；上游 https://ggbot.itch.io/quinquefive-font；由 ttf 转换"
+added = "2026-08-31"
+
+name_en = "QuinqueFive"
+authors_en = ["GGBotNet"]
+description_en = "A 5x5 monospaced pixel font by GGBotNet. Its 1,047 glyphs cover Latin, Greek, Cyrillic and Armenian for 58 languages. Upstream advises using it only at multiples of 5px with anti-aliasing off."
+provenance_en = "Imported from direct-downloads-2026-08-31/ggbot-quinquefive-1.20; upstream https://ggbot.itch.io/quinquefive-font; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "License.txt"
+note = "发布包内 License.txt 为 OFL 1.1 全文，署名“Copyright © 2019-2025 GGBotNet (https://ggbot.net), with Reserved Font Name \"QuinqueFive\"”，字体 name 表内嵌同一声明。保留字体名意味着改作版不得沿用“QuinqueFive”这个名字，不影响原样使用与商用。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The License.txt in the release archive is the full OFL 1.1 text, attributed to \"Copyright (c) 2019-2025 GGBotNet (https://ggbot.net), with Reserved Font Name 'QuinqueFive'\"; the same declaration is embedded in the font's name table. The reserved font name means a modified version may not keep the name QuinqueFive; it places no restriction on using the font as-is, commercially or otherwise."

@@ -2,7 +2,7 @@
 
 import { emptyState, type FilterState, type SortKey } from './filters';
 
-const SORTS: SortKey[] = ['name', 'size', 'glyphs', 'added'];
+const SORTS: SortKey[] = ['name', 'size', 'glyphs'];
 
 export function encodeState(s: FilterState): URLSearchParams {
   const p = new URLSearchParams();
@@ -16,7 +16,6 @@ export function encodeState(s: FilterState): URLSearchParams {
   if (s.licenses.length) p.set('lic', s.licenses.join(','));
   if (s.spacing.length) p.set('sp', s.spacing.join(','));
   if (s.weights.length) p.set('wt', s.weights.join(','));
-  if (s.origin !== d.origin) p.set('or', s.origin);
   if (s.coverage.length)
     p.set('cov', s.coverage.map((c) => `${c.id}:${c.min}`).join(','));
   if (s.chars) p.set('chars', s.chars);
@@ -46,8 +45,6 @@ export function decodeState(p: URLSearchParams): FilterState {
   s.licenses = list(p, 'lic');
   s.spacing = list(p, 'sp');
   s.weights = list(p, 'wt');
-  const or = p.get('or');
-  if (or === 'native' || or === 'converted') s.origin = or;
   s.coverage = list(p, 'cov')
     .map((x) => {
       const [id, min] = x.split(':');

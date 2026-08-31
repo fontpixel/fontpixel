@@ -1,11 +1,14 @@
 name = "Pixeloid Sans"
-name_zh = ""
-author = "GGBotNet"
+authors = ["GGBotNet"]
 homepage = "https://ggbot.itch.io/pixeloid-font"
 repository = ""
 description = ""
 form = "sans"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["PixeloidSans", "Pixeloid Font"]
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Pixeloid-Sans；上游 https://ggbot.itch.io/pixeloid-font （直链下载包，收录于 2026-08-18）；由 ttf 转换"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Pixeloid-Sans；上游https://ggbot.itch.io/pixeloid-font（直链下载包，收录于2026-08-18）；由ttf转换"
 added = "2026-08-21"
+name_en = "Pixeloid Sans"
+authors_en = ["GGBotNet"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/Pixeloid-Sans; upstream https://ggbot.itch.io/pixeloid-font (direct download package, catalogued 2026-08-18); converted from ttf"

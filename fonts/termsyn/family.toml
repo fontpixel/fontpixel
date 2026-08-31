@@ -1,0 +1,25 @@
+name = "Termsyn"
+authors = ["stlarch"]
+homepage = "http://sourceforge.net/projects/termsyn/"
+repository = ""
+description = "基于Terminus与Tamsyn改作的等宽点阵字体，四档尺寸（6×11／7×12／6×13／7×14）各含常规与粗体。收录ISO 10646版本（各382字形）；上游另有ISO 8859-1／-2版、图标版与控制台字体，未重复收录。"
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+aliases = ["termsynu"]
+converted_from = ""
+provenance = "导入自github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/termsyn-1.8.7；上游https://github.com/Tecate/bitmap-fonts"
+added = "2026-08-31"
+
+name_en = "Termsyn"
+authors_en = ["stlarch"]
+description_en = "A monospace bitmap font derived from Terminus and Tamsyn, in four sizes (6x11, 7x12, 6x13, 7x14), each with a regular and a bold weight. The ISO 10646 builds are catalogued here (382 glyphs each); upstream's ISO 8859-1/-2 builds, icon builds and console fonts are not duplicated."
+provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/termsyn-1.8.7; upstream https://github.com/Tecate/bitmap-fonts"
+
+[license]
+spdx = "GPL-2.0-only"
+name = "GNU通用公共许可证 第2版"
+confidence = "manual"
+file = "README.termsyn"
+note = "包内README末尾写明 “Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)”，且每个PCF的COPYRIGHT属性都写着 “GPLv2”。本族随字体附上该README原文。"
+name_en = "GNU General Public License v2.0 only"
+note_en = "The bundled README ends with \"Released under GPLv2 license. (http://www.gnu.org/licenses/gpl-2.0.html)\", and every PCF carries \"GPLv2\" in its COPYRIGHT property. That README is bundled here as the licensing evidence."

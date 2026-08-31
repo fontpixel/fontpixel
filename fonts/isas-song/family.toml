@@ -1,17 +1,23 @@
 name = "ISAS Song"
-name_zh = "中研院宋体点阵"
-author = "Institute of Software, Academia Sinica (1988)"
+name_zh_hans = "中科院宋体点阵"
+authors = ["中国科学院软件研究所"]
 homepage = ""
 repository = "https://github.com/olikraus/u8g2"
 description = ""
 form = "mingcho"
 vibes = ["classic"]
+aliases = ["Song ti", "Songti", "中科院宋体", "中研院宋体点阵"]
 converted_from = ""
-provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/olikraus--u8g2；上游 https://github.com/olikraus/u8g2 (tools/font/bdf,1988 年 GB2312 宋体点阵,BDF 注释含宽松授权声明)"
+provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/olikraus--u8g2；上游https://github.com/olikraus/u8g2（tools/font/bdf,1988年GB2312宋体点阵，BDF注释含宽松授权声明）；1988年由中国科学院软件研究所（Institute of Software, Academia Sinica）制作。"
 added = "2026-08-21"
+
+name_en = "ISAS Song"
+authors_en = ["Institute of Software, Academia Sinica"]
+provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/olikraus--u8g2; upstream https://github.com/olikraus/u8g2 (tools/font/bdf, a 1988 GB2312 Song bitmap font, BDF comments include a permissive license statement); Produced in 1988 by the Institute of Software, Academia Sinica."
 
 [license]
 spdx = "LicenseRef-ISAS-1988"
-name = "ISAS 宽松授权(1988,见 BDF 注释)"
-commercial = true
-note = "BDF COMMENT 声明:允许使用、复制、修改与分发;版权归中研院软件所(1988)。"
+name = "ISAS宽松授权（1988，见BDF注释）"
+note = "BDF COMMENT声明：允许使用、复制、修改与分发；版权归中研院软件所（1988）。"
+name_en = "ISAS License (1988)"
+note_en = "The BDF COMMENT states that use, copying, modification, and distribution are permitted; copyright held by the Institute of Software, Academia Sinica (1988)."

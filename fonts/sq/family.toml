@@ -1,17 +1,21 @@
 name = "Sq"
-name_zh = ""
-author = "Christian Neukirchen"
+authors = ["Christian Neukirchen"]
 homepage = ""
 repository = "https://github.com/chneukirchen/sq"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore"]  # UNVERIFIED
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/sq；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/sq；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）"
 added = "2026-08-21"
+
+name_en = "Sq"
+authors_en = ["Christian Neukirchen"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/sq; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for the original upstream project)"
 
 [license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
-commercial = true
-note = "15px 等宽终端字体，含 regular（sq）与 bold（sqb）两个 BDF 文件（同名 .pcf 未取用）。BDF COMMENT 注明 “Based upon Codec Terminal Text by Chris Cannam”，COPYRIGHT 字段为 “Public domain”。"
+note = "15px等宽终端字体，含regular（sq）与bold（sqb）两个BDF文件（同名 .pcf未取用）。BDF COMMENT注明 “Based upon Codec Terminal Text by Chris Cannam”，COPYRIGHT字段为 “Public domain”。"
+name_en = "Public Domain"
+note_en = "A 15px monospace terminal font with two BDF files, regular (sq) and bold (sqb) (the matching .pcf files were not taken). The BDF COMMENT notes \"Based upon Codec Terminal Text by Chris Cannam,\" and the COPYRIGHT field reads \"Public domain.\""

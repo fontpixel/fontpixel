@@ -1,18 +1,23 @@
 name = "Press Start 2P"
-name_zh = ""
-author = ""
+authors = ["CodeMan38"]
 homepage = "https://fonts.google.com/specimen/Press+Start+2P"
 repository = "https://github.com/google/fonts/tree/main/ofl/pressstart2p"
 description = ""
 form = "sans"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game"]  # UNVERIFIED
+aliases = ["PressStart2P", "pressstart2p"]
 converted_from = "ttf"
-provenance = "导入自 pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P；上游 https://fonts.google.com/specimen/Press+Start+2P （CSS Unicode-range 切片镜像，v16，latin 子集，收录于 2026-08-18）；由 ttf 转换；收录的是 Google Fonts v16 的 latin 切片转制版，OFL.txt 取自 google/fonts"
+provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P；上游https://fonts.google.com/specimen/Press+Start+2P（CSS Unicode-range切片镜像，v16，latin子集，收录于2026-08-18）；由ttf转换；收录的是Google Fonts v16的latin切片转制版，OFL.txt取自google/fonts"
 added = "2026-08-21"
+
+name_en = "Press Start 2P"
+authors_en = ["CodeMan38"]
+provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P; upstream https://fonts.google.com/specimen/Press+Start+2P (CSS unicode-range slice mirror, v16, latin subset, collected 2026-08-18); converted from ttf; the collected file is a converted version of the Google Fonts v16 latin slice; OFL.txt taken from google/fonts"
 
 [license]
 spdx = "OFL-1.1"
 name = "SIL Open Font License 1.1"
 file = "OFL.txt"
-commercial = true
-note = "SIL OFL 1.1，保留字体名（Reserved Font Name）为 “Press Start 2P”，修改版须改用其它名称后方可分发。可商用、可嵌入、可修改、可再分发；随字体须保留版权声明与许可证全文。本目录 OFL.txt 取自 google/fonts 仓库 ofl/pressstart2p。"
+note = "SIL OFL 1.1，保留字体名（Reserved Font Name）为 “Press Start 2P”，修改版须改用其它名称后方可分发。可商用、可嵌入、可修改、可再分发；随字体须保留版权声明与许可证全文。本目录OFL.txt取自google/fonts仓库ofl/pressstart2p。"
+name_en = "SIL Open Font License 1.1"
+note_en = "SIL OFL 1.1. The Reserved Font Name is \"Press Start 2P\"; modified versions must be renamed before distribution. Commercial use, embedding, modification, and redistribution are all permitted; the copyright notice and full license text must accompany the font. The OFL.txt in this directory is taken from the google/fonts repository at ofl/pressstart2p."

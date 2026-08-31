@@ -1,17 +1,22 @@
 name = "Tamzen"
-name_zh = ""
-author = "sunaku（基于 Scott Fial 的 Tamsyn 字体再设计）"
+authors = ["sunaku"]
 homepage = ""
 repository = "https://github.com/sunaku/tamzen-font"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["terminal-hardcore"]  # UNVERIFIED
+aliases = ["tamzen-font", "Tamzen Font"]
 converted_from = ""
-provenance = "导入自 github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font；上游 https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
+provenance = "导入自github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font；上游https://github.com/masaeedu/bitmap-fonts（clone于2026-08-29；上游原始项目见note）；由sunaku基于Scott Fial的Tamsyn字体再设计。"
 added = "2026-08-21"
+
+name_en = "Tamzen"
+authors_en = ["sunaku"]
+provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for original upstream project); Redesigned by sunaku from Scott Fial's Tamsyn font."
 
 [license]
 spdx = "LicenseRef-Tamsyn"
-name = "Tamsyn 字体许可（BSD 风格，衍生须保留原许可与归属）"
-commercial = true
-note = "Tamsyn 的像素级重绘衍生版，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 BDF 文件（取自 bdf/ 子目录，同名 pcf/ 下的 .pcf 未取用）。各文件 COPYRIGHT 字段沿用 “(c) 2015 Scott Fial”，符合 Tamsyn License 对衍生作品保留原作者版权声明的要求。目录内另有 Powerline*.bdf（纯 Powerline 分隔符号补充字体）与 TamzenForPowerline*.bdf（Tamzen 正文缝合 Powerline 符号的衍生版），判定为非独立设计，未收录，见 todo。"
+name = "Tamsyn字体许可（BSD风格，衍生须保留原许可与归属）"
+note = "Tamsyn的像素级重绘衍生版，含5x9/6x12/7x13/7x14/8x15/8x16/10x20七档尺寸、regular/bold两种字重，共14个BDF文件（取自bdf/ 子目录，同名pcf/ 下的 .pcf未取用）。各文件COPYRIGHT字段沿用 “(c) 2015 Scott Fial”，符合Tamsyn License对衍生作品保留原作者版权声明的要求。目录内另有Powerline*.bdf（纯Powerline分隔符号补充字体）与TamzenForPowerline*.bdf（Tamzen正文缝合Powerline符号的衍生版），判定为非独立设计，未收录，见todo。"
+name_en = "Tamsyn Font License (BSD-style; derivatives must retain the original license and attribution)"
+note_en = "A pixel-level redrawn derivative of Tamsyn, with seven sizes (5x9, 6x12, 7x13, 7x14, 8x15, 8x16, 10x20) in regular and bold weights, 14 BDF files in total (taken from the bdf/ subdirectory; the .pcf files under the matching pcf/ were not used). Each file's COPYRIGHT field retains \"(c) 2015 Scott Fial\", satisfying the Tamsyn License requirement that derivative works retain the original author's copyright notice. The directory also contains Powerline*.bdf (a supplementary font of Powerline separator glyphs only) and TamzenForPowerline*.bdf (a derivative that stitches Powerline glyphs into the Tamzen body text); these were judged not to be standalone designs and were not included, see todo."

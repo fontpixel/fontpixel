@@ -14,8 +14,11 @@
     s: UIStrings;
     dataBase: string;
     fontsBase: string;
+    charsetIds: string[];
+    charsetNames: Record<string, { zh: string; en: string; section: string; total: number }>;
   }
-  const { families, lang, s, dataBase, fontsBase }: Props = $props();
+  const { families, lang, s, dataBase, fontsBase, charsetIds, charsetNames }: Props =
+    $props();
 
   const store = new GlyphStore(dataBase);
   let state = $state(emptyState());
@@ -60,7 +63,7 @@
     history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
   });
 
-  const results = $derived(applyFilters(families, state, charLookup));
+  const results = $derived(applyFilters(families, state, charLookup, charsetIds));
 </script>
 
 <section class="cat" data-testid="catalogue-island">
@@ -96,7 +99,6 @@
           <option value="name">{s.catalogue.sortName}</option>
           <option value="size">{s.catalogue.sortSize}</option>
           <option value="glyphs">{s.catalogue.sortGlyphs}</option>
-          <option value="added">{s.catalogue.sortAdded}</option>
         </select>
       </label>
     </div>
@@ -105,7 +107,7 @@
   <div class="cat__body">
     <details class="cat__filters" open bind:this={filtersEl}>
       <summary class="cat__filters-summary">{s.catalogue.filters}</summary>
-      <FilterPanel {families} bind:state {s} {lang} />
+      <FilterPanel {families} bind:filters={state} {s} {lang} {charsetIds} {charsetNames} />
     </details>
     <div class="cat__main">
       <p class="cat__results mono" data-testid="result-count">
@@ -145,14 +147,15 @@
     margin-bottom: var(--s4);
   }
   .cat__search {
-    flex: 1 1 14rem;
+    flex: 1 1 min(14rem, 100%);
   }
   .cat__sample {
-    flex: 2 1 20rem;
+    flex: 2 1 min(20rem, 100%);
   }
   .cat__controls {
     display: flex;
-    gap: var(--s3);
+    flex-wrap: wrap;
+    gap: var(--s2) var(--s3);
     align-items: center;
     font-size: 0.85rem;
     color: var(--ink-2);
@@ -165,7 +168,9 @@
   }
   .cat__body {
     display: grid;
-    grid-template-columns: 15rem 1fr;
+    /* minmax(0,…) 解除 grid 子项 min-width:auto 的默认下限，
+       否则卡片内容比轨道宽时会把整页顶破 */
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
     gap: var(--s6);
     align-items: start;
   }
@@ -176,7 +181,8 @@
   }
   .cat__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    /* min() 让下限跟着视口走：300px 屏上 19rem(304px) 会直接把网格撑破 */
+    grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
     gap: var(--s4);
   }
   .cat__empty {
@@ -193,7 +199,7 @@
   }
   @media (max-width: 900px) {
     .cat__body {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: var(--s4);
     }
     .cat__filters {

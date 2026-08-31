@@ -1,18 +1,29 @@
 name = "UW ttyp0"
-name_zh = ""
-author = "Uwe Waldmann"
+authors = ["Uwe Waldmann"]
 homepage = "https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/"
 repository = ""
-description = "覆盖极广的等宽点阵终端字体，含拉丁、希腊、西里尔、越南语、亚美尼亚语、格鲁吉亚语与制表符，11–22px 多档尺寸并含粗体与斜体。"
+description = "覆盖极广的等宽点阵终端字体，含拉丁、希腊、西里尔、越南语、亚美尼亚语、格鲁吉亚语与制表符，11–22px多档尺寸并含粗体与斜体。"
 form = "terminal"
 vibes = ["terminal-hardcore"]
 converted_from = ""
-provenance = "官方发行版 uw-ttyp0-1.3.tar.gz（https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/，取于 2026-08-29）。上游以字体自有编码的主控 BDF 分发，本站用其 mgl/unicode.mgl 按字形名重映射为 Unicode BDF，重建代码见 pipeline/fbf/ingest/uwttyp0.py。masaeedu/bitmap-fonts 的 1.2 快照因缺 mgl 目录无法重建，未采用。"
+provenance = "官方发行版uw-ttyp0-1.3.tar.gz（https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/，取于2026-08-29）。上游以字体自有编码的主控BDF分发，本站用其mgl/unicode.mgl按字形名重映射为Unicode BDF，重建代码见pipeline/opf/ingest/uwttyp0.py。masaeedu/bitmap-fonts的1.2快照因缺mgl目录无法重建，未采用。"
 added = "2026-08-29"
+
+name_en = "UW ttyp0"
+authors_en = ["Uwe Waldmann"]
+description_en = "An extremely broad-coverage monospace bitmap terminal font covering Latin, Greek, Cyrillic, Vietnamese, Armenian, Georgian, and box-drawing characters, in multiple sizes from 11 to 22px with bold and italic styles."
+provenance_en = "Official release uw-ttyp0-1.3.tar.gz (https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/, retrieved 2026-08-29). Upstream distributes a master BDF in the font's own custom encoding; this site remaps it to a Unicode BDF using its mgl/unicode.mgl glyph-name mapping. Rebuild code at pipeline/opf/ingest/uwttyp0.py. The 1.2 snapshot in masaeedu/bitmap-fonts lacks the mgl directory and could not be rebuilt, so it was not used."
+
+# 上游的奇数尺寸文件（11/13/15/17px，共10个）每个只有234个字形，是一套
+# 固定的补充集：罕用的预组合重音字母、箭头与数学符号，四个尺寸内容完全相同，
+# 且全部已存在于对应的偶数尺寸完整字体中。没有基础字母就排不出任何文本，
+# 收录只会显示成“一个字母都没有的11px字体”，故不予收录。
+exclude = ["t0-11*.bdf", "t0-13*.bdf", "t0-15*.bdf", "t0-17*.bdf"]
 
 [license]
 spdx = "LicenseRef-UW-ttyp0"
-name = "UW ttyp0 许可证（MIT 风格）"
+name = "UW ttyp0许可证（MIT风格）"
 file = "LICENSE"
-commercial = true
-note = "BDF 内嵌与随包 LICENSE 一致：允许任何人免费使用、复制、修改、合并、发布、分发、嵌入、再许可与销售，条件是保留版权与许可声明；另附一条改名要求——若修改字形设计或增补字形，必须为字体改名且新名不得含 “UW”。该改名条款与 OFL 的保留字体名机制同类，不影响自由许可判定。"
+note = "BDF内嵌与随包LICENSE一致：允许任何人免费使用、复制、修改、合并、发布、分发、嵌入、再许可与销售，条件是保留版权与许可声明；另附一条改名要求——若修改字形设计或增补字形，必须为字体改名且新名不得含 “UW”。该改名条款与OFL的保留字体名机制同类，不影响自由许可判定。"
+name_en = "UW ttyp0 License (MIT-style)"
+note_en = "Matches the LICENSE included with the package, embedded in the BDF: permits anyone to use, copy, modify, merge, publish, distribute, embed, sublicense, and sell the font at no cost, provided the copyright and license notices are retained. It also includes a renaming clause: if the glyph design is modified or glyphs are added, the font must be renamed and the new name must not contain \"UW\". This renaming clause is analogous to the OFL's Reserved Font Name mechanism and does not affect the font's classification as a free/open license."

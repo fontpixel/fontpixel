@@ -36,11 +36,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .cache
-          key: fbf-cache-${{ hashFiles('fonts/**', 'pipeline/fbf/**') }}
-          restore-keys: fbf-cache-
+          key: opf-cache-${{ hashFiles('fonts/**', 'pipeline/opf/**') }}
+          restore-keys: opf-cache-
 
       - name: 构建字体数据
-        run: .venv/bin/python -m fbf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
+        run: .venv/bin/python -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
 
       - name: 安装站点依赖
         run: cd site && npm ci

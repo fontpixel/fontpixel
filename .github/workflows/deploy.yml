@@ -6,16 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # Releases 上传
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
   group: deploy
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,41 +34,44 @@ jobs:
       - name: 安装 Python 依赖
         run: |
           python -m venv .venv
-          .venv/bin/pip install -e "pipeline[dev]"
+          .venv/bin/pip install -e "pipeline[dev]" boto3
 
       - name: 恢复构建缓存
         uses: actions/cache@v4
         with:
           path: .cache
-          key: fbf-cache-${{ hashFiles('fonts/**', 'pipeline/fbf/**') }}
-          restore-keys: fbf-cache-
+          key: opf-cache-${{ hashFiles('fonts/**', 'pipeline/opf/**') }}
+          restore-keys: opf-cache-
 
-      - name: 构建字体数据(体积红线 900MB)
-        run: .venv/bin/python -m fbf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
+      - name: 构建字体数据(展示资产红线 900MB)
+        run: .venv/bin/python -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
+
+      - name: 校验下载基址已配置
+        run: |
+          if [ -z "${{ vars.OPF_DOWNLOADS_BASE }}" ]; then
+            echo "::error::仓库变量 OPF_DOWNLOADS_BASE 未设置。站点会把下载链接回落到 Pages 的 /downloads，而该目录在部署时被删除，所有下载都会 404。请到 Settings → Secrets and variables → Actions → Variables 设置（2026-08-31 项目改名后，由 FBF_DOWNLOADS_BASE 更名而来）。"
+            exit 1
+          fi
 
       - name: Astro 构建
         run: |
-          rm -rf site/public/downloads   # 下载物只走 Releases,绝不进 Pages
+          rm -rf site/public/downloads   # 下载物只走 R2，绝不进 Pages
           cd site && npm ci && npx astro build
         env:
-          FBF_DOWNLOADS_BASE: https://github.com/${{ github.repository }}/releases/download/downloads
+          # Pages 服务在域名根目录；下载物指向 R2 的公开地址
+          OPF_BASE: /
+          OPF_DOWNLOADS_BASE: ${{ vars.OPF_DOWNLOADS_BASE }}
 
-      - name: 上传 Pages 构建物
-        uses: actions/upload-pages-artifact@v3
+      - name: 部署站点到 Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          path: site/dist
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site/dist --project-name=${{ vars.CF_PAGES_PROJECT }}
 
-      - name: 同步下载物到 Releases(增量)
-        run: .venv/bin/python .github/scripts/sync_release.py --dir dist-downloads --tag downloads
+      - name: 同步下载物到 R2(增量)
+        run: .venv/bin/python .github/scripts/sync_r2.py --dir dist-downloads --bucket "${{ vars.R2_BUCKET }}"
         env:
-          GH_TOKEN: ${{ github.token }}
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}

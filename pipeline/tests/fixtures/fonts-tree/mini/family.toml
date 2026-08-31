@@ -1,8 +1,9 @@
 name = "Mini Test"
 name_zh = "迷你测试"
-author = "PFC Tests"
+authors = ["PFC Tests", "Second Author"]
 homepage = "https://example.com/mini"
 description = "测试家族"
 form = "gothic"
 vibes = ["retro-game"]
+aliases = ["MiniOld", "迷你旧名"]
 added = "2026-08-21"

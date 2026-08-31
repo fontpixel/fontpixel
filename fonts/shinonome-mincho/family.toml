@@ -1,19 +1,28 @@
 name = "Shinonome Mincho"
-name_zh = "東雲明朝"
-author = "The Electronic Font Open Laboratory（/efont/）；原始设计 古川泰之 ほか，见 AUTHORS"
+name_zh_hans = "东云明朝"
+name_zh_hant = "東雲明朝"
+name_ja = "東雲明朝"
+authors = ["The Electronic Font Open Laboratory (efont)", "古川泰之"]
 homepage = "http://openlab.ring.gr.jp/efont/shinonome/"
 repository = "https://github.com/code4fukui/shinonome-font"
 description = "東雲字体的明朝版，以黑体为基底派生，12／14／16px。"
 form = "mingcho"
 vibes = ["classic"]
+aliases = ["東雲フォント"]
 converted_from = ""
-provenance = "由上游 .bit 源码重建：code4fukui/shinonome-font（clone 于 2026-08-29），用上游自带的公有领域工具 tools/bit2bdf 与 tools/bdfmerge 还原各字符集 BDF，再按 latin1（ISO 8859-1 全部）＋ hankaku（仅 U+FF61–FF9F 半角片假名）＋ kanji（JIS X 0208 全部）合并为单个 Unicode BDF，重建代码见 pipeline/pfc/ingest/shinonome.py"
+provenance = "由上游 .bit源码重建：code4fukui/shinonome-font（clone于2026-08-29），用上游自带的公有领域工具tools/bit2bdf与tools/bdfmerge还原各字符集BDF，再按latin1（ISO 8859-1全部）＋hankaku（仅U+FF61–FF9F半角片假名）＋kanji（JIS X 0208全部）合并为单个Unicode BDF，重建代码见pipeline/pfc/ingest/shinonome.py；原始设计 古川泰之 ほか，完整名单见上游AUTHORS。"
 added = "2026-08-29"
 sample_lang = "ja"
+
+name_en = "Shinonome Mincho"
+authors_en = ["The Electronic Font Open Laboratory (efont)", "Yasuyuki Furukawa"]
+description_en = "The Mincho counterpart to the Shinonome typeface family, derived from the Gothic (sans-serif) base, in 12/14/16px sizes."
+provenance_en = "Rebuilt from upstream .bit source: code4fukui/shinonome-font (cloned 2026-08-29), using the upstream's own public-domain tools tools/bit2bdf and tools/bdfmerge to reconstruct per-charset BDFs, then merged into a single Unicode BDF covering latin1 (all of ISO 8859-1) + hankaku (half-width katakana, U+FF61-FF9F only) + kanji (all of JIS X 0208); rebuild code at pipeline/pfc/ingest/shinonome.py; Original design by Yasuyuki Furukawa and others; see the upstream AUTHORS file for the full list."
 
 [license]
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域（東雲フォントライセンス）"
 file = "LICENSE-Shinonome.txt"
-commercial = true
-note = "上游 LICENSE（東雲フォントライセンス，2001，The Electronic Font Open Laboratory）声明：档案内全部字体数据、文档与脚本均以 Public Domain 提供；因日本法下无法在法律上放弃著作权，由 AUTHORS 列出的作者声明不行使权利，实质等同公有领域，明确允许自由改造、转换格式、嵌入与再分发。注意：本字体不是 MIT，收录时不得按 MIT 标注。"
+note = "上游LICENSE（東雲フォントライセンス，2001，The Electronic Font Open Laboratory）声明：档案内全部字体数据、文档与脚本均以Public Domain提供；因日本法下无法在法律上放弃著作权，由AUTHORS列出的作者声明不行使权利，实质等同公有领域，明确允许自由改造、转换格式、嵌入与再分发。注意：本字体不是MIT，收录时不得按MIT标注。"
+name_en = "Public Domain (Shinonome Font License)"
+note_en = "The upstream LICENSE (Shinonome Font License, 2001, The Electronic Font Open Laboratory) states that all font data, documentation, and scripts in the archive are provided as Public Domain. Because Japanese law does not permit a legal waiver of copyright, the authors listed in AUTHORS instead declare that they will not exercise their rights, which amounts to public domain in practice and explicitly permits free modification, format conversion, embedding, and redistribution. Note: this font is not MIT-licensed; it must not be labeled as MIT when catalogued."
