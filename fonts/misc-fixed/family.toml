@@ -1,6 +1,6 @@
 name = "Misc Fixed"
 authors = ["X.Org Foundation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/misc-misc"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/misc-misc"
 description = "X11自带的经典点阵等宽字体，从4×6到18×18共15档字面，含粗体与斜体。Unix终端上用了几十年，覆盖拉丁、希腊、西里尔与制表符；12×13、18×18三档另含日文与韩文的汉字与谚文。"
 form = "terminal"

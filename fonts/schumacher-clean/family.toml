@@ -1,6 +1,6 @@
 name = "Schumacher Clean"
 authors = ["Dale Schumacher"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
 description = "X11自带的另一套经典等宽点阵字体，1989年Dale Schumacher作，31个字面覆盖4×6到9×15，含常规、粗体与斜体。其中6×12常规一档已扩到ISO 10646（1194字形），其余各档为ISO 646 IRV的128字形。"
 form = "terminal"

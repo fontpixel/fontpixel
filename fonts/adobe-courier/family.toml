@@ -1,6 +1,6 @@
 name = "Adobe Courier"
 authors = ["Adobe Systems", "Digital Equipment Corporation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 description = "Adobe为X11制作的Courier位图字面，等宽打字机风格，是X11时代终端与代码显示的默认比例字体之一。含常规／粗体／斜体／粗斜四款，75dpi与100dpi合计12档像素尺寸（8–34px），ISO 10646编码。"
 form = "terminal"

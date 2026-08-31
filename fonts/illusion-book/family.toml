@@ -1,7 +1,7 @@
 name = "Illusion Book"
 name_zh_hans = "幻象像素书体"
 authors = ["StevenLZH (Steven Liu)"]
-homepage = "http://studiountagged.top/Projects/IllusionBook.html"
+homepage = ""
 repository = "https://github.com/StevenLZH/IllusionBook"
 description = ""
 form = "serif-pixel"  # UNVERIFIED：导入时预填，待人工复核

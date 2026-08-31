@@ -223,6 +223,8 @@ const brandCss = brand
           <a
             class="nav-icon"
             href={REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             data-testid="github-link"
             aria-label={s.nav.github}
             title={s.nav.github}
@@ -332,7 +334,7 @@ const brandCss = brand
           <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
           <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
           <a href={withBase(`/${lang}/about/#datasources`)}>{s.footer.dataSources}</a>
-          <a href={REPO_URL} rel="noopener">{s.footer.sourceCode}</a>
+          <a href={REPO_URL} target="_blank" rel="noopener noreferrer">{s.footer.sourceCode}</a>
         </nav>
         <div class="site-footer__legal">
           <p>{s.footer.disclaimer}</p>
@@ -340,7 +342,7 @@ const brandCss = brand
             {s.footer.siteLicense}{' '}
             {/* Copyright line skips i18n: the year and name are the same in every language, and it needs an embedded link */}
             <span class="site-footer__copy">
-              © 2026 <a href="https://tomchen.org/" rel="noopener">Tom Chen</a>
+              © 2026 <a href="https://tomchen.org/" target="_blank" rel="noopener noreferrer">Tom Chen</a>
             </span>
           </p>
         </div>

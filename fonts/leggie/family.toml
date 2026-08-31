@@ -1,6 +1,6 @@
 name = "Leggie"
 authors = ["Wiktor W Brodlo"]
-homepage = "http://wiktorb.eu/leggie"
+homepage = ""
 repository = "https://github.com/wiktor-b/leggie"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核

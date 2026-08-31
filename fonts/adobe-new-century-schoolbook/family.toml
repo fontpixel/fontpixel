@@ -1,6 +1,6 @@
 name = "Adobe New Century Schoolbook"
 authors = ["Adobe Systems", "Digital Equipment Corporation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 description = "Adobe为X11制作的New Century Schoolbook位图字面，字面开阔的教科书体衬线设计。含常规／粗体／斜体／粗斜四款，75dpi与100dpi合计12档像素尺寸（8–34px），ISO 10646编码。"
 form = "serif-pixel"

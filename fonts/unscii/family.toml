@@ -1,7 +1,7 @@
 name = "Unscii"
 authors = ["Viznut"]
-homepage = "http://pelulamu.net/unscii/"
-repository = ""
+homepage = ""
+repository = "https://github.com/viznut/unscii"
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核
 vibes = ["retro-game", "classic"]  # UNVERIFIED

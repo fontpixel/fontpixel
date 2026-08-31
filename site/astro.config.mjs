@@ -41,6 +41,25 @@ function downloadsAsAttachments() {
 // Production domain is pixelfonts.dev; override with OPF_SITE for special environments.
 const site = process.env.OPF_SITE ?? 'https://pixelfonts.dev';
 
+/**
+ * Markdown/MDX links that point off-site open in a new tab and never hand the
+ * target window a reference back (or a referrer). Written inline rather than
+ * pulling in rehype-external-links for one rule.
+ */
+function rehypeExternalLinks() {
+  const walk = (node) => {
+    if (node.type === 'element' && node.tagName === 'a') {
+      const href = node.properties?.href;
+      if (typeof href === 'string' && /^https?:\/\//i.test(href)) {
+        node.properties.target = '_blank';
+        node.properties.rel = 'noopener noreferrer';
+      }
+    }
+    for (const child of node.children ?? []) walk(child);
+  };
+  return (tree) => walk(tree);
+}
+
 export default defineConfig({
   site,
   integrations: [
@@ -59,6 +78,7 @@ export default defineConfig({
   ],
   // Cloudflare Pages serves from the domain root; override with OPF_BASE when deploying to a subpath
   base: process.env.OPF_BASE ?? '/',
+  markdown: { rehypePlugins: [rehypeExternalLinks] },
   vite: {
     plugins: [downloadsAsAttachments()],
     resolve: {

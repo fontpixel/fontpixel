@@ -46,6 +46,7 @@ const kindLabel: Record<string, string> = {
               {entries.map((e) => (
                 <a
                   class="dl__link"
+                  rel="noopener noreferrer"
                   href={`${base}/${e.file}`}
                   download={e.file}
                   data-kind={e.kind}
@@ -66,8 +67,9 @@ const kindLabel: Record<string, string> = {
             <td>
               <a
                 class="dl__link"
+                rel="noopener noreferrer"
                 href={`${base}/${zip.file}`}
-                  download={zip.file}
+                download={zip.file}
                 data-kind="zip"
                 title={`SHA-256 ${zip.sha256}`}
               >
@@ -85,8 +87,9 @@ const kindLabel: Record<string, string> = {
             <td>
               <a
                 class="dl__link"
+                rel="noopener noreferrer"
                 href={`${base}/${e.file}`}
-                  download={e.file}
+                download={e.file}
                 data-kind="ttf"
                 title={`SHA-256 ${e.sha256}`}
               >
@@ -104,8 +107,9 @@ const kindLabel: Record<string, string> = {
             <td>
               <a
                 class="dl__link"
+                rel="noopener noreferrer"
                 href={`${base}/${e.file}`}
-                  download={e.file}
+                download={e.file}
                 data-kind={e.kind}
                 title={`SHA-256 ${e.sha256}`}
               >

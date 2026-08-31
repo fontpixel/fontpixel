@@ -1,6 +1,6 @@
 name = "Proggy Square SZ"
 authors = ["Tristan Grimmer"]
-homepage = "https://github.com/bluescan/proggyfonts"
+homepage = ""
 repository = "https://github.com/bluescan/proggyfonts"
 description = "Proggy系列里字面接近正方形的一款，11px，斜杠零版本，完整覆盖Latin-1（256字形）。上游另有不带斜杠零的常规版与CP／BP等编码变体，与本变体仅个别字形不同，未重复收录。"
 form = "terminal"

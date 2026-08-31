@@ -50,7 +50,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
         <>
           <dt>{s.detail.homepage}</dt>
           <dd>
-            <a href={detail.homepage} rel="noopener">
+            <a href={detail.homepage} target="_blank" rel="noopener noreferrer">
               {detail.homepage.replace(/^https?:\/\//, '')}
             </a>
           </dd>
@@ -62,7 +62,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
         <>
           <dt>{s.detail.repository}</dt>
           <dd>
-            <a href={detail.repository} rel="noopener">
+            <a href={detail.repository} target="_blank" rel="noopener noreferrer">
               {detail.repository.replace(/^https?:\/\/(github\.com\/)?/, '')}
             </a>
           </dd>

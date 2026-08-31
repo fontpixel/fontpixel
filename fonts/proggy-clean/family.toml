@@ -1,6 +1,6 @@
 name = "Proggy Clean SZ"
 authors = ["Tristan Grimmer"]
-homepage = "https://github.com/bluescan/proggyfonts"
+homepage = ""
 repository = "https://github.com/bluescan/proggyfonts"
 description = "Tristan Grimmer 2004年做的经典编程点阵字体，长年是代码编辑器里的常见点阵选择。收录13px的斜杠零（slashed zero）版本，完整覆盖Latin-1（256字形）。上游另有不带斜杠零的常规版与CP／BP等编码变体，与本变体仅个别字形不同，未重复收录。"
 form = "terminal"

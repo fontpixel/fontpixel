@@ -31,13 +31,14 @@ provenance_url = "https://github.com/chocolatemelt/baekmuk"
 form = "mingcho"
 vibes = ["classic"]
 
+# Note: credit detail moved out of the author field — based on GNU Unifont
 [[family]]
 slug = "unifont-ex"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/stgiga--UnifontEX"
 take = ["UnifontExMono-16.bdf"]
 license_files = ["LICENSE"]
 name = "UnifontEX Mono"
-author = "stgiga (based on GNU Unifont)"
+author = "stgiga"
 homepage = "https://stgiga.github.io/UnifontEX/"
 repository = "https://github.com/stgiga/UnifontEX"
 provenance_url = "https://github.com/stgiga/UnifontEX"
@@ -69,6 +70,7 @@ vibes = ["classic"]
 # All are derivative works based on Japanese bitmap font series such as Kadoma Nau / KH dot fonts, with Simplified/Traditional Chinese characters added.
 # ============================================================
 
+# Note: credit detail moved out of the author field — based on KH ドット八丁堀16 by 平木敬太郎 / 自家製フォント工房
 [[family]]
 slug = "ba-ding-shi-wei-ti-16"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--BaDingShiWeiTi-16"
@@ -76,7 +78,7 @@ take = ["BaDingShiWeiTi-16.bdf"]
 license_files = ["OFL.txt"]
 name = "BaDingShiWeiTi 16"
 name_zh = "八丁饰尾体 16"
-author = "yzdnn (基于平木敬太郎／自家製フォント工房的 KH ドット八丁堀16)"
+author = "yzdnn"
 homepage = ""
 repository = "https://github.com/yzdnn/BaDingShiWeiTi-16"
 provenance_url = "https://github.com/yzdnn/BaDingShiWeiTi-16/releases (v1.1.0)"
@@ -93,6 +95,7 @@ reason = "已与另一上游仓库合并为单一家族 chang-ban-dian-song（�
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ChangBanDianSong-16"
 reason = "已与另一上游仓库合并为单一家族 chang-ban-dian-song（长坂点宋 12 与 16 是同一作者的同一套设计的两档字面，上游分两个仓库发布）。此处保留 todo 条目，防止全量重跑时把旧 slug 重新建出来。"
 
+# Note: credit detail moved out of the author field — based on KH ドット秋葉原16 by 平木敬太郎 / 自家製フォント工房
 [[family]]
 slug = "qiu-ye-yuan-ti-16"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--QiuYeYuanTi-16"
@@ -100,13 +103,14 @@ take = ["QiuYeYuanTi-16.bdf"]
 license_files = ["OFL.txt"]
 name = "QiuYeYuanTi 16"
 name_zh = "秋叶圆体 16"
-author = "yzdnn (基于平木敬太郎／自家製フォント工房的 KH ドット秋葉原16)"
+author = "yzdnn"
 homepage = ""
 repository = "https://github.com/yzdnn/QiuYeYuanTi-16"
 provenance_url = "https://github.com/yzdnn/QiuYeYuanTi-16/releases (v1.0.1)"
 form = "rounded"
 vibes = ["cute", "retro-game"]
 
+# Note: credit detail moved out of the author field — based on KH ドット人形町16 by 平木敬太郎 / 自家製フォント工房
 [[family]]
 slug = "ren-ou-fang-song-16"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--RenOuFangSong-16"
@@ -114,7 +118,7 @@ take = ["RenOuFangSong-16.bdf"]
 license_files = ["OFL.txt"]
 name = "RenOuFangSong 16"
 name_zh = "人偶仿宋 16"
-author = "yzdnn (基于平木敬太郎／自家製フォント工房的 KH ドット人形町16)"
+author = "yzdnn"
 homepage = ""
 repository = "https://github.com/yzdnn/RenOuFangSong-16"
 provenance_url = "https://github.com/yzdnn/RenOuFangSong-16/releases (v1.1.1)"
@@ -122,6 +126,7 @@ form = "fangsong"
 vibes = ["handwriting", "decorative"]
 # Note: the repo also ships an "OFL (Chinese translation for reference)" file explicitly marked as reference-only, so only the official OFL.txt is included.
 
+# Note: credit detail moved out of the author field — based on k6x8 by Num Kadoma
 [[family]]
 slug = "xiu-zhen-xiang-su-ti"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--XiuZhenXiangSuTi"
@@ -129,7 +134,7 @@ take = ["XiuZhenXiangSuTi-8.bdf"]
 license_files = ["OFL.txt"]
 name = "XiuZhenXiangSuTi"
 name_zh = "袖珍像素体"
-author = "yzdnn (基于 Num Kadoma 的 k6x8)"
+author = "yzdnn"
 homepage = ""
 repository = "https://github.com/yzdnn/XiuZhenXiangSuTi"
 provenance_url = "https://github.com/yzdnn/XiuZhenXiangSuTi/releases (v1.0.0)"
@@ -138,6 +143,7 @@ vibes = ["terminal-hardcore"]
 # Note: 6x8 spec (including letter-spacing); the README claims it's "probably the smallest Chinese bitmap font on the market",
 # form is set to terminal as a guess -- not confident.
 
+# Note: credit detail moved out of the author field — based on DotGothic16 by DotGothic16 Project / Fontworks
 [[family]]
 slug = "zheng-ge-dian-hei-16"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ZhengGeDianHei-16"
@@ -145,7 +151,7 @@ take = ["ZhengGeDianHei-16.bdf"]
 license_files = ["OFL.txt"]
 name = "ZhengGeDianHei 16"
 name_zh = "正格点黑 16"
-author = "yzdnn (基于 DotGothic16 Project／Fontworks 的 DotGothic16)"
+author = "yzdnn"
 homepage = ""
 repository = "https://github.com/yzdnn/ZhengGeDianHei-16"
 provenance_url = "https://github.com/yzdnn/ZhengGeDianHei-16/releases (v1.0.0)"
@@ -174,6 +180,7 @@ vibes = ["retro-game"]
 # referred to in the ZLabs-Bitmap-HC / ZLabs-Bitmap-JP READMEs. It has since been
 # renamed "Z Labs Pixel 12px" and now maintains all three CN/HC/JP glyph variants together (there are also HC_fallback/JP_fallback mixed-fallback versions that fill missing glyphs with CN glyphs -- these are skipped).
 
+# Note: credit detail moved out of the author field — based on UwU 点矩黑 by ChenhaoUwU
 [[family]]
 slug = "zlabs-diamondpix-16px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px"
@@ -182,7 +189,7 @@ convert_take = ["ZLabsDiamondPix_16px_SC.kbitx"]
 license_files = ["./LICENSE-OFL"]
 name = "Z Labs DiamondPix 16px"
 name_zh = "Z工坊金刚黑体 16px"
-author = "Astro_2539, ChenhaoUwU, Dalict, yzdnn (基于 ChenhaoUwU 的 UwU 点矩黑)"
+author = "Astro_2539, ChenhaoUwU, Dalict, yzdnn"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px/releases (Build_20260309)"
@@ -192,6 +199,7 @@ vibes = ["retro-game"]
 # (currently only ~1064 characters) -- keep its completeness in mind when using it. The repo also ships MD/MS weight release ttfs,
 # but neither has a corresponding kbitx source, so only the M (Regular) weight, which has kbitx support, is taken.
 
+# Note: credit detail moved out of the author field — based on UwU 点矩黑 by ChenhaoUwU
 [[family]]
 slug = "zlabs-geopix-16px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px"
@@ -200,7 +208,7 @@ convert_take = ["ZLabsGeoPix_16px_SC.kbitx"]
 license_files = ["./LICENSE-OFL"]
 name = "Z Labs GeoPix 16px"
 name_zh = ""
-author = "Astro_2539, ChenhaoUwU, yzdnn (基于 ChenhaoUwU 的 UwU 点矩黑)"
+author = "Astro_2539, ChenhaoUwU, yzdnn"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px (data/ 目录,未见正式 README 说明或独立 release)"
@@ -210,6 +218,7 @@ vibes = ["retro-game"]
 # (font name "Z Labs GeoPix 16px M SC", author list). There is no release ttf, and both its completeness and status as a distinct font are uncertain --
 # this is the least-confident entry in this review; manual re-confirmation of whether it's a usable standalone work is recommended.
 
+# Note: credit detail moved out of the author field — based on x12y12pxMaruMinya by hicc / x0y0pxFreeFont
 [[family]]
 slug = "zlabs-roundpix-12px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-12px"
@@ -218,13 +227,14 @@ convert_take = ["data/ZLabsRoundPix_12px_CN.kbitx"]
 license_files = ["./LICENSE-OFL"]
 name = "Z Labs RoundPix 12px"
 name_zh = "Z工坊像素圆体 12px"
-author = "Astro_2539 (基于 hicc／x0y0pxFreeFont 的 x12y12pxMaruMinya)"
+author = "Astro_2539"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-RoundPix-12px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-12px/releases (Build_20260813)"
 form = "rounded"
 vibes = ["cute", "retro-game"]
 
+# Note: credit detail moved out of the author field — letterforms reference Zen Maru Gothic
 [[family]]
 slug = "zlabs-roundpix-16px"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-16px"
@@ -233,7 +243,7 @@ convert_take = ["data/ZLabsRoundPix_16px_CN.kbitx", "data/ZLabsRoundPix_16px_JP.
 license_files = ["./LICENSE-OFL"]
 name = "Z Labs RoundPix 16px"
 name_zh = "Z工坊像素圆体 16px"
-author = "Astro_2539 (取形参考 Zen Maru Gothic)"
+author = "Astro_2539"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-RoundPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501)"
@@ -247,6 +257,7 @@ vibes = ["cute", "retro-game"]
 # into Simplified Chinese bitmap fonts; the repo root directly provides the primary kbitx source.
 # ============================================================
 
+# Note: credit detail moved out of the author field — based on k8x12 by Num Kadoma
 [[family]]
 slug = "muzai-pixel"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--MuzaiPixel"
@@ -255,7 +266,7 @@ convert_take = ["MuzaiPixel.kbitx"]
 license_files = ["LICENSE.md"]
 name = "MuzaiPixel"
 name_zh = "目哉像素"
-author = "DWNfonts (基于 Num Kadoma 的 k8x12)"
+author = "DWNfonts"
 homepage = "https://diaowinner.itch.io/muzaipixel"
 repository = "https://github.com/DWNfonts/MuzaiPixel"
 provenance_url = "https://github.com/DWNfonts/MuzaiPixel/releases (2.0.20260705)"
@@ -320,26 +331,28 @@ reason = "字体是「文泉驿点阵宋体」经矢量化后再加工出的菱�
 # Japanese/
 # ============================================================
 
+# Note: credit detail moved out of the author field — Japanese kana and kanji taken from M+ BITMAP FONTS
 [[family]]
 slug = "pixel-mplus"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--PixelMplus"
 take = ["mplus_*.bdf"]
 license_files = ["LICENSE_E", "LICENSE_J"]
 name = "PixelMplus"
-author = "itouhiro (日文假名/汉字取自 M+ BITMAP FONTS)"
+author = "itouhiro"
 homepage = "http://itouhiro.hatenablog.com/entry/20130602/font"
 repository = "https://github.com/itouhiro/PixelMplus"
 provenance_url = "https://github.com/itouhiro/PixelMplus"
 form = "gothic"
 vibes = ["retro-game"]
 
+# Note: credit detail moved out of the author field — Latin taken from the author's own Teku font, Japanese from M+ BITMAP FONTS
 [[family]]
 slug = "tekuplus"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--Tekuplus"
 take = ["*.bdf"]
 license_files = ["LICENSE.md"]
 name = "Tekuplus"
-author = "itouhiro (西文取自自制 Teku 字体，日文取自 M+ BITMAP FONTS)"
+author = "itouhiro"
 repository = "https://github.com/itouhiro/Tekuplus"
 provenance_url = "https://github.com/itouhiro/Tekuplus"
 form = "gothic"
@@ -502,13 +515,14 @@ provenance_url = "https://github.com/hurss/fonts"
 form = "gothic"
 vibes = ["terminal-hardcore"]
 
+# Note: credit detail moved out of the author field — packaged and released as BDF/TTF by hurss
 [[family]]
 slug = "dos-saemmul"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
 take = ["DOSSaemmul-16.bdf"]
 license_files = ["LICENSE.txt"]
 name = "DOSSaemmul"
-author = "leedheo (经 hurss 整理为 BDF/TTF 发布)"
+author = "leedheo"
 repository = "https://github.com/hurss/fonts"
 provenance_url = "https://github.com/hurss/fonts"
 form = "rounded"
@@ -584,26 +598,28 @@ vibes = ["classic", "terminal-hardcore"]
 # neodgm-pro is officially positioned as a proportional-width derivative that "breaks out of the 8x16/16x16 grid", with no single
 # native pixel grid, so ppem is not filled in by hand -- left to the pipeline to auto-detect the native grid (there is a risk
 # of detection failing and skipping auto-conversion, in which case manual filling would be needed).
+# Note: credit detail moved out of the author field — adapted from x8y12pxDenkiChip by hicc
 [[family]]
 slug = "x10y12px-denki-chip-hangul"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x10y12pxDenkiChipHangul"
 take = ["fonts/x10y12pxDenkiChipHangul.bdf"]
 license_files = ["OFL.txt"]
 name = "x10y12pxDenkiChipHangul"
-author = "quiple (Lee Minseo) (改编自 hicc 的 x8y12pxDenkiChip)"
+author = "quiple (Lee Minseo)"
 homepage = "https://blog.quiple.dev/font/denkichip-hangul"
 repository = "https://github.com/quiple/x10y12pxDenkiChipHangul"
 provenance_url = "https://github.com/quiple/x10y12pxDenkiChipHangul/releases (v1.210)"
 form = "gothic"
 vibes = ["retro-game"]
 
+# Note: credit detail moved out of the author field — adapted from x12y12pxMaruMinya by hicc
 [[family]]
 slug = "x12y12px-maru-minya-hangul"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x12y12pxMaruMinyaHangul"
 take = ["x12y12pxMaruMinyaHangul.bdf"]
 license_files = ["OFL.txt"]
 name = "x12y12pxMaruMinyaHangul"
-author = "quiple (Lee Minseo) (改编自 hicc 的 x12y12pxMaruMinya)"
+author = "quiple (Lee Minseo)"
 homepage = "https://blog.quiple.dev/font/maruminya-hangul"
 repository = "https://github.com/quiple/x12y12pxMaruMinyaHangul"
 provenance_url = "https://github.com/quiple/x12y12pxMaruMinyaHangul"
@@ -1126,6 +1142,7 @@ vibes = ["retro-game"]
 # Note: adapted from "Kabutocho 16" in jikasei.me's KH dot font series. The latest of three version numbers, 0.092, is taken
 # (ppem auto-detected=16, stable); 0.09/0.091 detect as 64 (unstable, discarded).
 
+# Note: credit detail moved out of the author field — original glyph source: 螢火飛 FireFly
 [[family]]
 slug = "nightgazer-bitmap"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--Nightgazer-Bitmap"
@@ -1135,7 +1152,7 @@ convert_take = ["Nightgazer12.ttf", "Nightgazer12B.ttf", "Nightgazer13.ttf", "Ni
 license_files = ["GPL.txt", "LICENSE"]
 name = "Nightgazer-Bitmap"
 name_zh = "夜照飛點陣字型系列"
-author = "scott0107000 (原字模：螢火飛 FireFly)"
+author = "scott0107000"
 homepage = ""
 repository = "https://github.com/scott0107000/Nightgazer-Bitmap"
 provenance_url = "https://github.com/scott0107000/Nightgazer-Bitmap (HEAD 快照，收录于 2026-08-18)"
@@ -1146,6 +1163,7 @@ vibes = ["classic"]
 # to equal 16 (gcd=1 triggers the detection algorithm's conservative-rejection rule) -- a known limitation; it's actually 16px, left for
 # manual confirmation in the import report or a future ppem override.
 
+# Note: credit detail moved out of the author field — based on WenQuanYi Bitmap Song (文泉驿点阵宋体)
 [[family]]
 slug = "uranus-pixel"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--Uranus-Pixel"
@@ -1155,7 +1173,7 @@ ppem = 11
 license_files = ["LICENSE"]
 name = "Uranus Pixel"
 name_zh = "天王星像素"
-author = "scott0107000 (基于文泉驿点阵宋体)"
+author = "scott0107000"
 homepage = ""
 repository = "https://github.com/scott0107000/Uranus-Pixel"
 provenance_url = "https://github.com/scott0107000/Uranus-Pixel (HEAD 快照，收录于 2026-08-18)"
@@ -1231,7 +1249,7 @@ license_files = ["LICENSE.md"]
 name = "Illusion Book"
 name_zh = "幻象像素书体"
 author = "StevenLZH (Steven Liu)"
-homepage = "http://studiountagged.top/Projects/IllusionBook.html"
+homepage = ""
 repository = "https://github.com/StevenLZH/IllusionBook"
 provenance_url = "https://github.com/StevenLZH/IllusionBook/releases (v1.0.2)"
 form = "serif-pixel"
@@ -1997,8 +2015,8 @@ license_files = []
 name = "Kakwafont"
 name_zh = ""
 author = "kakwa"
-homepage = "http://carpenti.iiens.net/kakwafont/"
-repository = ""
+homepage = ""
+repository = "https://github.com/kakwa/kakwafont"
 provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
 form = "terminal"
 vibes = ["terminal-hardcore"]
@@ -2020,7 +2038,7 @@ license_files = []
 name = "Leggie"
 name_zh = ""
 author = "Wiktor W Brodlo"
-homepage = "http://wiktorb.eu/leggie"
+homepage = ""
 repository = "https://github.com/wiktor-b/leggie"
 provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
 form = "terminal"
@@ -2242,7 +2260,7 @@ license_files = []
 name = "Tamsyn"
 name_zh = ""
 author = "Scott Fial"
-homepage = "http://www.fial.com/~scott/tamsyn-font/"
+homepage = ""
 repository = ""
 provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
 form = "terminal"
@@ -2266,7 +2284,7 @@ take = ["Tamzen10x20b.bdf", "Tamzen10x20r.bdf", "Tamzen5x9b.bdf", "Tamzen5x9r.bd
 license_files = []
 name = "Tamzen"
 name_zh = ""
-author = "sunaku (基于 Scott Fial 的 Tamsyn 字体再设计)"
+author = "sunaku"
 homepage = ""
 repository = "https://github.com/sunaku/tamzen-font"
 provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
@@ -2325,8 +2343,8 @@ license_files = []
 name = "Unscii"
 name_zh = ""
 author = "Viznut"
-homepage = "http://pelulamu.net/unscii/"
-repository = ""
+homepage = ""
+repository = "https://github.com/viznut/unscii"
 provenance_url = "https://github.com/masaeedu/bitmap-fonts (clone 于 2026-08-29；上游原始项目见 note)"
 form = "terminal"
 vibes = ["retro-game", "classic"]
@@ -2394,7 +2412,7 @@ take = ["ib8x8u.bdf", "ib16x8u.bdf", "ib8x16u.bdf", "ib16x16u.bdf"]
 license_files = ["CC-BY-SA-4.0"]
 name = "IBM BIOS"
 name_zh = ""
-author = "VileR (The Ultimate Oldschool PC Font Pack，像素复原)；farsil / Marco Buzzanca (BDF 转换与整理，2016)"
+author = "VileR, farsil (Marco Buzzanca)"
 homepage = "https://farsil.github.io/ibmfonts/"
 repository = "https://github.com/farsil/ibmfonts"
 provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
@@ -2414,7 +2432,7 @@ take = ["ic8x8u.bdf", "ic16x16u.bdf", "ic8x16u.bdf"]
 license_files = ["CC-BY-SA-4.0"]
 name = "IBM CGA"
 name_zh = ""
-author = "VileR (The Ultimate Oldschool PC Font Pack，像素复原)；farsil / Marco Buzzanca (BDF 转换与整理，2016)"
+author = "VileR, farsil (Marco Buzzanca)"
 homepage = "https://farsil.github.io/ibmfonts/"
 repository = "https://github.com/farsil/ibmfonts"
 provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
@@ -2434,7 +2452,7 @@ take = ["icl8x8u.bdf", "icl16x16u.bdf", "icl8x16u.bdf"]
 license_files = ["CC-BY-SA-4.0"]
 name = "IBM CGA Light"
 name_zh = ""
-author = "VileR (The Ultimate Oldschool PC Font Pack，像素复原)；farsil / Marco Buzzanca (BDF 转换与整理，2016)"
+author = "VileR, farsil (Marco Buzzanca)"
 homepage = "https://farsil.github.io/ibmfonts/"
 repository = "https://github.com/farsil/ibmfonts"
 provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
@@ -2454,7 +2472,7 @@ take = ["ie8x14u.bdf", "ie9x14u.bdf", "ie16x14u.bdf", "ie18x14u.bdf"]
 license_files = ["CC-BY-SA-4.0"]
 name = "IBM EGA"
 name_zh = ""
-author = "VileR (The Ultimate Oldschool PC Font Pack，像素复原)；farsil / Marco Buzzanca (BDF 转换与整理，2016)"
+author = "VileR, farsil (Marco Buzzanca)"
 homepage = "https://farsil.github.io/ibmfonts/"
 repository = "https://github.com/farsil/ibmfonts"
 provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
@@ -2474,7 +2492,7 @@ take = ["im9x14u.bdf"]
 license_files = ["CC-BY-SA-4.0"]
 name = "IBM MDA"
 name_zh = ""
-author = "VileR (The Ultimate Oldschool PC Font Pack，像素复原)；farsil / Marco Buzzanca (BDF 转换与整理，2016)"
+author = "VileR, farsil (Marco Buzzanca)"
 homepage = "https://farsil.github.io/ibmfonts/"
 repository = "https://github.com/farsil/ibmfonts"
 provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
@@ -2494,7 +2512,7 @@ take = ["iv8x16u.bdf", "iv9x16u.bdf", "iv16x16u.bdf", "iv18x16u.bdf"]
 license_files = ["CC-BY-SA-4.0"]
 name = "IBM VGA"
 name_zh = ""
-author = "VileR (The Ultimate Oldschool PC Font Pack，像素复原)；farsil / Marco Buzzanca (BDF 转换与整理，2016)"
+author = "VileR, farsil (Marco Buzzanca)"
 homepage = "https://farsil.github.io/ibmfonts/"
 repository = "https://github.com/farsil/ibmfonts"
 provenance_url = "https://github.com/farsil/ibmfonts (clone 于 2026-08-29)"
@@ -3041,7 +3059,7 @@ take = ["ProggyCleanSZ.pcf.gz"]
 license_files = ["LICENSE"]
 name = "Proggy Clean SZ"
 authors = ["Tristan Grimmer"]
-homepage = "https://github.com/bluescan/proggyfonts"
+homepage = ""
 repository = "https://github.com/bluescan/proggyfonts"
 provenance_url = "https://github.com/bluescan/proggyfonts"
 aliases = ["Proggy Clean", "proggycleansz", "proggyfonts"]
@@ -3067,7 +3085,7 @@ take = ["ProggySquareSZ.pcf.gz"]
 license_files = ["LICENSE"]
 name = "Proggy Square SZ"
 authors = ["Tristan Grimmer"]
-homepage = "https://github.com/bluescan/proggyfonts"
+homepage = ""
 repository = "https://github.com/bluescan/proggyfonts"
 provenance_url = "https://github.com/bluescan/proggyfonts"
 aliases = ["Proggy Square", "proggysquaresz", "proggyfonts"]
@@ -3093,7 +3111,7 @@ take = ["ProggyTinySZ.pcf.gz"]
 license_files = ["LICENSE"]
 name = "Proggy Tiny SZ"
 authors = ["Tristan Grimmer"]
-homepage = "https://github.com/bluescan/proggyfonts"
+homepage = ""
 repository = "https://github.com/bluescan/proggyfonts"
 provenance_url = "https://github.com/bluescan/proggyfonts"
 aliases = ["Proggy Tiny", "proggytinysz", "proggyfonts"]
@@ -3399,7 +3417,7 @@ take = ["cl*.bdf"]
 license_files = ["COPYING"]
 name = "Schumacher Clean"
 authors = ["Dale Schumacher"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
 provenance_url = "https://gitlab.freedesktop.org/xorg/font/schumacher-misc"
 aliases = ["Clean", "font-schumacher-misc", "clR6x12", "xfonts-100dpi"]
@@ -3451,7 +3469,7 @@ source = "github-clones-2026-08-31"
 license_files = ["xorg-font-adobe-100dpi/COPYING"]
 name = "Adobe Helvetica"
 authors = ["Adobe Systems", "Digital Equipment Corporation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 aliases = ["helvR", "Helvetica bitmap", "X11 Helvetica", "xfonts-100dpi", "xfonts-75dpi"]
@@ -3480,7 +3498,7 @@ source = "github-clones-2026-08-31"
 license_files = ["xorg-font-adobe-100dpi/COPYING"]
 name = "Adobe Times"
 authors = ["Adobe Systems", "Digital Equipment Corporation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 aliases = ["timR", "Times bitmap", "X11 Times"]
@@ -3509,7 +3527,7 @@ source = "github-clones-2026-08-31"
 license_files = ["xorg-font-adobe-100dpi/COPYING"]
 name = "Adobe Courier"
 authors = ["Adobe Systems", "Digital Equipment Corporation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 aliases = ["courR", "Courier bitmap", "X11 Courier"]
@@ -3538,7 +3556,7 @@ source = "github-clones-2026-08-31"
 license_files = ["xorg-font-adobe-100dpi/COPYING"]
 name = "Adobe New Century Schoolbook"
 authors = ["Adobe Systems", "Digital Equipment Corporation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 provenance_url = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 aliases = ["ncenR", "New Century Schoolbook bitmap", "X11 New Century Schoolbook"]

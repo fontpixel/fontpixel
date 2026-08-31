@@ -1,6 +1,6 @@
 name = "Tamsyn"
 authors = ["Scott Fial"]
-homepage = "http://www.fial.com/~scott/tamsyn-font/"
+homepage = ""
 repository = ""
 description = ""
 form = "terminal"  # UNVERIFIED：导入时预填，待人工复核

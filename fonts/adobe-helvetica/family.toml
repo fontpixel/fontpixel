@@ -1,6 +1,6 @@
 name = "Adobe Helvetica"
 authors = ["Adobe Systems", "Digital Equipment Corporation"]
-homepage = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
+homepage = ""
 repository = "https://gitlab.freedesktop.org/xorg/font/adobe-100dpi"
 description = "Adobe为X11制作的Helvetica位图字面，1984–1994年间随X Window System分发，是Unix桌面上用了几十年的比例无衬线体。含常规／粗体／斜体／粗斜四款，75dpi与100dpi两套合计12档像素尺寸（8–34px），每个字面756字形、ISO 10646编码。"
 form = "sans"
