@@ -25,10 +25,10 @@ test('renders single glyph at correct pixels', () => {
   const r = rasterize('A', glyphs(), FONT, { invert: false });
   expect(r.width).toBe(8); // dwidth
   expect(r.height).toBe(16); // ascent+descent
-  // A 第 0 行 0x30 → x=2,3;py = ascent - (yoff+h) = 14-10 = 4
+  // A row 0 is 0x30 -> x=2,3; py = ascent - (yoff+h) = 14-10 = 4
   expect(px(r, 2, 4)[3]).toBe(255);
-  expect(px(r, 2, 4)[0]).toBeLessThan(64); // 墨色
-  expect(px(r, 0, 0)[0]).toBeGreaterThan(200); // 纸色
+  expect(px(r, 2, 4)[0]).toBeLessThan(64); // ink color
+  expect(px(r, 0, 0)[0]).toBeGreaterThan(200); // paper color
   expect(r.missing).toEqual([]);
 });
 
@@ -36,7 +36,7 @@ test('missing char produces box and missing list', () => {
   const r = rasterize('B', glyphs(), FONT, { invert: false });
   expect(r.missing).toEqual([66]);
   expect(r.width).toBe(MISSING_ADVANCE(16));
-  // 虚线框某边缘像素应为墨色
+  // some edge pixel of the dashed box should be ink-colored
   expect(px(r, 0, 14 - 1)[3]).toBe(255);
 });
 
@@ -65,14 +65,14 @@ test('maxWidth wraps at char boundary', () => {
 test('cjk glyph with negative yoff extends below baseline', () => {
   const r = rasterize('永', glyphs(), FONT, { invert: false });
   expect(r.width).toBe(16);
-  // 永 bby=-1，最底行 py = 14 - (-1) - 1 = 14
+  // 永 bby=-1, bottom row py = 14 - (-1) - 1 = 14
   let anyInkRow14 = false;
   for (let x = 0; x < 16; x++) if (px(r, x, 14)[3] === 255 && px(r, x, 14)[0] < 64) anyInkRow14 = true;
   expect(anyInkRow14).toBe(true);
 });
 
 test('字形高过 FONT_ASCENT 时不削顶（萤火飞回归）', () => {
-  // ascent=4 的字体里放一个顶到 6 的字形：有效行高应扩到 6+descent
+  // place a glyph reaching height 6 in a font with ascent=4: effective row height should expand to 6+descent
   const tall = {
     cp: 0x65e5,
     w: 3,
@@ -84,8 +84,8 @@ test('字形高过 FONT_ASCENT 时不削顶（萤火飞回归）', () => {
   };
   const map = new Map([[0x65e5, tall]]);
   const r = rasterize('日', map, { pixelSize: 6, ascent: 4, descent: 1 }, { invert: false });
-  expect(r.height).toBe(7); // 6 + 1，而不是声明的 4 + 1
-  // 顶行像素必须存在（未被裁剪）
+  expect(r.height).toBe(7); // 6 + 1, not the declared 4 + 1
+  // top row pixels must exist (not clipped)
   const topRow = Array.from({ length: r.width }, (_, x) => r.mask[x]);
   expect(topRow.some((v) => v === 1)).toBe(true);
 });

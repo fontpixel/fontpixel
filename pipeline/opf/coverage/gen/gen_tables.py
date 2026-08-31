@@ -1,9 +1,9 @@
-"""字表数据生成器：编解码派生表、静态区间表、UCD、旧项目数据迁移。
+"""Charset data generator: codec-derived tables, static range tables, UCD, legacy project data migration.
 
-运行（在仓库根）：
-    .venv/bin/python -m opf.coverage.gen.gen_tables --all --old-dir <旧项目cjk-tables目录>
+Run (from the repo root):
+    .venv/bin/python -m opf.coverage.gen.gen_tables --all --old-dir <path to legacy project's cjk-tables dir>
 
-生成物直接写入 opf/coverage/data/ 并入库；可重跑，输出确定。
+Output is written directly into opf/coverage/data/ and checked in; reruns are safe and deterministic.
 """
 
 from __future__ import annotations
@@ -60,7 +60,7 @@ def write_table(section: str, cid: str, order: int, name_zh: str, name_en: str,
     print(f"  {section}/{cid}: {len(cps)}")
 
 
-# ---------------------------------------------------------------- codec 派生
+# ---------------------------------------------------------------- codec-derived
 
 def _row_cell(codec: str, rows: range, base: int = 0xA0) -> set[int]:
     cps: set[int] = set()
@@ -151,7 +151,7 @@ def gen_codec_tables() -> None:
             if len(s) == 1:
                 p1.add(ord(s))
             if row not in plane2_rows:
-                continue  # Python codec 对未定义面2区回退 JIS X 0212，须排除
+                continue  # Python's codec falls back to JIS X 0212 for undefined plane-2 rows, so exclude them
             try:
                 s2 = bytes([0x8F, 0xA0 + row, 0xA0 + cell]).decode("euc_jis_2004")
             except UnicodeDecodeError:
@@ -181,7 +181,7 @@ def gen_codec_tables() -> None:
                 0x25C4, 0x2195, 0x203C, 0x00B6, 0x00A7, 0x25AC, 0x21A8, 0x2191,
                 0x2193, 0x2192, 0x2190, 0x221F, 0x2194, 0x25B2, 0x25BC]
     cp437.update(graphics)
-    cp437.add(0x2302)  # 0x7F ⌂
+    cp437.add(0x2302)  # 0x7F house symbol
     cp437.update(range(0x20, 0x7F))
     for b in range(0x80, 0x100):
         cp437.add(ord(bytes([b]).decode("cp437")))
@@ -190,7 +190,7 @@ def gen_codec_tables() -> None:
                 f"Python cp437 codec + IBM graphic set; generated {TODAY}", cp437)
 
 
-# ---------------------------------------------------------------- 静态区间
+# ---------------------------------------------------------------- static ranges
 
 def gen_static_tables() -> None:
     src = f"Unicode block ranges; generated {TODAY}"
@@ -285,7 +285,7 @@ def gen_ucd() -> None:
     print(f"  ucd: {len(assigned)} assigned cps")
 
 
-# ---------------------------------------------------------------- Unihan / 越南语
+# ---------------------------------------------------------------- Unihan / Vietnamese
 
 def gen_unihan_core() -> None:
     import io
@@ -331,7 +331,7 @@ def gen_viet() -> None:
                 f"按 Unicode 越南语用字构成定义；generated {TODAY}", cps)
 
 
-# ---------------------------------------------------------------- 外部数据表
+# ---------------------------------------------------------------- external data tables
 
 EXTERNAL = Path(__file__).resolve().parent / "external"
 
@@ -406,10 +406,11 @@ def gen_external() -> None:
 
 
 def gen_gb18030() -> None:
-    """GB 18030-2022 实现级别 1/2/3（汉字及部首口径，非汉字符号 991 个不计入）。
+    """GB 18030-2022 implementation levels 1/2/3 (hanzi and radical scope; the 991 non-hanzi symbols are excluded).
 
-    构造依据 docs/research/gb18030-2022-levels.md（标准条文引用与
-    Unicode L2/22-274 交叉验证）；各扩展区按标准冻结于 Unicode 11 的范围。
+    Constructed per docs/research/gb18030-2022-levels.md (standard clause
+    citations cross-checked against Unicode L2/22-274); each extension block
+    is frozen at its Unicode 11 range per the standard.
     """
     from opf.coverage.charsets import parse_charset_file
 
@@ -448,7 +449,7 @@ def gen_gb18030() -> None:
                 "政务与公共服务产品要求：全部汉字扩展 A–F 与康熙部首（88115 字）", src, l3)
 
 
-# ---------------------------------------------------------------- 旧数据迁移
+# ---------------------------------------------------------------- legacy data migration
 
 _MIGRATE = {
     "tongyong-guifan-han.txt": ("prc-lit", "tongyong-guifan", 10, "通用规范汉字表",

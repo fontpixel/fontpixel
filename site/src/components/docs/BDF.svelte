@@ -1,12 +1,14 @@
 <script lang="ts">
-  /** bdfparser 文档里的活演示（移植自原站 BDF.js）。
+  /** Live demo for the bdfparser docs (ported from the original site's BDF.js).
    *
-   * 原组件接收 func 属性——MDX 里内联真函数，靠 React 同树编译才行得通；
-   * Astro 岛屿的属性必须可序列化，故改为演示注册表：MDX 写 demo 名，
-   * 代码住在这里。加一个演示就在 DEMOS 里添一项。
+   * The original component took a func prop — an inline real function in MDX,
+   * which only worked because React compiled it in the same tree. Astro island
+   * props must be serializable, so this uses a demo registry instead: MDX
+   * writes the demo name, and the code lives here. Adding a demo means adding
+   * an entry to DEMOS.
    */
   import { onMount } from 'svelte';
-  // Svelte 保留 $ 前缀标识符，$Font 等只能经命名空间属性访问
+  // Svelte reserves $-prefixed identifiers, so $Font etc. can only be accessed via the namespace prop
   import * as bdflib from 'bdfparser';
   import fetchline from 'fetchline';
 

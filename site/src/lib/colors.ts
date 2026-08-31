@@ -1,4 +1,4 @@
-/** 从 CSS 变量读取 canvas 用的主题色。 */
+/** Read the canvas theme colors from CSS variables. */
 
 import type { Rgba } from './render';
 

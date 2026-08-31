@@ -8,32 +8,42 @@ interface Props {
   lang: Lang;
   title: string;
   description?: string;
-  /** 不含语言前缀的路径，如 "/fonts/galmuri/"，用于 hreflang 与语言切换 */
+  /** Path without the language prefix, e.g. "/fonts/galmuri/" — used for hreflang and language switching */
   path: string;
   ogImage?: string;
+  /** Language versions this page actually exists in; defaults to all. English-only
+   * docs pages pass ['en'] — the language menu and hreflang only list these. */
+  availableLangs?: Lang[];
 }
 
 const REPO_URL = 'https://github.com/pixelfont/open-pixel-fonts';
 
-const { lang, title, description, path, ogImage } = Astro.props;
+const { lang, title, description, path, ogImage, availableLangs } = Astro.props;
+const langs = availableLangs ?? LANGS;
+const otherLangs = langs.filter((l) => l !== lang);
 const s = t(lang);
 const other = otherLang(lang);
-// canonical / og:url / hreflang 必须是绝对地址，相对路径搜索引擎不认。
-// Astro.site 由 astro.config 的 site 提供（CI 注入 OPF_SITE）。
+// canonical / og:url / hreflang must be absolute URLs — search engines don't honor relative paths.
+// Astro.site comes from `site` in astro.config (CI injects OPF_SITE).
 const abs = (p: string) => new URL(withBase(p), Astro.site).href;
 const canonical = abs(`/${lang}${path}`);
-const alternates = LANGS.map((l) => ({ tag: LANG_TAGS[l], href: abs(`/${l}${path}`) }));
+// A single-language page emits no alternates — hreflang must come in mutually
+// referencing groups; one lone entry is meaningless.
+const alternates =
+  langs.length > 1 ? langs.map((l) => ({ tag: LANG_TAGS[l], href: abs(`/${l}${path}`) })) : [];
+const xDefaultLang = langs.includes('zh' as Lang) ? 'zh' : langs[0];
 const isHome = path === '/';
 
-// 站名用构建期子集出的像素 web 字体（brand.woff2，几 KB 全站缓存一份），
-// 取代旧的 canvas 逐页渲染。数据未构建时 brand 为 null，退回系统字体。
+// The site name uses a pixel web font subsetted at build time (brand.woff2, a few KB,
+// cached once site-wide), replacing the old per-page canvas rendering. brand is null
+// when data hasn't been built, falling back to the system font.
 let brand: { file: string; px: number; family: string } | null = null;
 try {
   brand = JSON.parse(
     readFileSync(new URL('../../public/data/brand.json', import.meta.url), 'utf-8'),
   );
 } catch {
-  /* 数据未构建时退回纯文字 */
+  /* fall back to plain text when data hasn't been built */
 }
 const brandCss = brand
   ? `@font-face{font-family:${JSON.stringify(brand.family)};` +
@@ -53,12 +63,14 @@ const brandCss = brand
     {alternates.map((a) => (
       <link rel="alternate" hreflang={a.tag} href={a.href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={withBase(`/zh${path}`)} />
+    {alternates.length > 0 && (
+      <link rel="alternate" hreflang="x-default" href={withBase(`/${xDefaultLang}${path}`)} />
+    )}
     <meta property="og:type" content={isHome ? 'website' : 'article'} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={s.siteName} />
     <meta property="og:locale" content={LANG_TAGS[lang].replace('-', '_')} />
-    {LANGS.filter((l) => l !== lang).map((l) => (
+    {otherLangs.map((l) => (
       <meta property="og:locale:alternate" content={LANG_TAGS[l].replace('-', '_')} />
     ))}
     <meta property="og:title" content={title} />
@@ -69,7 +81,7 @@ const brandCss = brand
     {description && <meta name="twitter:description" content={description} />}
     {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />}
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
-    {/* 结构化数据：让搜索引擎认出这是一个可站内检索的字体合集 */}
+    {/* Structured data: lets search engines recognize this as a font collection with site search */}
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
@@ -112,7 +124,7 @@ const brandCss = brand
     </script>
   </head>
   <body>
-    {/* 键盘/读屏用户绕过整个页头直达正文；仅在获得焦点时可见 */}
+    {/* Lets keyboard/screen-reader users skip the whole header straight to main content; visible only on focus */}
     <a class="skip-link" href="#main">{s.skipToContent}</a>
     <header class="site-header">
       <div class="container site-header__row">
@@ -128,40 +140,43 @@ const brandCss = brand
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
           <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
           <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
-          <details class="langmenu" data-testid="lang-menu">
-            <summary aria-label={s.langLabel} title={s.langLabel}>
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="m5 8 6 6" />
-                <path d="m4 14 6-6 2-3" />
-                <path d="M2 5h12" />
-                <path d="M7 2h1" />
-                <path d="m22 22-5-10-5 10" />
-                <path d="M14 18h6" />
-              </svg>
-            </summary>
-            <ul>
-              {LANGS.filter((l) => l !== lang).map((l) => (
-                <li>
-                  <a
-                    href={withBase(`/${l}${path}`)}
-                    data-lang-link
-                    data-testid={l === other ? 'lang-switch' : undefined}
-                    rel="alternate"
-                    hreflang={LANG_TAGS[l]}>{LANG_NAMES[l]}</a
-                  >
-                </li>
-              ))}
-            </ul>
-          </details>
+          {/* Pages that exist in one language only get no language button at all */}
+          {otherLangs.length > 0 && (
+            <details class="langmenu" data-testid="lang-menu">
+              <summary aria-label={s.langLabel} title={s.langLabel}>
+                <svg
+                  class="icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m5 8 6 6" />
+                  <path d="m4 14 6-6 2-3" />
+                  <path d="M2 5h12" />
+                  <path d="M7 2h1" />
+                  <path d="m22 22-5-10-5 10" />
+                  <path d="M14 18h6" />
+                </svg>
+              </summary>
+              <ul>
+                {otherLangs.map((l) => (
+                  <li>
+                    <a
+                      href={withBase(`/${l}${path}`)}
+                      data-lang-link
+                      data-testid={l === other ? 'lang-switch' : undefined}
+                      rel="alternate"
+                      hreflang={LANG_TAGS[l]}>{LANG_NAMES[l]}</a
+                    >
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
           <button
             type="button"
             class="theme-toggle"
@@ -233,8 +248,9 @@ const brandCss = brand
     </header>
 
     <script>
-      // 切语言要留在「当页」——包括目录页的搜索与筛选状态。链接是服务端
-      // 渲染的，不知道客户端的 query，点击时按当前 URL 补上。
+      // Switching language should stay on the "current page" — including the catalogue
+      // page's search and filter state. The link is server-rendered and doesn't know the
+      // client-side query, so append it from the current URL on click.
       document
         .querySelectorAll('[data-lang-link]')
         .forEach((el) =>
@@ -250,8 +266,9 @@ const brandCss = brand
     </script>
 
     <script>
-      // 语言菜单跟着指针与焦点走：悬停即展开，移开即收起。<details> 原生只认
-      // 点击，所以这里补上——但把原生点击留着，触屏与不支持 hover 的设备仍能用。
+      // The language menu follows the pointer and focus: expands on hover, collapses on
+      // leave. <details> natively only responds to clicks, so we add this — but we keep
+      // the native click behavior too, so touchscreens and devices without hover still work.
       document.querySelectorAll<HTMLDetailsElement>('.langmenu').forEach((menu) => {
         const summary = menu.querySelector('summary');
         if (!summary) return;
@@ -267,19 +284,22 @@ const brandCss = brand
 
         if (matchMedia('(hover: hover)').matches) {
           menu.addEventListener('mouseenter', open);
-          // 指针从 summary 划到菜单要越过一小段空隙，留点缓冲免得半路收起
+          // The pointer crosses a small gap moving from summary to menu — buffer this
+          // so it doesn't close midway
           menu.addEventListener('mouseleave', () => {
             closeTimer = window.setTimeout(close, 120);
           });
-          // 悬停已经展开了，这一下点击若走原生 toggle 反而会把它关掉
+          // Hover already expanded it, so letting this click go through native toggle
+          // would just close it again
           summary.addEventListener('click', (e) => {
             if (menu.open) e.preventDefault();
           });
         }
 
         menu.addEventListener('focusin', () => {
-          // 只认键盘来的焦点；鼠标/触屏点出来的焦点交给 <details> 自己处理，
-          // 否则 focusin 先展开、紧接着的原生 toggle 又会把它收回去
+          // Only respond to keyboard-originated focus; leave mouse/touch-triggered focus
+          // to <details> itself — otherwise focusin would open it and the native toggle
+          // right after would close it again
           if (summary.matches(':focus-visible')) open();
         });
         menu.addEventListener('focusout', (e) => {
@@ -317,7 +337,7 @@ const brandCss = brand
           <p>{s.footer.disclaimer}</p>
           <p>
             {s.footer.siteLicense}{' '}
-            {/* 版权行不走 i18n：年份与人名各语言相同，而其中要嵌链接 */}
+            {/* Copyright line skips i18n: the year and name are the same in every language, and it needs an embedded link */}
             <span class="site-footer__copy">
               © 2026 <a href="https://tomchen.org/" rel="noopener">Tom Chen</a>
             </span>
@@ -334,7 +354,7 @@ const brandCss = brand
         try {
           localStorage.setItem('opf-theme', cur);
         } catch {
-          /* 私隐模式等场景忽略 */
+          /* ignore, e.g. in private browsing mode */
         }
       });
     </script>
@@ -373,8 +393,9 @@ const brandCss = brand
         font-weight: 700;
         letter-spacing: 0.02em;
       }
-      /* 像素 web 字体：字号必须是原生像素的整数倍（inline style 给 2×），
-         合成粗体与字距都会毁掉像素网格 */
+      /* Pixel web font: the font size must be an integer multiple of the native pixel
+         size (inline style gives 2×); synthetic bold and letter spacing would both
+         ruin the pixel grid */
       .site-brand__name--pix {
         font-family: 'FBF Brand', system-ui, sans-serif;
         font-weight: 400;
@@ -387,7 +408,7 @@ const brandCss = brand
       .site-nav {
         display: flex;
         align-items: center;
-        flex-wrap: wrap; /* 300px 宽下四项排不开，允许折行 */
+        flex-wrap: wrap; /* the four items don't fit at 300px wide, so allow wrapping */
         gap: var(--s2) var(--s4);
         font-size: 0.9rem;
         color: var(--ink-2);
@@ -422,8 +443,9 @@ const brandCss = brand
       .langmenu li a:hover {
         background: var(--accent-soft);
       }
-      /* summary 与菜单之间有段视觉留白，指针穿过时会离开 .langmenu、触发收起。
-         用一块透明区域补上——只贴在 summary 正下方，免得展开时盖住左边的导航链接。 */
+      /* There's a visual gap between summary and the menu — the pointer leaves .langmenu
+         crossing it, triggering a close. Fill it with a transparent area — placed right
+         under summary only, so it doesn't cover the nav links to the left when expanded. */
       .langmenu[open]::after {
         content: '';
         position: absolute;
@@ -435,7 +457,7 @@ const brandCss = brand
         height: 1.15em;
         display: block;
       }
-      /* 按钮显示「当前」主题的图标：亮色时太阳，暗色时月亮 */
+      /* The button shows the icon for the "current" theme: sun in light mode, moon in dark mode */
       :root[data-theme='dark'] .icon--sun,
       :root:not([data-theme='dark']) .icon--moon {
         display: none;

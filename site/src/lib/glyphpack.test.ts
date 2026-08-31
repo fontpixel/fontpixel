@@ -14,7 +14,7 @@ test('parses python-written chunk', () => {
   expect(c.rangeEnd).toBe(0x110000);
   const a = c.get(65)!;
   expect([a.dwidth, a.w, a.h, a.xoff, a.yoff]).toEqual([8, 7, 10, 0, 0]);
-  expect(a.rows.length).toBe(10); // ceil(7/8)=1 字节/行 × 10 行
+  expect(a.rows.length).toBe(10); // ceil(7/8)=1 byte/row x 10 rows
   expect(a.rows[0]).toBe(0x30);
   expect(a.rows[5]).toBe(0xfc);
   const yong = c.get(27704)!;

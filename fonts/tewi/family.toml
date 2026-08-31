@@ -14,7 +14,7 @@ name_en = "Tewi"
 authors_en = ["lucy"]
 provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tewi-font; upstream https://github.com/masaeedu/bitmap-fonts (cloned 2026-08-29; see note for the original upstream project)"
 
-# 上游的Tewi2a-*.bdf每个只有1个字形，是打包时留下的残文件，不予收录。
+# Upstream's Tewi2a-*.bdf files have only 1 glyph each -- leftover fragment files from packaging, not included.
 exclude = ["Tewi2a-*.bdf"]
 
 [license]

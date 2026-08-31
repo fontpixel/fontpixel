@@ -1,4 +1,4 @@
-/** 字形包 v1 解码器（契约 C1/C4）。与 pipeline/opf/glyphpack.py 互为镜像。 */
+/** Glyph pack v1 decoder (contract C1/C4). Mirrors pipeline/opf/glyphpack.py. */
 
 export interface DecodedGlyph {
   cp: number;
@@ -7,7 +7,7 @@ export interface DecodedGlyph {
   h: number;
   xoff: number;
   yoff: number;
-  /** h × ceil(w/8) 字节，行序自上而下，位 MSB-first */
+  /** h × ceil(w/8) bytes, rows top-to-bottom, bits MSB-first */
   rows: Uint8Array;
 }
 

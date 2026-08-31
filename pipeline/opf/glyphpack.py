@@ -1,7 +1,8 @@
-"""字形包 v1 写入器(契约 C1/C2)。
+"""Glyph pack v1 writer (contract C1/C2).
 
-分块:码位按 256 对齐块分组;相邻已用块间隔 >16 块或原始体积
-预估超 48KB 时断开。gzip mtime=0 保证确定性。
+Chunking: codepoints are grouped into 256-aligned blocks; a chunk breaks
+when the gap to the next used block exceeds 16 blocks, or the estimated
+raw size exceeds 48KB. gzip mtime=0 keeps output deterministic.
 """
 
 from __future__ import annotations
@@ -19,7 +20,7 @@ _MAGIC = b"PFG1"
 _VERSION = 1
 _ENTRY = struct.Struct("<IhBBbbI")
 _HEADER = struct.Struct("<4sBBHII")
-_RAW_LIMIT = 32 * 1024  # gz 后约 ≤16KB(位图熵实测压缩比 ~0.45)
+_RAW_LIMIT = 32 * 1024  # roughly ≤16KB after gzip (measured bitmap entropy gives a ~0.45 compression ratio)
 _BLOCK_GAP = 16
 
 
@@ -28,10 +29,10 @@ def _glyph_bitmap_size(g: Glyph) -> int:
 
 
 def plan_chunks(glyphs: list[Glyph]) -> list[tuple[int, int]]:
-    """返回 256 对齐的 (start, end) 半开区间列表。"""
+    """Return a list of 256-aligned (start, end) half-open intervals."""
     if not glyphs:
         return []
-    # 每个已用块的预估体积
+    # Estimated size of each used block
     block_size: dict[int, int] = {}
     for g in glyphs:
         b = g.cp >> 8

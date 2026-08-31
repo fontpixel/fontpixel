@@ -1,4 +1,4 @@
-/** 构建期数据加载（node fs + zod 校验）与 base 路径工具。 */
+/** Build-time data loading (node fs + zod validation) and base-path utilities. */
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
@@ -23,8 +23,9 @@ export function loadIndex(): FontIndex {
     );
   }
   const parsed = JSON.parse(raw) as { schemaVersion?: number };
-  // 数据契约一变、旧数据还躺在磁盘上时，先给出一句能照做的提示——
-  // 直接交给 zod 的话，开发者看到的是一页读不懂的校验堆栈
+  // When the data contract changes but old data is still on disk, give an
+  // actionable message up front — handing this straight to zod would leave
+  // the developer staring at an unreadable validation stack trace
   if (parsed.schemaVersion !== DATA_SCHEMA_VERSION) {
     throw new Error(
       `站点数据是旧格式（schemaVersion=${parsed.schemaVersion ?? '无'}，需要 ${DATA_SCHEMA_VERSION}）。` +
@@ -50,13 +51,13 @@ export function readPreviewSvg(relPath: string): string {
   return readFileSync(join(DATA_DIR, relPath), 'utf-8');
 }
 
-/** 客户端/服务端通用：拼接 base 路径。 */
+/** Shared between client and server: join the base path. */
 export function withBase(path: string): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
-/** 下载物基址：生产由 CI 注入 Releases 地址，本地退回 /downloads。 */
+/** Base URL for downloads: CI injects the Releases URL in production, falls back to /downloads locally. */
 export function downloadsBase(): string {
   return (import.meta.env.OPF_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
 }

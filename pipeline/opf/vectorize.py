@@ -1,15 +1,20 @@
-"""把点阵字形转成矢量轮廓 TTF:每个亮起的像素画成一个方块或圆点。
+"""Convert bitmap glyphs into a vector-outline TTF: each lit pixel is drawn as a square or a dot.
 
-与 `ttfexport` 的位图 TTF 不同,这里生成的是真正的矢量字体(有 glyf 轮廓),
-任何渲染器、任何字号都能用,代价是文件更大、放大后仍是像素造型(这正是要的效果)。
+Unlike `ttfexport`'s bitmap TTF, this produces a genuine vector font (with
+glyf outlines) usable by any renderer at any size, at the cost of a
+larger file — and it still looks pixelated when scaled up, which is the
+intended effect.
 
-两种造型:
-    square  每个像素一个正方形。相邻像素会合并成矩形条带以减少轮廓点数。
-    round   每个像素一个圆点(四段二次贝塞尔近似)。圆本身只存一份,
-            各字形以复合字形(composite glyph)引用它,只存偏移量。
+Two shapes:
+    square  One square per pixel. Adjacent pixels are merged into
+            rectangular strips to reduce outline point count.
+    round   One dot per pixel (approximated with four quadratic Bézier
+            segments). The circle itself is stored only once; each glyph
+            references it as a composite glyph, storing only an offset.
 
-一个字体一个尺寸——矢量字体没有 strike 概念,所以同一家族的每个像素尺寸
-各出一个 TTF;字号缩放由渲染器完成。
+One font per size — vector fonts have no notion of a strike, so each
+pixel size within a family gets its own TTF; scaling to a display size is
+left to the renderer.
 """
 
 from __future__ import annotations
@@ -31,7 +36,7 @@ def _lit_rows(glyph) -> list[list[bool]]:
 
 
 def _runs(row: list[bool]) -> list[tuple[int, int]]:
-    """一行里连续亮像素的 [start, end) 区间。"""
+    """The [start, end) interval of consecutive lit pixels in one row."""
     out: list[tuple[int, int]] = []
     x = 0
     while x < len(row):
@@ -46,9 +51,9 @@ def _runs(row: list[bool]) -> list[tuple[int, int]]:
 
 
 def _rects(rows: list[list[bool]]) -> list[tuple[int, int, int, int]]:
-    """把亮像素合并成矩形:先按行取游程,再把上下相同的游程纵向合并。
+    """Merge lit pixels into rectangles: take runs row by row, then merge vertically-matching runs across rows.
 
-    返回 (x, y_top, width, height),y 以位图顶部为 0。
+    Returns (x, y_top, width, height), with y measured from the top of the bitmap (0).
     """
     pending: dict[tuple[int, int], tuple[int, int]] = {}  # (s,e) -> (y_top, h)
     out: list[tuple[int, int, int, int]] = []
@@ -82,19 +87,21 @@ def _draw_square(pen, glyph, unit: int, baseline_top: int) -> None:
         pen.closePath()
 
 
-DOT = "dot"  # 圆点版的基准字形名
+DOT = "dot"  # base glyph name for the round variant
 
 
 def _dot_glyph(unit: int):
-    """位于 (0,0)-(unit,unit) 的一个圆,供所有字形以复合字形复用。
+    """A circle at (0,0)-(unit,unit), reused by every glyph as a composite glyph.
 
-    用 TrueType 原生的二次贝塞尔,4 段(8 个点)。控制点取 0.9142r 而不是
-    外接方角的 r——这样弧线中点正好落在圆上,径向误差约 2%,肉眼就是个圆。
+    Uses native TrueType quadratic Béziers, 4 segments (8 points). The
+    control point is taken at 0.9142r rather than the circumscribing r —
+    this makes the arc midpoint land exactly on the circle, with about 2%
+    radial error, indistinguishable from a circle to the eye.
     """
     from fontTools.pens.ttGlyphPen import TTGlyphPen
 
     r = unit / 2
-    c = 0.9142135623730951 * r  # 使弧中点落在圆上的控制点偏移
+    c = 0.9142135623730951 * r  # control-point offset that puts the arc midpoint on the circle
     cx = cy = r
     pen = TTGlyphPen(None)
     pen.moveTo((cx + r, cy))
@@ -107,10 +114,12 @@ def _dot_glyph(unit: int):
 
 
 def _place_dots(pen, glyph, unit: int, baseline_top: int) -> None:
-    """每个亮像素放一个指向 DOT 的复合字形组件。
+    """Place one component referencing DOT for each lit pixel.
 
-    存一份圆的轮廓、其余只存偏移量,比每个像素各存一整圈轮廓小三倍多——
-    点阵字体动辄几十万个点,这直接决定文件大小。
+    Storing one circle outline and only offsets for the rest is over
+    three times smaller than storing a full outline per pixel — bitmap
+    fonts routinely have hundreds of thousands of dots, so this directly
+    drives file size.
     """
     for y, row in enumerate(_lit_rows(glyph)):
         for x, on in enumerate(row):
@@ -122,7 +131,7 @@ def _place_dots(pen, glyph, unit: int, baseline_top: int) -> None:
 def build_vector_ttf(font: ParsedFont, family_name: str, style_name: str,
                      out: Path, *, shape: str = "square",
                      copyright_: str = "", version: str = "1.000") -> dict:
-    """一个点阵字体 → 一个矢量 TTF。shape 为 "square" 或 "round"。"""
+    """One bitmap font → one vector TTF. shape is "square" or "round"."""
     from fontTools.fontBuilder import FontBuilder
     from fontTools.pens.ttGlyphPen import TTGlyphPen
 
@@ -134,7 +143,7 @@ def build_vector_ttf(font: ParsedFont, family_name: str, style_name: str,
     unit = UPEM // max(font.pixel_size, 1)
     if unit < 1:
         raise ValueError(f"像素尺寸 {font.pixel_size} 超出 upem {UPEM}")
-    upem = unit * font.pixel_size  # 取整后的实际 em,保证像素对齐
+    upem = unit * font.pixel_size  # the actual em after rounding, ensuring pixel alignment
     baseline_top_of = lambda g: g.bby + g.bbh  # noqa: E731
 
     from opf.ttfexport import FIXED_TIMESTAMP, glyph_name, name_records
@@ -154,7 +163,7 @@ def build_vector_ttf(font: ParsedFont, family_name: str, style_name: str,
     if round_:
         glyphs[DOT] = _dot_glyph(unit)
         metrics[DOT] = (unit, 0)
-    # 复合字形要能查到被引用的基准字形才能算出外框
+    # A composite glyph needs its referenced base glyph available to compute its bounding box
     gs = {DOT: glyphs[DOT]} if round_ else None
     for cp in cps:
         g = by_cp[cp]
@@ -164,9 +173,11 @@ def build_vector_ttf(font: ParsedFont, family_name: str, style_name: str,
         glyphs[glyph_name(cp)] = pen.glyph()
         metrics[glyph_name(cp)] = (max(g.dwidth, 0) * unit, g.bbx * unit)
     fb.setupGlyf(glyphs)
-    # hmtx 的 lsb 必须等于轮廓的 xMin：TrueType 渲染器按二者之差平移字形，
-    # 写成 bbx 会让「（」这类墨迹靠右的字形整体左移、撞进前一个字。
-    # 组合字形（round 的点阵引用）也要经 recalcBounds 展开后取实际边界。
+    # hmtx's lsb must equal the outline's xMin: TrueType renderers shift
+    # the glyph by their difference, and writing bbx there would push a
+    # glyph with right-set ink — like "（" — left as a whole, into the
+    # previous character. Composite glyphs (round's dot references) also
+    # need recalcBounds expanded to get their actual bounds.
     glyf_table = fb.font["glyf"]
     for name in order:
         gl = glyf_table[name]

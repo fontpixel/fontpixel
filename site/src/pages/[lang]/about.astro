@@ -15,11 +15,12 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const s = t(lang);
-// 关于页正文：繁体由简体转换，其余语言先用英文
-// 关于页正文：繁体由简体转换，其余语言各有译本
+// About page body: Traditional Chinese is converted from Simplified; other languages fall back to English
+// About page body: Traditional Chinese is converted from Simplified; other languages each have their own translation
 const CONTENT = { zh: zhContent, 'zh-Hant': zhContent, en: enContent,
                   ja: jaContent, ko: koContent, fr: frContent };
-// 繁体整份由简体转换，正文里的 id（锚点）不受影响：toHantDeep 只动字符串值
+// The whole Traditional Chinese version is converted from Simplified; ids (anchors) in the
+// body are unaffected: toHantDeep only touches string values
 const c =
   lang === 'zh-Hant'
     ? toHantDeep(zhContent as unknown as Record<string, unknown>)

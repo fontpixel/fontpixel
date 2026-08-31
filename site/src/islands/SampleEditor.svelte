@@ -33,7 +33,7 @@
     Props = $props();
 
   const store = new GlyphStore(dataBase);
-  // 与顶部预览用同一个变体，上下两处才是同一份字体
+  // Shares the variant with the top preview, so both sections show the same font
   let variantId = $state(
     variants.some((v) => v.id === previewVariant)
       ? previewVariant
@@ -42,13 +42,13 @@
   let text = $state('');
   let zoom = $state(2);
   let nowrap = $state(false);
-  // 画布外观四选一：无（跟随主题）／整框反色／代码编辑器（黑底＋语法高亮）／老游戏对话框
+  // Canvas appearance, pick one of four: none (follows theme) / whole-frame invert / code editor (black background + syntax highlighting) / retro-game dialog box
   let frame = $state<'none' | 'invert' | 'code' | 'game'>('none');
   let codeLang = $state<CodeLang>('javascript');
-  // 老游戏框：FF 式对话框的深藏青底、白字，与站点主题无关
+  // Retro-game frame: an FF-style dialog box with dark-navy background and white text, independent of the site theme
   const GAME_PAPER = [19, 19, 83, 255] as const;
   const GAME_INK = [240, 240, 252, 255] as const;
-  // 预设名优先用书写系统名；制表符、代码不是书写系统，另取标签
+  // Preset names prefer the script name; tab stops and code aren't scripts, so use a different label
   const presetLabel = (k: string) =>
     s.scriptNames[k.toLowerCase()] ??
     (k === 'box-drawing' ? s.catalogue.boxDrawing : k === 'javascript' ? 'JavaScript' : k);
@@ -56,7 +56,7 @@
   let missing = $state(0);
   let themeTick = $state(0);
   let canvasEl: HTMLCanvasElement | undefined = $state();
-  // 供「复制点阵」用：留住最后一次渲染的结果与字形
+  // For "copy dot matrix": keep the last render result and glyphs around
   let lastRaster = $state<RasterResult | null>(null);
   let lastGlyphs = $state<Map<number, DecodedGlyph | null> | null>(null);
   let copied = $state('');
@@ -64,7 +64,7 @@
 
   onMount(() => {
     text = sampleText || defaultSample(sampleLang);
-    // 覆盖率那一段也有个变体下拉，两处双向同步
+    // The coverage section also has a variant dropdown; keep the two in sync both ways
     const onExternal = (e: Event) => {
       const id = (e as CustomEvent).detail?.id;
       if (id && id !== variantId && variants.some((v) => v.id === id)) {
@@ -105,7 +105,7 @@
     }
   }
 
-  // 标签由整组变体一起算：只报组内真正有差异的维度，且保证两两可区分
+  // Labels are computed across the whole variant set: only report dimensions that actually differ within the group, while keeping every pair distinguishable
   const labels = $derived(variantLabels(variants, s));
 
   $effect(() => {
@@ -120,7 +120,7 @@
     const t = text;
     const z = zoom;
     const g = grid;
-    // 依赖必须在 await 之前同步读取，否则 Svelte 追踪不到，勾选后不会重画
+    // Dependencies must be read synchronously before the await, otherwise Svelte can't track them and toggling the checkbox won't trigger a repaint
     const nw = nowrap;
     const fr = frame;
     const cl = codeLang;
@@ -136,11 +136,11 @@
       const ink = fr === 'code' ? CODE_INK : fr === 'game' ? GAME_INK : theme.ink;
       const paper = fr === 'code' ? CODE_PAPER : fr === 'game' ? GAME_PAPER : theme.paper;
       const r = rasterize(t, glyphs, m, {
-        // 反色不在这里做：它是整个画布容器（含衬纸纹理）的 CSS invert
+        // Invert isn't done here: it's a CSS invert on the whole canvas container (including the paper texture)
         invert: false,
         charColors: fr === 'code' ? highlightCode(t, cl) : undefined,
-        // 不换行时不给上限：画布按最长行撑开，由 .ed__canvas 的
-        // overflow-x 横向滚动承接，页面本身不会溢出。
+        // No cap when wrapping is off: the canvas expands to fit the longest line,
+        // handled by .ed__canvas's horizontal overflow-x scroll so the page itself never overflows.
         maxWidth: nw
           ? undefined
           : Math.max(48, Math.floor((wrapEl?.clientWidth ?? 640) / z) - 2),
@@ -200,7 +200,7 @@
       </select>
     </label>
     <label class="check">
-      <!-- 网格线只有 ≥×4 才画得下（再小会吃掉墨迹），勾选时自动把缩放提上去 -->
+      <!-- Grid lines only render at ≥×4 (any smaller and they'd swallow the ink), so checking the box bumps the zoom up automatically -->
       <input
         type="checkbox"
         bind:checked={grid}
@@ -275,7 +275,7 @@
     flex-wrap: wrap;
     margin-bottom: var(--s2);
   }
-  /* flex 子项默认 min-width:auto，变体下拉的长标签会把工具条撑破 */
+  /* Flex children default to min-width:auto; a long variant-dropdown label would blow out the toolbar */
   .ed__bar > * {
     min-width: 0;
     max-width: 100%;
@@ -289,7 +289,7 @@
   }
   .ed__presets {
     display: flex;
-    /* 语言预设按钮在 300px 屏上排不下一行，必须允许折行 */
+    /* Language preset buttons don't fit on one row at 300px, so wrapping must be allowed */
     flex-wrap: wrap;
     gap: var(--s1);
     align-items: center;
@@ -354,11 +354,11 @@
     display: block;
     image-rendering: pixelated;
   }
-  /* —— 反色：整个画布容器（含衬纸纹理与内边距）一起底片化 —— */
+  /* —— Invert: the whole canvas container (paper texture and padding included) turns negative together —— */
   .ed__shell--invert .ed__canvas {
     filter: invert(1);
   }
-  /* —— 代码编辑器外框：无论明暗主题都是黑底白字 —— */
+  /* —— Code editor frame: black background, white text, regardless of light/dark theme —— */
   .ed__shell--code .ed__titlebar {
     display: flex;
     align-items: center;
@@ -380,7 +380,7 @@
     background: #0d0d0d;
     border-color: #000;
   }
-  /* —— 老游戏对话框：深藏青底、金色双线描边，外加 CRT 扫描线 —— */
+  /* —— Retro-game dialog box: dark-navy background, gold double-line border, plus CRT scanlines —— */
   .ed__shell--game {
     position: relative;
   }
@@ -405,7 +405,7 @@
   .ed__frames {
     display: inline-flex;
     align-items: center;
-    /* 窄屏（300px 级）一行放不下四个选项，必须允许组内折行 */
+    /* On narrow screens (~300px) the four options don't fit on one row, so wrapping within the group must be allowed */
     flex-wrap: wrap;
     gap: var(--s2);
     padding-left: var(--s3);

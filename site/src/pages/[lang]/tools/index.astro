@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { LANGS, t, type Lang } from '../../../i18n';
+import { DOC_LANGS } from '../../../lib/docs';
 import { withBase } from '../../../lib/data';
 
 export function getStaticPaths() {
@@ -9,6 +10,8 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const s = t(lang);
+// Doc bodies only exist in DOC_LANGS; cards must not link to a missing language version.
+const docLang = DOC_LANGS.includes(lang) ? lang : DOC_LANGS[0];
 ---
 
 <Base lang={lang} title={s.tools.title} description={s.tools.intro} path="/tools/">
@@ -16,7 +19,7 @@ const s = t(lang);
   <p class="tools__intro">{s.tools.intro}</p>
   <div class="tools__grid">
     {s.tools.cards.map((c) => (
-      <a class="tools__card" href={withBase(`/${lang}/${c.slug}/`)}>
+      <a class="tools__card" href={withBase(`/${docLang}/${c.slug}/`)}>
         <span class="tools__name">{c.name}</span>
         <span class="tools__blurb">{c.blurb}</span>
       </a>

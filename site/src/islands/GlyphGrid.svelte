@@ -14,7 +14,7 @@
     variantIds: string[];
     s: UIStrings;
     dataBase: string;
-    /** 每个变体实际覆盖到的 Unicode block 名（至少含一个字形） */
+    /** Names of the Unicode blocks each variant actually covers (has at least one glyph in) */
     blocksByVariant: Record<string, string[]>;
   }
   const { slug, variantIds, s, dataBase, blocksByVariant }: Props = $props();
@@ -53,8 +53,8 @@
       .catch((e) => console.error(e));
   });
 
-  // 下拉里既有分块 range，也有该变体覆盖到的 Unicode block；两者都归结为
-  // 一个 [start, end) 码位区间。
+  // The dropdown holds both chunked ranges and Unicode blocks the variant covers;
+  // both resolve to a single [start, end) code point span.
   const span = $derived.by((): [number, number] | null => {
     const m = manifest;
     if (!m) return null;
@@ -65,9 +65,10 @@
     const r = m.ranges[Number(selection.slice(2))];
     return r ? [r.start, r.end] : null;
   });
-  // 每页最多 256 个码位。分页从区间起点算起并在终点截断——选了某个 block
-  // 就只画这个 block，不能因为按 256 对齐而把邻居 block 一起画进来
-  // （如平假名 U+3040–U+309F 对齐后会带出 CJK 符号和片假名）。
+  // At most 256 code points per page. Pagination is counted from the span's start
+  // and truncated at its end — selecting a block should draw only that block, not
+  // pull in a neighboring block just because 256-alignment overruns into it
+  // (e.g. Hiragana U+3040–U+309F, aligned to 256, would drag in CJK Symbols and Katakana).
   const sheets = $derived.by(() => {
     if (!span) return [];
     const out: { start: number; count: number }[] = [];
@@ -75,7 +76,7 @@
       out.push({ start: b, count: Math.min(256, span[1] - b) });
     return out;
   });
-  /** 某个码位落在哪个分块文件里——block 可能横跨多个分块。 */
+  /** Which chunk file a given code point falls into — a block may span multiple chunks. */
   function rangeFor(cp: number) {
     return manifest?.ranges.find((r) => cp >= r.start && cp < r.end) ?? null;
   }
@@ -85,8 +86,8 @@
       .sort((a, b) => UNICODE_BLOCKS[a]![0] - UNICODE_BLOCKS[b]![0]),
   );
 
-  // 下拉里动辄几十上百项，给个即输即筛的搜索框。名字和码位都能搜：
-  // 输 "hira" 找平假名，输 "4e00" 找汉字起始的那一段。
+  // The dropdown can easily have dozens or hundreds of entries, so give it a live-filter search box.
+  // Both name and code point are searchable: type "hira" to find Hiragana, type "4e00" to find where CJK Han starts.
   const q = $derived(jumpQuery.trim().toLowerCase());
   const matches = (text: string, cps: number[]) =>
     !q ||
@@ -94,7 +95,7 @@
     cps.some((c) => c.toString(16).padStart(4, '0').includes(q));
   const shownRanges = $derived(
     (manifest?.ranges ?? []).map((r, i) => ({ r, i })).filter(
-      // 当前选中项始终保留，否则搜索时下拉会显示空白
+      // Always keep the currently selected item, otherwise the dropdown would show blank while searching
       ({ r, i }) => selection === `r:${i}` || matches(rangeLabel(r), [r.start, r.end - 1]),
     ),
   );
@@ -162,7 +163,7 @@
   }
 
   function sheetAction(canvas: HTMLCanvasElement, sheet: { start: number; count: number }) {
-    // svelte action：可见时绘制，主题/变体变化时由 #key 重建
+    // Svelte action: draws when visible; rebuilt via #key when theme/variant changes
     const io = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         drawSheet(canvas, sheet);
@@ -318,7 +319,7 @@
     width: 9rem;
     font-size: 0.8rem;
   }
-  /* 大屏每行 3 张，铺满容器；窄屏依次降到 2 列、1 列 */
+  /* 3 sheets per row on large screens, filling the container; narrows to 2 columns then 1 on smaller screens */
   .gg__sheets {
     display: grid;
     grid-template-columns: 1fr;

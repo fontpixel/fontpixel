@@ -1,30 +1,33 @@
-/** 覆盖率筛选下拉里列出的字表。
+/** Charts listed in the coverage filter dropdown.
  *
- * 全部 64 张字表塞进下拉太长也没法用，这里是一份人工挑选的短名单。
+ * All 64 charts stuffed into the dropdown would be too long to be usable,
+ * so this is a hand-picked short list.
  *
- * 每种书写系统至少要留一张判定该标签所用的参照字表，否则用户看得到
- * “Traditional Chinese (incomplete)” 却没法按同一把尺子去筛。至于同一
- * 标签的第二张参照表（简体的通用规范汉字表）为求简短已略去。
+ * Each writing system must keep at least one reference chart that decides
+ * the label used for it, otherwise a user could see
+ * "Traditional Chinese (incomplete)" with no consistent chart to filter by.
+ * The second reference chart for the same label (Simplified's general-use
+ * standard hanzi chart) is omitted for brevity.
  *
- * `test_coverage_picks.py` 会校验以上两点。
+ * `test_coverage_picks.py` verifies both of the above.
  */
 export const COVERAGE_PICKS: readonly string[] = [
-  // 简体中文
+  // Simplified Chinese
   'gb2312',
   'gbk-hanzi',
   'gb18030-2022-l1',
-  // 繁体中文
+  // Traditional Chinese
   'big5-changyong',
   'big5',
-  // 日文
+  // Japanese
   'hiragana',
   'katakana',
   'joyo',
   'jisx0208-l1',
-  // 韩文
+  // Korean
   'ksx1001-hangul',
   'hangul-syllables',
-  // 拉丁与欧洲语言
+  // Latin and European languages
   'latin-basic',
   'latin1-supp',
   'latin-ext-a',
@@ -32,7 +35,7 @@ export const COVERAGE_PICKS: readonly string[] = [
   'wgl4',
   'cyrillic',
   'greek-coptic',
-  // 终端与符号——点阵字体的常见用途
+  // Terminal and symbols — a common use case for bitmap fonts
   'box-drawing',
   'block-elements',
   'cp437',

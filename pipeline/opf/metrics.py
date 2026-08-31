@@ -1,4 +1,4 @@
-"""宣称大小与墨迹度量(spec §4.2 口径)。"""
+"""Claimed size and ink metrics (spec §4.2 definitions)."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from statistics import median_low
 
 from opf.model import Glyph, ParsedFont, row_bytes
 
-# 每字节最高/最低置位位置(bit 0 = MSB = 最左像素)
+# Highest/lowest set bit position per byte (bit 0 = MSB = leftmost pixel)
 _FIRST_SET = [8] * 256
 _LAST_SET = [-1] * 256
 for _b in range(1, 256):
@@ -42,7 +42,7 @@ def glyph_ink_size(g: Glyph) -> tuple[int, int] | None:
         return None
     min_x, max_x = g.bbw, -1
     min_y, max_y = g.bbh, -1
-    tail_bits = g.bbw - (nb - 1) * 8  # 末字节有效位数
+    tail_bits = g.bbw - (nb - 1) * 8  # number of valid bits in the last byte
     tail_mask = (0xFF00 >> tail_bits) & 0xFF if tail_bits < 8 else 0xFF
     for y in range(g.bbh):
         base = y * nb
@@ -116,11 +116,13 @@ def compute_ink(f: ParsedFont, han_ref: frozenset[int]) -> InkMetrics:
 
 
 def is_monospaced(f: ParsedFont) -> bool:
-    """步进宽度是否落在固定格上。
+    """Whether advance widths fall on a fixed grid.
 
-    CJK 等宽字体天然有半宽与全宽两档（拉丁 6px、汉字 12px），只看单一众数
-    永远达不到 99%，会把所有 CJK 等宽字体误判成比例。所以除了「全部一样」，
-    还接受「全部落在 W 与 2W 两档上」。
+    CJK monospace fonts naturally have two tiers, half-width and
+    full-width (e.g. Latin 6px, Han 12px), so checking a single mode alone
+    would never reach 99% and would misjudge every CJK monospace font as
+    proportional. So besides "all equal," this also accepts "all fall on
+    either W or 2W."
     """
     widths = [g.dwidth for g in f.glyphs if g.dwidth > 0]
     if not widths:
@@ -131,7 +133,7 @@ def is_monospaced(f: ParsedFont) -> bool:
     modal_w = max(counts, key=lambda w: counts[w])
     if counts[modal_w] / len(widths) >= 0.99:
         return True
-    # 众数通常是全宽；半宽即其一半
+    # The mode is usually full-width; half-width is half of it.
     if modal_w % 2 == 0:
         pair = counts[modal_w] + counts.get(modal_w // 2, 0)
         if pair / len(widths) >= 0.99:

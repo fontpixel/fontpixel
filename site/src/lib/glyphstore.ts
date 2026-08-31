@@ -1,4 +1,4 @@
-/** 字形数据存取：manifest 缓存 + 分块 LRU + 并发去重（契约 C4）。 */
+/** Glyph data access: manifest cache + chunked LRU + in-flight request dedup (contract C4). */
 
 import { gunzip } from './decompress';
 import { GlyphChunk, type DecodedGlyph } from './glyphpack';
@@ -18,7 +18,7 @@ export interface VariantManifest {
 export class GlyphStore {
   private manifests = new Map<string, Promise<VariantManifest>>();
   private cores = new Map<string, Promise<GlyphChunk>>();
-  private chunks = new Map<string, Promise<GlyphChunk>>(); // 插入序即 LRU 序
+  private chunks = new Map<string, Promise<GlyphChunk>>(); // insertion order is LRU order
 
   private readonly fetchFn: typeof fetch;
 
@@ -27,7 +27,7 @@ export class GlyphStore {
     fetchFn?: typeof fetch,
     private readonly capacity = 64,
   ) {
-    // 不能直接存全局 fetch：经 this 调用会 Illegal invocation
+    // Can't store the global fetch directly: calling it through `this` throws Illegal invocation
     this.fetchFn = fetchFn ?? ((input, init) => globalThis.fetch(input, init));
   }
 
@@ -74,7 +74,7 @@ export class GlyphStore {
     const key = `${slug}/${variantId}/${file}`;
     let p = this.chunks.get(key);
     if (p) {
-      // LRU 刷新
+      // refresh LRU position
       this.chunks.delete(key);
       this.chunks.set(key, p);
       return p;
@@ -89,7 +89,7 @@ export class GlyphStore {
     return p;
   }
 
-  /** 直接取某个区间分块（字形网格用）。 */
+  /** Load a range chunk directly (used by the glyph grid). */
   loadChunk(slug: string, variantId: string, file: string): Promise<GlyphChunk> {
     return this.rangeChunk(slug, variantId, file);
   }

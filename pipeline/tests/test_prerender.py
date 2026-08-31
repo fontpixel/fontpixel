@@ -13,7 +13,7 @@ def _mini():
 
 def test_svg_rect_runs_and_viewbox():
     svg = sample_svg(_mini(), "A")
-    # A 的水平游程数:1+1+2+2+2+1+2+2+2+2 = 17
+    # horizontal run count for A: 1+1+2+2+2+1+2+2+2+2 = 17
     assert svg.count("<rect") == 17
     assert 'viewBox="0 0 8 16"' in svg
     assert 'shape-rendering="crispEdges"' in svg
@@ -27,7 +27,7 @@ def test_svg_missing_placeholder():
 def test_svg_multichar_advances():
     svg = sample_svg(_mini(), "AA")
     m = re.search(r'viewBox="0 0 (\d+) (\d+)"', svg)
-    assert m and m.group(1) == "16"  # 两个 A,各 dwidth 8
+    assert m and m.group(1) == "16"  # two As, dwidth 8 each
 
 
 def test_og_png(tmp_path):
@@ -45,12 +45,13 @@ def test_svg_deterministic():
 
 
 def test_missing_space_renders_blank_not_a_box():
-    """CJK 点阵字体常只有全角空格 U+3000，没有半角 U+0020。
+    """CJK bitmap fonts often only have the full-width space U+3000, not the half-width U+0020.
 
-    空白没有墨迹，缺了也不该画成缺字虚线框——任何排版引擎都按空白推进。
+    A space has no ink, so a missing one must not be drawn as a missing-glyph dashed
+    box -- any layout engine advances past whitespace regardless.
     """
     f = _mini()
     assert not any(g.cp == 0x20 for g in f.glyphs), "夹具本身就没有半角空格"
     assert 'class="missing"' not in sample_svg(f, "永 永"), "空格不该被画成缺字框"
-    # 换成真正缺失的字，框还是要画
+    # swap in an actually missing character, and the box should still be drawn
     assert 'class="missing"' in sample_svg(f, "永B永")

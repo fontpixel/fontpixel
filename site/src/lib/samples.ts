@@ -1,4 +1,4 @@
-/** 默认样例句 —— 与 pipeline/opf/samples.py 保持同步(spec §5.2)。 */
+/** Default sample sentences — kept in sync with pipeline/opf/samples.py (spec §5.2). */
 
 export const SAMPLES: Record<string, string> = {
   latin: 'Sphinx of black quartz, judge my vow. 0123456789',
@@ -15,7 +15,7 @@ export const SAMPLES: Record<string, string> = {
   'box-drawing': '┌─┬─┐ ┏━┳━┓ ╔═╦═╗ ╭─┬─╮\n├─┼─┤ ┣━╋━┫ ╠═╬═╣ ├─┼─┤\n└─┴─┘ ┗━┻━┛ ╚═╩═╝ ╰─┴─╯\n┄┅┆┇┈┉┊┋ ╌╍╎╏ ╱╲╳ ╴╵╶╷ ╸╹╺╻',
 };
 
-/** 这些预设靠字符逐格对齐说明问题，折行会毁掉版面，选中时强制关掉折行。 */
+/** These presets rely on characters being aligned cell by cell to make their point; wrapping would ruin the layout, so force wrap off when selected. */
 export const NOWRAP_PRESETS: ReadonlySet<string> = new Set(['box-drawing']);
 
 export function defaultSample(sampleLang: string): string {

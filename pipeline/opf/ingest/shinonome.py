@@ -1,23 +1,25 @@
-"""東雲フォント(Shinonome)源码 → 合并后的 Unicode BDF。
+"""Shinonome font (東雲フォント) source → merged Unicode BDF.
 
-上游 code4fukui/shinonome-font 以 `.bit`(ASCII 点阵画版的 BDF)分发,
-按字符集拆成多个目录,并用 diff 表达派生字形:
+Upstream code4fukui/shinonome-font distributes fonts as `.bit` (an ASCII
+pixel-art rendition of BDF), split into multiple directories by charset, with
+derived glyphs expressed as diffs:
 
-    latin1/font_src.bit           ISO 8859-1 基底
-    hankaku/font_src_diff.bit     JIS X 0201,diff over latin1
-    kanjic/font_src.bit           JIS X 0208 基底(ゴシック)
-    mincho/font_src_diff.bit      明朝,diff over kanjic
-    marumoji/font_src_diff.bit    丸文字,diff over kanjic(仅 12px)
+    latin1/font_src.bit           ISO 8859-1 base
+    hankaku/font_src_diff.bit     JIS X 0201, diff over latin1
+    kanjic/font_src.bit           JIS X 0208 base (Gothic)
+    mincho/font_src_diff.bit      Mincho, diff over kanjic
+    marumoji/font_src_diff.bit    Marumoji, diff over kanjic (12px only)
 
-本模块调用上游自带的公有领域 Perl 工具(tools/bit2bdf、tools/bdfmerge)
-还原出各字符集的 BDF,再按下列规则合并成单个 Unicode BDF:
+This module calls upstream's bundled public-domain Perl tools
+(tools/bit2bdf, tools/bdfmerge) to reconstruct the BDF for each charset, then
+merges them into a single Unicode BDF per these rules:
 
-    latin1   → 全部收(ISO 8859-1 到 Unicode 是标准映射,且 0x5C 为反斜杠)
-    hankaku  → 只收半角片假名 U+FF61–FF9F(其 ASCII 区 0x5C 为日元号,不取)
-    kanji    → 全部收
+    latin1   -> take all (ISO 8859-1 to Unicode is a standard mapping, and 0x5C is backslash)
+    hankaku  -> only take halfwidth katakana U+FF61-FF9F (its ASCII range maps 0x5C to yen sign, so skip it)
+    kanji    -> take all
 
-授权:東雲フォントライセンス声明全部数据为 Public Domain(日本法下作者
-声明不行使权利)。
+License: the Shinonome font license declares all data Public Domain (the
+author waives rights under Japanese law).
 """
 
 from __future__ import annotations
@@ -40,7 +42,7 @@ STYLES = {
 
 
 def _tools(repo: Path, work: Path) -> tuple[Path, Path]:
-    """把 tools/*.in 里的 @PERL@ 占位换成真实解释器。"""
+    """Replace the @PERL@ placeholder in tools/*.in with the real interpreter."""
     if shutil.which("perl") is None:
         raise RuntimeError("需要 perl 才能运行上游的 bit2bdf / bdfmerge")
     out = []
@@ -65,7 +67,7 @@ def _run(cmd: list[str], stdout: Path) -> None:
 
 def _to_bdf(bit2bdf: Path, bdfmerge: Path, work: Path, name: str,
             base: Path, diff: Path | None) -> Path:
-    """(可选 merge) + bit2bdf → BDF 路径。"""
+    """(optional merge) + bit2bdf → BDF path."""
     src = base
     if diff is not None:
         merged = work / f"{name}.bit"
@@ -73,7 +75,7 @@ def _to_bdf(bit2bdf: Path, bdfmerge: Path, work: Path, name: str,
         src = merged
     bdf = work / f"{name}.bdf"
     _run([str(bit2bdf), str(src)], bdf)
-    # 上游头部含 autoconf 占位符,替换成真实值以免污染属性表
+    # upstream's header contains autoconf placeholders; replace them with real values so they don't pollute the property table
     text = bdf.read_text(encoding="latin-1")
     text = text.replace("@FOUNDRY@", "efont").replace("@FAMILY@", "Shinonome")
     bdf.write_text(text, encoding="latin-1")
@@ -81,7 +83,7 @@ def _to_bdf(bit2bdf: Path, bdfmerge: Path, work: Path, name: str,
 
 
 def build(repo: Path, size: int, style: str, work: Path) -> ParsedFont | None:
-    """构建某尺寸某风格的合并 Unicode 字体;该组合不存在时返回 None。"""
+    """Build a merged Unicode font for a given size and style; returns None if that combination doesn't exist."""
     kanji_dir, name_zh, name_en = STYLES[style]
     sd = repo / str(size)
     if not sd.is_dir():
@@ -120,14 +122,14 @@ def build(repo: Path, size: int, style: str, work: Path) -> ParsedFont | None:
                                       kanji_base, style_diff), "shinonome")
         parts.append((kanji, "kanji"))
     elif style != "gothic":
-        return None  # 该尺寸没有汉字基底,明朝/丸文字无从派生
+        return None  # no kanji base for this size, so Mincho/Marumoji can't be derived
 
     glyphs: dict[int, object] = {}
     warnings: list[str] = []
     for font, kind in parts:
         for g in font.glyphs:
             if kind == "hankaku" and g.cp not in HALFWIDTH_KANA:
-                continue  # 其 ASCII 区按 JIS 习惯把 0x5C 画成日元号,不取
+                continue  # per JIS convention its ASCII range renders 0x5C as yen sign, so skip it
             if g.cp in glyphs:
                 continue
             glyphs[g.cp] = g
@@ -175,9 +177,9 @@ def build(repo: Path, size: int, style: str, work: Path) -> ParsedFont | None:
 
 
 def build_all(repo: Path, dest_root: Path) -> dict[str, list[tuple[int, int]]]:
-    """构建全部风格与尺寸,写入 dest_root/shinonome-<style>/。
+    """Build every style and size, writing into dest_root/shinonome-<style>/.
 
-    返回 {slug: [(size, glyph_count), ...]}。
+    Returns {slug: [(size, glyph_count), ...]}.
     """
     from opf.ingest.bdfwrite import write_bdf
 

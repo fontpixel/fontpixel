@@ -1,6 +1,8 @@
-"""事实缓存:条目存原始事实(文件哈希 + toml 快照),命中判定在比对时套用
-当前的结构性字段政策。这样改政策本身(增删 _STRUCTURAL_KEYS)不再让全部
-缓存失效——2026-08-30 那次 52 分钟全量重建就是「改了键算法忘了迁移」造成的。
+"""Facts cache: entries store raw facts (file hashes + toml snapshot); a cache hit
+applies the current structural-field policy at comparison time. This means changing
+the policy itself (adding/removing _STRUCTURAL_KEYS) no longer invalidates the whole
+cache -- the 52-minute full rebuild on 2026-08-30 was caused by exactly this: changing
+the key algorithm and forgetting to migrate.
 """
 
 import json
@@ -61,17 +63,19 @@ def test_data_hash_change_mismatches(tmp_path):
 
 
 def test_policy_change_alone_keeps_the_hit(tmp_path, monkeypatch):
-    """核心保证：只改「哪些字段算结构性」这个政策，值没变就不重建。
+    """Core guarantee: changing only the "which fields count as structural" policy,
+    with no value change, must not trigger a rebuild.
 
-    政策活在代码里，比对时才套用到存档快照与当前文件上；两边用同一份
-    政策取子集，所以政策本身不构成失效理由。
+    The policy lives in code and is applied to the stored snapshot and the current
+    file only at comparison time; both sides take their subset using the same policy,
+    so the policy itself is never a reason for a cache miss.
     """
     d = _dir(tmp_path)
     stored = family_facts("dh", d)
     monkeypatch.setattr(cache, "_STRUCTURAL_KEYS",
                         cache._STRUCTURAL_KEYS + ("vibes",))
     assert facts_match(stored, family_facts("dh", d))
-    # 新纳入的字段一旦取值真的变了，就该重建
+    # Once a newly-included field's value actually changes, it should rebuild
     (d / "family.toml").write_text(TOML.replace('["retro-game"]', '["cute"]'),
                                    encoding="utf-8")
     assert not facts_match(stored, family_facts("dh", d))
@@ -80,15 +84,15 @@ def test_policy_change_alone_keeps_the_hit(tmp_path, monkeypatch):
 def test_unparseable_toml_never_matches_a_parsed_snapshot(tmp_path):
     d = _dir(tmp_path)
     stored = family_facts("dh", d)
-    (d / "family.toml").write_text('name = "Fam', encoding="utf-8")  # 缺引号
+    (d / "family.toml").write_text('name = "Fam', encoding="utf-8")  # missing closing quote
     broken = family_facts("dh", d)
     assert not facts_match(stored, broken)
-    # 坏文件与自身一致：不至于每次都重建同一个坏状态
+    # A broken file matches itself: no rebuilding the same broken state every time
     assert facts_match(broken, family_facts("dh", d))
 
 
 def test_facts_survive_json_roundtrip(tmp_path):
-    # 缓存条目要过 json.dumps；日期等非 JSON 标量按字符串归一
+    # Cache entries must survive json.dumps; non-JSON scalars like dates are normalized to strings
     d = _dir(tmp_path, TOML + 'added = 2026-08-30\n')
     facts = family_facts("dh", d)
     thawed = json.loads(json.dumps(facts, ensure_ascii=False, sort_keys=True))

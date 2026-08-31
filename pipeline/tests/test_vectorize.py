@@ -13,7 +13,7 @@ def _mini():
 
 
 class _G:
-    """按 ASCII 画构造的最小字形。"""
+    """A minimal glyph built from an ASCII-art drawing."""
 
     def __init__(self, art: list[str]):
         self.bbw = len(art[0])
@@ -38,20 +38,20 @@ class _G:
 def test_rects_merges_horizontally_and_vertically():
     from opf.vectorize import _lit_rows
 
-    # 2×2 实心块应合成一个矩形
+    # a 2x2 solid block should merge into one rectangle
     block = _G(["##", "##"])
     assert _rects(_lit_rows(block)) == [(0, 0, 2, 2)]
 
-    # 单像素
+    # a single pixel
     dot = _G([".#.", "...", "..."])
     assert _rects(_lit_rows(dot)) == [(1, 0, 1, 1)]
 
-    # 上下不同宽的两行不合并
+    # two rows of different widths stacked don't merge
     step = _G(["##.", "###"])
     got = sorted(_rects(_lit_rows(step)))
     assert got == [(0, 0, 2, 1), (0, 1, 3, 1)]
 
-    # 空字形
+    # empty glyph
     assert _rects(_lit_rows(_G(["..", ".."]))) == []
 
 
@@ -62,12 +62,12 @@ def test_square_ttf_has_real_outlines(tmp_path):
     info = build_vector_ttf(_mini(), "Mini", "Regular", out, shape="square")
     assert info["shape"] == "square" and info["glyphs"] == 2
     f = TTFont(out)
-    assert "EBDT" not in f and "EBLC" not in f  # 这是矢量字体
+    assert "EBDT" not in f and "EBLC" not in f  # this is a vector font
     glyf = f["glyf"]
     a = glyf[f.getBestCmap()[0x41]]
     assert a.numberOfContours > 0, "A 必须有真实轮廓"
     unit = f["head"].unitsPerEm // 16
-    # 轮廓只覆盖点亮的像素，不是整个 BBX：A 的墨迹是 6 列 × 10 行
+    # the outline only covers the lit pixels, not the whole BBX: A's ink is 6 columns x 10 rows
     from opf.metrics import glyph_ink_size
 
     src_a = next(g for g in _mini().glyphs if g.cp == 0x41)
@@ -77,14 +77,15 @@ def test_square_ttf_has_real_outlines(tmp_path):
 
 
 def test_round_reuses_one_dot_via_components(tmp_path):
-    """圆点版必须复用同一个圆:存一份轮廓 + 每像素一个偏移,而不是逐像素
-    各存一整圈轮廓——后者文件大三倍多。"""
+    """The round-dot variant must reuse a single circle: store one outline plus a
+    per-pixel offset, rather than a full outline for every pixel -- the latter
+    would make the file more than three times larger."""
     from fontTools.ttLib import TTFont
 
     out = tmp_path / "rd.ttf"
     build_vector_ttf(_mini(), "Mini", "Regular", out, shape="round")
     f = TTFont(out)
-    # post 3.0 不存字形名，基准圆按字形序号定位（紧跟 .notdef）
+    # post 3.0 stores no glyph names, so the base circle is located by glyph index (right after .notdef)
     dot_name = f.getGlyphOrder()[1]
     dot = f["glyf"][dot_name]
     _, _, flags = dot.getCoordinates(f["glyf"])
@@ -99,7 +100,7 @@ def test_round_reuses_one_dot_via_components(tmp_path):
 
 
 def test_square_merges_runs(tmp_path):
-    """方块版会把相邻像素合并成矩形,轮廓数应少于亮像素数。"""
+    """The square variant merges adjacent pixels into rectangles, so the contour count should be less than the lit-pixel count."""
     from fontTools.ttLib import TTFont
 
     sq = tmp_path / "s.ttf"
@@ -130,8 +131,8 @@ def test_rejects_bad_shape(tmp_path):
 
 
 def test_timestamps_pinned(tmp_path):
-    """head 时间戳必须固定,否则同样的输入每次构建都产出不同字节,
-    CI 会把全部 TTF 重新上传一遍。"""
+    """The head timestamp must be pinned, or identical input would produce different
+    bytes on every build, and CI would re-upload every TTF each time."""
     from fontTools.ttLib import TTFont
 
     from opf.ttfexport import FIXED_TIMESTAMP, build_ttf
@@ -148,7 +149,7 @@ def test_timestamps_pinned(tmp_path):
 
 
 def _padded_font():
-    """含「墨迹不从第 0 列开始」的字形——全角左括号就是这种形态。"""
+    """Contains a glyph whose ink doesn't start at column 0 -- the full-width left parenthesis is this shape."""
     from opf.model import Glyph, ParsedFont
 
     def g(cp, art, bbx=0, dwidth=12):
@@ -157,9 +158,9 @@ def _padded_font():
                      bbh=base.bbh, bbx=bbx, bby=0, rows=base.rows)
 
     glyphs = [
-        g(0x41, ["##......", "#.#.....", "##......"]),          # 墨迹贴左
-        g(0xFF08, ["......##", ".....#..", "......##"]),        # 墨迹全在右侧
-        g(0x42, ["..##....", ".#..#...", "..##...."], bbx=-2),  # 负 bbx
+        g(0x41, ["##......", "#.#.....", "##......"]),          # ink flush left
+        g(0xFF08, ["......##", ".....#..", "......##"]),        # ink entirely on the right
+        g(0x42, ["..##....", ".#..#...", "..##...."], bbx=-2),  # negative bbx
     ]
     return ParsedFont(path=Path("t.bdf"), family_slug="t", file_name="t.bdf",
                       props={}, pixel_size=12, ascent=10, descent=2,
@@ -168,11 +169,12 @@ def _padded_font():
 
 @pytest.mark.parametrize("shape", ["square", "round"])
 def test_lsb_matches_outline_xmin(tmp_path, shape):
-    """hmtx 的 lsb 必须等于轮廓 xMin。
+    """hmtx's lsb must equal the outline's xMin.
 
-    TrueType 渲染器按 lsb 与 xMin 之差平移字形：lsb 写成 bbx 的话，
-    「（」这类墨迹全在格子右侧的字形会被整体左移、撞进前一个字——
-    站名 web 字体上就是这么露馅的。
+    TrueType renderers shift a glyph by the difference between lsb and xMin: if lsb
+    were written as bbx, a glyph like "(" whose ink sits entirely on the right side
+    of its cell would get shifted left as a whole and collide with the previous
+    character -- exactly how this surfaced on the station-name web font.
     """
     from fontTools.ttLib import TTFont
 

@@ -1,7 +1,8 @@
-"""构建期预渲染:默认样例 SVG(SEO/无 JS)与 og:image PNG。
+"""Build-time prerendering: default sample SVG (SEO/no-JS) and the og:image PNG.
 
-布局逻辑与 site/src/lib/render.ts 一致:LTR、无 shaping、\n 换行、
-缺字画虚线占位框(advance = round(px/2)+1)。
+Layout logic matches site/src/lib/render.ts: LTR, no shaping, \n for line
+breaks, missing glyphs draw a dashed placeholder box (advance =
+round(px/2)+1).
 """
 
 from __future__ import annotations
@@ -14,8 +15,10 @@ from opf.model import Glyph, ParsedFont, row_bytes
 LINE_GAP = 1
 
 
-# 空白本来就没有墨迹，字体里没有它也不该画成缺字方框——KS X 1001、JIS 一类
-# 的 CJK 点阵字体普遍只有全角空格 U+3000，没有半角 U+0020。
+# A blank has no ink to begin with, so a font lacking it shouldn't be
+# drawn as a missing-glyph box — CJK bitmap fonts encoded as KS X 1001,
+# JIS, etc. commonly only have the fullwidth space U+3000, not the
+# halfwidth U+0020.
 _BLANK_CPS = frozenset({0x20, 0x09, 0xA0, 0x3000})
 
 
@@ -61,9 +64,11 @@ def _layout(f: ParsedFont, text: str, max_width: int | None = None
         x += adv
         max_w = max(max_w, x)
     lines = line + 1
-    # 行高不能只信字体自报的 ascent/descent：60 个家族存在字形高出 FONT_ASCENT
-    # 的情况（萤火飞最多超 2 行），按声明排就会把顶部裁出 viewBox。
-    # 与站点侧 render.ts 同一套修法：按实际字形取有效上下界。
+    # Line height can't rely solely on the font's self-reported
+    # ascent/descent: 60 families have glyphs taller than FONT_ASCENT
+    # (Firefly overshoots by up to 2 lines), and laying out by the
+    # declared values would clip the top out of the viewBox. Same fix as
+    # the site-side render.ts: derive the effective bounds from the actual glyphs.
     above = f.ascent
     below = f.descent
     for p in placed:
@@ -77,7 +82,7 @@ def _layout(f: ParsedFont, text: str, max_width: int | None = None
 
 
 def _glyph_runs(g: Glyph) -> list[tuple[int, int, int]]:
-    """返回 (x, y, run_len) 列表,y 自位图顶部起。"""
+    """Returns a list of (x, y, run_len), with y measured from the top of the bitmap."""
     nb = row_bytes(g.bbw)
     runs: list[tuple[int, int, int]] = []
     for yy in range(g.bbh):
@@ -106,7 +111,7 @@ def sample_svg(f: ParsedFont, text: str, fg: str = "currentColor",
     for p in placed:
         baseline = p.line * (line_height + LINE_GAP) + above
         if p.glyph is None and p.blank:
-            continue  # 空白就留白，不画缺字框
+            continue  # a blank stays blank — don't draw a missing-glyph box
         if p.glyph is None:
             w = miss_adv - 1
             top = baseline - f.ascent + 1
@@ -158,7 +163,7 @@ def og_png(f: ParsedFont, name: str, text: str, out: Path) -> None:
 
     W, H = 1200, 630
     canvas = Image.new("RGB", (W, H), _PAPER)
-    # 顶部朱砂色条
+    # Vermilion bar at the top
     for y in range(0, 12):
         for x in range(W):
             canvas.putpixel((x, y), _ACCENT)

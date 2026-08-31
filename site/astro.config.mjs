@@ -3,8 +3,9 @@ import mdx from '@astrojs/mdx';
 import svelte from '@astrojs/svelte';
 import sitemap from '@astrojs/sitemap';
 
-// 生产域名。canonical、og:url、sitemap 都要绝对地址，搜索引擎才认。
-// 生产域名 pixelfonts.dev；特殊环境可用 OPF_SITE 覆盖。
+// Production domain. canonical, og:url, and sitemap all need absolute URLs for search
+// engines to honor them.
+// Production domain is pixelfonts.dev; override with OPF_SITE for special environments.
 const site = process.env.OPF_SITE ?? 'https://pixelfonts.dev';
 
 export default defineConfig({
@@ -13,8 +14,9 @@ export default defineConfig({
     mdx(),
     svelte(),
     sitemap({
-      // 站点是六语并列的，每个页面把其余五种语言列为 alternate，
-      // 搜索引擎才知道它们是同一内容的不同语言版，而不是重复内容
+      // The site has six parallel languages; each page lists the other five as
+      // alternates, so search engines know they're different-language versions of the
+      // same content, not duplicates
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', zh: 'zh-Hans', 'zh-Hant': 'zh-Hant',
@@ -22,11 +24,11 @@ export default defineConfig({
       },
     }),
   ],
-  // Cloudflare Pages 服务在域名根目录；要部署到子路径时用 OPF_BASE 覆盖
+  // Cloudflare Pages serves from the domain root; override with OPF_BASE when deploying to a subpath
   base: process.env.OPF_BASE ?? '/',
   vite: {
     resolve: {
-      // MDX 文档里用 @dc/ 引文档组件，免去随目录深度变化的相对路径
+      // MDX docs reference doc components via @dc/, avoiding relative paths that shift with directory depth
       alias: { '@dc': new URL('./src/components/docs', import.meta.url).pathname },
     },
   },

@@ -9,7 +9,7 @@ interface Props {
   detail: FontDetail;
   sections: string[];
   charsets: CharsetMeta[];
-  /** 变体分组：同签名变体共用一个面板（attr 为空格分隔的变体 id 列表） */
+  /** Variant groups: variants with the same signature share one panel (attr is a space-separated list of variant ids) */
   groups: { ids: string[]; repId: string; attr: string }[];
   variants: { id: string; label: string }[];
 }
@@ -31,7 +31,7 @@ const pct = (have: number, total: number) =>
 <section class="cov" data-testid="coverage-report">
   <div class="cov__head">
     <h2>{s.detail.coverageTitle}</h2>
-    {/* 覆盖率随变体而变，而顶部那个变体下拉此时早已滚出视野 */}
+    {/* Coverage changes with the variant, and by now the variant dropdown at the top has scrolled out of view */}
     <label class="cov__pick"
       >{s.detail.variants}
       <select data-coverage-variant data-testid="coverage-variant">
@@ -230,7 +230,7 @@ const pct = (have: number, total: number) =>
 </section>
 
 <script>
-  // 与页面顶部的变体下拉双向同步：两处发同一个事件，谁变都跟着走
+  // Two-way sync with the variant dropdown at the top of the page: both sides dispatch the same event, whichever changes first drives the other
   const pick = document.querySelector<HTMLSelectElement>('[data-coverage-variant]');
   if (pick) {
     pick.addEventListener('change', () => {
@@ -244,8 +244,9 @@ const pct = (have: number, total: number) =>
     });
   }
 
-  // 缺字清单放在弹窗里看：单元格里塞不下几千个字，展开会把表格撑变形。
-  // 内容已由 SSR 渲染在按钮后面的隐藏容器里，点击时搬进这个共用的对话框。
+  // The missing-glyph list is shown in a modal: a cell can't hold thousands of characters,
+  // and expanding it inline would break the table layout. The content is already rendered
+  // by SSR into a hidden container right after the button; a click moves it into this shared dialog.
   const dlg = document.querySelector<HTMLDialogElement>('[data-missing-modal]');
   if (dlg) {
     const title = dlg.querySelector('[data-modal-title]')!;
@@ -260,7 +261,7 @@ const pct = (have: number, total: number) =>
       });
     });
     dlg.querySelector('[data-modal-close]')?.addEventListener('click', () => dlg.close());
-    // 点遮罩关闭：点在 dialog 本身（而非内容）上即为点了遮罩
+    // Close on backdrop click: a click landing on the dialog itself (not its content) counts as a backdrop click
     dlg.addEventListener('click', (e) => {
       if (e.target === dlg) dlg.close();
     });
@@ -278,8 +279,8 @@ const pct = (have: number, total: number) =>
     margin: var(--s4) 0 var(--s2);
     letter-spacing: 0.02em;
   }
-  /* 表格本身就宽（字表名 + 计数 + 百分比 + 条形图 + 缺字数），
-     窄屏让它在自己的框里横向滚动，别把整页撑出横向滚动条 */
+  /* The table is inherently wide (charset name + count + percentage + bar + missing count);
+     on narrow screens let it scroll horizontally within its own box instead of forcing the whole page to scroll */
   .cov__scroll {
     overflow-x: auto;
   }
@@ -312,7 +313,7 @@ const pct = (have: number, total: number) =>
   .cov__barcell {
     width: 30%;
   }
-  /* 像素方块进度条：纯 CSS，两层渐变 */
+  /* Pixel-block progress bar: pure CSS, two layered gradients */
   .pxbar {
     display: inline-block;
     vertical-align: middle;
@@ -351,7 +352,7 @@ const pct = (have: number, total: number) =>
     gap: var(--s2) var(--s4);
     flex-wrap: wrap;
   }
-  /* flex 子项默认 min-width:auto：变体选择器的长标签会撑破标题行 */
+  /* flex children default to min-width:auto: a long label in the variant selector would break the header row */
   .cov__head > * {
     min-width: 0;
     max-width: 100%;
@@ -423,7 +424,7 @@ const pct = (have: number, total: number) =>
     font-size: 1rem;
     user-select: all;
   }
-  /* 每个缺字一个淡边框，悬停显示码位 */
+  /* Each missing glyph gets a light border; hover shows its codepoint */
   .cov__miss {
     display: inline-block;
     border: 1px solid var(--line-soft);

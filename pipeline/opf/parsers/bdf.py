@@ -1,7 +1,8 @@
-"""BDF 解析器。
+"""BDF parser.
 
-容忍常见方言:CRLF、位图行长度不符(截断/补零并记警告)、重复
-ENCODING(保留首个)、缺失 ascent/descent(从 FONTBOUNDINGBOX 推导)。
+Tolerates common dialect quirks: CRLF, bitmap rows of the wrong length
+(truncated/zero-padded with a warning), duplicate ENCODING (keeps the first),
+missing ascent/descent (derived from FONTBOUNDINGBOX).
 """
 
 from __future__ import annotations
@@ -53,7 +54,7 @@ def _normalize_row(hexline: str, nbytes: int, warnings: list[str], glyph: str) -
 
 def parse_bdf(path: Path, family_slug: str, *,
               remap_charset: bool = True) -> ParsedFont:
-    """remap_charset=False 时保留原始 ENCODING（供按字形名自行重映射的场景）。"""
+    """When remap_charset=False, keep the raw ENCODING (for callers that remap by glyph name themselves)."""
     lines = _read_lines(path)
     warnings: list[str] = []
     props: dict[str, str | int] = {}
@@ -74,15 +75,16 @@ def parse_bdf(path: Path, family_slug: str, *,
             continue
         key, _, rest = line.partition(" ")
         if key == "FONT":
-            # XLFD 名的第 7 段就是 PIXEL_SIZE，比 SIZE 行可靠：不少工具
-            # （如 Bits'n'Picas）把 SIZE 的点数字段直接写成像素数，按
-            # 点数×dpi/72 换算会算出 17px、22px 这种不存在的尺寸。
+            # Field 7 of the XLFD name is PIXEL_SIZE, more reliable than the
+            # SIZE line: many tools (e.g. Bits'n'Picas) write the pixel count
+            # directly into SIZE's point-size field, so converting via
+            # points x dpi/72 produces nonexistent sizes like 17px, 22px.
             xf = rest.split("-")
             if len(xf) >= 15:
                 if xf[7].isdigit():
                     xlfd_pixel_size = int(xf[7])
-                # 第 5 段是 SETWIDTH（Normal / Condensed / Expanded 等）；
-                # 不少工具不写 SETWIDTH_NAME 属性，只在字体名里带
+                # Field 5 is SETWIDTH (Normal / Condensed / Expanded etc.);
+                # many tools omit the SETWIDTH_NAME property and only carry it in the font name
                 xlfd_setwidth = xf[5]
         elif key == "SIZE":
             parts = rest.split()
@@ -163,7 +165,7 @@ def parse_bdf(path: Path, family_slug: str, *,
             if not rows:
                 rows = b"\x00" * (gb[1] * row_bytes(gb[0]))
             if dwidth is None:
-                dwidth = -1  # 哨兵:解析完 pixel_size 后统一回退
+                dwidth = -1  # sentinel: resolved uniformly once pixel_size is known
                 missing_dwidth += 1
             glyphs[enc] = Glyph(
                 cp=enc, name=name, dwidth=dwidth,
@@ -173,7 +175,7 @@ def parse_bdf(path: Path, family_slug: str, *,
             break
 
     if declared_chars is not None and declared_chars != len(glyphs) + 0:
-        # 声明数含未编码字形属正常,只在少于实际时提示
+        # the declared count can legitimately include unencoded glyphs; only warn when it's lower than the actual count
         if declared_chars < len(glyphs):
             warnings.append(
                 f"CHARS declares {declared_chars}, parsed {len(glyphs)} encoded glyphs"
@@ -202,8 +204,9 @@ def parse_bdf(path: Path, family_slug: str, *,
         warnings.append("ascent/descent derived from FONTBOUNDINGBOX")
 
     if missing_dwidth:
-        # UnifontEX 等方言省略 DWIDTH:按单元格语义回退——
-        # 墨迹超过半格视为全宽(= pixel_size),否则半宽。
+        # some dialects (e.g. UnifontEX) omit DWIDTH: fall back to cell-width
+        # semantics -- ink past the half-cell mark counts as full width
+        # (= pixel_size), otherwise half width.
         half = (pixel_size + 1) // 2
         for g in glyphs.values():
             if g.dwidth == -1:
@@ -213,9 +216,10 @@ def parse_bdf(path: Path, family_slug: str, *,
             f"{missing_dwidth} glyphs missing DWIDTH, cell-width fallback applied"
         )
 
-    # 非 Unicode 字符集:按 CHARSET_REGISTRY 重映射码位。
-    # 例外:有些字体(如 hurss DOS 系列)registry 写着 Johab,数据却已是
-    # Unicode——用字形名(U+XXXX/uniXXXX)与 ENCODING 的吻合度识破。
+    # Non-Unicode charset: remap code points by CHARSET_REGISTRY.
+    # Exception: some fonts (e.g. the hurss DOS series) declare a registry
+    # like Johab but the data is already Unicode -- detected by checking
+    # whether glyph names (U+XXXX/uniXXXX) agree with ENCODING.
     registry = str(props.get("CHARSET_REGISTRY", "")) if remap_charset else ""
     if registry and not is_unicode_registry(registry):
         name_re = re.compile(r"^(?:U\+?|uni)([0-9A-Fa-f]{4,6})$")

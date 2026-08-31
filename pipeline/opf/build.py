@@ -1,6 +1,6 @@
-"""构建编排器：fonts/ → site/public/data + dist-downloads（契约 C5/C6/C8）。
+"""Build orchestrator: fonts/ → site/public/data + dist-downloads (contract C5/C6/C8).
 
-用法：python -m opf.build --fonts fonts --out site/public/data \
+Usage: python -m opf.build --fonts fonts --out site/public/data \
         --downloads dist-downloads --cache .cache [--family <slug>]
 """
 
@@ -107,11 +107,12 @@ def _json_dump(obj, path: Path) -> None:
 
 
 def merge_scripts(scripts: list[str]) -> list[str]:
-    """家族层面取各变体里最好的那一档。
+    """Take the best tier across variants at the family level.
 
-    家族的 scripts 是各变体的并集,小尺寸覆盖不全、大尺寸达标的字体
-    (如方舟像素)会同时出现 zh-hans 和 zh-hans-partial,两个标签并列
-    对读者没有意义。
+    A family's scripts is the union across variants; a font where small
+    sizes fall short of coverage but large sizes reach it (e.g. Ark Pixel)
+    would otherwise show both zh-hans and zh-hans-partial, and having both
+    labels side by side means nothing to a reader.
     """
     full = {s for s in scripts if not s.endswith("-partial")}
     return [
@@ -124,20 +125,23 @@ def _build_family(
     family_dir: Path, site_data: Path, downloads_dir: Path,
     charsets, ucd, han_ref, report: BuildReport,
 ) -> tuple[dict, dict]:
-    """返回 (index_entry, cache_payload)。"""
+    """Returns (index_entry, cache_payload)."""
     slug = family_dir.name
     meta = load_family_meta(family_dir)
     files = _font_files(family_dir)
 
-    # 上游偶尔混进残文件（只有一两个字形的占位），排除掉
+    # Upstream sometimes ships stray files (placeholders with only a
+    # glyph or two); filter those out.
     if meta.exclude:
         import fnmatch
         files = [
             p for p in files
             if not any(fnmatch.fnmatch(p.name, pat) for pat in meta.exclude)
         ]
-    # 上游常把同一字面拆成几份（拉丁一份、汉字一份），分别收录会显示成几个
-    # 残缺字体，合并回一个变体。按名字自动归组，家族也可显式指定分组。
+    # Upstream often splits one typeface into several files (Latin in one,
+    # CJK in another); listing them separately would show up as several
+    # incomplete fonts, so merge them back into a single variant. Grouping
+    # is automatic by filename, but a family can also specify groups explicitly.
     groups = group_files(files) if meta.merge_subsets else {p: [] for p in files}
     if meta.merge:
         by_name = {p.name: p for p in files}
@@ -155,8 +159,9 @@ def _build_family(
                 subs.extend([sp, *groups.pop(sp, [])])
             groups[base] = sorted(set(subs))
 
-    # 先把每个字面解析好（该合并的合并），合不进去的仍单列成变体，
-    # 否则那些字形就凭空消失了
+    # Parse each typeface first (merging where applicable); anything that
+    # doesn't merge in still gets listed as its own variant, otherwise
+    # those glyphs would just vanish.
     fonts: list[ParsedFont] = []
     for p in sorted(groups):
         f = _parse(p, slug)
@@ -171,9 +176,11 @@ def _build_family(
     built: list[BuiltVariant] = []
     seen_ids: set[str] = set()
     for f in fonts:
-        # 一个字形都没剩,说明该字面的字符集没解开(如 Adobe FontSpecific 这类
-        # 自有编码),不是「覆盖率低」而是根本没解析出来。让整族构建失败,
-        # 由上层的单家族隔离记进报告——绝不能把空字体发布到站上。
+        # No glyphs left at all means this typeface's charset never got
+        # decoded (e.g. a proprietary encoding like Adobe FontSpecific) —
+        # that's not "low coverage," it's "never parsed." Fail the whole
+        # family build so the per-family isolation layer above records it
+        # in the report — an empty font must never get published to the site.
         if not f.glyphs:
             raise ValueError(
                 f"{f.file_name} 解析后一个字形都不剩"
@@ -191,8 +198,9 @@ def _build_family(
             report.warnings.append(f"{slug}: variant id collision for {base}")
         seen_ids.add(v.id)
         cps = font_cps(f)
-        # 纯 CJK 字库（KS X 1001、JIS 等编码）常一个 ASCII 都没有，装上后
-        # 拉丁字母和空格会掉到别的字体。这不是错误，但用户该被告知。
+        # Pure-CJK fonts (KS X 1001, JIS, etc.) often have zero ASCII, so
+        # installing them means Latin letters and spaces fall back to
+        # another font. That's not a bug, but the user should be told.
         if len(cps) > 200:
             latin = sum(1 for c in range(0x41, 0x7B) if c in cps)
             if latin == 0:
@@ -211,7 +219,8 @@ def _build_family(
         ))
     if not built:
         raise ValueError(f"{slug}: no font files")
-    # 变体按尺寸排序，页面上的切换器才不会是 13、15、16、14、12 这种文件名序
+    # Sort variants by size so the on-page switcher isn't in filename order
+    # (e.g. 13, 15, 16, 14, 12).
     _WEIGHT = {"light": 0, "regular": 1, "bold": 2}
     built.sort(key=lambda b: (b.desc.size, _WEIGHT.get(b.desc.weight, 9),
                               b.desc.spacing, b.desc.script_subset or ""))
@@ -220,7 +229,7 @@ def _build_family(
                                   meta.license_override)
     _cps_cache = {b.desc.id: font_cps(b.font) for b in built}
 
-    # 家族级聚合
+    # Family-level aggregation
     best = max(built, key=lambda b: len(b.font.glyphs))
     fam_badges: list[str] = []
     for b in built:
@@ -235,13 +244,14 @@ def _build_family(
     scripts = merge_scripts(scripts)
     sample_lang = meta.sample_lang or pick_sample_lang(best.coverage)
     sample_text = meta.samples.get(sample_lang) or SAMPLES.get(sample_lang, SAMPLES["latin"])
-    # 图标／符号字体排不出任何一句预设样例，改用它自己的字形
+    # Icon/symbol fonts can't render any preset sample text, so fall back
+    # to using their own glyphs.
     if not meta.samples.get(sample_lang):
         best_cps = font_cps(best.font)
         if sample_is_broken(sample_text, best_cps):
             sample_text = specimen(best_cps) or sample_text
 
-    # 资产
+    # Assets
     for b in built:
         write_packs(b.font, b.desc, meta.name, site_data / "packs" / slug / b.desc.id)
     preview_rel = f"previews/{slug}/{sample_lang}.svg"
@@ -271,8 +281,9 @@ def _build_family(
     for b in built:
         if b.ink.han_ink and str(b.desc.size) not in han_ink_by_size:
             han_ink_by_size[str(b.desc.size)] = list(b.ink.han_ink)
-    # 逐变体的墨迹高度：汉字墨迹字面高，没有汉字就退回大写字高。
-    # 只下发家族最大值的话，按「14-14」筛选就搜不到有 14 档变体的家族。
+    # Per-variant ink height: Han ink face height, or cap height as a
+    # fallback when there's no Han. Sending only the family max would mean
+    # a "14-14" size filter misses families that also have a 14px variant.
     ink_heights = sorted({
         b.ink.han_ink[1] if b.ink.han_ink else (b.ink.cap_height or 0)
         for b in built
@@ -301,7 +312,8 @@ def _build_family(
             cid: round(max(_ratio(b.coverage, cid) for b in built), 4)
             for cid in _SUMMARY_IDS
         },
-        # 全部字表的家族级覆盖率（取各变体最大值），顺序对齐 index.charsetIds
+        # Family-level coverage across all charsets (max across variants),
+        # in the same order as index.charsetIds
         "coverage": [
             round(max(_ratio(b.coverage, c.id) for b in built), 4) for c in charsets
         ],
@@ -321,11 +333,13 @@ def _build_family(
         ],
         "preview": preview_rel,
         "sampleLang": sample_lang,
-        # 样例文本必须随索引一起下发：图标字体用的是自身字形，
-        # 前端按 sampleLang 查表只会查回一句排不出来的英文
+        # Sample text must be sent alongside the index: icon fonts use
+        # their own glyphs, and the frontend looking sampleLang up in its
+        # table would just get back English text that can't be rendered.
         "sampleText": sample_text,
-        # 顶部预览用的是字形最多的那个变体；输入框要跟它一致，
-        # 否则上下两处显示的是同一字体的不同尺寸
+        # The top preview uses the variant with the most glyphs; the input
+        # box must match it, otherwise the two spots show different sizes
+        # of the same font.
         "previewVariant": best.desc.id,
     }
 
@@ -408,29 +422,32 @@ def _dwidth_hist(f: ParsedFont) -> dict[str, int]:
 
 
 def _readme_text(meta, license_name: str) -> str:
-    """家族 zip 里的来源 README。重建与元数据快路径共用同一份定义。"""
+    """Provenance README bundled in the family zip. Shared between the full rebuild path and the metadata fast path."""
     return (f"{meta.name}\n来源：{meta.provenance or meta.homepage or '-'}\n"
             f"许可证：{license_name}\n由 开源像素字体馆 打包\n")
 
 
 def _copyright_line(meta, license_name: str) -> str:
-    """写进 TTF name 表的版权行。重建与元数据快路径共用同一份定义。"""
+    """Copyright line written into the TTF name table. Shared between the full rebuild path and the metadata fast path."""
     return (f"{meta.name} — {license_name}"
             + (f"（{'、'.join(meta.authors)}）" if meta.authors else ""))
 
 
 
 def _describe(meta, slug: str) -> dict:
-    """index 条目里纯粹来自 family.toml 的展示字段。
+    """The index entry fields that come purely from family.toml's display data.
 
-    这是「什么算描述性」的唯一定义：重建路径靠它拼 entry，命中缓存的快路径
-    靠它回填。新增字段写进这里，两条路径就不会跑偏；没写进来的字段按构造
-    属于结构性，改了会照常触发重建（见 cache._STRUCTURAL_KEYS）。
+    This is the single definition of "what counts as descriptive": the full
+    rebuild path uses it to assemble the entry, and the cache-hit fast path
+    uses it to refresh those fields. Add new fields here and both paths
+    stay in sync; anything not listed here is structural by construction —
+    changing it still triggers a rebuild (see cache._STRUCTURAL_KEYS).
     """
     return {
         "slug": slug,
         "name": meta.name,
-        # 各语言写法都下发，取哪个由站点按界面语言决定（i18n/pickName）
+        # All per-language spellings are sent; which one is shown is up to
+        # the site based on interface language (i18n/pickName).
         "names": family_names(meta),
         "authors": meta.authors,
         "authorsEn": meta.authors_en or meta.authors,
@@ -443,7 +460,7 @@ def _describe(meta, slug: str) -> dict:
 
 
 def _describe_detail(meta) -> dict:
-    """详情页里纯粹来自 family.toml 的展示字段。"""
+    """The detail-page fields that come purely from family.toml's display data."""
     return {
         "homepage": meta.homepage,
         "repository": meta.repository,
@@ -455,10 +472,11 @@ def _describe_detail(meta) -> dict:
 
 
 def _search_text_for(meta, slug: str) -> str:
-    """家族的可搜索文本。简繁展开后，搜「东云」也能命中「東雲」。
+    """The family's searchable text. After Simplified/Traditional expansion, searching "东云" also matches "東雲".
 
-    name_en/author_en 是英文页面上显示的那一份，不收进来就搜不到；
-    aliases 是曾用名与别名（见 family.toml）。
+    name_en/author_en are what's shown on the English page — leaving them
+    out means they can't be searched; aliases are former/alternate names
+    (see family.toml).
     """
     return search_text(meta.name, *family_names(meta).values(),
                        " ".join(meta.authors), " ".join(meta.authors_en), slug,
@@ -469,13 +487,16 @@ def _refresh_metadata(
     slug: str, family_dir: Path, site_data: Path, downloads_dir: Path,
     cached: dict,
 ) -> tuple[dict, list[dict]] | None:
-    """字形产物没变、只有 family.toml 的展示字段变了时走的路径。
+    """Path taken when the glyph output is unchanged and only family.toml's display fields changed.
 
-    缓存(见 cache.facts_match)只认字体文件与 family.toml 的结构性字段，
-    所以命中之后 index 条目、详情页与下载物里的文本可能还是旧的——这里把
-    它们刷新一遍，代价是几毫秒，而不是把 131 个家族重新矢量化半小时。
+    The cache (see cache.facts_match) only tracks the font files and
+    family.toml's structural fields, so after a cache hit the text in the
+    index entry, detail page, and downloads may still be stale — this
+    refreshes them, at a cost of a few milliseconds instead of re-vectorizing
+    131 families for half an hour.
 
-    返回 None 表示刷不动(产物缺失)，交给上游走全量重建。
+    Returns None when it can't refresh (output is missing), leaving the
+    caller to fall back to a full rebuild.
     """
     meta = load_family_meta(family_dir)
     entry = {**cached["index_entry"], **_describe(meta, slug)}
@@ -512,30 +533,33 @@ def _outputs_exist(site_data: Path, entry: dict) -> bool:
     return True
 
 
-# 并行重建的共享上下文。fork 出的子进程直接继承（零拷贝），不走 pickle——
-# charsets/ucd 有几十 MB，逐任务序列化就把并行的收益吃掉了。
+# Shared context for parallel rebuilds. Forked worker processes inherit it
+# directly (zero-copy) rather than going through pickle — charsets/ucd run
+# to tens of MB, and serializing them per task would eat up the whole gain
+# from parallelizing.
 _POOL_CTX: dict = {}
 
 
 def _rebuild_one(args: tuple[str, str]) -> tuple[str, dict | None, dict | None,
                                                  int, list[str], str | None]:
-    """在工作进程里构建一个家族。返回 (slug, entry, payload, 变体数, warnings, 错误)。"""
+    """Build one family in a worker process. Returns (slug, entry, payload, variant count, warnings, error)."""
     slug, family_dir = args
     ctx = _POOL_CTX
-    local = BuildReport()          # 子进程攒自己的 warnings，回主进程再合并
+    local = BuildReport()          # worker collects its own warnings, merged back in the main process
     try:
         entry, payload = _build_family(
             Path(family_dir), ctx["site_data"], ctx["downloads_dir"],
             ctx["charsets"], ctx["ucd"], ctx["han_ref"], local,
         )
-    except Exception as e:  # noqa: BLE001 - 单家族失败不拖垮全站构建
+    except Exception as e:  # noqa: BLE001 - one family failing shouldn't take down the whole build
         return slug, None, None, 0, local.warnings, str(e)
     return slug, entry, payload, local.variants, local.warnings, None
 
 
 def _jobs() -> int:
-    """并行度：OPF_JOBS 覆盖，默认不超过 8——最大的几个家族（unifont、mona）
-    在 TTF 导出时各要吃 1~2GB 内存，并行度太高会先撞内存而不是 CPU。"""
+    """Parallelism: overridden by OPF_JOBS, capped at 8 by default — the
+    largest families (unifont, mona) each need 1-2GB of memory during TTF
+    export, and too much parallelism hits memory limits before CPU ones."""
     env = os.environ.get("OPF_JOBS", "").strip()
     if env:
         return max(1, int(env))
@@ -543,7 +567,7 @@ def _jobs() -> int:
 
 
 def _run_rebuilds(pending, site_data, downloads_dir, charsets, ucd, han_ref):
-    """把待重建的家族分发到进程池；起不了 fork 或只有一个任务就串行。"""
+    """Dispatch families pending rebuild to the process pool; fall back to serial if fork is unavailable or there's only one task."""
     _POOL_CTX.update(site_data=site_data, downloads_dir=downloads_dir,
                      charsets=charsets, ucd=ucd, han_ref=han_ref)
     args = [(slug, str(d)) for slug, d, _ in pending]
@@ -556,13 +580,14 @@ def _run_rebuilds(pending, site_data, downloads_dir, charsets, ucd, han_ref):
     import multiprocessing as mp
     from concurrent.futures import ProcessPoolExecutor, as_completed
     try:
-        mp_ctx = mp.get_context("fork")   # 显式 fork：Python 3.14 起默认不再是它
+        mp_ctx = mp.get_context("fork")   # explicit fork: no longer the default as of Python 3.14
     except ValueError:
         for a in args:
             yield _rebuild_one(a)
         return
 
-    # 大家族先进队（按目录体积估算）：unifont 这类不能压到队尾拖长收尾
+    # Queue large families first (estimated by directory size): something
+    # like unifont shouldn't end up at the back of the queue dragging out the tail.
     size = {slug: sum(f.stat().st_size for f in d.iterdir() if f.is_file())
             for slug, d, _ in pending}
     args.sort(key=lambda a: -size[a[0]])
@@ -598,7 +623,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
             report.warnings.append(f"{slug}: 目录中无字体文件，跳过")
             continue
         if not (family_dir / "family.toml").exists():
-            load_family_meta(family_dir)  # 物化 stub，保证缓存键稳定
+            load_family_meta(family_dir)  # materialize a stub so the cache key stays stable
         facts = family_facts(data_hash, family_dir)
         cached = cache.load(slug, facts)
         if only_family and slug != only_family:
@@ -628,8 +653,10 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
                 continue
         pending.append((slug, family_dir, facts))
 
-    # 需要重建的家族按 CPU 并行跑（矢量化是纯计算，互相不共享任何状态；
-    # 每个家族只写自己的 packs/<slug>、details/<slug>.json 等，互不踩踏）
+    # Families needing a rebuild run in parallel across CPUs (vectorization
+    # is pure computation with no shared state between families; each
+    # family only writes its own packs/<slug>, details/<slug>.json, etc.,
+    # so there's no cross-family interference).
     done: dict[str, tuple[dict, dict, int, list[str], str | None]] = {}
     for slug, entry, payload, n_variants, warns, err in _run_rebuilds(
             pending, site_data, downloads_dir, charsets, ucd, han_ref):
@@ -638,7 +665,8 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
             print(f"  {slug}: FAILED ({err})")
         else:
             print(f"  {slug}: built ({len(entry['variants'])} variants)")
-    # 汇总按目录序走，保证 warnings 顺序与产物拼装都是确定的
+    # Aggregation walks in directory order so warning order and output
+    # assembly are both deterministic.
     for slug, family_dir, facts in pending:
         entry, payload, n_variants, warns, err = done[slug]
         report.warnings.extend(warns)
@@ -676,8 +704,10 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
     write_intervals(runs_by_slug, site_data / "coverage-intervals.bin.gz")
     write_charsets_json(charsets, site_data / "charsets.json")
 
-    # --family 模式下 entries 只含命中缓存的家族（缓存整体失效时可能一个都没有），
-    # 拿它当「现存家族全集」去清理，会把其他家族的产物误删
+    # In --family mode, entries only contains cache-hit families (possibly
+    # none, if the cache is entirely invalid), so treating it as "the
+    # complete set of existing families" for cleanup would wrongly delete
+    # other families' outputs.
     if not only_family:
         _prune_orphans(site_data, downloads_dir, {e["slug"] for e in entries},
                        {e["file"] for e in all_downloads})
@@ -689,7 +719,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
 
 def _prune_orphans(site_data: Path, downloads_dir: Path, slugs: set[str],
                    download_files: set[str]) -> None:
-    """移除不再属于任何现存家族的产物(家族改名/删除后)。"""
+    """Remove outputs that no longer belong to any existing family (after a family is renamed or deleted)."""
     import shutil
 
     for sub, is_dir in (("details", False), ("previews", True), ("og", False),

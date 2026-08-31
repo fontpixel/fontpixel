@@ -21,7 +21,7 @@ test('parses python-written intervals', () => {
 test('covers checks every non-space char', () => {
   const idx = CoverageIndex.parse(fixture());
   expect(idx.covers('mini', '永')).toBe(true);
-  expect(idx.covers('mini', 'A 永')).toBe(true); // 空白跳过
+  expect(idx.covers('mini', 'A 永')).toBe(true); // whitespace skipped
   expect(idx.covers('mini', '龘')).toBe(false);
   expect(idx.covers('mini', 'A龘')).toBe(false);
 });

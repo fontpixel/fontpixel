@@ -1,4 +1,4 @@
-"""内部字体模型(契约 C3)。"""
+"""Internal font model (contract C3)."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ class Glyph:
     bbh: int
     bbx: int
     bby: int
-    rows: bytes  # bbh * ceil(bbw/8) 字节,行序自上而下,位 MSB-first
+    rows: bytes  # bbh * ceil(bbw/8) bytes, rows top to bottom, bits MSB-first
 
 
 @dataclass
@@ -28,7 +28,7 @@ class ParsedFont:
     ascent: int
     descent: int
     bbox: tuple[int, int, int, int]  # (w, h, xoff, yoff)
-    glyphs: list[Glyph] = field(default_factory=list)  # cp 升序,仅 ENCODING>=0
+    glyphs: list[Glyph] = field(default_factory=list)  # ascending by cp, ENCODING>=0 only
     warnings: list[str] = field(default_factory=list)
 
 

@@ -1,13 +1,17 @@
-"""家族级增量缓存：条目存「事实」，命中判定在比对时套用政策。
+"""Family-level incremental cache: entries store "facts", and policy is applied to them at comparison time to decide a hit.
 
-事实 = 字表数据哈希（含管线版本）+ 家族目录里每个文件的哈希 + family.toml
-的完整解析快照。政策 = 哪些 toml 字段算「结构性」（_STRUCTURAL_KEYS），
-只活在代码里，facts_match 比对时才把它套到存档快照与当前文件上。
+Facts = charset data hash (including the pipeline version) + a hash of
+every file in the family directory + a full parsed snapshot of
+family.toml. Policy = which toml fields count as "structural"
+(_STRUCTURAL_KEYS), which lives only in code and gets applied to both the
+stored snapshot and the current files only when facts_match compares them.
 
-为什么不存一个算好的键：键算法一变（哪怕只是调整结构性字段清单），所有
-不透明哈希就全部对不上，唯一的解药是记得跑迁移脚本——2026-08-30 就因为
-忘了跑而付出 52 分钟全量重建。存事实则没有这个失效模式：政策改了，两边
-都按新政策取子集，值没变就照样命中。
+Why not store a precomputed key instead: whenever the key algorithm
+changes (even just adjusting the list of structural fields), every opaque
+hash stops matching, and the only fix is remembering to run a migration
+script — on 2026-08-30 forgetting to do that cost a 52-minute full
+rebuild. Storing facts avoids this failure mode: when policy changes, both
+sides take the subset under the new policy, and unchanged values still hit.
 """
 
 from __future__ import annotations
@@ -29,16 +33,18 @@ def data_dir_hash(data_dir: Path) -> str:
     return h.hexdigest()
 
 
-# family.toml 里会改变「构建出什么」的键。其余字段纯粹是展示文本，
-# 改了不必重算字形包、覆盖率与 TTF 轮廓——见 build.py 的快路径。
+# The family.toml keys that change "what gets built." Everything else is
+# purely display text, and changing it doesn't require recomputing glyph
+# packs, coverage, or TTF outlines — see build.py's fast path.
 #
-#   merge / merge_subsets / exclude  决定构建哪些字形
-#   variants                         决定变体 id、尺寸、字重、排布
-#   license                          决定许可证产物与 TTF 里的版权行
-#   converted_from                   决定「转换自」标记
-#   name                             被烘进 OG 图（只有它，各语言名都不进产物）
-#   samples / sample_lang            样例文本的选取依赖字体实际覆盖，
-#                                    没有解析好的字体算不出来
+#   merge / merge_subsets / exclude  which glyphs get built
+#   variants                         variant id, size, weight, layout
+#   license                          license output and the TTF copyright line
+#   converted_from                   the "converted from" marker
+#   name                             baked into the OG image (only this one — per-language names never enter build output)
+#   samples / sample_lang            picking sample text depends on the
+#                                    font's actual coverage, which isn't
+#                                    known without a parsed font
 _STRUCTURAL_KEYS = (
     "merge", "merge_subsets", "exclude", "variants", "license",
     "converted_from", "name", "samples", "sample_lang",
@@ -46,11 +52,13 @@ _STRUCTURAL_KEYS = (
 
 
 def family_facts(data_hash: str, family_dir: Path) -> dict:
-    """采集一个家族当前的全部事实，作为缓存条目的一部分存盘。
+    """Gather all current facts for a family, to be stored as part of its cache entry.
 
-    family.toml 存解析后的快照而非哈希——命中判定要按「当时的政策」从中
-    取结构性子集。解析不了（文件损坏）就存整文件哈希，保证既不误命中、
-    也不会每次都重建同一个坏状态。
+    family.toml is stored as a parsed snapshot rather than a hash — a hit
+    check needs to pull the structural subset from it "as policy stood at
+    comparison time." When it can't be parsed (a corrupt file), store a
+    whole-file hash instead, so it neither false-hits nor rebuilds the
+    same broken state every single time.
     """
     files: dict[str, str] = {}
     toml_snapshot: dict | None = None
@@ -60,8 +68,9 @@ def family_facts(data_hash: str, family_dir: Path) -> dict:
         if p.name == "family.toml":
             try:
                 raw = tomllib.loads(p.read_text(encoding="utf-8"))
-                # 过一遍 JSON：日期等非 JSON 标量归一成字符串，让「现算的
-                # 事实」与「从缓存条目读回的事实」逐位可比
+                # Round-trip through JSON: non-JSON scalars like dates get
+                # normalized to strings, so "facts computed now" and
+                # "facts read back from a cache entry" are byte-for-byte comparable.
                 toml_snapshot = json.loads(
                     json.dumps(raw, ensure_ascii=False, sort_keys=True,
                                default=str))
@@ -76,7 +85,7 @@ def family_facts(data_hash: str, family_dir: Path) -> dict:
 
 
 def structural_subset(toml_snapshot: dict | None) -> str:
-    """按当前政策取 toml 快照的结构性子集，规范化成可比字符串。"""
+    """Extract the structural subset of a toml snapshot under current policy, normalized into a comparable string."""
     if not isinstance(toml_snapshot, dict):
         return "__missing__"
     subset = {k: toml_snapshot[k] for k in _STRUCTURAL_KEYS
@@ -87,10 +96,11 @@ def structural_subset(toml_snapshot: dict | None) -> str:
 
 
 def facts_match(stored: dict | None, current: dict) -> bool:
-    """存档事实与当前事实是否等价（等价 ⇒ 字形产物可以复用）。
+    """Whether stored facts and current facts are equivalent (equivalent ⇒ glyph output can be reused).
 
-    文件逐个比哈希；family.toml 只比结构性子集——展示字段的变化由
-    build.py 的快路径回填，不触发重建。
+    Files are compared hash by hash; family.toml is compared only on its
+    structural subset — display-field changes get backfilled by build.py's
+    fast path instead of triggering a rebuild.
     """
     if not isinstance(stored, dict):
         return False

@@ -30,11 +30,12 @@ const detail = loadDetail(slug);
 const m = detail.meta;
 const displayName = pickName(lang, m.names, m.name);
 
-// 尺寸一览：多变体家族在介绍下方给一张对照表。Galmuri 这类「上游编号、
-// 推荐尺寸、声明行高、字面」四个数各说各话的家族，靠它一眼看清。
+// Sizes overview: multi-variant families get a comparison table below the intro.
+// For families like Galmuri, where "upstream numbering, recommended size, declared
+// line height, ink height" are four numbers that don't agree, this makes it clear at a glance.
 const hasDisplaySize = m.variants.some((v) => v.displaySize > 0);
-// 行序沿用 meta.variants 的原始顺序（build.py 按尺寸→字重→排布排好），
-// 与页面上的变体下拉框严格一致，不另设一套规则
+// Row order follows meta.variants' original order (build.py sorts by size → weight → layout),
+// kept consistent with the variant dropdown on the page — no separate ordering rule here
 const sizeRows = m.variants
   .map((v) => {
     const mm = detail.metrics[v.id];
@@ -52,7 +53,7 @@ let previewSvg = '';
 try {
   previewSvg = readPreviewSvg(m.preview);
 } catch {
-  /* 无预渲染时忽略 */
+  /* ignore when no pre-rendered preview exists */
 }
 const dlBase = downloadsBase();
 const variantIds = m.variants.map((v) => v.id);
@@ -64,8 +65,9 @@ const blocksByVariant = Object.fromEntries(
 );
 const charsetsMeta = loadCharsetsMeta();
 
-// 变体分组：签名相同的变体共用一个 SSR 面板，把 ark-pixel（35 变体）这类
-// 家族的页面从数百 KB 压回正常。度量随尺寸变、覆盖率往往不变，故分两套分组。
+// Variant grouping: variants with the same signature share one SSR panel, bringing
+// pages for families like ark-pixel (35 variants) back down from hundreds of KB to normal.
+// Metrics change with size while coverage usually doesn't, hence the two separate groupings.
 function groupBy(sig: (vid: string) => string) {
   const map = new Map<string, string[]>();
   for (const v of m.variants) {
@@ -183,8 +185,9 @@ const coverageGroups = groupBy((vid) =>
                           {s.card.px}
                         </td>
                       </tr>
-                      {/* 上游若标了推荐显示尺寸就并排列出：它量的是字面高 + 行距，
-                          与字体声明的 em 不是一回事，两个都给读者 */}
+                      {/* If upstream provides a recommended display size, list it alongside:
+                          it measures ink height + line gap, not the same thing as the font's
+                          declared em, so we show both to the reader */}
                       {(() => {
                         const dv = m.variants.find((v) => v.id === g.repId);
                         return dv && dv.displaySize > 0 ? (
@@ -337,7 +340,8 @@ const coverageGroups = groupBy((vid) =>
       gap: var(--s6);
       align-items: start;
     }
-    /* grid item 默认 min-width:auto，会被最宽的子元素撑破，窄屏整页横向滚动 */
+    /* grid items default to min-width:auto and get stretched by their widest child,
+       causing the whole page to scroll horizontally on narrow screens */
     .layout__main {
       min-width: 0;
     }
@@ -353,14 +357,16 @@ const coverageGroups = groupBy((vid) =>
       gap: var(--s6);
       flex-wrap: wrap;
       align-items: flex-start;
-      /* 窄屏下 flex 子项要允许收缩到 0，否则表格与示意图各自把整页撑破 */
+      /* On narrow screens flex children must be allowed to shrink to 0, otherwise the
+         table and diagram each stretch the whole page */
       min-width: 0;
     }
     .metrics__flex > * {
       min-width: 0;
       max-width: 100%;
     }
-    /* 度量表在极窄屏（300px）放不下时自己横向滚动，不撑破页面 */
+    /* When the metrics table doesn't fit on very narrow screens (300px), it scrolls
+       horizontally on its own instead of stretching the page */
     .metrics__table {
       display: block;
       overflow-x: auto;
@@ -380,12 +386,13 @@ const coverageGroups = groupBy((vid) =>
     .metrics__table td {
       padding: var(--s1) 0;
     }
-    /* 尺寸一览：数据列右对齐留间距；窄屏横向滚动，不许把页面撑宽 */
+    /* Sizes overview: right-align data columns with spacing; scrolls horizontally on
+       narrow screens instead of widening the page */
     .sizes {
       margin-bottom: var(--s6);
     }
-    /* 折叠标题：原生 marker 跟大号 h2 对不齐基线，隐藏后用 flex 自绘，
-       与语言菜单同一做法 */
+    /* Collapsible heading: the native marker doesn't align to the baseline of a large h2,
+       so we hide it and draw our own with flex — same approach as the language menu */
     .sizes summary {
       cursor: pointer;
       display: flex;
@@ -398,7 +405,7 @@ const coverageGroups = groupBy((vid) =>
     }
     .sizes summary::before {
       content: '▸';
-      /* 全黑（暗色主题下随正文色反白），不用灰阶弱化 */
+      /* Pure black (inverts with body color under dark theme); no gray dimming */
       color: var(--ink);
       transition: transform 0.15s;
     }
@@ -410,12 +417,14 @@ const coverageGroups = groupBy((vid) =>
     }
     .sizes__scroll {
       overflow-x: auto;
-      /* 光有 overflow 不够：这个容器没有宽度约束时，表格照样把它撑开，
-         再顶破整页。max-width 给出上限，滚动才真的发生在容器内部 */
+      /* overflow alone isn't enough: without a width constraint on this container,
+         the table still stretches it, which then blows out the whole page.
+         max-width sets a ceiling so the scroll actually happens inside the container */
       max-width: 100%;
     }
-    /* 尺寸表的滚动由外层 .sizes__scroll 负责，表格自身保持表格布局；
-       width:max-content 让它按内容自然展开，超出的部分由容器滚动消化 */
+    /* Scrolling for the sizes table is handled by the outer .sizes__scroll; the table
+       itself keeps table layout. width:max-content lets it expand naturally to fit its
+       content, with any overflow absorbed by the container's scroll */
     .sizes .metrics__table {
       display: table;
       overflow-x: visible;

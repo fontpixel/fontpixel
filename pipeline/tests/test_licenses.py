@@ -94,7 +94,7 @@ def test_manual_override_wins(tmp_path):
 
 
 def test_manual_override_keeps_english_name():
-    """英文界面要显示英文许可证名，人工覆写时可单独给 name_en／note_en。"""
+    """The English UI must show the English license name; a manual override can supply name_en/note_en separately."""
     from pathlib import Path as _P
 
     li = detect_license(

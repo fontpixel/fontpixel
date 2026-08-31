@@ -3,6 +3,7 @@ import Base from './Base.astro';
 import { t, type Lang } from '../i18n';
 import { withBase } from '../lib/data';
 import {
+  DOC_LANGS,
   DOC_SECTIONS,
   docPath,
   docSlug,
@@ -28,7 +29,7 @@ const prev = idx > 0 ? entries[idx - 1] : null;
 const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
 ---
 
-<Base lang={lang} title={`${entry.data.title} · ${sectionTitle}`} description={entry.data.description} path={path}>
+<Base lang={lang} title={`${entry.data.title} · ${sectionTitle}`} description={entry.data.description} path={path} availableLangs={DOC_LANGS}>
   <div class="doc">
     <nav class="doc__side" aria-label={sectionTitle}>
       <p class="doc__section mono">{sectionTitle}</p>

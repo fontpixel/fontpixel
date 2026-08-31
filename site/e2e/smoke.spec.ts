@@ -24,13 +24,13 @@ test('the language menu offers every language, each linking to the same page', a
 }) => {
   await page.goto('zh/fonts/galmuri/');
   const menu = page.getByTestId('lang-menu');
-  // summary 里只有一个图标，可及名称走 aria-label/title——标的是控件本身
-  // 「语言」，不是当前语言的自称
+  // summary has only an icon; the accessible name comes from aria-label/title—it labels
+  // the control itself as "Language", not the current language's own name
   await expect(menu.locator('summary')).toHaveAttribute('aria-label', '语言');
   await expect(menu.locator('summary')).toHaveAttribute('title', '语言');
   await menu.locator('summary').click();
   const links = menu.locator('a');
-  // 六种语言，当前语言不再出现在菜单里
+  // six languages, the current language no longer appears in the menu
   await expect(links).toHaveCount(5);
   const hrefs = await links.evaluateAll((as) =>
     as.map((a) => (a as HTMLAnchorElement).getAttribute('href')),
@@ -45,7 +45,7 @@ test('the language menu offers every language, each linking to the same page', a
       '/fr/fonts/galmuri/',
     ]),
   );
-  // 每种语言都有 hreflang 备用链接
+  // every language has an hreflang alternate link
   await expect(page.locator('link[rel="alternate"][hreflang="zh-Hant"]')).toHaveCount(1);
   await expect(page.locator('link[rel="alternate"][hreflang="fr"]')).toHaveCount(1);
 });
@@ -55,9 +55,9 @@ test('traditional Chinese is converted, not left in simplified', async ({ page }
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-Hant');
   await expect(page.locator('h1')).toHaveText('文泉驛點陣宋體');
   const body = await page.locator('body').innerText();
-  // 这些简体字形不该残留
+  // these simplified glyph forms shouldn't remain
   for (const ch of ['体', '点', '阵', '许', '证']) {
-    expect(body, `不该出现简体「${ch}」`).not.toContain(ch);
+    expect(body, `simplified "${ch}" should not appear`).not.toContain(ch);
   }
 });
 
@@ -96,7 +96,7 @@ test('language menu opens on hover and closes when the pointer leaves', async ({
   await menu.locator('summary').hover();
   await expect(link).toBeVisible();
 
-  // 移到页面别处，菜单收起（收起有 120ms 缓冲，用 toBeHidden 的重试等它）
+  // move elsewhere on the page, the menu closes (closing has a 120ms buffer, waited out via toBeHidden's retry)
   await page.locator('.site-brand').hover();
   await expect(link).toBeHidden();
 });
@@ -108,8 +108,8 @@ test('language menu opens on keyboard focus and closes on Escape', async ({
   const summary = page.getByTestId('lang-menu').locator('summary');
   const link = page.getByTestId('lang-switch');
 
-  // 只有键盘来的焦点才展开，所以真的按 Tab——programmatic focus 在 Chromium
-  // 里不会命中 :focus-visible
+  // only keyboard-originated focus expands it, so actually press Tab—programmatic focus
+  // doesn't trigger :focus-visible in Chromium
   await page.locator('body').click({ position: { x: 2, y: 2 } });
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press('Tab');

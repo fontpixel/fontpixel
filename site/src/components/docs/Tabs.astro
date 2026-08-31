@@ -1,6 +1,6 @@
 ---
-/** 与 Docusaurus Tabs 同 API（values / defaultValue / groupId），
- * 让并入的 MDX 无需改动标记。无 JS 时各页签堆叠显示（渐进增强）。
+/** Same API as Docusaurus's Tabs (values / defaultValue / groupId),
+ * so merged-in MDX needs no markup changes. Without JS, tabs stack (progressive enhancement).
  */
 interface Props {
   groupId?: string;
@@ -52,7 +52,7 @@ const { groupId, defaultValue, values = [] } = Astro.props;
           try {
             localStorage.setItem(key, v);
           } catch {
-            /* 私隐模式下存不了就算了 */
+            /* fine if this fails in private-browsing mode */
           }
         }
         if (group)
@@ -69,7 +69,7 @@ const { groupId, defaultValue, values = [] } = Astro.props;
         const saved = localStorage.getItem(key);
         if (saved && items.some((i) => i.dataset.tabValue === saved)) init = saved;
       } catch {
-        /* 同上 */
+        /* same as above */
       }
     }
     show(init);

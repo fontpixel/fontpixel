@@ -1,4 +1,4 @@
-"""覆盖率引擎:字表统计、总览、徽章与书写系统判定。"""
+"""Coverage engine: charset stats, overview, badges, and script detection."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from opf.coverage.charsets import Charset
 from opf.coverage.ucd import Ucd
 from opf.model import ParsedFont
 
-# 兼容区中实为统一表意字的 12 个码位(Unicode 官方注记)
+# 12 code points in the compatibility block that are actually unified ideographs (per Unicode's official notes)
 UNIFIED_IN_COMPAT = frozenset({
     0xFA0E, 0xFA0F, 0xFA11, 0xFA13, 0xFA14, 0xFA1F,
     0xFA21, 0xFA23, 0xFA24, 0xFA27, 0xFA28, 0xFA29,
@@ -25,7 +25,7 @@ _PLANES = [("BMP", 0x0000, 0xFFFF), ("SMP", 0x10000, 0x1FFFF),
 _PUA = [("BMP PUA", 0xE000, 0xF8FF), ("Plane 15", 0xF0000, 0xFFFFD),
         ("Plane 16", 0x100000, 0x10FFFD)]
 
-# 徽章:(badge id = charset id, 阈值)
+# Badges: (badge id = charset id, threshold)
 _BADGES: list[tuple[str, float]] = [
     ("gb2312", 0.99), ("tongyong-guifan", 0.99), ("big5-changyong", 0.99),
     ("tw-changyong-4808", 0.99), ("jisx0208-l1", 0.99), ("ksx1001-hangul", 0.99),
@@ -100,18 +100,21 @@ def badges(cov: dict[str, tuple[int, int]]) -> list[str]:
     return out
 
 
-# 书写系统判定:每个脚本两档
-#   full     覆盖率过线,可以正常书写该语言
-#   partial  明显以该语言为目标、但没达线(如只有假名没有汉字的「日文」字体,
-#            或只带 KS X 1001 那部分汉字的韩文字体)
-# 判定用的是覆盖率数据,和 Coverage 筛选器同源,但口径不同:这里回答
-# 「能不能用这门语言写字」,Coverage 回答「是否达到某份标准的合规线」。
-SCRIPT_FULL = 0.9      # 达线门槛
-SCRIPT_TARGET = 0.1    # 「以该语言为目标」的下限
-KANA_GATE = 0.95       # 没有假名就谈不上「以日文为目标」
+# Script detection: two tiers per script
+#   full     coverage clears the threshold — the language can be written normally
+#   partial  clearly targets the language but falls short of the threshold (e.g. a
+#            "Japanese" font with kana but no kanji, or a Korean font that only
+#            covers the KS X 1001 hanja subset)
+# Detection uses the same coverage data as the Coverage filter, but with a different
+# question in mind: this answers "can you write in this language", while Coverage
+# answers "does it meet some standard's compliance bar".
+SCRIPT_FULL = 0.9      # threshold to count as "full"
+SCRIPT_TARGET = 0.1    # lower bound for "clearly targets this language"
+KANA_GATE = 0.95       # no kana means it can't be "targeting Japanese"
 
-# 判定各书写系统所依据的参照字表。站点的覆盖率筛选下拉必须把这些都列出来,
-# 否则用户看得到「Simplified Chinese (incomplete)」却没法按同一把尺子去筛。
+# Reference charsets used to detect each script. The site's coverage filter
+# dropdown must list all of these, or users will see e.g. "Simplified Chinese
+# (incomplete)" with no matching filter to select by the same yardstick.
 SCRIPT_REFERENCE_CHARSETS: dict[str, tuple[str, ...]] = {
     "zh-hans": ("gb2312", "tongyong-guifan"),
     "zh-hant": ("big5-changyong",),
@@ -135,7 +138,7 @@ def _script_scores(cov: dict[str, tuple[int, int]]) -> dict[str, float]:
     return {
         "zh-hans": _best(cov, r["zh-hans"]),
         "zh-hant": _best(cov, r["zh-hant"]),
-        # 日文以汉字覆盖为准,但必须先有假名才谈得上「以日文为目标」
+        # Japanese is judged by kanji coverage, but kana must be present first for it to count as targeting Japanese
         "ja": _ratio(cov, "jisx0208-l1") if kana >= KANA_GATE else 0.0,
         "ko": _best(cov, r["ko"]),
         "latin": _best(cov, r["latin"]),
@@ -147,7 +150,7 @@ def _script_scores(cov: dict[str, tuple[int, int]]) -> dict[str, float]:
 
 
 def detect_scripts(cov: dict[str, tuple[int, int]]) -> list[str]:
-    """达线的书写系统;未达线但明显以该语言为目标的记为 `<script>-partial`。"""
+    """Scripts that clear the threshold; scripts that fall short but clearly target the language are recorded as `<script>-partial`."""
     out: list[str] = []
     for name, score in _script_scores(cov).items():
         if score >= SCRIPT_FULL:
@@ -158,14 +161,14 @@ def detect_scripts(cov: dict[str, tuple[int, int]]) -> list[str]:
 
 
 def pick_sample_lang(cov: dict[str, tuple[int, int]]) -> str:
-    """样例语言:各脚本强度 0–1 同尺度;固定优先序,平手偏向靠前者。"""
+    """Sample language: script strength is scored on the same 0-1 scale for all scripts; fixed priority order, ties favor the earlier one."""
     scripts = {s for s in detect_scripts(cov) if not s.endswith("-partial")}
     ordered = [
         ("zh-hans", max(_ratio(cov, "gb2312"), _ratio(cov, "tongyong-guifan"))),
         ("zh-hant", _ratio(cov, "big5-changyong")),
         ("ko", max(_ratio(cov, "ksx1001-hangul"), _ratio(cov, "hangul-syllables"))),
         ("ja", 0.3 * (_ratio(cov, "hiragana") + _ratio(cov, "katakana")) / 2
-               + 0.7 * _ratio(cov, "jisx0208-l1")),  # 汉字覆盖是日文性的判别项
+               + 0.7 * _ratio(cov, "jisx0208-l1")),  # kanji coverage is the discriminating factor for "Japanese-ness"
         ("latin", 0.4 * _ratio(cov, "latin-basic")),
     ]
     best, best_v = "latin", -1.0

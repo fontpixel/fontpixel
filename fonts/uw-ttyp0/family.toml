@@ -14,10 +14,10 @@ authors_en = ["Uwe Waldmann"]
 description_en = "An extremely broad-coverage monospace bitmap terminal font covering Latin, Greek, Cyrillic, Vietnamese, Armenian, Georgian, and box-drawing characters, in multiple sizes from 11 to 22px with bold and italic styles."
 provenance_en = "Official release uw-ttyp0-1.3.tar.gz (https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/, retrieved 2026-08-29). Upstream distributes a master BDF in the font's own custom encoding; this site remaps it to a Unicode BDF using its mgl/unicode.mgl glyph-name mapping. Rebuild code at pipeline/opf/ingest/uwttyp0.py. The 1.2 snapshot in masaeedu/bitmap-fonts lacks the mgl directory and could not be rebuilt, so it was not used."
 
-# 上游的奇数尺寸文件（11/13/15/17px，共10个）每个只有234个字形，是一套
-# 固定的补充集：罕用的预组合重音字母、箭头与数学符号，四个尺寸内容完全相同，
-# 且全部已存在于对应的偶数尺寸完整字体中。没有基础字母就排不出任何文本，
-# 收录只会显示成“一个字母都没有的11px字体”，故不予收录。
+# Upstream's odd-size files (11/13/15/17px, 10 total) have only 234 glyphs each -- a
+# fixed supplementary set of rarely-used precomposed accented letters, arrows, and math symbols, identical across all four sizes,
+# and all already present in the corresponding even-size complete fonts. Without basic letters, no text can be typeset at all,
+# so including them would just show up as “an 11px font with not a single letter” -- not included.
 exclude = ["t0-11*.bdf", "t0-13*.bdf", "t0-15*.bdf", "t0-17*.bdf"]
 
 [license]

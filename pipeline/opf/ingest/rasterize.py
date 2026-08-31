@@ -1,8 +1,10 @@
-"""矢量化像素字体(TTF/OTF)按原生格点栅格化回点阵。
+"""Rasterize a vectorized pixel font (TTF/OTF) back to a bitmap at its native grid.
 
-原生 ppem 判定:轮廓全部坐标对 upem 的公约格点;格点整除 upem 且
-ppem 落在 4–64 才认定是矢量化像素字体,否则返回 None(普通轮廓
-字体不转制,进导入报告人工定夺)。
+Native ppem detection: all outline coordinates must share a common grid
+divisor of upem; it's only treated as a vectorized pixel font if the grid
+evenly divides upem and the resulting ppem falls in 4-64, otherwise returns
+None (a regular outline font isn't converted — it's flagged in the import
+report for manual review).
 """
 
 from __future__ import annotations
@@ -23,7 +25,7 @@ def detect_native_ppem(path: Path) -> int | None:
     font = TTFont(path, fontNumber=0)
     upem = font["head"].unitsPerEm
     glyphset = font.getGlyphSet()
-    names = list(font.getGlyphOrder())[1:]  # 跳过 .notdef
+    names = list(font.getGlyphOrder())[1:]  # skip .notdef
     step = max(1, len(names) // _SAMPLE_GLYPHS)
 
     g = 0
@@ -37,13 +39,13 @@ def detect_native_ppem(path: Path) -> int | None:
         drew = False
         for op, pts in pen.value:
             if op == "addComponent":
-                continue  # 组件引用,坐标随基字形采样
+                continue  # a component reference; its coordinates are sampled via the base glyph
             for pt in pts:
                 if not (isinstance(pt, tuple) and len(pt) == 2):
                     continue
                 x, y = pt
                 if x != int(x) or y != int(y):
-                    return None  # 非整数坐标:不是干净的格点字体
+                    return None  # non-integer coordinates: not a clean grid-aligned font
                 g = math.gcd(g, abs(int(x)))
                 g = math.gcd(g, abs(int(y)))
                 drew = True
@@ -63,7 +65,7 @@ def detect_native_ppem(path: Path) -> int | None:
 
 
 def _materialize_sfnt(path: Path) -> Path:
-    """woff/woff2 → 解包成临时 ttf(freetype 不带 brotli 时无法直读)。"""
+    """woff/woff2 → unpack to a temp ttf (freetype can't read them directly without brotli support)."""
     if path.suffix.lower() not in (".woff", ".woff2"):
         return path
     import tempfile
@@ -109,7 +111,7 @@ def rasterize_ttf(path: Path, ppem: int, family_slug: str) -> ParsedFont:
                     bby=face.glyph.bitmap_top - h,
                     rows=bytes(rows),
                 )
-            except Exception as e:  # noqa: BLE001 - 单字形失败仅告警
+            except Exception as e:  # noqa: BLE001 - a single glyph failure only warns
                 warnings.append(f"U+{cp:04X}: {e}")
         cp, gindex = face.get_next_char(cp, gindex)
 

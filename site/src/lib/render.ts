@@ -1,4 +1,4 @@
-/** 像素光栅化（契约 C4）：纯函数输出 RGBA 缓冲，paint 负责放大绘制。 */
+/** Pixel rasterization (contract C4): a pure function that outputs an RGBA buffer; paint handles scaled drawing. */
 
 import type { DecodedGlyph } from './glyphpack';
 import { rowBytes } from './glyphpack';
@@ -17,9 +17,11 @@ export interface RasterOpts {
   ink?: Rgba;
   paper?: Rgba;
   /**
-   * 逐字符墨色，下标与 `for (const ch of text)` 的码位序一致（换行符也占位）。
-   * 语法高亮用；null/undefined 处回落到 ink。不受 invert 影响——需要反色
-   * 语义的模式（代码框、游戏框）本就固定配色、不开反色。
+   * Per-character ink color, indices matching the codepoint order of
+   * `for (const ch of text)` (newlines occupy a slot too). Used for syntax
+   * highlighting; falls back to `ink` where null/undefined. Not affected by
+   * invert — modes that need fixed color semantics (code box, game box)
+   * already use a fixed palette and never enable invert.
    */
   charColors?: readonly (Rgba | null | undefined)[];
 }
@@ -30,10 +32,12 @@ export interface RasterResult {
   data: Uint8ClampedArray;
   missing: number[];
   /**
-   * 每个像素是否为字形墨迹（1 = 有墨），供「复制点阵」用。
+   * Whether each pixel is glyph ink (1 = ink), used by "copy bitmap".
    *
-   * 不从 data 的 RGBA 反推：反色、缺字高亮、网格线都会掺进颜色里，
-   * 而这里要的是字形本身的点阵。缺字占位框不计入。
+   * This isn't derived back from `data`'s RGBA: invert, missing-glyph
+   * highlighting, and grid lines all get mixed into the color, but what's
+   * wanted here is the glyph's own bitmap. The missing-glyph placeholder box
+   * is not counted.
    */
   mask: Uint8Array;
 }
@@ -47,7 +51,7 @@ export function MISSING_ADVANCE(pixelSize: number): number {
   return Math.round(pixelSize / 2) + 1;
 }
 
-/** 字体缺这些码位时按空白推进，而不是标成缺字。 */
+/** When the font lacks these codepoints, advance as whitespace instead of marking them missing. */
 function isBlank(cp: number): boolean {
   return cp === 0x20 || cp === 0x09 || cp === 0xa0 || cp === 0x3000;
 }
@@ -58,7 +62,7 @@ interface Placed {
   x: number;
   line: number;
   blank: boolean;
-  /** 在原文本中的码位下标，供 charColors 对位 */
+  /** Codepoint index in the original text, for aligning with charColors */
   idx: number;
 }
 
@@ -71,9 +75,11 @@ export function rasterize(
   const ink = opts.invert ? (opts.paper ?? DEFAULT_PAPER) : (opts.ink ?? DEFAULT_INK);
   const paper = opts.invert ? (opts.ink ?? DEFAULT_INK) : (opts.paper ?? DEFAULT_PAPER);
   const missAdv = MISSING_ADVANCE(font.pixelSize);
-  // 空白本来就没有墨迹，字体里没有它也不该画成缺字方框——KS X 1001、
-  // JIS 一类的 CJK 点阵字体普遍只有全角空格 U+3000，没有半角 U+0020。
-  // 宽度优先取全角空格的一半，取不到就退回缺字宽度。
+  // Whitespace has no ink to begin with, so a font missing it shouldn't be
+  // drawn as a missing-glyph box — CJK bitmap fonts like KS X 1001 and JIS
+  // typically only have the full-width space U+3000, not the half-width
+  // U+0020. Prefer half the full-width space's advance for the width,
+  // falling back to the missing-glyph width if unavailable.
   const fullWidthSpace = glyphs.get(0x3000);
   const spaceAdv = fullWidthSpace
     ? Math.max(1, Math.round(Math.max(fullWidthSpace.dwidth, 0) / 2))
@@ -108,9 +114,12 @@ export function rasterize(
 
   const lines = line + 1;
   const width = Math.max(1, maxLineWidth);
-  // 行高不能只信字体自报的 ascent/descent：不少点阵字体的字形实际高过
-  // FONT_ASCENT（萤火飞六档全是，最多超 2 行），照声明排第一行就会削顶、
-  // 后续行会互相叠笔。按本次真正要画的字形取有效上下界，保证每个像素都画得下。
+  // Line height can't just trust the font's self-reported ascent/descent:
+  // many bitmap fonts have glyphs taller than FONT_ASCENT (true of all six
+  // Firefly sizes, by up to 2 rows) — laying out the first line by the
+  // declared metrics would clip the top, and later lines would overlap.
+  // Compute the actual effective bounds from the glyphs being drawn this
+  // time, so every pixel fits.
   let above = font.ascent;
   let below = font.descent;
   for (const p of placed) {
@@ -149,13 +158,13 @@ export function rasterize(
   for (const p of placed) {
     const baseline = p.line * (lineHeight + LINE_GAP) + above;
     const inkC = opts.charColors?.[p.idx] ?? ink;
-    if (!p.glyph && p.blank) continue; // 空白就留白，不画框
+    if (!p.glyph && p.blank) continue; // blank stays blank, no box drawn
     if (!p.glyph) {
-      // 缺字：占位虚线框（高 = ascent，宽 = missAdv-1）
+      // missing glyph: placeholder dashed box (height = ascent, width = missAdv-1)
       const w = missAdv - 1;
       const top = baseline - font.ascent + 1;
       const bottom = baseline - 1;
-      // 缺字一律衬红：虚线框在小字号下与笔画难以分辨，红底才一眼可辨
+      // Always tint missing glyphs red: at small sizes a dashed box is hard to tell from actual strokes, a red backing makes it instantly recognizable
       for (let yy = top; yy <= bottom; yy++)
         for (let xx = p.x; xx < p.x + w; xx++) put(xx, yy, HIGHLIGHT);
       for (let xx = p.x; xx < p.x + w; xx += 2) {
@@ -189,7 +198,7 @@ export function rasterize(
   return { width, height, data, missing, mask };
 }
 
-/** 把光栅结果按整数倍绘制到 canvas;grid 在 scale≥4 时叠加网格线。 */
+/** Draw the raster result onto a canvas at an integer scale; grid overlays gridlines when scale≥4. */
 export function paint(
   canvas: HTMLCanvasElement,
   r: RasterResult,

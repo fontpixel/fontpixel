@@ -36,8 +36,9 @@ def _lit(g):
 
 
 def test_detect_native_ppem_on_vectorized_pixel_font(galmuri9):
-    # 注意:格点 ppem(em 相对)与 BDF 的 PIXEL_SIZE 是两种口径,
-    # 不必相等;正确性由位图逐像素对照测试保证。
+    # note: the grid ppem (em-relative) and the BDF's PIXEL_SIZE are two different
+    # measures and need not be equal; correctness is guaranteed by the pixel-by-pixel
+    # bitmap comparison test.
     ppem = detect_native_ppem(galmuri9 / "Galmuri9.ttf")
     assert ppem is not None
     assert 4 <= ppem <= 64
@@ -57,7 +58,7 @@ def test_rasterized_matches_official_bdf(galmuri9):
     for cp in checked:
         if _lit(r_by[cp]) != _lit(b_by[cp]) or r_by[cp].dwidth != b_by[cp].dwidth:
             mismatch += 1
-    # 矢量化往返允许极少量取整差异,但必须 ≥99% 逐像素一致
+    # the vectorize round-trip allows a tiny amount of rounding difference, but must be >=99% pixel-identical
     assert mismatch <= len(checked) * 0.01, f"{mismatch}/{len(checked)} 不一致"
 
 

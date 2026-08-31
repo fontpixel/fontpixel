@@ -1,4 +1,4 @@
-"""family.toml 读取与变体描述解析(spec §3.1/§3.2)。"""
+"""family.toml loading and variant description resolution (spec §3.1/§3.2)."""
 
 from __future__ import annotations
 
@@ -41,7 +41,7 @@ class VariantDesc:
     weight: str
     spacing: str
     width: str
-    """上游文档标注的推荐显示尺寸（px）；0 表示上游未说明。"""
+    """Recommended display size (px) as noted by upstream docs; 0 means upstream didn't specify one."""
     display_size: int
     script_subset: str | None
     display: str
@@ -52,20 +52,22 @@ class FamilyMeta:
     slug: str
     name: str
     name_zh: str = ""
-    """并列作者，逐个渲染成按作者名搜索的链接，所以每项要干净、可搜索：
-    「基于某某字体」这类说明写进 provenance，不要塞在名字里。"""
+    """Co-authors, each rendered as its own author-search link, so each
+    entry must be clean and searchable: notes like "based on font X"
+    belong in provenance, not crammed into the name."""
     authors: list[str] = field(default_factory=list)
     homepage: str = ""
     repository: str = ""
     description: str = ""
     form: str = ""
     vibes: list[str] = field(default_factory=list)
-    """曾用名、上游项目名、原生语言名等——只进搜索文本，不在站上展示。"""
+    """Former names, upstream project names, native-language names, etc. — only feed into search text, never shown on the site."""
     aliases: list[str] = field(default_factory=list)
     converted_from: str = ""
     provenance: str = ""
-    """各语言下的字体名，都是可选的；缺哪个就按 LOCALE_FALLBACK 往后退，
-    最终落到 name。zh-Hant 缺省时由站点用 OpenCC 从 zh-Hans 转出。"""
+    """Font names per language, all optional; a missing one falls back per
+    LOCALE_FALLBACK, eventually landing on name. When zh-Hant is missing,
+    the site derives it from zh-Hans via OpenCC."""
     name_en: str = ""
     name_zh_hans: str = ""
     name_zh_hant: str = ""
@@ -87,7 +89,7 @@ class FamilyMeta:
 
 
 def _authors(data: dict, key: str, legacy_key: str) -> list[str]:
-    """读作者列表；旧文件里的单值 author = "..." 当作单元素列表。"""
+    """Read the author list; a single-value author = "..." in old files is treated as a one-element list."""
     if key in data:
         return [str(a).strip() for a in data[key] if str(a).strip()]
     one = str(data.get(legacy_key, "")).strip()
@@ -95,7 +97,7 @@ def _authors(data: dict, key: str, legacy_key: str) -> list[str]:
 
 
 def family_names(meta: "FamilyMeta") -> dict[str, str]:
-    """家族名的各语言写法，只收非空的。键用站点的 locale 标识。"""
+    """Per-language spellings of the family name, non-empty ones only. Keys use the site's locale identifiers."""
     pairs = {
         "en": meta.name_en,
         "zh-Hans": meta.name_zh_hans,
@@ -134,7 +136,8 @@ def load_family_meta(family_dir: Path) -> FamilyMeta:
         converted_from=str(data.get("converted_from", "")),
         provenance=str(data.get("provenance", "")),
         name_en=str(data.get("name_en", "")),
-        # name_zh 是加入多语言字段之前的旧写法，按简体读进来
+        # name_zh was the old spelling from before multi-language fields
+        # were added; read it in as Simplified.
         name_zh_hans=str(data.get("name_zh_hans", "") or data.get("name_zh", "")),
         name_zh_hant=str(data.get("name_zh_hant", "")),
         name_ja=str(data.get("name_ja", "")),
@@ -159,7 +162,7 @@ def load_family_meta(family_dir: Path) -> FamilyMeta:
 _SCRIPT_TOKENS = {
     "zh_hans": "zh-Hans", "zh-hans": "zh-Hans", "sc": "zh-Hans", "cn": "zh-Hans",
     "zh_hant": "zh-Hant", "zh-hant": "zh-Hant", "tc": "zh-Hant", "tw": "zh-Hant",
-    "hk": "zh-Hant", "tr": "zh-Hant",  # zh_hk 港标字形 / zh_tr 传承字形
+    "hk": "zh-Hant", "tr": "zh-Hant",  # zh_hk Hong Kong standard glyphs / zh_tr traditional/inherited glyphs
     "ja": "ja", "jp": "ja", "ko": "ko", "kr": "ko", "latin": "latin",
 }
 
@@ -191,9 +194,11 @@ def resolve_variant(f: ParsedFont, meta: FamilyMeta) -> VariantDesc:
     elif "light" in wn or "light" in tokens:
         weight = "light"
 
-    # 字宽：Condensed 这类与常规同尺寸同字重，不区分就会撞标签
-    # （Galmuri11 与 Galmuri11-Condensed 都是「16px·常规·比例」）。
-    # 只认真正表示字宽的词——有的工具把字重也写进 SETWIDTH 字段。
+    # Width: something like Condensed shares the same size and weight as
+    # the regular cut, so failing to distinguish them collides tags
+    # (Galmuri11 and Galmuri11-Condensed would both be "16px, regular, proportional").
+    # Only recognize tokens that genuinely denote width — some tools also
+    # write weight into the SETWIDTH field.
     width = "normal"
     sw = str(f.props.get("SETWIDTH_NAME", "")).lower().replace(" ", "")
     for token, val in _WIDTH_TOKENS.items():

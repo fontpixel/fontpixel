@@ -1,12 +1,16 @@
-"""把上游按字符集拆分的 BDF 合并回同一个字面。
+"""Merge BDFs that upstream split by charset back into a single typeface.
 
-X11 时代的日文字体常按字符集分发:`mplus_j10r.bdf` 只有汉字假名,
-拉丁部分在 `mplus_j10r-iso-W5.bdf`,半角假名在 `mplus_j10r-jisx0201.bdf`。
-它们是同一套设计的不同片段,分别收录会显示成几个残缺字体
-(PixelMplus 的「完整版」里 ASCII 可见字符是 0/94,连空格都没有)。
+Japanese fonts from the X11 era were often distributed split by charset:
+`mplus_j10r.bdf` has only kanji/kana, the Latin part is in
+`mplus_j10r-iso-W5.bdf`, and half-width kana is in
+`mplus_j10r-jisx0201.bdf`. These are fragments of the same design, and
+listing them separately would show up as several incomplete fonts
+(PixelMplus's "complete" file has 0/94 printable ASCII characters — not
+even a space).
 
-归属规则:文件 B 是 A 的子集,当且仅当 B 的主干名等于 A 的主干名再接
-一个 `-` 或 `_` 加后缀。存在多个候选时取最长的 A。
+Attribution rule: file B is a subset of A if and only if B's stem equals
+A's stem plus a `-` or `_` and a suffix. When multiple candidates exist,
+take the longest A.
 """
 
 from __future__ import annotations
@@ -27,7 +31,7 @@ def _stem(path: Path) -> str:
 
 
 def group_files(paths: list[Path]) -> dict[Path, list[Path]]:
-    """返回 {主文件: [子集文件, ...]}；没有子集的主文件对应空列表。"""
+    """Returns {main file: [subset file, ...]}; a main file with no subsets maps to an empty list."""
     stems = {p: _stem(p) for p in paths}
     parents: dict[Path, Path] = {}
     for b in paths:
@@ -43,7 +47,7 @@ def group_files(paths: list[Path]) -> dict[Path, list[Path]]:
             parents[b] = best
     out: dict[Path, list[Path]] = {p: [] for p in paths if p not in parents}
     for child, parent in parents.items():
-        # 父文件本身也可能是别人的子集，一路上溯到根
+        # A parent file might itself be someone else's subset — walk up to the root.
         while parent in parents:
             parent = parents[parent]
         out.setdefault(parent, []).append(child)
@@ -54,13 +58,16 @@ def group_files(paths: list[Path]) -> dict[Path, list[Path]]:
 
 def merge(base: ParsedFont,
           extras: list[ParsedFont]) -> tuple[ParsedFont, list[str], list[ParsedFont]]:
-    """把 extras 里 base 没有的码位补进 base。
+    """Fill in codepoints from extras that base doesn't have.
 
-    返回 (合并结果, 说明, 未能合并的字体)。未能合并的要由调用方保留成独立
-    变体，否则那些字形就凭空消失了。
+    Returns (merged result, notes, fonts that couldn't be merged). Fonts
+    that fail to merge must be kept by the caller as separate variants,
+    otherwise those glyphs would just vanish.
 
-    只按像素尺寸判断能否合并：BDF 的字形自带相对基线的偏移，字面级的
-    ascent/descent 不同不妨碍拼合，取各方最大值让所有字形都放得下即可。
+    Mergeability is judged purely by pixel size: BDF glyphs carry their
+    own baseline-relative offsets, so differing typeface-level
+    ascent/descent doesn't block merging — take the max across all
+    sources so every glyph fits.
     """
     notes: list[str] = []
     have = {g.cp for g in base.glyphs}

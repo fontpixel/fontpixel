@@ -54,7 +54,7 @@ def test_core_pack_contains_ascii_only_here(tmp_path):
     f = _mini()
     manifest = write_packs(f, _variant(f), "mini", tmp_path)
     core = read_chunk(tmp_path / manifest["core"]["file"])
-    assert [g.cp for g in core] == [65]  # 字体只有 A 在核心字符集内
+    assert [g.cp for g in core] == [65]  # only A is in the core charset for this font
     assert manifest["core"]["glyphs"] == 1
 
 

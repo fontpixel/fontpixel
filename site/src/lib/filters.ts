@@ -1,4 +1,4 @@
-/** 目录页筛选纯函数（契约见计划 Task 16）。 */
+/** Pure filter functions for the catalog page (contract per plan Task 16). */
 
 import type { FamilyIndex } from './schema';
 
@@ -54,21 +54,24 @@ export function applyFilters(
   charsetIds?: string[],
 ): FamilyIndex[] {
   const idxOf = new Map((charsetIds ?? []).map((id, i) => [id, i]));
-  // 按空白拆词，全部命中才算：整串当子串匹配的话，「俐方 cubic」这种
-  // 跨字段的组合永远搜不到——两个词分别都在，连起来却不是任何一段文本
+  // Split on whitespace into terms and require every term to hit: matching
+  // the whole query as one substring would never find a cross-field
+  // combination like "俐方 cubic" — each word exists somewhere, but never
+  // joined together in any single piece of text
   const terms = s.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const chars = [...s.chars].filter((c) => !/\s/.test(c)).join('');
   let out = fams.filter((f) => {
     if (terms.length) {
-      // searchText 由构建期生成，已把家族名做过简繁异体展开
+      // searchText is generated at build time and already expands the family name across Simplified/Traditional variants
       const hay = `${f.searchText} ${f.name} ${Object.values(f.names).join(' ')} ${f.authors.join(' ')} ${f.slug}`.toLowerCase();
       if (!terms.every((t) => hay.includes(t))) return false;
     }
     if (s.forms.length && !s.forms.includes(f.form)) return false;
     if (s.vibes.length && !intersects(s.vibes, f.vibes)) return false;
     if (s.sizes.length && !intersects(s.sizes, f.sizes)) return false;
-    // 任一变体的墨迹高度落在区间即命中：家族只按最大值比的话，
-    // 文泉驿（11/12/13/14/16）按 14-14 筛就落空了
+    // A match if any variant's ink height falls in the range: comparing the
+    // family by its max value alone would make WenQuanYi (11/12/13/14/16)
+    // miss a 14-14 filter
     if (s.inkH && !f.inkHeights.some((h) => h >= s.inkH![0] && h <= s.inkH![1]))
       return false;
     if (s.scripts.length && !intersects(s.scripts, f.scripts)) return false;
@@ -89,8 +92,10 @@ export function applyFilters(
     return true;
   });
 
-  // 沿用原有语义：有中文名就按中文名排，否则按拉丁名。排序与界面语言无关，
-  // 所以英文界面下也是按中文名排的——这是加多语言名之前就有的行为。
+  // Keeping the original semantics: sort by the Chinese name when present,
+  // otherwise by the Latin name. Sorting is independent of the UI language,
+  // so it sorts by Chinese name even in the English UI — this behavior
+  // predates the addition of multi-language names.
   const byName = (f: FamilyIndex) => (f.names['zh-Hans'] || f.name).toLowerCase();
   out = [...out];
   switch (s.sort) {

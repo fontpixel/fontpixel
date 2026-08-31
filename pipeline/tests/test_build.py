@@ -34,19 +34,19 @@ def test_full_build(tmp_path):
     assert len(mini["variants"]) == 2  # mini.bdf + mini2.bdf.gz
     assert mini["added"] == "2026-08-21"
 
-    # 曾用名／别名进搜索文本，中文别名和家族名一样做简繁展开
+    # Former names/aliases feed into search text; Chinese aliases get Simplified/Traditional expansion like the family name
     assert "MiniOld" in mini["searchText"]
     assert "迷你旧名" in mini["searchText"]
     assert "舊" in mini["searchText"]
-    # 并列作者原样下发，前端逐个做成按作者名搜索的链接
+    # Co-authors are passed through as-is; the frontend turns each into a per-author search link
     assert mini["authors"] == ["PFC Tests", "Second Author"]
     assert mini["authorsEn"] == ["PFC Tests", "Second Author"]
 
     nometa = fams["nometa"]
     assert nometa["curated"] is False
-    assert (fonts / "nometa" / "family.toml").exists()  # stub 已写
+    assert (fonts / "nometa" / "family.toml").exists()  # stub was written
 
-    # 逐变体资产
+    # Per-variant assets
     for v in mini["variants"]:
         vdir = data / "packs" / "mini" / v["id"]
         assert (vdir / "manifest.json").exists()
@@ -84,9 +84,9 @@ def test_coverage_intervals_and_missing(tmp_path):
 
     detail = json.loads((data / "details" / "mini.json").read_text(encoding="utf-8"))
     vid = detail["meta"]["variants"][0]["id"]
-    # hiragana 共 86 字,mini 全缺(≤500)→ 提供缺字列表
+    # hiragana has 86 chars total, mini is missing all of them (<=500) -> a missing-chars list is provided
     assert len(detail["missingChars"][vid]["hiragana"]) == 86
-    # gb2312 缺 6763 个(>500)→ 不提供
+    # gb2312 is missing 6763 chars (>500) -> not provided
     assert "gb2312" not in detail["missingChars"][vid]
 
     charsets = json.loads((data / "charsets.json").read_text(encoding="utf-8"))
@@ -96,7 +96,7 @@ def test_coverage_intervals_and_missing(tmp_path):
     assert by_id["gb2312"]["section"] == "gb"
     assert charsets["sections"][0] == "gb"
 
-    # 缓存后重跑,intervals 仍完整(来自缓存 payload)
+    # After a cached rerun, intervals are still complete (sourced from the cache payload)
     build(fonts, data, dl, cache)
     runs2 = read_intervals(data / "coverage-intervals.bin.gz")
     assert runs2 == runs
@@ -110,7 +110,7 @@ def test_incremental_cache(tmp_path):
     assert report2.cached == 2
     assert (data / "index.json").read_bytes() == idx1
 
-    # 修改结构性字段 → 只重建该家族（各语言名是描述性的，走快路径，另有测试）
+    # Modify a structural field -> only that family is rebuilt (localized names are descriptive and take the fast path, tested separately)
     toml = fonts / "mini" / "family.toml"
     toml.write_text(toml.read_text().replace('name = "Mini Test"', 'name = "Mini Test 2"'),
                     encoding="utf-8")
@@ -121,14 +121,14 @@ def test_incremental_cache(tmp_path):
 
 
 def test_broken_family_isolated(tmp_path):
-    """单个家族的 family.toml 损坏不应拖垮整个构建。"""
+    """A broken family.toml in one family should not take down the whole build."""
     fonts, data, dl, cache = _setup(tmp_path)
     (fonts / "mini" / "family.toml").write_text("这不是合法的 TOML ===", encoding="utf-8")
     report = build(fonts, data, dl, cache)
     assert report.failed == 1
     assert any("mini" in w and "失败" in w for w in report.warnings)
     idx = json.loads((data / "index.json").read_text(encoding="utf-8"))
-    assert [f["slug"] for f in idx["families"]] == ["nometa"]  # 其余家族照常
+    assert [f["slug"] for f in idx["families"]] == ["nometa"]  # other families are unaffected
 
 
 def test_orphan_outputs_pruned(tmp_path):
@@ -156,7 +156,7 @@ def test_only_family(tmp_path):
 
 def test_variant_id_collision_uniquified(tmp_path):
     fonts, data, dl, cache = _setup(tmp_path)
-    # mini.bdf 与 mini.bdf.gz 同名 → id 冲突,应加后缀并告警
+    # mini.bdf and mini.bdf.gz share a name -> id collision, should get a suffix and a warning
     shutil.copy(FIX / "fonts-tree" / "mini" / "mini2.bdf.gz",
                 fonts / "mini" / "mini.bdf.gz")
     report = build(fonts, data, dl, cache, only_family="mini")
@@ -167,10 +167,11 @@ def test_variant_id_collision_uniquified(tmp_path):
 
 
 def test_ts_fixtures_in_sync(tmp_path):
-    """站点的 zod 契约夹具必须跟管线的真实产物一致。
+    """The site's zod contract fixtures must match the pipeline's real output.
 
-    夹具原本靠手工拷贝，改了 index/detail 的结构就会悄悄过期，vitest 那边
-    才报错。这里直接拿构建产物比对；要更新就跑 OPF_UPDATE_FIXTURES=1 pytest。
+    The fixtures are copied by hand; changing the index/detail structure lets them
+    silently go stale until vitest fails on the site side. This compares against
+    the actual build output directly; to update, run OPF_UPDATE_FIXTURES=1 pytest.
     """
     import os
 
@@ -201,25 +202,27 @@ def test_ts_fixtures_in_sync(tmp_path):
 
 
 def test_family_scripts_drop_partial_when_a_variant_is_complete():
-    """家族里只要有一个尺寸达标，就不该再同时挂着「（不完整）」标签。
+    """If any one size in a family is fully covered, the family should not still carry a "(partial)" tag.
 
-    家族的 scripts 是各变体的并集，方舟像素这类字体的小尺寸覆盖不全、
-    大尺寸达标，并集里会同时出现 zh-hans 和 zh-hans-partial。
+    A family's scripts are the union of its variants'. For fonts like Ark Pixel, where
+    small sizes have incomplete coverage but large sizes are fully covered, the union
+    would otherwise contain both zh-hans and zh-hans-partial.
     """
     from opf.build import merge_scripts
 
     assert merge_scripts(
         ["zh-hans-partial", "ja-partial", "latin", "zh-hans"]
     ) == ["ja-partial", "latin", "zh-hans"]
-    # 没有对应完整档的「不完整」标签要保留
+    # A "partial" tag with no matching complete entry should be kept
     assert merge_scripts(["ja-partial", "latin"]) == ["ja-partial", "latin"]
 
 
 def test_family_toml_top_level_keys_are_before_any_table():
-    """顶层键必须写在第一个 [表头] 之前。
+    """Top-level keys must be written before the first [table header].
 
-    往 family.toml 末尾追加 `exclude = [...]` 时，如果文件已有 [license] 段，
-    这个键会静默落进 license 表里而不是顶层——TOML 照样解析成功，只是读不到。
+    When appending `exclude = [...]` to the end of family.toml, if the file already
+    has a [license] section, the key silently lands inside the license table instead
+    of the top level -- TOML still parses fine, it's just unreadable from where it's expected.
     """
     import tomllib
     from pathlib import Path
@@ -242,16 +245,17 @@ def test_family_toml_top_level_keys_are_before_any_table():
 
 
 def test_search_text_is_recomputed_on_cache_hit(tmp_path):
-    """searchText 是元数据的纯函数，不该跟着缓存一起变陈旧。
+    """searchText is a pure function of the metadata, so it must not go stale along with the cache.
 
-    缓存键只认字体文件、family.toml 与管线版本，改 variants.py 的展开
-    规则不会让它失效——若 searchText 存在缓存里，规则改了也刷不出来，
-    除非全量重建一次（131 个家族要半小时）。所以命中缓存时现算。
+    The cache key only tracks font files, family.toml, and the pipeline version --
+    changing variants.py's expansion rules doesn't invalidate it. If searchText were
+    stored in the cache, a rule change wouldn't show up until a full rebuild (131
+    families takes half an hour). So it's recomputed on every cache hit instead.
     """
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)
 
-    # 把缓存里的 searchText 改坏，模拟「展开规则变了、缓存还是旧的」
+    # Corrupt the cached searchText to simulate "expansion rules changed, cache is stale"
     cached = cache / "families" / "mini.json"
     payload = json.loads(cached.read_text(encoding="utf-8"))
     payload["index_entry"]["searchText"] = "STALE"
@@ -267,7 +271,7 @@ def test_search_text_is_recomputed_on_cache_hit(tmp_path):
 
 
 def _retoml(fonts, **edits):
-    """改 mini 的 family.toml，返回改动前的原文。"""
+    """Edit mini's family.toml, returning the text before the change."""
     f = fonts / "mini" / "family.toml"
     before = f.read_text(encoding="utf-8")
     text = before
@@ -280,10 +284,11 @@ def _retoml(fonts, **edits):
 
 
 def test_descriptive_edit_skips_the_expensive_rebuild(tmp_path):
-    """只改展示字段时，不该重算字形——但产物里的文本必须全部刷新。
+    """Editing only display fields should not recompute glyphs -- but all text in the output must still refresh.
 
-    改一个作者名就把 131 个家族重新矢量化要半小时，而作者名并不改变任何
-    字形轮廓。缓存键因此只认字体文件与 family.toml 的结构性字段。
+    Re-vectorizing 131 families over an author-name change would take half an hour,
+    and an author name changes no glyph outlines. So the cache key only tracks font
+    files and family.toml's structural fields.
     """
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)
@@ -295,7 +300,7 @@ def test_descriptive_edit_skips_the_expensive_rebuild(tmp_path):
     report = build(fonts, data, dl, cache)
 
     assert report.cached == 2, "只改展示字段不该触发重建"
-    # 字形产物一个字节都不该动
+    # Not a single byte of the glyph output should change
     assert {p: p.stat().st_mtime_ns for p in packs.rglob("*") if p.is_file()} \
         == before_mtimes
 
@@ -310,14 +315,14 @@ def test_descriptive_edit_skips_the_expensive_rebuild(tmp_path):
 
 
 def test_descriptive_edit_gives_the_same_bytes_as_a_full_rebuild(tmp_path):
-    """快路径与全量重建必须产出同样的下载物——sha256 是要发布出去的。"""
+    """The fast path and a full rebuild must produce identical downloads -- the sha256 gets published."""
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)
     _retoml(fonts, authors='authors = ["新作者 (handle)"]')
-    build(fonts, data, dl, cache)                      # 快路径
+    build(fonts, data, dl, cache)                      # fast path
     fast = json.loads((data / "details" / "mini.json").read_text(encoding="utf-8"))
 
-    # 参照组：同样的 fonts 目录，空缓存、空产物，整个重来一遍
+    # control group: same fonts directory, empty cache, empty output, full rebuild
     fonts2, data2, dl2, cache2 = _setup(tmp_path / "again")
     shutil.copy(fonts / "mini" / "family.toml", fonts2 / "mini" / "family.toml")
     build(fonts2, data2, dl2, cache2)
@@ -328,7 +333,7 @@ def test_descriptive_edit_gives_the_same_bytes_as_a_full_rebuild(tmp_path):
 
 
 def test_structural_edit_still_forces_a_rebuild(tmp_path):
-    # 改字体名会写进 TTF 与 OG 图，必须照常重建
+    # Renaming the font gets written into the TTF and the OG image, so it must still trigger a rebuild
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)
     _retoml(fonts, name='name = "Renamed"')
@@ -337,7 +342,7 @@ def test_structural_edit_still_forces_a_rebuild(tmp_path):
 
 
 def test_parallel_and_serial_builds_agree(tmp_path, monkeypatch):
-    """并行只是调度方式，产物必须与串行逐字节一致。"""
+    """Parallelism is only a scheduling mechanism -- output must be byte-identical to the serial build."""
     fonts1, data1, dl1, cache1 = _setup(tmp_path / "par")
     build(fonts1, data1, dl1, cache1)          # 默认并行
 
@@ -355,10 +360,11 @@ def test_parallel_and_serial_builds_agree(tmp_path, monkeypatch):
 
 
 def test_index_carries_per_variant_ink_heights(tmp_path):
-    """墨迹高度要逐变体下发，不能只给家族最大值。
+    """Ink height must be reported per-variant, not just the family max.
 
-    文泉驿点阵宋体的五个变体墨迹高是 11/12/13/14/16，只下发 max=16 的话，
-    按 14-14 筛选就搜不到它——而它确实有一个 14 的变体。
+    WenQuanYi Bitmap Song's five variants have ink heights 11/12/13/14/16; reporting
+    only max=16 would make it unsearchable when filtering by 14-14 -- even though it
+    does have a 14 variant.
     """
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)
@@ -366,14 +372,15 @@ def test_index_carries_per_variant_ink_heights(tmp_path):
     mini = next(f for f in idx["families"] if f["slug"] == "mini")
     assert mini["inkHeights"] == sorted(set(mini["inkHeights"]))
     assert mini["inkHeights"], "每个家族至少有一个变体的墨迹高度"
-    assert max(mini["inkHeights"]) == mini["inkHeight"]  # 旧字段仍是最大值
+    assert max(mini["inkHeights"]) == mini["inkHeight"]  # the legacy field still holds the max
 
 
 def test_family_only_build_keeps_other_families_outputs(tmp_path):
-    """--family 只该重建指定家族，绝不能删掉别人的产物。
+    """--family should only rebuild the given family, and must never delete other families' output.
 
-    缓存整体失效时（例如刚升过 PIPELINE_VERSION），其余家族一个都命中不了，
-    旧实现会把它们从 entries 里漏掉，然后 _prune_orphans 当作孤儿全删。
+    When the entire cache is invalidated (e.g. right after bumping PIPELINE_VERSION),
+    none of the other families hit cache. The old implementation would drop them from
+    entries, and _prune_orphans would then delete all of them as orphans.
     """
     fonts, data, dl, cache = _setup(tmp_path)
     build(fonts, data, dl, cache)
@@ -381,7 +388,7 @@ def test_family_only_build_keeps_other_families_outputs(tmp_path):
     assert len(others) > 1
 
     import shutil
-    shutil.rmtree(cache)                      # 模拟缓存整体失效
+    shutil.rmtree(cache)                      # simulate the whole cache being invalidated
     build(fonts, data, dl, cache, only_family="mini")
 
     still = sorted(p.name for p in (data / "details").glob("*.json"))
@@ -389,11 +396,11 @@ def test_family_only_build_keeps_other_families_outputs(tmp_path):
 
 
 def test_zero_glyph_variant_fails_the_family(tmp_path):
-    """字符集没解开导致零字形时，整族必须构建失败，不能发布空字体。"""
+    """When an unresolved charset leaves zero glyphs, the whole family must fail the build rather than publish an empty font."""
     fonts = tmp_path / "fonts"
     fam = fonts / "ghost"
     fam.mkdir(parents=True)
-    # Adobe FontSpecific 这类自有编码，decode_cp 无法映射，字形会被全部丢弃
+    # A proprietary encoding like Adobe FontSpecific can't be mapped by decode_cp, so all glyphs get dropped
     (fam / "ghost.bdf").write_text(
         "STARTFONT 2.1\n"
         "FONT -Adobe-Symbol-Medium-R-Normal--12-120-100-100-P-95-Adobe-FontSpecific\n"

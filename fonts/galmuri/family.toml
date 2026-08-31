@@ -14,9 +14,9 @@ authors_en = ["quiple (Lee Minseo)"]
 description_en = "A Korean bitmap font family spanning 7-14px, with kana and Latin support and a monospace variant."
 provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri; upstream https://github.com/quiple/galmuri/releases (v2.40.4)"
 
-# 上游README的“Summary of Supported Ranges”表里标注了各款的推荐显示尺寸
-# （https://github.com/quiple/galmuri）。该数值等于字面高 + 1行像素，与
-# BDF声明的em（ascent + descent）不是一回事，故单列。Mono系列上游未说明。
+# Upstream's README marks each variant's recommended display size in the “Summary of Supported Ranges” table
+# (https://github.com/quiple/galmuri). This value equals the glyph height + 1 pixel of line spacing, which is not the same as
+# the em (ascent + descent) declared in the BDF, so it's listed separately. Upstream doesn't document it for the Mono series.
 [variants."Galmuri7.bdf"]
 display_size = 8
 

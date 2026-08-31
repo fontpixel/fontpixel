@@ -1,12 +1,13 @@
 <script lang="ts">
-  /** bdfparser 活代码编辑器（移植自原站 Docusaurus 的 jsx live 代码块）。
+  /** Live code editor for bdfparser (ported from the original site's Docusaurus jsx live code block).
    *
-   * 用户在文本框里写整段 <BDF …func={…}/>，这里解析出 func 与
-   * fontfile/pixelcolors/size 三个属性并即时渲染。执行用户代码用
-   * new Function——跟原站 react-live 一样跑在用户自己的浏览器里。
+   * The user writes a whole <BDF …func={…}/> snippet in the textarea; this parses
+   * out func and the fontfile/pixelcolors/size props and renders it live. User code
+   * is executed with new Function — same as the original site's react-live, running
+   * entirely in the user's own browser.
    */
   import { onMount } from 'svelte';
-  // Svelte 保留 $ 前缀标识符，$Font 等只能经命名空间属性访问
+  // Svelte reserves $-prefixed identifiers, so $Font etc. can only be accessed via the namespace prop
   import * as bdflib from 'bdfparser';
   import fetchline from 'fetchline';
 
@@ -22,7 +23,7 @@
   let running = $state(false);
   let canvasEl: HTMLCanvasElement | undefined = $state();
 
-  // 字体按 URL 缓存，改代码不重新下载
+  // Fonts are cached by URL, so editing code doesn't re-download them
   const fontCache = new Map<string, Promise<unknown>>();
   function loadFont(url: string) {
     let p = fontCache.get(url);
@@ -33,7 +34,7 @@
     return p;
   }
 
-  /** 不管写的是本地文件名还是原站完整 URL，都落到本站 public/bdfparser_fonts/。 */
+  /** Whether given a local filename or the original site's full URL, resolves to this site's public/bdfparser_fonts/. */
   function resolveFont(name: string | undefined): string {
     const file = (name ?? 'unifont-reduced.bdf').split('?')[0]!.replace(/\/+$/, '');
     if (/^https?:/.test(file) && !file.includes('bdfparser_fonts/')) return file;
@@ -75,7 +76,7 @@
         ? (new Function(`return (${pixelcolorsText})`)() as Record<number, string | null>)
         : undefined;
       const font = await loadFont(resolveFont(fontfile));
-      if (my !== seq) return; // 已被更新的一次运行取代
+      if (my !== seq) return; // superseded by a newer run
       const bitmap = fn(font, bdflib);
       if (bitmap && canvasEl) {
         canvasEl.width = bitmap.width();

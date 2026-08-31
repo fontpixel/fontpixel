@@ -1,11 +1,14 @@
-/** 试写框「高亮代码」模式的轻量语法着色。
+/** Lightweight syntax coloring for the trial-writing box's "highlight code" mode.
  *
- * 不引 highlight.js / prism：它们输出 HTML，而这里要的是逐码位的颜色数组，
- * 好让 render.ts 在点阵画布上逐字上色。展示用途不需要完整语法分析，
- * 一个「注释／字符串／数字／关键字／调用名／类型名」级别的状态机足够。
+ * Not using highlight.js / prism: they output HTML, while what's needed here
+ * is a per-codepoint color array so render.ts can color each character on
+ * the bitmap canvas. This is display-only, so it doesn't need full syntax
+ * analysis — a state machine at the level of "comment / string / number /
+ * keyword / call name / type name" is enough.
  *
- * 返回数组的下标与 `for (const ch of code)` 的码位序一致（含换行符占位），
- * 与 RasterOpts.charColors 的约定相同。
+ * The returned array's indices line up with the codepoint order of
+ * `for (const ch of code)` (newlines occupy a slot too), matching the
+ * convention used by RasterOpts.charColors.
  */
 
 import type { Rgba } from './render';
@@ -50,7 +53,7 @@ export const CODE_LANG_EXT: Record<CodeLang, string> = {
   go: 'go',
 };
 
-/** 深底配色（VS Code Dark+ 系）；画布底色固定为黑，与站点主题无关。 */
+/** Dark-background palette (VS Code Dark+ family); the canvas background is fixed black, independent of the site theme. */
 export const CODE_PAPER: Rgba = [13, 13, 13, 255];
 export const CODE_INK: Rgba = [212, 212, 212, 255];
 const C_COMMENT: Rgba = [106, 153, 85, 255];
@@ -93,7 +96,7 @@ function cfg(lang: CodeLang): LangCfg {
     case 'php':
       return { line: ['//', '#'], block: ['/*', '*/'], quotes: ['"', "'"], triple: false, dollarVar: true };
     case 'rust':
-      // 不把单引号当字符串起点，免得 'a 生命周期把后半行吞成字符串
+      // Don't treat a single quote as a string start, so an 'a lifetime doesn't swallow the rest of the line as a string
       return { line: ['//'], block: ['/*', '*/'], quotes: ['"'], triple: false, dollarVar: false };
     case 'javascript':
     case 'typescript':
@@ -107,7 +110,7 @@ const isIdStart = (ch: string) => /[A-Za-z_]/.test(ch);
 const isId = (ch: string) => /[A-Za-z0-9_]/.test(ch);
 const isDigit = (ch: string) => ch >= '0' && ch <= '9';
 
-/** 逐码位着色；null 表示用默认墨色。 */
+/** Color per codepoint; null means use the default ink color. */
 export function highlightCode(code: string, lang: CodeLang): (Rgba | null)[] {
   const chars = Array.from(code);
   const out: (Rgba | null)[] = new Array<Rgba | null>(chars.length).fill(null);
@@ -117,13 +120,13 @@ export function highlightCode(code: string, lang: CodeLang): (Rgba | null)[] {
   let i = 0;
   while (i < chars.length) {
     const ch = chars[i]!;
-    // 行注释
+    // line comment
     const lineMark = c.line.find((m) => at(i, m));
     if (lineMark) {
       while (i < chars.length && chars[i] !== '\n') out[i++] = C_COMMENT;
       continue;
     }
-    // 块注释
+    // block comment
     if (c.block && at(i, c.block[0])) {
       const [, close] = c.block;
       out[i] = C_COMMENT;
@@ -132,7 +135,7 @@ export function highlightCode(code: string, lang: CodeLang): (Rgba | null)[] {
       for (let k = 0; k < close.length && i < chars.length; k++) out[i++] = C_COMMENT;
       continue;
     }
-    // 字符串（含 Python 三引号；转义符跳过下一个码位）
+    // string (including Python triple quotes; an escape skips the next codepoint)
     if (c.quotes.includes(ch)) {
       const triple = c.triple && at(i, ch.repeat(3));
       const close = triple ? ch.repeat(3) : ch;
@@ -147,23 +150,23 @@ export function highlightCode(code: string, lang: CodeLang): (Rgba | null)[] {
           for (let k = 0; k < close.length; k++) out[i++] = C_STRING;
           break;
         }
-        if (!triple && chars[i] === '\n') break; // 单行字符串不跨行
+        if (!triple && chars[i] === '\n') break; // single-line strings don't span lines
         out[i++] = C_STRING;
       }
       continue;
     }
-    // 数字（含 0x/0b、小数、下划线分隔）
+    // number (including 0x/0b, decimals, underscore separators)
     if (isDigit(ch) || (ch === '.' && isDigit(chars[i + 1] ?? ''))) {
       while (i < chars.length && /[0-9A-Fa-fxXoObB_.]/.test(chars[i]!)) out[i++] = C_NUMBER;
       continue;
     }
-    // PHP 变量
+    // PHP variable
     if (c.dollarVar && ch === '$' && isIdStart(chars[i + 1] ?? '')) {
       out[i++] = C_VAR;
       while (i < chars.length && isId(chars[i]!)) out[i++] = C_VAR;
       continue;
     }
-    // 标识符：关键字 → 蓝；后随 "(" → 调用名；首字母大写 → 类型名
+    // identifier: keyword → blue; followed by "(" → call name; capitalized → type name
     if (isIdStart(ch)) {
       const start = i;
       while (i < chars.length && isId(chars[i]!)) i += 1;

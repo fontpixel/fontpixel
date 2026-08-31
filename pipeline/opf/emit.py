@@ -1,4 +1,4 @@
-"""附加产物:查字覆盖区间表与字表元数据 JSON。"""
+"""Auxiliary output: the coverage interval lookup table and charset metadata JSON."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from opf.coverage.charsets import SECTION_ORDER, Charset
 
 
 def cps_to_runs(cps: frozenset[int] | set[int]) -> list[tuple[int, int]]:
-    """码位集合 → 合并后的半开区间 [(start, end), ...]。"""
+    """Codepoint set → merged half-open intervals [(start, end), ...]."""
     runs: list[tuple[int, int]] = []
     for cp in sorted(cps):
         if runs and cp == runs[-1][1]:

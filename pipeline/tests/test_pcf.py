@@ -32,7 +32,7 @@ def test_parse_mini_pcf_matches_bdf():
 
 
 def test_parse_terminal_pcf_matches_bdf():
-    # -t 用终端字形填充;墨迹外框可能被填充到等宽——只比码位/位图内容按 BDF 裁剪比较
+    # -t pads with terminal glyphs; the ink bbox may get padded to monospace -- only compare codepoints/bitmap content clipped against the BDF
     pcf = parse_pcf(FIX / "mini-t.pcf", "mini")
     assert [g.cp for g in pcf.glyphs] == [65, 27704]
 

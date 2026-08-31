@@ -1,4 +1,4 @@
-"""OTB(OpenType Bitmap,EBDT/EBLC)→ ParsedFont。"""
+"""OTB (OpenType Bitmap, EBDT/EBLC) → ParsedFont."""
 
 from __future__ import annotations
 
@@ -8,25 +8,25 @@ from opf.model import Glyph, ParsedFont, row_bytes
 
 
 def convert_otb(path: Path, family_slug: str) -> list[tuple[str, ParsedFont]]:
-    """每个 strike 一个 (后缀, ParsedFont),后缀如 "12px"。"""
+    """One (suffix, ParsedFont) per strike, suffix like "12px"."""
     from fontTools.ttLib import TTFont
 
     font = TTFont(path)
     cmap = font.getBestCmap()
     if cmap is None:
-        # 老 CJK 字体常见:(3,0) Symbol 声明的伪装 Unicode 表,直接取用
+        # common in old CJK fonts: a (3,0) Symbol table masquerading as a Unicode table, use it directly
         for t in font["cmap"].tables:
             sub = getattr(t, "cmap", None)
             if sub:
                 cmap = dict(sub)
                 break
         if cmap and min(cmap) >= 0xF000 and max(cmap) <= 0xF0FF:
-            cmap = {cp - 0xF000: g for cp, g in cmap.items()}  # 真 Symbol 表平移
+            cmap = {cp - 0xF000: g for cp, g in cmap.items()}  # a genuine Symbol table, shift it back
     if not cmap:
         raise ValueError(f"{path}: no usable cmap")
     name_to_cp: dict[str, int] = {}
     for cp, gname in cmap.items():
-        # 一名多码位时取最小码位,其余码位共享字形
+        # when one glyph name maps to multiple code points, keep the lowest and let the rest share the glyph
         if gname not in name_to_cp or cp < name_to_cp[gname]:
             name_to_cp[gname] = cp
 
@@ -67,7 +67,7 @@ def convert_otb(path: Path, family_slug: str) -> list[tuple[str, ParsedFont]]:
             continue
         asc = int(bst.hori.ascender)
         desc = -int(bst.hori.descender)
-        # 个别 OTB 的 strike ascender 异常(如 wqy 12ppem 报 16):按字形实测回退
+        # some OTB strikes report a bogus ascender (e.g. wqy 12ppem reports 16): fall back to measuring the actual glyphs
         max_top = max(g.bby + g.bbh for g in glyphs.values())
         max_bottom = max(-g.bby for g in glyphs.values())
         if asc + desc > ppem * 1.4 or asc < max_top - 1:

@@ -1,4 +1,4 @@
-/** 管线产物的 zod 模型（契约 C5/C6）——跨语言契约的 TS 侧权威。 */
+/** zod models for pipeline output (contract C5/C6) — the TS-side authority for the cross-language contract. */
 
 import { z } from 'zod';
 
@@ -16,7 +16,7 @@ export const VariantSchema = z.object({
   weight: z.string(),
   spacing: z.string(),
   width: z.string().default('normal'),
-  /** 上游文档标注的推荐显示尺寸（px）；0 表示上游未说明 */
+  /** Recommended display size (px) as noted in upstream docs; 0 means upstream doesn't specify */
   displaySize: z.number().default(0),
   script: z.string().nullable(),
   glyphs: z.number().int(),
@@ -40,7 +40,7 @@ export const FamilyIndexSchema = z.object({
   glyphCount: z.number().int(),
   hanInk: z.record(z.string(), z.array(z.number().int()).length(2)).nullable(),
   inkHeight: z.number().int(),
-  /** 逐变体的墨迹高度（去重升序）；筛选按「任一变体落在区间」判定 */
+  /** Per-variant ink heights (deduped, ascending); the filter matches when any variant falls in the range */
   inkHeights: z.array(z.number().int()),
   badges: z.array(z.string()),
   coverageSummary: z.record(z.string(), z.number()),
@@ -61,8 +61,8 @@ export const CharsetMetaSchema = z.object({
   total: z.number().int(),
 });
 
-/** 站点数据契约版本，与 pipeline/opf/__init__.py 的 DATA_SCHEMA_VERSION 同步。
- *  index.json 的形状一变就双侧 +1；不同步会被 schema.test.ts 拦住。 */
+/** Site data contract version, kept in sync with DATA_SCHEMA_VERSION in pipeline/opf/__init__.py.
+ *  Bump both sides by 1 whenever index.json's shape changes; going out of sync is caught by schema.test.ts. */
 export const DATA_SCHEMA_VERSION = 2;
 
 export const IndexSchema = z.object({

@@ -63,7 +63,7 @@ def test_load_full_toml(tmp_path):
 
 
 def test_legacy_singular_author_still_loads(tmp_path):
-    # 旧写法 author = "..." 仍要能读，免得漏改一个文件就把作者悄悄清空
+    # the legacy singular author = "..." form must still load, so a missed file doesn't silently drop its author
     d = tmp_path / "old"
     d.mkdir()
     (d / "family.toml").write_text('name = "Old"\nauthor = "TakWolf"\n',
@@ -80,7 +80,7 @@ def test_authors_default_to_empty(tmp_path):
 
 
 def test_aliases_default_to_empty(tmp_path):
-    # 绝大多数家族没有别名，缺这个键不该出错
+    # most families have no aliases; a missing key should not be an error
     d = tmp_path / "plain"
     d.mkdir()
     (d / "family.toml").write_text('name = "Plain"\n', encoding="utf-8")
@@ -95,7 +95,7 @@ def test_missing_toml_writes_stub(tmp_path):
     assert m.name == "Cool Font"
     stub = (d / "family.toml").read_text(encoding="utf-8")
     assert "TODO" in stub
-    m2 = load_family_meta(d)  # stub 可被重新读取
+    m2 = load_family_meta(d)  # the stub can be read back
     assert m2.name == "Cool Font"
 
 
@@ -113,7 +113,7 @@ def test_resolve_variant_from_props_and_filename(tmp_path):
     assert v.weight == "regular"
     assert v.spacing == "monospaced"
     assert v.script_subset == "zh-Hans"
-    assert v.display == "10px 等宽 简体"  # override 生效
+    assert v.display == "10px 等宽 简体"  # override takes effect
 
 
 def test_resolve_bold_from_filename_suffix(tmp_path):

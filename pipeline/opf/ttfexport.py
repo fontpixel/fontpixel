@@ -1,8 +1,10 @@
-"""把同一字体的多个点阵尺寸打包成单个位图 TTF(EBDT/EBLC strike)。
+"""Pack multiple bitmap sizes of the same font into a single bitmap TTF (EBDT/EBLC strikes).
 
-产物只含位图,不含矢量轮廓:glyf 里每个字形都是空轮廓,真正的形状全在
-EBDT 的各 ppem strike 里。这样一个文件就覆盖了该字体的全部尺寸,
-支持位图 strike 的渲染器(FreeType、macOS、多数 Linux 桌面)可直接使用。
+Output holds only bitmaps, no vector outlines: every glyph in glyf is an
+empty outline, and the actual shapes live entirely in EBDT's per-ppem
+strikes. This way one file covers every size of the font, and any
+renderer that supports bitmap strikes (FreeType, macOS, most Linux
+desktops) can use it directly.
 """
 
 from __future__ import annotations
@@ -12,19 +14,21 @@ from pathlib import Path
 from opf.model import ParsedFont, row_bytes
 
 UPEM = 1000
-# 固定的 head 时间戳（2020-01-01，以 1904 纪元计秒）。同样的输入必须产出
-# 同样的字节，否则每次构建都会让 CI 把全部 TTF 重新上传一遍。
+# Fixed head timestamp (2020-01-01, seconds since the 1904 epoch). The
+# same input must produce the same bytes, or every build would have CI
+# re-upload every TTF all over again.
 FIXED_TIMESTAMP = 3660681600
-MAX_GLYPHS = 65535  # TTF 字形数上限（含 .notdef）
+MAX_GLYPHS = 65535  # TTF glyph count limit (including .notdef)
 
 
 def name_records(family: str, style: str, copyright_: str,
                  version: str = "1.000") -> dict[str, str]:
-    """TTF name 表的内容。
+    """Contents of the TTF name table.
 
-    三处共用同一份定义：位图导出、矢量导出，以及命中缓存后「只刷新元数据」
-    的那条路径（downloads.refresh_downloads_metadata）。分成几份写的话，
-    快路径改出来的字节就会和全量重建对不上。
+    Shared by three call sites: bitmap export, vector export, and the
+    cache-hit "metadata refresh only" path
+    (downloads.refresh_downloads_metadata). Writing it in more than one
+    place would make the fast path's output bytes diverge from a full rebuild.
     """
     return {
         "familyName": family,
@@ -47,7 +51,7 @@ def _clamp8(v: int) -> int:
 
 def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
               out: Path, *, copyright_: str = "", version: str = "1.000") -> dict:
-    """fonts:同一字体的不同尺寸(每个 ParsedFont 一个 strike)。"""
+    """fonts: different sizes of the same font (one ParsedFont per strike)."""
     from fontTools.fontBuilder import FontBuilder
     from fontTools.ttLib import newTable
     from fontTools.ttLib.tables import E_B_D_T_, E_B_L_C_
@@ -56,7 +60,7 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
     if not fonts:
         raise ValueError("没有可导出的字体")
     fonts = sorted(fonts, key=lambda f: f.pixel_size)
-    ref = fonts[-1]  # 以最大尺寸作为矢量度量的参照
+    ref = fonts[-1]  # use the largest size as the reference for vector metrics
 
     cps = sorted({g.cp for f in fonts for g in f.glyphs})
     if not cps:
@@ -69,7 +73,7 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
     fb = FontBuilder(UPEM, isTTF=True)
     fb.setupGlyphOrder(order)
     fb.setupCharacterMap({cp: glyph_name(cp) for cp in cps})
-    # 空轮廓:形状全部来自位图 strike
+    # Empty outlines: shapes come entirely from the bitmap strikes
     from fontTools.pens.ttGlyphPen import TTGlyphPen
 
     empty = TTGlyphPen(None).glyph()
@@ -80,7 +84,7 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
     metrics = {".notdef": (int(round(ref.pixel_size * scale / 2)), 0)}
     for cp in cps:
         g = ref_by_cp.get(cp)
-        if g is None:  # 该尺寸缺字时退回其它尺寸按比例换算
+        if g is None:  # if missing at this size, fall back to another size and scale proportionally
             for f in reversed(fonts):
                 other = next((x for x in f.glyphs if x.cp == cp), None)
                 if other is not None:
@@ -99,7 +103,7 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
     fb.setupNameTable(name_records(family_name, style_name, copyright_, version))
     fb.setupOS2(sTypoAscender=asc, sTypoDescender=desc, usWinAscent=asc,
                 usWinDescent=abs(desc))
-    # 位图字体不需要字形名；post 2.0 用 16 位索引存名字，6.5 万字形会溢出
+    # Bitmap fonts don't need glyph names; post 2.0 stores names via a 16-bit index, which overflows at 65K glyphs
     fb.setupPost(keepGlyphNames=False, isFixedPitch=0)
 
     font = fb.font
@@ -154,7 +158,7 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
         bst.ppemX = f.pixel_size
         bst.ppemY = f.pixel_size
         bst.bitDepth = 1
-        bst.flags = 1  # 横排
+        bst.flags = 1  # horizontal layout
         strike.bitmapSizeTable = bst
 
         ist = E_B_L_C_.eblc_index_sub_table_1(b"", font)

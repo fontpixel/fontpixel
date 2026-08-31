@@ -7,10 +7,10 @@ import { ko } from './ko';
 import { fr } from './fr';
 import { toHant, toHantDeep } from './hant';
 
-/** 站点支持的语言，顺序即语言菜单的顺序。 */
+/** Languages the site supports, in the order the language menu shows them. */
 export const LANGS: Lang[] = ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'fr'];
 
-/** 语言的自称，菜单里按各自语言显示。 */
+/** Each language's name for itself, shown in the menu in its own script. */
 export const LANG_NAMES: Record<Lang, string> = {
   zh: '简体中文',
   'zh-Hant': '繁體中文',
@@ -20,7 +20,7 @@ export const LANG_NAMES: Record<Lang, string> = {
   fr: 'Français',
 };
 
-/** hreflang 用的 BCP 47 标签。 */
+/** BCP 47 tags used for hreflang. */
 export const LANG_TAGS: Record<Lang, string> = {
   zh: 'zh-Hans',
   'zh-Hant': 'zh-Hant',
@@ -30,7 +30,7 @@ export const LANG_TAGS: Record<Lang, string> = {
   fr: 'fr',
 };
 
-// 繁体不是翻译而是转换，构建期由简体整份转出
+// Traditional Chinese isn't translated, it's converted — the whole set is derived from Simplified at build time
 let hant: UIStrings | null = null;
 
 export function t(lang: string): UIStrings {
@@ -38,7 +38,7 @@ export function t(lang: string): UIStrings {
     case 'zh':
       return zh;
     case 'zh-Hant':
-      // 站名是定名不是转换产物：繁体版取 sitenames.json 的 zh-Hant 键
+      // The site name is a fixed value, not a conversion output: the Traditional version comes from the zh-Hant key in sitenames.json
       return (hant ??= { ...toHantDeep(zh), siteName: sitenames['zh-Hant'] });
     case 'ja':
       return ja;
@@ -51,10 +51,10 @@ export function t(lang: string): UIStrings {
   }
 }
 
-/** 各语言取字体名的顺序；找不到就往后退，最终落到 family.name。 */
+/** Per-language priority order for picking a font name; falls back down the list, ending at family.name. */
 const NAME_FALLBACK: Record<Lang, string[]> = {
   en: ['en'],
-  // 中文界面退到日文名而不是拉丁名：東雲ゴシック 这类汉字名，中文读者认得
+  // Chinese UI falls back to the Japanese name rather than the Latin one: Han names like 東雲ゴシック are recognizable to Chinese readers
   zh: ['zh-Hans', 'ja'],
   'zh-Hant': ['zh-Hant', 'zh-Hans', 'ja'],
   ja: ['ja', 'en'],
@@ -63,10 +63,12 @@ const NAME_FALLBACK: Record<Lang, string[]> = {
 };
 
 /**
- * 按界面语言取字体名。
+ * Pick a font name for the current UI language.
  *
- * names 里只有作者确实起过名字的语言；缺 zh-Hant 时由简体经 OpenCC 转出，
- * 和站内其它中文一个待遇。全都没有就用 fallback（family.name，通常是拉丁名）。
+ * `names` only has entries for languages the author actually named the font in;
+ * a missing zh-Hant is derived from Simplified via OpenCC, same as any other
+ * Chinese text on the site. If nothing matches, fall back to `fallback`
+ * (family.name, usually the Latin name).
  */
 export function pickName(
   lang: string,
@@ -76,17 +78,19 @@ export function pickName(
   for (const key of NAME_FALLBACK[lang as Lang] ?? ['en']) {
     const v = names[key];
     if (!v) continue;
-    // 繁体缺省时从简体转，但日文名不能转——那是日语，不是中文
+    // Fall back to converting Simplified when Traditional is missing, but never convert Japanese names — that's Japanese, not Chinese
     return lang === 'zh-Hant' && key === 'zh-Hans' ? toHant(v) : v;
   }
   return fallback;
 }
 
 /**
- * 取一段随语言而变的文本。
+ * Get a piece of text that varies by language.
  *
- * 字体元数据只有中英两份：繁体由简体转换得来，其余语言回落英文——这是
- * 收录之初就定下的规则，新增语言不必回头补 130 个家族的简介。
+ * Font metadata only exists in Chinese and English: Traditional is derived
+ * from Simplified, and every other language falls back to English — a rule
+ * set from the start of the collection so that adding a new language never
+ * requires going back and writing blurbs for 130 families.
  */
 export function pickText(lang: string, zhText: string, enText: string): string {
   if (lang === 'zh') return zhText || enText;
@@ -95,10 +99,12 @@ export function pickText(lang: string, zhText: string, enText: string): string {
 }
 
 /**
- * 「主要备选语言」：中文系去英文，其余去简体中文。
+ * The "primary alternate language": Chinese variants go to English, everything
+ * else goes to Simplified Chinese.
  *
- * 六种语言用菜单呈现，没有唯一的「另一种语言」了；这个函数只用来在菜单里
- * 标出那个最可能被点的选项（也是端到端测试的落点）。
+ * With six languages shown in a menu, there's no longer a single "other
+ * language"; this function is only used to highlight the option most likely
+ * to be clicked (and is also what end-to-end tests target).
  */
 export function otherLang(lang: string): Lang {
   return lang === 'zh' || lang === 'zh-Hant' ? 'en' : 'zh';

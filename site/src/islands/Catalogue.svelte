@@ -41,12 +41,12 @@
     state = decodeState(new URLSearchParams(location.search));
     document.querySelector('[data-ssr-grid]')?.remove();
     if (filtersEl && matchMedia('(max-width: 900px)').matches) {
-      filtersEl.open = false; // 移动端默认收起筛选
+      filtersEl.open = false; // Collapse filters by default on mobile
     }
     mounted = true;
   });
 
-  // Task 18 接线：chars 查字懒加载覆盖区间索引
+  // Task 18 wiring: lazy-load the coverage interval index for `chars` glyph lookup
   $effect(() => {
     if (!state.chars.trim() || charLookup) return;
     import('../lib/intervals')
@@ -168,8 +168,8 @@
   }
   .cat__body {
     display: grid;
-    /* minmax(0,…) 解除 grid 子项 min-width:auto 的默认下限，
-       否则卡片内容比轨道宽时会把整页顶破 */
+    /* minmax(0,…) lifts the default min-width:auto floor on grid children,
+       otherwise card content wider than its track would blow out the whole page */
     grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
     gap: var(--s6);
     align-items: start;
@@ -181,7 +181,7 @@
   }
   .cat__grid {
     display: grid;
-    /* min() 让下限跟着视口走：300px 屏上 19rem(304px) 会直接把网格撑破 */
+    /* min() lets the floor track the viewport: at 300px, a fixed 19rem (304px) would blow out the grid */
     grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
     gap: var(--s4);
   }

@@ -22,8 +22,8 @@ file = "README"
 name_en = "MIT License (X11-style)"
 note_en = "A 12pt/100dpi proportional-width font covering multiple Unicode scripts (Latin, Cyrillic, Greek, Arabic, Devanagari, and others), influenced by Donald Knuth's Computer Modern. The README embeds the full license text (Copyright 2000 Computing Research Lab, New Mexico State University, MIT/X11-style wording). cu12 is the main font; cu-alt12, cu-arabic12, cu-lig12, and cu-pua12 are alternate-glyph, Arabic, ligature, and PUA extension files split from the same design rather than separate fonts. The directory also includes an ORIGIN file noting that the local files were actually extracted from the XFree86 4.0.2 source package."
 
-# 上游另发四个附属字体（替代字形、连字、私用区、阿拉伯字形），各只有
-# 几十到一百多个字形，单列会显示成几个残缺字体。合并进主文件，重复码位
-# 以主文件为准，只补进它没有的那123个。
+# Upstream also ships four auxiliary fonts (alternate glyphs, ligatures, private-use area, Arabic glyphs), each with only
+# a few dozen to just over a hundred glyphs; listed separately they'd show up as several incomplete fonts. Merged into the main file, with duplicate
+# codepoints deferring to the main file -- only the 123 codepoints it lacks are added in.
 [merge]
 "cu12.bdf" = ["cu-alt12.bdf", "cu-arabic12.bdf", "cu-lig12.bdf", "cu-pua12.bdf"]

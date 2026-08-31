@@ -13,7 +13,8 @@ const lang = Astro.params.lang as Lang;
 const s = t(lang);
 const index = loadIndex();
 const families = index.families;
-// 首屏 HTML 体积控制：仅前 12 张卡片内联预渲染 SVG，其余静态卡只留文字
+// Control initial HTML payload: only the first 12 cards get inlined pre-rendered SVG,
+// the rest of the static cards keep only text
 const previews = new Map(
   families.slice(0, 12).map((f) => {
     try {
@@ -44,7 +45,7 @@ const previews = new Map(
     charsetNames={index.charsetNames}
   />
 
-  <!-- 无 JS 首屏与 SEO：岛屿水合后移除 -->
+  <!-- No-JS initial paint & SEO: removed once the island hydrates -->
   <section class="ssr" data-ssr-grid data-testid="catalogue">
     <div class="grid">
       {

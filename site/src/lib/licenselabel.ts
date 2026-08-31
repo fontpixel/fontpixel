@@ -1,7 +1,8 @@
-/** 许可证的短标签：筛选面板上的 chip 用，中英文一致。
+/** Short license labels, used for chips in the filter panel; same in Chinese and English.
  *
- * 完整名称（已 i18n）在每个字体详情页的 License 一栏里，chip 只需要一个
- * 认得出的通用缩写。SPDX id 本身多半已经够短，只有少数需要修饰。
+ * The full (i18n'd) name lives in the License field on each font's detail
+ * page — the chip just needs a recognizable common abbreviation. Most SPDX
+ * ids are already short enough as-is; only a few need adjusting.
  */
 const OVERRIDES: Record<string, string> = {
   'CC-BY-SA-4.0': 'CC BY-SA 4.0',
@@ -14,7 +15,7 @@ const OVERRIDES: Record<string, string> = {
 export function licenseShortLabel(spdx: string): string {
   const hit = OVERRIDES[spdx];
   if (hit) return hit;
-  // 未收录的 LicenseRef-* 至少去掉前缀，别把内部 id 直接示人
+  // For LicenseRef-* not in the map, at least strip the prefix so we don't show the raw internal id to the user
   return spdx.startsWith('LicenseRef-')
     ? spdx.slice('LicenseRef-'.length)
     : spdx;

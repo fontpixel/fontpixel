@@ -7,7 +7,7 @@ export default defineConfig({
   timeout: 30_000,
   retries: process.env.CI ? 1 : 0,
   use: {
-    // 尾斜杠必须保留:测试里用不带前导斜杠的相对路径(如 'zh/')拼接
+    // trailing slash must be kept: tests concatenate relative paths without a leading slash (e.g. 'zh/')
     baseURL: `http://localhost:${PORT}/`,
   },
   webServer: {

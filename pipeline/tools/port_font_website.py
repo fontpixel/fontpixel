@@ -1,4 +1,4 @@
-"""搬迁 bdfparser_js / bdfparser_py（含 typedoc api 子树），围栏感知。"""
+"""Port bdfparser_js / bdfparser_py (including the typedoc api subtree), fence-aware."""
 import re
 from pathlib import Path
 
@@ -30,7 +30,7 @@ def fmval(fm, key):
     return m.group(1).strip().strip("'\"") if m else None
 
 def outside_fences(body, fn):
-    """只对代码围栏之外的行应用 fn（逐行）。"""
+    """Apply fn only to lines outside code fences (line by line)."""
     out, fence = [], False
     for line in body.split("\n"):
         if line.lstrip().startswith("```"):
@@ -41,10 +41,11 @@ def outside_fences(body, fn):
     return "\n".join(out)
 
 def fix_rel_links(line, is_index, depth=1, is_md=False):
-    """相对文档链接 → 目录式 URL（非 index 页要多退一级）。
+    """Relative doc links -> directory-style URLs (non-index pages need one extra level up).
 
-    depth：当前页面 URL 在 /{lang}/ 之下的目录层数（index 页为 1）。
-    跨区块链接（../bdf_spec 等）一律重写成从页面 URL 回退 depth 层再进目标区块。"""
+    depth: how many directory levels the current page URL sits below /{lang}/ (index page is 1).
+    Cross-section links (../bdf_spec etc.) are always rewritten to go up `depth` levels from the
+    page URL and back into the target section."""
     SECTION_MAP = {"bdf_spec": "bdf-spec", "bdfparser_js": "bdfparser-js", "bdfparser_py": "bdfparser-py", "font_template": "font-template"}
     ASSET_EXT = re.compile(r"\.(png|jpe?g|svg|gif|webp|bdf|zip|pdf|ttf|woff2?)$", re.I)
     def rep(m):
@@ -59,14 +60,14 @@ def fix_rel_links(line, is_index, depth=1, is_md=False):
             return m.group(0)
         suffix = f"#{anchor}" if anchor else ""
         if path.startswith("."):
-            # typedoc 生成的 .md 按文件相对写链接；页面 URL 比文件多一层目录
+            # typedoc-generated .md files write links relative to the file; the page URL has one more directory level than the file
             if is_md and not is_index:
                 path = "../" + path
             for old_slug, new_slug in SECTION_MAP.items():
                 path = re.sub(rf"(^|/){old_slug}(?=/|$)", rf"\g<1>{new_slug}", path)
             if not path.endswith("/"):
                 path += "/"
-            # 跨区块：原文按文件相对写（../bdf_spec/…），改成从页面 URL 回退 depth 层
+            # Cross-section: source writes links file-relative (../bdf_spec/...), rewrite to go up depth levels from the page URL
             m2 = re.match(r"^(\.\./)+((bdf-spec|bdfparser-js|bdfparser-py|font-template)/.*)$", path)
             if m2:
                 path = "../" * depth + m2.group(2)
@@ -77,7 +78,7 @@ def fix_rel_links(line, is_index, depth=1, is_md=False):
 
 
 def _sub_outside_inline_code(seg, bdf_rep):
-    """对段落做 <BDF func={…}/> 替换，但跳过行内反引号代码。"""
+    """Apply the <BDF func={...}/> substitution to a segment, but skip inline backtick code."""
     parts = re.split(r"(`[^`\n]*`)", seg)
     return "".join(
         part if i % 2 else re.sub(r"<BDF\s*([^>]*?)func=\{(.*?)\}\s*/>", bdf_rep, part, flags=re.S)
@@ -95,16 +96,16 @@ def convert(text, order, entry_key, is_index, is_md):
             lines_out.append(line)
             continue
         if not fence and re.match(r"^import .+ from '(@site|@theme|@docusaurus)", line):
-            continue  # 原站组件导入全部剥掉，按用法重加
+            continue  # strip all original-site component imports; re-add them based on usage
         lines_out.append(line)
     body = "\n".join(lines_out)
 
-    # typedoc .md 的正文重复 H1（原站用 hide_title 藏掉），这里由布局出标题
+    # typedoc .md bodies repeat the H1 (the original site hid it via hide_title); here the layout renders the title
     if is_md:
         body = re.sub(r"^\s*# .+\n", "", body, count=1)
 
-    # 活演示：抽出 func 与属性进注册表，MDX 只留 <BDF demo="…" />
-    # 必须按围栏分块——代码示例里的 <BDF> 是给读者看的原文，不能替换
+    # Live demos: extract func and props into the registry, MDX keeps only <BDF demo="..." />
+    # Must chunk by fence -- the <BDF> inside code samples is literal text shown to the reader and must not be substituted
     page_tag = entry_key.replace("bdfparser-", "").replace("/", "-")
     counter = [0]
     def bdf_rep(m):
@@ -123,7 +124,7 @@ def convert(text, order, entry_key, is_index, is_md):
         seg if in_fence else _sub_outside_inline_code(seg, bdf_rep)
         for in_fence, seg in chunks)
 
-    # MDX1 的转义泛型 <string\> 在 MDX3 里是非法 JSX，改成 HTML 实体；由内向外迭代处理嵌套
+    # MDX1's escaped generics <string\> are illegal JSX in MDX3; convert to HTML entities, iterating inside-out to handle nesting
     def _fix_generics(line):
         prev = None
         while prev != line:
@@ -131,19 +132,19 @@ def convert(text, order, entry_key, is_index, is_md):
             line = re.sub(r"<(?=[A-Za-z])([^<>]*?)\\>", r"&lt;\1&gt;", line)
         return line
     body = outside_fences(body, _fix_generics)
-    # MDX3 要求 <details> 独占一行成为块级 JSX，内联开标签会报未闭合
+    # MDX3 requires <details> to be alone on its line to become block-level JSX; an inline opening tag reports unclosed
     body = outside_fences(body, lambda l: l.replace("<details><summary>", "<details>\n<summary>"))
     slug = re.sub(r"\.(md|mdx)$", "", entry_key)
     slug = re.sub(r"(^|/)index$", "", slug).rstrip("/")
-    depth = slug.count("/") + 1  # URL 在 /{lang}/ 之下的目录层数：section/ → 1，section/page/ → 2，section/api/a/b/ → 4
+    depth = slug.count("/") + 1  # directory levels the URL sits below /{lang}/: section/ -> 1, section/page/ -> 2, section/api/a/b/ -> 4
     body = outside_fences(body, lambda l: fix_rel_links(l, is_index, depth, is_md))
-    # useBaseUrl('x') → BASE_URL 拼接
+    # useBaseUrl('x') -> BASE_URL concatenation
     body = body.replace("useBaseUrl('", "import.meta.env.BASE_URL + ('")
     body = re.sub(r"import\.meta\.env\.BASE_URL \+ \('([^']+)'\)",
                   r"import.meta.env.BASE_URL + '\1'", body)
 
-    if not is_md:  # .md 不支持组件，也不会用到
-        needed = [imp for probe, imp in IMPORTS.items() if re.search(rf"{re.escape(probe)}[\s>]", body)]  # 行内组件（如 Tooltip）也要认
+    if not is_md:  # .md doesn't support components and won't use them
+        needed = [imp for probe, imp in IMPORTS.items() if re.search(rf"{re.escape(probe)}[\s>]", body)]  # inline components (e.g. Tooltip) must be recognized too
         if needed:
             body = "\n".join(needed) + "\n\n" + body.lstrip("\n")
 
@@ -164,7 +165,7 @@ for section, (src_dir, pages) in MAIN.items():
         dp.write_text(convert(sp.read_text(encoding="utf-8"), order, key, page == "index", False), encoding="utf-8")
         print(f"  {key}")
 
-# typedoc api 子树（仅 js 有）
+# typedoc api subtree (js only)
 api_files = sorted((SRC / "bdfparser_js" / "api").rglob("*.md"))
 for n, sp in enumerate(api_files):
     rel = sp.relative_to(SRC / "bdfparser_js")           # api/classes/font.md
@@ -173,14 +174,14 @@ for n, sp in enumerate(api_files):
     is_index = sp.name == "index.md"
     order = 10 + n
     text = convert(sp.read_text(encoding="utf-8"), order, f"bdfparser-js/{rel}", is_index, True)
-    # 侧栏里给 API 项加前缀，便于与正文区分
+    # prefix API entries in the sidebar to distinguish them from body pages
     text = re.sub(r'^label: "(.*)"$', lambda m: f'label: "API · {m.group(1)}"', text, count=1, flags=re.M)
     dp.write_text(text, encoding="utf-8")
     print(f"  bdfparser-js/{rel}")
 print("done")
 
 
-# ---- 生成活演示注册表 ----
+# ---- generate the live-demo registry ----
 def parse_props(txt):
     out = {}
     m = re.search(r"fontfile='([^']+)'", txt)

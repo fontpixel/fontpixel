@@ -16,7 +16,7 @@ const w = ps * cell + pad * 2;
 const h = ps * cell + pad * 2;
 const box = (bw: number, bh: number) => {
   const x = pad + Math.floor(((ps - bw) / 2) * cell);
-  const y = pad + Math.floor((ps - bh) * cell); // 底对齐示意
+  const y = pad + Math.floor((ps - bh) * cell); // bottom-align illustration
   return { x, y, w: bw * cell, h: bh * cell };
 };
 const han = hanInk ? box(hanInk[0], hanInk[1]) : null;

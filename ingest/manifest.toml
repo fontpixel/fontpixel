@@ -1,8 +1,8 @@
-# 导入清单：源路径 → fonts/ 家族。运行：
+# Import manifest: source path → fonts/ family. Run:
 #   .venv/bin/python -m opf.ingest.run --manifest ingest/manifest.toml \
 #     --src ../pixel-font-collection-fonts --dest fonts --report docs/import-report.md
 #
-# 试点五家族(Task 20)；全量清单在 Task 22 分批补齐。
+# Pilot five families (Task 20); the full manifest is filled in incrementally in Task 22.
 
 [[family]]
 slug = "galmuri"
@@ -59,14 +59,14 @@ provenance_url = "https://github.com/carrothu-cn/wqy-bitmapfont-otb"
 form = "mingcho"
 vibes = ["classic"]
 
-# ==================== 合并片段:manifest-frag-chinese.toml ====================
-# CJK-bitmap-fonts-open-source-2026-08-18/Chinese/ 导入清单片段。
-# carrothu-cn--wqy-bitmapfont-otb 已收录(wqy-bitmap-song),本片段不再处理。
-# 其余 21 个仓库逐一核查如下:16 个 family、6 个 todo。
+# ==================== Merged fragment: manifest-frag-chinese.toml ====================
+# Import manifest fragment for CJK-bitmap-fonts-open-source-2026-08-18/Chinese/.
+# carrothu-cn--wqy-bitmapfont-otb is already included (as wqy-bitmap-song); this fragment no longer covers it.
+# The remaining 21 repos are reviewed one by one below: 16 families, 6 todos.
 
 # ============================================================
-# yzdnn 系列 —— 仓库内 BDF(Sources/)+ OFL.txt,README 给出官方中文名。
-# 均基于门真奈武／KH 点阵字体系列等日文点阵字体二次创作、增补简繁汉字。
+# yzdnn series -- BDF in the repo (Sources/) + OFL.txt; the README gives the official Chinese name.
+# All are derivative works based on Japanese bitmap font series such as Kadoma Nau / KH dot fonts, with Simplified/Traditional Chinese characters added.
 # ============================================================
 
 [[family]]
@@ -82,8 +82,8 @@ repository = "https://github.com/yzdnn/BaDingShiWeiTi-16"
 provenance_url = "https://github.com/yzdnn/BaDingShiWeiTi-16/releases (v1.1.0)"
 form = "decorative"
 vibes = ["decorative", "retro-game"]
-# 注：README 称原字体风格为「隶书体」,作者依汉字部分风格改称「饰尾体」;
-# 且 README 中「SC／TC 后缀」说明为跨仓库复制粘贴残留,本仓库实际只有单一 BDF。
+# Note: the README calls the original font style "Lishu (clerical script)"; the author renamed it "ShiWeiTi" based on the Han-character portion's style;
+# and the README's mention of "SC/TC suffix" is leftover copy-paste from another repo -- this repo actually has only a single BDF.
 
 [[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--ChangBanDianSong-12"
@@ -120,7 +120,7 @@ repository = "https://github.com/yzdnn/RenOuFangSong-16"
 provenance_url = "https://github.com/yzdnn/RenOuFangSong-16/releases (v1.1.1)"
 form = "fangsong"
 vibes = ["handwriting", "decorative"]
-# 注：仓库另附「OFL(参考用中译)」文件,明确标注仅供参考,故只收录正式 OFL.txt。
+# Note: the repo also ships an "OFL (Chinese translation for reference)" file explicitly marked as reference-only, so only the official OFL.txt is included.
 
 [[family]]
 slug = "xiu-zhen-xiang-su-ti"
@@ -135,8 +135,8 @@ repository = "https://github.com/yzdnn/XiuZhenXiangSuTi"
 provenance_url = "https://github.com/yzdnn/XiuZhenXiangSuTi/releases (v1.0.0)"
 form = "terminal"
 vibes = ["terminal-hardcore"]
-# 注：6x8(含字间距)规格,README 自称「大概是市面上尺寸最小的中文点阵字体」,
-# form 定为 terminal 属推断,拿不准。
+# Note: 6x8 spec (including letter-spacing); the README claims it's "probably the smallest Chinese bitmap font on the market",
+# form is set to terminal as a guess -- not confident.
 
 [[family]]
 slug = "zheng-ge-dian-hei-16"
@@ -153,7 +153,7 @@ form = "gothic"
 vibes = ["retro-game"]
 
 # ============================================================
-# Astro-2539 / Z Labs 系列 —— kbitx 源(convert="kbitx"),部分另有 ttf/zip。
+# Astro-2539 / Z Labs series -- kbitx source (convert="kbitx"), some also have ttf/zip.
 # ============================================================
 
 [[family]]
@@ -170,9 +170,9 @@ repository = "https://github.com/Astro-2539/ZLabs-Pixel-12px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-Pixel-12px/releases (Build_20260519)"
 form = "gothic"
 vibes = ["retro-game"]
-# 注：本仓库原名「Z Labs Bitmap 12px」,即 ZLabs-Bitmap-HC／ZLabs-Bitmap-JP 两仓库
-# README 中所指的「主仓库」,现已改名为「Z Labs Pixel 12px」并统一维护 CN／HC／JP 三种
-# 字形变体(另有 HC_fallback／JP_fallback 混合回退版本,内容为 CN 字形填充缺字,予以跳过)。
+# Note: this repo was originally named "Z Labs Bitmap 12px" -- the "main repo"
+# referred to in the ZLabs-Bitmap-HC / ZLabs-Bitmap-JP READMEs. It has since been
+# renamed "Z Labs Pixel 12px" and now maintains all three CN/HC/JP glyph variants together (there are also HC_fallback/JP_fallback mixed-fallback versions that fill missing glyphs with CN glyphs -- these are skipped).
 
 [[family]]
 slug = "zlabs-diamondpix-16px"
@@ -188,9 +188,9 @@ repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px/releases (Build_20260309)"
 form = "gothic"
 vibes = ["retro-game"]
-# 注：README 明确标注「仍处于早期开发阶段,缺失大量汉字,尚未达到可用水平」
-# (目前仅约 1064 字),收录时请留意其完成度。仓库同时含 MD／MS 两个粗细的发布 ttf,
-# 但均无对应 kbitx 源,故只取有 kbitx 支持的 M(常规)字重。
+# Note: the README explicitly states it's "still in early development, missing a large number of Han characters, not yet usable"
+# (currently only ~1064 characters) -- keep its completeness in mind when using it. The repo also ships MD/MS weight release ttfs,
+# but neither has a corresponding kbitx source, so only the M (Regular) weight, which has kbitx support, is taken.
 
 [[family]]
 slug = "zlabs-geopix-16px"
@@ -206,9 +206,9 @@ repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px (data/ 目录,未见正式 README 说明或独立 release)"
 form = "gothic"
 vibes = ["retro-game"]
-# 注：与 DiamondPix 同仓库但 README 全文未提及,信息完全来自 kbitx 内嵌 name 表
-# (字体名「Z Labs GeoPix 16px M SC」、作者列表),无发布版 ttf,完成度与定位均不确定,
-# 是本次核查中把握最小的一条,建议人工二次确认是否为可用的独立作品。
+# Note: shares a repo with DiamondPix but is never mentioned in the README; all information comes from the kbitx-embedded name table
+# (font name "Z Labs GeoPix 16px M SC", author list). There is no release ttf, and both its completeness and status as a distinct font are uncertain --
+# this is the least-confident entry in this review; manual re-confirmation of whether it's a usable standalone work is recommended.
 
 [[family]]
 slug = "zlabs-roundpix-12px"
@@ -239,12 +239,12 @@ repository = "https://github.com/Astro-2539/ZLabs-RoundPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501)"
 form = "rounded"
 vibes = ["cute", "retro-game"]
-# 注：README 自称「仍处于开发与调整阶段,目前存在中宫不均匀、汉字部件不一致等问题」;
-# JP 变体 README 正文未正式介绍,但 data/ 目录与发布 ttf 均已提供,一并收录。
+# Note: the README describes it as "still in development and tuning, currently has issues like uneven character centering and inconsistent Han-character components";
+# the JP variant isn't formally introduced in its README body, but both the data/ directory and a release ttf are provided, so it's included too.
 
 # ============================================================
-# DWNfonts 系列 —— 均基于门真奈武(k8x12)或 hicc(マルミーニャ)的日文点阵字体
-# 二次创作为简中点阵字体;仓库根目录直接给出 kbitx 主源。
+# DWNfonts series -- all are derivative works turning Japanese bitmap fonts based on Kadoma Nau (k8x12) or hicc (Maru Minya)
+# into Simplified Chinese bitmap fonts; the repo root directly provides the primary kbitx source.
 # ============================================================
 
 [[family]]
@@ -261,8 +261,8 @@ repository = "https://github.com/DWNfonts/MuzaiPixel"
 provenance_url = "https://github.com/DWNfonts/MuzaiPixel/releases (2.0.20260705)"
 form = "gothic"
 vibes = ["retro-game"]
-# 注：曾用名 k8x12j。仓库同时发布 MZPXflat／MZPXorig 两种 ttf 变体,
-# 但只有一份 kbitx 主源,故按最高优先级只取 kbitx。form 为推断,拿不准。
+# Note: formerly named k8x12j. The repo publishes two ttf variants, MZPXflat/MZPXorig,
+# but there is only one primary kbitx source, so per the highest-priority rule only the kbitx is taken. form is a guess -- not confident.
 
 [[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/bluebat--cmexfonts"
@@ -281,11 +281,11 @@ repository = "https://github.com/carrothu-cn/wqy-unibit-otb"
 provenance_url = "https://github.com/carrothu-cn/wqy-unibit-otb/releases (v1.1)"
 form = "other"
 vibes = ["fallback"]
-# 注：与已收录的 wqy-bitmap-song(文泉驿点阵宋体)是文泉驿项目下的不同字体,
-# 覆盖近乎全部 Unicode BMP 的等宽点阵字,并非重复内容。README 极简,未给出官方中文名,故留空。
+# Note: this is a different font from the already-included wqy-bitmap-song (WenQuanYi Bitmap Song) within the WenQuanYi project --
+# a monospace bitmap font covering nearly the entire Unicode BMP, not duplicate content. The README is minimal and gives no official Chinese name, so it's left blank.
 
 # ============================================================
-# todo —— 无可用素材、与已收录家族重复、或已被作者废弃/合并
+# todo -- no usable material, duplicates an already-included family, or has been abandoned/merged by the author
 # ============================================================
 
 [[todo]]
@@ -312,9 +312,9 @@ reason = "README 明确说明以「文泉驿点阵宋体」为源本转制给 u8
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/wixette--dotted-chinese-fonts"
 reason = "字体是「文泉驿点阵宋体」经矢量化后再加工出的菱形／圆形／方形三种装饰点阵效果 OTF,已脱离原生像素网格、无法判定原生 ppem 供 convert=\"ttf\" 使用,且字形血缘与已收录的 wqy-bitmap-song 重复,故跳过,留待人工评估是否作为装饰字体单独收录。"
 
-# ==================== 合并片段:manifest-frag-jk.toml ====================
-# 导入清单片段:CJK-bitmap-fonts-open-source-2026-08-18/Japanese/ 与 /Korean/
-# 与 ingest/manifest.toml 同格式,供合并进主清单。
+# ==================== Merged fragment: manifest-frag-jk.toml ====================
+# Import manifest fragment for CJK-bitmap-fonts-open-source-2026-08-18/Japanese/ and /Korean/,
+# in the same format as ingest/manifest.toml, for merging into the main manifest.
 
 # ============================================================
 # Japanese/
@@ -345,10 +345,10 @@ provenance_url = "https://github.com/itouhiro/Tekuplus"
 form = "gothic"
 vibes = []
 
-# x5y8pxNegaClip/x5y8pxNegaTape/x8y12pxDenkiChip:仓库内 fonts/ttf/ 与
-# fonts/ttf_no-bitmap/ 下各有一个同名 ttf(区别仅是否内嵌位图,轮廓与原生格点
-# 相同),convert_take 按 basename 匹配会两个都命中;抽查过 upem/表结构,栅格化
-# 结果应等价,_place() 会因内容相同去重,不影响产物,仅记录以备复核。
+# x5y8pxNegaClip/x5y8pxNegaTape/x8y12pxDenkiChip: the repo has a same-named ttf under both fonts/ttf/ and
+# fonts/ttf_no-bitmap/ (the only difference is whether the bitmap is embedded; the outline and native grid
+# are identical). convert_take matching by basename hits both; spot-checked upem/table structure, the
+# rasterization result should be equivalent, and _place() will dedupe identical content, so it doesn't affect the output -- noted here for future review.
 [[family]]
 slug = "x5y8px-nega-clip"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x5y8pxNegaClip"
@@ -391,8 +391,8 @@ provenance_url = "https://github.com/hicchicc/x8y12pxDenkiChip/releases (v1.000)
 form = "gothic"
 vibes = ["retro-game"]
 
-# README 正文没有再复述像素数(只有仓库/文件名 x12y12px 自证),按简报规则未手填
-# ppem,交给管线按原生格点自动判定。
+# The README body doesn't restate the pixel size (only the repo/file name x12y12px implies it self-evidently); per the briefing rules ppem
+# was not filled in by hand -- left to the pipeline to auto-detect from the native grid.
 [[family]]
 slug = "x12y12px-maru-minya"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Japanese/hicchicc--x12y12pxMaruMinya"
@@ -434,8 +434,8 @@ reason = "美咲フォント(Misaki Font)教育汉字子集的 Arduino C++ 库,�
 # Korean/
 # ============================================================
 
-# chocolatemelt--baekmuk 的 batang 已经作为 baekmuk-batang 收录(见
-# ingest/manifest.toml),这里补齐同一仓库内的 dotum/gulim/hline 三套字体。
+# chocolatemelt--baekmuk's batang is already included as baekmuk-batang (see
+# ingest/manifest.toml); this fills in the dotum/gulim/hline trio from the same repo.
 [[family]]
 slug = "baekmuk-dotum"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/chocolatemelt--baekmuk"
@@ -475,9 +475,9 @@ provenance_url = "https://github.com/chocolatemelt/baekmuk"
 form = "other"
 vibes = ["classic"]
 
-# hurss--fonts 内含 7 个互不相同的 DOS 风格字体(bdf/ 下各一个 16pt/24pt 的
-# BDF),拆成 7 个 family;form 依据 README 的韩文字体名与 fontsample.PNG 样图
-# 判断,DOSSaemmul/Sam3KRFont/DOSIyagiBoldface 三个分类信心不高,见任务小结。
+# hurss--fonts contains 7 distinct DOS-style fonts (a 16pt/24pt BDF pair each under bdf/),
+# split into 7 families; form is judged from the README's Korean font names and the fontsample.PNG sample image --
+# confidence is low for the DOSSaemmul/Sam3KRFont/DOSIyagiBoldface classifications, see the task summary.
 [[family]]
 slug = "dos-myungjo"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/hurss--fonts"
@@ -562,10 +562,10 @@ provenance_url = "https://github.com/hurss/fonts"
 form = "gothic"
 vibes = ["classic"]
 
-# neodgm 自己仓库的 README 没有直接写像素数,但姊妹仓库 neodgm-pro 的 README
-# 明确说基底字体「NeoDunggeunmo」是 8x16(西文)/16x16(韩文)网格,故据此手填
-# ppem=16;neodgm_code.ttf 是同一设计的等宽/编程变体,与 neodgm.ttf 同属一个
-# family。RELEASE-ASSETS 下是未压缩的发布产物,convert_take 可以直接扫到。
+# neodgm's own repo README doesn't directly state the pixel size, but the sibling repo neodgm-pro's README
+# explicitly says the base font "NeoDunggeunmo" is an 8x16 (Latin) / 16x16 (Hangul) grid, so ppem=16 is filled in
+# by hand accordingly; neodgm_code.ttf is a monospace/coding variant of the same design and belongs to the same
+# family as neodgm.ttf. RELEASE-ASSETS contains uncompressed release artifacts that convert_take can scan directly.
 [[family]]
 slug = "neodgm"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm"
@@ -581,9 +581,9 @@ provenance_url = "https://github.com/neodgm/neodgm/releases (v1.601)"
 form = "rounded"
 vibes = ["classic", "terminal-hardcore"]
 
-# neodgm-pro 官方定位是「跳出 8x16/16x16 网格」的比例宽度衍生字体,没有单一
-# 原生像素格点,因此不手填 ppem,交给管线自动判定原生格点(有判定失败而不自动
-# 转制的风险,届时需要人工介入手填)。
+# neodgm-pro is officially positioned as a proportional-width derivative that "breaks out of the 8x16/16x16 grid", with no single
+# native pixel grid, so ppem is not filled in by hand -- left to the pipeline to auto-detect the native grid (there is a risk
+# of detection failing and skipping auto-conversion, in which case manual filling would be needed).
 [[family]]
 slug = "x10y12px-denki-chip-hangul"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/quiple--x10y12pxDenkiChipHangul"
@@ -622,31 +622,31 @@ reason = "Mulmaru/MulmaruMono 只发布 OTF/TTF/WOFF2(以及 .pfp 源文件),而
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/yangpa-onyon--Mallangche"
 reason = "README 明确说明目前只发布 PNG(png/jamo.png、png/syllables.png 等)且带抗锯齿,作者说明以后才会出其他格式,当前没有 BDF/TTF 可收,跳过"
 
-# ==================== 合并片段:manifest-frag-pancjk.toml ====================
-# 导入清单片段：CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/
-# 覆盖该目录下全部仓库（已收录跳过：quiple--galmuri、stgiga--UnifontEX；
-# 44670 不在本片段范围）。核对方式：ls / find / unzip -l / head，逐仓库确认。
+# ==================== Merged fragment: manifest-frag-pancjk.toml ====================
+# Import manifest fragment for CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/,
+# covering every repo in that directory (already-included ones skipped: quiple--galmuri, stgiga--UnifontEX;
+# 44670 is out of scope for this fragment). Verified via: ls / find / unzip -l / head, confirmed repo by repo.
 #
-# 特别说明：
-# 1) ark-pixel：本片段的 [[family]] slug="ark-pixel" 为全尺寸版，
-#    将替换 ingest/manifest.toml 中试点的 slug="ark-pixel-12px-monospaced"
-#    单尺寸条目，合并时请删除旧条目。
-# 2) fusion-pixel / fusion-bold-pixel：这两个仓库的发布 zip 内除根目录
-#    OFL.txt 外，还含 LICENSES/<组件字体>/OFL.txt、LICENSES/<组件字体>/
-#    LICENSE.txt 等同名子许可证（用于致谢内嵌的 boutique-bitmap-7x7、
-#    galmuri、misaki、miseki-bitmap 等组件字体）。由于抽取按 basename
-#    落盘，"OFL.txt"/"LICENSE.txt" 这类字面量会与子目录同名文件冲突、
-#    互相覆盖，所以这两个家族的 zip_take 只取 "*.bdf"，改用 license_files
-#    指向仓库根目录的 LICENSE-OFL / LICENSE-MIT（内容与 zip 内根 OFL.txt
-#    一致，经 diff 头部确认），不收录组件字体的许可证副本。
-# 3) gnu-unifont：multitheftauto--unifont 仓库的官方发布里，真正的
-#    unifont-*.bdf 只存在于 RELEASE-ASSETS/src_unifont-16.0.04.tar.gz
-#    内部（且是 .bdf.gz 双重压缩），现有导入器 extract_zip 只支持 .zip、
-#    take 不做任何解压，故无法直接取到该 bdf。RELEASE-ASSETS 下另有直接
-#    可用的 unifont-16.0.04.otf / unifont_jp-16.0.04.otf（非 zip、非 tar，
-#    直接是矢量 OTF），经本地用 opf.ingest.rasterize.detect_native_ppem
-#    实测两者均判定为原生 16 格点，故改用 convert="ttf" 栅格化路线收录，
-#    以落实简报里"若有 unifont-*.bdf 就收"的意图（等效替代路径）。
+# Special notes:
+# 1) ark-pixel: this fragment's [[family]] slug="ark-pixel" is the full-size version,
+#    replacing the pilot single-size entry slug="ark-pixel-12px-monospaced" in
+#    ingest/manifest.toml -- delete the old entry when merging.
+# 2) fusion-pixel / fusion-bold-pixel: besides the root-directory OFL.txt, these two repos'
+#    release zips also contain identically-named sub-licenses LICENSES/<component-font>/OFL.txt,
+#    LICENSES/<component-font>/LICENSE.txt, etc. (for the embedded-credit component fonts
+#    boutique-bitmap-7x7, galmuri, misaki, miseki-bitmap, etc.). Since extraction writes files by basename,
+#    literal names like "OFL.txt"/"LICENSE.txt" would collide with same-named files in subdirectories
+#    and overwrite each other, so these two families' zip_take only takes "*.bdf", and license_files is used instead
+#    to point at the repo root's LICENSE-OFL / LICENSE-MIT (content confirmed identical to the zip's root
+#    OFL.txt via a diff of the header) -- the component fonts' license copies are not included.
+# 3) gnu-unifont: in the multitheftauto--unifont repo's official release, the actual
+#    unifont-*.bdf only exists inside RELEASE-ASSETS/src_unifont-16.0.04.tar.gz
+#    (and is double-compressed as .bdf.gz). The existing importer's extract_zip only supports .zip,
+#    and take does no decompression at all, so this bdf can't be taken directly. RELEASE-ASSETS also has
+#    directly usable unifont-16.0.04.otf / unifont_jp-16.0.04.otf (not a zip, not a tar,
+#    a vector OTF directly). Locally testing with opf.ingest.rasterize.detect_native_ppem
+#    confirmed both are detected as a native 16 grid, so the convert="ttf" rasterization route is used instead,
+#    to fulfill the briefing's intent of "include it if there's a unifont-*.bdf" (an equivalent substitute path).
 
 [[family]]
 slug = "ark-pixel"
@@ -692,8 +692,8 @@ vibes = ["retro-game"]
 [[family]]
 slug = "fusion-bold-pixel"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/pixel-font-studio--fusion-bold-pixel-font"
-# 注意：README 声明"这不是一个正式项目，仅用于测试，旨在提供思路和验证概念"，
-# 但发布 zip 内含真实可用的 BDF 字形数据（5 语言 × 3 尺寸模式）。
+# Note: the README states "this is not a formal project, only for testing, meant to provide ideas and validate the concept",
+# but the release zip contains real, usable BDF glyph data (5 languages x 3 size modes).
 zips = [
     "RELEASE-ASSETS/fusion-bold-pixel-font-8px-monospaced-bdf-v2026.08.11.zip",
     "RELEASE-ASSETS/fusion-bold-pixel-font-10px-monospaced-bdf-v2026.08.11.zip",
@@ -715,10 +715,10 @@ vibes = ["retro-game"]
 [[family]]
 slug = "jelly-pixel"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--jelly-pixel-font"
-# 注意：README 声明"该字体目前仅用于概念验证，尚未完工，暂无可用实例"，
-# 但发布 zip 内含真实可用的 BDF 字形数据（7 语言）。仅有 12px 一种尺寸，
-# 故只收等宽/比例两个 BDF zip（22 个 zip 里其余为 dfont/otb/otf/pcf/ttf/
-# woff/woff2 等非 BDF 格式，按格式优先级排除）。
+# Note: the README states "this font is currently only a proof of concept, not yet finished, no usable instance available",
+# but the release zip contains real, usable BDF glyph data (7 languages). There's only one size, 12px,
+# so only the monospace/proportional BDF zip pair is included (of the 22 zips, the rest are dfont/otb/otf/pcf/ttf/
+# woff/woff2 and other non-BDF formats, excluded per format priority).
 zips = [
     "RELEASE-ASSETS/jelly-pixel-font-12px-monospaced-bdf-v2026.08.11.zip",
     "RELEASE-ASSETS/jelly-pixel-font-12px-proportional-bdf-v2026.08.11.zip",
@@ -736,9 +736,9 @@ vibes = ["cute"]
 [[family]]
 slug = "gnu-unifont"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/multitheftauto--unifont"
-# 见文件头说明 3)：官方 bdf 仅存在于 tar.gz 内部（双重压缩，当前导入器不支持），
-# 改用 RELEASE-ASSETS 下直接可得的矢量 OTF 栅格化回点阵；两个文件均实测原生
-# 16 格点（detect_native_ppem 验证一致），故显式填写 ppem。
+# See note 3) at the top of the file: the official bdf only exists inside a tar.gz (double-compressed, not supported by the current importer),
+# so the directly available vector OTF under RELEASE-ASSETS is rasterized back into a bitmap instead; both files were tested and confirmed
+# to be a native 16 grid (confirmed consistent by detect_native_ppem), so ppem is filled in explicitly.
 convert = "ttf"
 convert_take = ["unifont-16.0.04.otf", "unifont_jp-16.0.04.otf"]
 ppem = 16
@@ -752,14 +752,14 @@ provenance_url = "https://github.com/multitheftauto/unifont/releases (v16.0.04)"
 form = "other"
 vibes = ["fallback"]
 
-# --- TakWolf--retro-pixel-font：11 个 zip 均为同一次发布的格式变体（bdf/dfont/
-# ms.bitmap.ttf/otb/otf/otf.woff/otf.woff2/pcf/ttf/ttf.woff/ttf.woff2），
-# 并非"每 zip 一风格"；真正的风格拆分在 bdf zip 内部的子目录（arcade/
-# cute-mono/cute-prop/petty-5h/petty-5x5/thick）。经查各 bdf 内 XLFD FONT
-# 名与 SPACING 字段：Cute Mono/Cute Prop 为同一字体"Cute"的等宽/比例两种
-# 模式（合并为一个家族）；Petty 5H 与 Petty 5x5 是两个不同署名的独立设计
-# （均 5px，但 FONT 名不同、非 Mono/Prop 命名），故拆成 5 个家族。全部风格
-# 均为拉丁/符号字体（无 CJK 字形），form 采用西文分类。
+# --- TakWolf--retro-pixel-font: all 11 zips are format variants of the same release (bdf/dfont/
+# ms.bitmap.ttf/otb/otf/otf.woff/otf.woff2/pcf/ttf/ttf.woff/ttf.woff2),
+# not "one style per zip"; the actual style split is in subdirectories inside the bdf zip (arcade/
+# cute-mono/cute-prop/petty-5h/petty-5x5/thick). Checking the XLFD FONT
+# name and SPACING field in each bdf: Cute Mono/Cute Prop are the monospace/proportional
+# modes of the same font "Cute" (merged into one family); Petty 5H and Petty 5x5 are two independently
+# authored, independent designs (both 5px, but with different FONT names, not Mono/Prop naming), so they're split into 5 families. All styles
+# are Latin/symbol fonts (no CJK glyphs), so form uses Western classification.
 
 [[family]]
 slug = "retro-pixel-arcade"
@@ -867,7 +867,7 @@ reason = "R 语言数据包（CRAN 包 hexfont），内容是 GNU Unifont 源码
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/DWNfonts--FullPixel"
 reason = "FullPixel：基于方舟像素字体制作、目标覆盖全部中日韩越统一汉字的 12x12 像素字体，README 自述「还在研发…」。仓库内无任何编译产物，只有构建脚本（ase2png.py、make.py、photo2bdf.py、build.bat）与一个 Aseprite 调色板样例文件（design/sample.ase），需要本地安装 Aseprite（付费软件）与 Bits'n'Picas 才能从头构建，无法直接收录。待上游发布可下载的字体产物后再收。"
 
-# ==================== 人工补充 ====================
+# ==================== Manually added ====================
 
 [[family]]
 slug = "isas-song"
@@ -880,18 +880,18 @@ repository = "https://github.com/olikraus/u8g2"
 provenance_url = "https://github.com/olikraus/u8g2 (tools/font/bdf,1988 年 GB2312 宋体点阵,BDF 注释含宽松授权声明)"
 form = "mingcho"
 vibes = ["classic"]
-# 注意:仓库内未见独立许可证文件,授权声明在 BDF COMMENT 中,导入后在 family.toml 手填。
+# Note: no standalone license file found in the repo; the licensing statement is in the BDF COMMENT, filled in by hand in family.toml after import.
 
 [[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm-pro"
 reason = "NeoDunggeunmo Pro 官方定位即「跳出 8x16/16x16 网格」的比例宽度衍生字体,原生格点判定失败(实测确无统一格点),不适合栅格化收录;基础版 neodgm 已收。"
 
-# ==================== 合并片段:manifest-frag-supplement.toml ====================
-# 导入清单片段：pixel-fonts-supplement-zeoseven-maoken-2026-08-18/
-# 覆盖 Upstream-GitHub、Upstream-Direct、Maoken-Direct、Google-Fonts 四个子目录（全部核查完毕），
-# 以及 ZeoSeven-Webfonts 的孤儿字体检查（未整体处理该目录，仅确认有无上游对应）。
-# 状态：全部核查完毕。family 49 个，todo 25 个（8 个仓库内容合并/排除说明 + 3 个非点阵/彩色
-# 字体排除 + 14 个 ZeoSeven-Webfonts 孤儿字体）。TOML 语法已用 python -c "import tomllib" 校验通过。
+# ==================== Merged fragment: manifest-frag-supplement.toml ====================
+# Import manifest fragment for pixel-fonts-supplement-zeoseven-maoken-2026-08-18/,
+# covering the four subdirectories Upstream-GitHub, Upstream-Direct, Maoken-Direct, Google-Fonts (all fully reviewed),
+# plus an orphan-font check for ZeoSeven-Webfonts (this directory was not processed as a whole, only checked for an upstream counterpart).
+# Status: fully reviewed. 49 families, 25 todos (8 repo-content merge/exclusion notes + 3 non-bitmap/color
+# font exclusions + 14 ZeoSeven-Webfonts orphan fonts). TOML syntax validated with python -c "import tomllib".
 
 # ============ Upstream-GitHub ============
 
@@ -909,9 +909,9 @@ repository = "https://github.com/ACh-K/Cubic-11"
 provenance_url = "https://github.com/ACh-K/Cubic-11 (HEAD 快照，收录于 2026-08-18)"
 form = "gothic"
 vibes = ["retro-game"]
-# 备注：仓库 fonts/ttf 为空目录（未提交编译产物），实取 fonts/web/Cubic_11.woff（TTF-flavored WOFF，
-# fontTools/freetype 可直接读取转换）。README 未给出数字化原生 ppem；经 detect_native_ppem 实测
-# 格点判定稳定为 12（而非名称中的"11"，11 应为字重/字面设计代号），故不在此处手填 ppem，交由自动判定。
+# Note: the repo's fonts/ttf is an empty directory (no compiled artifact committed); fonts/web/Cubic_11.woff is actually taken instead (a TTF-flavored WOFF,
+# readable and convertible directly by fontTools/freetype). The README doesn't give a digitized native ppem; testing with detect_native_ppem
+# consistently detects a 12 grid (not the "11" in the name -- 11 is likely a weight/design designation), so ppem isn't filled in by hand here, left to auto-detection.
 
 [[family]]
 slug = "chenhao-rp-font"
@@ -927,8 +927,8 @@ repository = "https://github.com/ChenhaoUwU/ChenhaoRPFont"
 provenance_url = "https://github.com/ChenhaoUwU/ChenhaoRPFont (HEAD 快照，收录于 2026-08-18)"
 form = "other"
 vibes = ["retro-game"]
-# 备注：仓库无 README.md，name_zh/homepage 无法核实故留空。三个 kbitx（本体/Enchant 附魔符号/
-# Supplement 补充）为同一字体的三个字符集模块，kbitx 优先于同名 ttf。
+# Note: the repo has no README.md, so name_zh/homepage can't be verified and are left blank. The three kbitx files (base/Enchant enchantment symbols/
+# Supplement) are three charset modules of the same font; kbitx takes priority over a same-named ttf.
 
 [[family]]
 slug = "clfn"
@@ -944,7 +944,7 @@ repository = "https://github.com/DWNfonts/CLFN"
 provenance_url = "https://github.com/DWNfonts/CLFN (HEAD 快照，收录于 2026-08-18)"
 form = "gothic"
 vibes = ["retro-game"]
-# 备注：README 明示 kbitx 为源文件，woff2 仅为 CDN 托管用；16x 常规/粗体 + 24x 常规共三个 kbitx。
+# Note: the README states kbitx is the source file, woff2 is only for CDN hosting; three kbitx files total: 16x Regular/Bold + 24x Regular.
 
 [[family]]
 slug = "dotgothic16"
@@ -961,8 +961,8 @@ repository = "https://github.com/fontworks-fonts/DotGothic16"
 provenance_url = "https://github.com/fontworks-fonts/DotGothic16 (HEAD 快照，收录于 2026-08-18)"
 form = "gothic"
 vibes = ["retro-game"]
-# 备注：README 明确"old 16x16 Gothic bitmap font"，故手填 ppem=16；detect_native_ppem 对该 ttf
-# （已 ttfautohint 处理）判定失败，属预期。仓库只有 .glyphs 矢量源，无位图源，故用 ttf 转制。
+# Note: the README explicitly says "old 16x16 Gothic bitmap font", so ppem=16 is filled in by hand; detect_native_ppem fails to judge
+# this ttf (already processed by ttfautohint), which is expected. The repo only has a .glyphs vector source, no bitmap source, so ttf conversion is used.
 
 [[family]]
 slug = "tiny5"
@@ -977,8 +977,8 @@ repository = "https://github.com/Gissio/font_tiny5"
 provenance_url = "https://github.com/Gissio/font_tiny5 (HEAD 快照，收录于 2026-08-18)"
 form = "terminal"
 vibes = ["terminal-hardcore", "retro-game"]
-# 备注：fonts/bdf/ 下有原生 BDF（Tiny5.bdf 与加粗变体 Tiny5Duo.bdf），优先于变量字体/静态实例 ttf。
-# sources/ 下有同名重复 BDF（内容一致），take 会重复匹配但覆盖写入同一目标，无影响。
+# Note: there's a native BDF under fonts/bdf/ (Tiny5.bdf and its bold variant Tiny5Duo.bdf), taking priority over the variable font/static-instance ttf.
+# There's a duplicate same-named BDF under sources/ (identical content); take matches it too but overwrites the same target, so there's no effect.
 
 [[family]]
 slug = "monocraft"
@@ -994,8 +994,8 @@ repository = "https://github.com/IdreesInc/Monocraft"
 provenance_url = "https://github.com/IdreesInc/Monocraft (HEAD 快照，收录于 2026-08-18)"
 form = "terminal"
 vibes = ["retro-game", "terminal-hardcore"]
-# 备注：dist/Monocraft-ttf/Monocraft.ttf 为主发布物，ppem 自动判定=18。weights/ 下另有 12 款
-# 字重/斜体变体，因多数无法通过格点判定（非 None 的仅主文件），暂不收录，只取主 Regular。
+# Note: dist/Monocraft-ttf/Monocraft.ttf is the main release artifact, auto-detected ppem=18. There are 12 more
+# weight/italic variants under weights/, but since most fail grid detection (only the main file is non-None), they're not included for now -- only the main Regular is taken.
 
 [[family]]
 slug = "misekibitmap"
@@ -1011,7 +1011,7 @@ repository = "https://github.com/ItMarki/MisekiBitmap"
 provenance_url = "https://github.com/ItMarki/MisekiBitmap (HEAD 快照，收录于 2026-08-18)"
 form = "mingcho"
 vibes = ["classic"]
-# 备注：仓库内仅有 Mincho 一款字重（fonts/ 下唯一 ttf），ppem 自动判定=8。
+# Note: the repo has only the Mincho weight (the sole ttf under fonts/), ppem auto-detected=8.
 
 [[family]]
 slug = "liora-chip-10x12"
@@ -1027,8 +1027,8 @@ repository = "https://github.com/LioraChen09/LioraChip10x12"
 provenance_url = "https://github.com/LioraChen09/LioraChip10x12 (HEAD 快照，收录于 2026-08-18)"
 form = "gothic"
 vibes = ["cute", "retro-game"]
-# 备注：fonts/ 下有 12 个按日期命名的每日构建 ttf（开发中字体，仍缺字），sources/ 下有对应的
-# 单一最新 kbitx 源文件，kbitx 优先，避免在多个日期快照间选择。
+# Note: fonts/ has 12 date-named daily-build ttfs (a font in development, still missing characters); sources/ has the corresponding
+# single latest kbitx source file; kbitx is preferred to avoid choosing among multiple dated snapshots.
 
 [[family]]
 slug = "mplus-hzk-12"
@@ -1044,10 +1044,10 @@ repository = "https://github.com/Luckeee/mplus_hzk_12"
 provenance_url = "https://github.com/Luckeee/mplus_hzk_12 (HEAD 快照，收录于 2026-08-18)"
 form = "gothic"
 vibes = ["classic"]
-# 备注：仓库内 mplus_jf12r.bdf 只是日文 JIS X0208 底料（源材料之一，7187 字），不含 hzk12 补入的
-# 简体汉字，属半成品，不能代表最终合成字体；故改用已合并完成的 mplus_hzk_12.ttf（10898 字形，
-# ppem 自动判定=12）。License 为 Unlicense（公有领域）。mplus_hzk_13.ttf 为另一构建快照
-# （字形数略多但字体家族名相同），未采用。
+# Note: the repo's mplus_jf12r.bdf is only the Japanese JIS X0208 base material (one of the source materials, 7187 glyphs), and doesn't include the Simplified Chinese
+# characters that hzk12 adds in -- it's a half-finished intermediate, not representative of the final merged font; so the already-merged mplus_hzk_12.ttf is used instead (10898 glyphs,
+# ppem auto-detected=12). License is Unlicense (public domain). mplus_hzk_13.ttf is another build snapshot
+# (slightly more glyphs but the same font family name) -- not used.
 
 [[family]]
 slug = "departure-mono"
@@ -1063,10 +1063,10 @@ repository = "https://github.com/rektdeckard/departure-mono"
 provenance_url = "https://github.com/rektdeckard/departure-mono (HEAD 快照，收录于 2026-08-18)"
 form = "terminal"
 vibes = ["terminal-hardcore"]
-# 注意：许可证文件名冲突——仓库根目录 LICENSE 是网站代码的 MIT 许可，字体本身的真实许可
-# （SIL OFL，已通过字体 name 表 nameID 13/14 核实）文本位于 public/assets/LICENSE，
-# 二者同名，license_files 的 basename glob 机制无法区分，故此处留空，需人工从
-# public/assets/LICENSE 复制正确的 OFL 文本。ppem 自动判定=11，全部变体一致。
+# Note: license filename conflict -- the repo root's LICENSE is the MIT license for the website code; the font's actual license
+# (SIL OFL, confirmed via the font's name table nameID 13/14) text lives at public/assets/LICENSE,
+# and the two share a filename that license_files' basename-glob mechanism can't distinguish, so it's left blank here -- needs manual
+# copying of the correct OFL text from public/assets/LICENSE. ppem auto-detected=11, consistent across all variants.
 
 [[family]]
 slug = "yarndings-12"
@@ -1082,8 +1082,8 @@ repository = "https://github.com/scfried/soft-type-yarndings"
 provenance_url = "https://github.com/scfried/soft-type-yarndings (HEAD 快照，收录于 2026-08-18)"
 form = "decorative"
 vibes = ["decorative", "cute"]
-# 备注：编织图案 dingbat 符号字体，非文字字体。README 称"12"指大写字母高度（像素），但该指标与
-# 实际渲染栅格不同；ppem 自动判定=16，采信判定值。Charted（带图表格线）变体格点判定失败，不收录。
+# Note: a knitting-pattern dingbat symbol font, not a text font. The README says "12" refers to the uppercase letter height (in pixels), but that metric differs from
+# the actual render grid; ppem auto-detected=16, and the detected value is trusted. The Charted (with chart gridlines) variant fails grid detection and isn't included.
 
 [[family]]
 slug = "yarndings-20"
@@ -1099,7 +1099,7 @@ repository = "https://github.com/scfried/soft-type-yarndings"
 provenance_url = "https://github.com/scfried/soft-type-yarndings (HEAD 快照，收录于 2026-08-18)"
 form = "decorative"
 vibes = ["decorative", "cute"]
-# 备注：与 Yarndings 12 同仓库但字体家族名不同（视为独立家族）。ppem 自动判定=24。
+# Note: shares a repo with Yarndings 12 but has a different font family name (treated as a separate family). ppem auto-detected=24.
 
 [[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--BoutiqueBitmap7x7"
@@ -1123,15 +1123,15 @@ repository = "https://github.com/scott0107000/FashionBitmap16"
 provenance_url = "https://github.com/scott0107000/FashionBitmap16 (HEAD 快照，收录于 2026-08-18)"
 form = "gothic"
 vibes = ["retro-game"]
-# 备注：基于 jikasei.me KH ドットフォント系列的"兜町16"改作。三个版本号中取最新 0.092
-# （ppem 自动判定=16，稳定）；0.09/0.091 判定为 64（不稳，弃用）。
+# Note: adapted from "Kabutocho 16" in jikasei.me's KH dot font series. The latest of three version numbers, 0.092, is taken
+# (ppem auto-detected=16, stable); 0.09/0.091 detect as 64 (unstable, discarded).
 
 [[family]]
 slug = "nightgazer-bitmap"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/scott0107000--Nightgazer-Bitmap"
 convert = "ttf"
 convert_take = ["Nightgazer12.ttf", "Nightgazer12B.ttf", "Nightgazer13.ttf", "Nightgazer13B.ttf", "Nightgazer14.ttf", "Nightgazer14B.ttf", "Nightgazer15.ttf", "Nightgazer15B.ttf"]
-# 注意：Nightgazer16/16B 因 upem=16 触发保守拒绝，已人工确认 ppem=16 手动转制入库。
+# Note: Nightgazer16/16B trigger the conservative-rejection rule because upem=16; ppem=16 was manually confirmed and converted in by hand.
 license_files = ["GPL.txt", "LICENSE"]
 name = "Nightgazer-Bitmap"
 name_zh = "夜照飛點陣字型系列"
@@ -1141,10 +1141,10 @@ repository = "https://github.com/scott0107000/Nightgazer-Bitmap"
 provenance_url = "https://github.com/scott0107000/Nightgazer-Bitmap (HEAD 快照，收录于 2026-08-18)"
 form = "gothic"
 vibes = ["classic"]
-# 备注：GPL 授权（转制自螢火飛 bdf）。5 种尺寸(12/13/14/15/16)×2 字重(Regular/Bold)共 10 个
-# ttf，glob 一次性匹配。12/13/14/15 各尺寸 ppem 自动判定与文件名完全一致；16/16B 因 upem 恰好
-# 等于 16（gcd=1 触发判定算法的保守拒绝规则）而判定失败，属已知限制，实际就是 16px，留待
-# 人工在导入报告里确认或后续加 ppem 覆盖。
+# Note: GPL-licensed (converted from the FireFly bdf). 5 sizes (12/13/14/15/16) x 2 weights (Regular/Bold), 10
+# ttfs total, matched in one glob. ppem auto-detection for the 12/13/14/15 sizes matches the filenames exactly; 16/16B fail detection because upem happens
+# to equal 16 (gcd=1 triggers the detection algorithm's conservative-rejection rule) -- a known limitation; it's actually 16px, left for
+# manual confirmation in the import report or a future ppem override.
 
 [[family]]
 slug = "uranus-pixel"
@@ -1161,9 +1161,9 @@ repository = "https://github.com/scott0107000/Uranus-Pixel"
 provenance_url = "https://github.com/scott0107000/Uranus-Pixel (HEAD 快照，收录于 2026-08-18)"
 form = "mingcho"
 vibes = ["classic"]
-# 注意：detect_native_ppem 对拉丁与 CJK 抽样均判定失败（gcd=1，非干净格点——推测因"不产生
-# 粘连的粗体"描边加粗处理破坏了原始 WenQuanYi 点阵的整数网格）。文件名明确标注"11Px"，
-# 已手填 ppem=11，但转制结果可能有轻微锯齿失真风险，建议人工复核。GPLv2（继承自文泉驿）。
+# Note: detect_native_ppem fails on both Latin and CJK samples (gcd=1, not a clean grid -- likely because the
+# "non-touching bold" stroke-thickening process breaks the original WenQuanYi bitmap's integer grid). The filename explicitly says "11Px",
+# so ppem=11 was filled in by hand, though the conversion may carry a slight risk of jagged distortion -- manual review recommended. GPLv2 (inherited from WenQuanYi).
 
 [[family]]
 slug = "terrarum-sans-bitmap"
@@ -1179,11 +1179,11 @@ repository = "https://github.com/curioustorvald/Terrarum-sans-bitmap"
 provenance_url = "https://github.com/curioustorvald/Terrarum-sans-bitmap/releases （猫啃网直链下载包，收录于 2026-08-18）"
 form = "sans"
 vibes = ["retro-game"]
-# 注意：Upstream-GitHub/curioustorvald--Terrarum-sans-bitmap 的 HEAD 快照内经核实不含任何编译
-# 产物（无 otf/ttf/woff/jar，README 本身也提示"不建议使用仓库内的 .jar，请去 release 页下载"），
-# 故改为源自此处的 Upstream-Direct 直链包（同目录下还有 猫啃网 相关素材文件，字体本体为
-# "Terrarum Sans Bitmap/TerrarumSansBitmap.otf"）。ppem 自动判定=20。许可证文本形式为
-# MIT 但含『Reserved Font Name』字样（近似 OFL 惯例但条款主体是标准 MIT）。
+# Note: the HEAD snapshot at Upstream-GitHub/curioustorvald--Terrarum-sans-bitmap was confirmed to contain no compiled
+# artifacts (no otf/ttf/woff/jar; the README itself notes "the .jar in the repo isn't recommended, download from the release page instead"),
+# so the Upstream-Direct direct-download package here is used instead (the same directory also has MaoKen-related asset files; the font itself is
+# "Terrarum Sans Bitmap/TerrarumSansBitmap.otf"). ppem auto-detected=20. The license text is worded as
+# MIT but includes a "Reserved Font Name" clause (resembling OFL convention, though the terms are standard MIT).
 
 [[family]]
 slug = "spleen"
@@ -1198,10 +1198,10 @@ repository = "https://github.com/fcambus/spleen"
 provenance_url = "https://github.com/fcambus/spleen (HEAD 快照，收录于 2026-08-18)"
 form = "terminal"
 vibes = ["terminal-hardcore"]
-# 备注：经典终端点阵字体，5 个主尺寸的原生 BDF，显式列出文件名以避免匹配到 cp437/ 子目录下
-# 同前缀但字符集不同的 IBM-437 变体（如 spleen-16x32-ibm-437.bdf）。BSD-2-Clause 许可。
+# Note: a classic terminal bitmap font, native BDFs at 5 main sizes; filenames are listed explicitly to avoid matching the
+# same-prefixed but different-charset IBM-437 variants under cp437/ (e.g. spleen-16x32-ibm-437.bdf). BSD-2-Clause license.
 
-# ============ Upstream-Direct（与上方 GitHub 仓库合并的 4 个）============
+# ============ Upstream-Direct (4 merged with the GitHub repos above) ============
 
 [[family]]
 slug = "chillmoonmono"
@@ -1217,9 +1217,9 @@ repository = "https://github.com/Warren2060/ChillMoonmono"
 provenance_url = "https://github.com/Warren2060/ChillMoonmono/releases (v1.000)"
 form = "script"
 vibes = ["handwriting"]
-# 备注：GitHub 仓库快照（Upstream-GitHub/Warren2060--ChillMoonmono）只有 README+license，无编译
-# 产物（"请查看 Releases"），故改用此处 v1.000 直链发布包。README 称"更具有手写感的人文像素
-# 字体"，故 form=script。官方中文名未见，留空。ppem 自动判定=16。OFL。
+# Note: the GitHub repo snapshot (Upstream-GitHub/Warren2060--ChillMoonmono) only has README+license, no compiled
+# artifacts ("see Releases"), so the v1.000 direct-download release package here is used instead. The README calls it "a more handwritten-feeling humanist pixel
+# font", hence form=script. No official Chinese name found, left blank. ppem auto-detected=16. OFL.
 
 [[family]]
 slug = "illusion-book"
@@ -1236,10 +1236,10 @@ repository = "https://github.com/StevenLZH/IllusionBook"
 provenance_url = "https://github.com/StevenLZH/IllusionBook/releases (v1.0.2)"
 form = "serif-pixel"
 vibes = ["classic"]
-# 备注：GitHub 仓库快照（Upstream-GitHub/StevenLZH--IllusionBook）只有 FontForge 源文件（.sfd/
-# .fea），无编译产物，故改用此处 v1.0.2 直链发布包（otf/ttf/woff/woff2 齐全）。README 明确
-# "该字体基于 12px 的大小设计"，UPM=1200，已手填 ppem=12（detect_native_ppem 判定失败，
-# 官方 README 亦提及字距调整未严格取整数倍单元格，属已知限制）。仅拉丁/希腊/西里尔字符，无 CJK。
+# Note: the GitHub repo snapshot (Upstream-GitHub/StevenLZH--IllusionBook) only has FontForge source files (.sfd/
+# .fea), no compiled artifacts, so the v1.0.2 direct-download release package here is used instead (otf/ttf/woff/woff2 all present). The README explicitly states
+# "this font is designed at a 12px size", UPM=1200, so ppem=12 was filled in by hand (detect_native_ppem fails to detect it,
+# and the official README also notes that kerning adjustments aren't strictly integer multiples of the cell -- a known limitation). Latin/Greek/Cyrillic only, no CJK.
 
 [[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/NanoQyoanDaSong"
@@ -1288,7 +1288,7 @@ repository = ""
 provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链下载包，收录于 2026-08-18）"
 form = "terminal"
 vibes = ["terminal-hardcore"]
-# 备注：Pona = Toki Pona 人工语言符号支持变体。
+# Note: Pona = variant with Toki Pona constructed-language symbol support.
 
 [[family]]
 slug = "fairfax-pula"
@@ -1335,7 +1335,7 @@ provenance_url = "https://www.kreativekorp.com/software/fonts/fairfax/ （直链
 form = "terminal"
 vibes = ["terminal-hardcore"]
 
-# ============ Upstream-Direct（littlelimit.net 门真なむ 三款：k6x8/k8x12/k12x8）============
+# ============ Upstream-Direct (littlelimit.net Kadoma Nau's three: k6x8/k8x12/k12x8) ============
 
 [[family]]
 slug = "k6x8"
@@ -1351,9 +1351,9 @@ repository = ""
 provenance_url = "https://littlelimit.net/k6x8.htm （直链下载包，2023-10-19 版，收录于 2026-08-18）"
 form = "gothic"
 vibes = ["classic"]
-# 备注：k6x8ゴシック（原始/Gothic）与 k6x8明朝（非汉字部分替换为明朝风格，汉字部分与
-# ゴシック版相同）为同一产品的两种字形变体，归为一个家族，以 Gothic 为主 form。
-# ppem 自动判定=8，两者一致。许可证为 k6x8.txt 内自由软件条款（近似 MIT/zlib）。
+# Note: k6x8 Gothic (original/Gothic) and k6x8 Mincho (non-Han portion replaced with Mincho style, while the Han-character portion is
+# identical to the Gothic version) are two glyph variants of the same product, grouped into one family, with Gothic as the primary form.
+# ppem auto-detected=8, consistent for both. The license is the free-software terms in k6x8.txt (resembling MIT/zlib).
 
 [[family]]
 slug = "k8x12"
@@ -1370,10 +1370,10 @@ repository = ""
 provenance_url = "https://littlelimit.net/k8x12.htm （直链下载包，收录于 2026-08-18）"
 form = "gothic"
 vibes = ["classic"]
-# 注意：detect_native_ppem 对三个变体均判定失败（upem=2047 为奇数，导致格点公约数计算异常），
-# 但兄弟项目 k6x8/k12x8 均自动判定成功且与文件名一致，故此处按文件名明确标注的高度手填
-# ppem=12（k8x12 = 宽 8 高 12）。k8x12/k8x12L/k8x12S 为常规/L/S 三种变体（具体差异见
-# k8x12.txt，未逐一深究）。
+# Note: detect_native_ppem fails on all three variants (upem=2047 is odd, causing the grid-gcd calculation to misbehave),
+# but the sibling projects k6x8/k12x8 both auto-detect successfully and match their filenames, so the height explicitly stated in the filename is filled in by hand
+# here as ppem=12 (k8x12 = width 8, height 12). k8x12/k8x12L/k8x12S are the Regular/L/S variants (see
+# k8x12.txt for the exact differences, not investigated in detail).
 
 [[family]]
 slug = "k12x8"
@@ -1389,7 +1389,7 @@ repository = ""
 provenance_url = "https://littlelimit.net/k12x8.htm （直链下载包，收录于 2026-08-18）"
 form = "gothic"
 vibes = ["classic"]
-# 备注：ppem 自动判定=8，与文件名高度一致。
+# Note: ppem auto-detected=8, matching the filename height.
 
 [[family]]
 slug = "misaki"
@@ -1405,8 +1405,8 @@ repository = ""
 provenance_url = "https://littlelimit.net/misaki.htm （直链下载包，收录于 2026-08-18）"
 form = "gothic"
 vibes = ["classic"]
-# 备注：ゴシック第2（Gothic 2nd）与明朝（Mincho）两种字形变体，归一家族。ppem 自动判定=8，
-# 与经典"美咲 8px"说法一致。原版 misaki_gothic.ttf（非"第2"版）本目录未提供，故未收。
+# Note: Gothic 2nd and Mincho are two glyph variants, grouped into one family. ppem auto-detected=8,
+# consistent with the classic "Misaki 8px" description. The original misaki_gothic.ttf (not the "2nd" version) isn't provided in this directory, so it's not included.
 
 # ============ Upstream-Direct（Pixeloid：GGBotNet，OFL）============
 
@@ -1424,7 +1424,7 @@ repository = ""
 provenance_url = "https://ggbot.itch.io/pixeloid-font （直链下载包，收录于 2026-08-18）"
 form = "sans"
 vibes = ["retro-game"]
-# 备注：ppem 自动判定=9，Regular/Bold 一致。
+# Note: ppem auto-detected=9, consistent for Regular/Bold.
 
 [[family]]
 slug = "pixeloid-mono"
@@ -1440,11 +1440,11 @@ repository = ""
 provenance_url = "https://ggbot.itch.io/pixeloid-font （直链下载包，收录于 2026-08-18）"
 form = "terminal"
 vibes = ["retro-game", "terminal-hardcore"]
-# 备注：ppem 自动判定=9。
+# Note: ppem auto-detected=9.
 
 # ============ Maoken-Direct ============
-# 4 个目录内子文件夹/部分文件名因原始 zip 采用 GBK 编码、在本机被按其他编码展开而乱码，
-# 但字体文件本身 basename 为纯 ASCII，不影响 glob 匹配。
+# Subfolders/some filenames in these 4 directories are garbled because the original zips used GBK encoding and were extracted
+# locally with a different encoding, but the font files' own basenames are pure ASCII and unaffected for glob matching.
 
 [[family]]
 slug = "chusung"
@@ -1460,10 +1460,10 @@ repository = ""
 provenance_url = "https://www.maoken.com/freefonts/11089.html"
 form = "mingcho"
 vibes = ["classic"]
-# 备注：字体 name 表家族名/全名分别为 "Chusung"/"Chusung 16"，明确标注 16，
-# detect_native_ppem 判定失败（gcd=1），故手填 ppem=16。版权继承 1988 Academia Sinica 字体。
+# Note: the font's name-table family/full names are "Chusung"/"Chusung 16" respectively, explicitly stating 16,
+# and detect_native_ppem fails (gcd=1), so ppem=16 is filled in by hand. Copyright inherited from the 1988 Academia Sinica font.
 
-# 注意：仓库内未见许可证文件（仅猫啃网通用免责声明模板，非真实许可证条款）
+# Note: no license file found in the repo (only MaoKen's generic disclaimer template, not real license terms)
 [[family]]
 slug = "lyusung"
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/11271"
@@ -1477,7 +1477,7 @@ repository = ""
 provenance_url = "https://www.maoken.com/freefonts/11271.html"
 form = "mingcho"
 vibes = ["classic"]
-# 备注：ppem 自动判定=24，与字体 name 表全名 "Lyusung 24" 一致。
+# Note: ppem auto-detected=24, matching the font's name-table full name "Lyusung 24".
 
 [[family]]
 slug = "bestten"
@@ -1495,14 +1495,14 @@ repository = ""
 provenance_url = "https://www.maoken.com/freefonts/15489.html"
 form = "gothic"
 vibes = ["classic"]
-# 备注：ReadMe.txt（UTF-16 编码）确认为「ベストテン」，基于 M+ BITMAP FONTS 与 PixelMplus10
-# 改作，"10×10のドットフォントです"，已手填 ppem=10（detect_native_ppem 判定失败）。
-# DOT = 未加工简单点阵版（Regular），CRT = 圆角视觉调整版（Bold），两者均收。
+# Note: ReadMe.txt (UTF-16 encoded) confirms the name is "Besuten" (BestTen), adapted from M+ BITMAP FONTS and PixelMplus10,
+# "a 10x10 dot font"; ppem=10 was filled in by hand (detect_native_ppem fails to detect it).
+# DOT = the raw, plain-bitmap version (Regular), CRT = a rounded-corner visual-tweak version (Bold); both are included.
 
 # ============ Google-Fonts ============
-# 两目录均为 ZeoSeven FontsAPI 式的 CSS + WOFF2 Unicode-range 切片导出（result.css +
-# font-NN.woff2），并非官方 google/fonts 仓库的完整 ttf；已核对每个切片的 Unicode 覆盖，
-# 选取含基本拉丁字母(U+0000-00FF)的切片。
+# Both directories are ZeoSeven-FontsAPI-style CSS + WOFF2 Unicode-range slice exports (result.css +
+# font-NN.woff2), not full ttfs from the official google/fonts repo; each slice's Unicode coverage was checked,
+# and the slice containing basic Latin (U+0000-00FF) was selected.
 
 [[family]]
 slug = "press-start-2p"
@@ -1518,11 +1518,11 @@ repository = "https://github.com/google/fonts/tree/main/ofl/pressstart2p"
 provenance_url = "https://fonts.google.com/specimen/Press+Start+2P （CSS Unicode-range 切片镜像，v16，latin 子集，收录于 2026-08-18）"
 form = "sans"
 vibes = ["retro-game"]
-# 备注：result.css 共 5 个 @font-face 切片（cyrillic-ext/cyrillic/greek/latin-ext/latin），
-# font-05.woff2 对应最后一个"latin"切片（已用 cmap 核实含 'A'）。其余 4 个切片（西里尔/希腊/
-# 拉丁扩展）未收录，如需完整字符集需另行合并。detect_native_ppem 对 latin 切片判定失败，
-# 但同一字体的 cyrillic-ext/greek 切片（font-01/font-03）判定稳定=8，Press Start 2P 8px
-# 网格设计已是公认事实，故手填 ppem=8。
+# Note: result.css has 5 @font-face slices total (cyrillic-ext/cyrillic/greek/latin-ext/latin);
+# font-05.woff2 corresponds to the last, "latin", slice (confirmed via cmap to contain 'A'). The other 4 slices (Cyrillic/Greek/
+# Latin Extended) aren't included -- merge them separately if the full charset is needed. detect_native_ppem fails on the latin slice,
+# but the same font's cyrillic-ext/greek slices (font-01/font-03) detect stably as 8; Press Start 2P's 8px
+# grid design is well established, so ppem=8 is filled in by hand.
 
 [[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/ZeoSeven-Webfonts/1--font"
@@ -1630,8 +1630,8 @@ reason = "NanoQyoanDaSong 已从馆藏移除（字形质量不足，2026-08-30�
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/VT323"
 reason = "VT323 的轮廓坐标不在任何格点上（gcd=1，设计即带软化边角的「像素风」矢量字体），不符合原生点阵收录口径，不转制。"
 
-# ==================== 2026-08-29 自由许可复核：以下 11 款移出收录 ====================
-# 判定标准：须允许任何人商用、修改、再分发，且授权明确适用于当前文件、来源链可核验。
+# ==================== 2026-08-29 Free-license review: the following 11 fonts are removed ====================
+# Criteria: must allow anyone to use commercially, modify, and redistribute, with the license clearly applying to the current file and a verifiable provenance chain.
 
 [[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-Direct/00ff（00ff-thestronggamer）"
@@ -1677,39 +1677,39 @@ reason = "README 允许免费使用、复制、修改、分发，但另写「不
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--XiaoyaPixel-Classic（小雅像素）"
 reason = "itch.io 元数据显示 Code license: BSD 3-Clause，但仓库实际 LICENSE 与 TTF 内嵌许可均为 00FF 式自定义条款，二者冲突。该条款虽允许商用、修改与再分发，但许可可变更、修改版权归属特殊，只能算宽松自定义许可，不符合严格 libre 白名单标准。"
 
-# ==================== 合并片段：masaeedu/bitmap-fonts（2026-08-29）====================
-# masaeedu/bitmap-fonts（clone 于 2026-08-29）导入清单片段。
-# 源目录：github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/，用户已完成自由许可核查，
-# 只处理以下 23 个目录：bitocra, cherry, clearlyu, creep, ctrld-font, dina, dylex, gohufont,
+# ==================== Merged fragment: masaeedu/bitmap-fonts (2026-08-29) ====================
+# Import manifest fragment for masaeedu/bitmap-fonts (cloned 2026-08-29).
+# Source directory: github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/. The user has completed the free-license review;
+# only the following 23 directories are processed: bitocra, cherry, clearlyu, creep, ctrld-font, dina, dylex, gohufont,
 # kakwa, leggie, lode, mplus, orp-font, siji, spleen, sq, tamsyn-font-1.11, tamzen-font,
-# terminus-font-4.39, tewi-font, unscii, uw-ttyp0-1.2, xbmicons。其余目录（artwiz、boxxy、
-# jmk-x11-fonts 等）不在核查范围内，本片段一律不碰。
+# terminus-font-4.39, tewi-font, unscii, uw-ttyp0-1.2, xbmicons. The remaining directories (artwiz, boxxy,
+# jmk-x11-fonts, etc.) are out of review scope and are left entirely untouched by this fragment.
 #
-# 家族拆分说明：
-#  - bitocra/ 目录内实际含 4 款不同设计（均为 Aaron Christianson / ninjaaron 所作，同一 OFL-1.1
-#    许可）：4thD、5thElement、bitbuntu、bitocra（含 7/11/13px 与 full 字符集变体），拆成 4 个家族。
-#  - dylex/ 目录内含 2 款不同设计：6x10/7x13/10x20 三档尺寸是 X11 misc-fixed（"Fixed"/"terminal"）
-#    的 dylex 分支，14x14 是另一款名为 "crawl" 的字体（FONT XLFD 内 FAMILY_NAME 不同），拆成
-#    dylex-terminal 与 dylex-crawl 两个家族。
-#  - mplus/ 按用户指定合并为单一家族 mplus-bitmap（slug 由用户指定），涵盖 fxd/hlv/qub/sys 四种
-#    字重字号变体；mplus_cursors.bdf 是 X11 光标字体（FONT cursor），非文本字体，进 todo。
-#  - tamzen-font/ 目录除核心 Tamzen 家族外，另含 Powerline（纯符号补充字体）与 TamzenForPowerline
-#    （Tamzen 正文缝合 Powerline 符号的衍生版），均判定为非独立设计，进 todo 不收录。
-#  - spleen 已收录（slug spleen，来自 fcambus 官方仓库），本片段仅记一条 todo。
+# Family-split notes:
+#  - bitocra/ actually contains 4 distinct designs (all by Aaron Christianson / ninjaaron, under the same OFL-1.1
+#    license): 4thD, 5thElement, bitbuntu, bitocra (with 7/11/13px and full-charset variants), split into 4 families.
+#  - dylex/ contains 2 distinct designs: the 6x10/7x13/10x20 sizes are the dylex fork of X11 misc-fixed ("Fixed"/"terminal"),
+#    while 14x14 is a different font named "crawl" (a different FAMILY_NAME in the FONT XLFD), split into
+#    dylex-terminal and dylex-crawl.
+#  - mplus/ is merged per the user's instruction into a single family mplus-bitmap (slug specified by the user), covering the fxd/hlv/qub/sys
+#    weight/size variants; mplus_cursors.bdf is an X11 cursor font (FONT cursor), not a text font, so it goes into todo.
+#  - besides the core Tamzen family, tamzen-font/ also has Powerline (a pure-symbol supplement font) and TamzenForPowerline
+#    (a derivative stitching Tamzen body text with Powerline symbols); both are judged non-independent designs and go into todo, not included.
+#  - spleen is already included (slug spleen, from fcambus's official repo); this fragment only records one todo entry for it.
 #
-# 许可证文件核查：23 个目录中仅 clearlyu/README 内嵌许可证全文（MIT/X11 风格），其余全部目录
-# 均无独立 LICENSE/COPYING 文件；授权依据来自 BDF/PCF 头 COPYRIGHT/COMMENT/NOTICE 字段，或用户
-# 对上游仓库的预先核查（各 family 块上方均有注释说明依据来源）。
+# License-file review: of the 23 directories, only clearlyu/README embeds the full license text (MIT/X11 style); all other directories
+# have no standalone LICENSE/COPYING file. The licensing basis comes from the BDF/PCF header's COPYRIGHT/COMMENT/NOTICE fields, or from the user's
+# prior review of the upstream repo (each family block has a comment above it explaining the source of the determination).
 #
-# 共 26 个 family、4 个 todo。
+# 26 families and 4 todos total.
 
 # ============================================================
-# bitocra/ 目录 —— Aaron Christianson (ninjaaron) 作品合集，拆成 4 个家族
+# bitocra/ -- a collection of works by Aaron Christianson (ninjaaron), split into 4 families
 # ============================================================
 
-# 注意：许可声明在 BDF COMMENT 中（"licenced under the OFL 1.1"，见 bitocra.bdf / bitocra-13.bdf /
-# bitbuntu.bdf / bitbuntu-full.bdf / bitocra-13-full.bdf）；4thD.bdf 本身无任何版权/许可字段，
-# 按同仓库同作者 bitocra 合集整体 OFL-1.1 处理。
+# Note: the license statement is in the BDF COMMENT ("licenced under the OFL 1.1", see bitocra.bdf / bitocra-13.bdf /
+# bitbuntu.bdf / bitbuntu-full.bdf / bitocra-13-full.bdf); 4thD.bdf itself has no copyright/license field at all,
+# so it's treated under the same OFL-1.1 as the rest of the bitocra collection from the same repo/author.
 [[family]]
 slug = "4thd"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
@@ -1729,7 +1729,7 @@ spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
 note = "4thD 是极小尺寸（4px）像素字体，随 ninjaaron/bitocra 合集一同发布；文件本身无版权/许可字段，但同仓库的 bitocra.bdf 等文件明确注明 licenced under the OFL 1.1，故按同一许可对待。README 中列为 “bitocra by ninjaaron”，仓库地址见 repository。"
 
-# 注意：许可声明同上（同仓库同作者，5thElement.bdf 本身亦无版权/许可字段）。
+# Note: same license statement as above (same repo/author; 5thElement.bdf itself also has no copyright/license field).
 [[family]]
 slug = "5thelement"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
@@ -1749,7 +1749,7 @@ spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
 note = "5thElement 是极小尺寸（5px）像素字体，随 ninjaaron/bitocra 合集一同发布，许可依据同 4thD 家族说明。"
 
-# 注意：许可声明在 BDF COMMENT 中（bitbuntu.bdf 与 bitbuntu-full.bdf 均含 "licenced under the OFL 1.1"）。
+# Note: the license statement is in the BDF COMMENT (both bitbuntu.bdf and bitbuntu-full.bdf contain "licenced under the OFL 1.1").
 [[family]]
 slug = "bitbuntu"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
@@ -1769,9 +1769,9 @@ spdx = "OFL-1.1"
 name = "SIL 开放字体许可证 1.1"
 note = "Bitbuntu 是 10px 等宽终端字体，bitbuntu.bdf 为 ISO8859-1 字符集、bitbuntu-full.bdf 为 UTF8 全字符集变体，同属一款设计。COMMENT 字段明确 Copyright (c) 2011 Aaron Christianson，licenced under the OFL 1.1。"
 
-# 注意：许可声明在 BDF COMMENT 中（bitocra.bdf / bitocra-full.bdf / bitocra-13.bdf / bitocra-13-full.bdf
-# 均含 "licenced under the OFL 1.1"；bitocra7.bdf 仅有 COPYRIGHT "Aaron Christianson 2011" 字段，
-# 按同一合集整体许可对待）。
+# Note: the license statement is in the BDF COMMENT (bitocra.bdf / bitocra-full.bdf / bitocra-13.bdf / bitocra-13-full.bdf
+# all contain "licenced under the OFL 1.1"; bitocra7.bdf only has a COPYRIGHT "Aaron Christianson 2011" field,
+# so it's treated under the same overall collection license).
 [[family]]
 slug = "bitocra"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/bitocra"
@@ -1792,11 +1792,11 @@ name = "SIL 开放字体许可证 1.1"
 note = "Bitocra 主设计，含 7px/11px/13px 三档尺寸，11px 与 13px 各有 ISO8859-1 与 full（UTF8）字符集两种变体。README 列为 “bitocra by ninjaaron”。"
 
 # ============================================================
-# cherry/ —— MarinHoc 作品
+# cherry/ -- a work by MarinHoc
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件，BDF 头亦无明确许可声明（仅含 FONT/FAMILY_NAME 等基础属性）；
-# MIT 认定依据用户对上游 MarinHoc/cherry 仓库的预先核查。
+# Note: no standalone license file found in the repo, and the BDF header has no explicit license statement (only basic attributes like FONT/FAMILY_NAME);
+# the MIT determination is based on the user's prior review of the upstream MarinHoc/cherry repo.
 [[family]]
 slug = "cherry"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/cherry"
@@ -1817,7 +1817,7 @@ name = "MIT 许可证"
 note = "含 10/11/13px 三档尺寸、regular/bold 两种字重，共 6 个 BDF 文件。仓库内与 BDF 头均无许可证文本，MIT 判定依据用户对上游仓库的核查结果。"
 
 # ============================================================
-# clearlyu/ —— Mark Leisher 作品，多文种点阵字体
+# clearlyu/ -- a work by Mark Leisher, a multilingual bitmap font
 # ============================================================
 
 [[family]]
@@ -1841,11 +1841,11 @@ file = "README"
 note = "12pt/100dpi 比例宽度字体，覆盖 Unicode 多文种（拉丁、西里尔、希腊、阿拉伯、天城文等），受 Donald Knuth 的 Computer Modern 影响。README 内嵌完整许可证全文（Copyright 2000 Computing Research Lab, New Mexico State University，MIT/X11 风格用语）。cu12 为主字体，cu-alt12/cu-arabic12/cu-lig12/cu-pua12 分别是备用字形、阿拉伯文、连字与 PUA 扩展，同属一套设计的字符集拆分文件，非独立设计。目录内另有 ORIGIN 文件说明本地文件实际提取自 XFree86 4.0.2 源码包。"
 
 # ============================================================
-# creep/ —— romeovs 作品
+# creep/ -- a work by romeovs
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；BDF 头仅有 COPYRIGHT "Copyright romeovs 2013" 字段，无明确许可
-# 声明；MIT 认定依据用户对上游 romeovs/creep 仓库的预先核查。
+# Note: no standalone license file found in the repo; the BDF header only has a COPYRIGHT "Copyright romeovs 2013" field, no explicit license
+# statement; the MIT determination is based on the user's prior review of the upstream romeovs/creep repo.
 [[family]]
 slug = "creep"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/creep"
@@ -1866,11 +1866,11 @@ name = "MIT 许可证"
 note = "16px 等宽终端字体，单一尺寸单文件。BDF 头仅有 COPYRIGHT 字段无许可声明，MIT 判定依据用户核查。"
 
 # ============================================================
-# ctrld-font/ —— bjin 作品，Proggy Tiny 分支
+# ctrld-font/ -- a work by bjin, a Proggy Tiny fork
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件，BDF 头亦无明确许可声明（仅 COMMENT 注明 fork 自 Proggy Tiny）；
-# MIT 认定依据用户对上游 bjin/ctrld-font 仓库的预先核查。
+# Note: no standalone license file found in the repo, and the BDF header has no explicit license statement (only a COMMENT noting it's forked from Proggy Tiny);
+# the MIT determination is based on the user's prior review of the upstream bjin/ctrld-font repo.
 [[family]]
 slug = "ctrld"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/ctrld-font"
@@ -1891,7 +1891,7 @@ name = "MIT 许可证"
 note = "由 fontforge 生成，BDF COMMENT 注明 “forked from Proggy Tiny”。含 10/13/16px 三档尺寸，每档含 regular/bold，13px 与 16px 另有斜体（-i）变体，共 10 个 BDF 文件。MIT 判定依据用户核查。"
 
 # ============================================================
-# dina/ —— Jørgen Ibsen 作品
+# dina/ -- a work by Jørgen Ibsen
 # ============================================================
 
 [[family]]
@@ -1914,11 +1914,11 @@ name = "MIT 许可证"
 note = "经典等宽终端字体，含 r400/r700（roman 常规/粗体）与 i400/i700（斜体 常规/粗体）四组字重字型，尺寸覆盖 6/8/9/10px，共 13 个 BDF 文件。各文件 COPYRIGHT 字段明确写明 “Copyright 2013 Joergen Ibsen, MIT license”。"
 
 # ============================================================
-# dylex/ 目录 —— dylex 作品合集，实含 2 款不同设计
+# dylex/ -- a collection of works by dylex, actually containing 2 distinct designs
 # ============================================================
 
-# 注意：许可声明在 BDF COPYRIGHT 中（"Public domain font. Share and enjoy." /
-# "Public domain terminal emulator font. Share and enjoy."）。
+# Note: the license statement is in the BDF COPYRIGHT ("Public domain font. Share and enjoy." /
+# "Public domain terminal emulator font. Share and enjoy.").
 [[family]]
 slug = "dylex-terminal"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex"
@@ -1938,7 +1938,7 @@ spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
 note = "X11 misc-fixed（俗称 “Fixed”/“Terminal”）字体的 dylex 分支，源自 Markus Kuhn 的 ucs-fonts 工程（BDF COMMENT 标注 “Source: -Misc-Fixed-Medium-R-Normal…$ucs-fonts”），含 6x10/7x13/10x20 三档尺寸、regular/bold/oblique/bold-oblique 四种字型，共 12 个 BDF 文件。各文件 COPYRIGHT 字段声明 Public domain。与同目录内 14x14（crawl，见 dylex-crawl 家族）是不同设计，故拆分。"
 
-# 注意：许可声明同上（同一 BDF COPYRIGHT 声明文本）。
+# Note: same license statement as above (identical BDF COPYRIGHT text).
 [[family]]
 slug = "dylex-crawl"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/dylex"
@@ -1959,10 +1959,10 @@ name = "公有领域声明"
 note = "14px 尺寸，FONT XLFD 内 FAMILY_NAME 为 “crawl”（与同目录 “terminal”/“Fixed” 家族的 FONT 名不同，是独立设计，推测源自 Dungeon Crawl 类终端游戏用字体），含 regular/bold/oblique/bold-oblique 四种字型，共 4 个 BDF 文件。COPYRIGHT 字段同样声明 Public domain。"
 
 # ============================================================
-# gohufont/ —— Hugo Chargois 作品
+# gohufont/ -- a work by Hugo Chargois
 # ============================================================
 
-# 注意：许可声明在 BDF COMMENT 中（"Copyright by Hugo Chargois" / "Licensed under the WTFPL"）。
+# Note: the license statement is in the BDF COMMENT ("Copyright by Hugo Chargois" / "Licensed under the WTFPL").
 [[family]]
 slug = "gohufont"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/gohufont"
@@ -1983,11 +1983,11 @@ name = "WTFPL（Do What The F*ck You Want To Public License）"
 note = "含 11px/14px 两档尺寸、regular/bold 两种字重，每档另有 -uni（ISO10646/Unicode 字符集）变体，共 8 个 BDF 文件（取自 gohufont/bdf/，同名 gohufont/pcf/ 下的 .pcf.gz 未取用，优先取 BDF）。COMMENT 字段明确 Licensed under the WTFPL。"
 
 # ============================================================
-# kakwa/ —— kakwa 作品
+# kakwa/ -- a work by kakwa
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；BDF 头仅含 COPYRIGHT "Copyright (C) 2010 kakwa" 字段，无明确
-# 许可声明；OFL-1.1 认定依据用户对上游 kakwafont 主页的预先核查。
+# Note: no standalone license file found in the repo; the BDF header only has a COPYRIGHT "Copyright (C) 2010 kakwa" field, no explicit
+# license statement; the OFL-1.1 determination is based on the user's prior review of the upstream kakwafont homepage.
 [[family]]
 slug = "kakwa"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/kakwa"
@@ -2008,7 +2008,7 @@ name = "SIL 开放字体许可证 1.1"
 note = "12px 等宽终端字体，含 normal/bold 两种字重（取 BDF，同名 .pcf.gz 未取用）。OFL-1.1 判定依据用户核查。"
 
 # ============================================================
-# leggie/ —— Wiktor W Brodlo 作品
+# leggie/ -- a work by Wiktor W Brodlo
 # ============================================================
 
 [[family]]
@@ -2031,10 +2031,10 @@ name = "SIL 开放字体许可证 1.1"
 note = "12px 等宽终端字体，单文件。BDF COPYRIGHT 字段明确 “2012-2015 Wiktor W Brodlo. Released under SIL OFL”，COMMENT 附作者主页链接。"
 
 # ============================================================
-# lode/ —— Hisham Muhammad 作品
+# lode/ -- a work by Hisham Muhammad
 # ============================================================
 
-# 注意：目录内只有 PCF，无 BDF；许可声明在 PCF COPYRIGHT 属性中。
+# Note: the directory has only a PCF, no BDF; the license statement is in the PCF COPYRIGHT property.
 [[family]]
 slug = "lode"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/lode"
@@ -2055,12 +2055,12 @@ name = "GNU 通用公共许可证 2.0"
 note = "单一 PCF 文件（无 BDF 版本，管线支持直接取 PCF）。PCF COPYRIGHT 属性明确 “(C)2007 Hisham Muhammad. GNU GPL with font exception”，附带字体嵌入例外条款，允许将本字体嵌入文档而不导致文档整体受 GPL 约束。"
 
 # ============================================================
-# mplus/ —— M+ BITMAP FONTS（原版，非 itouhiro 的 PixelMplus 衍生版）
-# 用户指定 slug：mplus-bitmap；合并 fxd/hlv/qub/sys 四种变体为单一家族。
+# mplus/ -- M+ BITMAP FONTS (the original, not itouhiro's PixelMplus derivative)
+# User-specified slug: mplus-bitmap; merges the fxd/hlv/qub/sys variants into a single family.
 # ============================================================
 
 [[family]]
-# BDF 内 FAMILY_NAME "fxd"，与同目录其它三族是不同设计，按真实家族拆分
+# BDF FAMILY_NAME is "fxd"; a different design from the other three in this directory, split by actual family
 slug = "mplus-fixed"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
 take = ["mplus_f*.bdf"]
@@ -2080,13 +2080,13 @@ name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
-# orp-font/ —— Micah Elliott 作品
+# orp-font/ -- a work by Micah Elliott
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+# Note: no standalone license file found in the repo; the license statement is in the BDF COPYRIGHT.
 
 [[family]]
-# BDF 内 FAMILY_NAME "hlv"，与同目录其它三族是不同设计，按真实家族拆分
+# BDF FAMILY_NAME is "hlv"; a different design from the other three in this directory, split by actual family
 slug = "mplus-helv"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
 take = ["mplus_h*.bdf"]
@@ -2106,13 +2106,13 @@ name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
-# orp-font/ —— Micah Elliott 作品
+# orp-font/ -- a work by Micah Elliott
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+# Note: no standalone license file found in the repo; the license statement is in the BDF COPYRIGHT.
 
 [[family]]
-# BDF 内 FAMILY_NAME "qub"，与同目录其它三族是不同设计，按真实家族拆分
+# BDF FAMILY_NAME is "qub"; a different design from the other three in this directory, split by actual family
 slug = "mplus-qub"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
 take = ["mplus_q*.bdf"]
@@ -2132,13 +2132,13 @@ name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
-# orp-font/ —— Micah Elliott 作品
+# orp-font/ -- a work by Micah Elliott
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+# Note: no standalone license file found in the repo; the license statement is in the BDF COPYRIGHT.
 
 [[family]]
-# BDF 内 FAMILY_NAME "sys"，与同目录其它三族是不同设计，按真实家族拆分
+# BDF FAMILY_NAME is "sys"; a different design from the other three in this directory, split by actual family
 slug = "mplus-sys"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/mplus"
 take = ["mplus_s*.bdf"]
@@ -2158,10 +2158,10 @@ name = "M+ 字体自定义许可（宽松，允许商用/复制/分发/修改）
 note = "与我们已收录的 pixel-mplus（itouhiro 基于 M+ 的再设计）不同，本家族是 M+ BITMAP FONTS 原版，含 fxd（等宽 Fixed）、hlv（比例宽度 Helvetica 风格）、sys（比例宽度 System 风格）、qub（6px 极小号 Qube）四种子样式，共 11 个 BDF 文件。BDF COMMENT 明确 “This font is a free software. Unlimited permission is granted to use, copy, and distribute it, with or without modification, either commercially and noncommercially.”。README 未署名作者（“M+ fonts by unknown”），故 author 留空。目录内另有 mplus_cursors.bdf（FONT cursor，X11 光标字体，非文本字形），未收录，见 todo。"
 
 # ============================================================
-# orp-font/ —— Micah Elliott 作品
+# orp-font/ -- a work by Micah Elliott
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中。
+# Note: no standalone license file found in the repo; the license statement is in the BDF COPYRIGHT.
 
 [[family]]
 slug = "orp"
@@ -2183,7 +2183,7 @@ name = "公有领域声明"
 note = "12px 半窄体（SemiCondensed）等宽终端字体，含 bold/book/italic/medium 四种字型，另有 profont.bdf（FONT XLFD 内 FAMILY_NAME 为 “profont”，但尺寸、SemiCondensed 特征与 COPYRIGHT 文本均与 orp 系列完全一致，判定为同一设计下的附加变体而非独立的 Tobias Jung ProFont），共 5 个 BDF 文件（取 BDF，同名 .pcf.gz 未取用）。各文件 COPYRIGHT 字段为 “Public domain terminal emulator font. Share and enjoy.”（源自 Markus Kuhn 的 ucs-fonts 工程用语）。"
 
 # ============================================================
-# siji/ —— gstk 作品，图标字体
+# siji/ -- a work by gstk, an icon font
 # ============================================================
 
 [[family]]
@@ -2206,7 +2206,7 @@ name = "GNU 通用公共许可证 2.0"
 note = "10px 图标字体（取 bdf/siji.bdf，同名顶层 siji.pcf 未取用），BDF COMMENT 说明 “基于 Stlarch 字体、Sm4tik 的 xbm 图标包、FontAwesome 与 Lokaltog Symbol Font 制作的图标字体”。COPYRIGHT 字段为 “GPLv2”。"
 
 # ============================================================
-# sq/ —— Christian Neukirchen 作品
+# sq/ -- a work by Christian Neukirchen
 # ============================================================
 
 [[family]]
@@ -2229,10 +2229,10 @@ name = "公有领域声明"
 note = "15px 等宽终端字体，含 regular（sq）与 bold（sqb）两个 BDF 文件（同名 .pcf 未取用）。BDF COMMENT 注明 “Based upon Codec Terminal Text by Chris Cannam”，COPYRIGHT 字段为 “Public domain”。"
 
 # ============================================================
-# tamsyn-font-1.11/ —— Scott Fial 作品
+# tamsyn-font-1.11/ -- a work by Scott Fial
 # ============================================================
 
-# 注意：目录内只有 PCF/PSF，无 BDF；许可声明在 PCF COPYRIGHT 属性中，PSF 格式不受管线支持，未取用。
+# Note: the directory has only PCF/PSF, no BDF; the license statement is in the PCF COPYRIGHT property. The PSF format isn't supported by the pipeline and isn't taken.
 [[family]]
 slug = "tamsyn"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamsyn-font-1.11"
@@ -2253,11 +2253,11 @@ name = "Tamsyn 字体许可（BSD 风格）"
 note = "经典等宽终端字体，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 PCF 文件（同名 .psf.gz 为 Linux 控制台 PSF 格式，管线不支持，未取用）。PCF COPYRIGHT 属性为 “(c) 2015 Scott Fial”。Tamsyn License 为 BSD 风格自由许可。"
 
 # ============================================================
-# tamzen-font/ —— sunaku 作品，Tamsyn 衍生
+# tamzen-font/ -- a work by sunaku, a Tamsyn derivative
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；许可声明在 BDF COPYRIGHT 中，且按 Tamsyn License 的衍生条款
-# 保留原作者版权归属。
+# Note: no standalone license file found in the repo; the license statement is in the BDF COPYRIGHT, and per the Tamsyn License's derivative-work terms,
+# the original author's copyright attribution is preserved.
 [[family]]
 slug = "tamzen"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font"
@@ -2278,11 +2278,11 @@ name = "Tamsyn 字体许可（BSD 风格，衍生须保留原许可与归属）"
 note = "Tamsyn 的像素级重绘衍生版，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 BDF 文件（取自 bdf/ 子目录，同名 pcf/ 下的 .pcf 未取用）。各文件 COPYRIGHT 字段沿用 “(c) 2015 Scott Fial”，符合 Tamsyn License 对衍生作品保留原作者版权声明的要求。目录内另有 Powerline*.bdf（纯 Powerline 分隔符号补充字体）与 TamzenForPowerline*.bdf（Tamzen 正文缝合 Powerline 符号的衍生版），判定为非独立设计，未收录，见 todo。"
 
 # ============================================================
-# terminus-font-4.39/ —— Dimitar Toshkov Zhekov 作品
+# terminus-font-4.39/ -- a work by Dimitar Toshkov Zhekov
 # ============================================================
 
-# 注意：本仓库 README 未列出 terminus 词条（仅列出其修改版 “terminusmod by stlarch”），故 homepage/
-# repository 留空，未按公开常识臆造；许可声明在 BDF COPYRIGHT/NOTICE 中。
+# Note: this repo's README doesn't list a terminus entry (only its modified version "terminusmod by stlarch"), so homepage/
+# repository are left blank rather than filled in from general public knowledge; the license statement is in the BDF COPYRIGHT/NOTICE.
 [[family]]
 slug = "terminus"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/terminus-font-4.39"
@@ -2303,10 +2303,10 @@ name = "SIL 开放字体许可证 1.1"
 note = "知名等宽终端字体，v4.39。含 12/14/16/18/20/22/24/28/32px 九档尺寸、regular/bold 两种字重，14px 另有 ter-u14v.bdf（framebuffer 控制台适配变体），共 20 个 BDF 文件。BDF COPYRIGHT 字段为 “Copyright (C) 2014 Dimitar Toshkov Zhekov”，NOTICE 字段明确 “Licensed under the SIL Open Font License, Version 1.1”。项目主页公开可查（terminus-font.sourceforge.net），但因未见于本仓库 README，未填入 homepage 字段，仅供参考。"
 
 # ============================================================
-# tewi-font/ —— lucy 作品
+# tewi-font/ -- a work by lucy
 # ============================================================
 
-# 注意：许可声明在 BDF COMMENT 中（完整 GPL-3.0-or-later 文本，含字体嵌入例外条款）。
+# Note: the license statement is in the BDF COMMENT (the full GPL-3.0-or-later text, with a font-embedding exception clause).
 [[family]]
 slug = "tewi"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tewi-font"
@@ -2327,11 +2327,11 @@ name = "GNU 通用公共许可证 3.0 或更高版本"
 note = "11px 终端字体，含 Tewi（常规设计）与 Tewi2a（数字 2、字母 a 等字形的替代风格变体）两个子款，各含 normal/bold 字重，共 4 个 BDF 文件。BDF COMMENT 内嵌完整 GPLv3 许可文本（“either version 3 of the License, or (at your option) any later version”），并附带字体嵌入例外条款（内嵌本字体不会导致文档整体受 GPL 约束）。"
 
 # ============================================================
-# unscii/ —— Viznut 作品
+# unscii/ -- a work by Viznut
 # ============================================================
 
-# 注意：目录内只有 PCF，无 BDF；PCF COPYRIGHT 属性存在但值为空，未见明确许可文本；Public Domain
-# 认定依据用户对上游 unscii 主页的预先核查。unscii-16-full.pcf 是 GPL 授权文件，按用户要求排除。
+# Note: the directory has only PCF, no BDF; the PCF COPYRIGHT property exists but is empty, with no explicit license text found; the Public Domain
+# determination is based on the user's prior review of the upstream unscii homepage. unscii-16-full.pcf is GPL-licensed and excluded per the user's request.
 [[family]]
 slug = "unscii"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/unscii"
@@ -2352,10 +2352,10 @@ name = "公有领域声明"
 note = "8px/16px 两档基础尺寸，8px 另有 alt/fantasy/mcr/tall/thin 五种风格变体，共取 7 个 PCF 文件（管线支持直接取 PCF）。已排除 unscii-16-full.pcf ——该文件是唯一的 GPL 授权文件（含完整 Unicode 字符集的扩展版本），与其余 Public Domain 文件许可不同，按用户要求不予收录。"
 
 # ============================================================
-# uw-ttyp0-1.2/ —— Uwe Waldmann 作品
+# uw-ttyp0-1.2/ -- a work by Uwe Waldmann
 # ============================================================
 
-# 注意：仓库内未见独立许可证文件；许可声明在 BDF COMMENT 中（完整 MIT 风格许可文本）。
+# Note: no standalone license file found in the repo; the license statement is in the BDF COMMENT (the full MIT-style license text).
 [[family]]
 slug = "xbmicons"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/xbmicons"
@@ -2395,15 +2395,15 @@ reason = "纯 Powerline 分隔符号补充字体（不含常规拉丁字形）�
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font/bdf/TamzenForPowerline*.bdf"
 reason = "Tamzen 正文缝合 Powerline 符号的衍生版，与已收录的 tamzen 家族内容重复（仅多了符号字形），不单独收录。"
 
-# ==================== 合并片段：farsil/ibmfonts（2026-08-29）====================
-# farsil/ibmfonts — IBM PC/XT/EGA/CGA/MDA/VGA 文本模式 ROM 字库的 BDF 复刻集合。
-# 仓库 LICENSE(根目录 LICENSE 文件)明确:全部 bdf/ 下的 BDF 字体采用 CC BY-SA 4.0,
-# 许可证全文见 licenses/CC-BY-SA-4.0;configure 脚本另采用 MIT 许可,与字体无关,不收录。
-# 家族划分依据 README.md 的「Font Preview」章节与各 BDF 文件内 STARTPROPERTIES 的
-# FOUNDRY/FAMILY_NAME 字段:同一来源机型(BIOS/CGA/CGA Light/EGA/MDA/VGA)下的不同
-# 点阵尺寸(如 8x8、8x16、9x14 等)属同一字体的不同分辨率变体,合并为一个家族;
-# 不同机型来源彼此是不同字体,拆成不同家族。bdf/ 目录共 19 个文件,6 个家族的
-# take 列表合计恰好覆盖全部 19 个文件,无遗漏、无重复。
+# ==================== Merged fragment: farsil/ibmfonts (2026-08-29) ====================
+# farsil/ibmfonts -- a collection of BDF reproductions of IBM PC/XT/EGA/CGA/MDA/VGA text-mode ROM font sets.
+# The repo's LICENSE (root-directory LICENSE file) states clearly: all BDF fonts under bdf/ are licensed CC BY-SA 4.0,
+# full license text at licenses/CC-BY-SA-4.0; the configure script separately uses the MIT license, unrelated to the fonts, and is not included.
+# Family grouping follows README.md's "Font Preview" section and the FOUNDRY/FAMILY_NAME fields in each BDF file's
+# STARTPROPERTIES: different bitmap sizes (e.g. 8x8, 8x16, 9x14) from the same source machine
+# (BIOS/CGA/CGA Light/EGA/MDA/VGA) are different-resolution variants of the same font and are merged into one family;
+# different source machines are treated as different fonts and split into different families. The bdf/ directory has 19 files total, and the 6 families'
+# take lists together cover exactly all 19 files, with no gaps and no duplicates.
 
 [[family]]
 slug = "ibm-bios"
@@ -2532,18 +2532,18 @@ reason = """masaeedu 快照里只有 fontspecific 主控 BDF(CHARSET_REGISTRY �
 改从官方 1.3 发行版收录:用 mgl/unicode.mgl 按字形名重映射为 Unicode,
 见 fonts/uw-ttyp0 与 pipeline/opf/ingest/uwttyp0.py(可重跑)。"""
 
-# ==================== 合并片段:manifest-frag-tecate-2026-08-31.toml ====================
-# Tecate/bitmap-fonts + IT-Studio-Rech/bdf-fonts 自由许可复核后的补收（第四批）。
-# 两个仓库共 54 + 48 个条目,此前只收了 masaeedu 快照核定的 23 个目录;
-# 本片段补齐其余经核实为自由许可的部分,不合格者记入 [[todo]]。
+# ==================== Merged fragment: manifest-frag-tecate-2026-08-31.toml ====================
+# Additional inclusions from Tecate/bitmap-fonts + IT-Studio-Rech/bdf-fonts after free-license review (4th batch).
+# The two repos have 54 + 48 entries combined; previously only the 23 directories confirmed via the masaeedu snapshot were included;
+# this fragment fills in the remaining parts confirmed as free-licensed; disqualified ones are recorded in [[todo]].
 #
-# artwiz-aleczapka:仓库快照内无 COPYING,BDF 的 COPYRIGHT 只写
-# “artwiz, fixed by aleczapka”。授权依据为发行版的逐包许可审查结论:
-# Fedora 的 artwiz-aleczapka-*-fonts 系列 license 字段为 GPL-2.0-only,
-# Gentoo 的 media-fonts/artwiz-aleczapka-* 同样标 GPL-2。故 confidence=manual、
-# 不附许可证文件,判定依据逐族写在 note 里。
-# 目录内 16 个 BDF 是 14 套彼此独立的设计(glisp 含常规+粗体,mints 含 mild+strong
-# 两档字重),按“一个真实字体一个家族”拆成 14 个家族。
+# artwiz-aleczapka: no COPYING in the repo snapshot; the BDF's COPYRIGHT only says
+# "artwiz, fixed by aleczapka". Licensing is based on per-package license review conclusions from distros:
+# Fedora's artwiz-aleczapka-*-fonts series has license field GPL-2.0-only,
+# and Gentoo's media-fonts/artwiz-aleczapka-* is likewise marked GPL-2. Hence confidence=manual,
+# no license file attached; the determination basis is written per-family in note.
+# The 16 BDFs in the directory are 14 mutually independent designs (glisp has regular+bold, mints has mild+strong
+# weight pairs), split into 14 families per "one real font, one family".
 
 [[family]]
 slug = "artwiz-anorexia"
@@ -3459,9 +3459,9 @@ confidence = "manual"
 note = "不附许可证文件，判定依据为作者公开页面。Robey Pointer 的发布页写明本字体改自 Brian Swetland 的字体，并在正文更新中写道：“Brian has authorized his font to be released under the CC0 or CC-BY 3.0 license. Therefore, this font may also be used under either CC0 or CC-BY 3.0 license.” 取其中最无歧义的 CC0 1.0 记录。注意：IT-Studio-Rech/bdf-fonts 的 README.md 称本字体为 MIT 并链到 http://vt100.tarunz.org/LICENSE，但该链接实际是 vt100 项目（Brian J. Swetland／Vassilii Khachaturov，1999）的 BSD-3-Clause 声明，并未提及本字体，不能作为授权依据；BDF 的 COPYRIGHT 字段也只有一个没有权利人的 “MIT” 字样。"
 note_en = "No licence file is bundled; the determination rests on the author's public page. Robey Pointer's release post states that the font is derived from Brian Swetland's font and adds, in an update: \"Brian has authorized his font to be released under the CC0 or CC-BY 3.0 license. Therefore, this font may also be used under either CC0 or CC-BY 3.0 license.\" The least ambiguous of these, CC0 1.0, is recorded here. Note that the README.md of IT-Studio-Rech/bdf-fonts calls the font MIT and links to http://vt100.tarunz.org/LICENSE, but that link is in fact the BSD-3-Clause notice of the vt100 project (Brian J. Swetland / Vassilii Khachaturov, 1999), which does not mention this font and cannot serve as the licence; the BDF's COPYRIGHT field likewise contains only the bare word \"MIT\" with no rights holder."
 
-# ---- Adobe 的 X11 位图字体（xorg font-adobe-75dpi / 100dpi）。
-# 两套是同一设计按 75dpi 与 100dpi 渲染的不同像素档，文件名完全相同，
-# 用 take_from 加前缀区分后合成一个家族——按本站口径，尺寸不同即同族变体。
+# ---- Adobe's X11 bitmap fonts (xorg font-adobe-75dpi / 100dpi).
+# The two sets are the same design rendered at different pixel densities for 75dpi and 100dpi, with identical filenames,
+# disambiguated with a take_from prefix and merged into one family -- per this site's convention, different sizes are variants of the same family.
 
 [[family]]
 slug = "adobe-helvetica"
@@ -3614,10 +3614,10 @@ file = "OFL.txt"
 note = "两个上游仓库各自附带 OFL.txt，正文完全相同，仅版权年份一处不同（12px 仓库为 2025-2026，16px 仓库为 2025），均署名 yzdnn。此处收录年份范围较宽的 12px 仓库那一份。"
 note_en = "Both upstream repositories ship their own OFL.txt. The texts are identical apart from the copyright year (2025-2026 in the 12px repository, 2025 in the 16px one) and both are attributed to yzdnn. The copy catalogued here is the one from the 12px repository, whose year range covers both."
 
-# ==================== 合并片段:manifest-frag-direct-2026-08-31.toml ====================
-# 官网／itch.io 直接下载的字体（第五批）。KH ドットフォント解掉了此前 8 条孤儿 todo。
-# KH 全系 TTF 内嵌等倍点阵（EBLC/EBDT），按标称档位栅格化取到的即是内嵌位图本身；
-# 注意 detect_native_ppem 对这批返回 64（1024upem/16 单位格），是错的，必须逐文件手填 ppem。
+# ==================== Merged fragment: manifest-frag-direct-2026-08-31.toml ====================
+# Fonts downloaded directly from official sites/itch.io (5th batch). KH dot fonts resolve 8 previously orphaned todo entries.
+# The entire KH series' TTFs embed 1:1-scale bitmaps (EBLC/EBDT); rasterizing at the nominal size just retrieves the embedded bitmap itself;
+# note that detect_native_ppem returns 64 for this batch (1024upem/16-unit cell), which is wrong -- ppem must be filled in by hand for each file.
 
 [[family]]
 slug = "kh-dot-kodenmachou"
@@ -3866,8 +3866,8 @@ file = "SIL_Open_Font_License_1.1.txt"
 note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"
 note_en = "The upstream archive bundles the full SIL_Open_Font_License_1.1.txt, and the README states that the font files may be used under the SIL Open Font License 1.1 and are therefore free of particular restrictions including for commercial use. Copyright in the glyph designs rests with Keitaro Hiraki; the TrueType conversion was done by Jikasei Font Kobo. The series began life as the Dennou Font range for the Sharp X68000 and was once sold under a paid commercial licence; on being converted to TrueType, Hiraki agreed to release it freely under OFL 1.1."
 
-# ---- GGBotNet 的像素字体（itch.io 直接下载）。detect_native_ppem 对前三款判定正确，
-# QuinqueFive 判定失败，按上游说明的 5×5 格点手填。
+# ---- GGBotNet's pixel fonts (downloaded directly from itch.io). detect_native_ppem detects the first three correctly,
+# but fails on QuinqueFive, which is filled in by hand as a 5x5 grid per the upstream description.
 
 [[family]]
 slug = "public-pixel"
@@ -3981,7 +3981,7 @@ note_en = "The License.txt in the release archive is the full OFL 1.1 text, attr
 source = "direct-downloads-2026-08-31/websites/Silver, a font for games by Poppy Works.html"
 reason = "Silver（Poppy Works / Wolfgang Wozniak）。2026-08-31 依用户提供的 itch.io 页面快照重新复核，结论与此前 Maoken-Direct/7577 一致，条款一字未改：页面把授权写作“Free* License — Attribution 4.0 International (CC BY 4.0)”，随后以星号附加“However, if the budget of your production exceeds $100,000 USD in total spend or earnings, or if you require urgent support, please contact hello@poppy.works to license this font.”。CC BY 4.0 本身允许不限规模的商业使用且合规后不可撤回，而该星号把预算门槛写成了“Free* License”的组成部分（要求另行 license this font），二者直接冲突；使用者无从判断以哪个为准。按本站收录标准——授权须明确、无歧义地允许任何人为任何目的使用与商用，且不因使用者规模设限——不予收录。注：其中“urgent support（加急支持）”属服务收费，本身不影响授权；有问题的是预算门槛这一条。作者若明确该门槛只是自愿联系的请求而非使用条件，可重新评估。另：Silver 的致谢列出 PixelMPlus（itouhiro）与 DOSGothic（leedheo）为主要贡献者，这两款本站均已收录。"
 
-# ---- OpenDesktop / 萤火飞点阵字体。原生 BDF，无需转制。
+# ---- OpenDesktop / FireFly bitmap fonts. Native BDF, no conversion needed.
 [[family]]
 slug = "opendesktop-firefly"
 source = "direct-downloads-2026-08-31/opendesktop-firefly-bitmaps-1.4.2"

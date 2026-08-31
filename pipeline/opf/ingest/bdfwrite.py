@@ -1,4 +1,4 @@
-"""从 ParsedFont 写出规范 BDF(供格式转换与 PCF 源生成 BDF 下载)。"""
+"""Write a canonical BDF from a ParsedFont (used for format conversion and generating BDF downloads from PCF sources)."""
 
 from __future__ import annotations
 

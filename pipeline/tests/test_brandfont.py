@@ -25,7 +25,7 @@ def test_subset_covers_the_brand_text_and_nothing_else(tmp_path, monkeypatch):
     fonts, data, names, text = _setup(tmp_path, monkeypatch)
     meta = bf.build_brand_font(fonts, data, names)
     assert (data / meta["file"]).exists()
-    assert meta["family"] == "FBF Brand"      # OFL 保留字体名条款：子集必须改名
+    assert meta["family"] == "FBF Brand"      # OFL Reserved Font Name clause: subsets must be renamed
 
     from fontTools.ttLib import TTFont
     f = TTFont(data / meta["file"])

@@ -13,11 +13,11 @@ const { lang, detail, licenseText } = Astro.props;
 const s = t(lang);
 const m = detail.meta;
 const lic = m.license;
-// 取值统一走 pickText：繁体由简体转换，其余语言回落英文
-// 中日文用全角括号，其余用半角
+// Values are all resolved via pickText: Traditional is converted from Simplified, other languages fall back to English
+// CJK languages use full-width parens, others use half-width
 const cjk = lang === 'zh' || lang === 'zh-Hant' || lang === 'ja';
-// 作者列表整份切换语言（不逐项配对：中英两份的拆分粒度不一定一样）；
-// 繁体和站内其它中文一样由简体转出
+// The author list switches language as a whole set (not item-by-item pairing: the Chinese and
+// English lists may not split the same way); Traditional is converted from Simplified like the rest of the site's Chinese
 const authors = (
   lang === 'zh' || lang === 'zh-Hant'
     ? m.authors
@@ -36,7 +36,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
       authors.length > 0 && (
         <>
           <dt>{s.detail.author}</dt>
-          {/* 每位作者链到按其名字搜索的目录页，便于顺藤摸到同作者的其它字体 */}
+          {/* Each author links to the catalogue page searched by their name, making it easy to find their other fonts */}
           <dd data-testid="meta-author">
             {authors.map((a, i) => (
               <>{i > 0 ? (cjk ? '、' : ', ') : ''}<a href={withBase(`/${lang}/?q=${encodeURIComponent(a)}`)}>{a}</a></>
@@ -75,7 +75,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
       m.scripts.length > 0 && (
         <>
           <dt>{s.catalogue.scripts}</dt>
-          {/* 每项链到按该文字筛选的目录页 */}
+          {/* Each item links to the catalogue page filtered by that script */}
           <dd>
             {m.scripts.map((sc, i) => (
               <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?scripts=${encodeURIComponent(sc)}`)} title={s.scriptRules[sc] ?? ''}>{s.scriptNames[sc] ?? sc}</a></>
@@ -88,7 +88,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
       m.vibes.length > 0 && (
         <>
           <dt>{s.catalogue.vibes}</dt>
-          {/* 同上：链到按该气质标签筛选的目录页 */}
+          {/* Same as above: links to the catalogue page filtered by that vibe tag */}
           <dd>
             {m.vibes.map((v, i) => (
               <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?vibes=${encodeURIComponent(v)}`)}>{s.vibeNames[v] ?? v}</a></>

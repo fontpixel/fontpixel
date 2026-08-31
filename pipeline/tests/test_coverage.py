@@ -53,7 +53,7 @@ def test_badges():
 
 
 def test_detect_scripts_and_sample_lang():
-    # 简体中文要整份 GB/T 2312（≥90%），只有一级字表不够
+    # Simplified Chinese needs the full GB/T 2312 (>=90%); level-1 alone isn't enough
     cov = coverage_for(frozenset(BY_ID["gb2312"].cps), CHARSETS)
     assert "zh-hans" in detect_scripts(cov)
     assert pick_sample_lang(cov) == "zh-Hans"
@@ -76,7 +76,7 @@ def test_detect_scripts_and_sample_lang():
 
 
 def test_pan_cjk_font_prefers_zh_hans_sample():
-    """wqy 型字体:GB2312 全覆盖 + 假名/JIS 也高 → 样例应为 zh-Hans 而非 ja。"""
+    """WQY-style font: full GB2312 coverage plus high kana/JIS -> sample should be zh-Hans, not ja."""
     cps = set(BY_ID["gb2312"].cps) | set(BY_ID["hiragana"].cps) | set(
         BY_ID["katakana"].cps)
     cps |= set(sorted(BY_ID["jisx0208-l1"].cps)[:2800])  # jis1 ~0.94
@@ -87,7 +87,7 @@ def test_pan_cjk_font_prefers_zh_hans_sample():
 def test_korean_font_prefers_ko_sample():
     cps = set(BY_ID["ksx1001-hangul"].cps) | set(BY_ID["hiragana"].cps) | set(
         BY_ID["katakana"].cps) | set(range(0x20, 0x7F))
-    # 白墨那类韩文字体带一部分汉字，但不该被标成中文
+    # Fonts like Baekmuk, a Korean font family, carry some hanja but must not be flagged as Chinese
     cov = coverage_for(frozenset(cps), CHARSETS)
     assert pick_sample_lang(cov) == "ko"
 
@@ -102,7 +102,7 @@ def test_overview():
     pua = dict((p[0], (p[1], p[2])) for p in ov["pua"])
     assert pua["BMP PUA"] == (1, 6400)
     assert pua["Plane 15"] == (0, 65534)
-    assert ov["han_total"][0] == 2  # 4E00 + 20000;FA0E 属兼容区单列
+    assert ov["han_total"][0] == 2  # 4E00 + 20000; FA0E is counted separately under the compatibility block
     assert ov["compat"][0] == 1
     assert ov["compat_unified_note"] == (1, 12)
 
@@ -111,5 +111,5 @@ def test_unicode_block_coverage():
     rows = unicode_block_coverage(frozenset({0x41}), UCD)
     d = {r[0]: (r[1], r[2]) for r in rows}
     assert d["Basic Latin"] == (1, 128)
-    assert len(rows) > 100  # 含零覆盖区段(已指派的区段全部列出)
+    assert len(rows) > 100  # includes zero-coverage blocks (every assigned block is listed)
     assert d["CJK Unified Ideographs"][0] == 0

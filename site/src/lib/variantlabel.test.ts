@@ -20,7 +20,7 @@ describe('variantLabels', () => {
   });
 
   test('字宽不同的变体必须能区分', () => {
-    // Galmuri11 与 Galmuri11-Condensed 同为 16px 常规比例，只差字宽
+    // Galmuri11 and Galmuri11-Condensed are both 16px regular proportional, differing only in width
     const out = variantLabels(
       [v({ id: 'Galmuri11' }), v({ id: 'Galmuri11-Condensed', width: 'condensed' })],
       S,
@@ -35,7 +35,7 @@ describe('variantLabels', () => {
   });
 
   test('所有维度都相同时退回变体名，绝不留下无法区分的重名', () => {
-    // misc-fixed 有 6 个变体同为 13px 常规等宽，只有文件名不同
+    // misc-fixed has 6 variants all 13px regular monospaced, differing only by filename
     const out = variantLabels(
       [v({ id: '6x13' }), v({ id: '6x13B' }), v({ id: '6x13O' })],
       S,
@@ -58,8 +58,8 @@ describe('variantLabels', () => {
   });
 
   test('兜底只补 id 中有区分度的部分，不重复公共前缀', () => {
-    // ark-pixel 的港标/传承/台标三个变体，只有结尾的 hk/tr/tw 不同；
-    // 整串文件名缀上去又长又读不出重点
+    // ark-pixel's HK/Legacy/TW variants differ only by the trailing hk/tr/tw;
+    // appending the whole filename would be long and unreadable
     const out = variantLabels(
       [
         v({ id: 'ark-pixel-10px-monospaced-zh_hk', script: 'zh-Hant' }),

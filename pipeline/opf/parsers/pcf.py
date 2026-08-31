@@ -1,9 +1,9 @@
-"""PCF 解析器。
+"""PCF parser.
 
-读取 properties / metrics / bitmaps / encodings / glyph names /
-accelerators 表;归一化位序、字节序与行填充到 BDF 约定
-(行按 ceil(w/8) 字节,位 MSB-first,最左像素在最高位);
-按 CHARSET_REGISTRY 把旧字符集码位映射到 Unicode。
+Reads the properties / metrics / bitmaps / encodings / glyph names /
+accelerators tables; normalizes bit order, byte order, and row padding to the
+BDF convention (rows are ceil(w/8) bytes, MSB-first bits, leftmost pixel in
+the high bit); maps legacy charset code points to Unicode by CHARSET_REGISTRY.
 """
 
 from __future__ import annotations
@@ -68,7 +68,7 @@ def _read_format(data: bytes, offset: int) -> tuple[int, _Reader]:
 
 
 def _read_metric(r: _Reader, compressed: bool) -> tuple[int, int, int, int, int]:
-    """返回 (lsb, rsb, width, ascent, descent)。"""
+    """Returns (lsb, rsb, width, ascent, descent)."""
     if compressed:
         lsb = r.u8() - 0x80
         rsb = r.u8() - 0x80

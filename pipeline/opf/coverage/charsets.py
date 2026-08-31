@@ -1,8 +1,8 @@
-"""字表注册与加载(契约 C7)。
+"""Charset registration and loading (contract C7).
 
-数据文件格式:头部 `# key: value` 注释(id/section/name_zh/name_en/
-desc_zh/desc_en/source/license/order),正文每行:
-`XXXX`(hex 码位)| `XXXX..YYYY`(闭区间)| 字面字符(逐字符取)。
+Data file format: header `# key: value` comments (id/section/name_zh/name_en/
+desc_zh/desc_en/source/license/order), body lines each one of:
+`XXXX` (hex code point) | `XXXX..YYYY` (closed range) | literal characters (taken one per character).
 """
 
 from __future__ import annotations

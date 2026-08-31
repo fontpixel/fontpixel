@@ -43,12 +43,12 @@ def test_single_size_roundtrip(tmp_path):
 
 
 def test_multi_size_strikes(tmp_path):
-    """同一字体的多个尺寸应打进同一个 TTF 的多个 strike。"""
+    """Multiple sizes of the same font should build into separate strikes of the same TTF."""
     real = FIX / "real-galmuri7.bdf"
     if not real.exists():
         pytest.skip("no real fixture")
     small = parse_bdf(real, "g")
-    big = _mini()  # 16px，与 galmuri7 尺寸不同即可
+    big = _mini()  # 16px, just needs to differ in size from galmuri7
     out = tmp_path / "multi.ttf"
     info = build_ttf([small, big], "Multi", "Regular", out)
     assert info["strikes"] == 2
@@ -56,7 +56,7 @@ def test_multi_size_strikes(tmp_path):
 
     strikes = convert_otb(out, "multi")
     assert {s for s, _ in strikes} == {f"{small.pixel_size}px", f"{big.pixel_size}px"}
-    # 每个 strike 只含该尺寸实际有的字形
+    # each strike only contains the glyphs that size actually has
     by_suffix = {s: f for s, f in strikes}
     small_cps = {g.cp for g in by_suffix[f"{small.pixel_size}px"].glyphs}
     assert 0x41 in small_cps
@@ -71,7 +71,7 @@ def test_cmap_and_no_outlines(tmp_path):
     assert "EBDT" in f and "EBLC" in f
     cmap = f.getBestCmap()
     assert 0x41 in cmap and 0x6C38 in cmap
-    # 所有字形都是空轮廓：位图字体不带矢量数据
+    # all glyphs have empty outlines: bitmap fonts carry no vector data
     glyf = f["glyf"]
     for name in f.getGlyphOrder():
         assert glyf[name].numberOfContours in (0, -1) or not glyf[name].isComposite()

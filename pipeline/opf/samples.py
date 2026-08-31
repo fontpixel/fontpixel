@@ -1,4 +1,4 @@
-"""默认样例句(spec §5.2)与核心包字符集。"""
+"""Default sample text (spec §5.2) and the core pack character set."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ SAMPLES: dict[str, str] = {
 
 
 def core_text() -> str:
-    """核心包字符：可打印 ASCII + 平/片假名 + 谚文兼容字母 + 全部默认样例句。"""
+    """Core pack characters: printable ASCII + hiragana/katakana + Hangul compatibility jamo + every default sample sentence."""
     parts = [
         "".join(chr(c) for c in range(0x20, 0x7F)),
         "".join(chr(c) for c in range(0x3041, 0x3097)),
@@ -33,11 +33,14 @@ CORE_TEXT = core_text()
 
 
 def specimen(cps: list[int] | set[int], n: int = 24) -> str:
-    """从字体自己的字形里取一段样例。
+    """Pull a sample from the font's own glyphs.
 
-    图标／符号字体一个书写系统都不达标，会落到拉丁兜底，于是拿英文句子去排
-    一个没有字母的字体，整行都是缺字框。这时改用字体自身的字形做样例。
-    在全部码位上等距取样，而不是取头几个——头部往往是控制符或占位符。
+    Icon/symbol fonts don't reach threshold for any script, so they fall
+    back to Latin — which means setting an English sentence in a font
+    that has no letters, filling the whole line with missing-glyph boxes.
+    In that case, use the font's own glyphs as the sample instead. Sample
+    evenly across all codepoints rather than taking the first few — the
+    front of the range is often control characters or placeholders.
     """
     usable = sorted(c for c in cps if c >= 0x20 and not 0x7F <= c <= 0x9F)
     if not usable:
@@ -51,7 +54,7 @@ def specimen(cps: list[int] | set[int], n: int = 24) -> str:
 
 
 def sample_is_broken(text: str, cps: set[int], threshold: float = 0.5) -> bool:
-    """样例里缺掉的字符是否已多到不适合再用（空格不计）。"""
+    """Whether too many characters in the sample are missing to still be usable (spaces excluded)."""
     chars = [ch for ch in text if ch not in " \n"]
     if not chars:
         return True

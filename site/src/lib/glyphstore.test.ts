@@ -62,10 +62,10 @@ test('chars outside any range resolve to null', async () => {
 test('lru evicts old chunks', async () => {
   const { fetchFn, calls } = makeFetch();
   const store = new GlyphStore('/data', fetchFn as unknown as typeof fetch, 1);
-  await store.glyphsFor('mini', 'mini', '永'); // chunk 6c00 进入容量 1 的缓存
-  await store.glyphsFor('mini', 'mini', 'A'); // core 不占 LRU；再取 65 无新 chunk
-  await store.glyphsFor('mini', 'mini', '天'); // 0x5929 无区块 → 无 fetch
+  await store.glyphsFor('mini', 'mini', '永'); // chunk 6c00 enters the capacity-1 cache
+  await store.glyphsFor('mini', 'mini', 'A'); // core doesn't count toward LRU; fetching 65 again causes no new chunk
+  await store.glyphsFor('mini', 'mini', '天'); // 0x5929 has no chunk -> no fetch
   await store.glyphsFor('mini', 'mini', '永');
   const chunkCalls = calls.filter((c) => c.includes('00006c00-00006d00'));
-  expect(chunkCalls.length).toBe(1); // 容量 1 且未被其他 chunk 挤出 → 仍缓存
+  expect(chunkCalls.length).toBe(1); // capacity 1 and not evicted by another chunk -> still cached
 });

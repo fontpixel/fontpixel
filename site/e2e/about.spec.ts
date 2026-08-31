@@ -6,7 +6,7 @@ test('about page explains metrics and lists data sources', async ({ page }) => {
   await expect(page.locator('main')).toContainText('宣称大小');
   await expect(page.locator('main')).toContainText('family.toml');
   const rows = page.locator('[data-testid="datasources"] tbody tr');
-  await expect(rows).toHaveCount(64); // 与字表数一致
+  await expect(rows).toHaveCount(64); // matches the number of charsets
 });
 
 test('about page english version', async ({ page }) => {

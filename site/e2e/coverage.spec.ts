@@ -15,7 +15,7 @@ test('coverage report shows charset rows with denominators', async ({ page }) =>
 
 test('missing chars open from the row that owns them', async ({ page }) => {
   await page.goto('zh/fonts/wqy-bitmap-song/');
-  // 注音符号 41/75：缺 34
+  // Bopomofo 41/75: missing 34
   const row = page.locator(
     '[data-variant-panel]:not([hidden]) [data-charset="bopomofo"]',
   );
@@ -47,10 +47,10 @@ test('glyph grid renders sheets and inspector', async ({ page }) => {
     .not.toBe('');
   const cell = await sheet.evaluate((c: HTMLCanvasElement) => Number(c.dataset['cell']));
   const block = await sheet.evaluate((c: HTMLCanvasElement) => Number(c.dataset['block']));
-  // 点击首个区块内的 'A'(若在)或该块首个存在的格子:用 A 所在 block 0 canvas
+  // click 'A' within the first block (if present), or the block's first existing cell: uses the block 0 canvas that holds A
   const rect = await sheet.boundingBox();
   const scale = rect!.width / (16 * cell);
-  const target = 0x41 - block; // block 0 时为 65
+  const target = 0x41 - block; // 65 when block is 0
   const col = target % 16;
   const row = Math.floor(target / 16);
   await sheet.click({
@@ -70,11 +70,11 @@ test('char lookup filters catalogue', async ({ page }) => {
   const all = await countOf();
   await page.getByTestId('chars-input').fill('永');
   await expect.poll(countOf).toBeLessThanOrEqual(all);
-  expect(await countOf()).toBeGreaterThanOrEqual(4); // 五家族中至少 4 家有「永」
+  expect(await countOf()).toBeGreaterThanOrEqual(4); // at least 4 of the 5 families have "永"
   const yong = await countOf();
-  await page.getByTestId('chars-input').fill('永͸'); // 加 U+0378(未指派)后只会更少
+  await page.getByTestId('chars-input').fill('永͸'); // adding U+0378 (unassigned) can only reduce the count
   await expect.poll(countOf).toBeLessThanOrEqual(yong);
-  await page.getByTestId('chars-input').fill('\u{40000}'); // 第 4 平面,任何字体都不会编码
+  await page.getByTestId('chars-input').fill('\u{40000}'); // plane 4, no font encodes this
   await expect.poll(countOf).toBe(0);
   await expect(page.getByTestId('catalogue-island')).toContainText('没有符合条件的字体');
 });
@@ -82,7 +82,7 @@ test('char lookup filters catalogue', async ({ page }) => {
 test('glyph sheets lay out three per row on a wide screen', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('zh/fonts/wqy-bitmap-song/');
-  // 岛屿是 client:visible，先把网格滚进视口再等图元出现
+  // the island is client:visible; scroll the grid into view first, then wait for it to render
   const grid = page.getByTestId('glyph-grid');
   await grid.scrollIntoViewIfNeeded();
   const sheets = grid.locator('.gg__sheets .gg__sheet');
@@ -94,10 +94,10 @@ test('glyph sheets lay out three per row on a wide screen', async ({ page }) => 
     }),
   );
   expect(boxes.length).toBeGreaterThanOrEqual(6);
-  // 前三个同一行，第四个换行
+  // the first three are on the same row, the fourth wraps
   expect(new Set(boxes.slice(0, 3).map((b) => b.y)).size).toBe(1);
   expect(boxes[3]!.y).toBeGreaterThan(boxes[0]!.y);
-  // 三列等宽，且铺满容器
+  // three equal-width columns filling the container
   expect(new Set(boxes.slice(0, 3).map((b) => b.w)).size).toBe(1);
   const container = await grid
     .locator('.gg__sheets')
@@ -115,7 +115,7 @@ test('jump-to-block dropdown lists covered Unicode blocks after the ranges', asy
   await grid.scrollIntoViewIfNeeded();
   const select = grid.getByTestId('range-select');
 
-  // block 选项在所有分块 range 之后，且归在一个分组里
+  // block options come after all range options, and are grouped together
   const groups = select.locator('optgroup');
   await expect(groups).toHaveCount(1);
   const values = await select.locator('option').evaluateAll((os) =>
@@ -126,10 +126,10 @@ test('jump-to-block dropdown lists covered Unicode blocks after the ranges', asy
   expect(values.slice(0, firstBlock).every((v) => v.startsWith('r:'))).toBe(true);
   expect(values.slice(firstBlock).every((v) => v.startsWith('b:'))).toBe(true);
 
-  // 选中某个 block 后，只显示该 block 所在的码位范围
+  // after selecting a block, only that block's code point range is shown
   await select.selectOption('b:Hiragana');
   await page.waitForTimeout(400);
-  // 平假名 U+3040–U+309F：只出这一页，不能因按 256 对齐而带出邻居 block
+  // Hiragana U+3040-U+309F: should only show this one page, not pull in a neighboring block due to 256-alignment
   expect(await grid.locator('.gg__sheet figcaption').allInnerTexts()).toEqual([
     'U+3040',
   ]);
@@ -146,7 +146,7 @@ test('a block spanning several chunk files still renders glyphs', async ({
   await page.goto('zh/fonts/wqy-bitmap-song/');
   const grid = page.getByTestId('glyph-grid');
   await grid.scrollIntoViewIfNeeded();
-  // CJK 统一汉字横跨多个分块文件，每张 sheet 要各自找到对应分块
+  // CJK Unified Ideographs spans multiple chunk files; each sheet must find its own matching chunk
   await grid.getByTestId('range-select').selectOption('b:CJK Unified Ideographs');
   await page.waitForTimeout(1500);
   const painted = await grid.locator('.gg__sheet canvas').evaluateAll((cs) => {
@@ -171,24 +171,24 @@ test('jump-to-block has a search box that narrows the options', async ({
   const select = grid.getByTestId('range-select');
   const search = grid.getByTestId('range-search');
   const count = () => select.locator('option').count();
-  // 岛屿是 client:visible，先等选项渲染出来再取基线
+  // the island is client:visible; wait for options to render before taking the baseline
   await expect.poll(count).toBeGreaterThan(1);
   const all = await count();
 
-  // 按名字搜
+  // search by name
   await search.fill('hira');
   await expect.poll(count).toBeLessThan(all);
   const names = await select.locator('optgroup option').allInnerTexts();
   expect(names.some((n) => n.startsWith('Hiragana'))).toBe(true);
   expect(names.every((n) => /hira/i.test(n))).toBe(true);
 
-  // 按码位搜
+  // search by code point
   await search.fill('4e00');
   await expect
     .poll(async () => await select.locator('optgroup option').allInnerTexts())
     .toEqual(expect.arrayContaining([expect.stringContaining('U+4E00')]));
 
-  // 清空即还原
+  // clearing restores it
   await search.fill('');
   await expect.poll(count).toBe(all);
 });
@@ -199,7 +199,7 @@ test('the current selection survives filtering', async ({ page }) => {
   await grid.scrollIntoViewIfNeeded();
   const select = grid.getByTestId('range-select');
   await select.selectOption('b:Hiragana');
-  // 搜一个匹配不到当前选中项的词，下拉不能变成空白
+  // searching a term that doesn't match the current selection shouldn't leave the dropdown blank
   await grid.getByTestId('range-search').fill('cyrillic');
   await expect(select).toHaveValue('b:Hiragana');
   expect(await select.locator('option').count()).toBeGreaterThan(0);
@@ -209,7 +209,7 @@ test('missing glyphs are boxed and titled with their code point', async ({
   page,
 }) => {
   await page.goto('zh/fonts/wqy-bitmap-song/');
-  // 点开第一个「缺 N 字」，内容在弹窗里
+  // open the first "missing N chars", content is in the modal
   const btn = page.locator('.cov__missbtn').first();
   await btn.scrollIntoViewIfNeeded();
   await btn.click();
@@ -219,7 +219,7 @@ test('missing glyphs are boxed and titled with their code point', async ({
   const n = await chars.count();
   expect(n).toBeGreaterThan(0);
 
-  // 每个缺字都带 U+XXXX 的 title，且与字符本身一致
+  // every missing char has a U+XXXX title matching the character itself
   for (const el of (await chars.all()).slice(0, 12)) {
     const ch = (await el.innerText()).trim();
     const title = await el.getAttribute('title');
@@ -229,7 +229,7 @@ test('missing glyphs are boxed and titled with their code point', async ({
         ch.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0'),
     );
   }
-  // 淡边框
+  // faint border
   await expect(chars.first()).toHaveCSS('border-top-width', '1px');
 });
 
@@ -243,14 +243,14 @@ test('missing chars open in a modal that closes again', async ({ page }) => {
   const label = (await btn.innerText()).trim();
   await btn.click();
   await expect(dlg).toBeVisible();
-  // 标题带上字表名与缺字数
+  // the title carries the charset name and missing-char count
   await expect(dlg.locator('[data-modal-title]')).toContainText(label);
   await expect(dlg.locator('.cov__miss').first()).toBeVisible();
 
   await dlg.locator('[data-modal-close]').click();
   await expect(dlg).toBeHidden();
 
-  // Esc 也能关（原生 dialog 的行为）
+  // Esc also closes it (native dialog behavior)
   await btn.click();
   await expect(dlg).toBeVisible();
   await page.keyboard.press('Escape');
@@ -270,14 +270,14 @@ test('coverage section has its own variant picker, synced with the top one', asy
   );
   expect(ids.length).toBeGreaterThan(1);
 
-  // 在覆盖率这里换变体：面板跟着换，顶部下拉也跟着走
+  // switch variant here in the coverage section: the panel follows, and so does the top dropdown
   await pick.selectOption(ids[2]!);
   await expect(top).toHaveValue(ids[2]!);
   await expect(
     page.locator(`[data-variant-panel~="${ids[2]}"]`).first(),
   ).toBeVisible();
 
-  // 反向：在顶部换，覆盖率这边的下拉同步
+  // reverse: switch at the top, the coverage dropdown here stays in sync
   await top.selectOption(ids[0]!);
   await expect(pick).toHaveValue(ids[0]!);
 });

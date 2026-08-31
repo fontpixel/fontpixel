@@ -1,4 +1,4 @@
-/** 关于页中文正文。英文版about.en.ts由Opus/Sonnet翻译流程产出。 */
+/** Chinese body text for the about page. The English version, about.en.ts, is produced by the Opus/Sonnet translation pipeline. */
 
 export interface AboutSection {
   id: string;

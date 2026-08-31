@@ -1,9 +1,9 @@
-/** 把试写框里的点阵导出成可粘贴的文本。 */
+/** Export the bitmap in the trial-writing box as pasteable text. */
 import type { DecodedGlyph } from './glyphpack';
 import { rowBytes } from './glyphpack';
 import type { RasterResult } from './render';
 
-/** 整段渲染结果转成 `.#` 点阵图。 */
+/** Convert a full raster result into a `.#` bitmap. */
 export function toDotText(r: RasterResult): string {
   const lines: string[] = [];
   for (let y = 0; y < r.height; y++) {
@@ -11,7 +11,7 @@ export function toDotText(r: RasterResult): string {
     for (let x = 0; x < r.width; x++) s += r.mask[y * r.width + x] ? '#' : '.';
     lines.push(s);
   }
-  // 去掉上下全空的行，粘出去才不会带一堆空白
+  // Trim blank rows from the top and bottom so pasting doesn't drag in whitespace
   let a = 0;
   let b = lines.length - 1;
   while (a <= b && !lines[a]!.includes('#')) a++;
@@ -33,11 +33,14 @@ function hexRows(g: DecodedGlyph): string[] {
 }
 
 /**
- * 按 BDF 的字形段格式导出，每个字符一段。
+ * Export in BDF glyph-block format, one block per character.
  *
- * 不是整幅画面导成一个巨大字形——那样粘回字体里没用。这里给的是可以直接
- * 贴进 .bdf 的 STARTCHAR…ENDCHAR 段，编码、步进、包围盒、位图行都按 BDF
- * 的写法（位图每行按字节对齐、高位在左，与 BDF 规范一致）。
+ * This does not export the whole rendered canvas as one giant glyph — that
+ * wouldn't be usable when pasted back into a font. Instead it produces
+ * STARTCHAR…ENDCHAR blocks that can be pasted directly into a .bdf file,
+ * with encoding, step width, bounding box, and bitmap rows all following
+ * BDF conventions (each bitmap row byte-aligned, MSB first, matching the
+ * BDF spec).
  */
 export function toBdfText(
   text: string,

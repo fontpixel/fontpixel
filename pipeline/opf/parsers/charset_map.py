@@ -1,7 +1,7 @@
-"""旧字符集码位 → Unicode 映射(BDF/PCF 共用)。
+"""Legacy charset code point → Unicode mapping (shared by BDF/PCF).
 
-GL(0x2121 基)与 GR(0xA1A1 基)双字节码通过 |0x80 归一
-(对 GR 幂等),再交给对应编解码器。
+GL-based (0x2121 base) and GR-based (0xA1A1 base) double-byte codes are
+normalized via |0x80 (a no-op for GR), then handed off to the matching codec.
 """
 
 from __future__ import annotations
@@ -12,9 +12,11 @@ def is_unicode_registry(registry: str) -> bool:
     return r.startswith(("iso10646", "unicode", "ucs"))
 
 
-# 单字节字符集:一个码位最多 0xFF。BDF 里出现更大的 ENCODING 只可能是
-# 字体把 registry 写错了(实为 Unicode 编码却自报 ISO8859),此时按 Unicode
-# 原样透传,不能当作“无法映射”丢掉——lemon 就因此丢过 839 个字形。
+# Single-byte charsets: a code point tops out at 0xFF. A larger ENCODING
+# appearing in a BDF can only mean the font declared the wrong registry (it's
+# actually Unicode-encoded but claims ISO8859) -- in that case pass it
+# through as Unicode as-is rather than dropping it as "unmappable". lemon
+# lost 839 glyphs this way before this check existed.
 _SINGLE_BYTE = ("iso8859", "koi8", "ascii", "iso646")
 
 

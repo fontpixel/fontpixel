@@ -1,6 +1,6 @@
-"""导入执行器：manifest.toml → fonts/<slug>/，幂等，产出导入报告。
+"""Import executor: manifest.toml -> fonts/<slug>/, idempotent, produces an import report.
 
-用法：python -m opf.ingest.run --manifest ingest/manifest.toml \
+Usage: python -m opf.ingest.run --manifest ingest/manifest.toml \
         --src ../pixel-font-collection-fonts --dest fonts [--only slug] \
         [--report docs/import-report.md]
 """
@@ -23,10 +23,11 @@ from opf.ingest.otb import convert_otb
 TODAY = "2026-08-31"
 
 def _q(v: str) -> str:
-    """TOML 基本字符串转义。清单里的说明文字含引号很常见。
+    """TOML basic-string escaping. Description text in the manifest commonly contains quotes.
 
-    控制字符必须一并转义:TOML 规范禁止基本字符串里出现裸控制字符,漏掉
-    \r、\b、\f 之类会生成解析不了的 family.toml。
+    Control characters must be escaped too: the TOML spec forbids bare control
+    characters in basic strings, and missing one (\r, \b, \f, etc.) produces
+    a family.toml that fails to parse.
     """
     out = []
     for ch in str(v):
@@ -47,9 +48,10 @@ def _arr(items) -> str:
 
 def _render_toml(fam: dict, provenance: str, provenance_en: str,
                  converted_from: str, added: str) -> str:
-    """按现有 family.toml 的字段顺序渲染：中文块 → 英文块 → [license]。
+    """Render in the same field order as existing family.toml files: Chinese block -> English block -> [license].
 
-    清单没给的字段一律留空/省略，交人工补；form/vibes 打 UNVERIFIED 标记。
+    Fields the manifest doesn't provide are left blank/omitted for manual
+    follow-up; form/vibes are marked UNVERIFIED.
     """
     authors = fam.get("authors") or [a for a in [fam.get("author", "")] if a]
     lines = [
@@ -105,7 +107,7 @@ def _render_toml(fam: dict, provenance: str, provenance_en: str,
         for k, v in merge.items():
             lines.append(f'"{_q(k)}" = {_arr(v)}')
 
-    # 逐变体覆写（上游元数据有错时用，例如 PIXEL_SIZE 被复制粘贴写错）。
+    # Per-variant overrides (for when upstream metadata is wrong, e.g. PIXEL_SIZE copy-pasted incorrectly).
     for fname, ov in (fam.get("variants") or {}).items():
         lines += ["", f'[variants."{_q(fname)}"]']
         for k, v in ov.items():
@@ -134,7 +136,7 @@ def _sha(p: Path) -> str:
 
 
 def _place(src_bytes: bytes, target: Path, report: IngestReport) -> bool:
-    """写入文件，内容相同则跳过；返回是否有变化。"""
+    """Write the file, skipping if content is unchanged; returns whether anything changed."""
     if target.exists() and hashlib.sha256(src_bytes).hexdigest() == _sha(target):
         report.files_unchanged += 1
         return False
@@ -145,11 +147,13 @@ def _place(src_bytes: bytes, target: Path, report: IngestReport) -> bool:
 
 
 class _DestGuard:
-    """同一家族内，凡是会写到同一个目标文件名的来源都要报出来。
+    """Within one family, flag any sources that would write to the same destination filename.
 
-    原先逐个模式各查各的，跨模式的冲突（take = ["a/x.bdf", "b/x.bdf"]）与
-    license_files 的冲突都漏掉了；而 take 是后者覆盖前者、license_files 是
-    只取第一个，静默地由排序决定收录哪一份。
+    Previously each pattern was checked in isolation, so cross-pattern
+    conflicts (take = ["a/x.bdf", "b/x.bdf"]) and license_files conflicts both
+    slipped through; take lets the later source overwrite the earlier one,
+    while license_files just takes the first match — silently letting sort
+    order decide which copy gets included.
     """
 
     def __init__(self, slug: str, report: IngestReport) -> None:
@@ -171,12 +175,13 @@ class _DestGuard:
 
 
 def _matches(path: Path, source: Path, pat: str) -> bool:
-    """含 “/” 的模式（或以 “./” 开头的）按相对 source 的路径匹配，否则按文件名匹配。
+    """A pattern containing "/" (or starting with "./") matches against the path relative to source; otherwise it matches by filename.
 
-    源目录根部的同名文件用 “./LICENSE” 这样的写法锚定。
+    A same-named file at the source root is anchored with a pattern like "./LICENSE".
 
-    路径模式逐段匹配：fnmatch 的 “*” 会跨过 “/”，直接拿整条路径去匹配会让
-    “fonts/*.ttf” 命中 “fonts/nested/x.ttf”，把本想排除的子目录又收进来。
+    Path patterns are matched segment by segment: fnmatch's "*" crosses "/",
+    so matching the whole path directly would let "fonts/*.ttf" match
+    "fonts/nested/x.ttf", pulling in a subdirectory meant to be excluded.
     """
     if pat.startswith("./"):
         pat = pat[2:]
@@ -222,9 +227,11 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
         for p in matched:
             changed |= _place(p.read_bytes(), dest / p.name, report)
 
-    # take_from:{前缀 = [模式...]}。上游把同一设计按解析度分成两套目录、
-    # 文件名却完全相同（Adobe 的 75dpi 与 100dpi 都叫 helvR12.bdf，实为
-    # 12px 与 17px），直接按原名落地会互相覆盖，得加前缀区分。
+    # take_from: {prefix = [pattern...]}. Upstream splits the same design into
+    # two directories by resolution, with identical filenames (Adobe's 75dpi
+    # and 100dpi both use helvR12.bdf, which are really 12px and 17px);
+    # writing them under the original name would overwrite each other, so a
+    # prefix is added to distinguish them.
     for prefix, pats in (fam.get("take_from") or {}).items():
         for pat in pats:
             matched = _collect(source, pat)
@@ -258,10 +265,13 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
             elif convert == "ttf":
                 from opf.ingest.rasterize import detect_native_ppem, rasterize_ttf
 
-                # ppem 可给整数（整族一档），也可给 {文件名 = 档位} 的表——
-                # 同一设计的多个尺寸在一个家族里时（KH ドット的道玄坂 12／16），
-                # 单一 ppem 不够用。上游若自带内嵌点阵，按其标称档位取到的就是
-                # 内嵌位图本身，比栅格化轮廓更准。
+                # ppem can be a single integer (one size for the whole
+                # family), or a {filename = size} table -- a single ppem
+                # isn't enough when a family bundles multiple sizes of the
+                # same design (e.g. KH Dot's Dogenzaka 12/16). If upstream
+                # ships an embedded bitmap, taking it at its nominal size
+                # gets the embedded bitmap itself, which is more accurate
+                # than rasterizing the outline.
                 cfg = fam.get("ppem")
                 ppem = cfg.get(p.name) if isinstance(cfg, dict) else cfg
                 if not ppem:
@@ -289,16 +299,17 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
         else:
             report.errors.append(f"{slug}: 许可证文件未找到 {lf}")
 
-    # 许可证只存在于压缩包内的上游（X11 时代的 .tar.gz 字体包尤其常见）。
+    # Upstreams where the license only exists inside an archive (especially common for X11-era .tar.gz font packages).
     lic_from = fam.get("license_from", "")
     if lic_from:
-        # 先按 source 相对路径找，找不到再按 --src 根目录找（许可证包常与字体
-        # 目录平级，例如 <repo>/archives/<x>.tar.gz 对 <repo>/bitmap/<x>/）。
+        # First look relative to source, then fall back to the --src root
+        # (the license archive is often a sibling of the font directory,
+        # e.g. <repo>/archives/<x>.tar.gz alongside <repo>/bitmap/<x>/).
         arc = source / lic_from
         if not arc.exists():
             arc = src_root / lic_from
         if arc.is_file() and not (is_tar(arc) or arc.suffix.lower() == ".zip"):
-            # 上游把许可证放在别的仓库/目录里（如字体只有编译产物、许可证在源码库）。
+            # Upstream keeps the license in a separate repo/directory (e.g. the font is compiled-output-only, with the license in the source repo).
             changed |= _place(arc.read_bytes(), dest / arc.name, report)
             arc = None
     if lic_from and arc is not None:
@@ -344,7 +355,7 @@ def run_manifest(manifest_path: Path, src_root: Path, dest_root: Path,
             continue
         try:
             changed = _ingest_family(fam, src_root, dest_root, report)
-        except Exception as e:  # noqa: BLE001 - 单家族失败不阻塞批量导入
+        except Exception as e:  # noqa: BLE001 - a single family's failure shouldn't block the batch import
             report.errors.append(f"{slug}: {e}")
             continue
         (report.imported if changed else report.skipped).append(slug)

@@ -1,4 +1,4 @@
-/** 变体选择器的标签：同一家族内必须两两可区分。 */
+/** Labels for the variant picker: every pair within a family must be distinguishable. */
 
 export interface LabelledVariant {
   id: string;
@@ -16,13 +16,17 @@ interface Names {
 }
 
 /**
- * 给一组变体生成标签。
+ * Generate labels for a set of variants.
  *
- * 只报「组内真正有差异」的维度：全是等宽就不必每条都写「等宽」，字宽全是
- * 常规就不写字宽。这样标签既短又都能互相区分。
+ * Only report dimensions that actually vary within the group: if every
+ * variant is monospace, no need to spell out "monospace" on each label; if
+ * every width is regular, skip the width. This keeps labels short while
+ * still distinguishing them.
  *
- * 维度全撞上时（misc-fixed 有 6 个变体同为 13px 常规等宽，只有文件名不同）
- * 补上变体自身的 id 兜底——宁可标签长，也不能给用户两个选不开的同名项。
+ * When every dimension collides (misc-fixed has 6 variants that are all
+ * 13px regular monospace, differing only by filename), fall back to
+ * appending the variant's own id — better a long label than two identical
+ * entries the user can't tell apart.
  */
 export function variantLabels(vs: LabelledVariant[], s: Names): string[] {
   const varies = <T>(pick: (v: LabelledVariant) => T) =>
@@ -35,7 +39,7 @@ export function variantLabels(vs: LabelledVariant[], s: Names): string[] {
 
   const base = vs.map((v) => {
     const bits: string[] = [`${v.size}px`];
-    // 只有一个变体时没有可比对象，仍给出字重与排布，信息量不至于太少
+    // With only one variant there's nothing to compare against, but still show weight and spacing so the label isn't too sparse
     if (showWeight || vs.length === 1) bits.push(s.weightNames[v.weight] ?? v.weight);
     if (showSpacing || vs.length === 1) bits.push(s.spacingNames[v.spacing] ?? v.spacing);
     if (showWidth) bits.push(s.widthNames[v.width] ?? v.width);
@@ -43,7 +47,7 @@ export function variantLabels(vs: LabelledVariant[], s: Names): string[] {
     return bits.join(' · ');
   });
 
-  // 仍有重名的，把 id 缀上；只补重名的那些，不牵连其它标签
+  // For any labels that still collide, append the id; only touch the colliding ones, leave the rest alone
   const count = new Map<string, number>();
   for (const b of base) count.set(b, (count.get(b) ?? 0) + 1);
   return base.map((b, i) =>
@@ -52,18 +56,21 @@ export function variantLabels(vs: LabelledVariant[], s: Names): string[] {
 }
 
 /**
- * 从变体 id 里取出有区分度的尾部。
+ * Extract the distinguishing tail from a variant id.
  *
- * 同一家族的 id 往往共享长前缀（ark-pixel-10px-monospaced-zh_hk / …_zh_tw），
- * 整串缀进标签又长又读不出重点，剥掉公共前缀后只剩 hk / tw 这样的关键差异。
+ * Ids within a family often share a long prefix (ark-pixel-10px-monospaced-
+ * zh_hk / …_zh_tw); appending the whole string to the label is long and
+ * buries the point, so stripping the common prefix leaves just the key
+ * difference, like hk / tw.
  */
 function distinguishing(id: string, all: LabelledVariant[]): string {
-  // 只跟「同样重名」的那几个比：跨尺寸的变体会让公共前缀提前分叉，
-  // 结果把 10px-monospaced-zh_hk 整串留下来
+  // Only compare against the peers that share this label — comparing across
+  // sizes would make the common prefix diverge too early, leaving the whole
+  // "10px-monospaced-zh_hk" string in the result
   const peers = all.filter((v) => v.id !== id);
   if (!peers.length) return id;
   const parts = id.split(/[-_]/);
-  // 从尾部起逐段加长，取第一个能与所有同侪区分开的后缀
+  // Grow the tail one segment at a time from the end, taking the first suffix that distinguishes it from all peers
   for (let n = 1; n <= parts.length; n += 1) {
     const tail = parts.slice(parts.length - n).join('-');
     const unique = peers.every((v) => !v.id.endsWith(tail));

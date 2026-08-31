@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * 日文文案里去掉 CJK 与拉丁字母／数字之间的空格。
+ * Remove spaces between CJK characters and Latin letters/digits in Japanese copy.
  *
- * 中文排版常写「位图 TTF」，日文不这么写：ビットマップTTF、12pxの五種類。
- * 和欧文之间的间距由排版引擎处理（アキ），手写空格反而会变成两倍宽。
+ * Chinese typesetting often writes "位图 TTF" (bitmap TTF) with a space; Japanese does not: ビットマップTTF、12pxの五種類.
+ * Spacing against Latin text is handled by the layout engine (アキ); a manually typed space would end up doubling the width instead.
  *
- *   node scripts/ja-spacing.mjs --check   只报告，不改
- *   node scripts/ja-spacing.mjs           就地修正
+ *   node scripts/ja-spacing.mjs --check   report only, don't fix
+ *   node scripts/ja-spacing.mjs           fix in place
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 

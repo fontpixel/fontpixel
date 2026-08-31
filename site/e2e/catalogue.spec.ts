@@ -7,8 +7,9 @@ async function resultCount(page: Page): Promise<number> {
   return Number.parseInt(text!.match(/\d+/)![0], 10);
 }
 
-/** 目录岛是 client:load 水合的：goto 之后立刻 fill，输入会赶在水合之前被丢掉。
- *  每轮重新填一次，水合一完成就生效——不靠固定 sleep，也不依赖内部实现。 */
+/** The catalogue island hydrates via client:load: filling right after goto loses the input
+ *  before hydration finishes. Refill each round—once hydration completes it takes effect,
+ *  without relying on a fixed sleep or internal implementation details. */
 async function searchFor(page: Page, q: string, expected: number): Promise<void> {
   await expect
     .poll(async () => {
@@ -58,12 +59,12 @@ test('url state restores filters on load', async ({ page }) => {
 
 test('search narrows results', async ({ page }) => {
   await page.goto('zh/');
-  // 两条命中：Galmuri 本身，以及曾用名 GalmuriExtended 的全小素
+  // two matches: Galmuri itself, and Quan Pixel via its former name GalmuriExtended
   await searchFor(page, 'galmuri', 2);
   await expect(page.locator(`${ISLAND} .card[data-slug="galmuri"]`)).toBeVisible();
   await expect(page.locator(`${ISLAND} .card[data-slug="quan-pixel"]`)).toBeVisible();
 
-  // 只有曾用名能命中的查询，只应留下那一款
+  // a query that only the former name matches should leave just that one
   await searchFor(page, 'GalmuriExtended', 1);
   await expect(page.locator(`${ISLAND} .card[data-slug="quan-pixel"]`)).toBeVisible();
 });
@@ -105,7 +106,7 @@ test('coverage form filters as you type and resets', async ({ page }) => {
   await page.goto('zh/');
   const all = await resultCount(page);
   const panel = page.locator('[data-testid="coverage-filter"]');
-  // 百分比预填 90，选中字表即刻生效
+  // percentage is pre-filled to 90, selecting a charset takes effect immediately
   await expect(panel.locator('[data-testid="coverage-pct"]')).toHaveValue('90');
   await panel.locator('[data-testid="coverage-charset"]').selectOption('gb2312');
   await expect.poll(() => resultCount(page)).toBeLessThan(all);
@@ -114,7 +115,7 @@ test('coverage form filters as you type and resets', async ({ page }) => {
   await expect(
     page.locator(`${ISLAND} .card[data-slug="wqy-bitmap-song"]`),
   ).toBeVisible();
-  // 门槛降低应放进更多字体
+  // lowering the threshold should include more fonts
   const strict = await resultCount(page);
   await panel.locator('[data-testid="coverage-pct"]').fill('50');
   await expect.poll(() => resultCount(page)).toBeGreaterThan(strict);
@@ -124,7 +125,7 @@ test('coverage form filters as you type and resets', async ({ page }) => {
 
 test('search matches across simplified and traditional forms', async ({ page }) => {
   await page.goto('zh/');
-  // 家族名是「東雲ゴシック」，搜简体「东云」应能命中
+  // family name is "東雲ゴシック", searching simplified "东云" should also match
   await page.getByTestId('search-input').fill('东云');
   await expect
     .poll(() =>
@@ -147,7 +148,7 @@ test('commercial-only filter is gone', async ({ page }) => {
 });
 
 test('vibe tags are localised, never raw slugs', async ({ page }) => {
-  // 数据里存的是 classic / retro-game / terminal-hardcore 这类 slug
+  // the data stores slugs like classic / retro-game / terminal-hardcore
   const SLUGS = ['retro-game', 'terminal-hardcore', 'handwriting', 'classic'];
   for (const [path, expected] of [
     ['zh/', '复古游戏'],
@@ -158,10 +159,10 @@ test('vibe tags are localised, never raw slugs', async ({ page }) => {
     await expect(panel).toContainText(expected);
     const text = await panel.innerText();
     for (const slug of SLUGS) {
-      expect(text, `${path} 不该出现原始 slug ${slug}`).not.toContain(slug);
+      expect(text, `${path} should not show the raw slug ${slug}`).not.toContain(slug);
     }
   }
-  // 详情页同理
+  // same goes for the detail page
   await page.goto('zh/fonts/wqy-bitmap-song/');
   const side = page.locator('aside').first();
   expect(await side.innerText()).not.toContain('classic');
@@ -183,7 +184,7 @@ test('switching language keeps the current page and its filter state', async ({
   expect(url.search).toContain('cov=gb2312');
   await expect(page.getByTestId('search-input')).toHaveValue('宋');
 
-  // 详情页没有查询串，也要切到同一个字体
+  // the detail page has no query string, but should still switch to the same font
   await page.goto('zh/fonts/galmuri/');
   await page.getByTestId('lang-menu').locator('summary').click();
   await page.getByTestId('lang-switch').click();

@@ -1,8 +1,9 @@
-/** gzip 解压：浏览器用 DecompressionStream,Node（测试）用 zlib。 */
+/** gzip decompression: DecompressionStream in the browser, zlib on Node (tests). */
 
 export async function gunzip(buf: ArrayBuffer): Promise<ArrayBuffer> {
-  // 服务器若设置 Content-Encoding: gzip（如 astro preview），浏览器已在传输层
-  // 解压；嗅探 gzip 魔数，非 gzip 直接原样返回。
+  // If the server sets Content-Encoding: gzip (e.g. astro preview), the
+  // browser already decompressed it at the transport layer; sniff the gzip
+  // magic bytes and return as-is if it's not gzip.
   const head = new Uint8Array(buf);
   if (head.length < 2 || head[0] !== 0x1f || head[1] !== 0x8b) {
     return buf;

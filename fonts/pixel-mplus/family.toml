@@ -8,9 +8,9 @@ vibes = ["retro-game"]  # UNVERIFIED
 aliases = ["Pixel Mplus", "ピクセルMplus", "PixelMplus10", "PixelMplus12"]
 converted_from = ""
 provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--PixelMplus；上游https://github.com/itouhiro/PixelMplus；日文假名与汉字取自M+ BITMAP FONTS。"
-# 上游按X11惯例把同一字面拆成几份：汉字假名一份、拉丁一份（-iso）、
-# 半角假名一份（-jisx0201）、补充符号一份（-jisx0213）。主文件里连ASCII
-# 空格都没有，分别收录会显示成几个残缺字体。
+# Following X11 convention, upstream splits the same typeface into several parts: one for Han/kana, one for Latin (-iso),
+# one for half-width kana (-jisx0201), and one for supplementary symbols (-jisx0213). The main file doesn't even have
+# an ASCII space, so including them separately would show up as several incomplete fonts.
 merge_subsets = true
 added = "2026-08-21"
 name_en = "PixelMplus"

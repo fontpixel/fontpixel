@@ -1,13 +1,17 @@
-/** 工具与文档区块的路由与侧栏辅助。
+/** Routing and sidebar helpers for the tools/docs sections.
  *
- * 路由形制：/{lang}/<section>/<slug>/，slug 为空即区块首页。
- * 内容为英文单语，六种语言路由都渲染同一份正文（页头等站壳仍随语言），
- * 与家族元数据「缺译回落」同一条规则。
+ * Route shape: /{lang}/<section>/<slug>/, with an empty slug meaning the
+ * section's index page.
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { LANGS } from '../i18n';
+import type { Lang } from '../i18n';
 
 export type DocEntry = CollectionEntry<'docs'>;
+
+/** Languages the docs body text actually exists in. Routes and hreflang are
+ * emitted only for these — English-only content gets only /en/…; add a language
+ * here when translations (e.g. *.zh.mdx) land. */
+export const DOC_LANGS: Lang[] = ['en'];
 
 export const DOC_SECTIONS = {
   'font-template': 'Font Template',
@@ -17,13 +21,13 @@ export const DOC_SECTIONS = {
 } as const;
 export type DocSection = keyof typeof DOC_SECTIONS;
 
-/** 区块内 slug：去掉区块前缀与结尾的 index。首页为空串。 */
+/** Slug within a section: strips the section prefix and a trailing index. Empty string for the index page. */
 export function docSlug(entry: DocEntry, section: DocSection): string {
   const rest = entry.id.slice(section.length + 1);
   return rest.replace(/(^|\/)index$/, '').replace(/\/$/, '');
 }
 
-/** 不含语言前缀的页面路径（Base 的 path 约定），带尾斜杠。 */
+/** Page path without the language prefix (Base's path convention), with a trailing slash. */
 export function docPath(section: DocSection, entry: DocEntry): string {
   const slug = docSlug(entry, section);
   return `/${section}/` + (slug ? `${slug}/` : '');
@@ -34,10 +38,10 @@ export async function sectionEntries(section: DocSection): Promise<DocEntry[]> {
   return entries.sort((a, b) => a.data.order - b.data.order);
 }
 
-/** 四个区块共用的 getStaticPaths 实现。 */
+/** Shared getStaticPaths implementation for all four sections. */
 export async function docStaticPaths(section: DocSection) {
   const entries = await sectionEntries(section);
-  return LANGS.flatMap((lang) =>
+  return DOC_LANGS.flatMap((lang) =>
     entries.map((entry) => ({
       params: { lang, slug: docSlug(entry, section) || undefined },
       props: { entry },

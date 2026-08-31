@@ -17,7 +17,7 @@ def _g(cp: int, w: int, h: int, bits: list[str], dwidth: int | None = None) -> G
 
 
 def _sq(cp: int, side: int, box: int) -> Glyph:
-    """box×box 实心方块居左上,放在 side×side 字形格里。"""
+    """A box×box solid block anchored top-left, placed in a side×side glyph cell."""
     bits = ["1" * box + "0" * (side - box)] * box + ["0" * side] * (side - box)
     return _g(cp, side, side, bits)
 
@@ -39,7 +39,7 @@ def test_ink_bbox_trims_margins():
 
 
 def test_ink_ignores_bits_beyond_width():
-    # bbw=7,末位第 8 bit 不应计入
+    # bbw=7, so the 8th bit at the end should not be counted
     g = Glyph(cp=65, name="A", dwidth=8, bbw=7, bbh=2, bbx=0, bby=0,
               rows=bytes([0b00000001, 0b00000001]))
     assert glyph_ink_size(g) is None
@@ -75,8 +75,8 @@ def test_monospace_tolerance():
     g99 = [_g(0x2000 + i, 8, 8, ["11111111"] * 8, dwidth=8) for i in range(99)]
     one = [_g(0x3000, 8, 8, ["11111111"] * 8, dwidth=5)]
     assert is_monospaced(_font(g99 + one)) is True
-    # 少数派宽度取 5 而非 4：4 正好是 8 的一半，那是合法的半宽/全宽格，
-    # 不该被当成「零散的少数派」
+    # the minority width is 5, not 4: 4 is exactly half of 8, which is a legitimate
+    # half-width/full-width grid and must not be treated as "scattered minority noise"
     g95 = g99[:95]
     five = [_g(0x3000 + i, 8, 8, ["11111111"] * 8, dwidth=5) for i in range(5)]
     assert is_monospaced(_font(g95 + five)) is False
@@ -93,17 +93,17 @@ def test_claimed_size():
 
 
 class _FakeGlyphs:
-    """只需要 dwidth——is_monospaced 不看别的。"""
+    """Only dwidth is needed -- is_monospaced looks at nothing else."""
 
     def __init__(self, widths):
         self.glyphs = [type("G", (), {"dwidth": w})() for w in widths]
 
 
 def test_monospace_accepts_cjk_half_and_full_width_grid():
-    """CJK 等宽字体有半宽与全宽两档，不该被判成比例。
+    """CJK monospace fonts have both half-width and full-width tiers; they must not be classified as proportional.
 
-    只看单一众数的话，拉丁那 800 多个半宽字形会把占比压到 96%，
-    所有 CJK 等宽字体都会被误判。
+    Looking at only a single mode would let those 800-odd Latin half-width glyphs
+    push the share down to 96%, misclassifying every CJK monospace font.
     """
     from opf.metrics import is_monospaced
 
@@ -112,7 +112,7 @@ def test_monospace_accepts_cjk_half_and_full_width_grid():
 
 
 def test_monospace_still_rejects_genuinely_proportional():
-    """真比例字体宽度散落多档，不能因为有个大众数就算等宽。"""
+    """A genuinely proportional font has widths scattered across many tiers; a large mode alone doesn't make it monospace."""
     from opf.metrics import is_monospaced
 
     spread = _FakeGlyphs(

@@ -67,11 +67,11 @@ function run(over: Partial<FilterState>) {
 
 describe('applyFilters', () => {
   test('empty state keeps all, sorted by name', () => {
-    expect(run({})).toEqual(['b', 'a']); // 阿尔法 vs Beta：localeCompare
+    expect(run({})).toEqual(['b', 'a']); // 阿尔法 vs Beta: localeCompare
   });
 
   test('q 简繁互通', () => {
-    // searchText 由构建期做过简繁展开：家族名是「東雲」，搜「东云」也应命中
+    // searchText gets Simplified/Traditional expansion at build time: family name is "東雲", searching "东云" should also match
     expect(run({ q: '东云' })).toEqual(['a']);
     expect(run({ q: '東雲' })).toEqual(['a']);
   });
@@ -80,18 +80,18 @@ describe('applyFilters', () => {
     expect(run({ q: 'alpha' })).toEqual(['a']);
     expect(run({ q: '阿尔' })).toEqual(['a']);
     expect(run({ q: 'quiple' })).toEqual(['a']);
-    // 并列作者的第二位也要能搜到
+    // the second co-author should also be searchable
     expect(run({ q: 'Lee Yerim' })).toEqual(['a']);
     expect(run({ q: 'zzz' })).toEqual([]);
   });
 
   test('q 按空白拆词，全部命中才算', () => {
-    // 「俐方」与「cubic」各自都在，合起来搜也该命中；
-    // 整串当子串匹配的话，跨字段的组合永远落空
+    // "俐方" and "cubic" are each present, so a combined search should also match;
+    // if matched as a whole substring, a cross-field combination would never match
     expect(run({ q: '阿尔法 Alpha' })).toEqual(['a']);
     expect(run({ q: 'Alpha 阿尔法' })).toEqual(['a']);
     expect(run({ q: 'Alpha zzz' })).toEqual([]);
-    expect(run({ q: '阿尔法　Alpha' })).toEqual(['a']); // 全角空格
+    expect(run({ q: '阿尔法　Alpha' })).toEqual(['a']); // full-width space
   });
 
   test('q 命中 searchText 里的曾用名', () => {
@@ -100,8 +100,8 @@ describe('applyFilters', () => {
   });
 
   test('inkH 按任一变体命中', () => {
-    // 文泉驿式：一个家族有 11/12/13/14/16 五档，按 14-14 也该命中；
-    // 只比家族最大值的话就落空了
+    // wenquanyi-style: a family has five tiers 11/12/13/14/16, searching 14-14 should also match;
+    // comparing only against the family's max would miss it
     expect(run({ inkH: [14, 14] })).toEqual(['a']);
     expect(run({ inkH: [12, 16] })).toEqual(['a']);
     expect(run({ inkH: [17, 20] })).toEqual([]);
@@ -139,7 +139,7 @@ describe('applyFilters', () => {
     expect(
       applyFilters(ALL, { ...emptyState(), chars: '永' }, lookup).map((f) => f.slug),
     ).toEqual(['b']);
-    // 无 lookup 时不筛（等待懒加载）
+    // without a lookup, don't filter (waiting on lazy load)
     expect(run({ chars: '永' })).toEqual(['b', 'a']);
   });
 

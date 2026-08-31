@@ -1,6 +1,7 @@
-"""下载物构建：每变体 bdf.gz / pcf.gz，每家族 zip（含许可证与来源 README）。
+"""Download artifact build: bdf.gz / pcf.gz per variant, a zip per family (with license and provenance README).
 
-全部产物字节级确定：gzip mtime=0、zip 条目时间戳固定 1980-01-01。
+All output is byte-for-byte deterministic: gzip mtime=0, zip entry
+timestamps pinned to 1980-01-01.
 """
 
 from __future__ import annotations
@@ -18,16 +19,17 @@ from opf.ingest.bdfwrite import write_bdf
 from opf.model import ParsedFont
 from opf.ttfexport import build_ttf, name_records
 
-ROUND_MAX_GLYPHS = 20000  # 超过此字形数只出方块矢量版
+ROUND_MAX_GLYPHS = 20000  # above this glyph count, only produce the square vector variant
 _ZIP_DATE = (1980, 1, 1, 0, 0, 0)
 
 
 def _restyle_ttf(raw: bytes, family: str, style: str, copyright_: str) -> bytes:
-    """只改写已有 TTF 的 name 表，不碰 glyf——省掉重新矢量化。
+    """Rewrite only the name table of an existing TTF, leaving glyf untouched — avoids re-vectorizing.
 
-    recalcTimestamp=False 是必须的：默认的 save() 会把 head.modified 改成
-    当前时间，产物就不再字节级确定了。tests 里有一条断言这样改出来的字节
-    与「用新元数据全量重建」完全一致。
+    recalcTimestamp=False is required: the default save() sets
+    head.modified to the current time, which would break byte-level
+    determinism. A test asserts that the bytes produced this way are
+    identical to a full rebuild with the new metadata.
     """
     import io
 
@@ -45,7 +47,7 @@ def _restyle_ttf(raw: bytes, family: str, style: str, copyright_: str) -> bytes:
 
 
 def _rezip_readme(raw: bytes, readme_text: str) -> bytes:
-    """只替换 zip 里的 README，其余成员原样搬过去（时间戳仍固定）。"""
+    """Replace only the README inside the zip, carrying every other member over as-is (timestamps still pinned)."""
     import io
 
     src = io.BytesIO(raw)
@@ -69,16 +71,17 @@ def refresh_downloads_metadata(
     family_display: str,
     copyright_line: str,
 ) -> list[dict]:
-    """把新元数据刷进已有下载物：TTF 换 name 表、zip 换 README。
+    """Refresh new metadata into existing downloads: swap the TTF name table, swap the zip's README.
 
-    字形轮廓与 BDF/PCF 都与元数据无关，原样留着——这条路径正是为了
-    避开重新矢量化（131 个家族要半小时）。返回更新后的条目（体积与
-    sha256 会变），BDF/PCF 条目原样返回。
+    Glyph outlines and BDF/PCF are unrelated to metadata and are left
+    as-is — this whole path exists precisely to avoid re-vectorizing
+    (half an hour for 131 families). Returns the updated entries (size
+    and sha256 change); BDF/PCF entries are returned unchanged.
     """
     fresh: list[dict] = []
     for e in entries:
         kind, path = e["kind"], out / e["file"]
-        if not path.exists():           # 产物被清掉了，交给全量重建
+        if not path.exists():           # output was pruned; let it fall back to a full rebuild
             return []
         raw = path.read_bytes()
         if kind.startswith("ttf"):
@@ -93,10 +96,12 @@ def refresh_downloads_metadata(
 
 
 def _ttf_style(raw: bytes) -> str:
-    """读回 TTF 自己的 styleName（name ID 2）。
+    """Read back the TTF's own styleName (name ID 2).
 
-    style 由变体分组（字重／排布／语言子集）决定，属于结构性信息，命中
-    缓存时不会变，所以从产物里读回来就够，不必再解析字体。
+    style is determined by variant grouping (weight/spacing/script
+    subset), which is structural information that doesn't change on a
+    cache hit, so reading it back from the output is enough — no need to
+    reparse the font.
     """
     import io
 
@@ -124,7 +129,7 @@ def _entry(slug: str, variant_id: str | None, kind: str, file: str, data: bytes,
 
 
 def _source_bdf_bytes(f: ParsedFont) -> bytes:
-    """变体的 BDF 原文；源是 .gz 先解压，源是 PCF 则由 ParsedFont 反写。"""
+    """The variant's original BDF text; decompress first if the source is .gz, or write it back out from ParsedFont if the source is PCF."""
     name = f.path.name.lower()
     if name.endswith(".bdf"):
         return f.path.read_bytes()
@@ -184,12 +189,14 @@ def build_downloads(
 
     from opf.vectorize import build_vector_ttf
 
-    # 位图 TTF：同一字体（同字重／排布／语言子集）的所有尺寸打进一个文件
+    # Bitmap TTF: all sizes of the same font (same weight/spacing/script
+    # subset) get packed into one file.
     groups: dict[tuple[str, str, str], list[tuple[ParsedFont, VariantDesc]]] = {}
     for f, v in fonts:
         groups.setdefault((v.weight, v.spacing, v.script_subset or ""), []).append((f, v))
     multi = len(groups) > 1
-    # 只把组间真正有差异的维度写进文件名,避免 sq-monospaced-bold.ttf 这种冗余
+    # Only put dimensions that actually vary between groups into the
+    # filename, to avoid redundancy like sq-monospaced-bold.ttf.
     varying = [
         i for i in range(3)
         if len({key[i] for key in groups}) > 1
@@ -205,7 +212,8 @@ def build_downloads(
         from opf.ttfexport import MAX_GLYPHS
 
         union = len({g.cp for f, _ in items for g in f.glyphs})
-        # 上游有时把超大字体拆成多份（合起来会超过 TTF 的字形数上限），此时逐份导出
+        # Upstream sometimes splits an oversized font into multiple pieces
+        # (combined they'd exceed the TTF glyph count limit) — export per piece in that case.
         batches = ([(name, [it for it in items])] if union + 1 <= MAX_GLYPHS
                    else [(f"{suffix}-{v.id}.ttf", [(f, v)]) for f, v in items])
         for fname, batch in batches:
@@ -216,15 +224,17 @@ def build_downloads(
                               style or "Regular", tmp, copyright_=copyright_line)
                     entries.append(_entry(slug, None, "ttf", fname,
                                           tmp.read_bytes(), out))
-            except Exception as e:  # noqa: BLE001 - TTF 失败不影响 BDF/PCF 下载
+            except Exception as e:  # noqa: BLE001 - a TTF failure doesn't affect BDF/PCF downloads
                 for f, _ in batch:
                     f.warnings.append(f"TTF 导出失败（{fname}）：{e}")
 
-        # 矢量 TTF：每个字面只出最大的那档像素尺寸。矢量轮廓本就能任意缩放，
-        # 把同一字面的每个尺寸都导一遍只是成倍放大下载体积。
+        # Vector TTF: only export the largest pixel size for each typeface.
+        # Vector outlines already scale arbitrarily, so exporting every
+        # size of the same typeface would just multiply the download size.
         rf, rv = max(items, key=lambda it: (it[1].size, it[1].id))
-        # 圆点逐像素成环、无法像方块那样合并游程，超大字体单文件可达数十 MB，
-        # 因此字形数超过阈值的只给方块版。
+        # Round dots trace each pixel as its own ring and can't merge runs
+        # the way squares can, so an oversized font can reach tens of MB in
+        # a single file — hence glyph counts above the threshold get only the square variant.
         shapes = ["square"] if len(rf.glyphs) > ROUND_MAX_GLYPHS else ["square", "round"]
         for shape in shapes:
             vname = f"{suffix}-{rv.size}px-{shape}.ttf"
@@ -235,7 +245,7 @@ def build_downloads(
                                      shape=shape, copyright_=copyright_line)
                     entries.append(_entry(slug, None, f"ttf-{shape}", vname,
                                           tmp.read_bytes(), out))
-            except Exception as e:  # noqa: BLE001 - 单文件失败不影响其它下载
+            except Exception as e:  # noqa: BLE001 - a single file failing doesn't affect other downloads
                 rf.warnings.append(f"矢量 TTF 导出失败（{vname}）：{e}")
 
     for lf in license_files:

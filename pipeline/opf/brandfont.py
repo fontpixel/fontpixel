@@ -1,12 +1,17 @@
-"""站名 web 字体：把站名用到的字符从馆藏像素字体子集成一个小字体。
+"""Site-name web font: subset the characters used by the site name out of a
+collection pixel font into a small font of its own.
 
-页头站名此前用 canvas 逐页渲染（取字形包 → 光栅化 → 换掉文字），每次翻页
-都闪一下。改成构建期产出 brand.woff2（几 KB，全站缓存一份），页头回归纯
-文本。字符清单的唯一来源是 site/src/i18n/sitenames.json——站点的 i18n 与
-本脚本读同一份，站名一改，两边同时跟上。
+The header site name used to be rendered page-by-page on canvas (pick a
+glyph pack → rasterize → swap in the text), which flickered on every page
+change. This now produces brand.woff2 at build time instead (a few KB,
+cached once for the whole site), and the header goes back to plain text.
+The single source of truth for the character list is
+site/src/i18n/sitenames.json — the site's i18n and this script read the
+same file, so a site-name change stays in sync on both sides.
 
-家族名叫 FBF Brand 而不是 Fusion Pixel：OFL 的保留字体名条款要求修改版
-改名，子集属于修改。
+The family is named FBF Brand rather than Fusion Pixel: OFL's Reserved
+Font Name clause requires modified versions to be renamed, and this subset
+counts as a modification.
 """
 
 from __future__ import annotations
@@ -19,11 +24,13 @@ from pathlib import Path
 from opf.parsers.bdf import parse_bdf
 from opf.vectorize import build_vector_ttf
 
-# 候选源，按偏好排序；取第一个存在且全覆盖站名字符集的。
-# fusion-pixel 各语言变体字符集相同（只有汉字字形随语言变），任选其一即可。
+# Candidate sources, in preference order; use the first one that exists
+# and fully covers the site name's character set.
+# fusion-pixel's language variants share the same character set (only the
+# CJK glyph shapes differ by language), so any one of them works.
 SOURCES = (
     "fusion-pixel/fusion-pixel-12px-proportional-zh_hans.bdf",
-    "unifont-ex/unifont-ex.bdf",   # 兜底：什么都有，但字面大一号
+    "unifont-ex/unifont-ex.bdf",   # fallback: covers everything, but the glyphs run larger
 )
 
 
@@ -58,7 +65,7 @@ def build_brand_font(fonts_dir: Path, data_dir: Path, names_path: Path) -> dict:
             f.flavor = "woff2"
             out_name = "brand.woff2"
             f.save(data_dir / out_name)
-        except ImportError:            # 环境没有 brotli 时退回 woff（zlib 必有）
+        except ImportError:            # fall back to woff when brotli isn't available (zlib always is)
             f.flavor = "woff"
             out_name = "brand.woff"
             f.save(data_dir / out_name)

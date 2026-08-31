@@ -13,8 +13,8 @@ name_en = "Tekuplus"
 authors_en = ["itouhiro"]
 provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Japanese/itouhiro--Tekuplus; upstream https://github.com/itouhiro/Tekuplus; Latin glyphs come from the author's own Teku font; Japanese glyphs from M+ BITMAP FONTS."
 
-# 上游把同一字面拆成三份分发：Teku的拉丁与半角假名、M+ 的汉字、
-# 以及tekuplus自己的补充符号。文件名不共前缀，需显式指定分组。
+# Upstream distributes the same typeface split across three parts: Teku's Latin and half-width kana, M+'s Han characters,
+# and tekuplus's own supplementary symbols. The filenames don't share a prefix, so the grouping must be specified explicitly.
 merge_subsets = true
 
 [merge]

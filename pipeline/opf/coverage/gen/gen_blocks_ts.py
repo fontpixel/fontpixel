@@ -1,8 +1,9 @@
-"""由 UCD Blocks.txt 生成前端用的 block 区间表。
+"""Generate a frontend block-range table from UCD Blocks.txt.
 
-字形总览的「Jump to block」下拉要把字体覆盖到的 Unicode block 也列出来，
-而 detail.json 里的 unicodeBlocks 只有名字和计数、没有码位区间。区间数据
-就在管线已有的 Blocks.txt 里，这里直接生成 TS，避免两边各抄一份。
+The glyph overview's "Jump to block" dropdown needs to list the Unicode blocks
+a font covers, but detail.json's unicodeBlocks only has names and counts, no
+code point ranges. The range data already lives in the pipeline's Blocks.txt,
+so generate the TS directly here rather than maintaining a second copy.
 
     python -m opf.coverage.gen.gen_blocks_ts
 """

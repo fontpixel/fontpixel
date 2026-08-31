@@ -1,40 +1,54 @@
-/** 简体 → 繁体（台湾用字）转换。
+/** Simplified → Traditional (Taiwan usage) conversion.
  *
- * 繁体中文不是另一种语言，是同一种语言的另一套字形与词汇，所以走 OpenCC
- * 转换而不是翻译：改一句中文，繁体版自动跟着变，不存在两份文本不同步。
+ * Traditional Chinese isn't a different language, it's the same language with
+ * a different glyph set and vocabulary, so we run it through OpenCC conversion
+ * rather than translation: edit a sentence in Chinese and the Traditional
+ * version automatically follows — there's never a risk of the two texts
+ * drifting out of sync.
  *
- * 用 s2twp（台湾用字 + 词汇替换）而不是纯字形的 s2t——后者会留下「軟件」
- * 「信息」这类大陆词，读起来一眼就是机转的。代价是 s2twp 偶尔会在专业
- * 复合词上出错，用 FIXUPS 修正。
+ * We use s2twp (Taiwan characters + vocabulary substitution) rather than the
+ * glyph-only s2t — the latter leaves Mainland words like 軟件/信息 in place,
+ * which reads as obviously machine-converted at a glance. The tradeoff is
+ * that s2twp occasionally mis-converts specialized compound terms, which
+ * FIXUPS corrects.
  *
- * 转换在构建期完成（本站是全静态的），并按唯一字符串缓存，全站一次构建
- * 约一千条、毫秒级。
+ * Conversion happens at build time (this site is fully static) and is cached
+ * per unique string; a full site build converts roughly a thousand strings,
+ * at millisecond cost.
  */
 import * as OpenCC from 'opencc-js';
 
 const convert = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
-/** s2twp 在这些词上判断有误，转换后修正。 */
+/** Words s2twp gets wrong; corrected here after conversion. */
 const FIXUPS: [RegExp, string][] = [
-  // s2twp 把「位图」当独立词转成「點陣圖」（bitmap image），但本站的「位图」
-  // 无一例外指位图字体／strike，台湾称「點陣」。全站六处用法均已核对。
+  // s2twp treats 位图 as a standalone word and converts it to 點陣圖 (bitmap
+  // image), but on this site 位图 always means a bitmap font/strike, which
+  // Taiwan usage calls 點陣. All six occurrences on the site have been checked.
   [/點陣圖/g, '點陣'],
-  // 台湾习惯说「授權」而非「許可證」
+  // Taiwan usage prefers 授權 over 許可證
   [/許可證/g, '授權'],
-  // 站名的繁体版是定名（見 sitenames.json 的 zh-Hant），不是逐字转换的产物；
-  // 这条规则把嵌在任意句子里的站名也一并矫正（如关于页导语）。
+  // The Traditional site name is a fixed value (see the zh-Hant key in
+  // sitenames.json), not the output of literal conversion; this rule also
+  // fixes up the site name wherever it's embedded in a sentence (e.g. the
+  // about-page intro).
   [/開源畫素字型館/g, '開源點陣字型館'],
-  // 简体正文统一用弯引号“”，繁体（台湾）惯例是直角引号「」，转换时换回来。
-  // 内层引号同理：‘’→『』。OpenCC 只管字与词，不动标点。
+  // Simplified body text uses curly quotes “” uniformly; Traditional (Taiwan)
+  // convention is corner brackets 「」, so convert them back. Same for inner
+  // quotes: ''→『』. OpenCC only handles characters and words, not punctuation.
   [/‘([^’]*)’/g, '『$1』'],
   [/“([^”]*)”/g, '「$1」'],
 ];
 
-/** 整句覆写：少数文案的繁体版是另写的，不是简体版转换来的。
+/** Whole-string overrides: a few copy items have a Traditional version that's
+ * written separately rather than converted from the Simplified version.
  *
- * 例如站点描述——繁体读者搜的关键词组合与简体不同（「點陣」「畫素」「位元圖」
- * 并用），这类 SEO 取向的差异 OpenCC 变不出来，也不该用 FIXUPS 硬凑（那是逐词
- * 替换，会误伤别处）。键是简体原文，值是最终繁体文本。
+ * For example the site description — the keyword mix Traditional readers
+ * search with differs from Simplified (using 點陣/畫素/位元圖 together); this
+ * kind of SEO-driven difference is something OpenCC can't produce, and
+ * shouldn't be forced through FIXUPS either (that's word-by-word replacement
+ * and would collateral-damage other text). The key is the Simplified source
+ * text, the value is the final Traditional text.
  */
 const OVERRIDES: Record<string, string> = {
   '免费可商用的自由开源点阵/像素/位图字体合集，BDF、PCF、TTF格式下载':
@@ -43,7 +57,7 @@ const OVERRIDES: Record<string, string> = {
 
 const cache = new Map<string, string>();
 
-/** 把一段简体中文转成繁体；非中文内容原样返回。 */
+/** Convert a piece of Simplified Chinese to Traditional; non-Chinese content is returned unchanged. */
 export function toHant(text: string): string {
   if (!text) return text;
   const hit = cache.get(text);
@@ -59,7 +73,7 @@ export function toHant(text: string): string {
   return out;
 }
 
-/** 深度转换一个只含字符串与嵌套对象的结构（用于整份 UI 文案）。 */
+/** Deep-convert a structure containing only strings and nested objects (used for the whole UI strings set). */
 export function toHantDeep<T>(value: T): T {
   if (typeof value === 'string') return toHant(value) as unknown as T;
   if (Array.isArray(value)) return value.map(toHantDeep) as unknown as T;

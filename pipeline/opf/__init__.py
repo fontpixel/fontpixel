@@ -1,13 +1,18 @@
-"""开源像素字体馆构建管线。"""
+"""Open-source pixel font collection build pipeline."""
 
-# 缓存键包含此版本号:凡是会改变产物的逻辑变更(引擎判定、格式、口径)
-# 都必须递增,否则缓存命中的家族不会重算。
-# 站点数据契约的版本：index.json 的形状一变就 +1，site/src/lib/schema.ts
-# 里的同名常量要一起改。站点加载数据时先比版本，对不上会直接把
-# 「请重新构建」的提示报给开发者，而不是让 zod 校验炸出一页堆栈。
+# This version number is part of the cache key: any logic change that can
+# alter output (engine decisions, formats, thresholds) must bump it, or a
+# cache-hit family won't get rebuilt.
+# Version of the site data contract: bump whenever index.json's shape
+# changes, and update the matching constant in site/src/lib/schema.ts at
+# the same time. The site compares versions on load and, on a mismatch,
+# surfaces a "please rebuild" message to the developer instead of letting
+# zod validation blow up into a stack trace.
 DATA_SCHEMA_VERSION = 2
 
-# 字形管线的版本：只在「构建出的字形/覆盖率/TTF 轮廓」会变时 +1，升它会让
-# 全部家族重建（并行下约十分钟）。纯元数据逻辑（searchText、描述字段、
-# TTF name 表、README）不用动它——缓存命中的快路径每次都按当前代码重算这些。
-PIPELINE_VERSION = 20  # v20：矢量 TTF 的 hmtx.lsb 改为轮廓 xMin（修「（」等右置墨迹字形左移）
+# Version of the glyph pipeline: bump only when the built glyphs/coverage/TTF
+# outlines would change; bumping it rebuilds every family (~10 minutes in
+# parallel). Pure metadata logic (searchText, description fields, TTF name
+# table, README) doesn't need it bumped — the cache-hit fast path
+# recomputes those from current code every time.
+PIPELINE_VERSION = 20  # v20: vector TTF hmtx.lsb now uses outline xMin (fixes left-shifted glyphs with right-set ink, e.g. "（")

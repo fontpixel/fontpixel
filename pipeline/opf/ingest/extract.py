@@ -1,8 +1,10 @@
-"""压缩包中按 glob 抽取文件（zip 与 tar 系）。
+"""Extract files from an archive by glob (zip and the tar family).
 
-上游发布形态不统一：GitHub 的 Release 资产多是 zip，而 X11 时代的字体包
-（ohsnap／termsyn／jmk-x11-fonts 等）几乎都是 .tar.gz，许可证原文往往只存在于
-包内（仓库目录树里只有编译好的 pcf）。两种格式都要能按 basename glob 取文件。
+Upstream release formats aren't consistent: GitHub Release assets are mostly
+zip, while X11-era font packages (ohsnap, termsyn, jmk-x11-fonts, etc.) are
+almost all .tar.gz, and the license text often only exists inside the archive
+(the repo tree itself has only the compiled pcf). Both formats need to support
+extracting files by basename glob.
 """
 
 from __future__ import annotations
@@ -21,9 +23,10 @@ def is_tar(path: Path) -> bool:
 
 
 def extract_archive(archive_path: Path, take: list[str], dest: Path) -> list[Path]:
-    """按 basename glob 抽取,返回落盘路径列表。zip 与 tar 系通用。
+    """Extract by basename glob, returning the list of written paths. Works for both zip and the tar family.
 
-    同名文件以包内首次出现者为准（tar 的增量成员不会覆盖先落盘的同名文件）。
+    For same-named files, the first occurrence in the archive wins (a later
+    tar member won't overwrite a same-named file already written to disk).
     """
     dest.mkdir(parents=True, exist_ok=True)
     out: list[Path] = []
@@ -64,5 +67,5 @@ def extract_archive(archive_path: Path, take: list[str], dest: Path) -> list[Pat
 
 
 def extract_zip(zip_path: Path, take: list[str], dest: Path) -> list[Path]:
-    """向后兼容的别名；新代码用 extract_archive。"""
+    """Backward-compatible alias; new code should use extract_archive."""
     return extract_archive(zip_path, take, dest)

@@ -25,7 +25,7 @@ def test_known_counts_static():
     assert len(cs["hiragana"].cps) == 86  # U+3041..3096
     assert len(cs["katakana"].cps) == 90  # U+30A1..30FA
     assert len(cs["kangxi-radicals"].cps) == 214
-    assert len(cs["cp437"].cps) == 255  # 图形解释 0x01–0xFF,0x00 不算字形
+    assert len(cs["cp437"].cps) == 255  # graphic interpretation is 0x01-0xFF; 0x00 doesn't count as a glyph
     assert len(cs["box-drawing"].cps) == 128
     assert len(cs["braille"].cps) == 256
     assert len(cs["halfwidth-kana"].cps) == 63
@@ -68,7 +68,7 @@ def test_gb18030_2022_levels():
     cs = _by_id()
     l1, l2, l3 = (cs[f"gb18030-2022-l{i}"].cps for i in (1, 2, 3))
     assert (len(l1), len(l2), len(l3)) == (27584, 27780, 88115)
-    assert l1 < l2 < l3  # 严格包含
+    assert l1 < l2 < l3  # strictly nested
     assert cs["tongyong-guifan"].cps <= l2
 
 
@@ -104,25 +104,25 @@ def test_ucd_blocks():
     assert ("Basic Latin", 0x0000, 0x007F) in u.blocks
     assert u.block_assigned_counts["Basic Latin"] == 128
     assert 0x4E00 in u.assigned
-    assert 0xD800 not in u.assigned  # 代理区不算字符
-    # PUA 属已指派(Co)
+    assert 0xD800 not in u.assigned  # surrogates don't count as characters
+    # PUA is assigned (category Co)
     assert 0xE000 in u.assigned
     names = [b[0] for b in u.blocks]
     assert "CJK Unified Ideographs Extension J" in names  # Unicode 17.0
 
 
 def test_single_byte_registry_with_unicode_codepoints():
-    """自报 ISO8859 却含 >0xFF 码位的字体（lemon／bitocra／envypn）不得丢字形。"""
+    """Fonts that self-report ISO8859 but contain codepoints >0xFF (lemon/bitocra/envypn) must not lose glyphs."""
     from opf.parsers.charset_map import decode_cp
 
     warnings: list[str] = []
     warned: set[str] = set()
-    # 单字节区照常按 latin-1 解
+    # single-byte range still decodes as latin-1 as usual
     assert decode_cp(0xE9, "ISO8859", "1", warnings, warned) == 0xE9
-    # >0xFF 只可能是 registry 写错，按 Unicode 透传
+    # >0xFF can only be a mistaken registry declaration; pass through as Unicode
     assert decode_cp(0xFF63, "ISO8859", "1", warnings, warned) == 0xFF63
     assert decode_cp(0xE0B3, "iSO8859", "1", warnings, warned) == 0xE0B3
     assert decode_cp(0x4E00, "ISO646.1991", "IRV", warnings, warned) == 0x4E00
     assert len(warnings) >= 1 and "Unicode" in warnings[0]
-    # 双字节 CJK 字符集不受影响，仍走各自的编解码器
+    # double-byte CJK charsets are unaffected and still go through their own codecs
     assert decode_cp(0x3021, "jisx0208.1990", "0", [], set()) == 0x4E9C

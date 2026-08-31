@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
 
-# 构建产物与原始数据不需要被索引：字形包是二进制分块，
-# 下载物走 R2、不在本站
+# Build artifacts and raw data need not be indexed: glyph packs are
+# binary chunks; downloads are served via R2, not this site
 Disallow: /data/packs/
 Disallow: /data/details/
 

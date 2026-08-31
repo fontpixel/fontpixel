@@ -1,10 +1,12 @@
-"""UW ttyp0 的字体自有编码 → Unicode BDF。
+"""UW ttyp0's font-specific encoding → Unicode BDF.
 
-上游以「fontspecific」主控 BDF 分发(`CHARSET_REGISTRY "UW"`,ENCODING 是
-字体内部序号,字形名形如 `LtCapALdot`),再由 `genbdf` 配合 `mgl/*.mgl`
-映射表在安装时生成各编码的 BDF。本模块直接读 `mgl/unicode.mgl`
-(格式:`PUT <字形名> <码位>`),把主控 BDF 重映射成 Unicode BDF——
-不必跑上游的 autotools 构建。
+Upstream distributes a "fontspecific" master BDF (`CHARSET_REGISTRY "UW"`,
+ENCODING is the font's internal ordinal, glyph names look like
+`LtCapALdot`), and `genbdf` combines it with `mgl/*.mgl` mapping tables at
+install time to generate the BDF for each encoding. This module reads
+`mgl/unicode.mgl` directly (format: `PUT <glyph name> <code point>`) and
+remaps the master BDF straight to Unicode BDF -- no need to run upstream's
+autotools build.
 """
 
 from __future__ import annotations
@@ -20,7 +22,7 @@ _COPYTO = re.compile(r"^IFUNDEF\s+(\S+)\s+COPYTO\s+(\S+)\s+(\S+)\s*$")
 
 
 def load_unicode_map(mgl: Path) -> dict[str, int]:
-    """字形名 → Unicode 码位。"""
+    """Glyph name → Unicode code point."""
     table: dict[str, int] = {}
     for line in mgl.read_text(encoding="latin-1").splitlines():
         line = line.strip()
@@ -31,7 +33,7 @@ def load_unicode_map(mgl: Path) -> dict[str, int]:
 
 
 def convert(bdf: Path, mgl: Path, family_slug: str) -> ParsedFont:
-    """把一份 fontspecific 主控 BDF 重映射为 Unicode。"""
+    """Remap a fontspecific master BDF to Unicode."""
     font = parse_bdf(bdf, family_slug, remap_charset=False)
     table = load_unicode_map(mgl)
 
@@ -74,7 +76,7 @@ def convert(bdf: Path, mgl: Path, family_slug: str) -> ParsedFont:
 
 
 def build_all(repo: Path, dest: Path) -> list[tuple[str, int]]:
-    """转换 repo/bdf/*.bdf,写入 dest;返回 [(文件名, 字形数)]。"""
+    """Convert repo/bdf/*.bdf, writing into dest; returns [(filename, glyph count), ...]."""
     from opf.ingest.bdfwrite import write_bdf
 
     mgl = repo / "mgl" / "unicode.mgl"

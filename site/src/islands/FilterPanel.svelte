@@ -17,13 +17,13 @@
   let { families, filters = $bindable(), s, lang, charsetIds, charsetNames }: Props =
     $props();
 
-  // 覆盖率筛选：一条「字表 ≥ 百分比」的规则，改动即筛
+  // Coverage filter: a single "charset ≥ percentage" rule, applied as soon as it changes
   let covId = $state('');
-  // 预填 90%：这是书写系统达标判定用的门槛，也是最常问的那个数
+  // Pre-filled with 90%: the threshold used for the "script fully supported" judgment, and the most commonly asked-about number
   let covPct = $state<number | null>(90);
   const csLabel = (id: string) =>
     pickText(lang, charsetNames[id]?.zh ?? id, charsetNames[id]?.en ?? id);
-  // 按 COVERAGE_PICKS 的次序（简→繁→日→韩→拉丁）列出，不按字母排
+  // Listed in COVERAGE_PICKS order (Simplified → Traditional → Japanese → Korean → Latin), not alphabetically
   const csOptions = $derived(
     COVERAGE_PICKS.filter((id) => charsetNames[id] && charsetIds.includes(id)),
   );
@@ -39,8 +39,8 @@
   const forms = $derived(uniq(families.map((f) => f.form)).sort());
   const sizes = $derived(uniq(families.flatMap((f) => f.sizes)).sort((a, b) => a - b));
   const vibes = $derived(uniq(families.flatMap((f) => f.vibes)).sort());
-  // 书写系统：达标的排在前面，「不完整」的排在后面，各组内按固定顺序，
-  // 免得列表顺序随收录字体的多寡乱跳
+  // Scripts: fully-supported ones come first, "incomplete" ones come after, each group in a fixed order,
+  // so the list order doesn't jump around as the number of included fonts changes
   const SCRIPT_ORDER = [
     'latin',
     'latin-supp',
@@ -333,7 +333,7 @@
   .chipbtn {
     cursor: pointer;
     background: none;
-    /* 许可证全名很长（如 WTFPL、CC BY-SA），必须能折行，否则会被面板裁掉 */
+    /* Full license names can be long (e.g. WTFPL, CC BY-SA), so wrapping must be allowed or the panel clips them */
     max-width: 100%;
     white-space: normal;
     text-align: left;

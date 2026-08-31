@@ -1,6 +1,6 @@
-/** 查字覆盖索引：全部家族的码位区间表，懒加载一次。
- * 二进制格式（gzip 内）：u32 familyCount；每家族：u16 slugLen + utf8 slug、
- * u32 runCount、runCount × (u32 start, u32 end)——闭开区间 [start, end)。
+/** Glyph-coverage lookup index: codepoint-range table for all families, lazy-loaded once.
+ * Binary format (inside gzip): u32 familyCount; per family: u16 slugLen + utf8 slug,
+ * u32 runCount, runCount × (u32 start, u32 end) — half-open interval [start, end).
  */
 
 import { gunzip } from './decompress';

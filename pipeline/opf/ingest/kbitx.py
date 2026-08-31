@@ -1,11 +1,11 @@
-"""kbitx(Bits'n'Picas XML)→ ParsedFont。
+"""kbitx (Bits'n'Picas XML) → ParsedFont.
 
-`d` 属性 = base64([height u8][width u8] + 操作码流),按行主序:
-  0x01–0x3F      跳过 N 个透明像素
-  0x40+N (≤0x7F) 画 N 个实心像素
-  0x80+N (≤0xBF) 后随 1 字节灰度,重复 N 次
-  0xC0+N         后随 N 字节逐像素灰度
-灰度 ≥0x80 视为点亮。已用 galmuri kbitx/BDF 双发布逐像素验证。
+`d` attribute = base64([height u8][width u8] + opcode stream), row-major order:
+  0x01-0x3F      skip N transparent pixels
+  0x40+N (<=0x7F) draw N solid pixels
+  0x80+N (<=0xBF) followed by 1 grayscale byte, repeated N times
+  0xC0+N         followed by N grayscale bytes, one per pixel
+A grayscale value >=0x80 counts as lit. Verified pixel-by-pixel against galmuri's dual kbitx/BDF releases.
 """
 
 from __future__ import annotations

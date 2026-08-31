@@ -1,4 +1,4 @@
-"""许可证识别：特征短语指纹 + 三级置信(spec §4.4)。"""
+"""License detection: characteristic-phrase fingerprinting + three confidence tiers (spec §4.4)."""
 
 from __future__ import annotations
 
@@ -52,7 +52,7 @@ def _normalize(text: str) -> str:
 
 
 def _classify_text(norm: str) -> str | None:
-    """归一化文本 → SPDX id；按特异性从高到低匹配。"""
+    """Normalized text → SPDX id; matched from most to least specific."""
     if "sil open font license" in norm or "scripts.sil.org/ofl" in norm:
         if "version 1.0" in norm and "version 1.1" not in norm:
             return "OFL-1.0"
@@ -115,7 +115,7 @@ def _hint_from_props(fonts: list[ParsedFont]) -> str | None:
     return None
 
 
-# 多许可并存时的偏好序（字体本体许可优先于代码许可）
+# Preference order when multiple licenses coexist (the font's own license outranks a code license)
 _PREFERENCE = [
     "OFL-1.1", "OFL-1.0", "IPA-1.0", "LicenseRef-Mplus", "LicenseRef-Baekmuk",
     "CC-BY-SA-4.0", "CC-BY-4.0", "CC0-1.0", "Unlicense", "WTFPL",

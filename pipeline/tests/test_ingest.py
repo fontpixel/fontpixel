@@ -48,7 +48,7 @@ def test_otb_conversion(tmp_path):
 
 
 def test_kbitx_matches_official_bdf():
-    """galmuri 同时发布 kbitx 源与 BDF:逐像素对照验证解码器。"""
+    """galmuri publishes both a kbitx source and a BDF: verify the decoder pixel-by-pixel against it."""
     kf = convert_kbitx(GALMURI / "src/Galmuri9.kbitx", "galmuri9")
     bf = parse_bdf(GALMURI / "dist/Galmuri9.bdf", "galmuri9")
     k_by = {g.cp: g for g in kf.glyphs}
@@ -99,12 +99,12 @@ form = "gothic"
     assert 'name = "Galmuri"' in toml
     assert "provenance" in toml
     assert 'form = "gothic"' in toml
-    assert "# UNVERIFIED" in toml  # 预填风格待人工复核
+    assert "# UNVERIFIED" in toml  # prefilled form is pending manual review
 
     report2 = run_manifest(manifest, COLLECTION, dest)
     assert report2.imported == []
     assert report2.skipped == ["galmuri"]
-    # 用户改过的 family.toml 不被覆盖
+    # a family.toml the user has edited is not overwritten
     p = dest / "galmuri" / "family.toml"
     p.write_text(toml.replace('form = "gothic"', 'form = "rounded"'), encoding="utf-8")
     run_manifest(manifest, COLLECTION, dest)
@@ -112,7 +112,7 @@ form = "gothic"
 
 
 def test_uwttyp0_unicode_remap(tmp_path):
-    """UW ttyp0 用字体自有编码分发，须按 mgl/unicode.mgl 的字形名映射重建。"""
+    """UW ttyp0 ships with its own proprietary encoding; it must be rebuilt using the glyph-name mapping in mgl/unicode.mgl."""
     from opf.ingest.uwttyp0 import convert, load_unicode_map
 
     repo = COLLECTION / "github-clones-2026-08-29/uw-ttyp0-1.3"
@@ -129,12 +129,12 @@ def test_uwttyp0_unicode_remap(tmp_path):
     for cp in (0x41, 0xE9, 0x1EA0, 0x3B1, 0x2500):
         assert cp in cps, hex(cp)
     assert f.props["CHARSET_REGISTRY"] == "ISO10646"
-    # 原始自有编码不得残留
+    # the original proprietary encoding must not remain
     assert 735 not in cps or 0x2DF == 735
 
 
 def test_extract_archive_tar(tmp_path):
-    """X11 时代的字体包是 .tar.gz，许可证只存在于包内。"""
+    """X11-era font packages are .tar.gz archives; the license only exists inside the archive."""
     arc = TECATE / "archives/ohsnap-1.8.0.tar.gz"
     if not arc.exists():
         pytest.skip("tecate snapshot missing")
@@ -144,7 +144,7 @@ def test_extract_archive_tar(tmp_path):
 
 
 def test_license_from_tarball(tmp_path):
-    """字体在 bitmap/<dir>/，许可证在平级的 archives/<x>.tar.gz 内。"""
+    """The font lives in bitmap/<dir>/; the license lives in the sibling archives/<x>.tar.gz."""
     if not TECATE.exists():
         pytest.skip("tecate snapshot missing")
     manifest = tmp_path / "manifest.toml"
@@ -178,7 +178,7 @@ def _mini_src(root, files):
 
 
 def test_toml_escapes_control_characters(tmp_path):
-    """说明文字里混进 \\r 之类控制字符时，生成的 family.toml 仍须能被解析。"""
+    """When description text has stray control characters like \\r mixed in, the generated family.toml must still parse."""
     import tomllib
 
     src = tmp_path / "src" / "fam"
@@ -193,12 +193,12 @@ def test_toml_escapes_control_characters(tmp_path):
     report = run_manifest(manifest, tmp_path / "src", dest)
     assert report.errors == []
     text = (dest / "ctl" / "family.toml").read_text(encoding="utf-8")
-    parsed = tomllib.loads(text)  # 会因裸控制字符抛异常
+    parsed = tomllib.loads(text)  # raises if a bare control character remains
     assert parsed["description"] == "before\rafter\bmore\ftail"
 
 
 def test_path_pattern_does_not_cross_directories(tmp_path):
-    """“./*.bdf” 只能命中源目录根部，不得递归进子目录。"""
+    """'./*.bdf' should only match the root of the source directory, not recurse into subdirectories."""
     src = tmp_path / "src" / "fam"
     _mini_src(src, {"top.bdf": "x", "nested/deep.bdf": "y"})
     manifest = tmp_path / "m.toml"
@@ -214,7 +214,7 @@ def test_path_pattern_does_not_cross_directories(tmp_path):
 
 
 def test_clash_detected_across_patterns(tmp_path):
-    """两个模式各自命中一个同名文件时，后者会覆盖前者，必须报错。"""
+    """When two patterns each match a file of the same name, the latter overwriting the former must be reported as an error."""
     src = tmp_path / "src" / "fam"
     _mini_src(src, {"a/font.bdf": "x", "b/font.bdf": "y"})
     manifest = tmp_path / "m.toml"
@@ -228,7 +228,7 @@ def test_clash_detected_across_patterns(tmp_path):
 
 
 def test_clash_detected_for_license_files(tmp_path):
-    """license_files 只取排序第一个，同名多份时同样必须报错。"""
+    """license_files only takes the first one after sorting; multiple same-named files must also be an error."""
     src = tmp_path / "src" / "fam"
     _mini_src(src, {"f.bdf": "x", "a/LICENSE": "one", "b/LICENSE": "two"})
     manifest = tmp_path / "m.toml"
@@ -242,7 +242,7 @@ def test_clash_detected_for_license_files(tmp_path):
 
 
 def test_take_from_prefixes_destination_names(tmp_path):
-    """上游按解析度分目录、文件名相同时，用 take_from 加前缀区分。"""
+    """When upstream splits by resolution into directories with identically-named files, use take_from to disambiguate with a prefix."""
     src = tmp_path / "src" / "fam"
     _mini_src(src, {"a75/f12.bdf": "small", "a100/f12.bdf": "big"})
     manifest = tmp_path / "m.toml"
@@ -259,7 +259,7 @@ def test_take_from_prefixes_destination_names(tmp_path):
 
 
 def test_ppem_table_per_file(tmp_path):
-    """同一家族含多个尺寸时，ppem 要能按文件名分别指定。"""
+    """When one family contains multiple sizes, ppem must be settable per filename."""
     import tomllib
 
     src = tmp_path / "src" / "fam"

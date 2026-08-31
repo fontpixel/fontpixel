@@ -1,6 +1,7 @@
-"""站点侧的覆盖率短名单与书写系统规则文案，跟管线保持一致。
+"""The site-side coverage shortlist and script-rule copy stay in sync with the pipeline.
 
-字表清单和门槛数值分处 TypeScript 与 Python，只能靠这些测试盯住不脱节。
+The charset list and threshold values live separately in TypeScript and Python;
+these tests are the only thing keeping them from drifting apart.
 """
 
 import re
@@ -21,10 +22,11 @@ def _picks() -> list[str]:
 
 
 def test_every_script_keeps_at_least_one_reference_charset():
-    """每种书写系统都要留一张判定它所用的参照字表。
+    """Every script must keep at least one reference charset used to determine it.
 
-    否则会出现「页面上标着 Traditional Chinese (incomplete)，但筛选器里
-    找不到 Big5 常用汉字」的割裂——标签说得出口径，用户却复现不了。
+    Otherwise you get a disconnect like: the page labels something "Traditional
+    Chinese (incomplete)", but the filter has no Big5 common-hanzi charset to show
+    for it -- the label can state the criterion, but the user can't reproduce it.
     """
     from opf.coverage.engine import SCRIPT_REFERENCE_CHARSETS
 
@@ -59,9 +61,10 @@ def _rules(lang: str) -> dict[str, str]:
 
 @pytest.mark.parametrize("lang", ["zh", "en"])
 def test_script_rule_titles_match_the_thresholds(lang: str):
-    """chip 上写的百分比必须和实际判定用的门槛一致。
+    """The percentage shown on the chip must match the threshold actually used for detection.
 
-    这两处曾经脱节过：代码把西里尔/希腊的门槛提到 90%，title 里还写着 50%。
+    These two have drifted apart before: the code raised the Cyrillic/Greek threshold
+    to 90% while the title still said 50%.
     """
     from opf.coverage.engine import (
         KANA_GATE,
@@ -78,6 +81,6 @@ def test_script_rule_titles_match_the_thresholds(lang: str):
         assert rules[f"{script}-partial"].endswith(partial), (
             f"{lang}/{script}-partial: {rules[f'{script}-partial']}"
         )
-    # 日文额外要求假名门槛
+    # Japanese additionally requires the kana threshold
     assert f"≥ {KANA_GATE * 100:g}%" in rules["ja"]
     assert f"≥ {KANA_GATE * 100:g}%" in rules["ja-partial"]

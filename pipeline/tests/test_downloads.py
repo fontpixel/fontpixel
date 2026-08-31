@@ -56,7 +56,7 @@ def test_build_downloads_outputs(tmp_path):
 
 
 def test_ttf_bundles_all_sizes(tmp_path):
-    """同一字体的多个尺寸应合并进一个位图 TTF。"""
+    """Multiple sizes of the same font should merge into one bitmap TTF."""
     from opf.ingest.otb import convert_otb
 
     d = _family(tmp_path)
@@ -127,10 +127,11 @@ def test_write_bdf_roundtrip(tmp_path):
 
 
 def test_metadata_refresh_matches_a_full_rebuild_byte_for_byte(tmp_path):
-    """快路径改出来的 TTF/zip，必须与「用新元数据全量重建」字节完全一致。
+    """The TTF/zip produced by the fast path must be byte-identical to a full rebuild with new metadata.
 
-    产物的 sha256 会随下载页发布出去。若两条路径产出不同字节，同一份字体
-    的校验和就取决于它当时走了哪条路——那这个优化就不能用。
+    The output's sha256 gets published on the download page. If the two paths
+    produced different bytes, the same font's checksum would depend on which path
+    it happened to take -- which would make this optimization unusable.
     """
     from opf.downloads import refresh_downloads_metadata
 
@@ -142,13 +143,13 @@ def test_metadata_refresh_matches_a_full_rebuild_byte_for_byte(tmp_path):
                               old_out, family_display="Mini",
                               copyright_line="Mini — 旧作者")
 
-    # 参照组：直接用新元数据整个重建一遍
+    # control group: rebuild fully with the new metadata directly
     want_out = tmp_path / "want"
     want = build_downloads("mini", fam, _fonts(fam), ["OFL.txt"], "新 README\n",
                            want_out, family_display="Mini",
                            copyright_line="Mini — 新作者（handle）")
 
-    # 快路径：只把新元数据刷进旧产物
+    # fast path: only refresh the new metadata onto the existing output
     got = refresh_downloads_metadata(entries, old_out, "新 README\n",
                                      "Mini", "Mini — 新作者（handle）")
 
@@ -159,7 +160,7 @@ def test_metadata_refresh_matches_a_full_rebuild_byte_for_byte(tmp_path):
 
 
 def test_metadata_refresh_gives_up_when_outputs_are_gone(tmp_path):
-    # 产物被清掉时要退回全量重建，而不是silently 交出半份下载物
+    # when output files are gone, must fall back to a full rebuild rather than silently handing out a half-formed download
     from opf.downloads import refresh_downloads_metadata
 
     fam = _family(tmp_path)
