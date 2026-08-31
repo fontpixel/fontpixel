@@ -1,0 +1,83 @@
+---
+title: "Global Font Information"
+label: "Global Font Info"
+order: 4
+---
+
+import Aside from '@dc/Aside.astro';
+
+
+import Keyword from '@dc/Keyword.astro';
+
+The following keywords describe global information which is valid for the entire font:
+
+## `STARTFONT`
+
+<Keyword keyword="STARTFONT" value="number" />
+
+`STARTFONT` is followed by a version number indicating the exact file format used (for example, *2.1*).
+
+## `COMMENT`
+
+<Keyword keyword="COMMENT" value="string" />
+
+One or more lines beginning with the word `CONTENT`. These lines can be ignored by any program reading the file.
+
+## `CONTENTVERSION`
+
+<Keyword keyword="CONTENTVERSION" value="integer" />
+
+(Optional) The value of `COMMENTVERSION` is an integer which can be assigned by an installer program to keep track of the version of the included data. The value is intended to be valid only in a single environment, under the control of a single installer. The value of `COMMENTVERSION` should only reflect upgrades to the quality of the bitmap mages, not to the glyph complement or encoding.
+
+## `FONT`
+
+<Keyword keyword="FONT" value="string" />
+
+`FONT` is followed by the font name, which should exactly match the PostScript™ language **FontName** property in the corresponding outline font program.
+
+## `SIZE`
+
+<Keyword keyword="SIZE" value="PointSize Xres Yres" />
+
+`SIZE` is followed by the point size of the glyphs and the *x* and *y* resolutions of the device for which the font is intended.
+
+## `FONTBOUNDINGBOX`
+
+<Keyword keyword="FONTBOUNDINGBOX" value="FBBx FBBy Xoff Yoff" />
+
+`FONTBOUNDINGBOX` is followed by the width in x and the height in y, and the x and y displacement of the lower left corner from origin 0 (for horizontal writing direction); all in integer pixel values. (See the examples in [section "Examples"](../../examples/).)
+
+## `METRICSSET`
+
+<Keyword keyword="METRICSSET" value="integer" />
+
+(Optional) The integer value of `METRICSSET` may be 0, 1, or 2, which correspond to writing direction 0 only, 1 only, or both (respectively). If not present, `METRICSSET 0` is implied. If `METRICSSET` is 1, `DWIDTH` and `SWIDTH` keywords are optional.
+
+## Metrics keywords
+
+* `SWIDTH`
+* `DWIDTH`
+* `SWIDTH1`
+* `DWIDTH1`
+* `VVECTOR`
+
+These metrics keywords may be present at the global level to define a single value for the whole font. The values may be defined at this level, yet overridden for individual glyphs by including the same keyword and a value in the information for an individual glyph. For a composite font containing a large number of ideographic glyphs with identical metrics, defining those values at the global level can provide a significant savings in the size of the resulting file.
+
+<Aside type="note">
+Version 2.1 of this document only allowed the metrics keywords `SWIDTH` and `DWIDTH`, and only at the glyph level. If compatibility with 2.1 is an issue, metrics should not be specified as global values.
+
+</Aside>
+
+These keywords all have the same meanings as specified in [section "Individual Glyph Information"](../individual_glyph_info/).
+
+## `STARTPROPERTIES`
+
+<Keyword keyword="STARTPROPERTIES" value="n" />
+
+The optional word `STARTPROPERTIES` may be followed by the number of properties (n) that follow. Within the properties list, there may be *n* lines consisting of a word for the property name followed by either an integer or string surrounded by ASCII double quotation marks (ASCII octal 042). Internal quotation characters are indicated (or “quoted”) by using two quotation characters in a row.
+
+## `ENDPROPERTIES`
+
+<Keyword keyword="ENDPROPERTIES" />
+
+The word `ENDPROPERTIES` is used to delimit the end of the optional properties list in fonts files containing the word `STARTPROPERTIES`.

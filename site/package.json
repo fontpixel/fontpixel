@@ -12,8 +12,11 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.14",
     "@astrojs/svelte": "^7.0.0",
     "astro": "^5.0.0",
+    "bdfparser": "^2.2.5",
+    "fetchline": "^1.0.1",
     "opencc-js": "^1.4.2",
     "svelte": "^5.0.0",
     "zod": "^3.24.0"

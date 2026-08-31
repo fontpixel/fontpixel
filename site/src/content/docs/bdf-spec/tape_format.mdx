@@ -1,0 +1,16 @@
+---
+title: "Tape Format"
+order: 2
+---
+
+import Aside from '@dc/Aside.astro';
+
+
+The Adobe Systems glyph bitmaps are typically distributed on magnetic tape. Each tape is 1600 BPI, nine track, un-labeled, and contains two or more files. Each file is followed by an end-of-file (EOF) mark. The last file on the tape is followed by two EOF marks. Physical records contain 512 bytes. The last physical record in a file (preceding an EOF mark) can contain fewer than 512 bytes.
+
+Each file is encoded in the printable characters (octal 40 through 176) of USASCII plus carriage return and line feed. Each file consists of a sequence of variable-length lines. Each line is terminated by a carriage-return (octal 015) and line-feed (octal 012). The first file on the tape is the Adobe Systems Copyright notice. The files which follow are font files. The format of font files is described in the following sections.
+
+<Aside type="note">
+Font tapes can also be obtained in UNIX<sup>®</sup> tar format. Be sure to specify tar format. No other tape formats are currently supported by Adobe Systems.
+
+</Aside>

@@ -1,0 +1,41 @@
+---
+title: "Unofficial BDF Property List"
+label: "Unofficial Property List"
+order: 8
+---
+
+# Unofficial BDF Property List
+
+These BDF properties are commonly used in BDF files between [`STARTPROPERTIES`](file_format/global_font_info/#startproperties) and [`ENDPROPERTIES`](file_format/global_font_info/#endproperties) words.
+
+These properties are not part of the specification v2.2, some of them are mentioned in the specification v2.1.
+
+| Property Name         | Type   | Description                                                                                         |
+| --------------------- | ------ | --------------------------------------------------------------------------------------------------- |
+| CAP_HEIGHT            | number | The height of capital letters above the baseline                                                    |
+| COPYRIGHT             | string | The copyright information for the font                                                              |
+| DEFAULT_CHAR          | number | The character displayed when a glyph is undefined                                                   |
+| FACE_NAME             | string | The name of the font face                                                                           |
+| FONT_ASCENT           | number | The height above the baseline used for line spacing                                                 |
+| FONT_DESCENT          | number | The distance below the baseline used for line spacing                                               |
+| FONT_VERSION          | string | The version identifier of the font                                                                  |
+| FONT_TYPE             | string | The type of the font                                                                                |
+| FOUNDRY               | string | The name of the font's designer or producer                                                         |
+| FAMILY_NAME or FAMILY | string | The name of the font family                                                                         |
+| NOTICE                | string | General comments or additional information about the font                                           |
+| POINT_SIZE            | number | The size of the font in points, determining spacing for EM, EN, and THIN spaces                     |
+| RESOLUTION_X          | number | Specifies the horizontal DPI of the font                                                            |
+| RESOLUTION_Y          | number | Specifies the vertical DPI of the font                                                              |
+| SLANT                 | string | Indicates the font's slant style, such as roman, italic, or oblique                                 |
+| WEIGHT_NAME           | string | The weight classification, such as bold or normal                                                   |
+| X_HEIGHT              | number | The height of lowercase letters such as "x" above the baseline                                      |
+| SETWIDTH_NAME         | string | The width classification, such as condensed or expanded                                             |
+| ADD_STYLE_NAME        | string | Describes additional style attributes                                                               |
+| PIXEL_SIZE            | number | The font size in pixels                                                                             |
+| SPACING               | string | The space type in pixels between characters. "P": Proportional, "M": Monowidth, "C": Character Cell |
+| AVERAGE_WIDTH         | number | The average width of the font's glyphs                                                              |
+| CHARSET_REGISTRY      | string | The type of character set, such as "ISO-8859"                                                       |
+| CHARSET_ENCODING      | string | Specify the encoding and character set associated with CHARSET_REGISTRY. E.g., "1" for "ISO-8859-1" |
+| MIN_SPACE or MINSPACE | number | The minimum spacing allowed in the font                                                             |
+| UNDERLINE_POSITION    | number | The position of the underline below the baseline (usually negative)                                 |
+| UNDERLINE_THICKNESS   | number | The thickness of the underline                                                                      |

@@ -14,6 +14,7 @@ export const ko: UIStrings = {
     catalogue: '목록',
     about: '소개',
     github: '소스',
+    tools: '도구',
   },
 
   catalogue: {
@@ -257,5 +258,15 @@ export const ko: UIStrings = {
     title: '페이지를 찾을 수 없습니다',
     hint: '이 코드 포인트에는 아직 글리프가 없습니다.',
     back: '목록으로',
+  },
+  tools: {
+    title: '도구와 문서',
+    intro: '비트맵 글꼴을 둘러싼 개발 도구와 참고 문서입니다. 본문은 현재 영어입니다.',
+    cards: [
+      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: 'BDF 비트맵 글꼴을 파싱하는 TypeScript/JavaScript 라이브러리. 브라우저와 Node 지원, 온라인 플레이그라운드 포함.' },
+      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: 'BDF 비트맵 글꼴을 파싱하는 Python 라이브러리. Pillow와 함께 비트맵을 그릴 수 있습니다.' },
+      { slug: 'bdf-spec', name: 'BDF 사양', blurb: 'Adobe의 Glyph Bitmap Distribution Format 사양 정리판. 비공식 속성 목록 포함.' },
+      { slug: 'font-template', name: '글꼴 템플릿', blurb: 'Adobe Illustrator로 글리프를 그리고 FontForge로 글꼴을 만드는 가장 간단한 템플릿과 안내.' },
+    ],
   },
 };

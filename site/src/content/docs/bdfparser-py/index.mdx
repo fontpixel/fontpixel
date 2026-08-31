@@ -1,0 +1,145 @@
+---
+title: "BDF Parser (Python library)"
+label: "BDF Parser (Python) - Overview"
+order: 0
+---
+
+import Figure from '@dc/Figure.astro';
+
+## Introduction
+
+This is a BDF (Glyph Bitmap Distribution; [Wikipedia](https://en.wikipedia.org/wiki/Glyph_Bitmap_Distribution_Format); [Spec](../bdf-spec/)) format bitmap font file parser library in Python. It has [`Font`](font/), [`Glyph`](glyph/) and [`Bitmap`](bitmap/) classes providing more than 30 chainable API methods of parsing BDF fonts, getting their meta information, rendering text in any writing direction, adding special effects and manipulating bitmap images. It works seamlessly with [PIL / Pillow](https://pillow.readthedocs.io/en/stable/) and [NumPy](https://numpy.org/), and has detailed documentation / tutorials / API reference.
+
+**BDF Parser TypeScript (JavaScript) library** ([documentation](../bdfparser-js/); [GitHub page](https://github.com/tomchen/bdfparser-js); [npm page](https://www.npmjs.com/package/bdfparser); `npm i bdfparser`) is a port of **BDF Parser Python library** ([documentation](../bdfparser-py/); [GitHub page](https://github.com/tomchen/bdfparser); [PyPI page](https://pypi.org/project/bdfparser/); `pip install bdfparser`). Both are written by [Tom Chen](https://github.com/tomchen/) and under the MIT License.
+
+The BDF Parser TypeScript (JavaScript) library has a [**Live Demo & Editor**](../bdfparser-js/editor/) you can try.
+
+## Installation
+
+```bash
+pip install bdfparser
+```
+
+<small>(Python 3.4 and later include pip by default. Read <a href="https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip">this</a> to know how to check whether pip is installed. Read <a href="https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py">this</a> if you need to install it)</small>
+
+## Quick examples
+
+```python
+from bdfparser import Font
+font = Font('tests/fonts/unifont-13.0.04.bdf')
+print(f"This font's global size is "
+      f"{font.headers['fbbx']} x {font.headers['fbby']} (pixel), "
+      f"it contains {len(font)} glyphs.")
+# This font's global size is 16 x 16 (pixel), it contains 57086 glyphs.
+```
+
+Print cropped and combined "a" and "c" with shadow effect:
+
+```python
+ac = font.glyph("a").draw().crop(6, 8, 1, 2).concat(
+    font.glyph("c").draw().crop(6, 8, 1, 2)
+    ).shadow()
+print(ac)
+# .####..####..
+# #.&&&##.&&&#.
+# .&...##&....&
+# .######&.....
+# #.&&&##&.....
+# #&...##&.....
+# #&..###&...#.
+# .###.#&####.&
+# ..&&&.&.&&&&.
+```
+
+Get an enlarged version (8 times both width and height) of this "ac":
+
+```python
+ac_8x8 = ac * 8
+```
+
+And save it as an RGBA (background transparent) image "ac.png", using [PIL (Pillow)](https://pillow.readthedocs.io/en/stable/) library <small>(<code>pip install pillow</code> if needed)</small>:
+
+```python
+from PIL import Image
+im_ac = Image.frombytes('RGBA',
+                        (ac_8x8.width(), ac_8x8.height()),
+                        ac_8x8.tobytes('RGBA'))
+im_ac.save("ac.png", "PNG")
+```
+
+<Figure
+  src="bdfparser_py/ac.png"
+  caption="ac.png (note its background is transparent)"
+  position="center"
+  imgUrl={true}
+/>
+
+Print text "Hello!", from right to left, with glowing effect:
+
+```python
+hello = font.draw('Hello!', direction='rl').glow()
+print(hello)
+# ..........................................................
+# ..........................................................
+# ..........................................................
+# ....................&&......&&............................
+# .....&.............&##&....&##&...........&....&..........
+# ....&#&.............&#&.....&#&..........&#&..&#&.........
+# ....&#&....&&&&.....&#&.....&#&....&&&&..&#&..&#&.........
+# ....&#&...&####&....&#&.....&#&...&####&.&#&..&#&.........
+# ....&#&..&#&&&&#&...&#&.....&#&..&#&&&&#&&#&&&&#&.........
+# ....&#&..&#&..&#&...&#&.....&#&..&#&&&&#&&######&.........
+# ....&#&..&#&..&#&...&#&.....&#&..&######&&#&&&&#&.........
+# ....&#&..&#&..&#&...&#&.....&#&..&#&&&&&.&#&..&#&.........
+# .....&...&#&..&#&...&#&.....&#&..&#&...&.&#&..&#&.........
+# ....&#&..&#&&&&#&..&&#&&...&&#&&.&#&&&&#&&#&..&#&.........
+# ....&#&...&####&..&#####&.&#####&.&####&.&#&..&#&.........
+# .....&.....&&&&....&&&&&...&&&&&...&&&&...&....&..........
+# ..........................................................
+# ..........................................................
+```
+
+This time, try [NumPy](https://numpy.org/) and [Matplotlib](https://matplotlib.org/)! <small>(<code>pip install</code> if you don't have them)</small>
+
+```python
+import numpy
+import matplotlib.pyplot as plt
+nparr = numpy.array(hello.todata(2))
+plt.imshow(nparr, 'Blues')
+plt.show()
+```
+
+<Figure
+  src="bdfparser_py/plot.png"
+  caption="Plot image &quot;!olleH&quot;"
+  position="center"
+  imgUrl={true}
+/>
+
+Save all glyphs in [Unifont](https://en.wikipedia.org/wiki/GNU_Unifont) as a black-and-white-two-color-only "font_preview.png" (with default width 512px):
+
+```python
+font_preview = font.drawall()
+im_ac = Image.frombytes('1',
+                        (font_preview.width(), font_preview.height()),
+                        font_preview.tobytes('1'))
+im_ac.save("font_preview.png", "PNG")
+```
+
+<Figure
+  src="bdfparser_py/font_preview_part.png"
+  caption="Parts of the Unifont preview image (click the image to view the long original)"
+  position="center"
+  imgUrl={true}
+  link={import.meta.env.BASE_URL + 'img/bdfparser_py/font_preview.png'}
+/>
+
+## Copyright & links
+
+Written by [Tom Chen](https://tomchen.org/), under [the MIT License](https://github.com/tomchen/bdfparser/blob/master/LICENSE), a permissive open-source license.
+
+This library officially supports Python version 3.5 or later.
+
+[GitHub repo](https://github.com/tomchen/bdfparser) | [PyPI page](https://pypi.org/project/bdfparser/)
+
+The documentation belongs to [font.tomchen.org](https://font.tomchen.org/), a website where I put font & typography related stuff. [The documentation website's GitHub repo](https://github.com/tomchen/font-website)

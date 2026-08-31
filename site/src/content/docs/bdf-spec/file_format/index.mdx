@@ -1,0 +1,18 @@
+---
+title: "File Format"
+order: 3
+---
+
+import Aside from '@dc/Aside.astro';
+
+
+BDF files are distributed in an ASCII encoded, human-readable form. The file begins with global information pertaining to the font as a whole, followed by the information and bitmaps for the individual glyphs. This data represents the font for a single size and orientation. Metrics for multiple writing directions may be included in a single file.
+
+A BDF file has the general form described in the following sections. Each item is contained on a separate line of text in the file. Items on a line are separated by spaces. Lines may be of unlimited length.
+
+Values specified in the file will be one of the following types: `string`, `number`, or `integer`. A value of the type `number` can be either a real number or an integer, and can be signed or unsigned. It may or may not contain a decimal point or a leading minus sign.
+
+<Aside type="note">
+This version lifts the restriction on line length. In this version, the new maximum length of a value of the type `string` is 65535 characters, and hence lines may now be at least this long. While it is possible to use a version 2.2 font file with a version 2.1 parser, it is also possible for it to be incompatible.
+
+</Aside>

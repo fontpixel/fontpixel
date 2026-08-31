@@ -1,0 +1,122 @@
+---
+title: "Individual Glyph Information"
+label: "Individual Glyph Info"
+order: 5
+---
+
+import Aside from '@dc/Aside.astro';
+
+
+import Keyword from '@dc/Keyword.astro';
+import Figure from '@dc/Figure.astro';
+
+The beginning of the section containing information for individual glyphs is specified by the `CHARS` keyword (followed by the number of glyphs in the font). Individual glyphs are delimited by the  `STARTCHAR` and `ENDCHAR` keywords; between these keywords are metrics information and the bitmap data.
+
+The glyph metrics data includes both the scalable width (the device independent width of the corresponding outline font glyph) and the width of the screen font glyph, expressed in device pixels. The scalable width can be used by applications for accurately calculating line widths and compensating for round-off errors.
+
+The glyph data section is introduced by the keyword:
+
+## `CHARS`
+
+<Keyword keyword="CHARS" value="nglyphs" />
+
+`CHARS` is followed by *nglyphs*, the number of glyphs that follow. To make sure that the correct number of glyphs were actually read and processed, error checking is recommended at the end of the file.
+
+Each of the glyphs is then represented by the following:
+
+## `STARTCHAR`
+
+<Keyword keyword="STARTCHAR" value="string" />
+
+The word `STARTCHAR` followed by a string containing the name for the glyph. In base fonts, this should correspond to the name in the PostScript language outline font’s encoding vector. In a Composite font (Type 0), the value may be a numeric offset or glyph ID.
+
+<Aside type="note">
+In versions of this document prior to 2.2, this value was limited to a string of 14 characters.
+
+</Aside>
+
+## `ENCODING`
+
+<Keyword keyword="ENCODING" value="integer (integer)" />
+
+`ENCODING` is followed by a positive integer representing the Adobe Standard Encoding value. If the character is not in the Adobe Standard Encoding, `ENCODING` is followed by –1 and optionally by another integer specifying the glyph index for the non-standard encoding.
+
+## `SWIDTH`
+
+<Keyword keyword="SWIDTH" value="swx0 swy0" />
+
+`SWIDTH` is followed by swx0 and swy0, the scalable width of the glyph in x and y for writing mode 0. The scalable widths are of type *Number* and are in units of 1/1000th of the size of the glyph and correspond to the widths found in AFM files (for outline fonts). If the size of the glyph is *p* points, the width information must be scaled by *p*/1000 to get the width of the glyph in printer’s points. This width information should be regarded as a vector indicating the position of the next glyph’s origin relative to the origin of this glyph. `SWIDTH` is mandatory for all writing mode 0 fonts.
+
+To convert the scalable width to the width in device pixels, multiply `SWIDTH` times *p*/1000 times *r*/72, where *r* is the device resolution in pixels per inch. The result is a real number giving the ideal width in device pixels. The actual device width must be an integral number of device pixels and is given by the `DWIDTH` entry.
+
+## `DWIDTH`
+
+<Keyword keyword="DWIDTH" value="dwx0 dwy0" />
+
+`DWIDTH` specifies the widths in x and y, dwx0 and dwy0, in device pixels. Like `SWIDTH`, this width information is a vector indicating the position of the next glyph’s origin relative to the origin of this glyph. `DWIDTH` is mandatory for all writing mode 0 fonts.
+
+## `SWIDTH1`
+
+<Keyword keyword="SWIDTH1" value="swx1 swy1" />
+
+`SWIDTH1` is followed by the values for swx1 and swy1, the scalable width of the glyph in x and y, for writing mode 1 (vertical direction). The values are of type `Number`, and represent the widths in glyph space coordinates.
+
+## `DWIDTH1`
+
+<Keyword keyword="DWIDTH1" value="dwx1 dwy1" />
+
+`DWIDTH1` specifies the integer pixel width of the glyph in x and y. Like `SWIDTH1`, this width information is a vector indicating the position of the next glyph’s origin relative to the origin of this glyph. `DWIDTH1` is mandatory for all writing mode 1 fonts.
+
+<Aside type="note">
+If `METRICSSET` is 1 or 2, both `SWIDTH1` and `DWIDTH1` must be present; if `METRICSSET` is 0, both should be absent.
+
+</Aside>
+
+## `VVECTOR`
+
+<Keyword keyword="VVECTOR" value="xoff yoff" />
+
+VVECTOR (optional) specifies the components of a vector from origin 0 (the origin for writing direction 0) to origin 1 (the origin for writing direction 1). If the value of `METRICSSET` is 1 or 2, `VVECTOR` must be specified either at the global level, or for each individual glyph. If specified at the global level, the `VVECTOR` is the same for all glyphs, though the inclusion of this keyword in an individual glyph has the effect of overriding the bal value for that specific glyph.
+
+### Figure 1
+
+Figure 1 illustrates how `VVECTOR` relates the origins for writing directions 0 and 1.
+
+<Figure
+  src="bdf_spec/1.png"
+  caption="Relationship between metrics for writing direction 0 and 1"
+  figure_number={1}
+  width={700}
+  position="center"
+  imgUrl={true}
+/>
+
+## `BBX`
+
+<Keyword keyword="BBX" value="BBw BBh BBxoff0x BByoff0y" />
+
+`BBX` is followed by BBw, the width of the black pixels in x, and BBh, the height in y. These are followed by the x and y displacement, BBxoff0 and BByoff0, of the lower left corner of the bitmap from origin 0. All values are are an integer number of pixels.
+
+If the font specifies metrics for writing direction 1, `VVECTOR` specifies the offset from origin 0 to origin 1. For example, for writing direction 1, the offset from origin 1 to the lower left corner of the bitmap would be:
+
+<p style={{'textIndent': '2em'}}>
+BBxoff1x,y = BBxoff0x,y – VVECTOR
+</p>
+
+## `BITMAP`
+
+<Keyword keyword="BITMAP" value="<hex data>" />
+
+`BITMAP` introduces the hexadecimal data for the character bitmap. From the `BBX` value for *h*, find *h* lines of hex-encoded bitmap, padded on the right with zero’s to the nearest byte (that is, multiple of 8). Hex data can be turned into binary by taking two bytes at a time, each of which represents 4 bits of the 8bit value. For example, the byte 01101101 is two hex digits: 6 (0110 in hex) and D (1101 in hex).
+
+## `ENDCHAR`
+
+<Keyword keyword="ENDCHAR" />
+
+`ENDCHAR` delimits the end of the glyph description.
+
+## `ENDFONT`
+
+<Keyword keyword="ENDFONT" />
+
+The entire file is terminated with the word `ENDFONT`. If this is encountered before all of the glyphs have been read, it is an error condition.

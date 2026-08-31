@@ -1,0 +1,41 @@
+---
+/** 文档提示框：承接 Docusaurus 的 :::note / :::tip / :::warning 等。 */
+interface Props {
+  type?: 'note' | 'tip' | 'info' | 'warning' | 'caution';
+  title?: string;
+}
+const { type = 'note', title } = Astro.props;
+const LABEL: Record<string, string> = {
+  note: 'Note', tip: 'Tip', info: 'Info', warning: 'Warning', caution: 'Caution',
+};
+---
+
+<aside class={`aside aside--${type}`}>
+  <p class="aside__label">{title ?? LABEL[type]}</p>
+  <slot />
+</aside>
+
+<style>
+  .aside {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    padding: var(--s2) var(--s4);
+    margin: var(--s4) 0;
+  }
+  .aside--warning,
+  .aside--caution {
+    border-left-color: #b5312f;
+  }
+  .aside--tip {
+    border-left-color: #3a7d44;
+  }
+  .aside__label {
+    margin: 0 0 var(--s1);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+</style>

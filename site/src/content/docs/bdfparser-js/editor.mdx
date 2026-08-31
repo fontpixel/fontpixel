@@ -1,0 +1,55 @@
+---
+title: "BDF Parser Live Code Editor"
+label: "Live Demo & Code Editor"
+order: 0.5
+---
+
+import BDFEditor from '@dc/BDFEditor.svelte';
+
+<BDFEditor client:load />
+
+Welcome to the BDF Parser Live Demo & Code Editor. Feel free to edit the code. The result will be shown immediately.
+
+The `font` parameters of the inner function is a `Font` instance that's already loaded a BDF font file. The other parameter is an object containing \{ [`Font`](../font/), [`Glyph`](../glyph/), [`Bitmap`](../bitmap/) \}, which refer to the three classes of the BDF Parser library.
+
+The return value of the inner function should be an instantiated `Bitmap` object you want to render. The result image is an HTML [`<canvas>`](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) element, you can right click on it and select "Save image as...". The shown result image on this webpage is by default bigger (width & height x 2) than the actual image you may download, this can be changed via `size` prop (see below).
+
+By default, it loads **unifont-reduced.bdf** file, a reduced version of **unifont-13.0.04.bdf** ([GNU Unifont](https://en.wikipedia.org/wiki/GNU_Unifont) v13.0.04 released on 2020-11-21). **unifont-reduced.bdf** includes 5441 glyphs in total.
+
+<details>
+<summary>unifont-reduced.bdf coverage detail</summary>
+
+* U+0000-U+13FF
+* U+3040-U+309F (Hiragana), U+30A0-U+30FF (Katakana)
+* The most commonly used Simplified and Traditional Chinese characters which are 的, 一, 是, 不, 了, 人, 我, 在, 有, 他, 这, 为, 之, 大, 来, 以, 个, 中, 上, 们, 到, 说, 国, 和, 地, 也, 子, 时, 道, 出, 而, 要, 于, 就, 下, 得, 可, 你, 年, 生, 自, 会, 那, 后, 能, 对, 着, 事, 其, 里, 所, 去, 行, 过, 家, 十, 用, 发, 天, 如, 然, 作, 方, 成, 者, 多, 日, 都, 三, 小, 军, 二, 无, 同, 么, 经, 法, 当, 起, 与, 好, 看, 学, 进, 种, 将, 还, 分, 此, 心, 前, 面, 又, 定, 见, 只, 主, 没, 公, 从, 這, 爲, 來, 個, 們, 說, 國, 時, 於, 會, 後, 對, 裏, 過, 發, 軍, 無, 麼, 經, 當, 與, 學, 進, 種, 將, 還, 見, 沒, 從
+
+You can also paste `<BDF size={1} func={(font) => font.drawall()}/>` into the editor to draw all glyphs of the font.
+
+See also Wikipedia article: [Unicode block # List of blocks](https://en.wikipedia.org/wiki/Unicode_block#List_of_blocks)
+
+</details>
+
+By default, glyphs / foreground (`1`) are black, shadow or glowing effect areas (`2`) are painted red, background (`0`) is not painted (transparent).
+
+If you want to customize the font file, the color of pixels, and the size multiplier, you can add `fontfile`, `pixelcolors` and `size` props to the `<BDF>` components:
+
+<details>
+<summary>Example with <code>fontfile</code>, <code>pixelcolors</code> and <code>size</code> props set to default values (click to show, then copy and paste it into the editor)</summary>
+
+```jsx
+<BDF
+fontfile='unifont-reduced.bdf'
+pixelcolors={{
+  0: null,
+  1: 'black',
+  2: 'red',
+}}
+size={2}
+func={
+  (font, {Font, Glyph, Bitmap, $Font, $Glyph, $Bitmap}) => {
+    return font.draw('Hello! άßç й的のةُक!', {linelimit: 300}).glow(1)
+  }
+}/>
+```
+
+</details>

@@ -14,6 +14,7 @@ export const en: UIStrings = {
     catalogue: 'Catalogue',
     about: 'About',
     github: 'Source',
+    tools: 'Tools',
   },
 
   catalogue: {
@@ -257,5 +258,15 @@ export const en: UIStrings = {
     title: 'Page not found',
     hint: 'No glyph at this code point yet.',
     back: 'Back to catalogue',
+  },
+  tools: {
+    title: 'Tools & Docs',
+    intro: 'Developer tools and reference documents around bitmap fonts.',
+    cards: [
+      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: 'A TypeScript/JavaScript library for parsing BDF bitmap fonts, for browsers and Node, with a live playground.' },
+      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: 'A Python library for parsing BDF bitmap fonts; pairs with Pillow for drawing bitmaps.' },
+      { slug: 'bdf-spec', name: 'BDF Specification', blurb: 'A cleaned-up edition of Adobe\'s Glyph Bitmap Distribution Format spec, plus an unofficial property list.' },
+      { slug: 'font-template', name: 'Font Template', blurb: 'The simplest template and walkthrough for drawing glyphs in Adobe Illustrator and building a font with FontForge.' },
+    ],
   },
 };

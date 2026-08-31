@@ -1,0 +1,666 @@
+---
+title: "Glyph object"
+label: "Glyph object"
+order: 2
+---
+
+import Tabs from '@dc/Tabs.astro';
+import TabItem from '@dc/TabItem.astro';
+import Tooltip from '@dc/Tooltip.astro';
+import BDF from '@dc/BDF.svelte';
+
+## `Glyph()` and `$Glyph()` shortcut
+
+#### Syntax
+
+```js
+new Glyph(meta_obj, font)
+// is equivalent to
+$Glyph(meta_obj, font)
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `meta_obj` | Required | *object* (*string* as keys, *number* or *string* as values) | *N/A* | *object* of the meta information |
+| `font` | Required | *Font* object | *N/A* | The font the glyph belongs to |
+
+#### Return value
+
+*Glyph* object
+
+#### Description
+
+Initialize a *Glyph* object. Load a *object* of meta information and the font the glyph belongs.
+
+The shortcut `$Glyph(meta_obj, font)` is equivalent to `new Glyph(meta_obj, font)`, use it for convenience.
+
+:::note
+Usually you get the glyph object from [font.glyph(character)](../font/#glyph) and do not need to use `Glyph()`.
+:::
+
+## `.meta`
+
+#### Syntax
+
+```js
+.meta
+```
+
+#### Examples
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+const font = await $Font(getline('test/fonts/unifont-13.0.04.bdf'))
+const glyph = font.glyph('a')
+// `glyph` here is the Glyph object of "a" in Unifont v13.0.04
+
+
+
+console.log(glyph.meta)
+// { glyphname: 'U+0061', codepoint: 97, bbw: 8, bbh: 16, bbxoff: 0, bbyoff: -2, swx0: 500, swy0: 0, dwx0: 8, dwy0: 0, swx1: null, swy1: null, dwx1: null, dwy1: null, vvectorx: null, vvectory: null, hexdata: [ '00', '00', '00', '00', '00', '00', '3C', '42', '02', '3E', '42', '42', '46', '3A', '00', '00'] }
+console.log(glyph.meta.bbw)
+// 8
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+const font = await $Font(getline('test/fonts/unifont-13.0.04.bdf'))
+const glyph = font.glyph('a')
+// `glyph` here is the Glyph object of "a" in Unifont v13.0.04
+if (!glyph) {
+  throw new Error('Can\'t find the glyph')
+}
+console.log(glyph.meta)
+// { glyphname: 'U+0061', codepoint: 97, bbw: 8, bbh: 16, bbxoff: 0, bbyoff: -2, swx0: 500, swy0: 0, dwx0: 8, dwy0: 0, swx1: null, swy1: null, dwx1: null, dwy1: null, vvectorx: null, vvectory: null, hexdata: [ '00', '00', '00', '00', '00', '00', '3C', '42', '02', '3E', '42', '42', '46', '3A', '00', '00'] }
+console.log(glyph.meta.bbw)
+// 8
+```
+
+</TabItem>
+</Tabs>
+
+#### Type
+
+*object* (*string* as keys, *number* or *string* or *array* as values)
+
+#### Description
+
+The glyph's meta data.
+
+Glyph meta information's names (keys), value types, and their descriptions in the [BDF spec](../../bdf-spec/file_format/individual_glyph_info/):
+
+* `'glyphname'`: (*string*) see [`STARTCHAR`](../../bdf-spec/file_format/individual_glyph_info/#startchar)
+* `'codepoint'`: (*number*) see [`ENCODING`](../../bdf-spec/file_format/individual_glyph_info/#encoding)
+* `'bbw'`: (*number*) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
+* `'bbh'`: (*number*) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
+* `'bbxoff'`: (*number*) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
+* `'bbyoff'`: (*number*) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
+* `'swx0'`: (*number*) see [`SWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#swidth)
+* `'swy0'`: (*number*) see [`SWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#swidth)
+* `'dwx0'`: (*number*) see [`DWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#dwidth)
+* `'dwy0'`: (*number*) see [`DWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#dwidth)
+* `'swx1'`: (*number*) see [`SWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#swidth1)
+* `'swy1'`: (*number*) see [`SWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#swidth1)
+* `'dwx1'`: (*number*) see [`DWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#dwidth1)
+* `'dwy1'`: (*number*) see [`DWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#dwidth1)
+* `'vvectorx'`: (*number*) see [`VVECTOR`](../../bdf-spec/file_format/individual_glyph_info/#vvector)
+* `'vvectory'`: (*number*) see [`VVECTOR`](../../bdf-spec/file_format/individual_glyph_info/#vvector)
+* `'hexdata'`: (*array* of *strings*) the glyph's shape data in the form of *array* of hexadecimal-encoded *string*
+
+:::note
+Same character or glyph's `'glyphname'` (`STARTCHAR`) information may vary in different fonts, therefore it is unreliable to use it. Use the API method [.chr()](#chr) instead.
+
+Consider using .[draw()](#draw).[todata(4)](../bitmap/#todata) instead of `.meta['hexdata']`.
+:::
+
+## `.font`
+
+#### Syntax
+
+```js
+.font
+```
+
+#### Examples
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+
+
+
+console.log(glyph.font.headers.fontname)
+// the name of the font the glyph belongs to,
+// e.g. '-gnu-Unifont-Medium-R-Normal-Sans-16-160-75-75-c-80-iso10646-1'
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+if (!glyph.font || !glyph.font.headers) {
+  throw new Error('Unable to find glyph or font')
+}
+console.log(glyph.font.headers.fontname)
+// the name of the font the glyph belongs to,
+// e.g. '-gnu-Unifont-Medium-R-Normal-Sans-16-160-75-75-c-80-iso10646-1'
+```
+
+</TabItem>
+</Tabs>
+
+#### Type
+
+*Font* object
+
+#### Description
+
+It's a reference to the glyph's font object.
+
+## `.cp()`
+
+#### Syntax
+
+```js
+.cp()
+```
+
+#### Examples
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+console.log(glyph.cp())
+// 97
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+console.log(glyph.cp())
+// 97
+```
+
+</TabItem>
+</Tabs>
+
+#### Parameters
+
+No parameters
+
+#### Return value
+
+(*number*) codepoint of the glyph
+
+#### Description
+
+Get the codepoint of the glyph.
+
+## `.chr()`
+
+#### Syntax
+
+```js
+.chr()
+```
+
+#### Examples
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+console.log(glyph.chr())
+// 'a'
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+console.log(glyph.chr())
+// 'a'
+```
+
+</TabItem>
+</Tabs>
+
+#### Parameters
+
+No parameters
+
+#### Return value
+
+(*string*) character (one character string) of the glyph
+
+#### Description
+
+Get the character of the glyph.
+
+## `.draw()`
+
+#### Syntax
+
+```js
+.draw(mode, bb)
+```
+
+#### Examples
+
+In these examples, we use [the "quoteright" (`'`) glyph in the BDF spec's example figure 3](../../bdf-spec/examples/#figure-3).
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+const font = await $Font(getline('test/fonts/spec_example_fixed.bdf'))
+const quoteright = font.glyph("'")
+
+
+
+quoteright.draw()
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+const font = await $Font(getline('test/fonts/spec_example_fixed.bdf'))
+const quoteright = font.glyph("'")
+if (!quoteright) {
+  throw new Error('Can\'t find quoteright glyph')
+}
+quoteright.draw()
+```
+
+</TabItem>
+</Tabs>
+
+<BDF demo="js-glyph-0" client:visible />
+
+<details>
+<summary>Click to see the output of <code>quoteright.draw().toString()</code> (with default mode 0)</summary>
+
+```
+.....###.
+.....###.
+.....###.
+.....##..
+....###..
+....##...
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+```
+
+</details>
+
+---
+
+```js
+quoteright.draw(1)
+```
+
+<BDF demo="js-glyph-1" client:visible />
+
+<details>
+<summary>Click to see the output of <code>quoteright.draw(1).toString()</code></summary>
+
+```
+.###
+.###
+.###
+.##.
+###.
+##..
+```
+
+</details>
+
+---
+
+```js
+quoteright.draw(2)
+```
+
+<BDF demo="js-glyph-2" client:visible />
+
+<details>
+<summary>Click to see the output of <code>quoteright.draw(2).toString()</code></summary>
+
+```
+.###....
+.###....
+.###....
+.##.....
+###.....
+##......
+```
+
+</details>
+
+---
+
+```js
+quoteright.draw(-1, [6, 17, 1, 1])
+```
+
+<BDF demo="js-glyph-3" client:visible />
+
+<details>
+<summary>Click to see the output of <code>quoteright.draw(-1, [6, 17, 1, 1]).toString()</code></summary>
+
+```
+..###.
+..###.
+..###.
+..##..
+.###..
+.##...
+......
+......
+......
+......
+......
+......
+......
+......
+......
+......
+......
+```
+
+</details>
+
+---
+
+#### Parameters
+
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `mode` | Optional | *number* | `0` | See below |
+| `bb` | Optional | *<Tooltip tip="Tuple in TypeScript = Fixed-length Array in JavaScript">tuple</Tooltip>* of four *numbers* | *empty*/`undefined` | See below |
+
+`mode` can be:
+
+* `0` (default): area represented by the bitmap hex data, positioned and resized (cropped) (`fbbx` × `fbby`) according to [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox) (the font's global bounding box)
+* `1`: area represented by the bitmap hex data, resized (cropped) according to [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx) (`bbw` × `bbh`), which is the individual glyph bounding box, without unnecessary blank margin (but still possible to have blank margin sometimes)
+* `2`: area represented by the bitmap hex data, original, without removing the [right-padded](../../bdf-spec/examples/#figure-3) `'0'`s
+* `-1`: user specified area.
+  * `bb` parameter is useless when mode `-1` is not chosen. But if mode `-1` is chosen, you **MUST** specify `bb` parameter, which is a *<Tooltip tip="Tuple in TypeScript = Fixed-length Array in JavaScript">tuple</Tooltip>* `[bbx, bby, bbxoff, bbyoff]` representing your customized font bounding box. Similar to [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox), `bbx` and `bby` represent the size, `bbxoff` and `bbyoff` represent the relative position (displacement) of the starting (bottom-left) point from the origin
+
+#### Return value
+
+[*Bitmap*](../bitmap/) object
+
+#### Description
+
+Draw the glyph to a *Bitmap* object.
+
+## `.origin()`
+
+#### Syntax
+
+```js
+.origin(options)
+// options = {mode, fromorigin, xoff, yoff}
+```
+
+#### Examples
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+console.log(quoteright.origin()) // [2, 6]
+console.log(quoteright.origin({ mode: 1 })) // [-2, -12]
+console.log(quoteright.origin({ mode: 2 })) // [-2, -12]
+console.log(quoteright.origin({ mode: -1, xoff: 1, yoff: 1 })) // [-1, -1]
+console.log(quoteright.origin({ fromorigin: true })) // [-2, -6]
+console.log(quoteright.origin({ mode: 1, fromorigin: true })) // [2, 12]
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+console.log(quoteright.origin()) // [2, 6]
+console.log(quoteright.origin({ mode: 1 })) // [-2, -12]
+console.log(quoteright.origin({ mode: 2 })) // [-2, -12]
+console.log(quoteright.origin({ mode: -1, xoff: 1, yoff: 1 })) // [-1, -1]
+console.log(quoteright.origin({ fromorigin: true })) // [-2, -6]
+console.log(quoteright.origin({ mode: 1, fromorigin: true })) // [2, 12]
+```
+
+</TabItem>
+</Tabs>
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| (in `options`) `mode` | Optional | *number* | `0` | Same as [`.draw()`](#draw)'s `mode` parameter |
+| (in `options`) `fromorigin` | Optional | *boolean* | `false` | `false`: to the origin<br />`true`: from the origin |
+| (in `options`) `xoff` | Optional | *numbers* | *empty*/`undefined` | See below |
+| (in `options`) `yoff` | Optional | *numbers* | *empty*/`undefined` | See below |
+
+Similar to [`.draw()`](#draw), `xoff` and `yoff` parameters are useless when mode `-1` is not chosen, but if `mode: -1` in `.origin()`, you **MUST** specify `xoff` and `yoff`, which are equivalent to `bb[2]` ("bbxoff") and `bb[3]` ("bbyoff") in the method [`.draw()`](#draw).
+
+#### Return value
+
+(*<Tooltip tip="Tuple in TypeScript = Fixed-length Array in JavaScript">tuple</Tooltip>* of two *numbers*) The relative position (displacement) represented by `[x, y]` *<Tooltip tip="Tuple in TypeScript = Fixed-length Array in JavaScript">tuple</Tooltip>* (where right and top directions are positive)
+
+#### Description
+
+Get the relative position (displacement) of the origin from the left bottom corner of the bitmap drawn by the method [`.draw()`](#draw), or vice versa (i.e. displacement of the left bottom corner of the bitmap from the origin).
+
+## `.toString()`
+
+#### Syntax
+
+```js
+.toString()
+```
+
+#### Examples
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+console.log(quoteright.toString())
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+console.log(quoteright.toString())
+```
+
+</TabItem>
+</Tabs>
+
+<details>
+<summary>Click to see the output of <code>quoteright.toString()</code></summary>
+
+```
+.....###.
+.....###.
+.....###.
+.....##..
+....###..
+....##...
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+```
+
+</details>
+
+#### Description
+
+(*string*) `.toString()` gets a human-readable (multi-line) *string* representation of the *Glyph* object. It's actually the string converted from `.draw()` with default parameters.
+
+See also [`toString()` for *Bitmap* object](../bitmap/#tostring)
+
+## `.repr()`
+
+#### Syntax
+
+```js
+.repr()
+```
+
+#### Examples
+
+<Tabs
+  groupId="bdfparser-js-ts"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript (CJS)', value: 'js', },
+    { label: 'TypeScript (strict)', value: 'ts', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+console.log(quoteright.repr())
+```
+
+</TabItem>
+<TabItem value="ts">
+
+```ts
+console.log(quoteright.repr())
+```
+
+</TabItem>
+</Tabs>
+
+<details>
+<summary>Click to see the output of <code>quoteright.repr()</code></summary>
+
+```js
+Glyph({
+  "glyphname": "quoteright",
+  "codepoint": 39,
+  "bbw": 4,
+  "bbh": 6,
+  "bbxoff": 2,
+  "bbyoff": 12,
+  "swx0": 223,
+  "swy0": 0,
+  "dwx0": 5,
+  "dwy0": 0,
+  "swx1": null,
+  "swy1": null,
+  "dwx1": null,
+  "dwy1": null,
+  "vvectorx": null,
+  "vvectory": null,
+  "hexdata": [
+    "70",
+    "70",
+    "70",
+    "60",
+    "E0",
+    "C0"
+  ]
+}, Font(<Helvetica-BoldOblique>)
+```
+
+</details>
+
+#### Description
+
+(*string*) It gets a programmer-readable *string* representation of the *Glyph* object.

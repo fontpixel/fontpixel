@@ -1,0 +1,16 @@
+---
+import { render } from 'astro:content';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import { docStaticPaths } from '../../../lib/docs';
+import type { Lang } from '../../../i18n';
+
+export async function getStaticPaths() {
+  return docStaticPaths('font-template');
+}
+
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<DocsLayout lang={lang} section="font-template" entry={entry}><Content /></DocsLayout>

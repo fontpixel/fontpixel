@@ -1,0 +1,108 @@
+---
+/** 与 Docusaurus Tabs 同 API（values / defaultValue / groupId），
+ * 让并入的 MDX 无需改动标记。无 JS 时各页签堆叠显示（渐进增强）。
+ */
+interface Props {
+  groupId?: string;
+  defaultValue?: string;
+  values?: { label: string; value: string }[];
+}
+const { groupId, defaultValue, values = [] } = Astro.props;
+---
+
+<div
+  class="tabs"
+  data-tabs
+  data-group={groupId}
+  data-default={defaultValue}
+  data-values={JSON.stringify(values)}
+>
+  <slot />
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
+    if (root.dataset.ready) continue;
+    root.dataset.ready = '1';
+    const values: { label: string; value: string }[] = JSON.parse(root.dataset.values || '[]');
+    const items = [...root.querySelectorAll<HTMLElement>(':scope > [data-tab-value]')];
+    if (!items.length) continue;
+    const labelOf = (v: string) =>
+      values.find((x) => x.value === v)?.label ??
+      items.find((i) => i.dataset.tabValue === v)?.dataset.tabLabel ??
+      v;
+    const group = root.dataset.group;
+    const key = group ? `opf-tabs-${group}` : '';
+    const bar = document.createElement('div');
+    bar.className = 'tabs__bar';
+    const show = (v: string) => {
+      for (const it of items) it.hidden = it.dataset.tabValue !== v;
+      for (const b of bar.children)
+        (b as HTMLElement).classList.toggle('on', (b as HTMLElement).dataset.v === v);
+    };
+    for (const it of items) {
+      const v = it.dataset.tabValue!;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.v = v;
+      btn.textContent = labelOf(v);
+      btn.addEventListener('click', () => {
+        show(v);
+        if (key) {
+          try {
+            localStorage.setItem(key, v);
+          } catch {
+            /* 私隐模式下存不了就算了 */
+          }
+        }
+        if (group)
+          for (const other of document.querySelectorAll<HTMLElement>(`[data-tabs][data-group="${group}"]`))
+            if (other !== root) other.dispatchEvent(new CustomEvent('opf-tab', { detail: v }));
+      });
+      bar.append(btn);
+    }
+    root.prepend(bar);
+    root.addEventListener('opf-tab', ((e: CustomEvent<string>) => show(e.detail)) as EventListener);
+    let init = root.dataset.default || items[0]!.dataset.tabValue!;
+    if (key) {
+      try {
+        const saved = localStorage.getItem(key);
+        if (saved && items.some((i) => i.dataset.tabValue === saved)) init = saved;
+      } catch {
+        /* 同上 */
+      }
+    }
+    show(init);
+  }
+</script>
+
+<style>
+  .tabs {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: var(--s2) var(--s3);
+    margin: var(--s4) 0;
+  }
+  .tabs :global(.tabs__bar) {
+    display: flex;
+    gap: var(--s1);
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: var(--s2);
+  }
+  .tabs :global(.tabs__bar button) {
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    padding: var(--s1) var(--s2);
+    cursor: pointer;
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 0.85rem;
+  }
+  .tabs :global(.tabs__bar button.on) {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 700;
+  }
+</style>

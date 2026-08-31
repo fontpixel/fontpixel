@@ -126,6 +126,7 @@ const brandCss = brand
         </a>
         <nav class="site-nav" aria-label={s.siteNavLabel}>
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
+          <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
           <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
           <details class="langmenu" data-testid="lang-menu">
             <summary aria-label={s.langLabel} title={s.langLabel}>
@@ -307,6 +308,7 @@ const brandCss = brand
         </div>
         <nav class="site-footer__links" aria-label={s.footer.navLabel}>
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
+          <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
           <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
           <a href={withBase(`/${lang}/about/#datasources`)}>{s.footer.dataSources}</a>
           <a href={REPO_URL} rel="noopener">{s.footer.sourceCode}</a>
@@ -385,7 +387,8 @@ const brandCss = brand
       .site-nav {
         display: flex;
         align-items: center;
-        gap: var(--s4);
+        flex-wrap: wrap; /* 300px 宽下四项排不开，允许折行 */
+        gap: var(--s2) var(--s4);
         font-size: 0.9rem;
         color: var(--ink-2);
       }

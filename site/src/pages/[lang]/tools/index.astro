@@ -1,0 +1,60 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { LANGS, t, type Lang } from '../../../i18n';
+import { withBase } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const s = t(lang);
+---
+
+<Base lang={lang} title={s.tools.title} description={s.tools.intro} path="/tools/">
+  <h1>{s.tools.title}</h1>
+  <p class="tools__intro">{s.tools.intro}</p>
+  <div class="tools__grid">
+    {s.tools.cards.map((c) => (
+      <a class="tools__card" href={withBase(`/${lang}/${c.slug}/`)}>
+        <span class="tools__name">{c.name}</span>
+        <span class="tools__blurb">{c.blurb}</span>
+      </a>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .tools__intro {
+    color: var(--ink-2);
+  }
+  .tools__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--s4);
+    margin-top: var(--s5);
+  }
+  .tools__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: var(--s4);
+  }
+  .tools__card:hover {
+    border-color: var(--accent);
+    color: inherit;
+  }
+  .tools__name {
+    font-weight: 700;
+  }
+  .tools__card:hover .tools__name {
+    color: var(--accent);
+  }
+  .tools__blurb {
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+</style>

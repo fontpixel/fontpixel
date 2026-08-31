@@ -21,6 +21,7 @@ export interface UIStrings {
     catalogue: string;
     about: string;
     github: string;
+    tools: string;
   };
 
   catalogue: {
@@ -179,5 +180,10 @@ export interface UIStrings {
     title: string;
     hint: string;
     back: string;
+  };
+  tools: {
+    title: string;
+    intro: string;
+    cards: { slug: string; name: string; blurb: string }[];
   };
 }

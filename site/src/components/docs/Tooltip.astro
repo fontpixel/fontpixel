@@ -1,0 +1,45 @@
+---
+/** 悬停提示（移植自原站 Tooltip.js，rc-tooltip 换成纯 CSS）。 */
+interface Props {
+  tip: string;
+}
+const { tip } = Astro.props;
+---
+
+<span class="tt" tabindex="0"><span class="tt__text"><slot /></span><span class="tt__mark" aria-hidden="true">?</span><span class="tt__tip" role="tooltip">{tip}</span></span>
+
+<style>
+  .tt {
+    position: relative;
+    cursor: help;
+  }
+  .tt__text {
+    border-bottom: 1px dotted var(--ink-3);
+  }
+  .tt__mark {
+    display: inline-block;
+    margin-left: 0.15em;
+    font-size: 0.7em;
+    vertical-align: super;
+    color: var(--ink-3);
+  }
+  .tt__tip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 6px);
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 280px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--s1) var(--s2);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    visibility: hidden;
+    z-index: 10;
+  }
+  .tt:hover .tt__tip,
+  .tt:focus .tt__tip {
+    visibility: visible;
+  }
+</style>

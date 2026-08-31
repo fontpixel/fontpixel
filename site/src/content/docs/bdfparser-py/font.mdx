@@ -1,0 +1,526 @@
+---
+title: "Font object"
+label: "Font object"
+order: 1
+---
+
+## `Font()`
+
+#### Syntax
+
+```python
+Font(arg)
+```
+
+#### Examples
+
+```python
+from bdfparser import Font
+font = Font('tests/fonts/unifont-13.0.04.bdf')
+# same as:
+# font = Font(open('tests/fonts/unifont-13.0.04.bdf'))
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `arg` | Optional | *string* or *`pathlib` path* or *file object* | *&lt;empty&gt;* | File path as a *string*, or *`pathlib` path*, or *file object*, or leave it empty |
+
+#### Return value
+
+*Font* object
+
+#### Description
+
+Initialize a *Font* object. Load the BDF font file if a file path string or a file object is present.
+
+## `.headers`
+
+#### Syntax
+
+```python
+.headers
+```
+
+#### Examples
+
+```python
+font.headers
+# {'bdfversion': 2.1, 'fontname': '-gnu-Unifont-Medium-R-Normal-Sans-16-160-75-75-c-80-iso10646-1','fbbx': 16, 'fbby': 16, 'fbbxoff': 0, 'fbbyoff': -2, 'pointsize': 16, 'xres': 75, 'yres': 75, 'metricsset': 0}
+font.headers['fontname']
+# '-gnu-Unifont-Medium-R-Normal-Sans-16-160-75-75-c-80-iso10646-1'
+```
+
+#### Type
+
+*dictionary* (*string* as keys, *integer* or *string* as values)
+
+#### Description
+
+This attribute of a *Font* object represents the header information which is typically all the information before the `STARTPROPERTIES` line in the font file.
+
+Font header's names (keys), value types, and their descriptions in the [BDF spec](../../bdf-spec/file_format/global_font_info/):
+
+* `'bdfversion'`: (*float*) see [`STARTFONT`](../../bdf-spec/file_format/global_font_info/#startfont)
+* `'fontname'`: (*string*) see [`FONT`](../../bdf-spec/file_format/global_font_info/#font)
+* `'pointsize'`: (*integer*) see [`SIZE`](../../bdf-spec/file_format/global_font_info/#size)
+* `'xres'`: (*integer*) see [`SIZE`](../../bdf-spec/file_format/global_font_info/#size)
+* `'yres'`: (*integer*) see [`SIZE`](../../bdf-spec/file_format/global_font_info/#size)
+* `'fbbx'`: (*integer*) see [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox)
+* `'fbby'`: (*integer*) see [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox)
+* `'fbbxoff'`: (*integer*) see [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox)
+* `'fbbyoff'`: (*integer*) see [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox)
+* `'swx0'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`SWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#swidth) at glyph-level
+* `'swy0'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`SWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#swidth) at glyph-level
+* `'dwx0'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`DWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#dwidth) at glyph-level
+* `'dwy0'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`DWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#dwidth) at glyph-level
+* `'swx1'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`SWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#swidth1) at glyph-level
+* `'swy1'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`SWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#swidth1) at glyph-level
+* `'dwx1'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`DWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#dwidth1) at glyph-level
+* `'dwy1'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`DWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#dwidth1) at glyph-level
+* `'vvectorx'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`VVECTOR`](../../bdf-spec/file_format/individual_glyph_info/#vvector) at glyph-level
+* `'vvectory'`: (*integer*) see [Metrics keywords](../../bdf-spec/file_format/global_font_info/#metrics-keywords), see also [`VVECTOR`](../../bdf-spec/file_format/individual_glyph_info/#vvector) at glyph-level
+* `'metricsset'`: (*integer*) see [`METRICSSET`](../../bdf-spec/file_format/global_font_info/#metricsset)
+* `'contentversion'`: (*integer*) see [`CONTENTVERSION`](../../bdf-spec/file_format/global_font_info/#contentversion)
+* `'comment'`: (*list* of *strings*) see [`COMMENT`](../../bdf-spec/file_format/global_font_info/#comment)
+
+:::note
+Headers are to be distinguished from [properties (props)](#props) which are inside the block between `STARTPROPERTIES` and `ENDPROPERTIES` lines in the font file.
+
+Header names are defined in the spec, property names are not.
+:::
+
+## `.props`
+
+#### Syntax
+
+```python
+.props
+```
+
+#### Examples
+
+```python
+font.props
+# {'add_style_name': 'Sans Serif','average_width': '80','cap_height': '10',...,'weight_name': 'Medium','x_height': '8'}
+```
+
+#### Type
+
+*dictionary* (*string* as keys, *string* as values)
+
+#### Description
+
+This attribute of a *Font* object represents the property infomation which is inside the block between `STARTPROPERTIES` and `ENDPROPERTIES` lines.
+
+:::note
+Properties (props) are to be distinguished from [headers](#headers) which are typically all the information before the `STARTPROPERTIES` line in the font file.
+
+Property names are not defined in the official spec, here is an [unofficial list of commonly used properties](../../bdf-spec/bdf_properties/).
+:::
+
+## `.glyphs`
+
+#### Syntax
+
+```python
+.glyphs
+```
+
+#### Type
+
+*dictionary* (*integer* as keys, *list* as values)
+
+#### Description
+
+This attribute of a *Font* object represents the raw glyph data in the font.
+
+:::note
+As raw data with values without their keys, you usually should not use it directly. Use other API methods instead, such as [.glyph()](#glyph) and [.iterglyphs()](#iterglyphs).
+:::
+
+## `.load_file_path()`
+
+#### Syntax
+
+```python
+.load_file_path(file_path)
+```
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `file_path` | Required | *string* | *N/A* | Path of the BDF font file to load |
+
+#### Return value
+
+The *Font* object itself, with font loaded
+
+#### Description
+
+Load the BDF font file in the file path.
+
+[`Font(file_path)`](#font) is equivalent to `Font().load_file_path(file_path)`.
+
+## `.load_file_obj()`
+
+#### Syntax
+
+```python
+.load_file_obj(file_obj)
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `file_obj` | Required | *file object* | *N/A* | *file object* of the BDF font file to load |
+
+#### Return value
+
+The *Font* object itself, with font loaded
+
+#### Description
+
+Load the BDF font file object.
+
+[`Font(file_object)`](#font) is equivalent to `Font().load_file_obj(file_object)`.
+
+## `.length()`
+
+#### Syntax
+
+```python
+.length()
+```
+
+#### Examples
+
+```python
+l = font.length()
+l2 = len(font)
+l == l2  # True
+```
+
+#### Parameters
+
+No parameters
+
+#### Return value
+
+(*integer*) Actual glyph count in the font
+
+#### Description
+
+The method always returns how many glyphs actually exist in the font. This could be different with the glyph count number next to the 'CHARS' keyword, if so, there would be a warning when the font is loaded.
+
+`font_obj.length()` is equivalent to `len(font_obj)`.
+
+## `.iterglyphs()`
+
+#### Syntax
+
+```python
+.iterglyphs(order, r)
+```
+
+#### Examples
+
+```python
+# print all basic latin letters (A-Za-z)'s character and bitmap shape, in reverse order:
+for glyph in font.iterglyphs(order=2 ,r=[(65, 90), (97, 122)]):
+    print('Character "' + glyph.chr() + '"\'s shape:')
+    print(glyph)
+# remove `order=2 ,r=[(65, 90), (97, 122)]` to print all glyphs in the font in normal ascending order
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `order` | Optional | *integer* | `1` | `-1`: reverse order in the BDF font file<br />`0`: order in the BDF font file<br />`1`: ascending codepoint order<br />`2`: descending codepoint order |
+| `r` | Optional | See below | `None` | Codepoint range, see below |
+
+The codepoint range parameter `r` accepts:
+
+* `None` (default): all the glyphs in the font
+* *integer*. Examples:
+  * `128` (Basic Latin / ASCII)
+  * `0x100` (Basic Latin and Latin-1 Supplement / cp1250 / cp1251 / cp1252)
+* *tuple* of two *integers*. Examples:
+  * `(0, 127)` (same as `128`)
+  * `(0, 0xff)` (same as `0x100`)
+  * `(48, 57)` (all numbers 0-9)
+  * `(65, 90)` (all uppercase basic latin letters A-Z)
+  * `(97, 122)` (all lowercase basic latin letters a-z)
+  * `(1328, 0x1032F)`
+* *list* of *tuples* of two *integers*. Example:
+  * `[(65, 90), (97, 122)]` (all basic latin letters A-Za-z)
+  * `[(0x2E80, 0x9FFF), (0xA960, 0xA97F), (0xAC00, 0xD7FF), (0xF900, 0xFAFF), (0xFE30, 0xFE4F), (0xFF00, 0xFFEF), (0x20000, 0x3134F)]` (this is roughly all [CJK characters](https://en.wikipedia.org/wiki/CJK_characters) in the Unicode)
+
+See also [Wikipedia article "Unicode block"](https://en.wikipedia.org/wiki/Unicode_block)
+
+#### Return value
+
+(*iterator* of [*Glyph*](../glyph/) objects/`None`) An *iterator* of glyphs as [*Glyph*](../glyph/) objects. Missing glyphs are replaced by `None`
+
+#### Description
+
+This method returns an iterator of all the glyphs (as [*Glyph*](../glyph/) objects) in the font (default) or in the specified codepoint range in the font, sorted by the specified order (or by the ascending codepoint order by default).
+
+## `.itercps()`
+
+#### Syntax
+
+```python
+.itercps(order, r)
+```
+
+#### Examples
+
+```python
+for codepoint in font.itercps():
+    print(codepoint)
+```
+
+#### Parameters
+
+See [`.iterglyphs()`](#iterglyphs)'s "Parameters" section
+
+#### Return value
+
+(*iterator* of *integers*) An iterator of the codepoints of glyphs
+
+#### Description
+
+This method is almost identical to [`.iterglyphs()`](#iterglyphs), except it returns an *iterator* of glyph codepoints instead of an *iterator* of [*Glyph*](../glyph/) objects.
+
+## `.glyph()`
+
+#### Syntax
+
+```python
+.glyph(character)
+```
+
+#### Examples
+
+```python
+# get glyph "a" and print its shape:
+glyph_a = font.glyph('a')
+print(glyph_a)
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `character` | Required | *string* | *N/A* | Character (a one-character *string*) of the glyph you need |
+
+#### Return value
+
+* [*Glyph*](../glyph/) object
+* `None` if the glyph does not exist in the font
+
+#### Description
+
+Get a glyph (as Glyph object) by its character.
+
+## `.glyphbycp()`
+
+#### Syntax
+
+```python
+.glyphbycp(codepoint)
+```
+
+#### Examples
+
+```python
+# get glyph "a" whose codepoint is 97:
+glyph_a = font.glyphbycp(97)
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `codepoint` | Required | *integer* | *N/A* | Codepoint of the glyph you need |
+
+#### Return value
+
+* [*Glyph*](../glyph/) object
+* `None` if the glyph does not exist in the font
+
+#### Description
+
+Get a glyph (as Glyph object) by its codepoint.
+
+## `.lacksglyphs()`
+
+#### Syntax
+
+```python
+.lacksglyphs(string)
+```
+
+#### Examples
+
+```python
+# This font only has latin and arabic support
+testfont = Font('tests/fonts/unifont-13.0.04-for-test.bdf')
+testfont.lacksglyphs('Bé H好Δiب')  # ['好', 'Δ']
+testfont.lacksglyphs('Bé Hiب')  # None
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `string` | Required | *string* | *N/A* | *string* (one or more characters) |
+
+#### Return value
+
+* (*list* of *strings*) *list* of missing glyph(s)' characters
+* `None` if all the glyphs in your *string* exist in the font
+
+#### Description
+
+Check if there is any missing glyph and gets these glyphs' character.
+
+## `.draw()`
+
+#### Syntax
+
+```python
+.draw(string, linelimit, mode, direction, usecurrentglyphspacing, missing)
+```
+
+#### Examples
+
+```python
+# draw 'Bdf Hi' to a bitmap:
+font.draw('Bdf Hi')
+# each glyph could be wider when mode=0:
+font.draw('Bdf Hi', mode=0)
+# right to left:
+font.draw('مرحبا', direction='rl')
+# each line has 30 pixels instead of 512 by default:
+font.draw('Bdf Hi', linelimit=30)
+
+# This font only has latin and arabic support
+testfont = Font('tests/fonts/unifont-13.0.04-for-test.bdf')
+# You can optionally specify the missing glyphs' replacement
+# instead of a 0-width-and-height empty glyph by default
+testfont.draw('Bé H好Δi的',
+  missing={'glyphname': 'missing glyph', 'codepoint': 0, 'bbw': 16, 'bbh': 16, 'bbxoff': 0, 'bbyoff': -2, 'swx0': 1000, 'swy0': 0, 'dwx0': 16, 'dwy0': 0, 'swx1': None, 'swy1': None, 'dwx1': None, 'dwy1': None, 'vvectorx': None, 'vvectory': None, 'hexdata': ['0000', '0000', '0000', '3ff8', '3018', '2828', '2448', '2288', '2108', '2288', '2448', '2828', '3018', '3ff8', '0000', '0000']}
+)  # the missing replacement is "⌧" ("x" in a rectangle box)
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `string` | Required | *string* | *N/A* | The words, the setences, the paragraphs you want to draw |
+| `linelimit` | Optional | *integer* | `512` | Maximum pixels per line (row) |
+| `mode` | Optional | *integer* | `1` | `0`: uses [ffb](../../bdf-spec/file_format/global_font_info/#fontboundingbox), glyphs will be fixed-width (monospace) and -height<br />`1`: uses [dwidth](../../bdf-spec/file_format/individual_glyph_info/#dwidth) horizontally, [dwidth1](../../bdf-spec/file_format/individual_glyph_info/#dwidth1) vertically |
+| `direction` | Optional | *string* | `'lrtb'` | Writing direction. See below |
+| `usecurrentglyphspacing` | Optional | *boolean* | `False` | Useful when `direction='rl'`. For example, `font.draw('a的', direction='rl')` will misplace the wider "的" on the narrower "U" because normally we use the previous glyph's spacing ([dwidth](../../bdf-spec/file_format/individual_glyph_info/#dwidth)). You can use `font.draw('a的', direction='rl', usecurrentglyphspacing=True)` to use the current one and solve the problem |
+| `missing` | Optional | *dictionary* or [*Glyph*](../glyph/) object | An empty glyph with glyphname `'empty'`, codepoint `8203`, hexdata `[]` and metrics all `0` | The missing glyphs will be replaced by this one. It can be a *dictionary* of glyph meta information, or a [*Glyph*](../glyph/) object |
+
+`direction`:
+* `'lrtb'` or `'lr'`: left to right, lines from top to bottom (most common direction)
+* `'lrbt'`: left to right, lines from bottom to top
+* `'rltb'` or `'rl'`: right to left, lines from top to bottom (Arabic, Hebrew, Persian, Urdu)
+* `'rlbt'`: right to left, lines from bottom to top
+* `'tbrl'` or `'tb'`: top to bottom, lines from right to left (Chinese traditionally)
+* `'tblr'`: top to bottom, lines from left to right
+* `'btrl'` or `'bt'`: bottom to top, lines from right to left
+* `'btlr'`: bottom to top, lines from left to right
+
+#### Return value
+
+[*Bitmap*](../bitmap/) object
+
+#### Description
+
+Draw (render) the glyphs of the specified words / setences / paragraphs (as a *string*), to a *Bitmap* object.
+
+:::note
+
+See the `missing` parameter if you need to handle potentially missing glyphs.
+
+:::
+
+## `.drawcps()`
+
+#### Syntax
+
+```python
+.drawcps(cps, linelimit, mode, direction, usecurrentglyphspacing, missing)
+```
+
+#### Examples
+
+```python
+# this is the same as `font.draw('Bdf Hi')`
+font.drawcps([66, 100, 102, 32, 72, 105])
+```
+
+#### Parameters
+
+| Name | <abbr title='required'>R</abbr>/<abbr title='optional'>O</abbr> | Type | Default Value | Description |
+| :-- |:-- | :-- | :-- | :-- |
+| `cps` | Required | *iterable* of *integers* | *N/A* | *iterable* (*list*, *generator* or any other *iterable*) of codepoints |
+
+For the rest of the parameters (`linelimit`, `mode`, `direction` and `usecurrentglyphspacing`), see [`.draw()`](#draw)'s "Parameters" section
+
+#### Return value
+
+[*Bitmap*](../bitmap/) object
+
+#### Description
+
+Draw the glyphs of the specified codepoints, to a *Bitmap* object.
+
+This method is almost identical to [`.draw()`](#draw), except in the first parameter, it uses *iterable* of codepoints instead of *string*
+
+## `.drawall()`
+
+#### Syntax
+
+```python
+.drawall(order, r, linelimit, mode, direction, usecurrentglyphspacing)
+```
+
+#### Examples
+
+```python
+# draw all glyphs in the font, linelimit is 512 pixels by default:
+font.drawall()
+# change linelimit
+font.drawall(linelimit=700)
+```
+
+#### Parameters
+
+For parameters `order` and `r`, see [`.iterglyphs()`](#iterglyphs)'s "Parameters" section
+
+For the rest of the parameters (`linelimit`, `mode`, `direction` and `usecurrentglyphspacing`), see [`.draw()`](#draw)'s "Parameters" section
+
+Those parameters have the same names, meanings, optional-ness (they are all optional), types and default values as the ones in [`.iterglyphs()`](#iterglyphs) and [`.draw()`](#draw), **except one thing: `mode` is `0` by default** (`mode=0`: the glyphs will have the same width and height)
+
+#### Return value
+
+[*Bitmap*](../bitmap/) object
+
+#### Description
+
+Draw all the glyphs in the font (default) or in the specified codepoint range in the font, sorted by the specified order (or by the ascending codepoint order by default), to a *Bitmap* object.
+
+This method is like a combined version of [`.iterglyphs()`](#iterglyphs)/[`.itercps()`](#itercps) and [`.draw()`](#draw)/[`.drawcps()`](#drawcps).
+
+:::note
+Read [the section for *Bitmap*'s .tobytes()](../bitmap/#tobytes) to know how to output your bitmap to BMP / PNG / JPEG files.
+:::

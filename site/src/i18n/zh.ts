@@ -13,6 +13,7 @@ export const zh: UIStrings = {
     catalogue: '馆藏',
     about: '关于',
     github: '源码',
+    tools: '工具',
   },
 
   catalogue: {
@@ -251,5 +252,15 @@ export const zh: UIStrings = {
     title: '页面不存在',
     hint: '这个码位还没有字形。',
     back: '回到馆藏',
+  },
+  tools: {
+    title: '工具与文档',
+    intro: '围绕点阵字体的开发工具与参考文档。正文目前为英文。',
+    cards: [
+      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: '解析BDF点阵字体的TypeScript/JavaScript库，浏览器与Node都能用，含在线试玩。' },
+      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: '解析BDF点阵字体的Python库，可配合Pillow绘制位图。' },
+      { slug: 'bdf-spec', name: 'BDF规格', blurb: 'Adobe字形位图分发格式（BDF）规范的整理版，含非官方属性清单。' },
+      { slug: 'font-template', name: '字体模板', blurb: '用Adobe Illustrator画字形、经FontForge生成字体的最简模板与教程。' },
+    ],
   },
 };

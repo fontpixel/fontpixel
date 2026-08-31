@@ -1,0 +1,131 @@
+---
+title: "Examples"
+order: 6
+---
+
+import Figure from '@dc/Figure.astro';
+
+Figures 2 through 4, along with [Example 1](#sample-bdf-font), illustrate the bitmap format and glyph metric information. Figures 2 and [3](#figure-3) show examples of individual glyphs, which are both included in the font shown in Example 1. [Figure 4](#figure-4) shows a glyph defined for use in both writing direction 0 and 1.
+
+## Figure 2
+
+<Figure
+  src="bdf_spec/2.png"
+  caption="Bitmap glyph and metrics for the glyph “j”"
+  figure_number={2}
+  width={400}
+  position="center"
+  imgUrl={true}
+/>
+
+```markup title="Figure 2"
+STARTCHAR j
+ENCODING 106
+SWIDTH 355 0
+DWIDTH 8 0
+BBX 9 22 -2 -6
+```
+
+In Figure 2, the bounding box is expressed differently than other PostScript language files such as the Adobe Font Metrics (AFM) file. The first two numbers following **`BBX`** are the width and height, the second two are the offsets in x and y.
+
+The width from the origin (between the “+” indicators) is 8 pixels, which is how far the current point moves after rendering the character. It has nothing to do with the width of the bitmap.
+
+The bounding box of the bitmap glyph can be used to predict how much data to read in the `BITMAP` section. The first two numbers give the width and height of the bitmap and correspond exactly to the amount of data supplied. The offset then allows positioning without repeating lots of white bits. (see the following *quoteright* glyph for an illustration of a glyph with all black pixels located a distance from the origin).
+
+## Figure 3
+
+<Figure
+  src="bdf_spec/3.png"
+  caption="Bitmap glyph and metrics for the “quoteright” glyph"
+  figure_number={3}
+  width={300}
+  position="center"
+  imgUrl={true}
+/>
+
+```markup title="Figure 3"
+STARTCHAR quoteright
+ENCODING 39
+SWIDTH 223 0
+DWIDTH 5 0
+BBX 4 6 2 12
+```
+
+In Figure 3, the actual bitmap is much smaller, and the offset (2 in x, 12 in y) positions the glyph with respect to its origin. The bitmaps in both Figure 2 and 3 are from an italic font program. Notice that the glyph width of the *quoteright* leaves the origin to the left of the black bits after the glyph is drawn, as would be expected for an italic font.
+
+The bitmap is started by the `BITMAP` keyword and finished with the `ENDCHAR` keyword; this is illustrated in [Example 1](#sample-bdf-font), below). It is best to predict the amount of data needed (using the `BBX` information) and use the `ENDCHAR` as an error-checking method. If you have consumed what you think is the appropriate amount of data, the next thing in the file should be `ENDCHAR`. If not, either the parser is in error, the file is not complete, or it is incorrect.
+
+The bitmap is represented as hexadecimal digits, where each row corresponds to one row of the glyph bitmap. The bits are padded out to the nearest byte boundary with 0s. The `BBX` bounding box information should be carefully consulted to determine how to extract the data.
+
+## Figure 4
+
+<Figure
+  src="bdf_spec/4.png"
+  caption="Bitmap glyph and metrics for writing directions 0 and 1"
+  figure_number={4}
+  width={500}
+  position="center"
+  imgUrl={true}
+/>
+
+## Sample BDF Font
+
+**Example 1**: *Sample BDF Font*
+
+The following is an abbreviated example of a BDF bitmap file containing the specification of two glyphs ( *j* and *quoteright* from [Figures 2](#figure-2) and [3](#figure-3)):
+
+```
+STARTFONT 2.1
+COMMENT This is a sample font in 2.1 format.
+FONT Helvetica-BoldOblique
+SIZE 8 200 200
+FONTBOUNDINGBOX 9 24 -2 -6
+STARTPROPERTIES 2
+MinSpace 4
+Copyright "Copyright (c) 1987 Adobe Systems, Inc."
+ENDPROPERTIES
+CHARS 2
+STARTCHAR j
+ENCODING 106
+SWIDTH 355 0
+DWIDTH 8 0
+BBX 9 22 -2 -6
+BITMAP
+0380
+0380
+0380
+0380
+0000
+0700
+0700
+0700
+0700
+0E00
+0E00
+0E00
+0E00
+0E00
+1C00
+1C00
+1C00
+1C00
+2C00
+7800
+F000
+E000
+ENDCHAR
+STARTCHAR quoteright
+ENCODING 39
+SWIDTH 223 0
+DWIDTH 5 0
+BBX 4 6 2 12
+BITMAP
+70
+70
+70
+60
+E0
+C0
+ENDCHAR
+ENDFONT
+```

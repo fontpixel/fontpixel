@@ -1,0 +1,156 @@
+---
+import Base from './Base.astro';
+import { t, type Lang } from '../i18n';
+import { withBase } from '../lib/data';
+import {
+  DOC_SECTIONS,
+  docPath,
+  docSlug,
+  sectionEntries,
+  type DocEntry,
+  type DocSection,
+} from '../lib/docs';
+
+interface Props {
+  lang: Lang;
+  section: DocSection;
+  entry: DocEntry;
+}
+const { lang, section, entry } = Astro.props;
+const s = t(lang);
+const entries = await sectionEntries(section);
+const current = docSlug(entry, section);
+const sectionTitle = DOC_SECTIONS[section];
+const path = docPath(section, entry);
+const link = (e: DocEntry) => withBase(`/${lang}${docPath(section, e)}`);
+const idx = entries.findIndex((e) => docSlug(e, section) === current);
+const prev = idx > 0 ? entries[idx - 1] : null;
+const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
+---
+
+<Base lang={lang} title={`${entry.data.title} · ${sectionTitle}`} description={entry.data.description} path={path}>
+  <div class="doc">
+    <nav class="doc__side" aria-label={sectionTitle}>
+      <p class="doc__section mono">{sectionTitle}</p>
+      <ul>
+        {entries.map((e) => {
+          const slug = docSlug(e, section);
+          return (
+            <li class:list={{ 'doc__item--sub': slug.includes('/') }}>
+              <a href={link(e)} aria-current={slug === current ? 'page' : undefined}
+                >{e.data.label ?? e.data.title}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+    <article class="doc__article">
+      <h1>{entry.data.title}</h1>
+      <slot />
+      <nav class="doc__pager mono">
+        {prev ? <a href={link(prev)}>← {prev.data.label ?? prev.data.title}</a> : <span />}
+        {next ? <a href={link(next)}>{next.data.label ?? next.data.title} →</a> : <span />}
+      </nav>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .doc {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: var(--s6);
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .doc {
+      grid-template-columns: 1fr;
+    }
+  }
+  .doc__side {
+    position: sticky;
+    top: var(--s4);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: var(--s3) var(--s4);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 800px) {
+    .doc__side {
+      position: static;
+    }
+  }
+  .doc__section {
+    margin: 0 0 var(--s2);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .doc__side ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .doc__side li {
+    margin: var(--s1) 0;
+  }
+  .doc__item--sub {
+    padding-left: var(--s3);
+  }
+  .doc__side a[aria-current='page'] {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .doc__article {
+    min-width: 0;
+    line-height: 1.75;
+  }
+  .doc__article :global(h1) {
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+  .doc__article :global(h2) {
+    margin-top: var(--s6);
+    padding-bottom: var(--s1);
+    border-bottom: 1px solid var(--line);
+  }
+  .doc__article :global(pre) {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: var(--s3);
+    overflow-x: auto;
+  }
+  .doc__article :global(code) {
+    font-size: 0.9em;
+  }
+  .doc__article :global(table) {
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+  }
+  .doc__article :global(th),
+  .doc__article :global(td) {
+    border: 1px solid var(--line);
+    padding: var(--s1) var(--s2);
+  }
+  .doc__article :global(img) {
+    max-width: 100%;
+  }
+  .doc__article :global(kbd) {
+    border: 1px solid var(--line);
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    padding: 0 0.3em;
+    font-size: 0.85em;
+    background: var(--surface);
+  }
+  .doc__pager {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--s6);
+    padding-top: var(--s3);
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+  }
+</style>
