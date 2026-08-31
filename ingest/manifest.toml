@@ -1694,7 +1694,8 @@ reason = "itch.io 元数据显示 Code license: BSD 3-Clause，但仓库实际 L
 #  - mplus/ is merged per the user's instruction into a single family mplus-bitmap (slug specified by the user), covering the fxd/hlv/qub/sys
 #    weight/size variants; mplus_cursors.bdf is an X11 cursor font (FONT cursor), not a text font, so it goes into todo.
 #  - besides the core Tamzen family, tamzen-font/ also has Powerline (a pure-symbol supplement font) and TamzenForPowerline
-#    (a derivative stitching Tamzen body text with Powerline symbols); both are judged non-independent designs and go into todo, not included.
+#    (a superset of each Tamzen face adding 7 Powerline symbols, U+E0A0-E0A2/U+E0B0-E0B3). TamzenForPowerline is merged
+#    into the corresponding tamzen variants per the user's instruction (2026-08-31); Powerline's glyphs are thereby covered.
 #  - spleen is already included (slug spleen, from fcambus's official repo); this fragment only records one todo entry for it.
 #
 # License-file review: of the 23 directories, only clearlyu/README embeds the full license text (MIT/X11 style); all other directories
@@ -2261,7 +2262,7 @@ note = "经典等宽终端字体，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档
 [[family]]
 slug = "tamzen"
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font"
-take = ["Tamzen10x20b.bdf", "Tamzen10x20r.bdf", "Tamzen5x9b.bdf", "Tamzen5x9r.bdf", "Tamzen6x12b.bdf", "Tamzen6x12r.bdf", "Tamzen7x13b.bdf", "Tamzen7x13r.bdf", "Tamzen7x14b.bdf", "Tamzen7x14r.bdf", "Tamzen8x15b.bdf", "Tamzen8x15r.bdf", "Tamzen8x16b.bdf", "Tamzen8x16r.bdf"]
+take = ["Tamzen10x20b.bdf", "Tamzen10x20r.bdf", "Tamzen5x9b.bdf", "Tamzen5x9r.bdf", "Tamzen6x12b.bdf", "Tamzen6x12r.bdf", "Tamzen7x13b.bdf", "Tamzen7x13r.bdf", "Tamzen7x14b.bdf", "Tamzen7x14r.bdf", "Tamzen8x15b.bdf", "Tamzen8x15r.bdf", "Tamzen8x16b.bdf", "Tamzen8x16r.bdf", "TamzenForPowerline5x9r.bdf", "TamzenForPowerline5x9b.bdf", "TamzenForPowerline6x12r.bdf", "TamzenForPowerline6x12b.bdf", "TamzenForPowerline7x13r.bdf", "TamzenForPowerline7x13b.bdf", "TamzenForPowerline7x14r.bdf", "TamzenForPowerline7x14b.bdf", "TamzenForPowerline8x15r.bdf", "TamzenForPowerline8x15b.bdf", "TamzenForPowerline8x16r.bdf", "TamzenForPowerline8x16b.bdf", "TamzenForPowerline10x20r.bdf", "TamzenForPowerline10x20b.bdf"]
 license_files = []
 name = "Tamzen"
 name_zh = ""
@@ -2275,7 +2276,7 @@ vibes = ["terminal-hardcore"]
 [family.license]
 spdx = "LicenseRef-Tamsyn"
 name = "Tamsyn 字体许可（BSD 风格，衍生须保留原许可与归属）"
-note = "Tamsyn 的像素级重绘衍生版，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 BDF 文件（取自 bdf/ 子目录，同名 pcf/ 下的 .pcf 未取用）。各文件 COPYRIGHT 字段沿用 “(c) 2015 Scott Fial”，符合 Tamsyn License 对衍生作品保留原作者版权声明的要求。目录内另有 Powerline*.bdf（纯 Powerline 分隔符号补充字体）与 TamzenForPowerline*.bdf（Tamzen 正文缝合 Powerline 符号的衍生版），判定为非独立设计，未收录，见 todo。"
+note = "Tamsyn 的像素级重绘衍生版，含 5x9/6x12/7x13/7x14/8x15/8x16/10x20 七档尺寸、regular/bold 两种字重，共 14 个 BDF 文件（取自 bdf/ 子目录，同名 pcf/ 下的 .pcf 未取用）。各文件 COPYRIGHT 字段沿用 “(c) 2015 Scott Fial”，符合 Tamsyn License 对衍生作品保留原作者版权声明的要求。另取 TamzenForPowerline*.bdf 14 个文件：每个都是对应 Tamzen 字面的超集，仅多 U+E0A0–E0A2 与 U+E0B0–E0B3 共 7 个 Powerline 符号，已按字面并入对应变体；纯符号补充字体 Powerline*.bdf 的字形因此已全部涵盖，不再单独收录。"
 
 # ============================================================
 # terminus-font-4.39/ -- a work by Dimitar Toshkov Zhekov
@@ -2389,11 +2390,8 @@ reason = "FONT XLFD 名为 “cursor”，是 X11 鼠标光标字形集合，不
 
 [[todo]]
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font/bdf/Powerline*.bdf"
-reason = "纯 Powerline 分隔符号补充字体（不含常规拉丁字形），是 Tamzen 的配套符号集而非独立设计，不单独收录。"
+reason = "纯 Powerline 分隔符号补充字体（不含常规拉丁字形）。其全部字形已随 TamzenForPowerline 并入 tamzen 家族各变体，无需单独收录。"
 
-[[todo]]
-source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/tamzen-font/bdf/TamzenForPowerline*.bdf"
-reason = "Tamzen 正文缝合 Powerline 符号的衍生版，与已收录的 tamzen 家族内容重复（仅多了符号字形），不单独收录。"
 
 # ==================== Merged fragment: farsil/ibmfonts (2026-08-29) ====================
 # farsil/ibmfonts -- a collection of BDF reproductions of IBM PC/XT/EGA/CGA/MDA/VGA text-mode ROM font sets.
@@ -2988,7 +2986,7 @@ note_en = "The upstream repository metan-ucw/fonts states in the opening line of
 [[family]]
 slug = "neep"
 source = "github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/jmk-x11-fonts-3.0"
-take = ["neep-iso8859-1-??x??.bdf", "neep-iso8859-2-??x??.bdf", "neep-iso8859-9-??x??.bdf", "neep-iso8859-15-??x??.bdf", "neep-iso8859-1-??x??-bold.bdf", "neep-iso8859-2-??x??-bold.bdf", "neep-iso8859-9-??x??-bold.bdf", "neep-iso8859-15-??x??-bold.bdf"]
+take = ["neep-iso8859-1-??x??.bdf", "neep-iso8859-2-??x??.bdf", "neep-iso8859-9-??x??.bdf", "neep-iso8859-15-??x??.bdf", "neep-iso8859-1-??x??-bold.bdf", "neep-iso8859-2-??x??-bold.bdf", "neep-iso8859-9-??x??-bold.bdf", "neep-iso8859-15-??x??-bold.bdf", "neep-alt-iso8859-1-??x??.bdf", "neep-alt-iso8859-2-??x??.bdf", "neep-alt-iso8859-9-??x??.bdf", "neep-alt-iso8859-15-??x??.bdf", "neep-alt-iso8859-1-??x??-bold.bdf", "neep-alt-iso8859-2-??x??-bold.bdf", "neep-alt-iso8859-9-??x??-bold.bdf", "neep-alt-iso8859-15-??x??-bold.bdf"]
 license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/jmk-x11-fonts-3.0.tar.gz"
 license_take = ["README"]
 name = "Neep"
@@ -4007,3 +4005,35 @@ confidence = "manual"
 file = "License.txt"
 note = "来源中，点阵部分的发布目录内License.txt为GPL第2版全文（中译在前、英文原文在后），作者为Firefly。可见作者将点阵层视为自己的制作，而没有使用文鼎公众授权书（Arphic Public License）1999年版（这和GPL一样是一个自由开源、copyleft的许可，但是与GPL不兼容），仅矢量层被视为基于文鼎科技的细上海宋与简报宋、遵守文鼎公众授权书的字体。不过在点阵BDF字体文件的COMMENT依然保留着“(c) Copyright 1994-1999, Arphic Technology Co., Ltd.”"
 note_en = "In the source, the License.txt in the bitmap release directory is the full GPL version 2 (Chinese translation first, English original after), and the author is Firefly. Evidently the author regarded the bitmap layer as their own work and did not place it under the Arphic Public License, 1999 version (like the GPL a free, open-source, copyleft licence, but incompatible with the GPL); only the outline layer is treated as derived from Arphic's Fine Shanghai Song and Bulletin Song and governed by the Arphic Public License. The bitmap BDF files nonetheless retain the COMMENT \"(c) Copyright 1994-1999, Arphic Technology Co., Ltd.\""
+
+# ============================================================
+# tobiasjung-profont-x11/ -- ProFont, X11 build by Gareth Redman
+# ============================================================
+# Added 2026-08-31 per the user's instruction. Official X11 PCF ZIP from
+# https://tobiasjung.name/downloadfile.php?file=profont-x11.zip (no public VCS).
+# The bundled LICENSE is the full MIT license text (2014, four authors) --
+# not GPL as initially assumed.
+[[family]]
+slug = "profont"
+source = "direct-downloads-2026-08-31/tobiasjung-profont-x11/profont-x11"
+take = ["ProFont_r400-10.pcf", "ProFont_r400-11.pcf", "ProFont_r400-12.pcf", "ProFont_r400-15.pcf", "ProFont_r400-17.pcf", "ProFont_r400-22.pcf", "ProFont_r400-29.pcf"]
+license_files = ["LICENSE"]
+name = "ProFont"
+name_zh = ""
+authors = ["Andrew Welch", "Carl Osterwald", "Stephen C. Gilardi", "Gareth Redman"]
+homepage = "https://tobiasjung.name/profont/"
+provenance_url = "https://tobiasjung.name/downloadfile.php?file=profont-x11.zip"
+aliases = []
+description = "面向程序员的等宽点阵字体，1987年源于Macintosh，以小字号下数字、括号与易混字符的清晰分辨著称。X11版由Gareth Redman构建，含10/11/12/15/17/22/29七档PCF，ISO 8859-1编码。"
+description_en = "A monospace bitmap font for programmers, originating on the Macintosh in 1987 and known for keeping digits, brackets, and easily confused characters clearly distinguishable at small sizes. The X11 port was built by Gareth Redman, with seven PCF sizes (10, 11, 12, 15, 17, 22, 29) in ISO 8859-1 encoding."
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+
+[family.license]
+spdx = "MIT"
+name = "MIT 许可证"
+name_en = "MIT License"
+confidence = "manual"
+file = "LICENSE"
+note = "发布包内 LICENSE 为 MIT 许可证全文，版权 2014 Gareth Redman、Carl Osterwald、Stephen C. Gilardi、Andrew Welch。readme.txt 指向主页 tobiasjung.name/profont。"
+note_en = "The LICENSE file in the release package is the full text of the MIT License, copyright 2014 Gareth Redman, Carl Osterwald, Stephen C. Gilardi, and Andrew Welch. readme.txt points to the homepage tobiasjung.name/profont."

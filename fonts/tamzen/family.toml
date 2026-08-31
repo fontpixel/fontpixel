@@ -17,6 +17,22 @@ provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bi
 [license]
 spdx = "LicenseRef-Tamsyn"
 name = "Tamsyn字体许可（BSD风格，衍生须保留原许可与归属）"
-note = "Tamsyn的像素级重绘衍生版，含5x9/6x12/7x13/7x14/8x15/8x16/10x20七档尺寸、regular/bold两种字重，共14个BDF文件（取自bdf/ 子目录，同名pcf/ 下的 .pcf未取用）。各文件COPYRIGHT字段沿用 “(c) 2015 Scott Fial”，符合Tamsyn License对衍生作品保留原作者版权声明的要求。目录内另有Powerline*.bdf（纯Powerline分隔符号补充字体）与TamzenForPowerline*.bdf（Tamzen正文缝合Powerline符号的衍生版），判定为非独立设计，未收录，见todo。"
+note = "Tamsyn的像素级重绘衍生版，含5x9/6x12/7x13/7x14/8x15/8x16/10x20七档尺寸、regular/bold两种字重，共14个BDF文件（取自bdf/ 子目录，同名pcf/ 下的 .pcf未取用）。各文件COPYRIGHT字段沿用 “(c) 2015 Scott Fial”，符合Tamsyn License对衍生作品保留原作者版权声明的要求。另取TamzenForPowerline*.bdf 14个文件：每个都是对应Tamzen字面的超集，仅多U+E0A0–E0A2与U+E0B0–E0B3共7个Powerline符号，已按字面并入对应变体；纯符号补充字体Powerline*.bdf的字形因此已全部涵盖，不再单独收录。"
 name_en = "Tamsyn Font License (BSD-style; derivatives must retain the original license and attribution)"
-note_en = "A pixel-level redrawn derivative of Tamsyn, with seven sizes (5x9, 6x12, 7x13, 7x14, 8x15, 8x16, 10x20) in regular and bold weights, 14 BDF files in total (taken from the bdf/ subdirectory; the .pcf files under the matching pcf/ were not used). Each file's COPYRIGHT field retains \"(c) 2015 Scott Fial\", satisfying the Tamsyn License requirement that derivative works retain the original author's copyright notice. The directory also contains Powerline*.bdf (a supplementary font of Powerline separator glyphs only) and TamzenForPowerline*.bdf (a derivative that stitches Powerline glyphs into the Tamzen body text); these were judged not to be standalone designs and were not included, see todo."
+note_en = "A pixel-level redrawn derivative of Tamsyn, with seven sizes (5x9, 6x12, 7x13, 7x14, 8x15, 8x16, 10x20) in regular and bold weights, 14 BDF files in total (taken from the bdf/ subdirectory; the .pcf files under the matching pcf/ were not used). Each file's COPYRIGHT field retains \"(c) 2015 Scott Fial\", satisfying the Tamsyn License requirement that derivative works retain the original author's copyright notice. Also taken were the 14 TamzenForPowerline*.bdf files: each is a superset of the corresponding Tamzen face, adding only the seven Powerline symbols U+E0A0–E0A2 and U+E0B0–E0B3, and these have been merged into the matching variant by face; the glyphs of the symbol-only supplementary font Powerline*.bdf are therefore fully covered and it is not included separately."
+
+[merge]
+"Tamzen5x9r.bdf" = ["TamzenForPowerline5x9r.bdf"]
+"Tamzen5x9b.bdf" = ["TamzenForPowerline5x9b.bdf"]
+"Tamzen6x12r.bdf" = ["TamzenForPowerline6x12r.bdf"]
+"Tamzen6x12b.bdf" = ["TamzenForPowerline6x12b.bdf"]
+"Tamzen7x13r.bdf" = ["TamzenForPowerline7x13r.bdf"]
+"Tamzen7x13b.bdf" = ["TamzenForPowerline7x13b.bdf"]
+"Tamzen7x14r.bdf" = ["TamzenForPowerline7x14r.bdf"]
+"Tamzen7x14b.bdf" = ["TamzenForPowerline7x14b.bdf"]
+"Tamzen8x15r.bdf" = ["TamzenForPowerline8x15r.bdf"]
+"Tamzen8x15b.bdf" = ["TamzenForPowerline8x15b.bdf"]
+"Tamzen8x16r.bdf" = ["TamzenForPowerline8x16r.bdf"]
+"Tamzen8x16b.bdf" = ["TamzenForPowerline8x16b.bdf"]
+"Tamzen10x20r.bdf" = ["TamzenForPowerline10x20r.bdf"]
+"Tamzen10x20b.bdf" = ["TamzenForPowerline10x20b.bdf"]

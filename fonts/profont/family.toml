@@ -1,0 +1,24 @@
+name = "ProFont"
+authors = ["Andrew Welch", "Carl Osterwald", "Stephen C. Gilardi", "Gareth Redman"]
+homepage = "https://tobiasjung.name/profont/"
+repository = ""
+description = "面向程序员的等宽点阵字体，1987年源于Macintosh，以小字号下数字、括号与易混字符的清晰分辨著称。X11版由Gareth Redman构建，含10/11/12/15/17/22/29七档PCF，ISO 8859-1编码。"
+form = "terminal"
+vibes = ["terminal-hardcore", "classic"]
+converted_from = ""
+provenance = "导入自 direct-downloads-2026-08-31/tobiasjung-profont-x11/profont-x11；上游 https://tobiasjung.name/downloadfile.php?file=profont-x11.zip"
+added = "2026-08-31"
+
+name_en = "ProFont"
+authors_en = ["Andrew Welch", "Carl Osterwald", "Stephen C. Gilardi", "Gareth Redman"]
+description_en = "A monospace bitmap font for programmers, originating on the Macintosh in 1987 and known for keeping digits, brackets, and easily confused characters clearly distinguishable at small sizes. The X11 port was built by Gareth Redman, with seven PCF sizes (10, 11, 12, 15, 17, 22, 29) in ISO 8859-1 encoding."
+provenance_en = "Imported from direct-downloads-2026-08-31/tobiasjung-profont-x11/profont-x11; upstream https://tobiasjung.name/downloadfile.php?file=profont-x11.zip"
+
+[license]
+spdx = "MIT"
+name = "MIT 许可证"
+confidence = "manual"
+file = "LICENSE"
+note = "发布包内 LICENSE 为 MIT 许可证全文，版权 2014 Gareth Redman、Carl Osterwald、Stephen C. Gilardi、Andrew Welch。readme.txt 指向主页 tobiasjung.name/profont。"
+name_en = "MIT License"
+note_en = "The LICENSE file in the release package is the full text of the MIT License, copyright 2014 Gareth Redman, Carl Osterwald, Stephen C. Gilardi, and Andrew Welch. readme.txt points to the homepage tobiasjung.name/profont."

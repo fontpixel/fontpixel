@@ -2,7 +2,7 @@ name = "Neep"
 authors = ["Jim Knoble"]
 homepage = "http://www.jmknoble.net/fonts/"
 repository = ""
-description = "Jim Knoble 1998年做的X11等宽点阵字体（旧名NouveauGothic），比X11自带的fixed更易读。七档尺寸从5×10到12×24，除最小档外均含粗体。上游按ISO 8859-1/2/9/15四个字符集分别发布，本站已合并成单一Unicode变体。"
+description = "Jim Knoble 1998年做的X11等宽点阵字体（旧名NouveauGothic），比X11自带的fixed更易读。七档尺寸从5×10到12×24，除最小档外均含粗体。上游按ISO 8859-1/2/9/15四个字符集分别发布，本站已合并成单一Unicode变体。另含Alt变体13个字面：与常规版仅U+0026“&”一个字形画法不同。"
 form = "terminal"
 vibes = ["classic", "terminal-hardcore"]
 aliases = ["jmk-x11-fonts", "NouveauGothic", "jmk neep"]
@@ -12,7 +12,7 @@ added = "2026-08-31"
 
 name_en = "Neep"
 authors_en = ["Jim Knoble"]
-description_en = "A monospace X11 bitmap font made by Jim Knoble in 1998 (formerly NouveauGothic), a more legible take on the standard X11 fixed fonts. Seven sizes from 5x10 to 12x24, all but the smallest with a bold weight. Upstream ships each face as four separate ISO 8859-1/2/9/15 files; they are merged here into a single Unicode variant per face."
+description_en = "A monospace X11 bitmap font made by Jim Knoble in 1998 (formerly NouveauGothic), a more legible take on the standard X11 fixed fonts. Seven sizes from 5x10 to 12x24, all but the smallest with a bold weight. Upstream ships each face as four separate ISO 8859-1/2/9/15 files; they are merged here into a single Unicode variant per face. It also ships an Alt cut across all 13 faces, differing from the regular version in exactly one glyph: the ampersand (U+0026)."
 provenance_en = "Imported from github-clones-2026-08-31/tecate-bitmap-fonts/bitmap/jmk-x11-fonts-3.0; upstream https://github.com/Tecate/bitmap-fonts"
 
 [license]
@@ -38,3 +38,16 @@ note_en = "The bundled README, section \"Copying, Copyright, and Open Source\", 
 "neep-iso8859-1-10x20-bold.bdf" = ["neep-iso8859-2-10x20-bold.bdf", "neep-iso8859-9-10x20-bold.bdf", "neep-iso8859-15-10x20-bold.bdf"]
 "neep-iso8859-1-12x24.bdf" = ["neep-iso8859-2-12x24.bdf", "neep-iso8859-9-12x24.bdf", "neep-iso8859-15-12x24.bdf"]
 "neep-iso8859-1-12x24-bold.bdf" = ["neep-iso8859-2-12x24-bold.bdf", "neep-iso8859-9-12x24-bold.bdf", "neep-iso8859-15-12x24-bold.bdf"]
+"neep-alt-iso8859-1-05x10.bdf" = ["neep-alt-iso8859-2-05x10.bdf", "neep-alt-iso8859-9-05x10.bdf", "neep-alt-iso8859-15-05x10.bdf"]
+"neep-alt-iso8859-1-05x11.bdf" = ["neep-alt-iso8859-2-05x11.bdf", "neep-alt-iso8859-9-05x11.bdf", "neep-alt-iso8859-15-05x11.bdf"]
+"neep-alt-iso8859-1-05x11-bold.bdf" = ["neep-alt-iso8859-2-05x11-bold.bdf", "neep-alt-iso8859-9-05x11-bold.bdf", "neep-alt-iso8859-15-05x11-bold.bdf"]
+"neep-alt-iso8859-1-06x11.bdf" = ["neep-alt-iso8859-2-06x11.bdf", "neep-alt-iso8859-9-06x11.bdf", "neep-alt-iso8859-15-06x11.bdf"]
+"neep-alt-iso8859-1-06x11-bold.bdf" = ["neep-alt-iso8859-2-06x11-bold.bdf", "neep-alt-iso8859-9-06x11-bold.bdf", "neep-alt-iso8859-15-06x11-bold.bdf"]
+"neep-alt-iso8859-1-06x13.bdf" = ["neep-alt-iso8859-2-06x13.bdf", "neep-alt-iso8859-9-06x13.bdf", "neep-alt-iso8859-15-06x13.bdf"]
+"neep-alt-iso8859-1-06x13-bold.bdf" = ["neep-alt-iso8859-2-06x13-bold.bdf", "neep-alt-iso8859-9-06x13-bold.bdf", "neep-alt-iso8859-15-06x13-bold.bdf"]
+"neep-alt-iso8859-1-08x15.bdf" = ["neep-alt-iso8859-2-08x15.bdf", "neep-alt-iso8859-9-08x15.bdf", "neep-alt-iso8859-15-08x15.bdf"]
+"neep-alt-iso8859-1-08x15-bold.bdf" = ["neep-alt-iso8859-2-08x15-bold.bdf", "neep-alt-iso8859-9-08x15-bold.bdf", "neep-alt-iso8859-15-08x15-bold.bdf"]
+"neep-alt-iso8859-1-10x20.bdf" = ["neep-alt-iso8859-2-10x20.bdf", "neep-alt-iso8859-9-10x20.bdf", "neep-alt-iso8859-15-10x20.bdf"]
+"neep-alt-iso8859-1-10x20-bold.bdf" = ["neep-alt-iso8859-2-10x20-bold.bdf", "neep-alt-iso8859-9-10x20-bold.bdf", "neep-alt-iso8859-15-10x20-bold.bdf"]
+"neep-alt-iso8859-1-12x24.bdf" = ["neep-alt-iso8859-2-12x24.bdf", "neep-alt-iso8859-9-12x24.bdf", "neep-alt-iso8859-15-12x24.bdf"]
+"neep-alt-iso8859-1-12x24-bold.bdf" = ["neep-alt-iso8859-2-12x24-bold.bdf", "neep-alt-iso8859-9-12x24-bold.bdf", "neep-alt-iso8859-15-12x24-bold.bdf"]
