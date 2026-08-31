@@ -16,10 +16,10 @@ provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bi
 
 [license]
 spdx = "MIT"
-name = "MIT许可证（X11风格）"
+name = "MIT许可证"
 note = "12pt/100dpi比例宽度字体，覆盖Unicode多文种（拉丁、西里尔、希腊、阿拉伯、天城文等），受Donald Knuth的Computer Modern影响。README内嵌完整许可证全文（Copyright 2000 Computing Research Lab, New Mexico State University，MIT/X11风格用语）。cu12为主字体，cu-alt12/cu-arabic12/cu-lig12/cu-pua12分别是备用字形、阿拉伯文、连字与PUA扩展，同属一套设计的字符集拆分文件，非独立设计。目录内另有ORIGIN文件说明本地文件实际提取自XFree86 4.0.2源码包。"
 file = "README"
-name_en = "MIT License (X11-style)"
+name_en = "MIT License"
 note_en = "A 12pt/100dpi proportional-width font covering multiple Unicode scripts (Latin, Cyrillic, Greek, Arabic, Devanagari, and others), influenced by Donald Knuth's Computer Modern. The README embeds the full license text (Copyright 2000 Computing Research Lab, New Mexico State University, MIT/X11-style wording). cu12 is the main font; cu-alt12, cu-arabic12, cu-lig12, and cu-pua12 are alternate-glyph, Arabic, ligature, and PUA extension files split from the same design rather than separate fonts. The directory also includes an ORIGIN file noting that the local files were actually extracted from the XFree86 4.0.2 source package."
 
 # Upstream also ships four auxiliary fonts (alternate glyphs, ligatures, private-use area, Arabic glyphs), each with only

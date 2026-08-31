@@ -237,6 +237,8 @@ export const zh: UIStrings = {
     close: '关闭',
     missingChars: '缺字',
     complete: '完整',
+    copyAll: '复制全部',
+    copiedChar: '已复制',
     sourceLabel: '来源',
   },
 

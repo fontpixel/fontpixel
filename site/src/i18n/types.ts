@@ -159,6 +159,8 @@ export interface UIStrings {
     expandMissing: string;
     close: string;
     missingChars: string;
+    copyAll: string;
+    copiedChar: string;
     complete: string;
     sourceLabel: string;
   };

@@ -18,5 +18,5 @@ provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bi
 spdx = "LicenseRef-PublicDomain"
 name = "公有领域声明"
 note = "X11 misc-fixed（俗称 “Fixed”/“Terminal”）字体的dylex分支，源自Markus Kuhn的ucs-fonts工程（BDF COMMENT标注 “Source: -Misc-Fixed-Medium-R-Normal…$ucs-fonts”），含6x10/7x13/10x20三档尺寸、regular/bold/oblique/bold-oblique四种字型，共12个BDF文件。各文件COPYRIGHT字段声明Public domain。与同目录内14x14（crawl，见dylex-crawl家族）是不同设计，故拆分。"
-name_en = "Public Domain Declaration"
+name_en = "Public Domain"
 note_en = "The dylex fork of the X11 misc-fixed font (commonly known as \"Fixed\"/\"Terminal\"), derived from Markus Kuhn's ucs-fonts project (the BDF COMMENT notes \"Source: -Misc-Fixed-Medium-R-Normal...$ucs-fonts\"). Includes 6x10, 7x13, and 10x20 sizes in regular, bold, oblique, and bold-oblique styles, 12 BDF files in total. Each file's COPYRIGHT field declares Public domain. Distinguished from the 14x14 design in the same directory (crawl, see the dylex-crawl family), which is a separate design and was therefore split out."

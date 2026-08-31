@@ -16,7 +16,7 @@ provenance_en = "Upstream https://diaowinner.itch.io/fonsung . The page states: 
 
 [license]
 spdx = "CC-BY-SA-4.0"
-name = "知识共享 署名-相同方式共享4.0国际"
+name = "知识共享署名-相同方式共享4.0国际"
 confidence = "manual"
 note = "上游页面标注CC-BY SA 4.0；字体内嵌的版权行仍署中国科学院软件研究所（1988），原始条款允许使用、复制、修改与分发。"
 name_en = "Creative Commons Attribution-ShareAlike 4.0 International"

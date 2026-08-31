@@ -16,8 +16,8 @@ provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18
 
 [license]
 spdx = "CC-BY-SA-4.0"
-name = "Creative Commons署名-相同方式共享4.0国际"
+name = "知识共享署名-相同方式共享4.0国际"
 file = "LICENSE-CC-BY-SA-4.0.txt"
 note = "授权以作者第一方页面（https://diaowinner.itch.io/chusung）为准：CC BY-SA 4.0；猫啃网转载页曾误标为CC BY，不作依据。汉字部分上游为X.Org ISAS点阵字体（允许任何目的的使用、复制、修改与分发），西文部分上游为VileR的Oldschool PC Fonts（CC BY-SA 4.0）。可商用、可修改、可再分发；再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。本站收录版本：Chusung-210529。"
-name_en = "CC BY-SA 4.0"
+name_en = "Creative Commons Attribution-ShareAlike 4.0 International"
 note_en = "Licensing follows the author's own page (https://diaowinner.itch.io/chusung): CC BY-SA 4.0. The Maoken reposting page once mislabeled it as CC BY; that label is not authoritative. The CJK glyphs derive from the X.Org ISAS bitmap fonts (use, copying, modification, and distribution permitted for any purpose), while the Latin glyphs derive from VileR's Oldschool PC Fonts (CC BY-SA 4.0). Commercial use, modification, and redistribution are all permitted; redistribution must retain attribution and a link to the license, and derivative works must continue to use a compatible share-alike license. Version collected on this site: Chusung-210529."

@@ -15,8 +15,8 @@ provenance_en = "Imported from github-clones-2026-08-29/farsil-ibmfonts; upstrea
 
 [license]
 spdx = "CC-BY-SA-4.0"
-name = "Creative Commons署名-相同方式共享4.0国际"
+name = "知识共享署名-相同方式共享4.0国际"
 note = "仓库LICENSE声明全部BDF字体采用CC BY-SA 4.0；本家族复刻自IBM EGA（增强图形适配器）显卡ROM内置的文本模式字库，由VileR在《The Ultimate Oldschool PC Font Pack》中完成像素级复原，farsil（Marco Buzzanca）于2016年转换为BDF格式并整理发布（各BDF文件内COPYRIGHT字段注明：“BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0”）。再分发须保留署名与许可链接，衍生版须继续采用兼容的共享协议。"
 file = "CC-BY-SA-4.0"
-name_en = "CC BY-SA 4.0"
+name_en = "Creative Commons Attribution-ShareAlike 4.0 International"
 note_en = "The repository's LICENSE states that all BDF fonts are released under CC BY-SA 4.0. This family reproduces the text-mode font built into the IBM EGA (Enhanced Graphics Adapter) card ROM. VileR performed the pixel-level restoration for The Ultimate Oldschool PC Font Pack, and farsil (Marco Buzzanca) converted it to BDF format and packaged it for release in 2016 (each BDF file's COPYRIGHT field notes: \"BDF conversion (c) 2016 farsil, license: CC BY-SA 4.0\"). Redistribution must retain attribution and a link to the license, and derivative works must be released under a compatible share-alike license."

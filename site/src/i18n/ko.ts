@@ -242,6 +242,8 @@ export const ko: UIStrings = {
     close: '닫기',
     missingChars: '누락',
     complete: '완전',
+    copyAll: '모두 복사',
+    copiedChar: '복사됨',
     sourceLabel: '출처',
   },
 

@@ -242,6 +242,8 @@ export const fr: UIStrings = {
     close: 'Fermer',
     missingChars: 'Absents',
     complete: 'Complet',
+    copyAll: 'Tout copier',
+    copiedChar: 'Copié',
     sourceLabel: 'Source',
   },
 

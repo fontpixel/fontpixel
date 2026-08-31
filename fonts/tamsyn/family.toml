@@ -16,7 +16,7 @@ provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bi
 
 [license]
 spdx = "LicenseRef-Tamsyn"
-name = "Tamsyn字体许可（BSD风格）"
+name = "Tamsyn字体许可（BSD风格，衍生须保留原许可与归属）"
 note = "经典等宽终端字体，含5x9/6x12/7x13/7x14/8x15/8x16/10x20七档尺寸、regular/bold两种字重，共14个PCF文件（同名 .psf.gz为Linux控制台PSF格式，管线不支持，未取用）。PCF COPYRIGHT属性为 “(c) 2015 Scott Fial”。Tamsyn License为BSD风格自由许可。"
-name_en = "Tamsyn License (BSD-style)"
+name_en = "Tamsyn Font License (BSD-style; derivatives must retain the original license and attribution)"
 note_en = "A classic monospace terminal font with seven sizes (5x9, 6x12, 7x13, 7x14, 8x15, 8x16, 10x20) and two weights (regular, bold), totaling 14 PCF files. (The corresponding .psf.gz files are Linux console PSF format, which the pipeline does not support and were not used.) The PCF COPYRIGHT attribute is \"(c) 2015 Scott Fial\". The Tamsyn License is a BSD-style free license."

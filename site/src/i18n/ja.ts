@@ -242,6 +242,8 @@ export const ja: UIStrings = {
     close: '閉じる',
     missingChars: '未収録',
     complete: '完全',
+    copyAll: 'すべてコピー',
+    copiedChar: 'コピーしました',
     sourceLabel: '出典',
   },
 

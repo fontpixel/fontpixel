@@ -15,7 +15,7 @@ provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bi
 
 [license]
 spdx = "GPL-2.0-only"
-name = "GNU通用公共许可证2.0"
+name = "GNU通用公共许可证 第2版"
 note = "10px图标字体（取bdf/siji.bdf，同名顶层siji.pcf未取用），BDF COMMENT说明 “基于Stlarch字体、Sm4tik的xbm图标包、FontAwesome与Lokaltog Symbol Font制作的图标字体”。COPYRIGHT字段为 “GPLv2”。"
-name_en = "GNU GPL v2"
+name_en = "GNU General Public License v2.0 only"
 note_en = "10px icon font (using bdf/siji.bdf; the top-level siji.pcf of the same name was not used). The BDF COMMENT describes it as \"an iconic font built from Stlarch font, Sm4tik's xbm icons, FontAwesome, and Lokaltog's Symbol Font.\" The COPYRIGHT field is \"GPLv2\"."

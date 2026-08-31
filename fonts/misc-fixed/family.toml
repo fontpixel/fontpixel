@@ -16,11 +16,11 @@ provenance_en = "Upstream https://gitlab.freedesktop.org/xorg/font/misc-misc (cl
 
 [license]
 spdx = "LicenseRef-PublicDomain"
-name = "公有领域"
+name = "公有领域声明"
 confidence = "manual"
 file = "COPYING"
 note = "仓库的COPYING全文为“Public domain font.  Share and enjoy.”；收录的25个BDF每一个的COPYRIGHT行也都逐字写着同一句（6x10与6x12作“Public domain terminal emulator font.”）。"
-name_en = "Public domain"
+name_en = "Public Domain"
 note_en = "The repository's COPYING reads in full: \"Public domain font.  Share and enjoy.\" Every one of the 25 catalogued BDFs carries the same statement on its own COPYRIGHT line (6x10 and 6x12 say \"Public domain terminal emulator font.\")."
 
 [variants."12x13ja.bdf"]

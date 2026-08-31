@@ -16,7 +16,7 @@ provenance_en = "Imported from direct-downloads-2026-08-31/tobiasjung-profont-x1
 
 [license]
 spdx = "MIT"
-name = "MIT 许可证"
+name = "MIT许可证"
 confidence = "manual"
 file = "LICENSE"
 note = "发布包内 LICENSE 为 MIT 许可证全文，版权 2014 Gareth Redman、Carl Osterwald、Stephen C. Gilardi、Andrew Welch。readme.txt 指向主页 tobiasjung.name/profont。"

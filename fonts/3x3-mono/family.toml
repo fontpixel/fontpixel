@@ -17,7 +17,7 @@ provenance_en = "Imported from direct-downloads-2026-08-31/ggbot-3x3-mono-1.01; 
 
 [license]
 spdx = "CC0-1.0"
-name = "CC0 1.0 公共领域贡献"
+name = "CC0 1.0公共领域贡献"
 confidence = "manual"
 file = "License.txt"
 note = "发布包内附 CC0 1.0 全文（License.txt），字体 name 表的 License 字段亦写明“Creative Commons Zero v1.0 Universal”，itch.io 页面同样标注 CC0。CC0 是版权及邻接权的彻底放弃，商用、修改、再分发均无限制，亦无署名要求。"

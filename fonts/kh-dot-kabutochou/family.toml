@@ -18,7 +18,7 @@ provenance_en = "Imported from direct-downloads-2026-08-31/jikasei-khdotfont-201
 
 [license]
 spdx = "OFL-1.1"
-name = "SIL 开放字体许可证 1.1"
+name = "SIL开放字体许可证1.1"
 confidence = "manual"
 file = "SIL_Open_Font_License_1.1.txt"
 note = "上游发布包内附 SIL_Open_Font_License_1.1.txt 全文，README 明写「本フォントのファイルは、SIL Open Font License 1.1 のもとで使用することができますので、商用利用などにおいても特に制約なくお使い頂けます」。字形著作权归平木敬太郎，TrueType 化由自家製フォント工房完成。这批字体原为 X68000 平台的『電脳フォント』系列，曾以商业授权销售，TrueType 化后经平木氏同意改以 OFL 1.1 自由发布。"

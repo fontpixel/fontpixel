@@ -16,7 +16,7 @@ provenance_en = "Imported from github-clones-2026-08-29/masaeedu-bitmap-fonts/bi
 
 [license]
 spdx = "WTFPL"
-name = "WTFPL（Do What The F*ck You Want To Public License）"
+name = "想干嘛干嘛公共许可证 第2版"
 note = "含11px/14px两档尺寸、regular/bold两种字重，每档另有 -uni（ISO10646/Unicode字符集）变体，共8个BDF文件（取自gohufont/bdf/，同名gohufont/pcf/ 下的 .pcf.gz未取用，优先取BDF）。COMMENT字段明确Licensed under the WTFPL。"
-name_en = "WTFPL (Do What The F*ck You Want To Public License)"
+name_en = "Do What The F*ck You Want To Public License v2"
 note_en = "Includes 11px and 14px sizes in regular and bold weights, each with an additional -uni (ISO10646/Unicode charset) variant, eight BDF files in total (taken from gohufont/bdf/; the .pcf.gz files under the matching gohufont/pcf/ were not used, BDF was preferred). The COMMENT field explicitly states \"Licensed under the WTFPL\"."

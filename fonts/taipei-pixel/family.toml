@@ -17,7 +17,7 @@ provenance_en = "Upstream https://diaowinner.itch.io/taipei-fonts . The page sta
 
 [license]
 spdx = "CC-BY-SA-4.0"
-name = "知识共享 署名-相同方式共享4.0国际"
+name = "知识共享署名-相同方式共享4.0国际"
 confidence = "manual"
 note = "上游页面标注CC-BY SA 4.0。原始字形来自X.org的taipei16/24.bdf。"
 name_en = "Creative Commons Attribution-ShareAlike 4.0 International"

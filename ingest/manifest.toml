@@ -1998,7 +1998,7 @@ vibes = ["terminal-hardcore"]
 
 [family.license]
 spdx = "WTFPL"
-name = "WTFPL（Do What The F*ck You Want To Public License）"
+name = "想干嘛干嘛公共许可证 第2版"
 note = "含 11px/14px 两档尺寸、regular/bold 两种字重，每档另有 -uni（ISO10646/Unicode 字符集）变体，共 8 个 BDF 文件（取自 gohufont/bdf/，同名 gohufont/pcf/ 下的 .pcf.gz 未取用，优先取 BDF）。COMMENT 字段明确 Licensed under the WTFPL。"
 
 # ============================================================

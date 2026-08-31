@@ -16,7 +16,7 @@ provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18
 
 [license]
 spdx = "OFL-1.1"
-name = "SIL Open Font License 1.1"
+name = "SIL开放字体许可证1.1"
 file = "OFL.txt"
 note = "SIL OFL 1.1，保留字体名（Reserved Font Name）为 “Press Start 2P”，修改版须改用其它名称后方可分发。可商用、可嵌入、可修改、可再分发；随字体须保留版权声明与许可证全文。本目录OFL.txt取自google/fonts仓库ofl/pressstart2p。"
 name_en = "SIL Open Font License 1.1"

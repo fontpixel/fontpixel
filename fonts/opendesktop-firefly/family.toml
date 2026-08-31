@@ -18,7 +18,7 @@ provenance_en = "Imported from direct-downloads-2026-08-31/opendesktop-firefly-b
 
 [license]
 spdx = "GPL-2.0-only"
-name = "GNU 通用公共许可证 第 2 版"
+name = "GNU通用公共许可证 第2版"
 confidence = "manual"
 file = "License.txt"
 note = "来源中，点阵部分的发布目录内License.txt为GPL第2版全文（中译在前、英文原文在后），作者为Firefly。可见作者将点阵层视为自己的制作，而没有使用文鼎公众授权书（Arphic Public License）1999年版（这和GPL一样是一个自由开源、copyleft的许可，但是与GPL不兼容），仅矢量层被视为基于文鼎科技的细上海宋与简报宋、遵守文鼎公众授权书的字体。不过在点阵BDF字体文件的COMMENT依然保留着“(c) Copyright 1994-1999, Arphic Technology Co., Ltd.”"

@@ -162,10 +162,11 @@ const pct = (have: number, total: number) =>
                                       data-label={name(c)}
                                     >
                                       {[...miss].map((ch) => (
-                                        <span
+                                        <button
+                                          type="button"
                                           class="cov__miss"
                                           title={formatCp(ch.codePointAt(0)!)}
-                                        >{ch}</span>
+                                        >{ch}</button>
                                       ))}
                                     </div>
                                   </>
@@ -215,9 +216,12 @@ const pct = (have: number, total: number) =>
     })
   }
 
-  <dialog class="cov__modal" data-missing-modal>
+  <dialog class="cov__modal" data-missing-modal data-copied-label={s.coverage.copiedChar}>
     <div class="cov__modal-head">
       <h3 class="cov__modal-title" data-modal-title />
+      <button type="button" class="cov__modal-copyall" data-modal-copyall
+        >{s.coverage.copyAll}</button
+      >
       <button
         type="button"
         class="cov__modal-close"
@@ -258,6 +262,26 @@ const pct = (have: number, total: number) =>
         title.textContent = `${src.dataset.label ?? ''} · ${btn.textContent?.trim() ?? ''}`;
         body.replaceChildren(...[...src.children].map((n) => n.cloneNode(true)));
         dlg.showModal();
+      });
+    });
+    // Clicking one glyph copies just that glyph; the header button copies the lot.
+    const copied = dlg.dataset.copiedLabel ?? 'Copied';
+    const flash = (el: HTMLElement) => {
+      el.classList.add('cov__miss--copied');
+      setTimeout(() => el.classList.remove('cov__miss--copied'), 600);
+    };
+    body.addEventListener('click', (e) => {
+      const cell = (e.target as HTMLElement).closest<HTMLElement>('.cov__miss');
+      if (!cell) return;
+      navigator.clipboard?.writeText(cell.textContent ?? '').then(() => flash(cell));
+    });
+    const copyAll = dlg.querySelector<HTMLButtonElement>('[data-modal-copyall]');
+    copyAll?.addEventListener('click', () => {
+      const all = [...body.querySelectorAll('.cov__miss')].map((n) => n.textContent ?? '').join('');
+      navigator.clipboard?.writeText(all).then(() => {
+        const label = copyAll.textContent;
+        copyAll.textContent = copied;
+        setTimeout(() => (copyAll.textContent = label), 1200);
       });
     });
     dlg.querySelector('[data-modal-close]')?.addEventListener('click', () => dlg.close());
@@ -390,6 +414,9 @@ const pct = (have: number, total: number) =>
     background: rgb(0 0 0 / 0.45);
   }
   .cov__modal-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s3);
     padding: var(--s3) var(--s4);
     padding-right: 2.5rem;
     border-bottom: 1px solid var(--line);
@@ -398,6 +425,11 @@ const pct = (have: number, total: number) =>
     margin: 0;
     font-size: 0.85rem;
     font-weight: 600;
+  }
+  .cov__modal-copyall {
+    flex: none;
+    font-size: 0.75rem;
+    padding: var(--s1) var(--s2);
   }
   .cov__modal-close {
     position: absolute;
@@ -422,15 +454,26 @@ const pct = (have: number, total: number) =>
     max-height: calc(80vh - 3rem);
     overflow-wrap: anywhere;
     font-size: 1rem;
-    user-select: all;
   }
-  /* Each missing glyph gets a light border; hover shows its codepoint */
+  /* Each missing glyph gets a light border; hover shows its codepoint, click copies it */
   .cov__miss {
     display: inline-block;
     border: 1px solid var(--line-soft);
+    border-radius: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
     padding: 0 2px;
     margin: 1px;
     line-height: 1.5;
+    cursor: pointer;
+  }
+  .cov__miss:hover {
+    border-color: var(--accent);
+  }
+  .cov__miss--copied {
+    border-color: var(--accent);
+    background: var(--accent-soft);
   }
   .cov__note {
     color: var(--accent);
