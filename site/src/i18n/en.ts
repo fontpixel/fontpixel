@@ -96,6 +96,7 @@ export const en: UIStrings = {
     'latin-ext': 'Latin (Central European)',
     cyrillic: 'Cyrillic',
     greek: 'Greek',
+    arabic: 'Arabic (incl. Persian, Urdu)',
     'zh-hans-partial': 'Simplified Chinese (incomplete)',
     'zh-hant-partial': 'Traditional Chinese (incomplete)',
     'ja-partial': 'Japanese (incomplete)',
@@ -105,6 +106,7 @@ export const en: UIStrings = {
     'latin-ext-partial': 'Latin (Central European, incomplete)',
     'cyrillic-partial': 'Cyrillic (incomplete)',
     'greek-partial': 'Greek (incomplete)',
+    'arabic-partial': 'Arabic (incomplete)',
   },
 
   scriptRules: {
@@ -117,6 +119,7 @@ export const en: UIStrings = {
     'latin-ext': 'Latin Extended-A ≥ 90%',
     'cyrillic': 'Cyrillic block ≥ 90%',
     'greek': 'Greek and Coptic ≥ 90%',
+    'arabic': 'Arabic block ≥ 90%',
     'zh-hans-partial': 'GB/T 2312 or General Standard list 10–90%',
     'zh-hant-partial': 'Big5 frequently-used hanzi 10–90%',
     'ja-partial': 'Kana ≥ 95% and JIS level 1 kanji 10–90%',
@@ -126,6 +129,7 @@ export const en: UIStrings = {
     'latin-ext-partial': 'Latin Extended-A 10–90%',
     'cyrillic-partial': 'Cyrillic block 10–90%',
     'greek-partial': 'Greek and Coptic 10–90%',
+    'arabic-partial': 'Arabic block 10–90%',
   },
 
   weightNames: {

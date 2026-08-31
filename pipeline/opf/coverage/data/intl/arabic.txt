@@ -1,0 +1,9 @@
+# id: arabic
+# section: intl
+# order: 42
+# name_zh: 阿拉伯字母
+# name_en: Arabic
+# desc_zh: U+0600–06FF 基本区，含波斯文、乌尔都文的扩展字母
+# desc_en: The basic block U+0600–06FF, including the extra letters used by Persian and Urdu.
+# source: Unicode block ranges; generated 2026-08-31
+0600..06FF

@@ -15,6 +15,7 @@ const docLang = DOC_LANGS.includes(lang) ? lang : DOC_LANGS[0];
 ---
 
 <Base lang={lang} title={s.tools.title} description={s.tools.intro} path="/tools/">
+  <div class="tools">
   <h1>{s.tools.title}</h1>
   <p class="tools__intro">{s.tools.intro}</p>
   <div class="tools__grid">
@@ -25,11 +26,61 @@ const docLang = DOC_LANGS.includes(lang) ? lang : DOC_LANGS[0];
       </a>
     ))}
   </div>
+  </div>
 </Base>
 
 <style>
+  /* Docusaurus-classic (Infima) look for the tools/docs area only — the
+     catalogue keeps the site's own pixel-museum styling. Values mirror the
+     original font.tomchen.org theme: the site accent as primary, 95% code size,
+     system-ui base stack, SFMono code stack. */
+  .tools {
+    --dx-font:
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      Roboto,
+      Ubuntu,
+      Cantarell,
+      'Noto Sans',
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
+    --dx-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --dx-primary: var(--accent);
+    --dx-primary-darker: color-mix(in srgb, var(--accent) 82%, black);
+    --dx-text: #1c1e21;
+    --dx-text-2: #606770;
+    --dx-code-bg: #f6f7f8;
+    --dx-code-border: rgba(0, 0, 0, 0.1);
+    --dx-pre-bg: #f6f8fa;
+    --dx-border: #dadde1;
+    --dx-hover-bg: rgba(0, 0, 0, 0.05);
+    --dx-stripe-bg: rgba(0, 0, 0, 0.03);
+    font-family: var(--dx-font);
+    color: var(--dx-text);
+  }
+  :global(:root[data-theme='dark']) .tools {
+    --dx-text: #e3e3e3;
+    --dx-text-2: #9aa0a6;
+    --dx-code-bg: rgba(255, 255, 255, 0.09);
+    --dx-code-border: rgba(255, 255, 255, 0.12);
+    --dx-pre-bg: #2b2d31;
+    --dx-border: #444950;
+    --dx-hover-bg: rgba(255, 255, 255, 0.08);
+    --dx-stripe-bg: rgba(255, 255, 255, 0.04);
+  }
+
+  .tools :global(h1) {
+    font-family: var(--dx-font);
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
   .tools__intro {
-    color: var(--ink-2);
+    color: var(--dx-text-2);
+    font-size: 1.05rem;
+    line-height: 1.65;
   }
   .tools__grid {
     display: grid;
@@ -41,23 +92,27 @@ const docLang = DOC_LANGS.includes(lang) ? lang : DOC_LANGS[0];
     display: flex;
     flex-direction: column;
     gap: var(--s2);
-    border: 1px solid var(--line);
+    border-radius: 0.4rem;
     background: var(--surface);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--dx-border);
     padding: var(--s4);
+    text-decoration: none;
+    transition: box-shadow 0.15s ease;
   }
   .tools__card:hover {
-    border-color: var(--accent);
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+    border-color: var(--dx-primary);
     color: inherit;
   }
   .tools__name {
     font-weight: 700;
-  }
-  .tools__card:hover .tools__name {
-    color: var(--accent);
+    font-size: 1.05rem;
+    color: var(--dx-primary);
   }
   .tools__blurb {
-    font-size: 0.85rem;
-    color: var(--ink-2);
+    font-size: 0.875rem;
+    color: var(--dx-text-2);
     line-height: 1.6;
   }
 </style>

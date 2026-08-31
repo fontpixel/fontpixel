@@ -96,6 +96,7 @@ export const ko: UIStrings = {
     'latin-ext': '라틴(중동유럽)',
     cyrillic: '키릴 문자',
     greek: '그리스 문자',
+    arabic: '아랍 문자(페르시아어·우르두어 포함)',
     'zh-hans-partial': '중국어 간체(불완전)',
     'zh-hant-partial': '중국어 번체(불완전)',
     'ja-partial': '일본어(불완전)',
@@ -105,6 +106,7 @@ export const ko: UIStrings = {
     'latin-ext-partial': '라틴(중동유럽, 불완전)',
     'cyrillic-partial': '키릴 문자(불완전)',
     'greek-partial': '그리스 문자(불완전)',
+    'arabic-partial': '아랍 문자(불완전)',
   },
 
   scriptRules: {
@@ -117,6 +119,7 @@ export const ko: UIStrings = {
     'latin-ext': '라틴 확장-A 90% 이상',
     'cyrillic': '키릴 문자 블록 ≥ 90%',
     'greek': '그리스 문자 및 콥트 문자 ≥ 90%',
+    'arabic': '아랍 문자 블록 ≥ 90%',
     'zh-hans-partial': 'GB/T 2312 또는 통용규범한자표 10–90%',
     'zh-hant-partial': 'Big5 상용 한자 10–90%',
     'ja-partial': '가나 ≥ 95% 및 JIS 제1수준 한자 10–90%',
@@ -126,6 +129,7 @@ export const ko: UIStrings = {
     'latin-ext-partial': '라틴 확장-A 10~90%',
     'cyrillic-partial': '키릴 문자 블록 10–90%',
     'greek-partial': '그리스 문자 및 콥트 문자 10–90%',
+    'arabic-partial': '아랍 문자 블록 10–90%',
   },
 
   weightNames: {

@@ -96,6 +96,7 @@ export const fr: UIStrings = {
     'latin-ext': 'Latin (Europe centrale)',
     cyrillic: 'Cyrillique',
     greek: 'Grec',
+    arabic: 'Arabe (dont persan et ourdou)',
     'zh-hans-partial': 'Chinois simplifié (incomplet)',
     'zh-hant-partial': 'Chinois traditionnel (incomplet)',
     'ja-partial': 'Japonais (incomplet)',
@@ -105,6 +106,7 @@ export const fr: UIStrings = {
     'latin-ext-partial': 'Latin (Europe centrale, incomplet)',
     'cyrillic-partial': 'Cyrillique (incomplet)',
     'greek-partial': 'Grec (incomplet)',
+    'arabic-partial': 'Arabe (incomplet)',
   },
 
   scriptRules: {
@@ -117,6 +119,7 @@ export const fr: UIStrings = {
     'latin-ext': 'Latin étendu A ≥ 90 %',
     'cyrillic': 'Bloc cyrillique ≥ 90%',
     'greek': 'Grec et copte ≥ 90%',
+    'arabic': 'Bloc arabe ≥ 90%',
     'zh-hans-partial': 'GB/T 2312 ou liste des sinogrammes chinois standard 10–90%',
     'zh-hant-partial': 'Sinogrammes courants Big5 10–90%',
     'ja-partial': 'Kana ≥ 95% et kanji JIS de niveau 1 10–90%',
@@ -126,6 +129,7 @@ export const fr: UIStrings = {
     'latin-ext-partial': 'Latin étendu A 10–90 %',
     'cyrillic-partial': 'Bloc cyrillique 10–90%',
     'greek-partial': 'Grec et copte 10–90%',
+    'arabic-partial': 'Bloc arabe 10–90%',
   },
 
   weightNames: {

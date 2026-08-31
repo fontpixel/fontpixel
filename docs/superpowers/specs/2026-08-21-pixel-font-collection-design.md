@@ -1,272 +1,272 @@
-# 开源像素字体馆 — 设计规格
+# Open Pixel Fonts (开源像素字体馆) — Design Specification
 
-日期:2026-08-21
-状态:已与项目所有者逐节确认通过
-站名:开源像素字体馆 / Open Pixel Fonts
-部署:GitHub Pages(展示资产)+ GitHub Releases(下载物)
+Date: 2026-08-21
+Status: confirmed section by section with the project owner
+Site name: Open Pixel Fonts / 开源像素字体馆
+Deployment: GitHub Pages (presentation assets) + GitHub Releases (downloadables)
 
-## 1. 背景与目标
+## 1. Background and Goals
 
-把收集来的开源点阵字体(以 CJK 为主)整理成一个自动构建的静态目录网站。字体源以 BDF/PCF 放进 `fonts/` 目录即自动收录。旧项目 `../open-pixel-fonts-old` 整体废弃重做;其覆盖率思路保留并大幅扩展,视觉、交互、工程全部重来。旧项目确认的三大败因:视觉有 AI 味、交互与功能不足、工程质量差(含 hash 路由不利分享)。
+Turn the collected open-source bitmap fonts (mostly CJK) into an automatically built static catalogue site. A font source is included automatically once its BDF/PCF is placed in the `fonts/` directory. The old project `../open-pixel-fonts-old` is scrapped and redone in full; its coverage-report concept is kept and substantially extended, while visuals, interaction, and engineering all start over. The three confirmed failings of the old project: the visuals had an AI smell, interaction and features were inadequate, and engineering quality was poor (including hash routing, which is bad for sharing).
 
-**成功标准**
+**Success criteria**
 
-- 全部导入家族可重复构建,构建产物齐全(字形包、预渲染、下载物、索引)。
-- 站点 Pages 体积 ≤ 900MB(CI 硬检查);目录页首屏 JS < 150KB gz。
-- 每个字体家族:属性齐全、覆盖率报告完整、样例可编辑、BDF/PCF 可下载。
-- 视觉经得起挑剔:不像模板、不像 AI 产物。
-- 中英双语完整可用。
+- Every imported family builds reproducibly, with complete artifacts (glyph packs, prerenders, downloadables, indexes).
+- Site Pages payload ≤ 900MB (hard CI check); catalogue page first-screen JS < 150KB gz.
+- For every font family: complete attributes, a complete coverage report, an editable sample, and downloadable BDF/PCF.
+- Visuals that survive a picky eye: not template-like, not AI-generated-looking.
+- Fully usable in both Chinese and English.
 
-**收录标准(2026-08-29 收紧)**
+**Inclusion criteria (tightened 2026-08-29)**
 
-只收录自由许可字体:授权须明确允许使用、复制、修改、再分发**并允许商业使用**,
-须明确适用于收录的这份文件,来源链可核验。仅标「免费」「免费商用」「freeware」
-或只允许复制的不算;作者尚未落实的「将来改开源许可」也不算。
+Only libre-licensed fonts are included: the license must explicitly permit use, copying, modification, and redistribution **and permit commercial use**,
+must explicitly apply to the very file being included, and the provenance chain must be verifiable. A mere "free", "free for commercial use", or "freeware"
+label, or a license that only permits copying, does not count; nor does an author's not-yet-executed promise to "switch to an open license later".
 
-**非目标(v1 不做)**
+**Non-goals (not in v1)**
 
-- 后端、账号、评论、用户上传。
-- OTF/WOFF2 下载分发(转制来源的原始矢量字体给上游链接,不再分发)。
-  注:位图 TTF 已于 2026-08-29 加入,见 §4.7——它承载的是点阵 strike、不含矢量轮廓,与此处排除的矢量分发不是一回事。
-- 彩色字体、emoji、竖排样例。
+- Backend, accounts, comments, user uploads.
+- OTF/WOFF2 download distribution (for converted sources, link upstream to the original vector font instead of redistributing it).
+  Note: bitmap TTF was added on 2026-08-29, see §4.7 — it carries bitmap strikes and contains no vector outlines, which is not the same thing as the vector distribution excluded here.
+- Color fonts, emoji, vertical samples.
 
-## 2. 已确认的关键决策
+## 2. Confirmed Key Decisions
 
-| 决策点 | 结论 |
+| Decision point | Conclusion |
 |---|---|
-| 导入范围 | 原生点阵格式(BDF、zip 内 BDF、OTB、kbitx、FNT 视情况)直接收;矢量化像素 TTF/OTF/woff2 栅格化转制为 BDF 并标注;PNG 图源/C 头文件逐个评估,冗余即跳过 |
-| 部署 | GitHub Pages;下载物走 GitHub Releases 滚动发布 |
-| 语言 | 中英双语,`/zh/`(默认)与 `/en/` 双路由 |
-| 目录单位 | 真实字体家族(导入时拆分,如 baekmuk 拆成 4 个家族) |
-| 源策略 | `fonts/` 源(BDF+元数据+许可证)进主仓库 git;生成物不进 git |
-| 风格体系 | 双层:受控「字形分类」+ 自由「气质标签」,均可筛选 |
-| 站点架构 | Astro 5 SSG + Svelte 5 岛屿 + TypeScript |
-| 样例渲染 | Canvas 点阵直绘(字形二进制分块)+ 构建期 SVG 预渲染保 SEO/无 JS |
-| 构建管线 | Python 3.12(fonttools、freetype-py),pytest 覆盖 |
+| Import scope | Native bitmap formats (BDF, BDF inside a zip, OTB, kbitx, FNT case by case) taken directly; vectorized pixel TTF/OTF/woff2 rasterized and converted into BDF with a note; PNG image sources / C header files evaluated one by one, skipped when redundant |
+| Deployment | GitHub Pages; downloadables published via a rolling GitHub Release |
+| Languages | Chinese and English, dual routes `/zh/` (default) and `/en/` |
+| Catalogue unit | The real font family (split at import time, e.g. baekmuk split into 4 families) |
+| Source policy | `fonts/` sources (BDF + metadata + license) go into the main repo's git; generated artifacts do not |
+| Style system | Two layers: a controlled "letterform category" plus free-form "vibe tags", both filterable |
+| Site architecture | Astro 5 SSG + Svelte 5 islands + TypeScript |
+| Sample rendering | Direct canvas bitmap drawing (binary glyph chunks) + build-time SVG prerender for SEO / no-JS |
+| Build pipeline | Python 3.12 (fonttools, freetype-py), covered by pytest |
 
-## 3. 仓库与目录约定
+## 3. Repository and Directory Conventions
 
 ```
 open-pixel-fonts/
-├── fonts/                        # 字体源,git 追踪
+├── fonts/                        # font sources, git-tracked
 │   └── <family-slug>/
-│       ├── family.toml           # 手填元数据(可缺省,构建器生成 stub)
-│       ├── LICENSE / OFL.txt …   # 上游许可证原文
-│       └── *.bdf | *.bdf.gz | *.pcf | *.pcf.gz   # 每文件=一个变体
-├── pipeline/                     # Python 构建管线
-│   ├── build.py                  # 入口:fonts/ → 产物
+│       ├── family.toml           # hand-written metadata (optional; builder generates a stub)
+│       ├── LICENSE / OFL.txt …   # upstream license text
+│       └── *.bdf | *.bdf.gz | *.pcf | *.pcf.gz   # one file = one variant
+├── pipeline/                     # Python build pipeline
+│   ├── build.py                  # entry point: fonts/ → artifacts
 │   ├── parsers/                  # bdf.py pcf.py otb.py kbitx.py
-│   ├── coverage/                 # 覆盖率计算 + data/ 字表(版本化,含来源说明)
-│   ├── metrics.py                # 宣称/墨迹度量
-│   ├── licenses.py               # 许可证识别
-│   ├── glyphpack.py              # 字形包写入器
-│   ├── prerender.py              # SVG 样例 + og:image PNG
-│   ├── downloads.py              # bdf.gz / pcf.gz / 家族 zip + manifest
-│   └── ingest/                   # 导入工具(见 §6)
-├── site/                         # Astro 项目
-│   ├── src/pages/                # 路由(含 [lang])
-│   ├── src/islands/              # Svelte 岛屿
-│   ├── src/lib/                  # 字形包解码器、GlyphStore、筛选逻辑(vitest)
-│   └── public/data/              # 管线产物(gitignored)
-├── dist-downloads/               # 下载物(gitignored,CI 上传 Releases)
-├── docs/superpowers/specs/       # 设计与计划文档
+│   ├── coverage/                 # coverage computation + data/ charsets (versioned, with provenance notes)
+│   ├── metrics.py                # claimed / ink metrics
+│   ├── licenses.py               # license detection
+│   ├── glyphpack.py              # glyph pack writer
+│   ├── prerender.py              # SVG samples + og:image PNG
+│   ├── downloads.py              # bdf.gz / pcf.gz / family zip + manifest
+│   └── ingest/                   # import tooling (see §6)
+├── site/                         # Astro project
+│   ├── src/pages/                # routes (including [lang])
+│   ├── src/islands/              # Svelte islands
+│   ├── src/lib/                  # glyph pack decoder, GlyphStore, filter logic (vitest)
+│   └── public/data/              # pipeline artifacts (gitignored)
+├── dist-downloads/               # downloadables (gitignored, uploaded to Releases by CI)
+├── docs/superpowers/specs/       # design and plan documents
 └── .github/workflows/build.yml
 ```
 
 ### 3.1 family.toml
 
-只填机器推不出的字段;缺省时构建器自动生成带 TODO 注释的 stub 并在站点标「未整理」。
+Only fill in fields a machine cannot infer; when it is missing, the builder generates a stub with TODO comments and the site marks the family "uncurated".
 
 ```toml
-name = "Galmuri"                  # 必填(stub 从目录名生成)
-name_zh = ""                      # 可选,中文显示名
+name = "Galmuri"                  # required (stub derives it from the directory name)
+name_zh = ""                      # optional, Chinese display name
 author = "quiple"
 homepage = "https://galmuri.quiple.dev"
 repository = "https://github.com/quiple/galmuri"
-description = ""                  # 可选,一句话介绍(中文;英文由翻译流程生成)
-form = "gothic"                   # 受控字形分类,见 §3.3;未填=「未分类」
-vibes = ["retro-game"]            # 自由气质标签(kebab-case,站点汇总为筛选项)
-converted_from = ""               # 转制来源:"ttf"|"otf"|"woff2"|留空=原生
-provenance = ""                   # 来源与获取说明(导入工具自动写入)
+description = ""                  # optional, one-line blurb (Chinese; English produced by the translation flow)
+form = "gothic"                   # controlled letterform category, see §3.3; empty = "uncategorized"
+vibes = ["retro-game"]            # free-form vibe tags (kebab-case; the site aggregates them into filters)
+converted_from = ""               # conversion source: "ttf"|"otf"|"woff2"|empty = native
+provenance = ""                   # source and acquisition notes (written automatically by the import tool)
 
-[license]                         # 自动识别成功时整块省略
-spdx = "OFL-1.1"                  # 或 LicenseRef-<name>
-name = ""                         # 自定义许可证显示名
-file = "OFL.txt"                  # 指向目录内文本
-note = ""                         # 附加限制说明
+[license]                         # omit the whole block when auto-detection succeeds
+spdx = "OFL-1.1"                  # or LicenseRef-<name>
+name = ""                         # display name for a custom license
+file = "OFL.txt"                  # points at a text file in the directory
+note = ""                         # additional restriction notes
 
-[samples]                         # 可选,覆盖默认样例句
+[samples]                         # optional, overrides the default sample sentence
 zh-Hans = "…"
 
-[variants."Galmuri11.bdf"]        # 可选,逐变体覆写
+[variants."Galmuri11.bdf"]        # optional, per-variant overrides
 display = "Galmuri 11"
 weight = "regular"                # regular|bold|light|…
 spacing = "proportional"          # monospaced|proportional
-script_subset = ""                # zh-Hans|zh-Hant|ja|ko|latin|…(fusion-pixel 式分包)
+script_subset = ""                # zh-Hans|zh-Hant|ja|ko|latin|… (fusion-pixel style subsetting)
 ```
 
-### 3.2 变体模型
+### 3.2 Variant Model
 
-变体维度 = 宣称尺寸 × 粗细 × 等宽/比例 × 语言子集。自动解析优先级:BDF/PCF 属性(`PIXEL_SIZE`、`WEIGHT_NAME`、`SPACING`、`CHARSET_REGISTRY` 等)→ 文件名启发式 → `[variants]` 手工覆写。家族页按「尺寸为主轴、其余为切换器」组织变体。
+Variant dimensions = claimed size × weight × monospaced/proportional × language subset. Auto-detection priority: BDF/PCF properties (`PIXEL_SIZE`, `WEIGHT_NAME`, `SPACING`, `CHARSET_REGISTRY`, etc.) → filename heuristics → manual `[variants]` overrides. The family page organizes variants with size as the primary axis and the rest as switchers.
 
-### 3.3 受控字形分类(form)
+### 3.3 Controlled Letterform Categories (form)
 
-`gothic` 黑体/ゴシック、`mingcho` 宋体/明朝、`rounded` 圆体、`kai` 楷体、`fangsong` 仿宋、`songti-serif` 衬线像素(西文 serif 系)、`sans` 无衬线像素(西文)、`script` 手写、`decorative` 装饰/美术、`terminal` 终端/系统、`other` 其他。词表在实现时可增删,但保持受控(站点筛选器逐项列出,双语名)。一个家族一个主分类,允许最多一个副分类。
+`gothic` heiti/gothic sans, `mingcho` songti/mincho serif, `rounded` rounded, `kai` kaishu, `fangsong` fangsong, `songti-serif` serif pixel (Latin serif lineage), `sans` sans-serif pixel (Latin), `script` handwriting, `decorative` decorative/display, `terminal` terminal/system, `other` other. The vocabulary may be extended or trimmed during implementation, but stays controlled (the site's filter lists each entry with bilingual names). One primary category per family, with at most one secondary category allowed.
 
-## 4. 构建管线
+## 4. Build Pipeline
 
-流程:扫描 → 解析 → 度量 → 覆盖率 → 许可证 → 产物(字形包/预渲染/下载物/索引)。全程按「文件内容哈希 + 管线版本号」增量缓存(`.cache/`,gitignored)。
+Flow: scan → parse → metrics → coverage → license → artifacts (glyph packs / prerenders / downloadables / indexes). The whole flow is incrementally cached on "file content hash + pipeline version" (`.cache/`, gitignored).
 
-### 4.1 解析器
+### 4.1 Parsers
 
-- **BDF**:完整属性表、逐字形 `ENCODING`(≥0 者入编码表)、`BBX`、`DWIDTH`、位图。容忍常见方言(重复属性、非标准行)并记录构建警告。
-- **PCF**:properties、metrics、ink metrics、bitmaps、encoding、glyph names 各表,处理字节序/位序/扫描单元。非 Unicode 编码(ISO 8859、GB2312、JIS、KS、Big5 等)映射到 Unicode;无法可靠映射的记警告并在站点展示。
-- **OTB**:fonttools 读 `EBDT/EBLC`(导入期转为 BDF 落盘,站点管线只消费 BDF/PCF)。
-- **kbitx / FNT**:同上,仅导入期使用。
+- **BDF**: full property table, per-glyph `ENCODING` (those ≥0 enter the encoding table), `BBX`, `DWIDTH`, bitmap. Tolerates common dialects (duplicate properties, non-standard lines) and records build warnings.
+- **PCF**: the properties, metrics, ink metrics, bitmaps, encoding, and glyph names tables, handling byte order / bit order / scan unit. Non-Unicode encodings (ISO 8859, GB2312, JIS, KS, Big5, etc.) are mapped to Unicode; anything that cannot be mapped reliably produces a warning shown on the site.
+- **OTB**: fonttools reads `EBDT/EBLC` (converted to BDF on disk at import time; the site pipeline consumes only BDF/PCF).
+- **kbitx / FNT**: same as above, used only at import time.
 
-### 4.2 度量口径(站点公示于「关于」页)
+### 4.2 Metric Definitions (published on the site's About page)
 
-- **宣称大小**:`PIXEL_SIZE` → `SIZE`(pt@dpi 换算)→ `FONTBOUNDINGBOX` 高度,取整像素。
-- **汉字墨迹字面**:取该字体已覆盖的通用规范一级字表交集(不足 100 字时退化为全部 CJK 统一表意字形),逐字形算实际点亮像素外接框,宽、高分别取中位数,报「W×H」。无汉字的字体改报:大写 A–Z 墨迹高中位数(cap height)、小写 x 高、ASCII 最大墨迹框。
-- **全字体最大墨迹**:全部字形最大墨迹宽/高,并记录达到极值的字形码位(组合符、超宽 PUA 字形会使其大于宣称框,属正常,页面加脚注)。
-- 另采集:ascent/descent、`FONTBOUNDINGBOX`、DWIDTH 分布(等宽判定:≥99% 字形同宽即视为等宽,与 `SPACING` 属性互校)。
+- **Claimed size**: `PIXEL_SIZE` → `SIZE` (pt@dpi conversion) → `FONTBOUNDINGBOX` height, rounded to whole pixels.
+- **Han ink size**: take the intersection with Level 1 of the Table of General Standard Chinese Characters that the font actually covers (falling back to all CJK Unified Ideographs when fewer than 100 characters are available), compute each glyph's actual lit-pixel bounding box, take the median of width and of height separately, and report it as "W×H". For fonts without Han characters, report instead: the median ink height of uppercase A–Z (cap height), the lowercase x-height, and the largest ASCII ink box.
+- **Whole-font maximum ink**: the maximum ink width/height across all glyphs, recording the code points that hit the extremes (combining marks and extra-wide PUA glyphs can push this beyond the claimed box, which is normal; the page carries a footnote).
+- Also collected: ascent/descent, `FONTBOUNDINGBOX`, DWIDTH distribution (monospace test: ≥99% of glyphs sharing one width counts as monospaced, cross-checked against the `SPACING` property).
 
-### 4.3 覆盖率计算
+### 4.3 Coverage Computation
 
-编码表中的码位集合(bitset)对照 §7 各字表逐一统计。计数规则:一码位一计;分母为版本化数据文件中的码位数;兼容表意字与统一表意字分列,FA0E/FA0F/FA11/FA13/FA14/FA1F/FA21/FA23/FA24/FA27/FA28/FA29 十二个「实为统一字」单独脚注。覆盖率按变体计算;家族级筛选取「任一变体达标」。
+The set of code points in the encoding table (a bitset) is tallied against each charset in §7. Counting rules: one code point counts once; the denominator is the number of code points in the versioned data file; compatibility ideographs and unified ideographs are listed separately, with the twelve "actually unified" characters FA0E/FA0F/FA11/FA13/FA14/FA1F/FA21/FA23/FA24/FA27/FA28/FA29 footnoted separately. Coverage is computed per variant; family-level filtering uses "any variant meets the threshold".
 
-### 4.4 许可证识别
+### 4.4 License Detection
 
-三级置信:
+Three confidence levels:
 
-1. **auto-高**:目录内 `LICENSE*`、`LICENCE*`、`COPYING*`、`OFL*` 及扫描到的许可证文本,归一化空白后与已知全文指纹匹配。首批指纹:OFL-1.1、OFL-1.0、MIT、Apache-2.0、GPL-2.0/3.0(含 Font Exception 变体)、LGPL-2.1、CC0-1.0、CC-BY-4.0、CC-BY-SA-4.0、WTFPL、Unlicense、IPA Font License 1.0、M+ Font License(旧版)、Baekmuk License、公有领域声明。
-2. **auto-低**:仅从 BDF `COPYRIGHT`/`NOTICE` 属性得到提示,站点显示「待确认」。
-3. **manual**:`family.toml` `[license]` 覆写一切。
+1. **auto-high**: `LICENSE*`, `LICENCE*`, `COPYING*`, `OFL*` in the directory plus any license text found by scanning, whitespace-normalized and matched against known full-text fingerprints. First batch of fingerprints: OFL-1.1, OFL-1.0, MIT, Apache-2.0, GPL-2.0/3.0 (including Font Exception variants), LGPL-2.1, CC0-1.0, CC-BY-4.0, CC-BY-SA-4.0, WTFPL, Unlicense, IPA Font License 1.0, M+ Font License (old version), Baekmuk License, public-domain declarations.
+2. **auto-low**: only a hint from the BDF `COPYRIGHT`/`NOTICE` properties; the site displays "unconfirmed".
+3. **manual**: `family.toml` `[license]` overrides everything.
 
-未识别 → 构建警告 + 站点「许可证未确认」警示条。（原有的 `commercial` 字段已于 2026-08-31 移除:收录标准本身就要求授权允许商用,站上不存在不可商用的字体,逐字体再记一个恒为真的字段是冗余,也曾因白名单不全而误报「未知」。）站点全站脚注:许可证信息仅供参考,以上游原文为准。
+Unrecognized → build warning + a "license unconfirmed" banner on the site. (The former `commercial` field was removed on 2026-08-31: the inclusion criteria already require the license to permit commercial use, so no non-commercial font exists on the site, and recording a per-font field that is always true is redundant — it had also mis-reported "unknown" because the whitelist was incomplete.) Site-wide footnote: license information is for reference only; the upstream original text governs.
 
-### 4.5 字形包(canvas 渲染数据源)
+### 4.5 Glyph Packs (the data source for canvas rendering)
 
-- 每变体一份 manifest JSON(区间 → 分块文件、字节数、字形数、sha256)+ 若干二进制分块,分块以 gzip 存储(`.bin.gz`),前端 `DecompressionStream('gzip')` 解压。
-- 分块按码位区间划分,目标单块 gzip 后 ≤ 16KB,支持按码位随机访问(块内索引:码位 → 度量 + 位图偏移;度量含 DWIDTH、BBX 四元组)。
-- 每变体额外一个**核心包**:可打印 ASCII + 平/片假名 + 谚文兼容字母 + 全部默认样例句用字 + 家族显示名用字,目标 ≤ 8KB gz;目录卡片(名称+样例行)仅凭核心包即可渲染,编辑样例才触发分块拉取。
-- 精确二进制布局(魔数、版本、字段宽度)在实现阶段随解码器测试一起定,规格要求:v1 版本号内向后兼容,解码为纯 TS 无依赖。
+- One manifest JSON per variant (range → chunk file, byte count, glyph count, sha256) plus a number of binary chunks, stored gzipped (`.bin.gz`) and decompressed on the front end with `DecompressionStream('gzip')`.
+- Chunks are split by code point range, targeting ≤ 16KB gzipped per chunk, and support random access by code point (in-chunk index: code point → metrics + bitmap offset; metrics include DWIDTH and the BBX quadruple).
+- Each variant also gets a **core pack**: printable ASCII + hiragana/katakana + Hangul Compatibility Jamo + every character used in the default sample sentences + the characters of the family display name, targeting ≤ 8KB gz; a catalogue card (name + sample line) can be rendered from the core pack alone, and only editing the sample triggers chunk fetches.
+- The exact binary layout (magic number, version, field widths) is fixed during implementation together with the decoder tests; the spec requires backward compatibility within version v1 and a dependency-free pure-TS decoder.
 
-### 4.6 预渲染与社交卡片
+### 4.6 Prerendering and Social Cards
 
-- 每家族默认样例构建期渲染为内联 SVG(横向连续像素合并为 rect,控制节点数),写入静态 HTML:无 JS 可见、SEO 可索引;JS 就绪后无缝替换为可编辑 canvas。
-- 每家族 og:image PNG(Pillow 绘制,含站名与家族名样例)。
+- Each family's default sample is rendered at build time into inline SVG (horizontally contiguous pixels merged into rects to keep the node count down) and written into the static HTML: visible without JS, indexable for SEO; once JS is ready it is seamlessly replaced by an editable canvas.
+- One og:image PNG per family (drawn with Pillow, containing the site name and a sample of the family name).
 
-### 4.7 下载物与 Releases
+### 4.7 Downloadables and Releases
 
-- 每变体:`<family>--<file>.bdf.gz`、`<family>--<file>.pcf.gz`(bdftopcf 生成;转换失败记警告并只提供 BDF)。每家族:`<family>.zip`(全部变体 BDF + 许可证 + 来源说明 README)。
-- **位图 TTF**(2026-08-29 新增):按(字重 × 排布 × 语言子集)分组,同组的全部像素尺寸打进一个 TTF,以 EBDT/EBLC strike 承载,`glyf` 内为空轮廓、不含矢量数据。文件名只带组间真正有差异的维度(单组家族即 `<family>.ttf`)。实现见 `pipeline/opf/ttfexport.py`,以「构建 → 用 OTB 解析器读回 → 与源 BDF 逐字节比对」验证。
-- CI 上传到滚动 Release(tag `downloads`),按 manifest sha256 只替换有变化的资产;站点链接指向 `releases/download/downloads/<asset>`,并显示文件大小与 sha256。
-- 本地 dev:链接指向本地 `dist-downloads/`(dev 服务器静态挂载);生产由环境变量切换基址。
+- Per variant: `<family>--<file>.bdf.gz`, `<family>--<file>.pcf.gz` (generated by bdftopcf; a conversion failure is recorded as a warning and only BDF is offered). Per family: `<family>.zip` (all variant BDFs + license + a README describing provenance).
+- **Bitmap TTF** (added 2026-08-29): grouped by (weight × spacing × language subset), with all pixel sizes in a group packed into one TTF, carried as EBDT/EBLC strikes, with empty outlines in `glyf` and no vector data. Filenames carry only the dimensions that actually differ between groups (a single-group family is simply `<family>.ttf`). Implementation in `pipeline/opf/ttfexport.py`, verified by "build → read back with the OTB parser → compare byte for byte against the source BDF".
+- CI uploads to a rolling Release (tag `downloads`), replacing only the assets whose manifest sha256 changed; site links point at `releases/download/downloads/<asset>` and display file size and sha256.
+- Local dev: links point at the local `dist-downloads/` (statically mounted by the dev server); production switches the base URL via an environment variable.
 
-### 4.8 索引产物
+### 4.8 Index Artifacts
 
-- `index.json`(目录页,目标 ≤ 50KB gz):每家族 slug、双语名、form/vibes、尺寸列表、粗细、等宽性、书写系统、许可证(spdx)、关键覆盖摘要、汉字墨迹与宣称尺寸、字形数、作者、是否转制、核心包与预渲染路径、变体清单。
-- 每家族 `detail.json`:完整覆盖率树(逐变体)、全部度量、构建警告、下载 manifest。
-- `coverage-intervals.bin.gz`:全部家族的覆盖码位区间(家族级并集),查字功能与缺字高亮按需加载一次。
+- `index.json` (catalogue page, target ≤ 50KB gz): per family, slug, bilingual names, form/vibes, size list, weights, monospaced-ness, writing systems, license (spdx), key coverage summary, Han ink and claimed sizes, glyph count, author, whether converted, core pack and prerender paths, variant list.
+- Per-family `detail.json`: the full coverage tree (per variant), all metrics, build warnings, download manifest.
+- `coverage-intervals.bin.gz`: the covered code point ranges for all families (family-level union), loaded once on demand for the character-lookup feature and missing-glyph highlighting.
 
-## 5. 站点信息架构
+## 5. Site Information Architecture
 
-路由(`ASTRO_BASE` 可配,默认 `/open-pixel-fonts`):
+Routes (`ASTRO_BASE` configurable, default `/open-pixel-fonts`):
 
-- `/` — 按 `navigator.language` 跳转 zh/en 的极小页,带 hreflang。
-- `/zh/`、`/en/` — 目录页(即首页)。
-- `/{lang}/fonts/<slug>/` — 家族详情页。
-- `/{lang}/about/` — 关于:收录标准、度量与覆盖率口径方法论、字表来源与致谢、贡献指南(如何添加字体/写 family.toml)、许可证免责声明。
-- `/404.html` — 用馆藏字体渲染的 404。
+- `/` — a minimal page that redirects to zh/en based on `navigator.language`, with hreflang.
+- `/zh/`, `/en/` — the catalogue page (i.e. the home page).
+- `/{lang}/fonts/<slug>/` — family detail page.
+- `/{lang}/about/` — About: inclusion criteria, methodology for metrics and coverage, charset sources and acknowledgements, contribution guide (how to add a font / write family.toml), license disclaimer.
+- `/404.html` — a 404 rendered with fonts from the collection.
 
-### 5.1 目录页
+### 5.1 Catalogue Page
 
-- 工具栏:全文搜索(名称/作者/标签;**简繁互通**——搜「东云」命中「東雲」,异体字等价类由 Unihan `kSimplifiedVariant`/`kTraditionalVariant` 在构建期展开进 `searchText`,前端无需映射表)、**全局样例文本框**(即改即绘,应用到全部卡片)、像素缩放 ×1/×2/×3、反色(白底黑字/黑底白字)。
-- 筛选器(全部序列化进 URL query,可分享):字形分类、气质标签、宣称尺寸(离散 px chips)、汉字墨迹高(范围)、书写系统、许可证(SPDX 多选;「仅看可商用」开关已于 2026-08-29 移除——收录标准已收紧为严格自由许可,全部字体均可商用,该筛选器不再有意义)、等宽/比例、粗细、原生/转制、覆盖率达标预设(GB2312≥99%、常用国字≥99%、JIS 第 1 水準≥99%、假名 100%、KS X 1001 谚文≥99%,以及「任选字表+阈值」自定义)、**查字**(输入任意字符,只显示全覆盖的家族)。
-- 排序:名称/宣称尺寸/字形数/最近加入。
-- 卡片:家族名用该字体自渲染 + 样例行 canvas(跟随全局样例,懒加载 IntersectionObserver)+ 元数据 chips(尺寸、分类、许可证、书写系统、字形数、转制徽章、未整理徽章)。样例中该字体缺的字以占位框+高亮提示。
-- 家族数超过视口承载时虚拟滚动(实现期视实测决定,预计 ~100+ 家族需要)。
+- Toolbar: full-text search (name/author/tags; **simplified–traditional interchange** — searching 东云 matches 東雲, with variant-character equivalence classes expanded into `searchText` at build time from the Unihan `kSimplifiedVariant`/`kTraditionalVariant` fields, so the front end needs no mapping table), a **global sample text box** (redraws as you type, applied to every card), pixel zoom ×1/×2/×3, and invert (black on white / white on black).
+- Filters (all serialized into the URL query so they can be shared): letterform category, vibe tags, claimed size (discrete px chips), Han ink height (range), writing system, license (multi-select SPDX; the "commercial use only" toggle was removed on 2026-08-29 — the inclusion criteria were tightened to strict libre licensing, so every font permits commercial use and the filter no longer means anything), monospaced/proportional, weight, native/converted, coverage threshold presets (GB2312 ≥99%, Frequently Used Chinese Characters (TW) ≥99%, JIS Level 1 ≥99%, kana 100%, KS X 1001 Hangul ≥99%, plus a custom "pick any charset + threshold"), and **character lookup** (type any characters and only fully covering families are shown).
+- Sorting: name / claimed size / glyph count / recently added.
+- Cards: the family name self-rendered in that font + a sample line on canvas (following the global sample, lazily rendered via IntersectionObserver) + metadata chips (size, category, license, writing system, glyph count, converted badge, uncurated badge). Characters the font lacks appear in the sample as a placeholder box with a highlight.
+- Virtual scrolling once the family count exceeds what the viewport can carry (decided by measurement during implementation; expected to be needed at roughly 100+ families).
 
-### 5.2 家族详情页
+### 5.2 Family Detail Page
 
-- 头部:家族名大号自渲染、作者/主页/仓库/来源、许可证徽章(置信级可见,全文折叠展开)、form/vibes、转制说明(如适用)。
-- 变体切换:尺寸主轴 + 粗细/等宽/语言子集切换器。
-- **可编辑样例**:多行输入、分文种预设句、缩放、反色、网格线开关、**缺字高亮**开关。默认句:zh-Hans「天地玄黄,宇宙洪荒。日月盈昃,辰宿列张。」;zh-Hant「落霞與孤鶩齊飛,秋水共長天一色。」;ja「色は匂へど 散りぬるを 我が世誰ぞ 常ならむ」;ko「다람쥐 헌 쳇바퀴에 타고파」;latin「Sphinx of black quartz, judge my vow. 0123456789」。家族默认取其主书写系统的句子,`[samples]` 可覆写。
-- **宣称 vs 墨迹可视化**:小型示意图,宣称框与代表汉字墨迹框叠加,数字标注。
-- **字形网格浏览器**:按 Unicode 区段跳转的虚拟滚动网格,点击字形 → 检视器(放大位图、码位、字形名、BBX/DWIDTH/墨迹框)。数据按滚动位置懒取分块。
-- **覆盖率报告**:§7 八大板块,进度条为离散像素方块;逐变体切换;每行:名称(双语)、n/分母、百分比、来源 tooltip;缺字数 ≤ 500 的行可展开查看缺字列表(以文本呈现,可复制)。
-- 下载区:逐变体 BDF/PCF(标大小与 sha256)+ 家族 zip;转制家族附上游矢量字体链接。
-- 度量区:全部 §4.2 采集值表格。
+- Header: family name self-rendered at large size, author/homepage/repository/source, license badge (confidence visible, full text collapsible), form/vibes, conversion notes (where applicable).
+- Variant switching: size as the primary axis + weight / monospacing / language-subset switchers.
+- **Editable sample**: multi-line input, per-script preset sentences, zoom, invert, gridline toggle, and a **missing-glyph highlight** toggle. Default sentences: zh-Hans "天地玄黄,宇宙洪荒。日月盈昃,辰宿列张。"; zh-Hant "落霞與孤鶩齊飛,秋水共長天一色。"; ja "色は匂へど 散りぬるを 我が世誰ぞ 常ならむ"; ko "다람쥐 헌 쳇바퀴에 타고파"; latin "Sphinx of black quartz, judge my vow. 0123456789". A family defaults to the sentence for its primary writing system; `[samples]` can override it.
+- **Claimed vs. ink visualization**: a small diagram overlaying the claimed box and the ink box of a representative Han character, with numeric labels.
+- **Glyph grid browser**: a virtually scrolled grid with jump-to-Unicode-block navigation; clicking a glyph opens an inspector (magnified bitmap, code point, glyph name, BBX/DWIDTH/ink box). Data is lazily fetched chunk by chunk according to scroll position.
+- **Coverage report**: the eight sections of §7, with progress bars drawn as discrete pixel squares; switchable per variant; each row shows name (bilingual), n/denominator, percentage, and a source tooltip; rows with ≤ 500 missing characters can be expanded to view the missing-character list (rendered as copyable text).
+- Download area: per-variant BDF/PCF (labelled with size and sha256) + the family zip; converted families also carry a link to the upstream vector font.
+- Metrics area: a table of every value collected in §4.2.
 
-### 5.3 客户端数据流
+### 5.3 Client-Side Data Flow
 
-单例 GlyphStore(TS):manifest 缓存 + 分块 LRU + 按需 fetch;目录页与详情页共用。筛选逻辑纯函数化(vitest 覆盖)。查字触发时才加载 `coverage-intervals.bin.gz`。
+A singleton GlyphStore (TS): manifest cache + chunk LRU + on-demand fetch; shared by the catalogue and detail pages. Filter logic is written as pure functions (covered by vitest). `coverage-intervals.bin.gz` is loaded only when character lookup is triggered.
 
-## 6. 导入工具(pipeline/ingest)
+## 6. Import Tooling (pipeline/ingest)
 
-一次性批量 + 未来增量均可用。输入 `../pixel-font-collection-fonts/`,输出 `fonts/` 家族目录 + 导入报告。
+Usable both for the one-off bulk run and for future incremental additions. Input `../pixel-font-collection-fonts/`, output `fonts/` family directories plus an import report.
 
-- **映射清单** `ingest/manifest.toml`(人工维护,代码辅助生成初稿):源路径 → 目标家族(含拆分,如 `chocolatemelt--baekmuk` → `baekmuk-batang`/`baekmuk-dotum`/`baekmuk-gulim`/`baekmuk-hline`;`RELEASE-ASSETS/*.zip` → 解包取 BDF)。
-- **来源优先级**:官方 release BDF > 仓库内 BDF > OTB/kbitx 转换 > TTF 栅格化。同一字体多处出现时取最高优先级,重复项记入报告。
-- **TTF/OTF/woff2 转制**:freetype-py 以原生格点 ppem 栅格化(单色模式)。原生 ppem 判定:轮廓坐标格点 GCD / em 整除关系 + 元数据,并渲染代表字对照校验;判定失败的家族进报告人工处理。转制家族写 `converted_from` 与 `provenance`。
-- **许可证与出处**:从源目录复制许可证文本;`provenance` 记录源 URL、获取日期、转换方式。
-- **跳过策略**:PNG 图源、C 头文件、u8g2 二进制等,若同字体已有其他可用来源则跳过;确无来源的列入报告的「待议」清单,逐个决定。
-- **幂等**:重跑不产生重复;目标目录已存在且哈希一致则跳过。
-- **报告** `docs/import-report.md`:收录清单、拆分决定、去重记录、跳过与原因、待人工事项(含风格标注待办清单,预填建议值并标「未复核」)。
+- **Mapping manifest** `ingest/manifest.toml` (maintained by hand, with a first draft generated by code): source path → target family (including splits, e.g. `chocolatemelt--baekmuk` → `baekmuk-batang`/`baekmuk-dotum`/`baekmuk-gulim`/`baekmuk-hline`; `RELEASE-ASSETS/*.zip` → unpack and take the BDFs).
+- **Source priority**: official release BDF > in-repo BDF > OTB/kbitx conversion > TTF rasterization. When the same font appears in several places, the highest priority wins and the duplicates are recorded in the report.
+- **TTF/OTF/woff2 conversion**: freetype-py rasterizes at the native grid ppem (monochrome mode). Native ppem detection: the GCD of the outline coordinate grid / divisibility against the em, plus metadata, cross-checked by rendering representative characters; families where detection fails go into the report for manual handling. Converted families get `converted_from` and `provenance`.
+- **License and provenance**: license text is copied from the source directory; `provenance` records the source URL, acquisition date, and conversion method.
+- **Skip policy**: PNG image sources, C header files, u8g2 binaries, and the like are skipped when the same font already has another usable source; those with no source at all go onto the report's "to be decided" list and are decided one by one.
+- **Idempotence**: reruns produce no duplicates; a target directory that already exists with a matching hash is skipped.
+- **Report** `docs/import-report.md`: inclusion list, split decisions, dedup records, skips and reasons, items needing manual work (including the style-annotation to-do list, prefilled with suggested values and marked "unverified").
 
-## 7. 覆盖率体系(八大板块)
+## 7. Coverage System (Eight Sections)
 
-每字表:双语名称、来源与版本、一句话用途说明(tooltip)、分母取自 `pipeline/coverage/data/` 版本化数据文件(每个文件头部注明来源、版本、获取日期、许可)。旧项目 `scripts/data/cjk-tables/` 的数据(源自 CJK-character-count,MIT)迁移复用并按下表补齐;第三方数据在 `THIRD_PARTY_NOTICES.md` 致谢。
+For every charset: bilingual name, source and version, a one-line purpose note (tooltip), and a denominator taken from a versioned data file under `pipeline/coverage/data/` (each file's header states source, version, acquisition date, and license). Data from the old project's `scripts/data/cjk-tables/` (derived from CJK-character-count, MIT) is migrated and reused, then filled out per the list below; third-party data is acknowledged in `THIRD_PARTY_NOTICES.md`.
 
-1. **总览**:总编码字符(分母 Unicode 17.0 已分配)、按平面分布(BMP/SMP/SIP/TIP/SSP)、PUA 三区(BMP PUA / Plane 15 / Plane 16)、汉字总数(URO+扩展 A–J)、兼容表意字(含补充区,附 12 字脚注)。
-2. **简体·国家标准**:GB/T 2312-1980(一级 3755 / 二级 3008 分列)、GB/T 12345-1990、GBK 汉字、GB 18030-2022 实现级别 1 / 2 / 3。
-3. **简体·语文规范**:通用规范汉字表 2013(一级 3500 / 二级 3000 / 三级 1605 分列)、现代汉语常用字表(常用 2500 / 次常用 1000)、现代汉语通用字表 7000、义务教育语文课程常用字表 3500、古籍印刷通用字规范字形表、康熙部首 214、CJK 部首补充 115;末尾附厂商口径:汉仪简繁字表、方正简繁字表。
-4. **繁体·台湾**:常用国字标准字体表 4808、次常用国字标准字体表 6343、Big5(常用 5401 / 次常用分列)、注音符号(含扩展)。
-5. **繁体·香港**:常用字字形表 4825、HKSCS-2016。
-6. **日文**:JIS X 0208(非汉字 / 第 1 水準 2965 / 第 2 水準 3390 分列)、JIS X 0213 第 3 / 第 4 水準、常用漢字表 2136、教育漢字 1026、人名用漢字、平假名、片假名、半角假名、JIS X 0201。
-7. **韩文**:KS X 1001(谚文音节 2350 / 汉字 4888 / 符号)、现代谚文全 11172、谚文兼容字母、谚文字母(Jamo)。
-8. **泛用与国际**:IICore 9810、UnihanCore2020、CJK 统一表意扩展 A–J 逐区、WGL4 652、Latin(Basic/1 Supplement/Extended-A/B)、希腊与科普特、西里尔(基本+扩展)、越南语拉丁字符集、CP437、制表符 Box Drawing、方块元素 Block Elements、Powerline 符号(U+E0A0–E0D4)、盲文、以及**全部 Unicode 17.0 区段**可折叠总表(默认只显示非零区段)。
+1. **Overview**: total encoded characters (denominator: everything assigned in Unicode 17.0), distribution by plane (BMP/SMP/SIP/TIP/SSP), the three PUA areas (BMP PUA / Plane 15 / Plane 16), total Han characters (URO + Extensions A–J), compatibility ideographs (including the supplement block, with the 12-character footnote).
+2. **Simplified · national standards**: GB/T 2312-1980 (Level 1 3755 / Level 2 3008 listed separately), GB/T 12345-1990, GBK Han characters, GB 18030-2022 implementation levels 1 / 2 / 3.
+3. **Simplified · language standards**: Table of General Standard Chinese Characters 2013 (Level 1 3500 / Level 2 3000 / Level 3 1605 listed separately), List of Frequently Used Characters in Modern Chinese (frequently used 2500 / less frequently used 1000), List of Commonly Used Characters in Modern Chinese 7000, Compulsory Education Chinese Curriculum Frequently Used Character List 3500, Standard Glyph Table of Common Characters for Ancient Book Printing, Kangxi Radicals 214, CJK Radicals Supplement 115; with vendor-defined lists appended at the end: the Hanyi simplified/traditional character list and the Founder simplified/traditional character list.
+4. **Traditional · Taiwan**: Standard Typefaces for Frequently Used Chinese Characters 4808, Standard Typefaces for Less Frequently Used Chinese Characters 6343, Big5 (frequently used 5401 / less frequently used listed separately), Bopomofo (including extensions).
+5. **Traditional · Hong Kong**: List of Graphemes of Commonly-Used Chinese Characters 4825, HKSCS-2016.
+6. **Japanese**: JIS X 0208 (non-kanji / Level 1 2965 / Level 2 3390 listed separately), JIS X 0213 Levels 3 and 4, Jōyō kanji 2136, Kyōiku kanji 1026, Jinmeiyō kanji, hiragana, katakana, halfwidth kana, JIS X 0201.
+7. **Korean**: KS X 1001 (Hangul syllables 2350 / hanja 4888 / symbols), all 11172 modern Hangul syllables, Hangul Compatibility Jamo, Hangul Jamo.
+8. **General and international**: IICore 9810, UnihanCore2020, CJK Unified Ideographs Extensions A–J block by block, WGL4 652, Latin (Basic / Latin-1 Supplement / Extended-A/B), Greek and Coptic, Cyrillic (basic + extended), the Vietnamese Latin character set, CP437, Box Drawing, Block Elements, Powerline symbols (U+E0A0–E0D4), Braille, and a collapsible master table of **every Unicode 17.0 block** (showing only non-zero blocks by default).
 
-目录卡片按书写系统自动挑选达标徽章(如 GB2312✓、Big5✓、JIS1✓、KS X 1001✓、假名✓)。
+Catalogue cards automatically pick which "meets threshold" badges to show based on writing system (e.g. GB2312 ✓, Big5 ✓, JIS1 ✓, KS X 1001 ✓, kana ✓).
 
-## 8. 视觉方向
+## 8. Visual Direction
 
-概念:**标本馆** — 字体是展品,界面是玻璃展柜。
+Concept: **a specimen hall** — the fonts are the exhibits, the interface is the glass case.
 
-- 近单色:纸白(light)/ 炭黑(dark)双主题,单一强调色**朱砂红**;不用科技蓝、渐变、玻璃拟态、满页大圆角。
-- UI 文本用系统字栈(中文 PingFang/Noto Sans CJK 栈,西文 system-ui);**站名与页面大标题用馆藏点阵字体自渲染**,像素风格只做点睛。
-- 点阵呼应细节:覆盖率进度条用离散像素方块;分隔线 1px 实线或点线;数字用等宽/tabular。
-- 严格排印网格与充足留白;暗色主题完整支持(canvas 反色联动)。
-- 实现阶段加载 frontend-design 技能打磨具体视觉;本节原则为验收基准。
+- Near-monochrome: paper white (light) / charcoal (dark) dual themes, with a single accent color, **cinnabar red**; no tech blue, no gradients, no glassmorphism, no page-wide large corner radii.
+- UI text uses the system font stack (PingFang / Noto Sans CJK stack for Chinese, system-ui for Latin); **the site name and page headings are self-rendered in collection fonts**, so the pixel styling stays a finishing touch.
+- Bitmap echoes in the details: coverage progress bars made of discrete pixel squares; 1px solid or dotted rules; numerals set in monospaced/tabular figures.
+- A strict typographic grid with generous whitespace; full dark theme support (with the canvas inverting in step).
+- The frontend-design skill is loaded during implementation to polish the concrete visuals; the principles in this section are the acceptance baseline.
 
-## 9. 工程、测试与 CI
+## 9. Engineering, Testing, and CI
 
-- **技术栈**:Python 3.12(pyproject;uv 可用则用,否则 venv+pip;依赖 fonttools、freetype-py、Pillow)、Node 24、Astro 5、Svelte 5、TypeScript strict。
-- 目录页「墨迹高」筛选取汉字墨迹高;无汉字的家族回退用 cap height 参与同一筛选轴。
-- **测试**:
-  - pytest:各解析器金样例(手工构造的小 BDF + bdftopcf 生成的 PCF 夹具)、度量口径用例、覆盖率计数用例、许可证指纹用例、字形包 writer 往返。
-  - vitest:字形包解码器(与 Python writer 共享二进制夹具)、筛选纯函数、GlyphStore。
-  - Playwright 冒烟:目录页渲染、筛选、样例编辑触发重绘、详情页字形网格、下载链接对 manifest 校验。
-  - 实现全程 TDD(superpowers 流程)。
-- **CI(GitHub Actions)**:job1 管线(按 fonts/ 哈希缓存)→ job2 Astro 构建 + 体积红线检查(≤900MB)→ Pages 部署;job3 下载物增量上传 Releases。PR 只跑构建与测试,不部署。
-- **许可证**:代码 MIT;字体各归各的许可证;字表数据第三方声明。
-- **i18n**:UI 文案 zh/en 类型化字典;字表名称/说明双语随数据文件。**所有英文翻译由 Opus/Sonnet 子代理完成(全局规则:Fable 不直接做翻译,含翻译复核)。**
+- **Stack**: Python 3.12 (pyproject; uv when available, otherwise venv+pip; depends on fonttools, freetype-py, Pillow), Node 24, Astro 5, Svelte 5, TypeScript strict.
+- The catalogue page's "ink height" filter uses Han ink height; families without Han characters fall back to cap height on the same filter axis.
+- **Testing**:
+  - pytest: golden samples for each parser (a small hand-built BDF plus PCF fixtures generated by bdftopcf), metric definition cases, coverage counting cases, license fingerprint cases, glyph pack writer round-trip.
+  - vitest: the glyph pack decoder (sharing binary fixtures with the Python writer), the pure filter functions, GlyphStore.
+  - Playwright smoke tests: catalogue page rendering, filtering, sample editing triggering a redraw, the detail page's glyph grid, download links validated against the manifest.
+  - TDD throughout implementation (the superpowers flow).
+- **CI (GitHub Actions)**: job1 pipeline (cached on the fonts/ hash) → job2 Astro build + size red-line check (≤900MB) → Pages deployment; job3 incremental upload of downloadables to Releases. PRs only run the build and tests, without deploying.
+- **Licensing**: code is MIT; fonts keep their own licenses; charset data carries third-party notices.
+- **i18n**: typed zh/en dictionaries for UI copy; charset names and descriptions are bilingual and travel with the data files. **All English translation is done by Opus/Sonnet subagents (global rule: Fable does not do translation directly, including translation review).**
 
-## 10. 实施顺序
+## 10. Implementation Order
 
-1. **管线核心**:BDF 解析 → 度量 → 覆盖率(先做总览+GB2312)→ 字形包 + 解码器。
-2. **站点骨架**:Astro + 目录页 + 详情页,试点 5 家族打通端到端(ark-pixel、galmuri、baekmuk 四拆、UnifontEX 压力测试、一个 TTF 转制家族)。
-3. **补全**:PCF 解析、全部覆盖率板块、许可证识别、预渲染/og、下载物+Releases、查字、字形网格。
-4. **批量导入**:ingest 全量跑收集夹,出导入报告;风格标注清单交所有者复核。
-5. **视觉打磨 + 双语 + CI/部署上线。**
+1. **Pipeline core**: BDF parsing → metrics → coverage (Overview + GB2312 first) → glyph packs + decoder.
+2. **Site skeleton**: Astro + catalogue page + detail page, with 5 pilot families proving out the end-to-end path (ark-pixel, galmuri, the four baekmuk splits, UnifontEX as a stress test, and one TTF-converted family).
+3. **Fill-out**: PCF parsing, all coverage sections, license detection, prerender/og, downloadables + Releases, character lookup, glyph grid.
+4. **Bulk import**: run ingest over the whole collection folder, produce the import report; hand the style-annotation list to the owner for review.
+5. **Visual polish + bilingual copy + CI/deployment go-live.**
 
-每阶段完成判据与任务拆分见后续实现计划(writing-plans)。
+Per-stage completion criteria and task breakdown are in the subsequent implementation plan (writing-plans).
 
-## 11. 风险与既定处理
+## 11. Risks and Agreed Handling
 
-- **Pages 体积**:字形包总量预估 100–200MB(gzip 后),留有余量;若超线,先裁 SMP 之外的稀有分块按需化,再考虑二级 Release 托管。
-- **PCF 旧编码映射**:无法可靠映射的字体降级展示并警告,不阻塞构建。
-- **TTF 原生格点误判**:校验失败即不自动转制,进报告人工定夺。
-- **Release 资产 URL 稳定性**:资产名含家族 slug 不含哈希,链接长期稳定;内容变化由 manifest sha256 表达。
-- **构建时长**:增量缓存 + 并行解析;全量冷构建目标 < 15 分钟(CI)。
+- **Pages payload**: glyph packs are estimated at 100–200MB total (gzipped), leaving headroom; if the limit is exceeded, first make rare chunks outside the SMP load on demand, then consider secondary hosting on a Release.
+- **Legacy PCF encoding mapping**: fonts that cannot be mapped reliably are shown in degraded form with a warning, without blocking the build.
+- **TTF native grid misdetection**: a failed check means no automatic conversion; the case goes into the report for a manual decision.
+- **Release asset URL stability**: asset names contain the family slug and no hash, so links stay stable long-term; content changes are expressed through the manifest sha256.
+- **Build duration**: incremental caching + parallel parsing; target for a full cold build < 15 minutes (in CI).

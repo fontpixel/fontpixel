@@ -35,6 +35,7 @@ export const COVERAGE_PICKS: readonly string[] = [
   'wgl4',
   'cyrillic',
   'greek-coptic',
+  'arabic',
   // Terminal and symbols — a common use case for bitmap fonts
   'box-drawing',
   'block-elements',

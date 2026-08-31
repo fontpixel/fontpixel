@@ -51,6 +51,7 @@
     'ko',
     'cyrillic',
     'greek',
+    'arabic',
   ];
   const scriptRank = (sc: string) => {
     const partial = sc.endsWith('-partial');

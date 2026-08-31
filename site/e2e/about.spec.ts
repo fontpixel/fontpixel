@@ -6,13 +6,13 @@ test('about page explains metrics and lists data sources', async ({ page }) => {
   await expect(page.locator('main')).toContainText('宣称大小');
   await expect(page.locator('main')).toContainText('family.toml');
   const rows = page.locator('[data-testid="datasources"] tbody tr');
-  await expect(rows).toHaveCount(64); // matches the number of charsets
+  await expect(rows).toHaveCount(65); // matches the number of charsets
 });
 
 test('about page english version', async ({ page }) => {
   await page.goto('en/about/');
   await expect(page.locator('main')).toContainText('ink');
-  await expect(page.locator('[data-testid="datasources"] tbody tr')).toHaveCount(64);
+  await expect(page.locator('[data-testid="datasources"] tbody tr')).toHaveCount(65);
 });
 
 test('detail page carries og image', async ({ page }) => {

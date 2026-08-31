@@ -12,6 +12,10 @@ SAMPLES: dict[str, str] = {
     "ko": "다람쥐 헌 쳇바퀴에 타고파",
     "cyrillic": "Съешь же ещё этих мягких французских булок, да выпей чаю.",
     "greek": "Ξεσκεπάζω την ψυχοφθόρα βδελυγμία.",
+    # Arabic joins letters and the renderer does no shaping/RTL, so a sentence
+    # would render wrong; an isolated-form alphabet is direction-agnostic and
+    # right for inspecting glyph coverage (includes Persian and Urdu letters).
+    "arabic": "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي\nپ چ ژ گ ک ی · ٹ ڈ ڑ ں ھ ہ ے\n٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ · ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹",
     "javascript": '// Quick sort: O(n log n) average, ASCII 0-9\nconst quickSort = ([p, ...rest]) =>\n  p === undefined\n    ? []\n    : [...quickSort(rest.filter((x) => x < p)), p,\n       ...quickSort(rest.filter((x) => x >= p))];\nconsole.log(quickSort([42, 7, 19, 3, 88, 0]), "OK!");',
     "box-drawing": "┌─┬─┐ ┏━┳━┓ ╔═╦═╗ ╭─┬─╮\n├─┼─┤ ┣━╋━┫ ╠═╬═╣ ├─┼─┤\n└─┴─┘ ┗━┻━┛ ╚═╩═╝ ╰─┴─╯\n┄┅┆┇┈┉┊┋ ╌╍╎╏ ╱╲╳ ╴╵╶╷ ╸╹╺╻",
 }

@@ -96,6 +96,7 @@ export const ja: UIStrings = {
     'latin-ext': 'ラテン（中東欧）',
     cyrillic: 'キリル文字',
     greek: 'ギリシャ文字',
+    arabic: 'アラビア文字（ペルシア語・ウルドゥー語を含む）',
     'zh-hans-partial': '簡体字中国語（不完全）',
     'zh-hant-partial': '繁体字中国語（不完全）',
     'ja-partial': '日本語（不完全）',
@@ -105,6 +106,7 @@ export const ja: UIStrings = {
     'latin-ext-partial': 'ラテン（中東欧・不完全）',
     'cyrillic-partial': 'キリル文字（不完全）',
     'greek-partial': 'ギリシャ文字（不完全）',
+    'arabic-partial': 'アラビア文字（不完全）',
   },
 
   scriptRules: {
@@ -117,6 +119,7 @@ export const ja: UIStrings = {
     'latin-ext': 'ラテン拡張A 90% 以上',
     'cyrillic': 'キリル文字ブロック ≥ 90%',
     'greek': 'ギリシャ文字・コプト文字 ≥ 90%',
+    'arabic': 'アラビア文字ブロック ≥ 90%',
     'zh-hans-partial': 'GB/T 2312または通用規範漢字表10–90%',
     'zh-hant-partial': 'Big5常用漢字10–90%',
     'ja-partial': 'かな ≥ 95%かつJIS第1水準漢字10–90%',
@@ -126,6 +129,7 @@ export const ja: UIStrings = {
     'latin-ext-partial': 'ラテン拡張A 10〜90%',
     'cyrillic-partial': 'キリル文字ブロック10–90%',
     'greek-partial': 'ギリシャ文字・コプト文字10–90%',
+    'arabic-partial': 'アラビア文字ブロック10–90%',
   },
 
   weightNames: {

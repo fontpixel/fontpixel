@@ -125,6 +125,7 @@ SCRIPT_REFERENCE_CHARSETS: dict[str, tuple[str, ...]] = {
     "latin-ext": ("latin-ext-a",),
     "cyrillic": ("cyrillic",),
     "greek": ("greek-coptic",),
+    "arabic": ("arabic",),
 }
 
 
@@ -146,6 +147,7 @@ def _script_scores(cov: dict[str, tuple[int, int]]) -> dict[str, float]:
         "latin-ext": _best(cov, r["latin-ext"]),
         "cyrillic": _best(cov, r["cyrillic"]),
         "greek": _best(cov, r["greek"]),
+        "arabic": _best(cov, r["arabic"]),
     }
 
 

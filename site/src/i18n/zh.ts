@@ -95,6 +95,7 @@ export const zh: UIStrings = {
     'latin-ext': '拉丁（中东欧）',
     cyrillic: '西里尔',
     greek: '希腊',
+    arabic: '阿拉伯文（含波斯、乌尔都）',
     'zh-hans-partial': '简体中文（不完整）',
     'zh-hant-partial': '繁体中文（不完整）',
     'ja-partial': '日文（不完整）',
@@ -104,6 +105,7 @@ export const zh: UIStrings = {
     'latin-ext-partial': '拉丁（中东欧，不完整）',
     'cyrillic-partial': '西里尔（不完整）',
     'greek-partial': '希腊（不完整）',
+    'arabic-partial': '阿拉伯文（不完整）',
   },
 
   scriptRules: {
@@ -116,6 +118,7 @@ export const zh: UIStrings = {
     'latin-ext': '拉丁字母扩展-A ≥ 90%',
     'cyrillic': '西里尔字母基本区 ≥ 90%',
     'greek': '希腊和科普特字母 ≥ 90%',
+    'arabic': '阿拉伯字母基本区 ≥ 90%',
     'zh-hans-partial': 'GB/T 2312或通用规范汉字表10–90%',
     'zh-hant-partial': 'Big5常用汉字10–90%',
     'ja-partial': '平/片假名 ≥ 95% 且JIS第一水準漢字10–90%',
@@ -125,6 +128,7 @@ export const zh: UIStrings = {
     'latin-ext-partial': '拉丁字母扩展-A 10–90%',
     'cyrillic-partial': '西里尔字母基本区10–90%',
     'greek-partial': '希腊和科普特字母10–90%',
+    'arabic-partial': '阿拉伯字母基本区10–90%',
   },
 
   weightNames: {
