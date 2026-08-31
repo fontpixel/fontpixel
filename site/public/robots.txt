@@ -6,4 +6,4 @@ Allow: /
 Disallow: /data/packs/
 Disallow: /data/details/
 
-Sitemap: https://pixelfont.github.io/sitemap-index.xml
+Sitemap: https://pixelfonts.dev/sitemap-index.xml

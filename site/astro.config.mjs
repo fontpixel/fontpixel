@@ -4,9 +4,8 @@ import svelte from '@astrojs/svelte';
 import sitemap from '@astrojs/sitemap';
 
 // 生产域名。canonical、og:url、sitemap 都要绝对地址，搜索引擎才认。
-// CI 用 OPF_SITE 注入真实域名；本地缺省用 dev 地址，只为让构建能跑通。
-// 生产域名暂定 pixelfont.github.io，定下来后改这里或用 OPF_SITE 覆盖
-const site = process.env.OPF_SITE ?? 'https://pixelfont.github.io';
+// 生产域名 pixelfonts.dev；特殊环境可用 OPF_SITE 覆盖。
+const site = process.env.OPF_SITE ?? 'https://pixelfonts.dev';
 
 export default defineConfig({
   site,
