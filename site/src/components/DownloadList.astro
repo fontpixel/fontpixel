@@ -47,6 +47,7 @@ const kindLabel: Record<string, string> = {
                 <a
                   class="dl__link"
                   href={`${base}/${e.file}`}
+                  download={e.file}
                   data-kind={e.kind}
                   title={`SHA-256 ${e.sha256}`}
                 >
@@ -66,6 +67,7 @@ const kindLabel: Record<string, string> = {
               <a
                 class="dl__link"
                 href={`${base}/${zip.file}`}
+                  download={zip.file}
                 data-kind="zip"
                 title={`SHA-256 ${zip.sha256}`}
               >
@@ -84,6 +86,7 @@ const kindLabel: Record<string, string> = {
               <a
                 class="dl__link"
                 href={`${base}/${e.file}`}
+                  download={e.file}
                 data-kind="ttf"
                 title={`SHA-256 ${e.sha256}`}
               >
@@ -102,6 +105,7 @@ const kindLabel: Record<string, string> = {
               <a
                 class="dl__link"
                 href={`${base}/${e.file}`}
+                  download={e.file}
                 data-kind={e.kind}
                 title={`SHA-256 ${e.sha256}`}
               >
