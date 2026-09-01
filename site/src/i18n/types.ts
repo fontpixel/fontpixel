@@ -23,6 +23,7 @@ export interface UIStrings {
     about: string;
     github: string;
     tools: string;
+    compare: string;
   };
 
   catalogue: {
@@ -30,7 +31,6 @@ export interface UIStrings {
     samplePlaceholder: string;
     sampleLabel: string;
     zoom: string;
-    invert: string;
     grid: string;
     nowrap: string;
     boxDrawing: string;
@@ -97,7 +97,10 @@ export interface UIStrings {
     /** Recommended display size as noted in upstream documentation */
     displaySize: string;
     copyDots: string;
+    sizeLadder: string;
     copied: string;
+    saved: string;
+    savePng: string;
     capHeight: string;
     xHeight: string;
     maxInk: string;
@@ -119,6 +122,13 @@ export interface UIStrings {
     downloadTtfNote: string;
     downloadTtfSquare: string;
     downloadTtfRound: string;
+    downloadWoff2Square: string;
+    downloadWoff2Round: string;
+    webfontTitle: string;
+    webfontNote: string;
+    webfontCopy: string;
+    webfontShow: string;
+    webfontHide: string;
     downloadVectorNote: string;
     buildNotes: string;
     downloadZip: string;
@@ -130,6 +140,13 @@ export interface UIStrings {
     provenance: string;
     licenseTitle: string;
     licenseViewFull: string;
+    licenseViewCanonical: string;
+    licenseCanonicalNote: string;
+    licenseNotes: string;
+    licenseSummary: string;
+    licenseSummaryCaveat: string;
+    licenseFlags: Record<'commercial' | 'modify' | 'documents' | 'apps' | 'notice' | 'sameLicense' | 'rename', string>;
+    licenseFlagValues: Record<'yes' | 'cond' | 'no', string>;
     licenseDisclaimer: string;
     warningsTitle: string;
     glyphGridTitle: string;
@@ -183,6 +200,14 @@ export interface UIStrings {
     title: string;
     hint: string;
     back: string;
+  };
+  compare: {
+    title: string;
+    intro: string;
+    add: string;
+    remove: string;
+    pickFont: string;
+    withOthers: string;
   };
   tools: {
     title: string;

@@ -65,6 +65,16 @@
   const licenses = $derived(
     uniq(families.map((f) => f.license.spdx ?? 'unknown')).sort(),
   );
+  /** SPDX id -> the full licence name, so a chip can spell itself out on hover.
+   * The names travel with the families, so no extra data is needed. */
+  const licenseNames = $derived.by(() => {
+    const out: Record<string, string> = {};
+    for (const f of families) {
+      const id = f.license.spdx ?? 'unknown';
+      if (!out[id]) out[id] = pickText(lang, f.license.name, f.license.nameEn);
+    }
+    return out;
+  });
   const weights = $derived(uniq(families.flatMap((f) => f.weights)).sort());
   const spacings = $derived(uniq(families.flatMap((f) => f.spacing)).sort());
   const inkRange = $derived.by(() => {
@@ -282,6 +292,7 @@
           type="button"
           class="chip chipbtn mono"
           class:on={filters.licenses.includes(lic)}
+          title={lic === 'unknown' ? s.card.licenseUnknown : (licenseNames[lic] ?? lic)}
           onclick={() => (filters.licenses = toggle(filters.licenses, lic))}
           >{lic === 'unknown'
             ? s.card.licenseUnknown

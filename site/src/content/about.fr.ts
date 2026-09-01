@@ -3,7 +3,8 @@
 import type { AboutSection } from './about.zh';
 
 export const aboutIntro =
-  '« Polices bitmap (pixel) libres et open source » rassemble des polices bitmap open source dispersées en un même cabinet de spécimens : chaque glyphe est analysé, mesuré selon une norme commune et recensé dans les différents jeux de caractères, avec des aperçus où vous pouvez saisir votre propre texte. Les polices appartiennent à leurs auteurs respectifs ; ce site ne fait que les cataloguer et les présenter.';
+  
+  '« Polices pixel libres et open source » réunit dans un même musée toutes les polices bitmap (pixel) sous licence libre que l\'on peut trouver dispersées sur le web : les polices sont démontées et chaque glyphe examiné, mesuré encore et encore selon une seule et même règle, la couverture de chaque jeu de caractères étant établie en détail ; vient ensuite un aperçu où vous pouvez saisir votre propre texte, pour voir ce que donnent les différentes écritures d\'une police dans un vieux jeu d\'arcade ou dans un éditeur à coloration syntaxique ; enfin, le téléchargement est proposé aux formats BDF, PCF, TTF bitmap et même TTF vectorisé, où chaque pixel devient un carré ou un cercle.';
 
 export const aboutSections: AboutSection[] = [
   {

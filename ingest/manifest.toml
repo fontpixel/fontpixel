@@ -45,6 +45,15 @@ provenance_url = "https://github.com/stgiga/UnifontEX"
 form = "other"
 vibes = ["fallback"]
 
+[family.license]
+spdx = "OFL-1.1 OR GPL-2.0-with-font-exception"
+name = "SIL开放字体许可证1.1 或 GNU通用公共许可证 第2版及以上（附字体嵌入例外）"
+name_en = "SIL Open Font License 1.1, or GNU GPL v2 or later with the font embedding exception"
+confidence = "manual"
+file = "LICENSE"
+note = "本族由GNU Unifont衍生而来，上游项目页明确“UnifontEX inherits ALL of upstream GNU Unifont's license terms, including the font embedding exception”，与GNU Unifont一样双重授权。随包LICENSE仅含GPL正文，例外条款依据上游说明与GNU Unifont的LICENSE.txt。"
+note_en = "Derived from GNU Unifont and dual-licensed exactly as it is; the upstream project states that UnifontEX inherits all of GNU Unifont's licence terms including the font embedding exception. The bundled LICENSE carries only the GPL text."
+
 [[family]]
 slug = "wqy-bitmap-song"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/carrothu-cn--wqy-bitmapfont-otb"
@@ -71,6 +80,16 @@ vibes = ["classic"]
 # ============================================================
 
 # Note: credit detail moved out of the author field — based on KH ドット八丁堀16 by 平木敬太郎 / 自家製フォント工房
+
+[family.license]
+spdx = "GPL-2.0-with-font-exception"
+name = "GNU通用公共许可证 第2版（附文档嵌入条款）"
+name_en = "GNU General Public License v2, with a document-embedding clause"
+confidence = "manual"
+file = "LICENSE"
+note = "随包LICENSE为GPL第2版原文；嵌入条款依据上游 wenq.org 的声明“字体授权形式为GNU General Public License v2(附加允许文档嵌入条款)”。该条款只豁免文档嵌入，不豁免非GPL单一性软件的使用。"
+note_en = "The bundled LICENSE is the plain GPL v2 text; the embedding clause comes from the upstream statement on wenq.org. It covers document embedding only, not use inside non-GPL monolithic software."
+
 [[family]]
 slug = "ba-ding-shi-wei-ti-16"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/yzdnn--BaDingShiWeiTi-16"
@@ -200,64 +219,38 @@ vibes = ["retro-game"]
 # but neither has a corresponding kbitx source, so only the M (Regular) weight, which has kbitx support, is taken.
 
 # Note: credit detail moved out of the author field — based on UwU 点矩黑 by ChenhaoUwU
-[[family]]
-slug = "zlabs-geopix-16px"
-source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px"
-convert = "kbitx"
-convert_take = ["ZLabsGeoPix_16px_SC.kbitx"]
-license_files = ["./LICENSE-OFL"]
-name = "Z Labs GeoPix 16px"
-name_zh = ""
-author = "Astro_2539, ChenhaoUwU, yzdnn"
-homepage = ""
-repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
-provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px (data/ 目录,未见正式 README 说明或独立 release)"
-form = "gothic"
-vibes = ["retro-game"]
-# Note: shares a repo with DiamondPix but is never mentioned in the README; all information comes from the kbitx-embedded name table
-# (font name "Z Labs GeoPix 16px M SC", author list). There is no release ttf, and both its completeness and status as a distinct font are uncertain --
-# this is the least-confident entry in this review; manual re-confirmation of whether it's a usable standalone work is recommended.
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px (data/ZLabsGeoPix_16px_SC.kbitx)"
+reason = "Not published by its author. The file sits in the source directory of the ZLabs-DiamondPix-16px repository and names itself 'Z Labs GeoPix 16px M SC' with an in-file OFL 1.1 grant, so the licence is sound; but the README covers only DiamondPix (Z工坊金刚黑体 16px) and never mentions GeoPix, there is no release asset for it and no Chinese name has ever been announced. At 2586 glyphs against DiamondPix's 2637 it is clearly no stub, yet cataloguing it would amount to publishing a draft on the author's behalf — and the README reserves the 'Z工坊 / Z Labs' name to him. Removed on 2026-09-01 (included 2026-08-21); worth revisiting if the author releases it. The released sibling stays in the collection as zlabs-diamondpix-16px."
 
-# Note: credit detail moved out of the author field — based on x12y12pxMaruMinya by hicc / x0y0pxFreeFont
 [[family]]
-slug = "zlabs-roundpix-12px"
-source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-12px"
+slug = "zlabs-roundpix"
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese"
 convert = "kbitx"
-convert_take = ["data/ZLabsRoundPix_12px_CN.kbitx"]
-license_files = ["./LICENSE-OFL"]
-name = "Z Labs RoundPix 12px"
-name_zh = "Z工坊像素圆体 12px"
-author = "Astro_2539"
-homepage = ""
-repository = "https://github.com/Astro-2539/ZLabs-RoundPix-12px"
-provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-12px/releases (Build_20260813)"
-form = "rounded"
-vibes = ["cute", "retro-game"]
-
-# Note: credit detail moved out of the author field — letterforms reference Zen Maru Gothic
-[[family]]
-slug = "zlabs-roundpix-16px"
-source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-RoundPix-16px"
-convert = "kbitx"
-convert_take = ["data/ZLabsRoundPix_16px_CN.kbitx", "data/ZLabsRoundPix_16px_JP.kbitx"]
-license_files = ["./LICENSE-OFL"]
-name = "Z Labs RoundPix 16px"
-name_zh = "Z工坊像素圆体 16px"
+convert_take = ["Astro-2539--ZLabs-RoundPix-12px/data/ZLabsRoundPix_12px_CN.kbitx", "Astro-2539--ZLabs-RoundPix-16px/data/ZLabsRoundPix_16px_CN.kbitx", "Astro-2539--ZLabs-RoundPix-16px/data/ZLabsRoundPix_16px_JP.kbitx"]
+license_files = ["Astro-2539--ZLabs-RoundPix-12px/LICENSE-OFL"]
+name = "Z Labs RoundPix"
+name_zh = "Z工坊像素圆体"
 author = "Astro_2539"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-RoundPix-16px"
-provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501)"
+provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-12px/releases (Build_20260813), https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501)"
+aliases = ["ZLabs RoundPix", "ZLabs-RoundPix-12px", "ZLabs-RoundPix-16px", "Z工坊像素圆体12px", "Z工坊像素圆体16px"]
+description = "Astro_2539制作的中文像素圆体，12px与16px两档。12px一档字形取自hicc／x0y0pxFreeFont的x12y12pxMaruMinya，16px一档取形参考Zen Maru Gothic，另含一套日文字形（JP）。两档字面上游分属两个独立仓库，本站合并为一个家族。"
+description_en = "A rounded Chinese pixel typeface by Astro_2539, at 12px and 16px. The 12px cut takes its letterforms from x12y12pxMaruMinya by hicc / x0y0pxFreeFont; the 16px cut references Zen Maru Gothic and adds a Japanese glyph set (JP). Upstream publishes the two sizes from two separate repositories; they are catalogued here as one family."
 form = "rounded"
+form_verified = true
 vibes = ["cute", "retro-game"]
-# Note: the README describes it as "still in development and tuning, currently has issues like uneven character centering and inconsistent Han-character components";
-# the JP variant isn't formally introduced in its README body, but both the data/ directory and a release ttf are provided, so it's included too.
 
-# ============================================================
-# DWNfonts series -- all are derivative works turning Japanese bitmap fonts based on Kadoma Nau (k8x12) or hicc (Maru Minya)
-# into Simplified Chinese bitmap fonts; the repo root directly provides the primary kbitx source.
-# ============================================================
+[family.license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+name_en = "SIL Open Font License 1.1"
+confidence = "manual"
+file = "LICENSE-OFL"
+note = "两个上游仓库各自附带LICENSE-OFL全文，kbitx源文件的name表内也声明“This Font Software is licensed under the SIL Open Font License, Version 1.1.”。12px与16px同属Z工坊像素圆体，授权一致，本站取12px仓库的许可证原文随族附上。"
+note_en = "Both upstream repositories bundle the full LICENSE-OFL text, and the kbitx sources declare \"This Font Software is licensed under the SIL Open Font License, Version 1.1.\" in their own name tables. The 12px and 16px cuts are the same typeface under the same licence; the copy bundled here is the one from the 12px repository."
 
-# Note: credit detail moved out of the author field — based on k8x12 by Num Kadoma
 [[family]]
 slug = "muzai-pixel"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--MuzaiPixel"
@@ -777,6 +770,15 @@ vibes = ["fallback"]
 # authored, independent designs (both 5px, but with different FONT names, not Mono/Prop naming), so they're split into 5 families. All styles
 # are Latin/symbol fonts (no CJK glyphs), so form uses Western classification.
 
+[family.license]
+spdx = "OFL-1.1 OR GPL-2.0-with-font-exception"
+name = "SIL开放字体许可证1.1 或 GNU通用公共许可证 第2版及以上（附字体嵌入例外）"
+name_en = "SIL Open Font License 1.1, or GNU GPL v2 or later with the font embedding exception"
+confidence = "manual"
+file = "LICENSE.txt"
+note = "随包LICENSE.txt写明：源码为GPL第2版或更新版本；编译后的字体同时受SIL开放字体许可证1.1与附GNU字体嵌入例外的GPL条款约束，取用者可任选其一。"
+note_en = "The bundled LICENSE.txt states that the source is GPL v2 or later while the compiled fonts are covered both by the SIL Open Font License 1.1 and by those GPL terms with the GNU font embedding exception; either may be taken."
+
 [[family]]
 slug = "retro-pixel-arcade"
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/TakWolf--retro-pixel-font"
@@ -1046,24 +1048,9 @@ vibes = ["cute", "retro-game"]
 # Note: fonts/ has 12 date-named daily-build ttfs (a font in development, still missing characters); sources/ has the corresponding
 # single latest kbitx source file; kbitx is preferred to avoid choosing among multiple dated snapshots.
 
-[[family]]
-slug = "mplus-hzk-12"
+[[todo]]
 source = "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/Luckeee--mplus_hzk_12"
-convert = "ttf"
-convert_take = ["mplus_hzk_12.ttf"]
-license_files = ["LICENSE"]
-name = "mplus_hzk_12"
-name_zh = ""
-author = "Luckeee"
-homepage = ""
-repository = "https://github.com/Luckeee/mplus_hzk_12"
-provenance_url = "https://github.com/Luckeee/mplus_hzk_12 (HEAD 快照，收录于 2026-08-18)"
-form = "gothic"
-vibes = ["classic"]
-# Note: the repo's mplus_jf12r.bdf is only the Japanese JIS X0208 base material (one of the source materials, 7187 glyphs), and doesn't include the Simplified Chinese
-# characters that hzk12 adds in -- it's a half-finished intermediate, not representative of the final merged font; so the already-merged mplus_hzk_12.ttf is used instead (10898 glyphs,
-# ppem auto-detected=12). License is Unlicense (public domain). mplus_hzk_13.ttf is another build snapshot
-# (slightly more glyphs but the same font family name) -- not used.
+reason = "The public-domain dedication does not cover the glyphs it matters for. The repository (now https://github.com/py-zhao/mplus_hzk_12) ships an Unlicense file, but its README states the font is M+ Latin and Japanese with HZK12 supplying the Chinese, and says of HZK12 only that it is an ancient font \"reportedly without copyright\" (据说没有版权), concluding \"if HZK really has no copyright, then mplus_hzk_12 is likewise a free font\" (如果hzk 真的没有版权…). That is the author's own admission that the grant rests on an unverified assumption about someone else's work. HZK12 was distributed with commercial Chinese DOS systems and no rights holder has ever released it under a free licence; the belief that it is uncopyrighted is folklore from the BBS era. WenQuanYi built its bitmap song face from scratch rather than reuse HZK for exactly this reason. The affected glyphs are not incidental: the font covers GB/T 2312 in full (6763/6763) out of 10609 glyphs, so the whole Chinese repertoire rests on the assumption. Fails the requirement that a licence verifiably cover the exact files catalogued. Removed from the collection on 2026-09-01 (included 2026-08-21 on the strength of the bundled Unlicense alone)."
 
 [[family]]
 slug = "departure-mono"

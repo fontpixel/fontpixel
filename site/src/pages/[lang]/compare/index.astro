@@ -1,0 +1,36 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Compare from '../../../islands/Compare.svelte';
+import { LANGS, t, type Lang } from '../../../i18n';
+import { loadIndex, withBase } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const s = t(lang);
+const index = loadIndex();
+// The page is static, so the preselection is read on the client from ?v=…;
+// server-side we only need the family list.
+---
+
+<Base lang={lang} title={s.compare.title} description={s.compare.intro} path="/compare/">
+  <h1>{s.compare.title}</h1>
+  <p class="cmp__intro">{s.compare.intro}</p>
+  <Compare
+    client:load
+    families={index.families}
+    s={s}
+    lang={lang}
+    dataBase={withBase('/data')}
+    initial={[]}
+  />
+</Base>
+
+<style>
+  .cmp__intro {
+    color: var(--ink-2);
+    margin-bottom: var(--s5);
+  }
+</style>

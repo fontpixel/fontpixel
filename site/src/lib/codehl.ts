@@ -24,6 +24,8 @@ export const CODE_LANGS = [
   'php',
   'rust',
   'go',
+  'css',
+  'html',
 ] as const;
 export type CodeLang = (typeof CODE_LANGS)[number];
 
@@ -38,6 +40,8 @@ export const CODE_LANG_LABELS: Record<CodeLang, string> = {
   php: 'PHP',
   rust: 'Rust',
   go: 'Go',
+  css: 'CSS',
+  html: 'HTML',
 };
 
 export const CODE_LANG_EXT: Record<CodeLang, string> = {
@@ -51,6 +55,8 @@ export const CODE_LANG_EXT: Record<CodeLang, string> = {
   php: 'php',
   rust: 'rs',
   go: 'go',
+  css: 'css',
+  html: 'html',
 };
 
 /** Dark-background palette (VS Code Dark+ family); the canvas background is fixed black, independent of the site theme. */
@@ -78,6 +84,8 @@ const KW: Record<CodeLang, string> = {
     'public private protected internal static void int long short byte char bool float double decimal string object class struct interface enum return if else for foreach while do switch case default break continue new this base namespace using try catch finally throw var async await readonly const null true false record sealed abstract virtual override partial get set in out ref params is as where',
   php: 'function return if else elseif for foreach while do switch case default break continue new class extends implements public private protected static echo print null true false use namespace try catch finally throw require include require_once include_once const global array isset unset empty as instanceof fn match abstract final interface trait',
   rust: 'fn let mut const static return if else for while loop match impl trait struct enum pub use mod crate self super where async await move ref dyn true false unsafe as in continue break type unsigned i8 i16 i32 i64 u8 u16 u32 u64 f32 f64 usize isize bool str',
+  css: '',
+  html: '',
   go: 'func var const type struct interface map chan return if else for range switch case default break continue package import go defer select fallthrough nil true false make new append len cap copy panic recover error string int int8 int16 int32 int64 uint float32 float64 bool byte rune',
 };
 
@@ -111,7 +119,129 @@ const isId = (ch: string) => /[A-Za-z0-9_]/.test(ch);
 const isDigit = (ch: string) => ch >= '0' && ch <= '9';
 
 /** Color per codepoint; null means use the default ink color. */
+/** CSS: at-rules and selectors read as structure, properties as names, the
+ * rest as values — enough to make a rule block legible without a real parser. */
+function highlightCss(chars: string[]): (Rgba | null)[] {
+  const out: (Rgba | null)[] = new Array<Rgba | null>(chars.length).fill(null);
+  const at = (i: number, t: string) => chars.slice(i, i + t.length).join('') === t;
+  let i = 0;
+  let inBlock = false;   // inside { } — names before ':' are properties
+  let afterColon = false;
+  while (i < chars.length) {
+    const ch = chars[i]!;
+    if (at(i, '/*')) {
+      while (i < chars.length && !at(i, '*/')) out[i++] = C_COMMENT;
+      for (let k = 0; k < 2 && i < chars.length; k++) out[i++] = C_COMMENT;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      out[i++] = C_STRING;
+      while (i < chars.length && chars[i] !== ch) {
+        if (chars[i] === '\\' && i + 1 < chars.length) out[i++] = C_STRING;
+        out[i++] = C_STRING;
+      }
+      if (i < chars.length) out[i++] = C_STRING;
+      continue;
+    }
+    if (ch === '{') { inBlock = true; afterColon = false; i += 1; continue; }
+    if (ch === '}') { inBlock = false; afterColon = false; i += 1; continue; }
+    if (ch === ':' && inBlock) { afterColon = true; i += 1; continue; }
+    if (ch === ';') { afterColon = false; i += 1; continue; }
+    if (ch === '@') {                       // at-rule: @media, @font-face
+      out[i++] = C_KEYWORD;
+      while (i < chars.length && isId(chars[i]!)) out[i++] = C_KEYWORD;
+      continue;
+    }
+    if (ch === '#' && !inBlock) {           // id selector, or a hex colour in a value
+      out[i++] = C_TYPE;
+      while (i < chars.length && /[A-Za-z0-9_-]/.test(chars[i]!)) out[i++] = C_TYPE;
+      continue;
+    }
+    if (ch === '#' && inBlock) {
+      out[i++] = C_NUMBER;
+      while (i < chars.length && /[0-9A-Fa-f]/.test(chars[i]!)) out[i++] = C_NUMBER;
+      continue;
+    }
+    if (isDigit(ch) || (ch === '.' && isDigit(chars[i + 1] ?? ''))) {
+      while (i < chars.length && /[0-9.]/.test(chars[i]!)) out[i++] = C_NUMBER;
+      while (i < chars.length && /[a-z%]/i.test(chars[i]!)) out[i++] = C_NUMBER;  // unit
+      continue;
+    }
+    if (isIdStart(ch) || ch === '-' || ch === '.') {
+      const start = i;
+      if (ch === '-' || ch === '.') i += 1;
+      while (i < chars.length && /[A-Za-z0-9_-]/.test(chars[i]!)) i += 1;
+      let j = i;
+      while (j < chars.length && (chars[j] === ' ' || chars[j] === '\t')) j += 1;
+      const color = !inBlock
+        ? C_TYPE                                  // selector
+        : afterColon
+          ? (chars[j] === '(' ? C_FUNC : null)    // value, or a function like url()
+          : C_VAR;                                // property name
+      for (let k = start; k < i; k++) out[k] = color;
+      continue;
+    }
+    i += 1;
+  }
+  return out;
+}
+
+/** HTML: tag names, attribute names and their quoted values; everything else
+ * is text. Doctype and comments are treated as comments. */
+function highlightHtml(chars: string[]): (Rgba | null)[] {
+  const out: (Rgba | null)[] = new Array<Rgba | null>(chars.length).fill(null);
+  const at = (i: number, t: string) => chars.slice(i, i + t.length).join('') === t;
+  let i = 0;
+  while (i < chars.length) {
+    if (at(i, '<!--')) {
+      while (i < chars.length && !at(i, '-->')) out[i++] = C_COMMENT;
+      for (let k = 0; k < 3 && i < chars.length; k++) out[i++] = C_COMMENT;
+      continue;
+    }
+    if (at(i, '<!')) {
+      while (i < chars.length && chars[i] !== '>') out[i++] = C_COMMENT;
+      if (i < chars.length) out[i++] = C_COMMENT;
+      continue;
+    }
+    if (chars[i] === '<') {
+      out[i++] = C_KEYWORD;
+      if (chars[i] === '/') out[i++] = C_KEYWORD;
+      while (i < chars.length && /[A-Za-z0-9-]/.test(chars[i]!)) out[i++] = C_KEYWORD;
+      // attributes until the closing angle bracket
+      while (i < chars.length && chars[i] !== '>') {
+        const ch = chars[i]!;
+        if (ch === '"' || ch === "'") {
+          out[i++] = C_STRING;
+          while (i < chars.length && chars[i] !== ch) out[i++] = C_STRING;
+          if (i < chars.length) out[i++] = C_STRING;
+          continue;
+        }
+        if (/[A-Za-z_:@-]/.test(ch)) {
+          while (i < chars.length && /[A-Za-z0-9_:.@-]/.test(chars[i]!)) out[i++] = C_FUNC;
+          continue;
+        }
+        if (ch === '/') out[i] = C_KEYWORD;
+        i += 1;
+      }
+      if (i < chars.length) out[i++] = C_KEYWORD;
+      continue;
+    }
+    if (chars[i] === '&') {                 // entity
+      const start = i;
+      out[i++] = C_NUMBER;
+      while (i < chars.length && /[A-Za-z0-9#]/.test(chars[i]!)) out[i++] = C_NUMBER;
+      if (chars[i] === ';') out[i++] = C_NUMBER;
+      else for (let k = start; k < i; k++) out[k] = null;
+      continue;
+    }
+    i += 1;
+  }
+  return out;
+}
+
 export function highlightCode(code: string, lang: CodeLang): (Rgba | null)[] {
+  if (lang === 'css') return highlightCss(Array.from(code));
+  if (lang === 'html') return highlightHtml(Array.from(code));
   const chars = Array.from(code);
   const out: (Rgba | null)[] = new Array<Rgba | null>(chars.length).fill(null);
   const c = cfg(lang);

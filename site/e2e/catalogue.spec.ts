@@ -87,13 +87,6 @@ test('zoom changes canvas height', async ({ page }) => {
     .toBeGreaterThan(h2);
 });
 
-test('invert repaints canvas', async ({ page }) => {
-  await page.goto('zh/');
-  const before = await cardCanvasData(page, 'galmuri');
-  await page.getByTestId('invert-toggle').check();
-  await expect.poll(() => cardCanvasData(page, 'galmuri')).not.toBe(before);
-});
-
 test('reset clears filters', async ({ page }) => {
   await page.goto('zh/?forms=mingcho');
   await page.waitForSelector(`${ISLAND} .card`);

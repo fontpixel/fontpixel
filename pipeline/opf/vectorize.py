@@ -74,17 +74,117 @@ def _rects(rows: list[list[bool]]) -> list[tuple[int, int, int, int]]:
     return out
 
 
+def _contours(rows: list[list[bool]]) -> list[list[tuple[int, int]]]:
+    """Trace the outline of every connected run of lit pixels.
+
+    One closed polygon per boundary — outer edges and the edges around any
+    hole — with a point only where the boundary actually turns. That beats
+    emitting one rectangle per pixel strip (the older approach): a CJK glyph
+    of solid strokes collapses to a couple of polygons instead of dozens of
+    abutting rectangles, which is most of the outline-point cost of a
+    vectorised bitmap font.
+
+    Each lit pixel contributes a directed unit edge wherever its neighbour is
+    unlit, always oriented so the ink lies on the same side. Chaining those
+    edges head-to-tail therefore closes loops whose winding is automatically
+    opposite for holes, which is exactly what the nonzero fill rule wants.
+    Where two regions meet at a corner the vertex has two outgoing edges;
+    always turning as far as possible towards the ink keeps them as two
+    touching loops rather than one figure of eight through the shared point.
+
+    Points come back in bitmap coordinates, y measured from the top.
+    """
+    h, w = len(rows), len(rows[0]) if rows else 0
+    lit = lambda x, y: 0 <= x < w and 0 <= y < h and rows[y][x]
+
+    # start point -> end point, for each directed boundary edge
+    edges: dict[tuple[int, int], list[tuple[int, int]]] = {}
+    for y in range(h):
+        for x in range(w):
+            if not rows[y][x]:
+                continue
+            if not lit(x, y - 1):
+                edges.setdefault((x, y), []).append((x + 1, y))
+            if not lit(x + 1, y):
+                edges.setdefault((x + 1, y), []).append((x + 1, y + 1))
+            if not lit(x, y + 1):
+                edges.setdefault((x + 1, y + 1), []).append((x, y + 1))
+            if not lit(x - 1, y):
+                edges.setdefault((x, y + 1), []).append((x, y))
+
+    out: list[list[tuple[int, int]]] = []
+    while edges:
+        start = next(iter(edges))
+        pt = start
+        poly: list[tuple[int, int]] = []
+        prev_d: tuple[int, int] | None = None
+        while True:
+            outgoing = edges.get(pt)
+            if not outgoing:
+                break
+            if len(outgoing) == 1 or prev_d is None:
+                nxt = outgoing[0]
+            else:
+                # Sharpest right turn first, so touching corners stay separate
+                px, py = prev_d
+                order = [(-py, px), (px, py), (py, -px)]  # hug the ink: left, straight, right
+                nxt = min(
+                    outgoing,
+                    key=lambda e: order.index((e[0] - pt[0], e[1] - pt[1]))
+                    if (e[0] - pt[0], e[1] - pt[1]) in order else 3,
+                )
+            outgoing.remove(nxt)
+            if not outgoing:
+                del edges[pt]
+            d = (nxt[0] - pt[0], nxt[1] - pt[1])
+            if d != prev_d:          # keep corners only, drop collinear points
+                poly.append(pt)
+            prev_d = d
+            pt = nxt
+            if pt == start:
+                break
+        # The loop closed on the starting point; if that point is collinear the
+        # first entry is redundant.
+        if len(poly) > 2:
+            first_d = (poly[1][0] - poly[0][0], poly[1][1] - poly[0][1])
+            first_d = (_sign(first_d[0]), _sign(first_d[1]))
+            if first_d == prev_d:
+                poly.pop(0)
+            out.append(poly)
+    return out
+
+
+def _sign(v: int) -> int:
+    return (v > 0) - (v < 0)
+
+
 def _draw_square(pen, glyph, unit: int, baseline_top: int) -> None:
-    for x, ytop, w, h in _rects(_lit_rows(glyph)):
-        x0 = (glyph.bbx + x) * unit
-        x1 = x0 + w * unit
-        y1 = (baseline_top - ytop) * unit
-        y0 = y1 - h * unit
-        pen.moveTo((x0, y0))
-        pen.lineTo((x1, y0))
-        pen.lineTo((x1, y1))
-        pen.lineTo((x0, y1))
+    rows = _lit_rows(glyph)
+    if not rows:
+        return
+    polys = [
+        [((glyph.bbx + x) * unit, (baseline_top - y) * unit) for x, y in poly]
+        for poly in _contours(rows)
+    ]
+    # Bitmap y runs down and font y runs up, so the conversion above mirrors
+    # every loop. Flip them back when needed: TrueType wants outer contours
+    # clockwise, i.e. a negative total signed area with y pointing up.
+    if sum(_signed_area(p) for p in polys) > 0:
+        polys = [p[::-1] for p in polys]
+    for poly in polys:
+        pen.moveTo(poly[0])
+        for pt in poly[1:]:
+            pen.lineTo(pt)
         pen.closePath()
+
+
+def _signed_area(poly: list[tuple[int, int]]) -> int:
+    """Twice the signed area (shoelace); positive means counter-clockwise."""
+    total = 0
+    for i, (x0, y0) in enumerate(poly):
+        x1, y1 = poly[(i + 1) % len(poly)]
+        total += x0 * y1 - x1 * y0
+    return total
 
 
 DOT = "dot"  # base glyph name for the round variant

@@ -437,3 +437,45 @@ its BDF/PCF/zip/TTF downloads have been removed, and the source has been recorde
 No other font in the collection is recorded as being derived from Monaco or from any other proprietary
 bitmap typeface.
 
+## 2026-09-01 Removal: mplus_hzk_12 (public-domain dedication does not cover the glyphs)
+
+`mplus_hzk_12` (Luckeee, 12px, one variant) was included on 2026-08-21 on the strength of the Unlicense
+file bundled with its repository. That dedication turns out not to cover the part of the font that matters.
+
+The repository's own README describes the font as M+ supplying Latin and Japanese with HZK12 supplying the
+Chinese, and says of HZK12 only that it is an ancient font "reportedly without copyright"
+(据说没有版权), concluding: "if HZK really has no copyright, then mplus_hzk_12 is likewise a font with no
+copyright holder that anyone may freely use" (如果hzk 真的没有版权, mplus_hzk_12 字体也是没有任何版权
+所有人都能随意使用的自由字体). The grant is thus explicitly conditional on an assumption the author could
+not verify, about someone else's work.
+
+HZK12 was distributed with commercial Chinese DOS systems (UCDOS and the like) and no rights holder has
+ever released it under a free licence; the belief that it carries no copyright is folklore from the BBS
+era. The clearest counter-evidence comes from the Chinese free-font community itself: WenQuanYi drew its
+bitmap Song face from scratch through distributed volunteer work rather than reuse HZK, precisely because
+the existing Chinese bitmap fonts had no clear licence.
+
+The affected glyphs are not incidental. The font covers GB/T 2312 in full (6763 of 6763) out of 10609
+glyphs, so its entire Chinese repertoire rests on that assumption. This fails the collection's requirement
+that a licence verifiably cover the exact files catalogued here. The family, its build data and its
+downloads have been removed and the source recorded as a todo in `ingest/manifest.toml`.
+Family count: 185 → 184.
+
+No other font in the collection is recorded as deriving from HZK or from any other Chinese bitmap font of
+unclear provenance.
+
+## 2026-09-01 Removal: Z Labs GeoPix 16px (never published upstream)
+
+`zlabs-geopix-16px` was taken from `data/ZLabsGeoPix_16px_SC.kbitx` in the ZLabs-DiamondPix-16px
+repository. Its licensing is not in doubt — the file names itself "Z Labs GeoPix 16px M SC", credits
+Astro_2539, ChenhaoUwU and yzdnn, and carries an OFL 1.1 statement in its own name table — but the author
+never published it. The repository's README is entirely about DiamondPix (Z工坊金刚黑体 16px) and does not
+mention GeoPix anywhere; there is no release asset for it and no Chinese name has ever been announced,
+which is why this entry alone among the ZLabs families had none. At 2586 glyphs against DiamondPix's 2637
+it is plainly not a stub, but listing it here would amount to publishing a draft on the author's behalf,
+and the README expressly reserves the "Z工坊 / Z Labs" name to him.
+
+Removed and recorded as a todo; worth revisiting if the author releases it. Its released sibling remains
+in the collection as `zlabs-diamondpix-16px`, built from the official release (Build_20260309).
+Family count: 184 → 183.
+

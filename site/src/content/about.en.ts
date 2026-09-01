@@ -3,7 +3,8 @@
 import type { AboutSection } from './about.zh';
 
 export const aboutIntro =
-  'Open Pixel Fonts gathers freely licensed bitmap fonts from wherever they happen to live and files them in one specimen cabinet: parsed glyph by glyph, measured to one consistent standard, tallied for character coverage, and paired with previews you can type into. The fonts belong to the people who made them; all that happens here is cataloguing and display.';
+  
+  'Open Pixel Fonts gathers every freely licensed bitmap (pixel) font that can be found scattered across the web into a single museum: the fonts are taken apart and every glyph inspected, measured again and again against one ruler, with the coverage of each character set worked out in detail; then you get a preview you can type into, to see how a font\'s various scripts look inside an old arcade game or a syntax-highlighting editor; and finally there are downloads as BDF, PCF, bitmap TTF, and even vectorised TTF, in which every pixel becomes a square or a circle.';
 
 export const aboutSections: AboutSection[] = [
   {

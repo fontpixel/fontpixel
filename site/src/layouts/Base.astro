@@ -139,6 +139,7 @@ const brandCss = brand
         </a>
         <nav class="site-nav" aria-label={s.siteNavLabel}>
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
+          <a href={withBase(`/${lang}/compare/`)}>{s.nav.compare}</a>
           <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
           <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
           {/* Pages that exist in one language only get no language button at all */}
@@ -331,6 +332,7 @@ const brandCss = brand
         </div>
         <nav class="site-footer__links" aria-label={s.footer.navLabel}>
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
+          <a href={withBase(`/${lang}/compare/`)}>{s.nav.compare}</a>
           <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
           <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
           <a href={withBase(`/${lang}/about/#datasources`)}>{s.footer.dataSources}</a>

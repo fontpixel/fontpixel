@@ -53,6 +53,12 @@
     s.scriptNames[k.toLowerCase()] ??
     (k === 'box-drawing' ? s.catalogue.boxDrawing : k === 'javascript' ? 'JavaScript' : k);
   let grid = $state(false);
+  // Size ladder: the same text drawn once per variant, stacked and labelled,
+  // the way a printed specimen sheet shows a face at every size it comes in.
+  // It reuses whatever is currently typed and the current frame, which beats
+  // a fixed sentence, so it lives here rather than in a section of its own.
+  let ladder = $state(false);
+  let ladderEls: (HTMLCanvasElement | undefined)[] = $state([]);
   let missing = $state(0);
   let themeTick = $state(0);
   let canvasEl: HTMLCanvasElement | undefined = $state();
@@ -82,13 +88,18 @@
   async function copy(kind: 'dots' | 'bdf' | 'image') {
     try {
       if (kind === 'image') {
+        // A PNG is more useful as a file than on the clipboard: the usual reason
+        // to want one is to drop it into a sprite sheet or an image editor.
         const blob = await new Promise<Blob | null>((res) =>
           canvasEl ? canvasEl.toBlob(res, 'image/png') : res(null),
         );
         if (!blob) return;
-        await navigator.clipboard.write([
-          new ClipboardItem({ 'image/png': blob }),
-        ]);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${slug}-${variantId}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
       } else {
         if (!lastRaster) return;
         const out =
@@ -156,6 +167,46 @@
       cancelled = true;
     };
   });
+
+  // One canvas per variant. Kept apart from the main render effect so toggling
+  // the ladder never disturbs the single-variant preview.
+  $effect(() => {
+    if (!ladder || !text) return;
+    const t = text;
+    const z = zoom;
+    const g = grid;
+    const nw = nowrap;
+    const fr = frame;
+    const cl = codeLang;
+    const width = wrapEl?.clientWidth ?? 640;
+    void themeTick;
+    let cancelled = false;
+    (async () => {
+      const theme = themeInkPaper();
+      const ink = fr === 'code' ? CODE_INK : fr === 'game' ? GAME_INK : theme.ink;
+      const paper = fr === 'code' ? CODE_PAPER : fr === 'game' ? GAME_PAPER : theme.paper;
+      for (const [i, v] of variants.entries()) {
+        const el = ladderEls[i];
+        if (!el) continue;
+        const [m, glyphs] = await Promise.all([
+          store.loadManifest(slug, v.id),
+          store.glyphsFor(slug, v.id, t),
+        ]);
+        if (cancelled) return;
+        const r = rasterize(t, glyphs, m, {
+          invert: false,
+          charColors: fr === 'code' ? highlightCode(t, cl) : undefined,
+          maxWidth: nw ? undefined : Math.max(48, Math.floor(width / z) - 2),
+          ink,
+          paper,
+        });
+        paint(el, r, z, { grid: g });
+      }
+    })().catch((e) => console.error(e));
+    return () => {
+      cancelled = true;
+    };
+  });
 </script>
 
 <section class="ed" data-testid="sample-editor">
@@ -191,6 +242,12 @@
   <textarea rows="3" bind:value={text} spellcheck="false"></textarea>
 
   <div class="ed__controls">
+    {#if variants.length > 1}
+      <label class="ed__check"
+        ><input type="checkbox" bind:checked={ladder} data-testid="ladder-toggle" />
+        {s.detail.sizeLadder}</label
+      >
+    {/if}
     <label>{s.catalogue.zoom}
       <select bind:value={zoom}>
         <option value={1}>×1</option>
@@ -243,7 +300,18 @@
       </div>
     {/if}
     <div class="ed__canvas lattice" bind:this={wrapEl}>
-      <canvas bind:this={canvasEl}></canvas>
+      {#if ladder}
+        <div class="ed__ladder">
+          {#each variants as v, i (v.id)}
+            <div class="ed__rung">
+              <span class="ed__rungname mono">{labels[i]}</span>
+              <canvas bind:this={ladderEls[i]}></canvas>
+            </div>
+          {/each}
+        </div>
+      {:else}
+        <canvas bind:this={canvasEl}></canvas>
+      {/if}
     </div>
     {#if frame === 'game'}<div class="ed__crt" aria-hidden="true"></div>{/if}
   </div>
@@ -257,12 +325,28 @@
       >{copied === 'bdf' ? s.detail.copied : 'BDF'}</button
     >
     <button type="button" data-testid="copy-image" onclick={() => copy('image')}
-      >{copied === 'image' ? s.detail.copied : 'PNG'}</button
+      >{copied === 'image' ? s.detail.saved : s.detail.savePng}</button
     >
   </div>
 </section>
 
 <style>
+  .ed__ladder {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4);
+  }
+  .ed__rung {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s1);
+  }
+  .ed__rungname {
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
   .ed {
     display: block;
     margin-bottom: var(--s6);

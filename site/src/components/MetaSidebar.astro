@@ -1,6 +1,7 @@
 ---
 import { licenseShortLabel } from '../lib/licenselabel';
 import { pickText, t, toHant, type Lang } from '../i18n';
+import LicenseSummary from './LicenseSummary.astro';
 import { withBase } from '../lib/data';
 import type { FontDetail } from '../lib/schema';
 
@@ -106,12 +107,27 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
       {lic.spdx && <span class="chip mono">{licenseShortLabel(lic.spdx)}</span>}
       <span>{licName}</span>
     </p>
-    {licNote && <p class="side__licnote">{licNote}</p>}
+    <LicenseSummary lang={lang} spdx={lic.spdx} />
     {
       licenseText && (
         <details data-testid="license-details">
-          <summary>{s.detail.licenseViewFull}</summary>
+          <summary>
+            {detail.licenseTextCanonical
+              ? s.detail.licenseViewCanonical
+              : s.detail.licenseViewFull}
+          </summary>
+          {detail.licenseTextCanonical && (
+            <p class="side__licnote">{s.detail.licenseCanonicalNote}</p>
+          )}
           <pre class="side__lictext">{licenseText}</pre>
+        </details>
+      )
+    }
+    {
+      licNote && (
+        <details class="side__licnotes" data-testid="license-notes">
+          <summary>{s.detail.licenseNotes}</summary>
+          <p class="side__licnote">{licNote}</p>
         </details>
       )
     }
@@ -171,8 +187,18 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
   .side__licname {
     display: flex;
     gap: var(--s2);
-    align-items: center;
+    align-items: baseline;
+    flex-wrap: wrap;
     margin: 0 0 var(--s1);
+  }
+  /* The chip is a fixed token; a long licence name should wrap under it
+     rather than squeeze it, and never the other way round. */
+  .side__licname .chip {
+    flex: none;
+  }
+  .side__licname > span:not(.chip) {
+    flex: 1 1 12rem;
+    min-width: 0;
   }
   .side__licmeta {
     color: var(--ink-2);
@@ -181,6 +207,10 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
     align-items: center;
     flex-wrap: wrap;
     margin: 0;
+  }
+  .side__licnotes,
+  .side__license details[data-testid='license-details'] {
+    margin-top: var(--s4);
   }
   .side__licnote {
     color: var(--ink-2);
@@ -205,7 +235,8 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
     color: var(--ink-2);
   }
   .side__notes summary,
-  .side__license summary {
+  .side__license summary,
+  .side__licnotes summary {
     cursor: pointer;
     font-size: 0.8rem;
     color: var(--ink-3);

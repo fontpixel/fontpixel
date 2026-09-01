@@ -86,6 +86,8 @@ export const DetailSchema = z.object({
   provenanceEn: z.string(),
   convertedFrom: z.string(),
   licenseText: z.string().nullable(),
+  /** true when the text shown is the licence's canonical wording rather than a file the author shipped */
+  licenseTextCanonical: z.boolean().default(false),
   licenseNote: z.string(),
   licenseNoteEn: z.string(),
   warnings: z.array(z.string()),
@@ -119,7 +121,10 @@ export const DetailSchema = z.object({
   downloads: z.array(z.object({
     family: z.string(),
     variantId: z.string().nullable(),
-    kind: z.enum(['bdf', 'pcf', 'zip', 'ttf', 'ttf-square', 'ttf-round']),
+    kind: z.enum([
+      'bdf', 'pcf', 'zip', 'ttf', 'ttf-square', 'ttf-round',
+      'woff2-square', 'woff2-round',
+    ]),
     file: z.string(),
     bytes: z.number().int(),
     sha256: z.string(),

@@ -10,6 +10,10 @@ const OVERRIDES: Record<string, string> = {
   'LicenseRef-Mplus': 'M+ Fonts',
   'LicenseRef-PublicDomain': 'Public Domain',
   'LicenseRef-UW-ttyp0': 'UW ttyp0',
+  // Keep the exception visible — it is what separates these from plain GPL in
+  // the filter list — but short: the full name beside the chip spells it out.
+  'GPL-2.0-with-font-exception': 'GPL 2 (font exc.)',
+  'OFL-1.1 OR GPL-2.0-with-font-exception': 'OFL 1.1 / GPL 2',
 };
 
 export function licenseShortLabel(spdx: string): string {

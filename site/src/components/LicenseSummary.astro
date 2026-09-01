@@ -1,0 +1,129 @@
+---
+/** Plain-language summary of one font's licence, shown in the sidebar.
+ *
+ * A seven-column table is what this information wants to be, but the sidebar is
+ * about 270px wide, so it is laid out as a list of label/verdict rows instead —
+ * same seven questions, readable at that width, and it degrades to one column
+ * on a phone without a horizontal scrollbar.
+ */
+import { t, type Lang } from '../i18n';
+import { toHantDeep } from '../i18n/hant';
+import {
+  FLAG_KEYS,
+  SUMMARIES_EN, SUMMARIES_ZH, SUMMARIES_JA, SUMMARIES_KO, SUMMARIES_FR,
+  type Flag, type LicenseSummary,
+} from '../content/licensesummary';
+
+interface Props {
+  lang: Lang;
+  spdx: string | null;
+}
+const { lang, spdx } = Astro.props;
+const s = t(lang);
+let hant: Record<string, LicenseSummary> | null = null;
+const table = (): Record<string, LicenseSummary> => {
+  switch (lang) {
+    case 'zh': return SUMMARIES_ZH;
+    case 'zh-Hant':
+      return (hant ??= toHantDeep(
+        SUMMARIES_ZH as unknown as Record<string, unknown>,
+      ) as unknown as Record<string, LicenseSummary>);
+    case 'ja': return SUMMARIES_JA;
+    case 'ko': return SUMMARIES_KO;
+    case 'fr': return SUMMARIES_FR;
+    default: return SUMMARIES_EN;
+  }
+};
+const summary = spdx ? table()[spdx] : undefined;
+
+const MARK: Record<Flag, string> = { yes: '✓', cond: '⚠', no: '×' };
+---
+
+{
+  summary && (
+    <details class="lsum" data-testid="license-summary" open>
+      <summary>{s.detail.licenseSummary}</summary>
+      <p class="lsum__caveat">{s.detail.licenseSummaryCaveat}</p>
+      <dl class="lsum__grid">
+        {FLAG_KEYS.map((k) => (
+          <>
+            <dt>{s.detail.licenseFlags[k]}</dt>
+            <dd class={`lsum__f lsum__f--${summary.flags[k]}`}>
+              <span aria-hidden="true">{MARK[summary.flags[k]]}</span>
+              <span class="lsum__sr">{s.detail.licenseFlagValues[summary.flags[k]]}</span>
+            </dd>
+          </>
+        ))}
+      </dl>
+      {summary.body.map((para) => (
+        <p class="lsum__body">{para}</p>
+      ))}
+    </details>
+  )
+}
+
+<style>
+  .lsum {
+    margin-top: var(--s4);
+  }
+  .lsum summary {
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--ink-3);
+  }
+  .lsum__caveat {
+    margin: var(--s2) 0;
+    font-size: 0.72rem;
+    color: var(--ink-3);
+  }
+  /* Label on the left, verdict on the right; the label column takes what it
+     needs so the marks line up in a single column down the right. */
+  .lsum__grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.15rem var(--s2);
+    margin: var(--s2) 0;
+    font-size: 0.75rem;
+  }
+  .lsum__grid dt {
+    color: var(--ink-2);
+  }
+  .lsum__grid dd {
+    margin: 0;
+    text-align: center;
+    font-weight: 700;
+  }
+  .lsum__f--yes {
+    color: #2e7d32;
+  }
+  .lsum__f--cond {
+    color: #b26a00;
+  }
+  .lsum__f--no {
+    color: #b5312f;
+  }
+  :global(:root[data-theme='dark']) .lsum__f--yes {
+    color: #7bbf7f;
+  }
+  :global(:root[data-theme='dark']) .lsum__f--cond {
+    color: #e0a458;
+  }
+  :global(:root[data-theme='dark']) .lsum__f--no {
+    color: #e25a4f;
+  }
+  .lsum__body {
+    margin: var(--s2) 0 0;
+    font-size: 0.75rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  /* The mark carries the meaning visually; screen readers get the word */
+  .lsum__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

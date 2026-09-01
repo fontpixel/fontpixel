@@ -13,3 +13,12 @@ name_en = "UnifontEX Mono"
 authors_en = ["stgiga"]
 description_en = "Community-extended version of GNU Unifont, an extremely broad-coverage Unicode fallback bitmap font."
 provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/stgiga--UnifontEX; upstream https://github.com/stgiga/UnifontEX; Extended from GNU Unifont."
+
+[license]
+spdx = "OFL-1.1 OR GPL-2.0-with-font-exception"
+name = "SIL开放字体许可证1.1 或 GNU通用公共许可证 第2版及以上（附字体嵌入例外）"
+confidence = "manual"
+file = "LICENSE"
+note = "本族由GNU Unifont衍生而来，上游项目页明确“UnifontEX inherits ALL of upstream GNU Unifont's license terms, including the font embedding exception”，因此与GNU Unifont一样为双重授权：SIL开放字体许可证1.1，或附GNU字体嵌入例外的GPL第2版及以上。随包的LICENSE仅收录GPL正文，例外条款的依据在上游说明与GNU Unifont的LICENSE.txt。嵌入文档不会使该文档整体受GPL约束。"
+name_en = "SIL Open Font License 1.1, or GNU GPL v2 or later with the font embedding exception"
+note_en = "Derived from GNU Unifont, whose terms it carries over: the upstream project states that \"UnifontEX inherits ALL of upstream GNU Unifont's license terms, including the font embedding exception\". It is therefore dual-licensed exactly as GNU Unifont is — SIL Open Font License 1.1, or GPL version 2 or later with the GNU font embedding exception. The bundled LICENSE carries only the GPL text; the evidence for the exception is the upstream statement and GNU Unifont's own LICENSE.txt. Embedding the font in a document does not place that document under the GPL."

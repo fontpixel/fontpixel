@@ -13,3 +13,6 @@ site/.astro/
 test-results/
 playwright-report/
 site/public/downloads
+
+# Scratch: drop-off point for files handed over during a session
+tmp/

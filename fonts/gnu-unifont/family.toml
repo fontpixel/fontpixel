@@ -12,3 +12,12 @@ added = "2026-08-21"
 name_en = "GNU Unifont"
 authors_en = ["GNU Unifont Project"]
 provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/multitheftauto--unifont; upstream https://github.com/multitheftauto/unifont/releases (v16.0.04); converted from ttf"
+
+[license]
+spdx = "OFL-1.1 OR GPL-2.0-with-font-exception"
+name = "SIL开放字体许可证1.1 或 GNU通用公共许可证 第2版及以上（附字体嵌入例外）"
+confidence = "manual"
+file = "LICENSE.txt"
+note = "双重授权，取用者可任选其一。随包的LICENSE.txt写明：源码部分为GPL第2版或更新版本；而“编译后的字体”同时受SIL开放字体许可证1.1与上述GPL条款约束，且GPL一侧附带GNU字体嵌入例外——原文为“As a special exception, if you create a document which uses this font, and embed this font or unaltered portions of this font into the document, this font does not by itself cause the resulting document to be covered by the GNU General Public License.”。也就是说把本字体嵌入文档（如PDF）不会使该文档整体受GPL约束。"
+name_en = "SIL Open Font License 1.1, or GNU GPL v2 or later with the font embedding exception"
+note_en = "Dual-licensed; a user may take either. The bundled LICENSE.txt states that the source is under GPL version 2 or later, while \"the compiled fonts\" are covered both by the SIL Open Font License 1.1 and by those GPL terms with the GNU font embedding exception: \"As a special exception, if you create a document which uses this font, and embed this font or unaltered portions of this font into the document, this font does not by itself cause the resulting document to be covered by the GNU General Public License.\" Embedding the font in a document (a PDF, say) therefore does not place that document under the GPL."

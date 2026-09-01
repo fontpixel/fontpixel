@@ -25,7 +25,6 @@
   let sampleInput = $state('');
   let sampleText = $state('');
   let zoom = $state(2);
-  let invert = $state(false);
   let charLookup = $state<CharLookup | undefined>(undefined);
   let mounted = $state(false);
   let filtersEl: HTMLDetailsElement | undefined = $state();
@@ -90,10 +89,6 @@
           <option value={3}>×3</option>
         </select>
       </label>
-      <label class="check">
-        <input type="checkbox" bind:checked={invert} data-testid="invert-toggle" />
-        {s.catalogue.invert}
-      </label>
       <label>{s.catalogue.sort}
         <select bind:value={state.sort} data-testid="sort-select">
           <option value="name">{s.catalogue.sortName}</option>
@@ -127,7 +122,6 @@
               {s}
               sampleText={sampleText}
               {zoom}
-              {invert}
               {store}
               href={`${fontsBase}${family.slug}/`}
             />

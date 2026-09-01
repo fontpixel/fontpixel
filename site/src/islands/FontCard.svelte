@@ -15,11 +15,10 @@
     s: UIStrings;
     sampleText: string;
     zoom: number;
-    invert: boolean;
     store: GlyphStore;
     href: string;
   }
-  const { family, lang, s, sampleText, zoom, invert, store, href }: Props = $props();
+  const { family, lang, s, sampleText, zoom, store, href }: Props = $props();
 
   const displayName = $derived(
     pickName(lang, family.names, family.name),
@@ -63,7 +62,6 @@
     if (!visible || !canvasEl) return;
     const t = text;
     const z = zoom;
-    const inv = invert;
     void themeTick;
     let cancelled = false;
     (async () => {
@@ -74,7 +72,7 @@
       if (cancelled || !canvasEl) return;
       const { ink, paper } = themeInkPaper();
       const r = rasterize(t, glyphs, m, {
-        invert: inv,
+        invert: false,
         maxWidth: Math.max(48, Math.floor((canvasEl.parentElement?.clientWidth ?? 320) / z)),
         ink,
         paper,
@@ -91,7 +89,7 @@
         );
         if (!anyMissing) {
           const nr = rasterize(displayName, nameGlyphs, m, {
-            invert: inv,
+            invert: false,
             ink,
             paper,
           });

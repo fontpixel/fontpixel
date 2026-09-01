@@ -13,3 +13,12 @@ name_en = "WenQuanYi Bitmap Song"
 authors_en = ["WenQuanYi Project", "Qianqian Fang"]
 description_en = "A classic Chinese bitmap Song (Ming) typeface for Linux, in five sizes from 12 to 16px, with GB18030-level coverage."
 provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Chinese/carrothu-cn--wqy-bitmapfont-otb; upstream https://github.com/carrothu-cn/wqy-bitmapfont-otb; converted from otb; The author field lists the main contributors; see upstream for the full list."
+
+[license]
+spdx = "GPL-2.0-with-font-exception"
+name = "GNU通用公共许可证 第2版（附文档嵌入条款）"
+confidence = "manual"
+file = "LICENSE"
+note = "随包的LICENSE为GPL第2版原文，嵌入条款不在其中，依据是上游文泉驿项目页（wenq.org）的授权声明：“字体授权形式为GNU General Public License v2(附加允许文档嵌入条款)”。该条款只豁免文档嵌入——同一页面同时声明，在非GPL的单一性(monolithic)软件中使用本字体仍属违反GPL。版权归文泉驿信任委员会、FangQ与Firefly。"
+name_en = "GNU General Public License v2, with a document-embedding clause"
+note_en = "The bundled LICENSE is the plain GPL version 2 text; the embedding clause is not in it. The evidence is the licence statement on the upstream WenQuanYi project page (wenq.org): the font is licensed under GNU General Public License v2 with an added clause permitting document embedding. That clause covers embedding only — the same page states that using this font inside non-GPL monolithic software still breaches the GPL. Copyright rests with the WenQuanYi Board of Trustees, FangQ and Firefly."

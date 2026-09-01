@@ -2,6 +2,7 @@
 import { t, type Lang } from '../i18n';
 import { formatBytes } from '../lib/format';
 import type { FontDetail } from '../lib/schema';
+import { Code } from 'astro:components';
 
 interface Props {
   lang: Lang;
@@ -15,10 +16,14 @@ let zip: (typeof detail.downloads)[number] | undefined;
 const ttfs: typeof detail.downloads = [];
 // Vector TTF appears once per typeface (not per variant), same family-level scope as bitmap TTF/ZIP
 const vecs: typeof detail.downloads = [];
+// woff2 for web use, with a ready-made @font-face rule underneath the table
+const webfonts: typeof detail.downloads = [];
 for (const e of detail.downloads) {
   if (e.kind === 'zip') zip = e;
   else if (e.kind === 'ttf') ttfs.push(e);
-  else if (e.kind === 'ttf-square' || e.kind === 'ttf-round') vecs.push(e); else {
+  else if (e.kind === 'ttf-square' || e.kind === 'ttf-round') vecs.push(e);
+  else if (e.kind === 'woff2-square' || e.kind === 'woff2-round') webfonts.push(e);
+  else {
     const list = byVariant.get(e.variantId!) ?? [];
     list.push(e);
     byVariant.set(e.variantId!, list);
@@ -29,7 +34,56 @@ const kindLabel: Record<string, string> = {
   pcf: s.detail.downloadPcf,
   'ttf-square': s.detail.downloadTtfSquare,
   'ttf-round': s.detail.downloadTtfRound,
+  'woff2-square': s.detail.downloadWoff2Square,
+  'woff2-round': s.detail.downloadWoff2Round,
 };
+const cssFamily = detail.meta.name.replace(/"/g, '');
+/** Generic family to fall back on, worked out from what the collection already
+ * knows about the face — but only when it can be justified.
+ *
+ * Whether a font is monospaced comes from its own metrics, so that answer is
+ * solid and takes precedence: a fallback that keeps columns lined up matters
+ * more than one that matches the stroke texture. A terminal face counts as
+ * monospace whatever its metrics say, since that is what it is for. The rest
+ * follows the curated `form` field — Song/Mincho, Fangsong, Kai and pixel
+ * serifs are serif; gothic, sans and rounded are sans-serif. Decorative and
+ * script faces get no generic at all rather than a guess, since the wrong
+ * stand-in is worse than none.
+ */
+const SERIF_FORMS = new Set(['mingcho', 'serif-pixel', 'fangsong', 'kai']);
+const SANS_FORMS = new Set(['sans', 'gothic', 'rounded', 'round']);
+function genericFor(file: string): string {
+  const form = detail.meta.form;
+  if (form === 'terminal') return 'monospace';
+  // The filename carries the group's spacing whenever it varies within a family
+  if (/-monospaced-/.test(file)) return 'monospace';
+  if (!/-proportional-/.test(file)) {
+    const spacings = new Set(detail.meta.variants.map((v) => v.spacing));
+    if (spacings.size === 1 && spacings.has('monospaced')) return 'monospace';
+  }
+  if (SERIF_FORMS.has(form)) return 'serif';
+  if (SANS_FORMS.has(form)) return 'sans-serif';
+  return '';
+}
+// The snippet is meant to be pasted into someone else's page, so the URL has
+// to be absolute; in production `base` already points at the download host.
+const absBase = /^https?:/.test(base) ? base : new URL(base, Astro.site).href.replace(/\/$/, '');
+const webfontCss = webfonts.map((e) => {
+  return [
+    '@font-face {',
+    `  font-family: "${cssFamily}";`,
+    `  src: url("${absBase}/${e.file}") format("woff2");`,
+    '  font-display: fallback;',
+    '}',
+    '',
+    '.pixel {',
+    (() => {
+      const g = genericFor(e.file);
+      return `  font-family: "${cssFamily}"${g ? `, ${g}` : ''};`;
+    })(),
+    '}',
+  ].filter(Boolean).join('\n');
+});
 ---
 
 <section class="dl" data-testid="download-list">
@@ -101,7 +155,7 @@ const kindLabel: Record<string, string> = {
         ))
       }
       {
-        vecs.map((e) => (
+        [...vecs, ...webfonts].map((e) => (
           <tr>
             <th scope="row">{kindLabel[e.kind] ?? e.kind}</th>
             <td>
@@ -125,9 +179,90 @@ const kindLabel: Record<string, string> = {
   <p class="dl__note">{s.detail.downloadNote}</p>
   {ttfs.length > 0 && <p class="dl__note">{s.detail.downloadTtfNote}</p>}
   {vecs.length > 0 && <p class="dl__note">{s.detail.downloadVectorNote}</p>}
+  {
+    webfonts.length > 0 && (
+      <div class="dl__webfont" data-testid="webfont-css">
+        <div class="dl__webfont-head">
+          <h3>{s.detail.webfontTitle}</h3>
+          {webfonts.length > 1 && (
+            <select class="dl__webfont-pick" data-webfont-pick aria-label={s.detail.webfontTitle}>
+              {webfonts.map((e, i) => (
+                <option value={i}>{e.file}</option>
+              ))}
+            </select>
+          )}
+          <button
+            type="button"
+            class="dl__webfont-show"
+            data-webfont-show
+            aria-expanded="false"
+            data-show-label={s.detail.webfontShow}
+            data-hide-label={s.detail.webfontHide}
+          >
+            {s.detail.webfontShow}
+          </button>
+          <button type="button" class="dl__webfont-copy" data-webfont-copy>
+            {s.detail.webfontCopy}
+          </button>
+        </div>
+        <p class="dl__note">{s.detail.webfontNote}</p>
+        <div class="dl__webfont-box" data-webfont-box hidden>
+          {webfontCss.map((css, i) => (
+            <div data-webfont-css={i} hidden={i !== 0}>
+              <Code code={css} lang="css" themes={{ light: 'github-light', dark: 'github-dark' }} />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
 </section>
 
+<script>
+  // Switch which @font-face block is on show, and copy it.
+  const box = document.querySelector<HTMLElement>('[data-testid="webfont-css"]');
+  if (box) {
+    const blocks = [...box.querySelectorAll<HTMLElement>('[data-webfont-css]')];
+    const pick = box.querySelector<HTMLSelectElement>('[data-webfont-pick]');
+    pick?.addEventListener('change', () => {
+      blocks.forEach((b, i) => (b.hidden = i !== Number(pick.value)));
+    });
+    const wrap = box.querySelector<HTMLElement>('[data-webfont-box]');
+    const show = box.querySelector<HTMLButtonElement>('[data-webfont-show]');
+    show?.addEventListener('click', () => {
+      if (!wrap) return;
+      wrap.hidden = !wrap.hidden;
+      show.setAttribute('aria-expanded', String(!wrap.hidden));
+      show.textContent = wrap.hidden ? (show.dataset.showLabel ?? '') : (show.dataset.hideLabel ?? '');
+    });
+    const btn = box.querySelector<HTMLButtonElement>('[data-webfont-copy]');
+    btn?.addEventListener('click', () => {
+      const shown = blocks.find((b) => !b.hidden);
+      if (!shown) return;
+      navigator.clipboard?.writeText(shown.textContent ?? '').then(() => {
+        const label = btn.textContent;
+        btn.textContent = btn.dataset.done ?? '✓';
+        setTimeout(() => (btn.textContent = label), 1200);
+      });
+    });
+  }
+</script>
+
 <style>
+  .dl__webfont-box {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    margin-top: var(--s2);
+    overflow-x: auto;
+  }
+  .dl__webfont-box :global(pre) {
+    margin: 0;
+    padding: var(--s3);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    background: none !important;
+  }
+
   .dl h2 {
     font-size: 1rem;
     margin: 0 0 var(--s3);

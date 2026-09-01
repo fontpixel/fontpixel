@@ -46,6 +46,27 @@ def _restyle_ttf(raw: bytes, family: str, style: str, copyright_: str) -> bytes:
     return buf.getvalue()
 
 
+def _restyle_woff2(raw: bytes, family: str, copyright_: str) -> bytes:
+    """The woff2 counterpart of _restyle_ttf: swap the name table, recompress."""
+    import io
+    import tempfile
+
+    from fontTools.fontBuilder import FontBuilder
+    from fontTools.ttLib import TTFont
+
+    from opf.ttfexport import FIXED_TIMESTAMP
+
+    f = TTFont(io.BytesIO(raw), recalcTimestamp=False)
+    style = f["name"].getDebugName(2) or "Regular"
+    FontBuilder(font=f).setupNameTable(name_records(family, style, copyright_))
+    f["head"].created = f["head"].modified = FIXED_TIMESTAMP
+    with tempfile.TemporaryDirectory() as td:
+        ttf = Path(td) / "f.ttf"
+        f.flavor = None
+        f.save(str(ttf))
+        return _woff2(ttf) or raw
+
+
 def _rezip_readme(raw: bytes, readme_text: str) -> bytes:
     """Replace only the README inside the zip, carrying every other member over as-is (timestamps still pinned)."""
     import io
@@ -86,6 +107,11 @@ def refresh_downloads_metadata(
         raw = path.read_bytes()
         if kind.startswith("ttf"):
             data = _restyle_ttf(raw, family_display, _ttf_style(raw), copyright_line)
+        elif kind.startswith("woff2"):
+            # Same name-table swap, then recompress; a woff2 carries the same
+            # name records as the TTF it came from, so leaving it alone here
+            # would publish the old family name and copyright.
+            data = _restyle_woff2(raw, family_display, copyright_line)
         elif kind == "zip":
             data = _rezip_readme(raw, readme_text)
         else:
@@ -126,6 +152,51 @@ def _entry(slug: str, variant_id: str | None, kind: str, file: str, data: bytes,
         "bytes": len(data),
         "sha256": hashlib.sha256(data).hexdigest(),
     }
+
+
+# Above this size, compress for speed rather than for the last few percent.
+_WOFF2_FAST_BYTES = 1_500_000
+
+
+def _woff2(ttf_path: Path) -> bytes | None:
+    """Recompress a TTF as woff2, or None when brotli isn't available.
+
+    fontTools' defaults are far too slow here. It applies the woff2 glyf
+    transform in pure Python — 13s on a 7MB CJK font, for about 12% off the
+    result — and hands brotli its top quality, another 12s. Skipping the
+    transform and using quality 9 on big fonts turns 25s into 0.5s for 41%
+    more bytes, which is the right trade when the whole collection is rebuilt
+    on every font change. Small fonts keep quality 11: it costs milliseconds
+    there. The output is a plain woff2 either way; table transforms are
+    optional in the format and every browser reads both.
+    """
+    import tempfile
+
+    from fontTools.ttLib import TTFont
+    try:
+        import fontTools.ttLib.woff2 as woff2mod
+        from fontTools.ttLib.woff2 import WOFF2FlavorData
+    except ImportError:
+        return None
+
+    size = ttf_path.stat().st_size
+    quality = 9 if size > _WOFF2_FAST_BYTES else 11
+    orig = woff2mod.brotli.compress
+    woff2mod.brotli.compress = (
+        lambda data, **kw: orig(data, **{**kw, "quality": quality})
+    )
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            out = Path(td) / "f.woff2"
+            font = TTFont(str(ttf_path), recalcTimestamp=False)
+            font.flavor = "woff2"
+            font.flavorData = WOFF2FlavorData(transformedTables=set())
+            font.save(str(out))
+            return out.read_bytes()
+    except Exception:  # noqa: BLE001 - a missing woff2 must not fail the download set
+        return None
+    finally:
+        woff2mod.brotli.compress = orig
 
 
 def _source_bdf_bytes(f: ParsedFont) -> bytes:
@@ -252,6 +323,16 @@ def build_downloads(
                                      shape=shape, copyright_=copyright_line)
                     entries.append(_entry(slug, None, f"ttf-{shape}", vname,
                                           tmp.read_bytes(), out))
+                    # Web use wants woff2, and only the vector outlines are
+                    # safe to serve that way: a browser's handling of the
+                    # bitmap TTF's embedded strikes is inconsistent, whereas
+                    # these outlines render anywhere and stay pixel-crisp at
+                    # integer multiples of the design size.
+                    w2 = _woff2(tmp)
+                    if w2 is not None:
+                        entries.append(_entry(
+                            slug, None, f"woff2-{shape}",
+                            f"{suffix}-{rv.size}px-{shape}.woff2", w2, out))
             except Exception as e:  # noqa: BLE001 - a single file failing doesn't affect other downloads
                 rf.warnings.append(f"矢量 TTF 导出失败（{vname}）：{e}")
 

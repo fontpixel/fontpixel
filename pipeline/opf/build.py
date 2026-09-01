@@ -262,20 +262,19 @@ def _build_family(
     )
     og_png(best.font, meta.name, sample_text, site_data / "og" / f"{slug}.png")
 
-    if license_info.file and (family_dir / license_info.file).exists():
+    lic_text, lic_text_canonical = _license_text_for(family_dir, license_info)
+    if lic_text is not None:
         lic_dir = site_data / "licenses"
         lic_dir.mkdir(parents=True, exist_ok=True)
-        (lic_dir / f"{slug}.txt").write_bytes(
-            (family_dir / license_info.file).read_bytes()
-        )
+        (lic_dir / f"{slug}.txt").write_bytes(lic_text)
 
     dl_entries = build_downloads(
         slug, family_dir, [(b.font, b.desc) for b in built],
         [license_info.file] if license_info.file else [],
-        _readme_text(meta, license_info.name),
+        _readme_text(meta, license_info.name_en or license_info.name),
         downloads_dir,
         family_display=meta.name,
-        copyright_line=_copyright_line(meta, license_info.name),
+        copyright_line=_copyright_line(meta, license_info.name_en or license_info.name),
     )
 
     han_ink_by_size: dict[str, list[int]] = {}
@@ -350,6 +349,7 @@ def _build_family(
         **_describe_detail(meta),
         "convertedFrom": meta.converted_from,
         "licenseText": license_info.file,
+        "licenseTextCanonical": lic_text_canonical,
         "licenseNote": license_info.note,
         "licenseNoteEn": license_info.note_en or license_info.note,
         "warnings": sorted({w for b in built for w in b.font.warnings}),
@@ -422,16 +422,54 @@ def _dwidth_hist(f: ParsedFont) -> dict[str, int]:
     return {str(k): v for k, v in top}
 
 
+_CANONICAL_LICENSES = Path(__file__).parent / "licensetexts"
+
+
+def _license_text_for(family_dir: Path, license_info) -> tuple[bytes | None, bool]:
+    """The licence text to publish, and whether it is the canonical fallback.
+
+    A family's own bundled file wins. Plenty of the distributions we collect
+    from carry a font and name its licence only in a README or a BDF comment,
+    though, and a reader still deserves to see the terms — so fall back to the
+    licence's canonical text, flagged as such. Note what the flag can and
+    cannot claim: we know the source we took the font from shipped no licence
+    file, not that the author never published one.
+    """
+    if license_info.file and (family_dir / license_info.file).exists():
+        return (family_dir / license_info.file).read_bytes(), False
+    spdx = license_info.spdx or ""
+    # A dual licence shows the text of whichever half we hold a copy of
+    for part in [spdx, *[x.strip() for x in spdx.split(" OR ")]]:
+        cand = _CANONICAL_LICENSES / f"{part}.txt"
+        if part and cand.exists():
+            return cand.read_bytes(), True
+    return None, False
+
+
 def _readme_text(meta, license_name: str) -> str:
-    """Provenance README bundled in the family zip. Shared between the full rebuild path and the metadata fast path."""
-    return (f"{meta.name}\n来源：{meta.provenance or meta.homepage or '-'}\n"
-            f"许可证：{license_name}\n由 开源像素字体馆 打包\n")
+    """Provenance README bundled in the family zip.
+
+    English throughout: a download travels far beyond the language the visitor
+    happened to be browsing in, and the archive carries no locale of its own.
+    Shared between the full rebuild path and the metadata fast path.
+    """
+    name = meta.name_en or meta.name
+    source = meta.provenance_en or meta.provenance or meta.homepage or "-"
+    return (f"{name}\nSource: {source}\n"
+            f"License: {license_name}\nPackaged by Open Pixel Fonts\n")
 
 
 def _copyright_line(meta, license_name: str) -> str:
-    """Copyright line written into the TTF name table. Shared between the full rebuild path and the metadata fast path."""
-    return (f"{meta.name} — {license_name}"
-            + (f"（{'、'.join(meta.authors)}）" if meta.authors else ""))
+    """Copyright line written into the TTF name table.
+
+    English for the same reason as the zip README — this string is read by font
+    software anywhere, not by a page in the visitor's language.
+    Shared between the full rebuild path and the metadata fast path.
+    """
+    name = meta.name_en or meta.name
+    authors = meta.authors_en or meta.authors
+    return (f"{name} — {license_name}"
+            + (f" ({', '.join(authors)})" if authors else ""))
 
 
 
@@ -511,7 +549,7 @@ def _refresh_metadata(
     detail["meta"] = entry
     detail["convertedFrom"] = meta.converted_from
 
-    license_name = entry["license"]["name"]
+    license_name = entry["license"]["nameEn"] or entry["license"]["name"]
     dl_entries = refresh_downloads_metadata(
         cached["downloads"], downloads_dir,
         _readme_text(meta, license_name),

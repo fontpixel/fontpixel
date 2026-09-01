@@ -167,6 +167,11 @@ const coverageGroups = groupBy((vid) =>
         dataBase={withBase('/data')}
         sampleLang={m.sampleLang}
       />
+      <p class="compare-link">
+        <a href={withBase(`/${lang}/compare/?v=${slug}:${m.previewVariant}`)}
+          >{s.compare.withOthers} →</a
+        >
+      </p>
 
       <section class="metrics">
         <h2>{s.detail.metricsTitle}</h2>
@@ -302,6 +307,11 @@ const coverageGroups = groupBy((vid) =>
   </script>
 
   <style>
+  .compare-link {
+    margin: var(--s2) 0 var(--s5);
+    font-size: 0.85rem;
+  }
+
     .crumb {
       font-size: 0.85rem;
       margin-bottom: var(--s4);
