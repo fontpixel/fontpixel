@@ -1,0 +1,28 @@
+name = "Izumi Gothic"
+name_zh = "出水黑体"
+name_ja = "出水ゴシック"
+authors = ["Yu=Izumi"]
+homepage = "http://izumilib.web.fc2.com/izumi-bf/index.html"
+repository = ""
+description = "Yu=Izumi的出水点阵字体黑体，16px，常规与粗体两款，含JIS X 0213：2000全部汉字。GNU Unifont日文变体版的全部汉字和绝大多数假名的字形即取自本字体（在v12.1.03前用的是jiskan16，因为可读性更好而改用本字体）"
+forms = ["gothic", "sans"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Izumi", "izumi", "出水ゴシック", "出水ビットマップフォント", "JFドット出水ゴシック", "JF Dot Izumi Gothic", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "Izumi Gothic"
+authors_en = ["Yu=Izumi"]
+description_en = "The gothic face of Yu=Izumi's Izumi bitmap font at 16px, in regular and bold, covering the whole of JIS X 0213:2000. GNU Unifont's Japanese variant takes all of its kanji and nearly all of its kana from this font, having used jiskan16 until v12.1.03 and switched to this one because it reads better."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页标注出水ビットマップフォント (Yu=Izumi氏) ※パブリックドメイン，授权表中列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用、改作与再分发均无限制，不要求署名。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me marks the Izumi bitmap font (Yu=Izumi) as public domain and places it in the public-domain row of its licence table: copyright waived, no restriction on personal or commercial use, modification, or redistribution, and no credit required."

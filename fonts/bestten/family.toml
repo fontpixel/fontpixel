@@ -2,13 +2,26 @@ name = "BestTen"
 authors = ["FLOP DESIGN"]
 homepage = "https://flopdesign.booth.pm/items/2747965"
 repository = ""
-description = ""
-form = "gothic"  # UNVERIFIED：导入时预填，待人工复核
-vibes = ["classic"]  # UNVERIFIED
-aliases = ["BestTen-DOT", "BestTen-CRT", "Best Ten", "ベストテン"]
+description = "10×10点阵字体，改作自M+ BITMAP FONTS与PixelMplus10；DOT为原始点阵，CRT为略作圆角与视觉调整的一版。"
+forms = ["gothic", "sans"]
+vibes = ["unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["OTF"]
+aliases = ["BestTen-DOT", "BestTen-CRT", "Best Ten", "ベストテン", "10×10"]
 converted_from = "ttf"
-provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/15489；上游https://www.maoken.com/freefonts/15489.html；由ttf转换"
+provenance = "导入自direct-downloads-2026-09-03/flopdesign-bestten-1.00；上游https://flopdesign.booth.pm/items/2747965（官方Best10-FONT.zip，收录于2026-09-03）；由ttf转换。2026-09-03改用官方发行包，替换此前的猫啃网转发包：转发包额外附带了一份SIL OFL文本，导致本站将授权误判为OFL-1.1，而官方ReadMe与发布页均写明本字体依循M+授权；且转发包的CRT仅覆盖8585个码位，是官方版10196个码位的严格子集。"
 added = "2026-08-21"
 name_en = "BestTen"
 authors_en = ["FLOP DESIGN"]
-provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Maoken-Direct/15489; upstream https://www.maoken.com/freefonts/15489.html; converted from ttf"
+description_en = "A 10x10 dot font adapted from M+ BITMAP FONTS and PixelMplus10; DOT is the plain bitmap and CRT a build with lightly rounded corners and optical adjustments."
+provenance_en = "Imported from direct-downloads-2026-09-03/flopdesign-bestten-1.00; upstream https://flopdesign.booth.pm/items/2747965 (the official Best10-FONT.zip, catalogued 2026-09-03); converted from ttf. Re-sourced 2026-09-03 to the official package, replacing a maoken.com repack: the repack shipped an extra SIL OFL text that made this site read the licence as OFL-1.1, while the official ReadMe and release page both state the font follows the M+ licence; the repack's CRT also covered only 8585 code points against the official build's 10196, a strict subset."
+
+# Both builds are dual-width CJK (10px) with genuinely proportional Latin (i=4, W=6, . =5),
+# so neither is monospaced. Left to the heuristic they split: DOT clears the 99% "all advances on
+# the W/2W grid" bar by a hair, CRT misses it because 85 more of its glyphs sit at 4px. Declaring
+# both keeps the pair together instead of letting a threshold decide.
+[variants."BestTen-DOT-10px.bdf"]
+spacing = "proportional"
+
+[variants."BestTen-CRT-10px.bdf"]
+spacing = "proportional"

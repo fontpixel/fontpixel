@@ -1,0 +1,18 @@
+name = "Matrix"
+authors = ["Trip5"]
+homepage = "https://trip5.github.io/Matrix-Fonts/"
+repository = "https://github.com/trip5/Matrix-Fonts"
+description = "为LED点阵时钟设计的字体，6行与8行两档字身，Chunky与Light两种笔画粗细，另有加宽与8x6等变体，共十款。多数字符宽3像素，右侧留一列空白。"
+forms = ["terminal"]
+vibes = ["terminal", "programming", "game-ui"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["Matrix", "Matrix Fonts", "MatrixChunky", "MatrixLight", "matrix-fonts", "Trip5"]
+converted_from = ""
+provenance = "导入自 https://github.com/trip5/Matrix-Fonts"
+added = "2026-09-03"
+
+name_en = "Matrix"
+authors_en = ["Trip5"]
+description_en = "Fonts drawn for LED matrix clocks, on 6-row and 8-row bodies in a Chunky and a Light weight, plus extended and 8x6 cuts, ten in all. Most characters are three pixels wide with one empty column on the right."
+provenance_en = "Imported from https://github.com/trip5/Matrix-Fonts"

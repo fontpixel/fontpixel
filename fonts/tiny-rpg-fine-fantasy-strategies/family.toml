@@ -1,0 +1,26 @@
+name = "Tiny RPG Fine Fantasy Strategies"
+authors = ["tiopalada"]
+homepage = "https://opengameart.org/content/tiny-rpg-font-kit-i"
+repository = ""
+description = "Tiny RPG 字体包中的独立像素设计；保留完整字符集。"
+forms = ["sans"]
+vibes = ["jrpg", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://opengameart.org/content/tiny-rpg-font-kit-i (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Tiny RPG Fine Fantasy Strategies"
+authors_en = ["tiopalada"]
+description_en = "An individual pixel design from the Tiny RPG font kits, retaining its complete character set."
+provenance_en = "Imported from https://opengameart.org/content/tiny-rpg-font-kit-i (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained); converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

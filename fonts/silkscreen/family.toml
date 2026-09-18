@@ -1,0 +1,26 @@
+name = "Silkscreen"
+authors = ["Jason Kottke"]
+homepage = "https://fonts.google.com/specimen/Silkscreen"
+repository = "https://github.com/googlefonts/silkscreen"
+description = "Jason Kottke设计的小尺寸像素字体，提供常规与粗体，覆盖拉丁字母及扩展字符。"
+forms = ["sans"]
+vibes = ["web-pixel", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/silkscreen (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Silkscreen"
+authors_en = ["Jason Kottke"]
+description_en = "A small pixel typeface by Jason Kottke, with regular and bold weights and complete Latin and extended-Latin coverage."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/silkscreen (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt及其上游版权声明。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt and upstream copyright notice from Google Fonts are retained."

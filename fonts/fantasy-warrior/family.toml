@@ -1,0 +1,26 @@
+name = "Fantasy Warrior"
+authors = ["Douglas Vautour (Burpy Fresh)"]
+homepage = "https://burpyfresh.itch.io/fantasy-warrior"
+repository = ""
+description = "受哥特黑体与 1990 年代奇幻游戏启发的 11px 像素字体，含拉丁文、西里尔文、全部 11,172 个现代韩文音节与韩文字母。"
+forms = ["decorative"]
+vibes = ["blackletter", "western-rpg", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://burpyfresh.itch.io/fantasy-warrior (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Fantasy Warrior"
+authors_en = ["Douglas Vautour (Burpy Fresh)"]
+description_en = "An 11px pixel font inspired by blackletter and 1990s fantasy games, with Latin, Cyrillic, all 11,172 modern Hangul syllables and Korean jamo."
+provenance_en = "Imported from https://burpyfresh.itch.io/fantasy-warrior (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC-BY-4.0"
+name = "CC-BY-4.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC-BY-4.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

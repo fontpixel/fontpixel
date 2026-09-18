@@ -1,0 +1,26 @@
+name = "Springwrite"
+authors = ["SpringSpring"]
+homepage = "https://opengameart.org/content/springwrite-16x16-pixel-font"
+repository = ""
+description = "从作者的原始像素图片逐像素提取，保留全部可辨识字符；不重复收录仅颜色不同的版本。"
+forms = ["script"]
+vibes = ["blackletter", "handwriting", "manuscript"]
+source_kind = "bitmap"
+source_formats = ["PNG"]
+converted_from = ""
+provenance = "导入自 https://opengameart.org/content/springwrite-16x16-pixel-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Springwrite"
+authors_en = ["SpringSpring"]
+description_en = "Extracted pixel for pixel from the original sprite sheet, retaining every identifiable character. Colour-only variants are not duplicated."
+provenance_en = "Imported from https://opengameart.org/content/springwrite-16x16-pixel-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

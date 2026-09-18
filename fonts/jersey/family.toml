@@ -1,0 +1,27 @@
+name = "Jersey"
+authors = ["Sarah Cadigan-Fried"]
+homepage = "https://github.com/scfried/soft-type-jersey"
+repository = "https://github.com/scfried/soft-type-jersey"
+description = "Sarah Cadigan-Fried为针织设计的运动风格无衬线点阵字体。Jersey 10、15、20、25合为同一家族的四档字号；名称数字是大写字母高度，对应BDF字号19、27、34、41px。每档均保留完整拉丁扩展、组合附加符号、数学及符号字符。"
+forms = ["sans"]
+vibes = ["sports", "block", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Jersey 10", "Jersey 15", "Jersey 20", "Jersey 25", "Jersey10", "Jersey15", "Jersey20", "Jersey25"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl (jersey10, jersey15, jersey20, jersey25; complete official TTFs; retrieved 2026-09-17)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Jersey"
+authors_en = ["Sarah Cadigan-Fried"]
+description_en = "Sarah Cadigan-Fried’s sporty sans-serif pixel typeface for knitting. Jersey 10, 15, 20, and 25 form four sizes in one family. The original numbers describe capital heights; the corresponding BDF sizes are 19, 27, 34, and 41px. Every size retains complete extended Latin, combining marks, mathematics, and symbols."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl (jersey10, jersey15, jersey20, jersey25; complete official TTFs; retrieved 2026-09-17); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt；四个字号的许可证及版权声明完全相同。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt is retained; all four sizes have identical licence and copyright notices."

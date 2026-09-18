@@ -1,0 +1,27 @@
+name = "font8x8"
+authors = ["Marcel Sondaar", "IBM", "Daniel Hepper"]
+homepage = "https://github.com/dhepper/font8x8"
+repository = "https://github.com/dhepper/font8x8"
+description = "8×8等宽点阵字体，含拉丁字母、希腊字母、平假名、制表符、方块及SGA私用区字形。原始汇编字体署名Marcel Sondaar和IBM（公有领域VGA字体）；Daniel Hepper整理为C头文件。"
+forms = ["terminal"]
+vibes = ["retro-computer", "bios", "terminal"]
+source_kind = "bitmap"
+source_formats = ["C bitmap arrays"]
+aliases = ["dhepper/font8x8", "8x8 monochrome bitmap font"]
+converted_from = ""
+provenance = "导入自 https://github.com/dhepper/font8x8/tree/8e279d2d864e79128e96188a6b9526cfa3fbfef9 (retrieved 2026-09-17)；由 font8x8 转换"
+added = "2026-09-17"
+
+name_en = "font8x8"
+authors_en = ["Marcel Sondaar", "IBM", "Daniel Hepper"]
+description_en = "An 8×8 monospaced bitmap font with Latin, Greek, Hiragana, box drawing, blocks, and SGA private-use glyphs. Original assembly font credited to Marcel Sondaar and IBM (public-domain VGA fonts); adapted into C headers by Daniel Hepper."
+provenance_en = "Imported from https://github.com/dhepper/font8x8/tree/8e279d2d864e79128e96188a6b9526cfa3fbfef9 (retrieved 2026-09-17); converted from font8x8"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域"
+confidence = "manual"
+file = "LICENSE.txt"
+note = "上游README和各头文件均明确声明Public Domain，并注明Marcel Sondaar及IBM公有领域VGA字体的来源。保留上游声明。"
+name_en = "Public Domain"
+note_en = "The upstream README and headers explicitly declare Public Domain and credit Marcel Sondaar and IBM public-domain VGA fonts. The upstream notices are retained."

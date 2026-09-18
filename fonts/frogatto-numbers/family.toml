@@ -1,0 +1,26 @@
+name = "Frogatto Numbers"
+authors = ["Jetrel"]
+homepage = "https://opengameart.org/content/frogatto-friends-bitmap-fonts"
+repository = ""
+description = "Frogatto 原生数字点阵，包含大小号与滚动计数器设计；合并仅颜色不同、点阵相同的样式。"
+forms = ["sans"]
+vibes = ["game-ui", "western-rpg", "block"]
+source_kind = "bitmap"
+source_formats = ["PNG"]
+converted_from = ""
+provenance = "导入自 https://opengameart.org/content/frogatto-friends-bitmap-fonts (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Frogatto Numbers"
+authors_en = ["Jetrel"]
+description_en = "Frogatto’s native numeral bitmaps, with small, large and scrolling-counter designs. Colour-only styles with identical bitmaps are merged."
+provenance_en = "Imported from https://opengameart.org/content/frogatto-friends-bitmap-fonts (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

@@ -1,0 +1,26 @@
+name = "Doto"
+authors = ["Óliver Lalan"]
+homepage = "https://fonts.google.com/specimen/Doto"
+repository = "https://github.com/oliverlalan/Doto"
+description = "Óliver Lalan设计的点阵字体，以一个像素还原一个圆点，保留完整拉丁字母及扩展字符。"
+forms = ["terminal"]
+vibes = ["dot-matrix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/doto (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Doto"
+authors_en = ["Óliver Lalan"]
+description_en = "Óliver Lalan’s dot-matrix typeface restored with one pixel per dot, retaining its complete Latin and extended-Latin character set."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/doto (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt及其上游版权声明。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt and upstream copyright notice from Google Fonts are retained."

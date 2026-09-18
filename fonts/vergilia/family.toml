@@ -1,0 +1,26 @@
+name = "Vergilia"
+authors = ["Echo Heo"]
+homepage = "https://fontstruct.com/fontstructions/show/2073919/vergilia"
+repository = ""
+description = "具有加洛林手稿风格的像素衬线字体，包含部分希腊字母。"
+forms = ["serif"]
+vibes = ["manuscript", "serif", "book", "western-rpg"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://fontstruct.com/fontstructions/show/2073919/vergilia (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Vergilia"
+authors_en = ["Echo Heo"]
+description_en = "A pixel serif with Carolingian manuscript character and partial Greek coverage."
+provenance_en = "Imported from https://fontstruct.com/fontstructions/show/2073919/vergilia (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "OFL-1.1"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "OFL-1.1"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

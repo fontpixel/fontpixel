@@ -1,0 +1,26 @@
+name = "Handjet"
+authors = ["David Březina", "Rosetta", "Johannes Neumeier", "Borna Izadpanah", "Khajag Apelian", "Meir Sadan"]
+homepage = "https://fonts.google.com/specimen/Handjet"
+repository = "https://github.com/rosettatype/handjet"
+description = "David Březina与Rosetta及各文字顾问设计的模块化点阵字体，包含拉丁、希腊、西里尔、亚美尼亚、希伯来和阿拉伯文字。采用常规方形元素，以34px保留原设计的半格位移；每个方形元素对应2×2像素。BDF保留未编码的上下文字形，但不包含OpenType自动连写规则。"
+forms = ["sans"]
+vibes = ["dot-matrix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/handjet (complete official TTF; retrieved 2026-09-17)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Handjet"
+authors_en = ["David Březina", "Rosetta", "Johannes Neumeier", "Borna Izadpanah", "Khajag Apelian", "Meir Sadan"]
+description_en = "A modular pixel typeface by David Březina, Rosetta, and script contributors, covering Latin, Greek, Cyrillic, Armenian, Hebrew, and Arabic. The Regular square-element design is restored at 34px to preserve half-cell positions; each square occupies 2×2 pixels. BDF retains unencoded contextual glyphs but does not include OpenType joining rules."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/handjet (complete official TTF; retrieved 2026-09-17); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt及其上游版权声明。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt and upstream copyright notice from Google Fonts are retained."

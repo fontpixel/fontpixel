@@ -1,0 +1,17 @@
+name = "Retro Pixel Petty"
+authors = ["TakWolf"]
+homepage = "https://retro-pixel-font.takwolf.com"
+repository = "https://github.com/TakWolf/retro-pixel-font"
+description = "5×5点阵字体，5px字面、9px行高；5H为比例宽度，5x5为等宽固定字面。"
+forms = ["sans"]  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["terminal", "technical"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["Retro Pixel Font", "retro-pixel-font", "Retro Pixel Petty 5H", "Retro Pixel Petty 5x5", "retro-pixel-petty-5h", "retro-pixel-petty-5x5"]
+converted_from = ""
+provenance = "导入自github-releases-2026-09-01/TakWolf--retro-pixel-font；上游https://github.com/TakWolf/retro-pixel-font/releases (v2026.09.01)。上游把Petty 5H与Petty 5x5作为两款字体发布，本站合并为一个家族：二者字面尺寸相同（5px／行高9px）、字形集相同（各95个），只是一款比例宽度、一款等宽，与本站已合并的Retro Pixel Cute（Mono／Prop）情形一致。"
+added = "2026-08-21"
+name_en = "Retro Pixel Petty"
+authors_en = ["TakWolf"]
+description_en = "A 5x5 pixel font, 5px face on a 9px line; 5H is proportional and 5x5 is fixed-width."
+provenance_en = "Imported from github-releases-2026-09-01/TakWolf--retro-pixel-font; upstream https://github.com/TakWolf/retro-pixel-font/releases (v2026.09.01). Upstream ships Petty 5H and Petty 5x5 as two fonts; they are merged into one family here because they share a size (5px on a 9px line) and a glyph set (95 each) and differ only in being proportional and fixed-width — the same situation as Retro Pixel Cute (Mono/Prop), already merged."

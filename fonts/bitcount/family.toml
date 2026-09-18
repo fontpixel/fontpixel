@@ -1,0 +1,28 @@
+name = "Bitcount"
+authors = ["Petr van Blokland"]
+homepage = "https://fonts.google.com/specimen/Bitcount"
+repository = "https://github.com/petrvanblokland/TYPETR-Bitcount"
+description = "Petr van Blokland设计的点阵字体家族，包含Bitcount、Single、Grid Double、Grid Single、Prop Single和Prop Double六个变体。默认展示Bitcount Single；各变体按10px保留原始点阵，包含完整拉丁及扩展字符。Prop变体采用比例字宽。"
+forms = ["terminal"]
+vibes = ["dot-matrix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Bitcount Single", "Bitcount Grid Double", "Bitcount Grid Single", "Bitcount Prop Single", "Bitcount Prop Double"]
+default_variant = "BitcountSingle-Regular-10px"
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl (complete Bitcount, Single, Grid Double, Grid Single, Prop Single, Prop Double TTFs; retrieved 2026-09-17)；由完整TTF还原点阵，保留全部编码与未编码字形。"
+added = "2026-09-17"
+
+name_en = "Bitcount"
+authors_en = ["Petr van Blokland"]
+description_en = "Petr van Blokland’s dot-matrix family, containing Bitcount, Single, Grid Double, Grid Single, Prop Single, and Prop Double. Bitcount Single is the default preview. Each variant restores its original dot grid at 10px with complete Latin and extended Latin; Prop variants use proportional advances."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl (complete Bitcount, Single, Grid Double, Grid Single, Prop Single, Prop Double TTFs; retrieved 2026-09-17); restored from complete TTFs with every encoded and unencoded glyph retained."
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "各变体的版权声明与OFL条款相同，仅许可证网站链接不同；随附Bitcount的官方完整OFL.txt。"
+name_en = "SIL Open Font License 1.1"
+note_en = "All variants share the same copyright notice and OFL terms; only the licence website URL differs. The complete official Bitcount OFL.txt is retained."

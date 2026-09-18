@@ -1,0 +1,27 @@
+name = "ETL Thai"
+name_zh = "ETL泰文"
+authors = ["Manop Wongsaisuwan"]
+homepage = "https://linux.thai.net/projects/thaixfonts"
+repository = "https://github.com/tlwg/thaixfonts"
+description = "泰文点阵字体，14px、16px、24px三档，字符集为TIS-620（泰国国家标准），含泰文全部87个字符与ASCII。XLFD厂商标识为etl。"
+forms = ["gothic", "sans"]
+vibes = ["terminal", "programming", "unix", "technical"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["ETL Thai", "etlthai", "etl-thai", "thaixfonts"]
+converted_from = ""
+provenance = "导入自 https://github.com/tlwg/thaixfonts"
+added = "2026-09-03"
+
+name_en = "ETL Thai"
+authors_en = ["Manop Wongsaisuwan"]
+description_en = "A Thai bitmap font at 14px, 16px, and 24px. Its repertoire is TIS-620, Thailand's national standard, covering all 87 Thai characters plus ASCII. The XLFD foundry is etl."
+provenance_en = "Imported from https://github.com/tlwg/thaixfonts"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游tlwg/thaixfonts的COPYING逐目录说明授权，etlthai条目写明作者为Manop Wongsaisuwan，并声明These are public domain fonts。"
+name_en = "Public Domain"
+note_en = "The COPYING file in tlwg/thaixfonts states the licence per directory. Its etlthai entry names Manop Wongsaisuwan as the author and states: These are public domain fonts."

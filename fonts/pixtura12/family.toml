@@ -1,0 +1,26 @@
+name = "Pixtura12"
+authors = ["eishiya"]
+homepage = "https://opengameart.org/content/pixtura12-medieval-pixel-font"
+repository = ""
+description = "12px 中世纪 Textura 点阵字体，含常规与窄体及未编码的拉丁连字。优先保留内嵌点阵，缺失的下划线由同一文件的像素轮廓补全。"
+forms = ["decorative"]
+vibes = ["blackletter", "textura", "manuscript", "western-rpg"]
+source_kind = "bitmap"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://opengameart.org/content/pixtura12-medieval-pixel-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Pixtura12"
+authors_en = ["eishiya"]
+description_en = "A 12px medieval Textura bitmap font, with regular and condensed faces and unencoded Latin ligatures. Embedded bitmaps are retained; the missing underscore is recovered from the same file’s pixel outline."
+provenance_en = "Imported from https://opengameart.org/content/pixtura12-medieval-pixel-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "OFL-1.1"
+name = "OFL-1.1"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "OFL-1.1"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

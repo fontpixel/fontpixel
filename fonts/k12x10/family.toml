@@ -1,0 +1,27 @@
+name = "k12x10"
+name_zh = "k12x10"
+authors = ["ぞろよし"]
+homepage = "http://z.apps.atjp.jp/k12x10/"
+repository = ""
+description = "ぞろよし的12x10点阵汉字字体，字身宽12点、高10点，含JIS X 0208：1990全部汉字。是本站收录的日文汉字点阵中字面最矮的一档之一。"
+forms = ["gothic", "sans"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["k12x10", "K12x10", "漢字12x10ドットフォント", "JFドットk12x10", "JF Dot k12x10", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "k12x10"
+authors_en = ["ぞろよし"]
+description_en = "Zoroyoshi's 12x10 kanji bitmap font, twelve dots wide on a ten-dot body, covering the whole of JIS X 0208:1990. It is among the shortest Japanese kanji bitmap faces catalogued here."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页标注漢字12x10ドットフォント - k12x10 (ぞろよし氏) ※パブリックドメイン，授权表中列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用、改作与再分发均无限制，不要求署名。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me marks the 12x10 kanji dot font k12x10 (Zoroyoshi) as public domain and places it in the public-domain row of its licence table: copyright waived, no restriction on personal or commercial use, modification, or redistribution, and no credit required."

@@ -1,0 +1,18 @@
+name = "512_8"
+authors = ["Alexei Frounze"]
+homepage = "https://github.com/alexfru/512_8"
+repository = "https://github.com/alexfru/512_8"
+description = "512字符的8x8等宽点阵字体，另有加倍字身高度的16px一档，各含无衬线、衬线与粗体三款。面向嵌入式、FPGA、模拟器与复古游戏。"
+forms = ["terminal"]
+vibes = ["terminal", "programming", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["512_8", "512-8", "512x8", "512x16"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/alexfru/512_8；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "512_8"
+authors_en = ["Alexei Frounze"]
+description_en = "A 512-character 8x8 monospace bitmap font, with a double-height 16px body alongside it, each in sans, serif, and bold. Aimed at embedded, FPGA, emulator, and retro-game use."
+provenance_en = "Imported from https://github.com/alexfru/512_8; converted from ttf"

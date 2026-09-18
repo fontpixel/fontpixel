@@ -1,0 +1,27 @@
+name = "Gossip"
+authors = ["Deborah Khodanovich"]
+homepage = "https://gossip.cargo.site/"
+repository = ""
+description = "低、中、高三种分辨率的 Pixel 风格；保留全部字形。刺绣造型不作为额外像素变体重复导入。"
+forms = ["decorative"]
+vibes = ["blackletter", "textura", "textile", "manuscript"]
+source_kind = "pixel-outline"
+source_formats = ["OTF"]
+export_name = "FontPixel Weft"
+converted_from = "ttf"
+provenance = "导入自 https://gossip.cargo.site/ (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Gossip"
+authors_en = ["Deborah Khodanovich"]
+description_en = "The Pixel faces at low, medium and high resolutions, retaining every glyph. Embroidery-shaped styles are not duplicated as bitmap variants."
+provenance_en = "Imported from https://gossip.cargo.site/ (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "OFL-1.1"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "OFL-1.1"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

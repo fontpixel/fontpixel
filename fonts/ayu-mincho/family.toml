@@ -1,0 +1,28 @@
+name = "Ayu Mincho"
+name_zh = "Ayu明朝"
+name_ja = "Ayu明朝"
+authors = ["After X-TT Project"]
+homepage = "http://x-tt.osdn.jp/ayu.html"
+repository = ""
+description = "After X-TT Project的Ayu点阵字体明朝体，18px，含JIS X 0208：1990全部汉字。与同族黑体共用全部汉字字形，仅假名与拉丁字母另行绘制，拉丁带衬线。"
+forms = ["song", "serif"]
+vibes = ["game-ui", "serif", "book"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Ayu", "ayu", "Ayu明朝", "JFドットAyu明朝", "JF Dot Ayu Mincho", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "Ayu Mincho"
+authors_en = ["After X-TT Project"]
+description_en = "The mincho face of the After X-TT Project's Ayu bitmap font at 18px, covering the whole of JIS X 0208:1990. It shares every kanji with the gothic face in the same family and redraws only the kana and the Latin, which is serifed."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "同Ayu黑体：上游jikasei.me的自家製ドットフォント页把Ayuビットマップフォント (After X-TT Project) 标为パブリックドメイン，授权表中个人与商用、改作与再分发均无限制，不要求署名。转制方自家製フォント工房声明对转制物不主张任何权利。"
+name_en = "Public Domain"
+note_en = "As for Ayu Gothic: the 自家製ドットフォント page at jikasei.me marks the Ayu bitmap font (After X-TT Project) as public domain, with no restriction on personal or commercial use, modification, or redistribution and no credit required. 自家製フォント工房 disclaims any rights of its own in the conversion."

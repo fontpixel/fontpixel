@@ -1,0 +1,26 @@
+name = "Scriptorium"
+authors = ["Font End Dev"]
+homepage = "https://fontenddev.com/fonts/scriptorium/"
+repository = ""
+description = "受林迪斯法恩福音书启发的安色尔体与半安色尔体。"
+forms = ["decorative"]
+vibes = ["uncial", "manuscript", "western-rpg"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://fontenddev.com/fonts/scriptorium/ (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Scriptorium"
+authors_en = ["Font End Dev"]
+description_en = "Uncial and half-uncial letterforms inspired by the Lindisfarne Gospels."
+provenance_en = "Imported from https://fontenddev.com/fonts/scriptorium/ (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained); converted from ttf"
+
+[license]
+spdx = "CC-BY-4.0"
+name = "CC-BY-4.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC-BY-4.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

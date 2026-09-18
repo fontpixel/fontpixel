@@ -1,0 +1,18 @@
+name = "Pixellari"
+authors = ["Zacchary Dempsey-Plante"]
+homepage = "https://github.com/zedseven/Pixellari"
+repository = "https://github.com/zedseven/Pixellari"
+description = "16px像素字体，322个字形，含拉丁、拉丁扩展与常用标点。"
+forms = ["sans"]
+vibes = ["game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Pixellari", "pixellari"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/zedseven/Pixellari；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "Pixellari"
+authors_en = ["Zacchary Dempsey-Plante"]
+description_en = "A 16px pixel font of 322 glyphs covering Latin, Latin extensions, and everyday punctuation."
+provenance_en = "Imported from https://github.com/zedseven/Pixellari; converted from ttf"

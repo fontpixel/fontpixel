@@ -1,0 +1,26 @@
+name = "Pixelcastle"
+authors = ["Leonhard Katschner"]
+homepage = "https://www.behance.net/gallery/169528513/Pixelcastle-free-font"
+repository = ""
+description = "由 Leonhard Katschner 创作的 25px 哥特像素字体。作者的原始发布页明确采用 OFL；下载包附带的 Tippa 许可署名属于误附文件，审计中保留原件。"
+forms = ["decorative"]
+vibes = ["blackletter", "manuscript", "western-rpg"]
+source_kind = "pixel-outline"
+source_formats = ["OTF"]
+converted_from = "ttf"
+provenance = "导入自 https://www.behance.net/gallery/169528513/Pixelcastle-free-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Pixelcastle"
+authors_en = ["Leonhard Katschner"]
+description_en = "A 25px blackletter pixel font by Leonhard Katschner. The author’s original release explicitly grants OFL; the bundle’s unrelated Tippa notice is preserved separately in the source audit."
+provenance_en = "Imported from https://www.behance.net/gallery/169528513/Pixelcastle-free-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "OFL-1.1"
+name = "OFL-1.1"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "OFL-1.1"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

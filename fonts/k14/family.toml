@@ -1,0 +1,27 @@
+name = "K14"
+name_zh = "K14"
+authors = ["橘浩志", "今村俊幸", "The Electronic Font Open Laboratory"]
+homepage = ""
+repository = ""
+description = "橘浩志1987年完成的14px日文点阵字体，又称橘フォント，1995年获第4回自由软件大奖先锋奖，是X11时代日文环境的代表性字模。本站收录常规与粗体，以及今村俊幸所作JIS X 0213：2004对应的派生版，共四款。半角部分取自東雲ゴシック16。"
+forms = ["gothic", "sans"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["K14", "k14", "JFドットK14", "JF Dot K14", "橘フォント", "Tachibana font", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "K14"
+authors_en = ["橘浩志", "今村俊幸", "The Electronic Font Open Laboratory"]
+description_en = "Hiroshi Tachibana's 14px Japanese bitmap font, finished in 1987 and also known as the Tachibana font; it won the Pioneer Award at the 4th Free Software Awards in 1995 and was one of the defining Japanese faces of the X11 era. Four cuts are catalogued here: regular and bold, plus Toshiyuki Imamura's derivative covering JIS X 0213:2004. The halfwidth characters come from Shinonome Gothic 16."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页标注K12, K14 (橘浩志氏 / 今村俊幸氏) ※パブリックドメイン，授权表中列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用、改作与再分发均无限制，不要求署名。半角所用的東雲ゴシック16同为公有领域。日文维基百科K14 (フォント)条目亦记其授权为Public Domain。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me marks K12 and K14 (Hiroshi Tachibana / Toshiyuki Imamura) as public domain and places them in the public-domain row of its licence table: copyright waived, no restriction on personal or commercial use, modification, or redistribution, and no credit required. The Shinonome Gothic 16 used for the halfwidth characters is public domain as well. The Japanese Wikipedia article on K14 also records the licence as Public Domain."

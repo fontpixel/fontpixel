@@ -1,0 +1,18 @@
+name = "kirsch"
+authors = ["molarmanful"]
+homepage = "https://github.com/molarmanful/kirsch"
+repository = "https://github.com/molarmanful/kirsch"
+description = "16px点阵字体，8288个字形，等宽与比例宽度两款。上游用bited（BDF编辑器）制作，发布即为BDF。另有2倍与3倍放大版，属机械放大，本站未收。"
+forms = ["terminal"]
+vibes = ["terminal", "programming"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["kirsch", "Kirsch"]
+converted_from = ""
+provenance = "导入自 https://github.com/molarmanful/kirsch/releases (v0.7.3)"
+added = "2026-09-03"
+
+name_en = "kirsch"
+authors_en = ["molarmanful"]
+description_en = "A 16px bitmap font with 8288 glyphs, in monospaced and proportional cuts. Upstream draws it in bited, a BDF editor, and ships BDF directly. The 2x and 3x builds are mechanical upscales and are not catalogued here."
+provenance_en = "Imported from https://github.com/molarmanful/kirsch/releases (v0.7.3)"

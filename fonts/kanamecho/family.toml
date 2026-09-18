@@ -1,0 +1,28 @@
+name = "Kanamecho"
+name_zh = "要町"
+name_ja = "要町"
+authors = ["中村隆生"]
+homepage = ""
+repository = ""
+description = "中村隆生的要町点阵字体，12px，含JIS X 0208：1983全部汉字。"
+forms = ["gothic", "sans"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Kanamecho", "kanamecho", "要町フォント", "要町12", "JFドット要町12", "JF Dot Kanamecho 12", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "Kanamecho"
+authors_en = ["中村隆生"]
+description_en = "Takao Nakamura's Kanamecho bitmap font at 12px, covering the whole of JIS X 0208:1983."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页标注要町フォント (中村隆生氏) ※パブリックドメイン，授权表中列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用、改作与再分发均无限制，不要求署名。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me marks the Kanamecho font (Takao Nakamura) as public domain and places it in the public-domain row of its licence table: copyright waived, no restriction on personal or commercial use, modification, or redistribution, and no credit required."

@@ -1,0 +1,27 @@
+name = "jiskan"
+name_zh = "jiskan"
+authors = ["電子情報技術産業協会", "小山壽久", "安岡孝一", "今村俊幸", "花高信哉", "矢木達也", "The Electronic Font Open Laboratory", "平木敬太郎"]
+homepage = ""
+repository = ""
+description = "日本工业标准附带的点阵汉字字模，由电子情报技术产业协会公开。本站收录16px与24px两档共五款：16px为JIS X 0208：1990、JIS X 0213：2000、JIS X 0213：2004三个编码档，半角取自東雲ゴシック16（公有领域）；24px为JIS X 0213：2000与2004两档，半角取自平木敬太郎的日比谷24（SIL开放字体许可证1.1）。上游另有半角取自SONY字模的一组，因再分发须附SONY授权文本而该文本未随包提供，本站未收录，其全角部分与此处相同。"
+forms = ["gothic", "sans"]
+vibes = ["terminal", "programming", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["jiskan", "jiskan16", "jiskan24", "jiskan16s", "jiskan24h", "JFドットjiskan16s", "JFドットjiskan24h", "JF Dot jiskan16s", "JF Dot jiskan24h", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换。上游把16px与24px作为两组发布，本站合并为一个家族：同为日本工业标准的同一套字模在两档字身上的实现，由同一机构公开。归属依各字体name表核定：16px全角为電子情報技術産業協会／小山壽久／安岡孝一／今村俊幸／花高信哉，24px全角为電子情報技術産業協会／小山壽久／矢木達也。注：jiskan16s三个文件的设计者字段把全角误标为jiskan24，标注正确的是同包内半角取SONY版的JF-Dot-jiskan16.ttf。"
+added = "2026-09-03"
+
+name_en = "jiskan"
+authors_en = ["電子情報技術産業協会", "小山壽久", "安岡孝一", "今村俊幸", "花高信哉", "矢木達也", "The Electronic Font Open Laboratory", "平木敬太郎"]
+description_en = "The kanji bitmaps that accompany the Japanese Industrial Standard, published by JEITA. Five cuts across two sizes are catalogued: at 16px, JIS X 0208:1990, JIS X 0213:2000, and JIS X 0213:2004, with halfwidth characters from Shinonome Gothic 16 (public domain); at 24px, JIS X 0213:2000 and 2004, with halfwidth characters from Keitaro Hiraki's Hibiya 24 (SIL Open Font License 1.1). Upstream also ships a set whose halfwidth comes from a SONY font, not catalogued here because redistributing it requires attaching SONY's licence text and that text is not included in the archive; its fullwidth characters are the same as these."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf. Upstream publishes the 16px and 24px sets separately; they are merged into one family here as two body sizes of the same Japanese Industrial Standard bitmaps, published by the same body. Attribution follows each font's own name table: the 16px fullwidth is JEITA / Hisahisa Koyama / Koichi Yasuoka / Toshiyuki Imamura / Shinya Hanataka, and the 24px fullwidth is JEITA / Hisahisa Koyama / Tatsuya Yagi. Note that the designer field of the three jiskan16s files mislabels their fullwidth as jiskan24; the correctly labelled file is JF-Dot-jiskan16.ttf, the SONY-halfwidth build in the same archive."
+
+[license]
+spdx = "LicenseRef-PublicDomain AND OFL-1.1"
+name = "公有领域声明（全角）+ SIL开放字体许可证1.1（半角）"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页对本家族所含两组分别说明：16px一组明写「※以下は半角部分が東雲ゴシック16版。すべての文字がパブリックドメイン」，全部字符为公有领域；24px一组单列一栏，全角文字はパブリックドメイン、半角文字はSIL Open Font License 1.1，半角著作权归制作者平木敬太郎（字体name表内为Copyright (c) Keitarou Hiraki, Font Silo. 1990-2015）。两组合并后按较严者标注：个人与商用均无限制；若以可再作为字体数据复用的形式嵌入应用或网站、或再分发时包含日比谷24的半角字形数据，须以某种形式明示SIL开放字体许可证1.1。仅使用16px一组时实际全部为公有领域。"
+name_en = "Public Domain (fullwidth) and SIL Open Font License 1.1 (halfwidth)"
+note_en = "The 自家製ドットフォント page at jikasei.me covers the two sets in this family separately. Of the 16px set it says explicitly that the halfwidth characters are the Shinonome Gothic 16 version and that every character is public domain. The 24px set gets a row of its own: fullwidth public domain, halfwidth under the SIL Open Font License 1.1, with copyright in the halfwidth held by Keitaro Hiraki (the font's name table reads Copyright (c) Keitarou Hiraki, Font Silo. 1990-2015). Merged, the family is labelled by the stricter of the two: personal and commercial use are unrestricted, but embedding in an application or website in a form where the font data can be reused, or redistributing data that includes Hibiya 24's halfwidth glyphs, requires the SIL Open Font License 1.1 to be stated somewhere. Using only the 16px set, everything is in fact public domain."

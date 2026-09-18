@@ -1,0 +1,27 @@
+name = "Not Jam Scrawl"
+authors = ["Not Jam"]
+homepage = "https://not-jam.itch.io/not-jam-font-pack"
+repository = ""
+description = "Not Jam 字体包中的像素设计，合并同一设计的不同原生尺寸并保留各自的全部字符。"
+forms = ["script"]
+vibes = ["handwriting", "crooked"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Not Jam Font Pack"]
+converted_from = "ttf"
+provenance = "导入自 https://not-jam.itch.io/not-jam-font-pack (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Not Jam Scrawl"
+authors_en = ["Not Jam"]
+description_en = "A design from the Not Jam Font Pack, grouping its native sizes and retaining the complete character set of each face."
+provenance_en = "Imported from https://not-jam.itch.io/not-jam-font-pack (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

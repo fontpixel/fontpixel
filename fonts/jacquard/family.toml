@@ -1,0 +1,27 @@
+name = "Jacquard"
+authors = ["Sarah Cadigan-Fried"]
+homepage = "https://github.com/scfried/soft-type-jacquard"
+repository = "https://github.com/scfried/soft-type-jacquard"
+description = "Sarah Cadigan-Fried根据Heinrich Kuehn约1880年的针绣字母设计扩展复刻的装饰点阵字体。将Jacquard 12与24收于同一家族，按原始网格分别还原为21px与43px，保留全部拉丁扩展、组合附加符号、数学及符号字符。"
+forms = ["decorative"]
+vibes = ["blackletter", "textura", "manuscript", "textile"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Jacquard 12", "Jacquard 24", "Jacquard12", "Jacquard24"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl (jacquard12 and jacquard24; complete official TTFs; retrieved 2026-09-17)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Jacquard"
+authors_en = ["Sarah Cadigan-Fried"]
+description_en = "Sarah Cadigan-Fried’s expanded revival of Heinrich Kuehn’s circa-1880 needlepoint alphabet. Jacquard 12 and 24 share one family, restored on their original grids at 21px and 43px, with complete extended Latin, combining marks, mathematics, and symbols."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl (jacquard12 and jacquard24; complete official TTFs; retrieved 2026-09-17); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt；两个字号的许可证及版权声明完全相同。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt is retained; both sizes have identical licence and copyright notices."

@@ -1,0 +1,32 @@
+name = "Pixelify Sans"
+authors = ["Stefie Justprince"]
+homepage = "https://fonts.google.com/specimen/Pixelify+Sans"
+repository = "https://github.com/eifetx/Pixelify-Sans"
+description = "Stefie Justprince设计的像素风格字体，包含拉丁字母及扩展字符、西里尔字母。按11px转换，保留常规、中等、半粗与粗体；原轮廓的光学校正会量化到像素网格。"
+forms = ["sans"]
+vibes = ["game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/pixelifysans (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Pixelify Sans"
+authors_en = ["Stefie Justprince"]
+description_en = "A pixel-style typeface by Stefie Justprince with Latin, extended Latin, and Cyrillic. Rasterized at 11px in Regular, Medium, SemiBold, and Bold; optical outline adjustments are quantized to the pixel grid."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/pixelifysans (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt及其上游版权声明。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt and upstream copyright notice from Google Fonts are retained."
+
+[variants."PixelifySans-Medium-11px.bdf"]
+weight = "medium"
+
+[variants."PixelifySans-SemiBold-11px.bdf"]
+weight = "semibold"

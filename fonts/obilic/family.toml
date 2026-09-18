@@ -1,0 +1,27 @@
+name = "Obilic"
+authors = ["Страхиња Радић"]
+homepage = "https://git.sr.ht/~strahinja/fonts"
+repository = "https://git.sr.ht/~strahinja/fonts"
+description = "16px与18px两档点阵字体，设计上受苹果Chicago与IBM VGA字体启发。西里尔部分覆盖ISO 8859-5全部现代字符以及古斯拉夫字母。每档各有完整Unicode版与512字版两款。"
+forms = ["terminal"]
+vibes = ["terminal", "programming", "game-ui", "unix", "technical"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["Obilic", "Обилић", "obilic"]
+converted_from = ""
+provenance = "导入自 https://git.sr.ht/~strahinja/fonts"
+added = "2026-09-03"
+
+name_en = "Obilic"
+authors_en = ["Страхиња Радић"]
+description_en = "A bitmap font at 16px and 18px, drawn under the influence of Apple's Chicago and the IBM VGA font. Its Cyrillic covers every modern ISO 8859-5 character plus the Old Slavic letters. Each size comes in a full Unicode cut and a 512-character cut."
+provenance_en = "Imported from https://git.sr.ht/~strahinja/fonts"
+
+[license]
+spdx = "GPL-3.0-with-font-exception"
+name = "GNU通用公共许可证 第3版或更高（附字体例外）"
+confidence = "manual"
+file = "LICENSE"
+note = "随包LICENSE为GPL第3版原文，LICENSE.notice写明All of the files in this repository are licensed under the terms of GNU GPL v3 or (at your option) any later version，并给出标准字体例外：把本字体嵌入文档不会因此使该文档受GPL约束。自动判定会把随包的GPL正文误判为GPL-2.0-only并漏掉例外条款，故在此手工声明。"
+name_en = "GNU General Public License v3 or later, with the font exception"
+note_en = "The bundled LICENSE is the GPL version 3 text, and LICENSE.notice states that all files in the repository are licensed under GNU GPL v3 or, at the reader's option, any later version, with the standard font exception: embedding these fonts in a document does not by itself bring that document under the GPL. Automatic detection reads the bundled GPL text as GPL-2.0-only and misses the exception, so the licence is declared by hand here."

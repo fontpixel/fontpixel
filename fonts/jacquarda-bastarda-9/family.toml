@@ -1,0 +1,26 @@
+name = "Jacquarda Bastarda 9"
+authors = ["Sarah Cadigan-Fried"]
+homepage = "https://fonts.google.com/specimen/Jacquarda+Bastarda+9"
+repository = "https://github.com/scfried/soft-type-jacquarda-bastarda"
+description = "Sarah Cadigan-Fried根据Heinrich Kuehn约1880年的针绣字母设计扩展复刻的装饰点阵字体，包含拉丁扩展、数学及符号字符。"
+forms = ["decorative"]
+vibes = ["blackletter", "bastarda", "manuscript", "textile"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/jacquardabastarda9 (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Jacquarda Bastarda 9"
+authors_en = ["Sarah Cadigan-Fried"]
+description_en = "Sarah Cadigan-Fried’s expanded revival of Heinrich Kuehn’s circa-1880 needlepoint alphabet, with extended Latin, mathematics, and symbols."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/jacquardabastarda9 (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt及其上游版权声明。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt and upstream copyright notice from Google Fonts are retained."

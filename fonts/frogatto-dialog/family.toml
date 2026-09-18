@@ -1,0 +1,26 @@
+name = "Frogatto Dialog"
+authors = ["Jetrel"]
+homepage = "https://opengameart.org/content/frogatto-friends-bitmap-fonts"
+repository = ""
+description = "Frogatto & Friends 的原生点阵字体。使用与源图片一致的历史字符表，保留全部文字系统；颜色与阴影还原为单色字面。"
+forms = ["sans"]
+vibes = ["game-ui", "western-rpg"]
+source_kind = "bitmap"
+source_formats = ["PNG"]
+converted_from = ""
+provenance = "导入自 https://opengameart.org/content/frogatto-friends-bitmap-fonts (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Frogatto Dialog"
+authors_en = ["Jetrel"]
+description_en = "A native bitmap font from Frogatto & Friends. Historical character maps matching the source image retain every script; colours and shadows are reduced to a monochrome letter face."
+provenance_en = "Imported from https://opengameart.org/content/frogatto-friends-bitmap-fonts (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

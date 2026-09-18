@@ -1,0 +1,27 @@
+name = "K12"
+name_zh = "K12"
+authors = ["橘浩志", "今村俊幸", "The Electronic Font Open Laboratory"]
+homepage = ""
+repository = ""
+description = "橘浩志的12px日文点阵字体，常规与粗体两款，含JIS X 0213：2000全部汉字。半角部分取自東雲ゴシック16。与14px的K14同为一套设计的两档字面，上游未给两者一个统一的系列名，故各立一族。"
+forms = ["gothic", "sans"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["K12", "k12", "JFドットK12", "JF Dot K12", "橘フォント", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "K12"
+authors_en = ["橘浩志", "今村俊幸", "The Electronic Font Open Laboratory"]
+description_en = "Hiroshi Tachibana's 12px Japanese bitmap font in regular and bold, covering the whole of JIS X 0213:2000; the halfwidth characters come from Shinonome Gothic 16. It is the 12px cut of the same design as the 14px K14, but upstream gives the two no common series name, so each is catalogued as its own family."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页标注K12, K14 (橘浩志氏 / 今村俊幸氏) ※パブリックドメイン，授权表中列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用、改作与再分发均无限制，不要求署名。半角所用的東雲ゴシック16同为公有领域。日文维基百科K14 (フォント)条目亦记其授权为Public Domain。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me marks K12 and K14 (Hiroshi Tachibana / Toshiyuki Imamura) as public domain and places them in the public-domain row of its licence table: copyright waived, no restriction on personal or commercial use, modification, or redistribution, and no credit required. The Shinonome Gothic 16 used for the halfwidth characters is public domain as well. The Japanese Wikipedia article on K14 also records the licence as Public Domain."

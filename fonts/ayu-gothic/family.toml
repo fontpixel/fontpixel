@@ -1,0 +1,28 @@
+name = "Ayu Gothic"
+name_zh = "Ayu黑体"
+name_ja = "Ayuゴシック"
+authors = ["After X-TT Project"]
+homepage = "http://x-tt.osdn.jp/ayu.html"
+repository = ""
+description = "After X-TT Project的Ayu点阵字体黑体，18px与20px两档，含JIS X 0208：1990全部汉字。"
+forms = ["gothic", "sans"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Ayu", "ayu", "Ayuゴシック", "JFドットAyuゴシック", "JF Dot Ayu Gothic", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "Ayu Gothic"
+authors_en = ["After X-TT Project"]
+description_en = "The gothic face of the After X-TT Project's Ayu bitmap font, at 18px and 20px, covering the whole of JIS X 0208:1990."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页在收录书体一览中标注Ayuビットマップフォント (After X-TT Project) ※パブリックドメイン，并在授权表中把本字体列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用均无限制，改作与再分发无限制，任何情况下都不要求署名。转制方自家製フォント工房声明对转制物不主张任何权利。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me lists the Ayu bitmap font (After X-TT Project) as public domain in its catalogue and places it in the public-domain row of the licence table: copyright waived by the creator, no restriction on personal or commercial use, no restriction on modification or redistribution, and no credit required in any case. 自家製フォント工房 disclaims any rights of its own in the conversion."

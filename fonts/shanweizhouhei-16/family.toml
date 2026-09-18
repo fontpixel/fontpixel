@@ -1,0 +1,29 @@
+name = "ShanWeiZhouHei 16"
+name_zh = "扇尾胄黑16"
+authors = ["yzdnn"]
+homepage = "https://github.com/yzdnn/ShanWeiZhouHei-16"
+repository = "https://github.com/yzdnn/ShanWeiZhouHei-16"
+description = "基于KHドット兜町16增补简繁体汉字的16px逆反差像素黑体，横画比竖画更粗。采用中国大陆字形，仍在持续补字。与流行点阵体16同源。"
+forms = ["gothic", "decorative", "sans"]
+vibes = ["game-ui"]
+aliases = ["ShanWeiZhouHei-16", "扇尾胄黑 16", "扇尾冑黑16"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+export_name = "FontPixel SWZH 16"
+converted_from = "ttf"
+provenance = "导入自 https://github.com/yzdnn/ShanWeiZhouHei-16/tree/f0373bc2183778615d6ae4ff56fd2b9c5511ce25 (2026-09-17)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "ShanWeiZhouHei 16"
+authors_en = ["yzdnn"]
+description_en = "A 16px reverse-contrast pixel gothic derived from KH Dot Kabutochou 16, with thicker horizontal strokes and expanded Chinese coverage. Uses mainland Chinese glyph forms and remains a work in progress. Shares its source with FashionBitmap16."
+provenance_en = "Imported from https://github.com/yzdnn/ShanWeiZhouHei-16/tree/f0373bc2183778615d6ae4ff56fd2b9c5511ce25 (2026-09-17); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留上游OFL及版权声明。项目声明保留名称「扇尾胄黑 16」和「ShanWeiZhouHei 16」，本站转换后的字体内部名称为FontPixel SWZH 16。"
+name_en = "SIL Open Font License 1.1"
+note_en = "Retains the upstream OFL and copyright notices. Upstream reserves the names ShanWeiZhouHei 16 and 扇尾胄黑 16; converted fonts use the internal name FontPixel SWZH 16."

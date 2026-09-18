@@ -1,0 +1,27 @@
+name = "Manop Thai"
+name_zh = "Manop泰文"
+authors = ["Manop Wongsaisuwan"]
+homepage = "https://linux.thai.net/projects/thaixfonts"
+repository = "https://github.com/tlwg/thaixfonts"
+description = "泰文点阵字体，字面6x14、7x18、8x16、8x20四款，字符集为TIS-620（泰国国家标准），含泰文全部87个字符与ASCII。XLFD厂商标识为thai，与同作者的ETL泰文是两套不同设计。"
+forms = ["gothic", "sans"]
+vibes = ["terminal", "programming", "unix", "technical"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["Manop Thai", "manop", "manop-thai", "thaixfonts"]
+converted_from = ""
+provenance = "导入自 https://github.com/tlwg/thaixfonts"
+added = "2026-09-03"
+
+name_en = "Manop Thai"
+authors_en = ["Manop Wongsaisuwan"]
+description_en = "A Thai bitmap font in four cuts, 6x14, 7x18, 8x16, and 8x20. Its repertoire is TIS-620, Thailand's national standard, covering all 87 Thai characters plus ASCII. The XLFD foundry is thai, and the design is separate from the same author's ETL Thai."
+provenance_en = "Imported from https://github.com/tlwg/thaixfonts"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游tlwg/thaixfonts的COPYING逐目录说明授权，manop条目写明作者为Manop Wongsaisuwan，声明These are public domain fonts，并指出作者本人的声明见manop/README文件末尾。"
+name_en = "Public Domain"
+note_en = "The COPYING file in tlwg/thaixfonts states the licence per directory. Its manop entry names Manop Wongsaisuwan as the author, states \"These are public domain fonts\", and points to the author's own statement at the end of manop/README."

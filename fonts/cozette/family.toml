@@ -1,0 +1,18 @@
+name = "Cozette"
+authors = ["Slavfox"]
+homepage = "https://github.com/the-moonwitch/Cozette"
+repository = "https://github.com/the-moonwitch/Cozette"
+description = "13px编程点阵字体，6046个字形，覆盖拉丁、希腊、西里尔、Powerline与大量制表与符号。另收一款把数字7画上横杠的变体。上游同时发布2倍的hidpi版，属机械放大，本站未收。"
+forms = ["terminal"]
+vibes = ["terminal", "programming", "cute"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["Cozette", "cozette"]
+converted_from = ""
+provenance = "导入自 https://github.com/the-moonwitch/Cozette/releases (v.1.30.0)"
+added = "2026-09-03"
+
+name_en = "Cozette"
+authors_en = ["Slavfox"]
+description_en = "A 13px programming bitmap font with 6046 glyphs covering Latin, Greek, Cyrillic, Powerline, and a wide range of box-drawing and symbol characters. A variant with a crossed seven is included. Upstream also publishes a 2x hidpi build, a mechanical upscale, which is not catalogued here."
+provenance_en = "Imported from https://github.com/the-moonwitch/Cozette/releases (v.1.30.0)"

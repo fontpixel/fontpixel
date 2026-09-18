@@ -1,0 +1,26 @@
+name = "Home Video"
+authors = ["GGBotNet"]
+homepage = "https://github.com/GGBotNet/fonts-cc0"
+repository = ""
+description = "GGBotNet CC0 字体集中的原生像素设计；导入全部文字系统与字形。"
+forms = ["sans"]
+vibes = ["vhs", "crt-osd"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/GGBotNet/fonts-cc0 (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Home Video"
+authors_en = ["GGBotNet"]
+description_en = "A native pixel design from GGBotNet’s CC0 collection, retaining all scripts and glyphs."
+provenance_en = "Imported from https://github.com/GGBotNet/fonts-cc0 (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained); converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

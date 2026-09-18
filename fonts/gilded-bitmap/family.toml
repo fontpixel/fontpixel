@@ -1,0 +1,26 @@
+name = "Gilded Bitmap"
+authors = ["artisticdude", "Reemax"]
+homepage = "https://opengameart.org/content/16-bit-gilded-bitmap-font-with-lower-cases"
+repository = ""
+description = "包含原始大写版与 Reemax 扩充的小写版；两者部分字形和字距不同，分别保留。金色逐像素还原为单色。"
+forms = ["serif"]
+vibes = ["serif", "manuscript", "western-rpg"]
+source_kind = "bitmap"
+source_formats = ["BMP", "PNG"]
+converted_from = ""
+provenance = "导入自 https://opengameart.org/content/16-bit-gilded-bitmap-font-with-lower-cases (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Gilded Bitmap"
+authors_en = ["artisticdude", "Reemax"]
+description_en = "The original uppercase face and Reemax’s extended lowercase face have distinct glyphs and spacing, so both are retained. Gold shading is reduced to a monochrome silhouette."
+provenance_en = "Imported from https://opengameart.org/content/16-bit-gilded-bitmap-font-with-lower-cases (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

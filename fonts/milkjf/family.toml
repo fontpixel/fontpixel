@@ -1,0 +1,27 @@
+name = "milkjf"
+name_zh = "milkjf"
+authors = ["日本農園", "山内千里"]
+homepage = ""
+repository = "https://github.com/uobikiemukot/yaft"
+description = "日本農園与山内千里的milkjf点阵字体BDF版，16px，常规与粗体两款，含JIS X 0208：1983全部汉字。原始BDF随终端模拟器yaft一同分发。"
+forms = ["gothic", "sans"]
+vibes = ["terminal", "programming", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["milkjf", "milkjf16", "JFドットmilkjf16", "JF Dot milkjf 16", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "milkjf"
+authors_en = ["日本農園", "山内千里"]
+description_en = "The BDF edition of the milkjf bitmap font by Nihon Nouen and Chisato Yamauchi, at 16px in regular and bold, covering the whole of JIS X 0208:1983. The original BDF is distributed with the yaft terminal emulator."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页标注milkjf BDF版 (日本農園氏 / 山内千里氏) ※パブリックドメイン，授权表中列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用、改作与再分发均无限制，不要求署名。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me marks the milkjf BDF edition (Nihon Nouen / Chisato Yamauchi) as public domain and places it in the public-domain row of its licence table: copyright waived, no restriction on personal or commercial use, modification, or redistribution, and no credit required."

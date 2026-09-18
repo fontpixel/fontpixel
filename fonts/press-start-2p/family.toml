@@ -3,16 +3,18 @@ authors = ["CodeMan38"]
 homepage = "https://fonts.google.com/specimen/Press+Start+2P"
 repository = "https://github.com/google/fonts/tree/main/ofl/pressstart2p"
 description = ""
-form = "sans"  # UNVERIFIED：导入时预填，待人工复核
-vibes = ["retro-game"]  # UNVERIFIED
+forms = ["sans"]  # UNVERIFIED：导入时预填，待人工复核
+vibes = ["arcade", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
 aliases = ["PressStart2P", "pressstart2p"]
 converted_from = "ttf"
-provenance = "导入自pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P；上游https://fonts.google.com/specimen/Press+Start+2P（CSS Unicode-range切片镜像，v16，latin子集，收录于2026-08-18）；由ttf转换；收录的是Google Fonts v16的latin切片转制版，OFL.txt取自google/fonts"
+provenance = "取自google/fonts官方仓库提交92345ac0dbb28d27dbd32f3a782e84c55eaac214的完整PressStart2P-Regular.ttf（v3.000，2026-09-17）；按原生8px网格转为BDF。已替换原Latin切片，保留Latin Extended、Greek、Cyrillic及Cyrillic Extended。"
 added = "2026-08-21"
 
 name_en = "Press Start 2P"
 authors_en = ["CodeMan38"]
-provenance_en = "Imported from pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Google-Fonts/Press-Start-2P; upstream https://fonts.google.com/specimen/Press+Start+2P (CSS unicode-range slice mirror, v16, latin subset, collected 2026-08-18); converted from ttf; the collected file is a converted version of the Google Fonts v16 latin slice; OFL.txt taken from google/fonts"
+provenance_en = "Complete PressStart2P-Regular.ttf v3.000 from google/fonts commit 92345ac0dbb28d27dbd32f3a782e84c55eaac214, retrieved 2026-09-17 and rasterized at its native 8px grid. Replaces the former Latin-only CSS slice and retains Latin Extended, Greek, Cyrillic, and Cyrillic Extended."
 
 [license]
 spdx = "OFL-1.1"

@@ -1,0 +1,27 @@
+name = "NECTEC Thai"
+name_zh = "NECTEC泰文"
+authors = ["Virach Sornlertlamvanich", "NECTEC"]
+homepage = "https://linux.thai.net/projects/thaixfonts"
+repository = "https://github.com/tlwg/thaixfonts"
+description = "泰国国家电子与计算机技术中心（NECTEC）的18px泰文点阵字体，含常规、粗体、斜体、粗斜体四款。字符集为TIS-620（泰国国家标准），含泰文全部87个字符与ASCII。"
+forms = ["gothic", "sans"]
+vibes = ["terminal", "programming", "unix", "technical"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["NECTEC Thai", "nectec", "nectec-thai", "thaixfonts"]
+converted_from = ""
+provenance = "导入自 https://github.com/tlwg/thaixfonts"
+added = "2026-09-03"
+
+name_en = "NECTEC Thai"
+authors_en = ["Virach Sornlertlamvanich", "NECTEC"]
+description_en = "An 18px Thai bitmap font from NECTEC, Thailand's National Electronics and Computer Technology Center, in regular, bold, italic, and bold italic. Its repertoire is TIS-620, the national standard, covering all 87 Thai characters plus ASCII."
+provenance_en = "Imported from https://github.com/tlwg/thaixfonts"
+
+[license]
+spdx = "GPL-2.0-or-later"
+name = "GNU通用公共许可证 第2版或更高"
+confidence = "manual"
+note = "上游tlwg/thaixfonts的COPYING在nectec条目下给出GPL标准声明：Copyright (C) 1999, 2000 NECTEC，作者Virach Sornlertlamvanich，this program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License … either version 2 of the License, or (at your option) any later version。nectec目录内另附LICENSE全文。"
+name_en = "GNU General Public License v2 or later"
+note_en = "The COPYING file in tlwg/thaixfonts gives the standard GPL grant under its nectec entry: Copyright (C) 1999, 2000 NECTEC, author Virach Sornlertlamvanich, \"this program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License ... either version 2 of the License, or (at your option) any later version\". The nectec directory bundles the full LICENSE text."

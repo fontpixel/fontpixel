@@ -1,0 +1,27 @@
+name = "1307"
+authors = ["intellikat"]
+homepage = "https://intellikat.itch.io/1307-playdatepulp-font"
+repository = ""
+description = "受中世纪手稿启发的 Playdate/Pulp 8×8 手写点阵字体。完整保留 95 个 ASCII 字符及 14 个未编码的界面图块。"
+forms = ["script"]
+vibes = ["handwriting", "manuscript", "western-rpg", "handheld"]
+aliases = ["Pulp 1307", "Playdate"]
+source_kind = "bitmap"
+source_formats = ["PNG"]
+converted_from = ""
+provenance = "导入自 https://intellikat.itch.io/1307-playdatepulp-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "1307"
+authors_en = ["intellikat"]
+description_en = "An 8×8 handwritten Playdate/Pulp bitmap font inspired by medieval manuscripts. All 95 ASCII characters and 14 unencoded UI tiles are retained."
+provenance_en = "Imported from https://intellikat.itch.io/1307-playdatepulp-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

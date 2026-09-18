@@ -1,0 +1,26 @@
+name = "Gothic Pixelart Font"
+authors = ["osadam"]
+homepage = "https://osadam.itch.io/gothic-pixelart-font"
+repository = ""
+description = "osadam 创作的 8px 哥特像素字体，保留源 TTF 的全部字形。"
+forms = ["decorative"]
+vibes = ["blackletter", "manuscript", "western-rpg"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://osadam.itch.io/gothic-pixelart-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Gothic Pixelart Font"
+authors_en = ["osadam"]
+description_en = "An 8px gothic pixel font by osadam, retaining the complete source TTF glyph set."
+provenance_en = "Imported from https://osadam.itch.io/gothic-pixelart-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

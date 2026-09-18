@@ -1,0 +1,26 @@
+name = "MatrixType"
+authors = ["GGBotNet"]
+homepage = "https://github.com/GGBotNet/fonts-cc0"
+repository = ""
+description = "将每个圆点还原为一个像素。四个原始样式还原后的 291 个编码字符逐像素一致，因此保留一个点阵变体。"
+forms = ["sans"]
+vibes = ["dot-matrix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/GGBotNet/fonts-cc0 (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "MatrixType"
+authors_en = ["GGBotNet"]
+description_en = "Each dot is restored to one pixel. All four original styles yield identical bitmaps for their 291 encoded characters, so one bitmap variant is retained."
+provenance_en = "Imported from https://github.com/GGBotNet/fonts-cc0 (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

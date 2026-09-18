@@ -1,0 +1,26 @@
+name = "Micro 5"
+authors = ["Sarah Cadigan-Fried"]
+homepage = "https://fonts.google.com/specimen/Micro+5"
+repository = "https://github.com/scfried/soft-type-micro"
+description = "Sarah Cadigan-Fried设计的微型针织点阵字体，大写字母主体高5个像素，包含拉丁扩展、数学及符号字符。"
+forms = ["sans"]
+vibes = ["micro", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/micro5 (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "Micro 5"
+authors_en = ["Sarah Cadigan-Fried"]
+description_en = "A tiny knitting typeface by Sarah Cadigan-Fried with five-pixel capitals, extended Latin, mathematics, and symbols."
+provenance_en = "Imported from https://github.com/google/fonts/tree/92345ac0dbb28d27dbd32f3a782e84c55eaac214/ofl/micro5 (complete official TTFs; retrieved 2026-09-17; all cmap entries and unencoded glyphs retained in BDF); converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL开放字体许可证1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "保留Google Fonts官方完整OFL.txt及其上游版权声明。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The complete official OFL.txt and upstream copyright notice from Google Fonts are retained."

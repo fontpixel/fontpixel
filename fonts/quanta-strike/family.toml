@@ -1,0 +1,18 @@
+name = "Quanta Strike"
+authors = ["dithernaut"]
+homepage = "https://github.com/dithernaut/quanta-strike"
+repository = "https://github.com/dithernaut/quanta-strike"
+description = "按字身尺寸分别绘制的像素字体，6/10/12/14/16/18/20/32px八档，每档各有等宽与比例宽度两款，12px另有粗体，共十八款。"
+forms = ["terminal"]
+vibes = ["terminal", "programming", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Quanta Strike", "quanta-strike", "quanta"]
+converted_from = "ttf"
+provenance = "导入自 https://github.com/dithernaut/quanta-strike/releases (v0.6.3)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "Quanta Strike"
+authors_en = ["dithernaut"]
+description_en = "A pixel font drawn separately for each body size: 6, 10, 12, 14, 16, 18, 20, and 32px, each in a monospaced and a proportional cut, with a bold at 12px, eighteen in all."
+provenance_en = "Imported from https://github.com/dithernaut/quanta-strike/releases (v0.6.3); converted from ttf"

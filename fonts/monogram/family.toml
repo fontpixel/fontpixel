@@ -1,0 +1,26 @@
+name = "monogram"
+authors = ["Vinícius Menézio"]
+homepage = "https://datagoblin.itch.io/monogram"
+repository = ""
+description = "紧凑的等宽像素字体，采用扩展字符集的常规和斜体版本。"
+forms = ["sans"]
+vibes = ["game-ui", "programming", "elegant"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://datagoblin.itch.io/monogram (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)；由 ttf 转换"
+added = "2026-09-17"
+
+name_en = "monogram"
+authors_en = ["Vinícius Menézio"]
+description_en = "A compact monospaced pixel font; both regular and italic extended character sets are retained."
+provenance_en = "Imported from https://datagoblin.itch.io/monogram (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained); converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

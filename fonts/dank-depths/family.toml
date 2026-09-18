@@ -1,0 +1,26 @@
+name = "Dank Depths"
+authors = ["Hexany Ives"]
+homepage = "https://hexany-ives.itch.io/dank-depths-pixel-font"
+repository = ""
+description = "16px 地牢风格像素字体，含拉丁大写、数字、标点与数学符号；保留源文件全部字形。"
+forms = ["serif"]
+vibes = ["western-rpg", "serif", "experimental"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://hexany-ives.itch.io/dank-depths-pixel-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Dank Depths"
+authors_en = ["Hexany Ives"]
+description_en = "A 16px dungeon-style pixel font with Latin capitals, digits, punctuation and mathematical symbols; all source glyphs are retained."
+provenance_en = "Imported from https://hexany-ives.itch.io/dank-depths-pixel-font (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "OFL-1.1"
+name = "OFL-1.1"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "OFL-1.1"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."

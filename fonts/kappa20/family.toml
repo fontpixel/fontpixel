@@ -1,0 +1,27 @@
+name = "Kappa 20dot"
+name_zh = "Kappa 20点阵"
+authors = ["狩野宏樹", "永尾制一"]
+homepage = "http://web.archive.org/web/20101221113130/http://kappa.allnet.ne.jp/20dot.fonts/"
+repository = ""
+description = "狩野宏樹与永尾制一的20px日文点阵字体，本站收录常规、粗体，以及对应JIS X 0213：2000的加粗一款，共三档。前两款含JIS X 0208：1990全部汉字。本系列是自家製ドットフォント中唯一支持竖排的一套。"
+forms = ["song", "serif"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["Kappa20", "kappa20", "Kappa 20dot fonts", "JFドットKappa20", "JF Dot Kappa 20", "自家製ドットフォント"]
+converted_from = "ttf"
+provenance = "导入自 http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527)；由 ttf 转换"
+added = "2026-09-03"
+
+name_en = "Kappa 20dot"
+authors_en = ["狩野宏樹", "永尾制一"]
+description_en = "Hiroki Kanou and Seiichi Nagao's 20px Japanese bitmap font. Three cuts are catalogued: regular, bold, and a bold cut covering JIS X 0213:2000; the first two cover the whole of JIS X 0208:1990. It is the only series in the 自家製ドットフォント collection with vertical writing support."
+provenance_en = "Imported from http://jikasei.me/font/jf-dotfont/ (jfdotfont-20150527); converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公有领域声明"
+confidence = "manual"
+note = "上游jikasei.me的自家製ドットフォント页标注Kappa 20dot fonts (狩野宏樹氏 / 永尾制一氏) ※パブリックドメイン，授权表中列入パブリックドメイン一栏：著作权由制作者放弃，个人与商用、改作与再分发均无限制，不要求署名。"
+name_en = "Public Domain"
+note_en = "The 自家製ドットフォント page at jikasei.me marks the Kappa 20dot fonts (Hiroki Kanou / Seiichi Nagao) as public domain and places them in the public-domain row of its licence table: copyright waived, no restriction on personal or commercial use, modification, or redistribution, and no credit required."

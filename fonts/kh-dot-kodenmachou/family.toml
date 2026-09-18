@@ -1,20 +1,23 @@
 name = "KH Dot Kodenmachou"
 name_zh = "KH点阵小传马町"
-authors = ["平木敬太郎", "自家製フォント工房"]
+name_ja = "KHドット小伝馬町"
+authors = ["平木敬太郎", "自家製フォント工房 (Jikasei)"]
 homepage = "http://jikasei.me/font/kh-dotfont/"
 repository = ""
 description = "KH点阵系列里的方黑体，12px与16px两档。除常规版外另有两种假名改款：Ki为几何风假名（幾何学的カナ），Ko为小假名（小かな）；汉字部分相同。含JIS第二水准全部汉字。"
-form = "gothic"
-vibes = ["retro-game", "classic"]
-aliases = ["KHドット小伝馬町", "KH Dot Kodenmachou", "KHドットフォント", "khdotfont", "電脳フォント"]
+forms = ["gothic", "sans"]
+vibes = ["game-ui", "unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["KHドット小伝馬町", "KH Dot Kodenmachou", "KHドットフォント", "khdotfont", "電脳フォント", "幾何学的カナ", "小かな", "角ゴシック", "KHドットフォントシリーズ"]
 converted_from = "ttf"
-provenance = "导入自 direct-downloads-2026-08-31/jikasei-khdotfont-20150527；上游 http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)；由 ttf 转换"
+provenance = "导入自 http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)；由 ttf 转换"
 added = "2026-08-31"
 
 name_en = "KH Dot Kodenmachou"
-authors_en = ["平木敬太郎", "自家製フォント工房"]
+authors_en = ["平木敬太郎", "自家製フォント工房 (Jikasei)"]
 description_en = "The square gothic face of the KH Dot series, at 12px and 16px. Besides the regular cut there are two alternative kana designs: Ki uses geometric kana and Ko uses small kana; the kanji are shared. Covers the whole of JIS level 2."
-provenance_en = "Imported from direct-downloads-2026-08-31/jikasei-khdotfont-20150527; upstream http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527); converted from ttf"
+provenance_en = "Imported from http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527); converted from ttf"
 
 [license]
 spdx = "OFL-1.1"

@@ -1,20 +1,23 @@
 name = "KH Dot Hatchoubori"
 name_zh = "KH点阵八丁堀"
-authors = ["平木敬太郎", "自家製フォント工房"]
+name_ja = "KHドット八丁堀"
+authors = ["平木敬太郎", "自家製フォント工房 (Jikasei)"]
 homepage = "http://jikasei.me/font/kh-dotfont/"
 repository = ""
 description = "KH点阵系列里的隶书体，16px，横画收尾带明显的波磔。中文点阵字体“八丁饰尾体16”即以本字体为底改作。含JIS第二水准全部汉字。"
-form = "decorative"
-vibes = ["decorative", "classic"]
-aliases = ["KHドット八丁堀", "KH Dot Hatchoubori", "KHドットフォント", "khdotfont", "電脳フォント"]
+forms = ["decorative"]
+vibes = ["unix", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+aliases = ["KHドット八丁堀", "KH Dot Hatchoubori", "KHドットフォント", "khdotfont", "電脳フォント", "隷書体", "KHドットフォントシリーズ"]
 converted_from = "ttf"
-provenance = "导入自 direct-downloads-2026-08-31/jikasei-khdotfont-20150527；上游 http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)；由 ttf 转换"
+provenance = "导入自 http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527)；由 ttf 转换"
 added = "2026-08-31"
 
 name_en = "KH Dot Hatchoubori"
-authors_en = ["平木敬太郎", "自家製フォント工房"]
+authors_en = ["平木敬太郎", "自家製フォント工房 (Jikasei)"]
 description_en = "The clerical script face of the KH Dot series at 16px, with the pronounced flared horizontals of the style. The Chinese bitmap font BaDingShiWeiTi 16 is a reworking of this face. Covers the whole of JIS level 2."
-provenance_en = "Imported from direct-downloads-2026-08-31/jikasei-khdotfont-20150527; upstream http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527); converted from ttf"
+provenance_en = "Imported from http://jikasei.me/font/kh-dotfont/ (khdotfont-20150527); converted from ttf"
 
 [license]
 spdx = "OFL-1.1"

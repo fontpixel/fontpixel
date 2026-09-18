@@ -1,0 +1,26 @@
+name = "Gothic Pixels"
+authors = ["Akezhar"]
+homepage = "https://akezhar.itch.io/gothic-pixels"
+repository = ""
+description = "适用于奇幻游戏与古籍风格的像素字体，保留源文件中的全部字形。"
+forms = ["decorative"]
+vibes = ["blackletter", "manuscript", "western-rpg"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://akezhar.itch.io/gothic-pixels (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+added = "2026-09-17"
+
+name_en = "Gothic Pixels"
+authors_en = ["Akezhar"]
+description_en = "A pixel font for fantasy games and old-book lettering, retaining every source glyph."
+provenance_en = "Imported from https://akezhar.itch.io/gothic-pixels (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0-1.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC0-1.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."
