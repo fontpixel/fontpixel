@@ -1,0 +1,7 @@
+/downloads/*
+  Content-Disposition: attachment
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=0, must-revalidate
+
+/downloads/*.gz
+  Content-Type: application/gzip

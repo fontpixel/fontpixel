@@ -34,7 +34,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m venv .venv
-          .venv/bin/pip install -e "pipeline[dev]" boto3
+          .venv/bin/pip install -e "pipeline[dev]"
 
       - name: Restore build cache
         uses: actions/cache@v4
@@ -46,21 +46,19 @@ jobs:
       - name: Build font data (display-asset budget 900MB)
         run: .venv/bin/python -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
 
-      - name: Verify download base URL is configured
-        run: |
-          if [ -z "${{ vars.OPF_DOWNLOADS_BASE }}" ]; then
-            echo "::error::仓库变量 OPF_DOWNLOADS_BASE 未设置。站点会把下载链接回落到 Pages 的 /downloads，而该目录在部署时被删除，所有下载都会 404。请到 Settings → Secrets and variables → Actions → Variables 设置（2026-08-31 项目改名后，由 FBF_DOWNLOADS_BASE 更名而来）。"
-            exit 1
-          fi
+      - name: Build site wordmark
+        run: .venv/bin/python -m opf.brandfont --fonts fonts --data site/public/data --names site/src/i18n/sitenames.json
 
       - name: Astro build
         run: |
-          rm -rf site/public/downloads   # downloads go through R2 only, never into Pages
-          cd site && npm ci && npx astro build
+          cd site && npm ci && npm run build
         env:
-          # Pages serves at the domain root; downloads point to R2's public address
+          # Pages serves both the site and downloadable fonts from one project.
           OPF_BASE: /
-          OPF_DOWNLOADS_BASE: ${{ vars.OPF_DOWNLOADS_BASE }}
+          OPF_DOWNLOADS_BASE: /downloads
+
+      - name: Check Cloudflare Pages Free limits
+        run: python .github/scripts/check_pages_limits.py site/dist
 
       - name: Deploy site to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
@@ -68,10 +66,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy site/dist --project-name=${{ vars.CF_PAGES_PROJECT }}
-
-      - name: Sync downloads to R2 (incremental)
-        run: .venv/bin/python .github/scripts/sync_r2.py --dir dist-downloads --bucket "${{ vars.R2_BUCKET }}"
-        env:
-          R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}

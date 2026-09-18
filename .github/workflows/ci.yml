@@ -27,10 +27,10 @@ jobs:
       - name: 安装 Python 依赖
         run: |
           python -m venv .venv
-          .venv/bin/pip install -e "pipeline[dev]"
+          .venv/bin/python -m pip install -e "pipeline[dev]"
 
       - name: pytest
-        run: .venv/bin/pytest pipeline/tests -q
+        run: .venv/bin/python -m pytest pipeline/tests -q
 
       - name: 恢复构建缓存
         uses: actions/cache@v4
@@ -48,8 +48,14 @@ jobs:
       - name: vitest
         run: cd site && npx vitest run
 
+      - name: 类型检查(astro check + svelte-check)
+        run: cd site && npm run check
+
       - name: Astro 构建
-        run: cd site && npx astro build
+        run: cd site && npm run build
+
+      - name: 检查完整站点的 Pages 免费额度
+        run: python .github/scripts/check_pages_limits.py site/dist
 
       - name: 安装 Playwright Chromium
         run: cd site && npx playwright install --with-deps chromium

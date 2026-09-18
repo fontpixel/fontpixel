@@ -1,14 +1,16 @@
 {
-  "name": "open-pixel-fonts-site",
+  "name": "fontpixel-site",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/stage-downloads.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/stage-downloads.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "test": "vitest run",
-    "check": "astro check",
+    "check": "astro check && svelte-check --threshold error",
     "e2e": "playwright test"
   },
   "dependencies": {
@@ -22,10 +24,12 @@
     "zod": "^3.24.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@astrojs/sitemap": "^3.7.3",
     "@playwright/test": "^1.62.1",
     "@types/node": "^24.0.0",
-    "typescript": "^5.6.0",
+    "svelte-check": "^4.7.6",
+    "typescript": "^5.9.3",
     "vitest": "^3.0.0"
   }
 }

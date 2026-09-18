@@ -8,8 +8,8 @@ import { createReadStream, existsSync, statSync } from 'node:fs';
 // `Content-Encoding: gzip` and no Content-Type, so the browser transparently
 // decompresses the BDF and renders it as text instead of downloading (and a
 // "save as" would even write decompressed bytes under a .gz name). Serve
-// /downloads/* ourselves with download headers. Production goes through R2,
-// where the sync script already sets proper content types.
+// /downloads/* ourselves with download headers. Production uses Pages
+// with the equivalent headers in public/_headers.
 const DOWNLOADS_DIR = new URL('./public/downloads/', import.meta.url).pathname;
 const DOWNLOAD_TYPES = { '.gz': 'application/gzip', '.zip': 'application/zip', '.ttf': 'font/ttf' };
 function downloadsAsAttachments() {
@@ -38,8 +38,8 @@ function downloadsAsAttachments() {
 
 // Production domain. canonical, og:url, and sitemap all need absolute URLs for search
 // engines to honor them.
-// Production domain is pixelfonts.dev; override with OPF_SITE for special environments.
-const site = process.env.OPF_SITE ?? 'https://pixelfonts.dev';
+// Production domain is fontpixel.com; override with OPF_SITE for special environments.
+const site = process.env.OPF_SITE ?? 'https://fontpixel.com';
 
 /**
  * Markdown/MDX links that point off-site open in a new tab and never hand the
@@ -62,10 +62,19 @@ function rehypeExternalLinks() {
 
 export default defineConfig({
   site,
+  redirects: Object.fromEntries(
+    ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'fr'].flatMap((lang) =>
+      ['bitcount-single', 'bitcount-prop-single'].map((slug) => [
+        `/${lang}/fonts/${slug}/`,
+        { status: 301, destination: `/${lang}/fonts/bitcount/` },
+      ]),
+    ),
+  ),
   integrations: [
     mdx(),
     svelte(),
     sitemap({
+      filter: (page) => !/\/fonts\/bitcount-(?:single|prop-single)\/?$/.test(page),
       // The site has six parallel languages; each page lists the other five as
       // alternates, so search engines know they're different-language versions of the
       // same content, not duplicates
