@@ -45,7 +45,9 @@ def test_build_downloads_outputs(tmp_path):
 
     bdf_entry = next(e for e in entries if e["kind"] == "bdf")
     raw = gzip.decompress((out / bdf_entry["file"]).read_bytes())
-    assert raw == (d / "mini.bdf").read_bytes()
+    assert b'CHARSET_REGISTRY "ISO10646"' in raw
+    assert b"ENCODING 27704" in raw
+    assert b"ENCODING -1" in raw
 
     with zipfile.ZipFile(out / "mini.zip") as z:
         names = set(z.namelist())
@@ -114,6 +116,9 @@ def test_write_bdf_roundtrip(tmp_path):
     from opf.ingest.bdfwrite import write_bdf
 
     f = parse_bdf(FIX / "mini.bdf", "mini")
+    # Parsed codepoints are Unicode even when the source used a legacy charset.
+    f.props["CHARSET_REGISTRY"] = "GB2312.1980"
+    f.props["CHARSET_ENCODING"] = "0"
     out = tmp_path / "rt.bdf"
     write_bdf(f, out)
     f2 = parse_bdf(out, "mini")
@@ -124,6 +129,7 @@ def test_write_bdf_roundtrip(tmp_path):
         assert a.rows == b.rows
     assert f2.pixel_size == f.pixel_size
     assert f2.ascent == f.ascent
+    assert f2.unencoded_glyphs == f.unencoded_glyphs
 
 
 def test_metadata_refresh_matches_a_full_rebuild_byte_for_byte(tmp_path):

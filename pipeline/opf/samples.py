@@ -16,6 +16,10 @@ SAMPLES: dict[str, str] = {
     # would render wrong; an isolated-form alphabet is direction-agnostic and
     # right for inspecting glyph coverage (includes Persian and Urdu letters).
     "arabic": "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي\nپ چ ژ گ ک ی · ٹ ڈ ڑ ں ھ ہ ے\n٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ · ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹",
+    # Thai combining vowels and tone marks carry dwidth 0 and a negative bbx,
+    # so they stack over the preceding consonant even though nothing here does
+    # shaping -- a real sentence renders correctly and is the better test.
+    "thai": "เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน ๐๑๒๓๔๕๖๗๘๙",
     "javascript": '// Quick sort: O(n log n) average, ASCII 0-9\nconst quickSort = ([p, ...rest]) =>\n  p === undefined\n    ? []\n    : [...quickSort(rest.filter((x) => x < p)), p,\n       ...quickSort(rest.filter((x) => x >= p))];\nconsole.log(quickSort([42, 7, 19, 3, 88, 0]), "OK!");',
     "box-drawing": "┌─┬─┐ ┏━┳━┓ ╔═╦═╗ ╭─┬─╮\n├─┼─┤ ┣━╋━┫ ╠═╬═╣ ├─┼─┤\n└─┴─┘ ┗━┻━┛ ╚═╩═╝ ╰─┴─╯\n┄┅┆┇┈┉┊┋ ╌╍╎╏ ╱╲╳ ╴╵╶╷ ╸╹╺╻",
 }

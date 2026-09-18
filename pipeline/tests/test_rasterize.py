@@ -1,3 +1,4 @@
+import os
 import zipfile
 from pathlib import Path
 
@@ -7,7 +8,13 @@ from opf.ingest.rasterize import detect_native_ppem, rasterize_ttf
 from opf.model import row_bytes
 from opf.parsers.bdf import parse_bdf
 
-COLLECTION = Path("/home/chen/githubprojects/pixelfontworkshop/pixel-font-collection-fonts")
+# Sibling of the repo by default (the --src the README documents), so a moved
+# checkout doesn't silently skip every test in this file. Override with
+# OPF_COLLECTION.
+COLLECTION = Path(
+    os.environ.get("OPF_COLLECTION")
+    or Path(__file__).resolve().parents[2].parent / "pixel-font-collection-fonts"
+)
 GALMURI_ZIP = COLLECTION / (
     "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri/"
     "RELEASE-ASSETS/Galmuri-v2.40.4.zip"
@@ -67,3 +74,69 @@ def test_regular_outline_font_returns_none():
     if not dejavu.exists():
         pytest.skip("no system DejaVu")
     assert detect_native_ppem(dejavu) is None
+
+
+# Nightgazer12 is a vectorized pixel font whose outlines sit exactly on a 12px grid
+# (upem=24, every coordinate a multiple of 2), so the correct raster is fully determined
+# by the geometry — filling the contours at pixel centres. These two glyphs were derived
+# that way, independently of FreeType.
+NIGHTGAZER12 = COLLECTION / (
+    "pixel-fonts-supplement-zeoseven-maoken-2026-08-18/Upstream-GitHub/"
+    "scott0107000--Nightgazer-Bitmap/Nightgazer-Bitmap-HEAD/Nightgazer12.ttf"
+)
+_GRID_TRUTH = {
+    0x570B: (10, 11, 1, -1, 12, [  # 國
+        "##########",
+        "#....#.#.#",
+        "##########",
+        "#....#...#",
+        "####.#.#.#",
+        "##.#.#.#.#",
+        "####.##..#",
+        "#....#.#.#",
+        "#####.##.#",
+        "#......#.#",
+        "##########",
+    ]),
+    0x5B57: (11, 11, 0, -1, 12, [  # 字
+        ".....#.....",
+        ".##########",
+        ".#........#",
+        "#.########.",
+        ".......#...",
+        "......#....",
+        "###########",
+        "......#....",
+        "...#..#....",
+        "....###....",
+        ".....#.....",
+    ]),
+}
+
+
+def _art(g):
+    nb = row_bytes(g.bbw)
+    return [
+        "".join("#" if g.rows[y * nb + (x >> 3)] & (0x80 >> (x & 7)) else "."
+                for x in range(g.bbw))
+        for y in range(g.bbh)
+    ]
+
+
+@pytest.mark.skipif(not NIGHTGAZER12.exists(), reason="Nightgazer12.ttf missing")
+def test_rasterize_reproduces_the_grid_exactly():
+    """A font already on the pixel grid must come back pixel-identical.
+
+    FreeType hints by default, and on a pixel font the hinter shifts and doubles
+    1px stems — 一会儿粗一会儿细. Rasterizing has to switch it off.
+    """
+    rf = rasterize_ttf(NIGHTGAZER12, 12, "nightgazer")
+    by_cp = {g.cp: g for g in rf.glyphs}
+    for cp, (bbw, bbh, bbx, bby, dwidth, art) in _GRID_TRUTH.items():
+        g = by_cp[cp]
+        assert _art(g) == art, f"U+{cp:04X} raster differs from the outline grid"
+        assert (g.bbw, g.bbh, g.bbx, g.bby, g.dwidth) == (bbw, bbh, bbx, bby, dwidth)
+
+    # ...and hinting=True is what the caller opts into, not the default.
+    hinted = {g.cp: g for g in rasterize_ttf(NIGHTGAZER12, 12, "n", hinting=True).glyphs}
+    assert _art(hinted[0x5B57]) != _GRID_TRUTH[0x5B57][5]

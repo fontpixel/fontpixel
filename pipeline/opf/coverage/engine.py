@@ -30,6 +30,11 @@ _BADGES: list[tuple[str, float]] = [
     ("gb2312", 0.99), ("tongyong-guifan", 0.99), ("big5-changyong", 0.99),
     ("tw-changyong-4808", 0.99), ("jisx0208-l1", 0.99), ("ksx1001-hangul", 0.99),
     ("hangul-syllables", 0.999), ("wgl4", 0.99), ("cp437", 0.99),
+    # Thai gets a badge where Greek and Arabic deliberately do not: those two sets
+    # depart from their nearest standards on purpose, while the Thai set is the
+    # Thai portion of TIS-620 exactly -- a national standard, the same category
+    # as gb2312 or jisx0208-l1.
+    ("thai", 0.99),
 ]
 
 
@@ -126,6 +131,7 @@ SCRIPT_REFERENCE_CHARSETS: dict[str, tuple[str, ...]] = {
     "cyrillic": ("cyrillic",),
     "greek": ("greek",),
     "arabic": ("arabic",),
+    "thai": ("thai",),
 }
 
 
@@ -148,6 +154,7 @@ def _script_scores(cov: dict[str, tuple[int, int]]) -> dict[str, float]:
         "cyrillic": _best(cov, r["cyrillic"]),
         "greek": _best(cov, r["greek"]),
         "arabic": _best(cov, r["arabic"]),
+        "thai": _best(cov, r["thai"]),
     }
 
 

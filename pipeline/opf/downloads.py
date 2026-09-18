@@ -23,6 +23,13 @@ ROUND_MAX_GLYPHS = 20000  # above this glyph count, only produce the square vect
 _ZIP_DATE = (1980, 1, 1, 0, 0, 0)
 
 
+def _names_match(font, family: str, style: str, copyright_: str) -> bool:
+    values = name_records(family, style, copyright_)
+    keys = {0: "copyright", 1: "familyName", 2: "styleName", 3: "uniqueFontIdentifier",
+            4: "fullName", 5: "version", 6: "psName"}
+    return all(font["name"].getDebugName(id) == values[key] for id, key in keys.items())
+
+
 def _restyle_ttf(raw: bytes, family: str, style: str, copyright_: str) -> bytes:
     """Rewrite only the name table of an existing TTF, leaving glyf untouched — avoids re-vectorizing.
 
@@ -38,7 +45,9 @@ def _restyle_ttf(raw: bytes, family: str, style: str, copyright_: str) -> bytes:
 
     from opf.ttfexport import FIXED_TIMESTAMP
 
-    f = TTFont(io.BytesIO(raw), recalcTimestamp=False)
+    f = TTFont(io.BytesIO(raw), recalcTimestamp=False, lazy=True)
+    if _names_match(f, family, style, copyright_):
+        return raw
     FontBuilder(font=f).setupNameTable(name_records(family, style, copyright_))
     f["head"].created = f["head"].modified = FIXED_TIMESTAMP
     buf = io.BytesIO()
@@ -58,6 +67,8 @@ def _restyle_woff2(raw: bytes, family: str, copyright_: str) -> bytes:
 
     f = TTFont(io.BytesIO(raw), recalcTimestamp=False)
     style = f["name"].getDebugName(2) or "Regular"
+    if _names_match(f, family, style, copyright_):
+        return raw
     FontBuilder(font=f).setupNameTable(name_records(family, style, copyright_))
     f["head"].created = f["head"].modified = FIXED_TIMESTAMP
     with tempfile.TemporaryDirectory() as td:
@@ -73,6 +84,10 @@ def _rezip_readme(raw: bytes, readme_text: str) -> bytes:
 
     src = io.BytesIO(raw)
     buf = io.BytesIO()
+    with zipfile.ZipFile(src) as check:
+        if check.read("README.txt") == readme_text.encode("utf-8"):
+            return raw
+    src.seek(0)
     with zipfile.ZipFile(src) as zin, \
             zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zout:
         for item in zin.infolist():
@@ -200,18 +215,11 @@ def _woff2(ttf_path: Path) -> bytes | None:
 
 
 def _source_bdf_bytes(f: ParsedFont) -> bytes:
-    """The variant's BDF text.
+    """One canonical Unicode BDF, shared by downloads and browser rendering.
 
-    Original file bytes when the source is a plain BDF, decompressed for .bdf.gz,
-    written back out from ParsedFont for PCF sources — and always written from
-    ParsedFont when the font was merged, otherwise glyphs merged in from other
-    files (encoding subsets, Powerline supplements) would be missing from the
-    download."""
-    name = f.path.name.lower()
-    if not f.merged and name.endswith(".bdf"):
-        return f.path.read_bytes()
-    if not f.merged and name.endswith(".bdf.gz"):
-        return gzip.decompress(f.path.read_bytes())
+    Preserve every parsed bitmap, metric and unencoded alternate. The source
+    files remain untouched; only the downloadable representation is normalized.
+    """
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td) / "x.bdf"
         write_bdf(f, tmp)

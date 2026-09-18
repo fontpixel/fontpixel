@@ -47,7 +47,7 @@ def data_dir_hash(data_dir: Path) -> str:
 #                                    known without a parsed font
 _STRUCTURAL_KEYS = (
     "merge", "merge_subsets", "exclude", "variants", "license",
-    "converted_from", "name", "samples", "sample_lang",
+    "converted_from", "name", "samples", "sample_lang", "default_variant", "export_name",
 )
 
 

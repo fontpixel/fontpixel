@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pytest
@@ -9,7 +10,13 @@ from opf.ingest.run import run_manifest
 from opf.metrics import glyph_ink_size
 from opf.parsers.bdf import parse_bdf
 
-COLLECTION = Path("/home/chen/githubprojects/pixelfontworkshop/pixel-font-collection-fonts")
+# Sibling of the repo by default (the --src the README documents), so a moved
+# checkout doesn't silently skip every test in this file. Override with
+# OPF_COLLECTION.
+COLLECTION = Path(
+    os.environ.get("OPF_COLLECTION")
+    or Path(__file__).resolve().parents[2].parent / "pixel-font-collection-fonts"
+)
 GALMURI = COLLECTION / "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/quiple--galmuri"
 WQY = COLLECTION / (
     "CJK-bitmap-fonts-open-source-2026-08-18/Chinese/carrothu-cn--wqy-bitmapfont-otb"
@@ -67,10 +74,31 @@ def test_kbitx_matches_official_bdf():
             if g.rows[y * nb + (x >> 3)] & (0x80 >> (x & 7))
         }
 
-    for cp in common[:300] + common[-300:] + common[5000:5300]:
+    for cp in common:
         kg, bg = k_by[cp], b_by[cp]
         assert kg.dwidth == bg.dwidth, f"U+{cp:04X} advance"
         assert lit(kg) == lit(bg), f"U+{cp:04X} bitmap"
+
+
+def test_muzai_native_source_matches_every_glyph_in_official_ttf():
+    from opf.ingest.rasterize import rasterize_ttf
+
+    source = COLLECTION / 'CJK-bitmap-fonts-open-source-2026-08-18/Chinese/DWNfonts--MuzaiPixel'
+    native = convert_kbitx(source / 'MuzaiPixel.kbitx', 'muzai-pixel')
+    official = rasterize_ttf(source / 'MZPXorig.ttf', 12, 'muzai-pixel')
+    assert len(native.glyphs) == len(official.glyphs) == 15932
+    assert not native.warnings
+
+    def pixels(g):
+        stride = (g.bbw + 7) // 8
+        return {(g.bbx + x, g.bby + g.bbh - 1 - y)
+                for y in range(g.bbh) for x in range(g.bbw)
+                if g.rows[y * stride + x // 8] & (128 >> (x % 8))}
+
+    for left, right in zip(native.glyphs, official.glyphs):
+        assert left.cp == right.cp
+        assert left.dwidth == right.dwidth, f'U+{left.cp:04X} advance'
+        assert pixels(left) == pixels(right), f'U+{left.cp:04X} bitmap'
 
 
 def test_run_manifest_idempotent(tmp_path):
@@ -98,7 +126,7 @@ form = "gothic"
     toml = (dest / "galmuri" / "family.toml").read_text(encoding="utf-8")
     assert 'name = "Galmuri"' in toml
     assert "provenance" in toml
-    assert 'form = "gothic"' in toml
+    assert 'forms = ["gothic", "sans"]' in toml
     assert "# UNVERIFIED" in toml  # prefilled form is pending manual review
 
     report2 = run_manifest(manifest, COLLECTION, dest)
@@ -106,9 +134,9 @@ form = "gothic"
     assert report2.skipped == ["galmuri"]
     # a family.toml the user has edited is not overwritten
     p = dest / "galmuri" / "family.toml"
-    p.write_text(toml.replace('form = "gothic"', 'form = "rounded"'), encoding="utf-8")
+    p.write_text(toml.replace('forms = ["gothic", "sans"]', 'forms = ["rounded"]'), encoding="utf-8")
     run_manifest(manifest, COLLECTION, dest)
-    assert 'form = "rounded"' in p.read_text(encoding="utf-8")
+    assert 'forms = ["rounded"]' in p.read_text(encoding="utf-8")
 
 
 def test_uwttyp0_unicode_remap(tmp_path):
@@ -157,7 +185,7 @@ take = ["stlarch.pcf"]
 license_from = "github-clones-2026-08-31/tecate-bitmap-fonts/archives/stlarch_font-1.5.tar.gz"
 license_take = ["README.stlarch"]
 name = "STLarch"
-form = "icon"
+forms = ["decorative"]
 """,
         encoding="utf-8",
     )
@@ -224,7 +252,7 @@ def test_clash_detected_across_patterns(tmp_path):
         encoding="utf-8",
     )
     report = run_manifest(manifest, tmp_path / "src", tmp_path / "out")
-    assert any("font.bdf" in e and "多个来源" in e for e in report.errors), report.errors
+    assert any("font.bdf" in e and "more than one source" in e for e in report.errors), report.errors
 
 
 def test_clash_detected_for_license_files(tmp_path):
@@ -238,7 +266,7 @@ def test_clash_detected_for_license_files(tmp_path):
         encoding="utf-8",
     )
     report = run_manifest(manifest, tmp_path / "src", tmp_path / "out")
-    assert any("LICENSE" in e and "多个来源" in e for e in report.errors), report.errors
+    assert any("LICENSE" in e and "more than one source" in e for e in report.errors), report.errors
 
 
 def test_take_from_prefixes_destination_names(tmp_path):
@@ -264,7 +292,7 @@ def test_ppem_table_per_file(tmp_path):
 
     src = tmp_path / "src" / "fam"
     src.mkdir(parents=True)
-    kh = Path("/home/chen/Downloads/fontsss/fonts/khdotfont-20150527")
+    kh = COLLECTION / "direct-downloads-2026-08-31/jikasei-khdotfont-20150527"
     if not kh.exists():
         pytest.skip("KH dot font sources not available")
     for n in ("KH-Dot-Dougenzaka-12.ttf", "KH-Dot-Dougenzaka-16.ttf"):

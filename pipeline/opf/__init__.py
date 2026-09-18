@@ -8,11 +8,11 @@
 # the same time. The site compares versions on load and, on a mismatch,
 # surfaces a "please rebuild" message to the developer instead of letting
 # zod validation blow up into a stack trace.
-DATA_SCHEMA_VERSION = 2
+DATA_SCHEMA_VERSION = 5  # Per-variant CJK set and intersection coverage in detail.json.
 
 # Version of the glyph pipeline: bump only when the built glyphs/coverage/TTF
 # outlines would change; bumping it rebuilds every family (~10 minutes in
 # parallel). Pure metadata logic (searchText, description fields, TTF name
 # table, README) doesn't need it bumped — the cache-hit fast path
 # recomputes those from current code every time.
-PIPELINE_VERSION = 20  # v20: vector TTF hmtx.lsb now uses outline xMin (fixes left-shifted glyphs with right-set ink, e.g. "（")
+PIPELINE_VERSION = 22  # v22: coverage sections reordered with "intl" first, which also reorders index.charsetIds -- every family's positional coverage array has to be rebuilt against it

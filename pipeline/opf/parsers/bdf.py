@@ -59,6 +59,7 @@ def parse_bdf(path: Path, family_slug: str, *,
     warnings: list[str] = []
     props: dict[str, str | int] = {}
     glyphs: dict[int, Glyph] = {}
+    unencoded: list[Glyph] = []
     bbox = (0, 0, 0, 0)
     size_line: tuple[int, int, int] | None = None
     xlfd_pixel_size = 0
@@ -157,9 +158,7 @@ def parse_bdf(path: Path, family_slug: str, *,
                     break
                 if cl.strip() == "ENDCHAR":
                     break
-            if enc < 0:
-                continue
-            if enc in glyphs:
+            if enc >= 0 and enc in glyphs:
                 warnings.append(f"duplicate ENCODING {enc}, keeping first")
                 continue
             if not rows:
@@ -167,10 +166,15 @@ def parse_bdf(path: Path, family_slug: str, *,
             if dwidth is None:
                 dwidth = -1  # sentinel: resolved uniformly once pixel_size is known
                 missing_dwidth += 1
-            glyphs[enc] = Glyph(
+            glyph = Glyph(
                 cp=enc, name=name, dwidth=dwidth,
                 bbw=gb[0], bbh=gb[1], bbx=gb[2], bby=gb[3], rows=rows,
             )
+            if enc < 0:
+                glyph.cp = -1
+                unencoded.append(glyph)
+            else:
+                glyphs[enc] = glyph
         elif key == "ENDFONT":
             break
 
@@ -208,7 +212,7 @@ def parse_bdf(path: Path, family_slug: str, *,
         # semantics -- ink past the half-cell mark counts as full width
         # (= pixel_size), otherwise half width.
         half = (pixel_size + 1) // 2
-        for g in glyphs.values():
+        for g in [*glyphs.values(), *unencoded]:
             if g.dwidth == -1:
                 natural = g.bbw + max(g.bbx, 0)
                 g.dwidth = pixel_size if natural > half else max(half, natural)
@@ -264,4 +268,5 @@ def parse_bdf(path: Path, family_slug: str, *,
         bbox=bbox,
         glyphs=[glyphs[cp] for cp in sorted(glyphs)],
         warnings=warnings,
+        unencoded_glyphs=unencoded,
     )

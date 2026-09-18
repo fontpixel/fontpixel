@@ -165,7 +165,7 @@ def build(repo: Path, size: int, style: str, work: Path) -> ParsedFont | None:
             "COPYRIGHT": "Public Domain",
             "NOTICE": ("Shinonome font, The Electronic Font Open Laboratory. "
                        "Public Domain. Rebuilt to Unicode BDF by "
-                       "Open Pixel Fonts."),
+                       "FontPixel.com."),
         },
         pixel_size=size,
         ascent=ref.ascent,

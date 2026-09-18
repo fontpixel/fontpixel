@@ -16,7 +16,13 @@ DATA_DIR = Path(__file__).parent / "data"
 _HEX_RE = re.compile(r"^[0-9A-Fa-f]{4,6}$")
 _RANGE_RE = re.compile(r"^([0-9A-Fa-f]{4,6})\.\.([0-9A-Fa-f]{4,6})$")
 
-SECTION_ORDER = ["gb", "prc-lit", "tw", "hk", "jp", "kr", "intl"]
+# Order the coverage sections are shown in. "intl" leads: it is the section that
+# applies to every font here, CJK or not, so it belongs directly under the
+# overview rather than after six CJK sections a Latin-only font scores zero in.
+# NOTE: this list also fixes the order of index.charsetIds, and each family's
+# coverage array is positional against it -- reordering means bumping
+# PIPELINE_VERSION, or cached families keep an array that no longer lines up.
+SECTION_ORDER = ["intl", "gb", "prc-lit", "tw", "hk", "jp", "kr"]
 
 
 @dataclass(frozen=True)

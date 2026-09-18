@@ -34,6 +34,9 @@ class ParsedFont:
     # longer matches the bytes at `path`, so downloads must be written from
     # memory instead of copying the source file.
     merged: bool = False
+    # BDF can retain alternate glyphs without inventing Unicode assignments.
+    # These are exported with ENCODING -1 and excluded from Unicode coverage.
+    unencoded_glyphs: list[Glyph] = field(default_factory=list)
 
 
 def row_bytes(bbw: int) -> int:

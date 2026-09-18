@@ -26,7 +26,7 @@ def test_full_build(tmp_path):
     mini = fams["mini"]
     assert mini["name"] == "Mini Test"
     assert mini["names"] == {"zh-Hans": "迷你测试"}
-    assert mini["form"] == "gothic"
+    assert mini["forms"] == ["gothic", "sans"]
     assert mini["curated"] is True
     assert mini["license"]["spdx"] == "OFL-1.1"
     assert mini["license"]["confidence"] == "auto-high"
@@ -46,11 +46,11 @@ def test_full_build(tmp_path):
     assert nometa["curated"] is False
     assert (fonts / "nometa" / "family.toml").exists()  # stub was written
 
-    # Per-variant assets
+    # The downloadable BDF is also the rendering source.
     for v in mini["variants"]:
-        vdir = data / "packs" / "mini" / v["id"]
-        assert (vdir / "manifest.json").exists()
-        assert (vdir / "core.bin.gz").exists()
+        assert (dl / f"mini--{v['id']}.bdf.gz").exists()
+    assert not (data / "packs").exists()
+    assert (data / mini["cardPreview"]).exists()
     assert (data / "og" / "mini.png").exists()
     previews = list((data / "previews" / "mini").glob("*.svg"))
     assert previews, "至少一个预渲染 SVG"
@@ -70,6 +70,58 @@ def test_full_build(tmp_path):
     dlm = json.loads((dl / "manifest.json").read_text(encoding="utf-8"))
     kinds = {(e["family"], e["kind"]) for e in dlm["entries"]}
     assert ("mini", "bdf") in kinds and ("mini", "zip") in kinds
+
+
+def test_explicit_default_variant_controls_preview_and_invalidates_cache(tmp_path):
+    fonts, data, dl, cache = _setup(tmp_path)
+    meta = fonts / 'mini/family.toml'
+    original = meta.read_text()
+    for variant in ['mini2', 'mini']:
+        meta.write_text(f'default_variant = "{variant}"\n' + original)
+        report = build(fonts, data, dl, cache)
+        assert not report.failed
+        family = next(f for f in json.loads((data / 'index.json').read_text())['families']
+                      if f['slug'] == 'mini')
+        assert family['previewVariant'] == variant
+        assert family['variants'][0]['id'] == variant
+
+
+def test_size_preference_updates_fresh_and_cached_previews_without_changing_family_coverage(tmp_path):
+    from dataclasses import replace
+    from opf.ingest.bdfwrite import write_bdf
+    from opf.parsers.bdf import parse_bdf
+
+    fonts = tmp_path / 'fonts'
+    family_dir = fonts / 'sized'
+    family_dir.mkdir(parents=True)
+    source = parse_bdf(FIX / 'mini.bdf', 'sized')
+    meta = ['name = "Sized"']
+    for size, count in [(7, 7), (8, 2), (16, 4), (17, 8)]:
+        glyphs = [replace(source.glyphs[0], cp=65 + i) for i in range(count)]
+        write_bdf(replace(source, glyphs=glyphs), family_dir / f'{size}.bdf')
+        meta.append(f'[variants."{size}.bdf"]\nsize = {size}')
+    (family_dir / 'family.toml').write_text('\n'.join(meta))
+    data, dl, cache = (tmp_path / name for name in ['data', 'dl', 'cache'])
+    report = build(fonts, data, dl, cache)
+    assert report.failed == 0
+    fresh = json.loads((data / 'index.json').read_text())['families'][0]
+    assert fresh['previewVariant'] == '16'
+    assert fresh['previews']['latin']['variantId'] == '16'
+    assert fresh['glyphCount'] == 8  # The family still reports its broadest variant.
+    preview = (data / fresh['cardPreview']).read_bytes()
+
+    # Simulate a cache created under the old "most glyphs at any size" policy.
+    path = cache / 'families/sized.json'
+    payload = json.loads(path.read_text())
+    payload['index_entry'].update(previewVariant='17', sampleLang='ja', sampleText='STALE')
+    path.write_text(json.dumps(payload))
+    report = build(fonts, data, dl, cache)
+    assert report.cached == 1 and report.failed == 0
+    refreshed = json.loads((data / 'index.json').read_text())['families'][0]
+    assert refreshed == fresh
+    assert (data / fresh['cardPreview']).read_bytes() == preview
+    detail = json.loads((data / 'details/sized.json').read_text())
+    assert detail['meta']['previewVariant'] == '16'
 
 
 def test_coverage_intervals_and_missing(tmp_path):
@@ -94,7 +146,9 @@ def test_coverage_intervals_and_missing(tmp_path):
     assert by_id["gb2312"]["nameZh"].startswith("GB/T 2312")
     assert by_id["gb2312"]["total"] == 6763
     assert by_id["gb2312"]["section"] == "gb"
-    assert charsets["sections"][0] == "gb"
+    # "intl" leads the section order, and that order is not cosmetic: it also fixes
+    # index.charsetIds, which each family's coverage array is positional against.
+    assert charsets["sections"][0] == "intl"
 
     # After a cached rerun, intervals are still complete (sourced from the cache payload)
     build(fonts, data, dl, cache)
@@ -118,6 +172,18 @@ def test_incremental_cache(tmp_path):
     assert report3.cached == 1
     idx = json.loads((data / "index.json").read_text(encoding="utf-8"))
     assert {f["slug"]: f for f in idx["families"]}["mini"]["name"] == "Mini Test 2"
+
+
+def test_cached_build_restores_missing_bdf(tmp_path):
+    fonts, data, dl, cache = _setup(tmp_path)
+    build(fonts, data, dl, cache)
+    path = next(dl.glob("mini--*.bdf.gz"))
+    expected = path.read_bytes()
+    path.unlink()
+    report = build(fonts, data, dl, cache)
+    assert not report.failed
+    assert report.cached == 1
+    assert path.read_bytes() == expected
 
 
 def test_broken_family_isolated(tmp_path):
@@ -152,6 +218,36 @@ def test_only_family(tmp_path):
     report = build(fonts, data, dl, cache, only_family="mini")
     assert report.families == 1
     assert not (data / "details" / "nometa.json").exists()
+
+
+def test_cached_build_removes_legacy_glyph_packs(tmp_path):
+    fonts, data, dl, cache = _setup(tmp_path)
+    build(fonts, data, dl, cache)
+    packs = data / "packs" / "mini" / "removed-variant"
+    packs.mkdir(parents=True)
+    (packs / "core.bin.gz").write_bytes(b"obsolete")
+    before = {p.name: p.read_bytes() for p in dl.glob("*.bdf.gz")}
+
+    report = build(fonts, data, dl, cache)
+
+    assert report.cached == 2
+    assert not (data / "packs").exists()
+    assert {p.name: p.read_bytes() for p in dl.glob("*.bdf.gz")} == before
+
+
+def test_family_build_preserves_other_families_legacy_packs(tmp_path):
+    fonts, data, dl, cache = _setup(tmp_path)
+    build(fonts, data, dl, cache)
+    for slug in ("mini", "nometa"):
+        folder = data / "packs" / slug
+        folder.mkdir(parents=True)
+        (folder / "old.bin.gz").write_bytes(b"old")
+
+    report = build(fonts, data, dl, cache, only_family="mini")
+
+    assert not report.failed
+    assert not (data / "packs" / "mini").exists()
+    assert (data / "packs" / "nometa" / "old.bin.gz").read_bytes() == b"old"
 
 
 def test_variant_id_collision_uniquified(tmp_path):
@@ -233,7 +329,7 @@ def test_family_toml_top_level_keys_are_before_any_table():
 
         pytest.skip("字体目录不在此 checkout 中")
     top_level = {"merge_subsets", "merge", "exclude", "sample_lang", "added",
-                 "form", "vibes", "curated"}
+                 "form", "forms", "vibes", "curated"}
     bad = []
     for toml_path in sorted(root.glob("*/family.toml")):
         data = tomllib.loads(toml_path.read_text(encoding="utf-8"))
@@ -330,6 +426,28 @@ def test_descriptive_edit_gives_the_same_bytes_as_a_full_rebuild(tmp_path):
 
     assert fast["downloads"] == full["downloads"]
     assert fast["meta"] == full["meta"]
+
+
+def test_category_migration_refreshes_cache_without_rebuilding_fonts(tmp_path):
+    fonts, data, dl, cache = _setup(tmp_path)
+    build(fonts, data, dl, cache)
+    before = json.loads((data / "details" / "mini.json").read_text())
+    cached = cache / "families" / "mini.json"
+    payload = json.loads(cached.read_text())
+    payload["index_entry"].pop("forms")
+    payload["index_entry"]["form"] = "gothic"
+    cached.write_text(json.dumps(payload))
+    _retoml(fonts, forms='forms = ["song", "decorative"]')
+
+    report = build(fonts, data, dl, cache)
+    assert report.cached == 2
+    detail = json.loads((data / "details" / "mini.json").read_text())
+    index = json.loads((data / "index.json").read_text())
+    entry = next(f for f in index["families"] if f["slug"] == "mini")
+    assert entry["forms"] == ["song", "decorative", "serif"]
+    assert "form" not in entry
+    assert detail["meta"] == entry
+    assert detail["downloads"] == before["downloads"]
 
 
 def test_structural_edit_still_forces_a_rebuild(tmp_path):

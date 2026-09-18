@@ -23,7 +23,6 @@ from opf.coverage.engine import (
     detect_scripts,
     font_cps,
     overview,
-    pick_sample_lang,
     unicode_block_coverage,
 )
 from opf.coverage.ucd import load_ucd
@@ -35,15 +34,15 @@ from opf.familymeta import (
     load_family_meta,
     resolve_variant,
 )
-from opf.glyphpack import write_packs
+from opf.bdfassets import upgrade_cached_bdfs
 from opf.licenses import detect_license
 from opf.mergesubsets import group_files, merge as merge_subsets
 from opf.metrics import InkMetrics, claimed_size, compute_ink, is_monospaced
 from opf.model import ParsedFont
 from opf.parsers.bdf import parse_bdf
 from opf.parsers.pcf import parse_pcf
+from opf.previews import default_sample, default_variant_rank, refresh_previews
 from opf.prerender import og_png, sample_svg
-from opf.samples import SAMPLES, sample_is_broken, specimen
 from opf.variants import search_text
 
 _SUMMARY_IDS = [
@@ -222,7 +221,7 @@ def _build_family(
         raise ValueError(f"{slug}: no font files")
     # Sort variants by size so the on-page switcher isn't in filename order
     # (e.g. 13, 15, 16, 14, 12).
-    _WEIGHT = {"light": 0, "regular": 1, "bold": 2}
+    _WEIGHT = {"light": 0, "regular": 1, "medium": 2, "semibold": 3, "bold": 4}
     built.sort(key=lambda b: (b.desc.size, _WEIGHT.get(b.desc.weight, 9),
                               b.desc.spacing, b.desc.script_subset or ""))
 
@@ -231,7 +230,14 @@ def _build_family(
     _cps_cache = {b.desc.id: font_cps(b.font) for b in built}
 
     # Family-level aggregation
-    best = max(built, key=lambda b: len(b.font.glyphs))
+    best = max(built, key=lambda b: default_variant_rank(b.desc.size, len(b.font.glyphs)))
+    if meta.default_variant:
+        preferred = next((b for b in built if b.desc.id == meta.default_variant), None)
+        if preferred is None:
+            raise ValueError(f"{slug}: unknown default_variant {meta.default_variant}")
+        best = preferred
+        built.remove(preferred)
+        built.insert(0, preferred)
     fam_badges: list[str] = []
     for b in built:
         for bd in badges(b.coverage):
@@ -243,18 +249,9 @@ def _build_family(
             if s not in scripts:
                 scripts.append(s)
     scripts = merge_scripts(scripts)
-    sample_lang = meta.sample_lang or pick_sample_lang(best.coverage)
-    sample_text = meta.samples.get(sample_lang) or SAMPLES.get(sample_lang, SAMPLES["latin"])
-    # Icon/symbol fonts can't render any preset sample text, so fall back
-    # to using their own glyphs.
-    if not meta.samples.get(sample_lang):
-        best_cps = font_cps(best.font)
-        if sample_is_broken(sample_text, best_cps):
-            sample_text = specimen(best_cps) or sample_text
+    sample_lang, sample_text = default_sample(meta, best.coverage, best.font)
 
     # Assets
-    for b in built:
-        write_packs(b.font, b.desc, meta.name, site_data / "packs" / slug / b.desc.id)
     preview_rel = f"previews/{slug}/{sample_lang}.svg"
     (site_data / "previews" / slug).mkdir(parents=True, exist_ok=True)
     (site_data / "previews" / slug / f"{sample_lang}.svg").write_text(
@@ -273,7 +270,7 @@ def _build_family(
         [license_info.file] if license_info.file else [],
         _readme_text(meta, license_info.name_en or license_info.name),
         downloads_dir,
-        family_display=meta.name,
+        family_display=meta.export_name or meta.name,
         copyright_line=_copyright_line(meta, license_info.name_en or license_info.name),
     )
 
@@ -292,6 +289,7 @@ def _build_family(
 
     entry = {
         **_describe(meta, slug),
+        "bdfPreviewVersion": 1,
         "scripts": scripts,
         "sizes": sorted({b.desc.size for b in built}),
         "weights": sorted({b.desc.weight for b in built}),
@@ -337,11 +335,13 @@ def _build_family(
         # their own glyphs, and the frontend looking sampleLang up in its
         # table would just get back English text that can't be rendered.
         "sampleText": sample_text,
-        # The top preview uses the variant with the most glyphs; the input
-        # box must match it, otherwise the two spots show different sizes
-        # of the same font.
+        # Prefer the broadest 8–16px variant (or any size if none); refresh_previews
+        # then picks its language-appropriate counterpart for every locale.
         "previewVariant": best.desc.id,
     }
+
+    refresh_previews(entry, meta, site_data, downloads_dir,
+                     {b.desc.id: b.font for b in built})
 
     detail = {
         "slug": slug,
@@ -455,8 +455,9 @@ def _readme_text(meta, license_name: str) -> str:
     """
     name = meta.name_en or meta.name
     source = meta.provenance_en or meta.provenance or meta.homepage or "-"
-    return (f"{name}\nSource: {source}\n"
-            f"License: {license_name}\nPackaged by Open Pixel Fonts\n")
+    conversion = f"Installed conversion name: {meta.export_name}\n" if meta.export_name else ""
+    return (f"{name}\n{conversion}Source: {source}\n"
+            f"License: {license_name}\nPackaged by FontPixel.com\n")
 
 
 def _copyright_line(meta, license_name: str) -> str:
@@ -490,8 +491,10 @@ def _describe(meta, slug: str) -> dict:
         "names": family_names(meta),
         "authors": meta.authors,
         "authorsEn": meta.authors_en or meta.authors,
-        "form": meta.form,
+        "forms": meta.forms,
         "vibes": meta.vibes,
+        "sourceKind": meta.source_kind or ("pixel-outline" if meta.converted_from else "bitmap"),
+        "sourceFormats": meta.source_formats,
         "curated": meta.curated,
         "added": meta.added,
         "searchText": _search_text_for(meta, slug),
@@ -539,21 +542,34 @@ def _refresh_metadata(
     """
     meta = load_family_meta(family_dir)
     entry = {**cached["index_entry"], **_describe(meta, slug)}
+    entry.pop("form", None)  # Remove the old single-category field on cache refresh.
 
     detail_path = site_data / "details" / f"{slug}.json"
     try:
         detail = json.loads(detail_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return None
+    if any(not (downloads_dir / item["file"]).is_file() for item in cached["downloads"]):
+        return None
+    old_downloads = upgrade_cached_bdfs(entry, detail, cached["downloads"], site_data, downloads_dir)
+    # Preview policy is recomputed from cached facts, without rebuilding glyphs,
+    # coverage or downloads. An old previewVariant must not pin a large size.
+    best = max(entry["variants"], key=lambda v: default_variant_rank(v["size"], v["glyphs"]))
+    if meta.default_variant:
+        best = next(v for v in entry["variants"] if v["id"] == meta.default_variant)
+    entry["previewVariant"] = best["id"]
+    font = parse_bdf(downloads_dir / f"{slug}--{best['id']}.bdf.gz", slug)
+    entry["sampleLang"], entry["sampleText"] = default_sample(meta, detail["coverage"][best["id"]], font)
+    refresh_previews(entry, meta, site_data, downloads_dir, {best["id"]: font})
     detail.update(_describe_detail(meta))
     detail["meta"] = entry
     detail["convertedFrom"] = meta.converted_from
 
     license_name = entry["license"]["nameEn"] or entry["license"]["name"]
     dl_entries = refresh_downloads_metadata(
-        cached["downloads"], downloads_dir,
+        old_downloads, downloads_dir,
         _readme_text(meta, license_name),
-        meta.name, _copyright_line(meta, license_name),
+        meta.export_name or meta.name, _copyright_line(meta, license_name),
     )
     if not dl_entries:
         return None
@@ -566,9 +582,6 @@ def _outputs_exist(site_data: Path, entry: dict) -> bool:
     slug = entry["slug"]
     if not (site_data / "details" / f"{slug}.json").exists():
         return False
-    for v in entry["variants"]:
-        if not (site_data / "packs" / slug / v["id"] / "manifest.json").exists():
-            return False
     return True
 
 
@@ -681,7 +694,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
                 entries.append(entry)
                 all_downloads.extend(dl_entries)
                 runs_by_slug[slug] = [tuple(r) for r in cached.get("runs", [])]
-                if dl_entries != cached["downloads"]:
+                if dl_entries != cached["downloads"] or entry != cached["index_entry"]:
                     cached["downloads"] = dl_entries
                     cached["index_entry"] = entry
                     cached["facts"] = facts
@@ -722,6 +735,9 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
         report.families += 1
 
     entries.sort(key=lambda e: e["slug"])
+    from opf.coverage.cjk import refresh_cjk_details
+
+    refresh_cjk_details(entries, site_data, downloads_dir, charsets, ucd)
     _json_dump(
         {
             "schemaVersion": DATA_SCHEMA_VERSION,
@@ -742,6 +758,16 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
 
     write_intervals(runs_by_slug, site_data / "coverage-intervals.bin.gz")
     write_charsets_json(charsets, site_data / "charsets.json")
+
+    # Glyphs now come from downloadable BDFs. Drop legacy generated packs
+    # only for successfully built/refreshed families, including cache hits.
+    import shutil
+    for entry in entries:
+        if (not only_family or entry["slug"] == only_family) and entry.get("bdfPreviewVersion") == 1:
+            shutil.rmtree(site_data / "packs" / entry["slug"], ignore_errors=True)
+    packs_root = site_data / "packs"
+    if packs_root.exists() and not any(packs_root.iterdir()):
+        packs_root.rmdir()
 
     # In --family mode, entries only contains cache-hit families (possibly
     # none, if the cache is entirely invalid), so treating it as "the

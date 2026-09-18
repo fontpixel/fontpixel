@@ -1,11 +1,11 @@
 """kbitx (Bits'n'Picas XML) → ParsedFont.
 
-`d` attribute = base64([height u8][width u8] + opcode stream), row-major order:
-  0x01-0x3F      skip N transparent pixels
-  0x40+N (<=0x7F) draw N solid pixels
-  0x80+N (<=0xBF) followed by 1 grayscale byte, repeated N times
-  0xC0+N         followed by N grayscale bytes, one per pixel
-A grayscale value >=0x80 counts as lit. Verified pixel-by-pixel against galmuri's dual kbitx/BDF releases.
+`d` attribute = base64([height ULEB128][width ULEB128] + WIB opcode stream),
+row-major order. The low five opcode bits give the run length; bit 0x20
+multiplies it by 32. The high two bits select transparent (0x00), solid
+(0x40), repeated grayscale byte (0x80), or literal grayscale bytes (0xC0).
+A grayscale value >=0x80 counts as lit. See Bits'N'Picas'
+KbitxBitmapFontImporter and WIBInputStream for the source format.
 """
 
 from __future__ import annotations
@@ -17,31 +17,49 @@ from pathlib import Path
 from opf.model import Glyph, ParsedFont, row_bytes
 
 
+def _read_uleb128(raw: bytes, offset: int) -> tuple[int, int]:
+    value = shift = 0
+    while offset < len(raw):
+        byte = raw[offset]
+        offset += 1
+        value |= (byte & 0x7F) << shift
+        if not byte & 0x80:
+            return value, offset
+        shift += 7
+    raise ValueError("truncated bitmap dimension")
+
+
 def _decode_bitmap(data: str, warnings: list[str], label: str
                    ) -> tuple[int, int, bytes] | None:
     raw = base64.b64decode(data + "=" * (-len(data) % 4))
     if len(raw) < 2:
         return None
-    h, w = raw[0], raw[1]
+    try:
+        h, i = _read_uleb128(raw, 0)
+        w, i = _read_uleb128(raw, i)
+    except ValueError as error:
+        warnings.append(f"{label}: {error}")
+        return None
     if w == 0 or h == 0:
         return None
     bits = bytearray(w * h)
     pos = 0
-    i = 2
     total = w * h
     while i < len(raw) and pos < total:
         op = raw[i]
         i += 1
-        if op < 0x40:
-            pos += op
-        elif op < 0x80:
-            n = op - 0x40
+        n = op & 0x1F
+        if op & 0x20:
+            n <<= 5
+        kind = op & 0xC0
+        if kind == 0x00:
+            pos += n
+        elif kind == 0x40:
             for _ in range(n):
                 if pos < total:
                     bits[pos] = 1
                 pos += 1
-        elif op < 0xC0:
-            n = op - 0x80
+        elif kind == 0x80:
             if i >= len(raw):
                 break
             v = raw[i]
@@ -51,7 +69,6 @@ def _decode_bitmap(data: str, warnings: list[str], label: str
                     bits[pos] = 1
                 pos += 1
         else:
-            n = op - 0xC0
             for k in range(n):
                 if i >= len(raw):
                     break

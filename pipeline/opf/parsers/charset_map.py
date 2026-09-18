@@ -17,7 +17,7 @@ def is_unicode_registry(registry: str) -> bool:
 # actually Unicode-encoded but claims ISO8859) -- in that case pass it
 # through as Unicode as-is rather than dropping it as "unmappable". lemon
 # lost 839 glyphs this way before this check existed.
-_SINGLE_BYTE = ("iso8859", "koi8", "ascii", "iso646")
+_SINGLE_BYTE = ("iso8859", "koi8", "ascii", "iso646", "tis620")
 
 
 def decode_cp(code: int, registry: str, encoding: str,
@@ -41,6 +41,17 @@ def decode_cp(code: int, registry: str, encoding: str,
             return ord(bytes([code]).decode(codec)) if code >= 0x80 else code
         except Exception:
             return code if code < 0x80 else None
+    if reg.startswith("tis620"):
+        # Thai. TIS-620 is ASCII below 0x80 and maps 0xA1-0xFB straight onto the
+        # Thai block at U+0E01-U+0E5B; ISO 8859-11 is the same table plus NBSP at
+        # 0xA0, and already falls through the iso8859 branch above. Without this
+        # every Thai bitmap font in the collection decodes to zero glyphs.
+        if code < 0x80:
+            return code
+        try:
+            return ord(bytes([code]).decode("tis_620"))
+        except Exception:
+            return None
     if reg.startswith("koi8"):
         try:
             return ord(bytes([code]).decode("koi8_r"))

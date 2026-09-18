@@ -27,14 +27,18 @@ def write_bdf(f: ParsedFont, out: Path) -> None:
     props.pop("FONT", None)
     props["FONT_ASCENT"] = f.ascent
     props["FONT_DESCENT"] = f.descent
-    props.setdefault("PIXEL_SIZE", f.pixel_size)
+    props["PIXEL_SIZE"] = f.pixel_size
+    # ParsedFont code points have already been mapped to Unicode. Keeping a
+    # source JIS/GB2312 registry here would make consumers map them twice.
+    props["CHARSET_REGISTRY"] = "ISO10646"
+    props["CHARSET_ENCODING"] = "1"
     lines.append(f"STARTPROPERTIES {len(props)}")
     for k in props:
         lines.append(_prop_line(k, props[k]))
     lines.append("ENDPROPERTIES")
 
-    lines.append(f"CHARS {len(f.glyphs)}")
-    for g in f.glyphs:
+    lines.append(f"CHARS {len(f.glyphs) + len(f.unencoded_glyphs)}")
+    for g in [*f.glyphs, *f.unencoded_glyphs]:
         lines.append(f"STARTCHAR {g.name or f'uni{g.cp:04X}'}")
         lines.append(f"ENCODING {g.cp}")
         swidth = round(g.dwidth * 1000 / max(1, f.pixel_size))

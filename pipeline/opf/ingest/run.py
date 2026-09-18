@@ -10,17 +10,33 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import hashlib
+import re
 import tempfile
 import tomllib
 from dataclasses import dataclass, field
+from datetime import date
 from pathlib import Path
 
 from opf.ingest.bdfwrite import write_bdf
 from opf.ingest.extract import extract_archive, is_tar
 from opf.ingest.kbitx import convert_kbitx
 from opf.ingest.otb import convert_otb
+from opf.familymeta import normalize_forms
 
-TODAY = "2026-08-31"
+# Seeds `added` in newly generated family.toml files. Hardcoded on purpose:
+# a rerun must not churn the inclusion dates of families already on file.
+TODAY = "2026-09-03"
+
+# Everything from this marker onward in an import report is hand-maintained and
+# survives a rerun; only the generated head above it is replaced. Matching is on
+# the prefix alone, so rewording the sentence -- or translating it, as happened
+# on 2026-09-03 -- cannot strand an existing report.
+MANUAL_MARKER_PREFIX = "<!-- opf:manual"
+MANUAL_MARKER = (
+    MANUAL_MARKER_PREFIX
+    + " — the hand-maintained inclusion record below is never touched by opf.ingest.run -->"
+)
+
 
 def _q(v: str) -> str:
     """TOML basic-string escaping. Description text in the manifest commonly contains quotes.
@@ -51,7 +67,7 @@ def _render_toml(fam: dict, provenance: str, provenance_en: str,
     """Render in the same field order as existing family.toml files: Chinese block -> English block -> [license].
 
     Fields the manifest doesn't provide are left blank/omitted for manual
-    follow-up; form/vibes are marked UNVERIFIED.
+    follow-up; forms/vibes are marked UNVERIFIED.
     """
     authors = fam.get("authors") or [a for a in [fam.get("author", "")] if a]
     lines = [
@@ -66,13 +82,22 @@ def _render_toml(fam: dict, provenance: str, provenance_en: str,
         f'description = "{_q(fam.get("description", ""))}"',
     ]
     mark = "" if fam.get("form_verified") else "  # UNVERIFIED：导入时预填，待人工复核"
-    lines.append(f'form = "{_q(fam.get("form", ""))}"{mark}')
+    forms = normalize_forms(fam.get("forms", fam.get("form", [])))
+    lines.append(f'forms = {_arr(forms)}{mark}')
     lines.append(
         f"vibes = {_arr(fam.get('vibes', []))}"
         + ("" if fam.get("form_verified") else "  # UNVERIFIED")
     )
     if fam.get("aliases"):
         lines.append(f"aliases = {_arr(fam['aliases'])}")
+    if fam.get("default_variant"):
+        lines.append(f'default_variant = "{_q(fam["default_variant"])}"')
+    if fam.get("source_kind"):
+        lines.append(f'source_kind = "{_q(fam["source_kind"])}"')
+    if fam.get("source_formats"):
+        lines.append(f"source_formats = {_arr(fam['source_formats'])}")
+    if fam.get("export_name"):
+        lines.append(f'export_name = "{_q(fam["export_name"])}"')
     if fam.get("merge_subsets"):
         lines.append("merge_subsets = true")
     lines += [
@@ -167,8 +192,9 @@ class _DestGuard:
             first = self.seen.get(name)
             if first is not None and first != p:
                 self.report.errors.append(
-                    f"{self.slug}: 目标文件名 {name} 有多个来源（{first} 与 {p}，"
-                    f"模式 {pat}）；请改用带 “/” 的路径模式指明其一"
+                    f"{self.slug}: destination filename {name} has more than one source "
+                    f"({first} and {p}, pattern {pat}); use a path pattern with a "
+                    f"\u201c/\u201d to name the one you want"
                 )
             else:
                 self.seen[name] = p
@@ -215,14 +241,14 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
             files = extract_archive(source / zp, fam.get("zip_take", ["*.bdf"]),
                                     Path(td))
             if not files:
-                report.errors.append(f"{slug}: zip {zp} 无匹配文件")
+                report.errors.append(f"{slug}: zip {zp} matched no files")
             for f in sorted(files):
                 changed |= _place(f.read_bytes(), dest / f.name, report)
 
     for pat in fam.get("take", []):
         matched = _collect(source, pat)
         if not matched:
-            report.errors.append(f"{slug}: take 无匹配 {pat}")
+            report.errors.append(f"{slug}: take matched nothing for {pat}")
         guard.add(matched, pat)
         for p in matched:
             changed |= _place(p.read_bytes(), dest / p.name, report)
@@ -236,7 +262,7 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
         for pat in pats:
             matched = _collect(source, pat)
             if not matched:
-                report.errors.append(f"{slug}: take_from 无匹配 {pat}")
+                report.errors.append(f"{slug}: take_from matched nothing for {pat}")
             guard.add(matched, pat, prefix)
             for p in matched:
                 changed |= _place(p.read_bytes(), dest / f"{prefix}{p.name}", report)
@@ -245,11 +271,11 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
     for pat in fam.get("convert_take", []):
         matched = _collect(source, pat)
         if not matched:
-            report.errors.append(f"{slug}: convert_take 无匹配 {pat}")
+            report.errors.append(f"{slug}: convert_take matched nothing for {pat}")
         guard.add(matched, pat)
         for p in matched:
             if convert == "otb":
-                for suffix, pf in convert_otb(p, slug):
+                for suffix, pf in convert_otb(p, slug, all_glyphs=bool(fam.get("all_glyphs", False))):
                     with tempfile.TemporaryDirectory() as td:
                         tmp = Path(td) / "x.bdf"
                         write_bdf(pf, tmp)
@@ -262,6 +288,25 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
                     tmp = Path(td) / "x.bdf"
                     write_bdf(pf, tmp)
                     changed |= _place(tmp.read_bytes(), dest / f"{p.stem}.bdf", report)
+            elif convert in ("t-mat-8x8", "font8x8"):
+                from opf.ingest.header8x8 import convert_font8x8, convert_tmat
+
+                pf = (convert_tmat if convert == "t-mat-8x8" else convert_font8x8)(p, slug)
+                report.notes.extend(f"{slug}: {warning}" for warning in pf.warnings)
+                with tempfile.TemporaryDirectory() as td:
+                    tmp = Path(td) / "x.bdf"
+                    write_bdf(pf, tmp)
+                    changed |= _place(tmp.read_bytes(), dest / pf.file_name, report)
+            elif convert == "spritesheet":
+                from opf.ingest.spritesheet import convert_spritesheet
+
+                specs = fam["sprite_maps"][p.name]
+                for spec in specs if isinstance(specs, list) else [specs]:
+                    pf = convert_spritesheet(p, slug, spec)
+                    with tempfile.TemporaryDirectory() as td:
+                        tmp = Path(td) / "x.bdf"
+                        write_bdf(pf, tmp)
+                        changed |= _place(tmp.read_bytes(), dest / pf.file_name, report)
             elif convert == "ttf":
                 from opf.ingest.rasterize import detect_native_ppem, rasterize_ttf
 
@@ -278,18 +323,46 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
                     ppem = detect_native_ppem(p)
                 if ppem is None:
                     report.errors.append(
-                        f"{slug}: {p.name} 原生格点判定失败,不自动转制(可在清单中手填 ppem)"
+                        f"{slug}: {p.name} native grid could not be determined; not converted "
+                        f"automatically (fill in ppem by hand in the manifest)"
                     )
                     continue
-                pf = rasterize_ttf(p, int(ppem), slug)
-                with tempfile.TemporaryDirectory() as td:
-                    tmp = Path(td) / "x.bdf"
-                    write_bdf(pf, tmp)
-                    changed |= _place(
-                        tmp.read_bytes(), dest / f"{p.stem}-{ppem}px.bdf", report
+                instances = fam.get("instances") or [{}]
+                if isinstance(instances, dict):
+                    if p.name not in instances:
+                        raise ValueError(f"{slug}: no instances configured for {p.name}")
+                    instances = instances[p.name]
+                for instance in instances:
+                    stem = instance.get("name", p.stem)
+                    if instance and not re.fullmatch(r"[A-Za-z0-9_-]+", stem):
+                        raise ValueError(f"{slug}: invalid instance name: {stem}")
+                    grid = fam.get("grid_units")
+                    if isinstance(grid, dict):
+                        grid = grid.get(p.name)
+                    pf = rasterize_ttf(
+                        p, int(ppem), slug,
+                        hinting=bool(fam.get("hinting", False)),
+                        all_glyphs=bool(fam.get("all_glyphs", False)),
+                        axes=instance.get("axes"),
+                        glyph_offsets=instance.get("glyph_offsets", fam.get("glyph_offsets")),
+                        pixel_offset=instance.get("pixel_offset", fam.get("pixel_offset")),
+                        grid_units=grid,
                     )
+                    pf.props["FONT"] = f"{stem}-{ppem}px"
+                    if fam.get("export_name"):
+                        pf.props["FONT"] = f'{fam["export_name"].replace(" ", "-")}-{ppem}px'
+                        pf.props["FAMILY_NAME"] = fam["export_name"]
+                    if instance.get("weight"):
+                        pf.props["WEIGHT_NAME"] = instance["weight"]
+                    report.notes.extend(f"{slug}: {warning}" for warning in pf.warnings)
+                    with tempfile.TemporaryDirectory() as td:
+                        tmp = Path(td) / "x.bdf"
+                        write_bdf(pf, tmp)
+                        changed |= _place(
+                            tmp.read_bytes(), dest / f"{stem}-{ppem}px.bdf", report
+                        )
             else:
-                report.errors.append(f"{slug}: 未知 convert 模式 {convert}")
+                report.errors.append(f"{slug}: unknown convert mode {convert}")
 
     for lf in fam.get("license_files", []):
         matched = _collect(source, lf)
@@ -297,7 +370,7 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
         if matched:
             changed |= _place(matched[0].read_bytes(), dest / matched[0].name, report)
         else:
-            report.errors.append(f"{slug}: 许可证文件未找到 {lf}")
+            report.errors.append(f"{slug}: licence file not found: {lf}")
 
     # Upstreams where the license only exists inside an archive (especially common for X11-era .tar.gz font packages).
     lic_from = fam.get("license_from", "")
@@ -318,26 +391,29 @@ def _ingest_family(fam: dict, src_root: Path, dest_root: Path,
                                     fam.get("license_take", ["LICENSE*", "COPYING*"]),
                                     Path(td))
             if not files:
-                report.errors.append(f"{slug}: license_from {lic_from} 无匹配文件")
+                report.errors.append(f"{slug}: license_from {lic_from} matched no files")
             for f in sorted(files):
                 changed |= _place(f.read_bytes(), dest / f.name, report)
 
     dest.mkdir(parents=True, exist_ok=True)
     toml_path = dest / "family.toml"
     if not toml_path.exists():
+        # Cite the upstream the font actually came from, not the path it happens
+        # to occupy in the local collection: provenance is shown to readers on
+        # the font page, and the collection's directory layout means nothing to
+        # them. The source path stays recorded in the manifest, which is what a
+        # rerun reads. Only when no upstream URL is known does the path stand in.
         upstream = fam.get("provenance_url", "")
-        prov = f"导入自 {fam['source']}"
-        prov_en = f"Imported from {fam['source']}"
-        if upstream:
-            prov += f"；上游 {upstream}"
-            prov_en += f"; upstream {upstream}"
+        origin = upstream or fam["source"]
+        prov = f"导入自 {origin}"
+        prov_en = f"Imported from {origin}"
         if convert:
             prov += f"；由 {convert} 转换"
             prov_en += f"; converted from {convert}"
         toml_path.write_text(
             _render_toml(fam, prov, prov_en,
                          convert if convert in ("ttf", "otf", "woff2") else "",
-                         TODAY),
+                         fam.get("added", TODAY)),
             encoding="utf-8",
         )
         changed = True
@@ -360,7 +436,10 @@ def run_manifest(manifest_path: Path, src_root: Path, dest_root: Path,
             continue
         (report.imported if changed else report.skipped).append(slug)
     for todo in data.get("todo", []):
-        report.notes.append(f"待议：{todo.get('source', '?')} — {todo.get('reason', '')}")
+        # reason_en where the manifest carries one, the Chinese reason otherwise --
+        # same fallback the description/note fields use.
+        why = todo.get("reason_en") or todo.get("reason", "")
+        report.notes.append(f"Pending: {todo.get('source', '?')} — {why}")
     if report_path:
         _write_report(report, report_path, data)
     return report
@@ -368,36 +447,60 @@ def run_manifest(manifest_path: Path, src_root: Path, dest_root: Path,
 
 def _write_report(report: IngestReport, path: Path, data: dict) -> None:
     lines = [
-        "# 导入报告",
+        "# Import Report",
         "",
-        f"生成时间：{TODAY}（由 opf.ingest.run 生成，重跑覆盖）",
+        f"Generated: {date.today().isoformat()} "
+        "(generated by opf.ingest.run; overwritten on rerun)",
         "",
-        f"- manifest 家族数：{len(data.get('family', []))}",
-        f"- 本次有变化：{len(report.imported)}；无变化跳过：{len(report.skipped)}",
-        f"- 文件写入：{report.files_written}；未变：{report.files_unchanged}",
+        f"- Families in manifest: {len(data.get('family', []))}",
+        f"- Changed this run: {len(report.imported)}; "
+        f"skipped unchanged: {len(report.skipped)}",
+        f"- Files written: {report.files_written}; "
+        f"unchanged: {report.files_unchanged}",
         "",
     ]
     if report.imported:
-        lines += ["## 本次导入/更新", ""]
+        lines += ["## Imported/Updated This Run", ""]
         lines += [f"- {s}" for s in report.imported]
         lines.append("")
     if report.errors:
-        lines += ["## 错误", ""]
+        lines += ["## Errors", ""]
         lines += [f"- {e}" for e in report.errors]
         lines.append("")
     if report.notes:
-        lines += ["## 待人工决定", ""]
+        lines += ["## Pending Manual Decision", ""]
         lines += [f"- {n}" for n in report.notes]
         lines.append("")
     lines += [
-        "## 风格标注待复核",
+        "## Style Annotations Pending Review",
         "",
-        "family.toml 中带 `# UNVERIFIED` 注释的 form/vibes 为导入时预填，",
-        "请逐一复核后删除该注释。",
+        "The form/vibes fields in family.toml carrying a `# UNVERIFIED` comment "
+        "were pre-filled at import time;",
+        "please review each one and remove the comment afterward.",
         "",
     ]
+    generated = "\n".join(lines)
+
+    # Everything from MANUAL_MARKER onward is hand-written history -- the
+    # per-batch inclusion reasoning, licence determinations and removal
+    # records the README points at. Only the generated head above it is ours
+    # to replace.
+    if path.exists():
+        existing = path.read_text(encoding="utf-8")
+        at = existing.find(MANUAL_MARKER_PREFIX)
+        if at < 0:
+            raise ValueError(
+                f"{path} exists but carries no manual-record marker; refusing to "
+                f"overwrite, since the file may hold hand-written content. To allow "
+                f"it, put a line reading \u201c{MANUAL_MARKER}\u201d above the "
+                f"hand-written section, or point --report somewhere else."
+            )
+        generated += "\n" + existing[at:]
+    else:
+        generated += "\n" + MANUAL_MARKER + "\n"
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text(generated, encoding="utf-8")
 
 
 def main() -> None:

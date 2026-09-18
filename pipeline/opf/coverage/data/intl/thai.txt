@@ -1,0 +1,10 @@
+# id: thai
+# section: intl
+# order: 43
+# name_zh: 泰文常用字符
+# name_en: Thai Everyday Characters
+# desc_zh: 书写泰语实际需要的 87 个字符：44 个辅音、元音符号与声调符号、泰文数字、泰铢符号与常用标点。本集与泰国国家标准 TIS-620 的泰文部分完全一致，同时也正好等于 Unicode 泰文区块 U+0E00–0E7F 中已分配的全部字符——TIS-620 未用的 U+0E3B–0E3E 四格在 Unicode 中同样未分配。因此“覆盖本集”与“完整支持泰文”是同一件事。
+# desc_en: The 87 characters actually needed to write Thai: the 44 consonants, the vowel signs and tone marks, Thai digits, the baht sign, and everyday punctuation. This set matches the Thai portion of TIS-620, Thailand's national standard, and at the same time is exactly the set of assigned characters in the Unicode Thai block U+0E00-0E7F -- the four slots TIS-620 leaves unused, U+0E3B-0E3E, are unassigned in Unicode too. Covering this set and fully supporting Thai are therefore the same thing.
+# source: TIS-620 (Thai national standard; ISO/IEC 8859-11 is the same table plus NBSP at 0xA0). Derived from Python's tis_620 codec over 0xA1-0xFB and cross-checked against the Unicode 17.0 Thai block's assigned characters; generated 2026-09-03
+0E01..0E3A
+0E3F..0E5B

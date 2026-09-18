@@ -1,6 +1,7 @@
 from pathlib import Path
+import pytest
 
-from opf.familymeta import load_family_meta, resolve_variant
+from opf.familymeta import load_family_meta, normalize_forms, resolve_variant
 from opf.model import ParsedFont
 
 TOML = """
@@ -10,7 +11,7 @@ authors = ["TakWolf", "pixel-font-studio"]
 homepage = "https://fusion-pixel-font.takwolf.com"
 repository = "https://github.com/TakWolf/fusion-pixel-font"
 description = "多来源缝合的像素字体"
-form = "gothic"
+forms = ["gothic", "decorative"]
 vibes = ["retro-game", "cute"]
 aliases = ["FZG", "缝合怪"]
 converted_from = ""
@@ -52,7 +53,7 @@ def test_load_full_toml(tmp_path):
     assert m.slug == "fusion-pixel"
     assert m.name == "Fusion Pixel"
     assert m.name_zh == "缝合像素"
-    assert m.form == "gothic"
+    assert m.forms == ["gothic", "decorative", "sans"]
     assert m.vibes == ["retro-game", "cute"]
     assert m.aliases == ["FZG", "缝合怪"]
     assert m.authors == ["TakWolf", "pixel-font-studio"]
@@ -60,6 +61,30 @@ def test_load_full_toml(tmp_path):
     assert m.license_override == {"spdx": "OFL-1.1", "file": "LICENSE-OFL"}
     assert m.samples == {"zh-Hans": "缝合怪也有春天"}
     assert "fusion-pixel-10px-monospaced-zh_hans.bdf" in m.variant_overrides
+
+
+@pytest.mark.parametrize(("value", "expected"), [
+    ("mingcho", ["song", "serif"]),
+    (["round", "rounded"], ["rounded"]),
+    (["serif-pixel", "song", "serif"], ["serif", "song"]),
+    (["gothic", "decorative", "gothic"], ["gothic", "decorative", "sans"]),
+    ([], []),
+])
+def test_category_aliases_parents_and_deduplication(value, expected):
+    assert normalize_forms(value) == expected
+
+
+def test_legacy_category_loads_but_explicit_categories_take_precedence(tmp_path):
+    path = tmp_path / "family.toml"
+    path.write_text('form = "mingcho"\n', encoding="utf-8")
+    assert load_family_meta(tmp_path).forms == ["song", "serif"]
+    path.write_text('form = "mingcho"\nforms = ["kai"]\n', encoding="utf-8")
+    assert load_family_meta(tmp_path).forms == ["kai"]
+
+
+def test_unknown_category_is_rejected():
+    with pytest.raises(ValueError, match="Unknown category"):
+        normalize_forms(["roundd"])
 
 
 def test_legacy_singular_author_still_loads(tmp_path):
@@ -123,6 +148,12 @@ def test_resolve_bold_from_filename_suffix(tmp_path):
     v = resolve_variant(_font("batang16b.bdf", {}, pixel_size=16), m)
     assert v.weight == "bold"
     assert v.size == 16
+
+    # The TTF rasterizer appends -<n>px to the stem, so the trailing B is no
+    # longer at the end of the name (Nightgazer12B -> Nightgazer12B-12px).
+    v = resolve_variant(_font("Nightgazer12B-12px.bdf", {}, pixel_size=12), m)
+    assert v.weight == "bold"
+    assert resolve_variant(_font("Nightgazer12-12px.bdf", {}, pixel_size=12), m).weight == "regular"
 
 
 def test_resolve_spacing_fallback_measured(tmp_path):

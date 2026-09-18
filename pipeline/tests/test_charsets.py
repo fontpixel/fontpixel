@@ -126,3 +126,23 @@ def test_single_byte_registry_with_unicode_codepoints():
     assert len(warnings) >= 1 and "Unicode" in warnings[0]
     # double-byte CJK charsets are unaffected and still go through their own codecs
     assert decode_cp(0x3021, "jisx0208.1990", "0", [], set()) == 0x4E9C
+
+
+def test_tis620_thai_registry():
+    """Thai bitmap fonts declare tis620, which used to decode to nothing at all.
+
+    Every BDF in tlwg/thaixfonts carries CHARSET_REGISTRY "tis620"; without a
+    mapping decode_cp returned None for the whole Thai range and the fonts
+    imported with zero glyphs.
+    """
+    from opf.parsers.charset_map import decode_cp
+
+    warnings: list[str] = []
+    warned: set[str] = set()
+    assert decode_cp(0x41, "tis620", "0", warnings, warned) == 0x41  # ASCII below 0x80
+    assert decode_cp(0xA1, "tis620", "0", warnings, warned) == 0x0E01  # ก
+    assert decode_cp(0xFB, "tis620", "0", warnings, warned) == 0x0E5B  # ๛
+    assert decode_cp(0xA0, "tis620", "0", warnings, warned) is None  # unassigned in TIS-620
+    assert warnings == []
+    # ISO 8859-11 is the same table and already went through the iso8859 branch
+    assert decode_cp(0xA1, "iso8859", "11", [], set()) == 0x0E01

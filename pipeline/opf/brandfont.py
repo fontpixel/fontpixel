@@ -9,7 +9,7 @@ The single source of truth for the character list is
 site/src/i18n/sitenames.json — the site's i18n and this script read the
 same file, so a site-name change stays in sync on both sides.
 
-The family is named FBF Brand rather than Fusion Pixel: OFL's Reserved
+The family is named FontPixel Brand rather than Fusion Pixel: OFL's Reserved
 Font Name clause requires modified versions to be renamed, and this subset
 counts as a modification.
 """
@@ -55,7 +55,7 @@ def build_brand_font(fonts_dir: Path, data_dir: Path, names_path: Path) -> dict:
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td) / "brand.ttf"
         build_vector_ttf(
-            font, "FBF Brand", "Regular", tmp, shape="square",
+            font, "FontPixel Brand", "Regular", tmp, shape="square",
             copyright_=f"Subset of {src.parent.name} (OFL-1.1) for the site wordmark",
         )
         from fontTools.ttLib import TTFont
@@ -70,7 +70,7 @@ def build_brand_font(fonts_dir: Path, data_dir: Path, names_path: Path) -> dict:
             out_name = "brand.woff"
             f.save(data_dir / out_name)
 
-    meta = {"file": out_name, "px": font.pixel_size, "family": "FBF Brand",
+    meta = {"file": out_name, "px": font.pixel_size, "family": "FontPixel Brand",
             "source": src.name, "glyphs": len(font.glyphs)}
     (data_dir / "brand.json").write_text(
         json.dumps(meta, ensure_ascii=False, sort_keys=True), encoding="utf-8")

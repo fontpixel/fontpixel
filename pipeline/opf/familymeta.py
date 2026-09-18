@@ -11,14 +11,39 @@ from opf.metrics import is_monospaced
 from opf.model import ParsedFont
 
 FORMS = {
-    "gothic", "mingcho", "rounded", "kai", "fangsong", "serif-pixel", "sans",
-    "script", "decorative", "terminal", "other", "",
+    "gothic", "song", "rounded", "kai", "fangsong", "serif", "sans",
+    "script", "decorative", "terminal", "other",
 }
+
+FORM_ALIASES = {"mingcho": "song", "round": "rounded", "serif-pixel": "serif"}
+FORM_PARENTS = {"gothic": "sans", "song": "serif"}
+
+
+def normalize_forms(value: list[str] | str) -> list[str]:
+    """Read legacy categories and include broader categories without duplicates."""
+    if isinstance(value, str):
+        value = [value]
+    if not isinstance(value, list) or any(not isinstance(v, str) for v in value):
+        raise ValueError("forms must be a list of category strings")
+    result = []
+    for item in value:
+        item = FORM_ALIASES.get(item, item)
+        if not item:
+            continue
+        if item not in FORMS:
+            raise ValueError(f"Unknown category {item!r}; expected one of {sorted(FORMS)}")
+        if item not in result:
+            result.append(item)
+    for item in list(result):
+        parent = FORM_PARENTS.get(item)
+        if parent and parent not in result:
+            result.append(parent)
+    return result
 
 _STUB = """\
 # 此文件由构建器自动生成，请补全后把 TODO 注释删掉。
-# form 可选值：gothic（黑体） | mingcho（宋体/明朝） | rounded（圆体） | kai（楷体）
-#   | fangsong（仿宋） | serif-pixel（西文衬线） | sans（西文无衬线） | script（手写）
+# forms 可选值：gothic（黑体） | song（宋体/明朝） | rounded（圆体） | kai（楷体）
+#   | fangsong（仿宋） | serif（衬线） | sans（无衬线） | script（手写）
 #   | decorative（装饰） | terminal（终端） | other
 name = "{name}"
 name_zh = ""            # TODO: 中文名（可留空）
@@ -26,7 +51,7 @@ authors = []            # TODO: 作者，如 ["TakWolf"]
 homepage = ""           # TODO
 repository = ""
 description = ""        # TODO: 一句话介绍
-form = ""               # TODO: 字形分类
+forms = []             # TODO: 字形分类，可多选；gothic 自动包含 sans，song 自动包含 serif
 vibes = []              # TODO: 气质标签，如 ["retro-game", "cute"]
 converted_from = ""
 provenance = ""
@@ -59,11 +84,15 @@ class FamilyMeta:
     homepage: str = ""
     repository: str = ""
     description: str = ""
-    form: str = ""
+    forms: list[str] = field(default_factory=list)
     vibes: list[str] = field(default_factory=list)
     """Former names, upstream project names, native-language names, etc. — only feed into search text, never shown on the site."""
     aliases: list[str] = field(default_factory=list)
     converted_from: str = ""
+    source_kind: str = ""
+    source_formats: list[str] = field(default_factory=list)
+    export_name: str = ""
+    """Installation name for conversions whose upstream reserves its font name."""
     provenance: str = ""
     """Font names per language, all optional; a missing one falls back per
     LOCALE_FALLBACK, eventually landing on name. When zh-Hant is missing,
@@ -83,6 +112,7 @@ class FamilyMeta:
     curated: bool = True
     added: str = ""
     sample_lang: str = ""
+    default_variant: str = ""
     license_override: dict | None = None
     samples: dict[str, str] = field(default_factory=dict)
     variant_overrides: dict[str, dict] = field(default_factory=dict)
@@ -130,10 +160,13 @@ def load_family_meta(family_dir: Path) -> FamilyMeta:
         homepage=str(data.get("homepage", "")),
         repository=str(data.get("repository", "")),
         description=str(data.get("description", "")),
-        form=str(data.get("form", "")),
+        forms=normalize_forms(data.get("forms", data.get("form", []))),
         vibes=[str(v) for v in data.get("vibes", [])],
         aliases=[str(a) for a in data.get("aliases", [])],
         converted_from=str(data.get("converted_from", "")),
+        source_kind=str(data.get("source_kind", "")),
+        source_formats=[str(value) for value in data.get("source_formats", [])],
+        export_name=str(data.get("export_name", "")),
         provenance=str(data.get("provenance", "")),
         name_en=str(data.get("name_en", "")),
         # name_zh was the old spelling from before multi-language fields
@@ -153,6 +186,7 @@ def load_family_meta(family_dir: Path) -> FamilyMeta:
         curated=curated,
         added=str(data.get("added", "")),
         sample_lang=str(data.get("sample_lang", "")),
+        default_variant=str(data.get("default_variant", "")),
         license_override=data.get("license"),
         samples={str(k): str(v) for k, v in data.get("samples", {}).items()},
         variant_overrides={str(k): dict(v) for k, v in data.get("variants", {}).items()},
@@ -189,7 +223,10 @@ def resolve_variant(f: ParsedFont, meta: FamilyMeta) -> VariantDesc:
 
     weight = "regular"
     wn = str(f.props.get("WEIGHT_NAME", "")).lower()
-    if "bold" in wn or "bold" in tokens or re.search(r"\d+b$", lower):
+    # "Nightgazer12B" style names: a trailing B on the size. The optional
+    # -<n>px tail is what the TTF rasterizer appends to the stem, and without
+    # allowing for it every converted bold in such a family reads as regular.
+    if "bold" in wn or "bold" in tokens or re.search(r"\d+b(-\d+px)?$", lower):
         weight = "bold"
     elif "light" in wn or "light" in tokens:
         weight = "light"

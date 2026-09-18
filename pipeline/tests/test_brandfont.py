@@ -25,13 +25,13 @@ def test_subset_covers_the_brand_text_and_nothing_else(tmp_path, monkeypatch):
     fonts, data, names, text = _setup(tmp_path, monkeypatch)
     meta = bf.build_brand_font(fonts, data, names)
     assert (data / meta["file"]).exists()
-    assert meta["family"] == "FBF Brand"      # OFL Reserved Font Name clause: subsets must be renamed
+    assert meta["family"] == "FontPixel Brand"      # OFL Reserved Font Name clause: subsets must be renamed
 
     from fontTools.ttLib import TTFont
     f = TTFont(data / meta["file"])
     cmap = f.getBestCmap()
     assert set(cmap) == {ord(c) for c in text}
-    assert f["name"].getDebugName(1) == "FBF Brand"
+    assert f["name"].getDebugName(1) == "FontPixel Brand"
 
 
 def test_output_is_deterministic(tmp_path, monkeypatch):
