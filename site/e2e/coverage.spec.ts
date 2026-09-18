@@ -85,6 +85,7 @@ test('glyph sheets lay out three per row on a wide screen', async ({ page }) => 
   // the island is client:visible; scroll the grid into view first, then wait for it to render
   const grid = page.getByTestId('glyph-grid');
   await grid.scrollIntoViewIfNeeded();
+  await grid.getByTestId('range-select').selectOption('b:CJK Unified Ideographs');
   const sheets = grid.locator('.gg__sheets .gg__sheet');
   await expect(sheets.nth(5)).toBeAttached();
   const boxes = await sheets.evaluateAll((els) =>
@@ -256,6 +257,39 @@ test('missing chars open in a modal that closes again', async ({ page }) => {
   await page.keyboard.press('Escape');
   await expect(dlg).toBeHidden();
 });
+
+for (const viewport of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
+  test(`missing-char modal preserves page scroll at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('en/fonts/kh-dot-kagurazaka/');
+    // Isolate modal scroll behavior from the asynchronous specimen's first layout.
+    await expect(page.getByTestId('copy-hash')).toBeEnabled();
+    const dlg = page.locator('[data-missing-modal]');
+    const buttons = page.locator('.cov__missbtn:visible');
+
+    for (const close of ['button', 'escape', 'backdrop']) {
+      const trigger = close === 'backdrop' ? buttons.last() : buttons.first();
+      await trigger.scrollIntoViewIfNeeded();
+      const scrollBefore = await page.evaluate(() => ({ x: scrollX, y: scrollY }));
+      expect(scrollBefore.y).toBeGreaterThan(0);
+
+      await trigger.click();
+      await expect(dlg).toBeVisible();
+      expect(await page.evaluate(() => ({ x: scrollX, y: scrollY }))).toEqual(scrollBefore);
+      const bounds = await dlg.boundingBox();
+      expect(bounds!.y).toBeGreaterThanOrEqual(0);
+      expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(viewport.height);
+
+      if (close === 'button') await dlg.locator('[data-modal-close]').click();
+      else if (close === 'escape') await page.keyboard.press('Escape');
+      else await page.mouse.click(1, 1);
+
+      await expect(dlg).toBeHidden();
+      await expect(trigger).toBeFocused();
+      expect(await page.evaluate(() => ({ x: scrollX, y: scrollY }))).toEqual(scrollBefore);
+    }
+  });
+}
 
 test('coverage section has its own variant picker, synced with the top one', async ({
   page,

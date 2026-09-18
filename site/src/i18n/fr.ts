@@ -1,3 +1,4 @@
+import { vibeNames } from '../lib/vibes';
 import sitenames from './sitenames.json';
 import type { UIStrings } from './types';
 
@@ -19,23 +20,39 @@ export const fr: UIStrings = {
   },
 
   catalogue: {
-    searchPlaceholder: 'Rechercher noms, auteurs, tags…',
+    searchPlaceholder: 'Noms, auteurs, tags…',
+    searchLabel: 'Rechercher noms, auteurs, tags…',
+    sortAutoReverse: 'Automatique (inversé)',
     samplePlaceholder: 'Saisissez un aperçu, toutes les cartes se redessinent aussitôt',
     sampleLabel: 'Texte d’aperçu',
+    preset: 'Exemple',
+    previewStyle: 'Style d’aperçu',
+    codeLanguage: 'Langage du code',
     zoom: 'Zoom',
     grid: 'Grille',
     nowrap: 'Sans retour à la ligne',
     boxDrawing: 'Filets',
     frameNone: 'Aucun',
+    frameInvert: 'Négatif',
     frameCode: 'Code en couleurs',
     frameGame: 'Jeu rétro',
     results: '{n} polices',
     noResults: 'Aucune police ne correspond à ces filtres',
     noResultsHint: 'Élargissez les filtres ou effacez la recherche par caractère.',
     sort: 'Trier',
-    sortName: 'Nom',
-    sortSize: 'Taille en pixels',
-    sortGlyphs: 'Nombre de glyphes',
+    sortAuto: 'Automatique',
+    pagination: 'Pages du catalogue',
+    previousPage: 'Précédent',
+    nextPage: 'Suivant',
+    pageLabel: 'Page {n}',
+    editPage: 'Modifier le numéro de page',
+    showing: 'Affichage : {start}–{end}',
+    sortName: 'Nom (A–Z)',
+    sortNameReverse: 'Nom (Z–A)',
+    sortSize: 'Taille croissante',
+    sortSizeReverse: 'Taille décroissante',
+    sortGlyphs: 'Glyphes décroissants',
+    sortGlyphsReverse: 'Glyphes croissants',
     filters: 'Filtres',
     reset: 'Effacer les filtres',
     form: 'Catégorie',
@@ -48,18 +65,19 @@ export const fr: UIStrings = {
     weights: 'Graisses',
     coverageAny: 'Choisir un jeu de caractères…',
     coveragePresets: 'Couverture',
+    coverageClear: 'Effacer',
     charsLookup: 'Chercher par caractère',
-    charsPlaceholder: 'Saisissez des caractères, p. ex. 龘齉𰻝',
+    charsPlaceholder: 'Saisissez des caractères, p. ex. Æφは𰻝',
     charsHint: 'Affiche uniquement les polices couvrant tous les caractères saisis',
   },
 
   forms: {
     gothic: 'Gothique',
-    mingcho: 'Song / Mincho',
+    song: 'Song / Mincho',
     rounded: 'Arrondie',
     kai: 'Kai',
     fangsong: 'Fangsong',
-    'serif-pixel': 'À empattements',
+    serif: 'À empattements',
     sans: 'Sans empattements',
     script: 'Manuscrite',
     decorative: 'Décorative',
@@ -68,15 +86,7 @@ export const fr: UIStrings = {
     '': 'Non classée',
   },
 
-  vibeNames: {
-    classic: 'Classique',
-    cute: 'Mignonne',
-    decorative: 'Décorative',
-    fallback: 'De secours',
-    handwriting: 'Manuscrite',
-    'retro-game': 'Jeu rétro',
-    'terminal-hardcore': 'Terminal / hardcore',
-  },
+  vibeNames: vibeNames('fr'),
 
   widthNames: {
     normal: 'Normale',
@@ -97,6 +107,7 @@ export const fr: UIStrings = {
     cyrillic: 'Cyrillique',
     greek: 'Grec',
     arabic: 'Arabe (dont persan et ourdou)',
+    thai: 'Thaï',
     'zh-hans-partial': 'Chinois simplifié (incomplet)',
     'zh-hant-partial': 'Chinois traditionnel (incomplet)',
     'ja-partial': 'Japonais (incomplet)',
@@ -107,6 +118,7 @@ export const fr: UIStrings = {
     'cyrillic-partial': 'Cyrillique (incomplet)',
     'greek-partial': 'Grec (incomplet)',
     'arabic-partial': 'Arabe (incomplet)',
+    'thai-partial': 'Thaï (incomplet)',
   },
 
   scriptRules: {
@@ -120,6 +132,7 @@ export const fr: UIStrings = {
     'cyrillic': 'Caractères cyrilliques usuels ≥ 90%',
     'greek': 'Caractères grecs usuels ≥ 90%',
     'arabic': 'Caractères arabes usuels ≥ 90%',
+    'thai': 'Caractères thaïs usuels ≥ 90%',
     'zh-hans-partial': 'GB/T 2312 ou liste des sinogrammes chinois standard 10–90%',
     'zh-hant-partial': 'Sinogrammes courants Big5 10–90%',
     'ja-partial': 'Kana ≥ 95% et kanji JIS de niveau 1 10–90%',
@@ -130,10 +143,13 @@ export const fr: UIStrings = {
     'cyrillic-partial': 'Caractères cyrilliques usuels 10–90%',
     'greek-partial': 'Caractères grecs usuels 10–90%',
     'arabic-partial': 'Caractères arabes usuels 10–90%',
+    'thai-partial': 'Caractères thaïs usuels 10–90%',
   },
 
   weightNames: {
     regular: 'Normale',
+    medium: 'Moyenne',
+    semibold: 'Demi-grasse',
     bold: 'Grasse',
     light: 'Légère',
   },
@@ -152,8 +168,12 @@ export const fr: UIStrings = {
   },
 
   detail: {
+    sourceType: 'Type de source',
+    sourceBitmap: 'Source bitmap',
+    sourcePixelOutline: 'Contours de pixels',
     close: 'Fermer',
     backToCatalogue: 'Retour au catalogue',
+    jumpToDownloads: 'Aller aux téléchargements',
     sizesOverview: 'Tableau des tailles de variantes',
     variants: 'Variantes',
     sampleTitle: 'Aperçu',
@@ -165,7 +185,7 @@ export const fr: UIStrings = {
     hanInkNone: 'Aucun glyphe Han',
     displaySize: 'Taille recommandée',
     copyDots: 'Copier la matrice de points',
-    sizeLadder: 'Échelle de tailles',
+    sizeLadder: 'Toutes les variantes',
     copied: 'Copié',
     saved: 'Enregistré',
     savePng: 'Enregistrer le PNG',
@@ -278,7 +298,7 @@ export const fr: UIStrings = {
 
   footer: {
     navLabel: 'Navigation du pied de page',
-    siteLicense: "Le site et les données du catalogue sont sous licence MIT.",
+    siteLicense: "Le code du site et les données du catalogue sont sous licence MIT.",
     disclaimer:
       'Chaque police reste la propriété de son auteur ; les informations de licence sont indicatives et le texte original publié en amont prévaut.',
     dataSources: 'Sources des jeux de caractères',
@@ -292,7 +312,6 @@ export const fr: UIStrings = {
   },
   compare: {
     title: 'Comparer les polices',
-    intro: 'Le même texte, la même taille en pixels, jusqu\'à quatre polices côte à côte : la règle unique de ce catalogue, rendue visible.',
     add: 'Ajouter une police',
     remove: 'Retirer',
     pickFont: 'Choisir une police',

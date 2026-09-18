@@ -45,24 +45,24 @@ const cssFamily = detail.meta.name.replace(/"/g, '');
  * solid and takes precedence: a fallback that keeps columns lined up matters
  * more than one that matches the stroke texture. A terminal face counts as
  * monospace whatever its metrics say, since that is what it is for. The rest
- * follows the curated `form` field — Song/Mincho, Fangsong, Kai and pixel
+ * follows the curated `forms` field — Song/Mincho, Fangsong, Kai and pixel
  * serifs are serif; gothic, sans and rounded are sans-serif. Decorative and
  * script faces get no generic at all rather than a guess, since the wrong
  * stand-in is worse than none.
  */
-const SERIF_FORMS = new Set(['mingcho', 'serif-pixel', 'fangsong', 'kai']);
-const SANS_FORMS = new Set(['sans', 'gothic', 'rounded', 'round']);
+const SERIF_FORMS = new Set(['song', 'serif', 'fangsong', 'kai']);
+const SANS_FORMS = new Set(['sans', 'gothic', 'rounded']);
 function genericFor(file: string): string {
-  const form = detail.meta.form;
-  if (form === 'terminal') return 'monospace';
+  const forms = detail.meta.forms;
+  if (forms.includes('terminal')) return 'monospace';
   // The filename carries the group's spacing whenever it varies within a family
   if (/-monospaced-/.test(file)) return 'monospace';
   if (!/-proportional-/.test(file)) {
     const spacings = new Set(detail.meta.variants.map((v) => v.spacing));
     if (spacings.size === 1 && spacings.has('monospaced')) return 'monospace';
   }
-  if (SERIF_FORMS.has(form)) return 'serif';
-  if (SANS_FORMS.has(form)) return 'sans-serif';
+  if (forms.some(form => SERIF_FORMS.has(form))) return 'serif';
+  if (forms.some(form => SANS_FORMS.has(form))) return 'sans-serif';
   return '';
 }
 // The snippet is meant to be pasted into someone else's page, so the URL has
@@ -86,7 +86,7 @@ const webfontCss = webfonts.map((e) => {
 });
 ---
 
-<section class="dl" data-testid="download-list">
+<section id="downloads" class="dl" data-testid="download-list">
   <h2>{s.detail.downloadsTitle}</h2>
   <table class="dl__table">
     <tbody>
@@ -179,13 +179,20 @@ const webfontCss = webfonts.map((e) => {
   <p class="dl__note">{s.detail.downloadNote}</p>
   {ttfs.length > 0 && <p class="dl__note">{s.detail.downloadTtfNote}</p>}
   {vecs.length > 0 && <p class="dl__note">{s.detail.downloadVectorNote}</p>}
+</section>
+
   {
     webfonts.length > 0 && (
-      <div class="dl__webfont" data-testid="webfont-css">
+      <section id="webfont" class="dl__webfont" data-testid="webfont-css">
         <div class="dl__webfont-head">
-          <h3>{s.detail.webfontTitle}</h3>
+          <h2>{s.detail.webfontTitle}</h2>
           {webfonts.length > 1 && (
-            <select class="dl__webfont-pick" data-webfont-pick aria-label={s.detail.webfontTitle}>
+            <select
+              class="dl__webfont-pick"
+              name="webfont-file"
+              data-webfont-pick
+              aria-label={s.detail.webfontTitle}
+            >
               {webfonts.map((e, i) => (
                 <option value={i}>{e.file}</option>
               ))}
@@ -213,10 +220,9 @@ const webfontCss = webfonts.map((e) => {
             </div>
           ))}
         </div>
-      </div>
+      </section>
     )
   }
-</section>
 
 <script>
   // Switch which @font-face block is on show, and copy it.
@@ -249,6 +255,22 @@ const webfontCss = webfonts.map((e) => {
 </script>
 
 <style>
+  .dl__webfont-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--s2);
+  }
+  .dl__webfont-head h2 {
+    flex-basis: 100%;
+  }
+  .dl__webfont-pick {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .dl__webfont-head :is(select, button) {
+    font-size: 0.85rem;
+  }
   .dl__webfont-box {
     border: 1px solid var(--line);
     background: var(--surface);
@@ -263,7 +285,8 @@ const webfontCss = webfonts.map((e) => {
     background: none !important;
   }
 
-  .dl h2 {
+  .dl h2,
+  .dl__webfont h2 {
     font-size: 1rem;
     margin: 0 0 var(--s3);
   }
@@ -290,6 +313,18 @@ const webfontCss = webfonts.map((e) => {
     gap: var(--s2);
     align-items: baseline;
     margin-right: var(--s4);
+    color: var(--accent);
+    /* 23.8px tall as laid out, just under the 24px minimum touch target */
+    min-height: 24px;
+  }
+  .dl__link:hover,
+  .dl__link:focus-visible {
+    background: var(--accent-soft);
+    text-decoration: underline;
+    text-underline-offset: .2em;
+  }
+  .dl__link:hover .dl__size,
+  .dl__link:focus-visible .dl__size {
     color: var(--accent);
   }
   .dl__size {

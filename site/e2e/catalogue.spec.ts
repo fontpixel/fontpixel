@@ -40,17 +40,17 @@ test('form filter narrows results and updates url', async ({ page }) => {
   await page.goto('zh/');
   const all = await resultCount(page);
   expect(all).toBeGreaterThanOrEqual(5);
-  await page.locator('[data-testid="filter-panel"] [data-form="mingcho"]').click();
+  await page.locator('[data-testid="filter-panel"] [data-form="song"]').click();
   await expect.poll(() => resultCount(page)).toBeLessThan(all);
-  await expect(page).toHaveURL(/forms=mingcho/);
-  await expect(
-    page.locator(`${ISLAND} .card[data-slug="wqy-bitmap-song"]`),
-  ).toBeVisible();
+  await expect(page).toHaveURL(/forms=song/);
+  const cards = page.locator(`${ISLAND} .card`);
+  expect(await cards.count()).toBeGreaterThan(0);
+  for (const meta of await cards.locator('.card__meta').all()) await expect(meta).toContainText('宋体 / 明朝体');
 });
 
 test('url state restores filters on load', async ({ page }) => {
-  await page.goto('zh/?forms=mingcho');
-  await page.waitForSelector(`${ISLAND} .card`);
+  await page.goto('zh/?forms=song');
+  await expect(page.locator('[data-testid="filter-panel"] [data-form="song"]')).toHaveClass(/\bon\b/);
   const filtered = await resultCount(page);
   await page.goto('zh/');
   await page.waitForSelector(`${ISLAND} .card`);
@@ -70,32 +70,38 @@ test('search narrows results', async ({ page }) => {
 });
 
 test('editing sample text repaints canvas', async ({ page }) => {
-  await page.goto('zh/');
+  await page.goto('zh/?q=galmuri');
+  await expect(page.locator(`${ISLAND} [data-slug="galmuri"] .card__sample svg`)).toBeVisible();
+  await page.getByTestId('sample-input').fill('ABC');
   const before = await cardCanvasData(page, 'galmuri');
   await page.getByTestId('sample-input').fill('픽셀 폰트 1234');
   await expect.poll(() => cardCanvasData(page, 'galmuri')).not.toBe(before);
 });
 
-test('zoom changes canvas height', async ({ page }) => {
-  await page.goto('zh/');
-  await cardCanvasData(page, 'galmuri');
-  const sel = `${ISLAND} .card[data-slug="galmuri"] .card__sample canvas`;
-  const h2 = await page.locator(sel).evaluate((c: HTMLCanvasElement) => c.height);
+test('zoom changes fixed SVG height', async ({ page }) => {
+  await page.goto('zh/?q=galmuri');
+  const sel = `${ISLAND} .card[data-slug="galmuri"] .card__sample svg`;
+  await expect(page.locator(sel)).toBeVisible();
+  const h2 = Number(await page.locator(sel).getAttribute('height'));
   await page.getByTestId('zoom-select').selectOption('3');
   await expect
-    .poll(() => page.locator(sel).evaluate((c: HTMLCanvasElement) => c.height))
+    .poll(async () => Number(await page.locator(sel).getAttribute('height')))
     .toBeGreaterThan(h2);
 });
 
-test('reset clears filters', async ({ page }) => {
-  await page.goto('zh/?forms=mingcho');
-  await page.waitForSelector(`${ISLAND} .card`);
+test('reset clears filters including the name search, and preserves sorting', async ({ page }) => {
+  await page.goto('zh/?forms=song&q=wenquanyi&sort=name');
+  await expect(page.locator('[data-testid="filter-panel"] [data-form="song"]')).toHaveClass(/\bon\b/);
+  await expect(page.getByTestId('filter-panel').getByTestId('search-input')).toHaveValue('wenquanyi');
   const filtered = await resultCount(page);
   await page.locator('[data-testid="filter-panel"] .fp__reset').click();
+  await expect(page.getByTestId('search-input')).toHaveValue('');
+  await expect(page.getByTestId('sort-select')).toHaveValue('name');
+  await expect(page).not.toHaveURL(/[?&](q|forms)=/);
   await expect.poll(() => resultCount(page)).toBeGreaterThan(filtered);
 });
 
-test('coverage form filters as you type and resets', async ({ page }) => {
+test('coverage form filters as you type and resets', async ({ page, request }) => {
   await page.goto('zh/');
   const all = await resultCount(page);
   const panel = page.locator('[data-testid="coverage-filter"]');
@@ -105,9 +111,13 @@ test('coverage form filters as you type and resets', async ({ page }) => {
   await expect.poll(() => resultCount(page)).toBeLessThan(all);
   await panel.locator('[data-testid="coverage-pct"]').fill('99');
   await expect.poll(() => resultCount(page)).toBeLessThanOrEqual(all);
-  await expect(
-    page.locator(`${ISLAND} .card[data-slug="wqy-bitmap-song"]`),
-  ).toBeVisible();
+  const index = await (await request.get('/data/index.json')).json();
+  const visible = await page.locator(`${ISLAND} .card`).evaluateAll(cards => cards.map(c => c.getAttribute('data-slug')));
+  expect(visible.length).toBeGreaterThan(0);
+  const coverageIndex = index.charsetIds.indexOf('gb2312');
+  for (const slug of visible) {
+    expect(index.families.find((f: { slug: string }) => f.slug === slug).coverage[coverageIndex]).toBeGreaterThanOrEqual(0.99);
+  }
   // lowering the threshold should include more fonts
   const strict = await resultCount(page);
   await panel.locator('[data-testid="coverage-pct"]').fill('50');
@@ -141,11 +151,10 @@ test('commercial-only filter is gone', async ({ page }) => {
 });
 
 test('vibe tags are localised, never raw slugs', async ({ page }) => {
-  // the data stores slugs like classic / retro-game / terminal-hardcore
-  const SLUGS = ['retro-game', 'terminal-hardcore', 'handwriting', 'classic'];
+  const SLUGS = ['retro-computer', 'game-ui', 'blackletter'];
   for (const [path, expected] of [
-    ['zh/', '复古游戏'],
-    ['en/', 'Retro game'],
+    ['zh/', '复古电脑'],
+    ['en/', 'Retro computer'],
   ] as const) {
     await page.goto(path);
     const panel = page.locator('[data-testid="filter-panel"]');

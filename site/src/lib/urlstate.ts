@@ -1,8 +1,8 @@
 /** FilterState ↔ URL query serialization (for shareable links). Unknown params are ignored. */
 
-import { emptyState, type FilterState, type SortKey } from './filters';
+import { emptyState, SORTS, type FilterState, type SortKey } from './filters';
 
-const SORTS: SortKey[] = ['name', 'size', 'glyphs'];
+const FORM_ALIASES: Record<string, string> = { mingcho: 'song', round: 'rounded', 'serif-pixel': 'serif' };
 
 export function encodeState(s: FilterState): URLSearchParams {
   const p = new URLSearchParams();
@@ -31,7 +31,7 @@ function list(p: URLSearchParams, key: string): string[] {
 export function decodeState(p: URLSearchParams): FilterState {
   const s = emptyState();
   s.q = p.get('q') ?? '';
-  s.forms = list(p, 'forms');
+  s.forms = [...new Set(list(p, 'forms').map(form => FORM_ALIASES[form] ?? form))];
   s.vibes = list(p, 'vibes');
   s.sizes = list(p, 'sizes')
     .map((x) => Number.parseInt(x, 10))

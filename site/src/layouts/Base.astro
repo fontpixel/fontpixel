@@ -14,11 +14,23 @@ interface Props {
   /** Language versions this page actually exists in; defaults to all. English-only
    * docs pages pass ['en'] — the language menu and hreflang only list these. */
   availableLangs?: Lang[];
+  /** What this page is *about*, for structured data — the font's name on a font
+   * page. Without it every page reports the site's name and search engines see a
+   * thousand pages all called the same thing. Defaults to the site name. */
+  entityName?: string;
+  /** Canonical URL of the licence covering this page's subject. Only the home page
+   * carries the site's own licence; a font page that claimed it would be stating
+   * MIT over a font that is GPL or public domain. */
+  licenseUrl?: string;
 }
 
-const REPO_URL = 'https://github.com/pixelfonts/open-pixel-fonts';
+const REPO_URL = 'https://github.com/fontpixel/fontpixel';
+// The site's own licence, correct only for the site itself -- a font page states
+// its font's licence instead, via the licenseUrl prop.
+const REPO_LICENSE = 'https://opensource.org/licenses/MIT';
 
-const { lang, title, description, path, ogImage, availableLangs } = Astro.props;
+const { lang, title, description, path, ogImage, availableLangs, entityName, licenseUrl } =
+  Astro.props;
 const langs = availableLangs ?? LANGS;
 const otherLangs = langs.filter((l) => l !== lang);
 const s = t(lang);
@@ -64,7 +76,7 @@ const brandCss = brand
       <link rel="alternate" hreflang={a.tag} href={a.href} />
     ))}
     {alternates.length > 0 && (
-      <link rel="alternate" hreflang="x-default" href={withBase(`/${xDefaultLang}${path}`)} />
+      <link rel="alternate" hreflang="x-default" href={abs(`/${xDefaultLang}${path}`)} />
     )}
     <meta property="og:type" content={isHome ? 'website' : 'article'} />
     <meta property="og:url" content={canonical} />
@@ -88,11 +100,12 @@ const brandCss = brand
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
         '@type': isHome ? 'WebSite' : 'WebPage',
-        name: s.siteName,
+        name: entityName ?? s.siteName,
+        ...(entityName && { isPartOf: { '@type': 'WebSite', name: s.siteName, url: abs('/') } }),
         description,
         url: canonical,
         inLanguage: LANG_TAGS[lang],
-        license: 'https://opensource.org/licenses/MIT',
+        ...(licenseUrl ? { license: licenseUrl } : isHome ? { license: REPO_LICENSE } : {}),
         ...(isHome && {
           potentialAction: {
             '@type': 'SearchAction',
@@ -120,6 +133,11 @@ const brandCss = brand
           document.documentElement.dataset.theme = m;
         } catch (e) {
           document.documentElement.dataset.theme = 'light';
+        }
+        // Lets CSS collapse the catalogue's filter panel from the first paint on
+        // narrow screens; the island drops the class once it can do it natively.
+        if (matchMedia('(max-width: 900px)').matches) {
+          document.documentElement.classList.add('narrow');
         }
       })();
     </script>
@@ -252,6 +270,12 @@ const brandCss = brand
     </header>
 
     <script>
+      import { revealFragment } from '../lib/fragments';
+
+      revealFragment();
+      window.addEventListener('hashchange', revealFragment);
+      window.addEventListener('load', revealFragment, { once: true });
+
       // Switching language should stay on the "current page" — including the catalogue
       // page's search and filter state. The link is server-rendered and doesn't know the
       // client-side query, so append it from the current URL on click.
@@ -408,7 +432,7 @@ const brandCss = brand
          size (inline style gives 2×); synthetic bold and letter spacing would both
          ruin the pixel grid */
       .site-brand__name--pix {
-        font-family: 'FBF Brand', system-ui, sans-serif;
+        font-family: 'FontPixel Brand', system-ui, sans-serif;
         font-weight: 400;
         letter-spacing: 0;
         line-height: 1;

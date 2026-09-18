@@ -3,9 +3,11 @@ import { formatCp } from '../lib/format';
 import { pickText, t, type Lang } from '../i18n';
 import type { CharsetMeta } from '../lib/data';
 import type { FontDetail } from '../lib/schema';
+import CjkCoverage from './CjkCoverage.astro';
 
 interface Props {
   lang: Lang;
+  initialVariant: string;
   detail: FontDetail;
   sections: string[];
   charsets: CharsetMeta[];
@@ -13,9 +15,8 @@ interface Props {
   groups: { ids: string[]; repId: string; attr: string }[];
   variants: { id: string; label: string }[];
 }
-const { lang, detail, sections, charsets, groups, variants } = Astro.props;
+const { lang, detail, sections, charsets, groups, variants, initialVariant } = Astro.props;
 const s = t(lang);
-const m = detail.meta;
 const name = (c: CharsetMeta) => pickText(lang, c.nameZh, c.nameEn);
 const desc = (c: CharsetMeta) => pickText(lang, c.descZh, c.descEn);
 const bySection = new Map<string, CharsetMeta[]>();
@@ -28,28 +29,28 @@ const pct = (have: number, total: number) =>
   total === 0 ? '0' : ((have / total) * 100).toFixed(have === total ? 0 : 2);
 ---
 
-<section class="cov" data-testid="coverage-report">
+<section id="coverage" class="cov" data-testid="coverage-report">
   <div class="cov__head">
     <h2>{s.detail.coverageTitle}</h2>
     {/* Coverage changes with the variant, and by now the variant dropdown at the top has scrolled out of view */}
     <label class="cov__pick"
       >{s.detail.variants}
-      <select data-coverage-variant data-testid="coverage-variant">
+      <select name="coverage-variant" data-coverage-variant data-testid="coverage-variant">
         {variants.map((v) => (
-          <option value={v.id}>{v.label}</option>
+          <option value={v.id} selected={v.id === initialVariant}>{v.label}</option>
         ))}
       </select>
     </label>
   </div>
   {
-    groups.map((g, vi) => {
+    groups.map((g) => {
       const cov = detail.coverage[g.repId]!;
       const ov = detail.overview[g.repId]!;
       const blocks = detail.unicodeBlocks[g.repId]!;
       const missing = detail.missingChars[g.repId] ?? {};
       return (
-        <div data-variant-panel={g.attr} hidden={vi !== 0}>
-          <section class="cov__overview">
+        <div data-variant-panel={g.attr} hidden={!g.ids.includes(initialVariant)}>
+          <section id={`coverage-overview-${g.repId}`} class="cov__overview">
             <h3>{s.coverage.sections['overview']}</h3>
             <div class="cov__scroll">
               <table class="cov__table">
@@ -119,7 +120,8 @@ const pct = (have: number, total: number) =>
             const rows = (bySection.get(sec) ?? []).filter((c) => cov[c.id]);
             if (!rows.length) return null;
             return (
-              <section class="cov__section">
+              <>
+              <section id={`coverage-${sec}-${g.repId}`} class="cov__section">
                 <h3>{s.coverage.sections[sec] ?? sec}</h3>
                 <div class="cov__scroll">
                   <table class="cov__table">
@@ -180,10 +182,12 @@ const pct = (have: number, total: number) =>
                   </table>
                 </div>
               </section>
+              {sec === 'intl' && <CjkCoverage lang={lang} coverage={detail.cjkCoverage[g.repId]!} id={`cjk-${g.repId}`} />}
+              </>
             );
           })}
 
-          <details class="cov__blocks">
+          <details id={`unicode-blocks-${g.repId}`} class="cov__blocks">
             <summary>
               {s.coverage.unicodeBlocks}({blocks.filter((b) => b[1] > 0).length})
             </summary>
@@ -402,7 +406,8 @@ const pct = (have: number, total: number) =>
     border-color: var(--accent);
   }
   .cov__modal {
-    position: relative;
+    /* Keep focus inside the viewport when showModal() runs, without scrolling the page. */
+    position: fixed;
     border: 1px solid var(--line);
     background: var(--surface);
     color: var(--ink);

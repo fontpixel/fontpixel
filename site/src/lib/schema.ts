@@ -28,7 +28,7 @@ export const FamilyIndexSchema = z.object({
   names: z.record(z.string(), z.string()),
   authors: z.array(z.string()),
   authorsEn: z.array(z.string()),
-  form: z.string(),
+  forms: z.array(z.string()),
   vibes: z.array(z.string()),
   scripts: z.array(z.string()),
   sizes: z.array(z.number().int()),
@@ -36,6 +36,8 @@ export const FamilyIndexSchema = z.object({
   spacing: z.array(z.string()),
   license: LicenseSchema,
   converted: z.boolean(),
+  sourceKind: z.enum(['bitmap', 'pixel-outline']).optional(),
+  sourceFormats: z.array(z.string()).optional(),
   curated: z.boolean(),
   glyphCount: z.number().int(),
   hanInk: z.record(z.string(), z.array(z.number().int()).length(2)).nullable(),
@@ -47,9 +49,17 @@ export const FamilyIndexSchema = z.object({
   coverage: z.array(z.number()),
   variants: z.array(VariantSchema).min(1),
   preview: z.string(),
+  cardPreview: z.string().default(''),
+  namePreviews: z.record(z.string(), z.string()).default({}),
   sampleLang: z.string(),
   sampleText: z.string().default(''),
   previewVariant: z.string().default(''),
+  /** Language-specific specimens; absent in older pipeline output. */
+  previews: z.record(z.string(), z.object({
+    variantId: z.string(),
+    text: z.string(),
+    file: z.string(),
+  })).optional(),
   added: z.string(),
   searchText: z.string(),
 });
@@ -63,7 +73,7 @@ export const CharsetMetaSchema = z.object({
 
 /** Site data contract version, kept in sync with DATA_SCHEMA_VERSION in pipeline/opf/__init__.py.
  *  Bump both sides by 1 whenever index.json's shape changes; going out of sync is caught by schema.test.ts. */
-export const DATA_SCHEMA_VERSION = 2;
+export const DATA_SCHEMA_VERSION = 5;
 
 export const IndexSchema = z.object({
   schemaVersion: z.number().int(),
@@ -105,6 +115,7 @@ export const DetailSchema = z.object({
     dwidthHistogram: z.record(z.string(), z.number().int()),
   })),
   coverage: z.record(z.string(), z.record(z.string(), Pair)),
+  cjkCoverage: z.record(z.string(), z.record(z.string(), Pair)),
   overview: z.record(z.string(), z.object({
     total: Pair,
     planes: z.array(z.tuple([z.string(), z.number().int(), z.number().int()])),

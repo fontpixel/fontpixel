@@ -4,12 +4,39 @@ import type { AboutSection } from './about.zh';
 
 export const aboutIntro =
   
-  '‘오픈 소스 픽셀 글꼴’은 인터넷 곳곳에 흩어진, 찾을 수 있는 모든 자유 저작권 비트맵(픽셀) 글꼴을 하나의 박물관에 모읍니다. 글꼴을 해체해 글리프를 하나하나 살피고, 같은 잣대로 거듭 재며, 문자 집합별 수록 범위를 자세히 헤아립니다. 또한 직접 입력할 수 있는 미리보기로 그 글꼴의 여러 문자가 옛 아케이드 게임이나 구문 강조 편집기에서 어떻게 보이는지 확인할 수 있습니다. 마지막으로 BDF, PCF, 비트맵 TTF, 그리고 각 픽셀을 정사각형이나 원으로 바꾼 벡터화 TTF 형식의 내려받기를 제공합니다.';
+  'Tom Chen의 ‘FontPixel.com 오픈 소스 픽셀 글꼴 박물관’은 인터넷 곳곳에 흩어진, 찾을 수 있는 모든 자유 저작권 비트맵(픽셀) 글꼴을 하나의 박물관에 모읍니다. 글꼴을 해체해 글리프를 하나하나 살피고, 같은 잣대로 거듭 재며, 문자 집합별 수록 범위를 자세히 헤아립니다. 또한 직접 입력할 수 있는 미리보기로 그 글꼴의 여러 문자가 옛 아케이드 게임이나 구문 강조 편집기에서 어떻게 보이는지 확인할 수 있습니다. 마지막으로 BDF, PCF, 비트맵 TTF, 그리고 각 픽셀을 정사각형이나 원으로 바꾼 벡터화 TTF 형식의 내려받기를 제공합니다.';
 
 export const aboutSections: AboutSection[] = [
   {
     id: 'criteria',
     heading: '수록 기준',
+    examplesIntro: "오픈 소스로 오해하기 쉽지만 검토 후 수록하지 않은 글꼴의 예:",
+    examples: [
+      {
+        "name": "HZK / mplus_hzk_12",
+        "href": "https://github.com/py-zhao/mplus_hzk_12#readme",
+        "reason": "사용된 HZK 글리프에 적용되는 자유 라이선스를 확인하지 못했습니다. 오래되었다고 퍼블릭 도메인이 되는 것은 아니며, 파생 저장소의 Unlicense도 원본 글리프의 이용 허락을 대신할 수 없습니다."
+      },
+      {
+        "name": "Zpix (最像素)",
+        "href": "https://github.com/SolidZORO/zpix-pixel-font#readme",
+        "reason": "개인·교육 프로젝트에는 무료지만 상업적 이용에는 유료 라이선스가 필요하고 수정·형식 변환 등도 금지됩니다. 본 사이트의 자유 라이선스 기준을 충족하지 않습니다."
+      },
+      {
+        "name": "Guanzhi 8px (观致, FontChinese7x7)",
+        "href": "https://github.com/Angelic47/FontChinese7x7#readme",
+        "reason": "중국어 글리프를 보충한 사람이 불명확합니다. 이슈 #6에는 샤샤(夏夏, lietxia)가 자신은 보충하지 않았다고 말했다는 보고가 있습니다. 저장소의 MIT 라이선스는 도구 코드에만 적용되며 글꼴에는 적용되지 않습니다.",
+        "reference": {
+          "label": "논의 #6",
+          "href": "https://github.com/Angelic47/FontChinese7x7/issues/6"
+        }
+      },
+      {
+        "name": "tewi",
+        "href": "https://github.com/lucy/tewi-font#readme",
+        "reason": "작성자는 Monaco에서 상당수 글리프를 가져온 데 따른 라이선스 불확실성 때문에 글꼴을 철회하고 배포자에게도 삭제를 검토해 달라고 요청했습니다. 이전 사본의 GPL 표기만으로 원본의 라이선스 문제를 해소할 수는 없습니다."
+      }
+    ],
     paragraphs: [
       '자유 라이선스 글꼴만 수록하며 기준은 엄격합니다. 라이선스는 누구나 사용·복제·수정·재배포할 수 있고 상업적 이용까지 허용함을 명시해야 하며, 본 사이트에 수록된 바로 그 파일에 적용되고 출처를 확인할 수 있어야 합니다. \'무료\', \'상업적 무료\', \'프리웨어\', 복제만 허용, \'나중에 오픈 소스로 전환\' 같은 경우는 해당되지 않습니다. 따라서 이 사이트의 모든 글꼴은 안심하고 상업적으로 쓸 수 있습니다.',
       '\'작성자 안내\'나 \'개인 사용 약관\' 같은 자체 규정을 내건 글꼴은 대부분 수록하지 못합니다. 기준은 규정의 이름이 아니라 자유 소프트웨어와 자유 글꼴의 통용 정의를 충족하는지입니다. 누구나 어떤 목적으로든 사용·연구·수정·재배포할 수 있고, 용도나 이용자에 따른 제한이 없으며, 허락이 나중에 철회되지 않고, 파생물에도 이어져야 합니다. 하나라도 빠지면 수록 보고서에 기록만 하고 싣지 않습니다.',
@@ -60,7 +87,7 @@ name_zh = "我的字体"
 authors = ["제작자 이름"]
 homepage = "https://example.com"
 description = "한 줄 설명"
-form = "gothic"          # 자형 분류: gothic|mingcho|rounded|kai|fangsong|…
+forms = ["gothic", "sans"]          # 자형 분류: gothic|song|rounded|kai|fangsong|…
 vibes = ["retro-game"]   # 분위기 태그. 자유롭게 입력
 aliases = ["옛 이름"]    # 선택: 옛 이름·별칭. 검색에만 쓰입니다`,
   },

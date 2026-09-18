@@ -21,7 +21,7 @@ const { groupId, defaultValue, values = [] } = Astro.props;
 </div>
 
 <script>
-  for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
+  for (const [index, root] of document.querySelectorAll<HTMLElement>('[data-tabs]').entries()) {
     if (root.dataset.ready) continue;
     root.dataset.ready = '1';
     const values: { label: string; value: string }[] = JSON.parse(root.dataset.values || '[]');
@@ -42,6 +42,8 @@ const { groupId, defaultValue, values = [] } = Astro.props;
     };
     for (const it of items) {
       const v = it.dataset.tabValue!;
+      // A doc can contain several tab groups with the same language names.
+      it.id ||= `tab-${index + 1}-${v}`;
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.dataset.v = v;

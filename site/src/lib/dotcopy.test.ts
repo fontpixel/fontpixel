@@ -8,19 +8,25 @@ function raster(rows: string[]) {
   const mask = new Uint8Array(width * height);
   rows.forEach((r, y) =>
     [...r].forEach((c, x) => {
-      if (c === '#') mask[y * width + x] = 1;
+      if (c === '@') mask[y * width + x] = 1;
     }),
   );
   return { width, height, data: new Uint8ClampedArray(), missing: [], mask };
 }
 
 test('dot text mirrors the ink mask and trims blank top and bottom', () => {
-  const r = raster(['....', '.##.', '#..#', '....']);
-  expect(toDotText(r)).toBe('.##.\n#..#');
+  const r = raster(['....', '.@@.', '@..@', '....']);
+  expect(toDotText(r)).toBe('.@@.\n@..@');
 });
 
 test('dot text of an empty raster is empty, not a block of dots', () => {
   expect(toDotText(raster(['...', '...']))).toBe('');
+});
+
+test('a custom ink character is used for both the ink and the blank-row trim', () => {
+  const r = raster(['....', '.@@.', '@..@', '....']);
+  expect(toDotText(r, '#')).toBe('.##.\n#..#');
+  expect(toDotText(raster(['...', '...']), '#')).toBe('');
 });
 
 const A: DecodedGlyph = {

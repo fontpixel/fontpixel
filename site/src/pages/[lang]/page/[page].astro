@@ -1,0 +1,16 @@
+---
+import CataloguePage from '../../../components/CataloguePage.astro';
+import { LANGS, type Lang } from '../../../i18n';
+import { loadIndex } from '../../../lib/data';
+import { pageCount } from '../../../lib/catalogue';
+
+export function getStaticPaths() {
+  const pages = pageCount(loadIndex().families.length);
+  return LANGS.flatMap((lang) => Array.from({ length: pages - 1 }, (_, i) => ({
+    params: { lang, page: String(i + 2) },
+  })));
+}
+const lang = Astro.params.lang as Lang;
+const page = Number(Astro.params.page);
+---
+<CataloguePage {lang} {page} />

@@ -31,7 +31,7 @@ const licNote = pickText(lang, detail.licenseNote, detail.licenseNoteEn);
 const prov = pickText(lang, detail.provenance, detail.provenanceEn);
 ---
 
-<aside class="side">
+<aside id="font-info" class="side">
   <dl class="side__list">
     {
       authors.length > 0 && (
@@ -73,6 +73,18 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
     <dt>{s.detail.glyphCount}</dt>
     <dd class="mono">{m.glyphCount.toLocaleString()}</dd>
     {
+      m.forms.length > 0 && (
+        <>
+          <dt>{s.catalogue.form}</dt>
+          <dd>
+            {m.forms.map((form, i) => (
+              <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?forms=${encodeURIComponent(form)}`)}>{s.forms[form] ?? form}</a></>
+            ))}
+          </dd>
+        </>
+      )
+    }
+    {
       m.scripts.length > 0 && (
         <>
           <dt>{s.catalogue.scripts}</dt>
@@ -98,10 +110,19 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
         </>
       )
     }
+    {m.sourceKind && (
+      <>
+        <dt>{s.detail.sourceType}</dt>
+        <dd>
+          {m.sourceKind === 'bitmap' ? s.detail.sourceBitmap : s.detail.sourcePixelOutline}
+          {m.sourceFormats?.length ? ` · ${m.sourceFormats.join(' / ')}` : ''}
+        </dd>
+      </>
+    )}
   </dl>
 
 
-  <section class="side__license" data-testid="license-box">
+  <section id="license" class="side__license" data-testid="license-box">
     <h3>{s.detail.licenseTitle}</h3>
     <p class="side__licname">
       {lic.spdx && <span class="chip mono">{licenseShortLabel(lic.spdx)}</span>}
@@ -110,7 +131,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
     <LicenseSummary lang={lang} spdx={lic.spdx} />
     {
       licenseText && (
-        <details data-testid="license-details">
+        <details id="license-text" data-testid="license-details">
           <summary>
             {detail.licenseTextCanonical
               ? s.detail.licenseViewCanonical
@@ -125,7 +146,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
     }
     {
       licNote && (
-        <details class="side__licnotes" data-testid="license-notes">
+        <details id="license-notes" class="side__licnotes" data-testid="license-notes">
           <summary>{s.detail.licenseNotes}</summary>
           <p class="side__licnote">{licNote}</p>
         </details>
@@ -136,7 +157,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
 
   {
     (prov || detail.warnings.length > 0) && (
-      <details class="side__notes" data-testid="build-notes">
+      <details id="build-notes" class="side__notes" data-testid="build-notes">
         <summary>{s.detail.buildNotes}</summary>
         {prov && <p class="side__prov">{prov}</p>}
         {detail.warnings.length > 0 && (
@@ -219,7 +240,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
   .side__lictext {
     max-height: 20rem;
     overflow: auto;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     background: var(--surface);
     border: 1px solid var(--line);
     padding: var(--s3);
@@ -252,7 +273,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
     margin: var(--s2) 0 var(--s1);
   }
   .side__warnlist {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     padding-left: 1.2em;
   }
   .side__converted {

@@ -57,7 +57,7 @@ export function withBase(path: string): string {
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
-/** Base URL for downloads: CI injects the Releases URL in production, falls back to /downloads locally. */
+/** Fonts and pages share one deployment; an explicit mirror override remains optional. */
 export function downloadsBase(): string {
   return (import.meta.env.OPF_DOWNLOADS_BASE as string | undefined) ?? withBase('/downloads');
 }

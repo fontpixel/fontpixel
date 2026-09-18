@@ -4,12 +4,39 @@ import type { AboutSection } from './about.zh';
 
 export const aboutIntro =
   
-  '« Polices pixel libres et open source » réunit dans un même musée toutes les polices bitmap (pixel) sous licence libre que l\'on peut trouver dispersées sur le web : les polices sont démontées et chaque glyphe examiné, mesuré encore et encore selon une seule et même règle, la couverture de chaque jeu de caractères étant établie en détail ; vient ensuite un aperçu où vous pouvez saisir votre propre texte, pour voir ce que donnent les différentes écritures d\'une police dans un vieux jeu d\'arcade ou dans un éditeur à coloration syntaxique ; enfin, le téléchargement est proposé aux formats BDF, PCF, TTF bitmap et même TTF vectorisé, où chaque pixel devient un carré ou un cercle.';
+  'Tom Chen a créé « FontPixel.com : Polices pixel open source », un musée qui réunit dans un même musée toutes les polices bitmap (pixel) sous licence libre que l\'on peut trouver dispersées sur le web : les polices sont démontées et chaque glyphe examiné, mesuré encore et encore selon une seule et même règle, la couverture de chaque jeu de caractères étant établie en détail ; vient ensuite un aperçu où vous pouvez saisir votre propre texte, pour voir ce que donnent les différentes écritures d\'une police dans un vieux jeu d\'arcade ou dans un éditeur à coloration syntaxique ; enfin, le téléchargement est proposé aux formats BDF, PCF, TTF bitmap et même TTF vectorisé, où chaque pixel devient un carré ou un cercle.';
 
 export const aboutSections: AboutSection[] = [
   {
     id: 'criteria',
     heading: 'Critères d’inclusion',
+    examplesIntro: "Quelques polices souvent prises pour des polices libres, mais écartées après vérification :",
+    examples: [
+      {
+        "name": "HZK / mplus_hzk_12",
+        "href": "https://github.com/py-zhao/mplus_hzk_12#readme",
+        "reason": "Aucune licence libre vérifiable n’a été trouvée pour les glyphes HZK utilisés. Leur ancienneté ne prouve pas leur appartenance au domaine public, et l’Unlicense du dépôt dérivé ne règle pas la question des droits sur les glyphes d’origine."
+      },
+      {
+        "name": "Zpix (最像素)",
+        "href": "https://github.com/SolidZORO/zpix-pixel-font#readme",
+        "reason": "Gratuite pour les projets personnels et éducatifs, mais l’usage commercial nécessite une licence payante. La modification et la conversion sont interdites, ce qui ne répond pas à nos critères de licence libre."
+      },
+      {
+        "name": "Guanzhi 8px (观致, FontChinese7x7)",
+        "href": "https://github.com/Angelic47/FontChinese7x7#readme",
+        "reason": "La personne ayant ajouté les glyphes chinois est inconnue. Le ticket nº 6 rapporte que Xiaxia (lietxia) a déclaré ne pas les avoir ajoutés. La licence MIT du dépôt couvre uniquement le code des outils, pas la police.",
+        "reference": {
+          "label": "Discussion nº 6",
+          "href": "https://github.com/Angelic47/FontChinese7x7/issues/6"
+        }
+      },
+      {
+        "name": "tewi",
+        "href": "https://github.com/lucy/tewi-font#readme",
+        "reason": "L’auteur a retiré la police en raison des droits incertains sur de nombreux glyphes dérivés de Monaco et invite les distributeurs à envisager son retrait. Les mentions GPL des anciennes copies ne clarifient pas les droits sur ces glyphes."
+      }
+    ],
     paragraphs: [
       'Seules les polices sous licence libre sont retenues, selon des critères stricts : la licence doit autoriser explicitement chacun à utiliser, copier, modifier et redistribuer la police, usage commercial compris, et couvrir de façon vérifiable le fichier précis catalogué ici. « Gratuit », « gratuit pour usage commercial », « freeware », la seule copie autorisée ou la promesse de « passer plus tard en open source » ne suffisent pas. Toutes les polices du site peuvent donc être utilisées commercialement en toute confiance.',
       'Les polices assorties de conditions rédigées sur mesure (« déclaration de l’auteur », « conditions d’usage personnel ») sont rarement retenues. Ce qui compte n’est pas le nom de ces conditions mais leur conformité aux définitions admises du logiciel libre et des polices libres : chacun peut utiliser, étudier, modifier et redistribuer à toute fin ; aucune restriction ne tient à l’usage ni à l’utilisateur ; l’autorisation est irrévocable et se transmet aux dérivés. Qu’il en manque une seule et la police est consignée dans le rapport d’import, pas au catalogue.',
@@ -60,7 +87,7 @@ name_zh = "我的字体"
 authors = ["Nom de l’auteur"]
 homepage = "https://example.com"
 description = "Description en une ligne"
-form = "gothic"          # catégorie : gothic|mingcho|rounded|kai|fangsong|…
+forms = ["gothic", "sans"]          # catégorie : gothic|song|rounded|kai|fangsong|…
 vibes = ["retro-game"]   # tags d’ambiance, saisie libre
 aliases = ["Ancien nom"] # optionnel : anciens noms / alias, pour la recherche seule`,
   },

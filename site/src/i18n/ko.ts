@@ -1,3 +1,4 @@
+import { vibeNames } from '../lib/vibes';
 import sitenames from './sitenames.json';
 import type { UIStrings } from './types';
 
@@ -19,23 +20,39 @@ export const ko: UIStrings = {
   },
 
   catalogue: {
-    searchPlaceholder: '이름, 제작자, 태그 검색…',
+    searchPlaceholder: '이름, 제작자, 태그…',
+    searchLabel: '이름, 제작자, 태그 검색…',
+    sortAutoReverse: '자동 (역순)',
     samplePlaceholder: '미리 볼 문구를 입력하면 모든 카드가 즉시 바뀝니다',
     sampleLabel: '미리보기 문구',
+    preset: '예문',
+    previewStyle: '미리보기 스타일',
+    codeLanguage: '코드 언어',
     zoom: '확대',
     grid: '격자',
     nowrap: '줄 바꿈 안 함',
     boxDrawing: '괘선 문자',
     frameNone: '없음',
+    frameInvert: '색 반전',
     frameCode: '코드 하이라이트',
     frameGame: '레트로 게임',
     results: '글꼴 {n}개',
     noResults: '조건에 맞는 글꼴이 없습니다',
     noResultsHint: '필터 조건을 완화하거나 문자 검색을 지워 보세요.',
     sort: '정렬',
-    sortName: '이름',
-    sortSize: '픽셀 크기',
-    sortGlyphs: '글리프 수',
+    sortAuto: '자동',
+    pagination: '글꼴 목록 페이지',
+    previousPage: '이전',
+    nextPage: '다음',
+    pageLabel: '{n}페이지',
+    editPage: '페이지 번호 편집',
+    showing: '{start}–{end} 표시',
+    sortName: '이름 (오름차순)',
+    sortNameReverse: '이름 (내림차순)',
+    sortSize: '크기 (작은 순)',
+    sortSizeReverse: '크기 (큰 순)',
+    sortGlyphs: '글리프 수 (많은 순)',
+    sortGlyphsReverse: '글리프 수 (적은 순)',
     filters: '필터',
     reset: '필터 초기화',
     form: '자형 분류',
@@ -48,18 +65,19 @@ export const ko: UIStrings = {
     weights: '굵기',
     coverageAny: '문자 집합 선택…',
     coveragePresets: '수록 범위',
+    coverageClear: '지우기',
     charsLookup: '문자로 찾기',
-    charsPlaceholder: '아무 문자나 입력하세요. 예: 龘齉𰻝',
+    charsPlaceholder: '아무 문자나 입력하세요. 예: Æφは𰻝',
     charsHint: '입력한 문자를 모두 수록한 글꼴만 표시합니다',
   },
 
   forms: {
     gothic: '고딕체',
-    mingcho: '송체 / 명조체',
+    song: '송체 / 명조체',
     rounded: '둥근고딕체',
     kai: '해서체',
     fangsong: '방송체',
-    'serif-pixel': '세리프',
+    serif: '세리프',
     sans: '산세리프',
     script: '손글씨',
     decorative: '장식체',
@@ -68,15 +86,7 @@ export const ko: UIStrings = {
     '': '미분류',
   },
 
-  vibeNames: {
-    classic: '고전',
-    cute: '귀여움',
-    decorative: '장식',
-    fallback: '대체용',
-    handwriting: '손글씨',
-    'retro-game': '복고 게임',
-    'terminal-hardcore': '터미널 / 하드코어',
-  },
+  vibeNames: vibeNames('ko'),
 
   widthNames: {
     normal: '보통',
@@ -97,6 +107,7 @@ export const ko: UIStrings = {
     cyrillic: '키릴 문자',
     greek: '그리스 문자',
     arabic: '아랍 문자(페르시아어·우르두어 포함)',
+    thai: '태국 문자',
     'zh-hans-partial': '중국어 간체(불완전)',
     'zh-hant-partial': '중국어 번체(불완전)',
     'ja-partial': '일본어(불완전)',
@@ -107,6 +118,7 @@ export const ko: UIStrings = {
     'cyrillic-partial': '키릴 문자(불완전)',
     'greek-partial': '그리스 문자(불완전)',
     'arabic-partial': '아랍 문자(불완전)',
+    'thai-partial': '태국 문자(불완전)',
   },
 
   scriptRules: {
@@ -120,6 +132,7 @@ export const ko: UIStrings = {
     'cyrillic': '실용 키릴 문자 ≥ 90%',
     'greek': '실용 그리스 문자 ≥ 90%',
     'arabic': '실용 아랍 문자 ≥ 90%',
+    'thai': '실용 태국 문자 ≥ 90%',
     'zh-hans-partial': 'GB/T 2312 또는 통용규범한자표 10–90%',
     'zh-hant-partial': 'Big5 상용 한자 10–90%',
     'ja-partial': '가나 ≥ 95% 및 JIS 제1수준 한자 10–90%',
@@ -130,10 +143,13 @@ export const ko: UIStrings = {
     'cyrillic-partial': '실용 키릴 문자 10–90%',
     'greek-partial': '실용 그리스 문자 10–90%',
     'arabic-partial': '실용 아랍 문자 10–90%',
+    'thai-partial': '실용 태국 문자 10–90%',
   },
 
   weightNames: {
     regular: '보통',
+    medium: '중간',
+    semibold: '약간 굵게',
     bold: '굵게',
     light: '얇게',
   },
@@ -152,8 +168,12 @@ export const ko: UIStrings = {
   },
 
   detail: {
+    sourceType: '원본 유형',
+    sourceBitmap: '비트맵 원본',
+    sourcePixelOutline: '픽셀 윤곽선',
     close: '닫기',
     backToCatalogue: '목록으로',
+    jumpToDownloads: '다운로드로 이동',
     sizesOverview: '변형 크기 표',
     variants: '변형',
     sampleTitle: '미리보기',
@@ -165,7 +185,7 @@ export const ko: UIStrings = {
     hanInkNone: '한자 글리프 없음',
     displaySize: '권장 크기',
     copyDots: '비트맵 복사',
-    sizeLadder: '크기 사다리',
+    sizeLadder: '모든 변형',
     copied: '복사됨',
     saved: '저장됨',
     savePng: 'PNG 저장',
@@ -278,7 +298,7 @@ export const ko: UIStrings = {
 
   footer: {
     navLabel: '바닥글 탐색',
-    siteLicense: "사이트와 수록 데이터는 MIT 라이선스로 배포됩니다.",
+    siteLicense: "사이트 코드와 수록 데이터는 MIT 라이선스로 배포됩니다.",
     disclaimer:
       '각 글꼴의 저작권은 원저작자에게 있습니다. 라이선스 정보는 참고용이며 원 배포처의 원문이 우선합니다.',
     dataSources: '문자 집합 데이터 출처',
@@ -292,7 +312,6 @@ export const ko: UIStrings = {
   },
   compare: {
     title: '글꼴 비교',
-    intro: '같은 문장을 같은 픽셀 크기로, 최대 네 종까지 나란히 놓고 봅니다. 이 컬렉션이 쓰는 하나의 잣대를 눈으로 확인하는 화면입니다.',
     add: '글꼴 추가',
     remove: '제거',
     pickFont: '글꼴 선택',

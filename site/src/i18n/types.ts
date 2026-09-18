@@ -28,22 +28,38 @@ export interface UIStrings {
 
   catalogue: {
     searchPlaceholder: string;
+    searchLabel: string;
     samplePlaceholder: string;
     sampleLabel: string;
+    preset: string;
+    previewStyle: string;
+    codeLanguage: string;
     zoom: string;
     grid: string;
     nowrap: string;
     boxDrawing: string;
     frameNone: string;
+    frameInvert: string;
     frameCode: string;
     frameGame: string;
     results: string; // {n} placeholder
     noResults: string;
     noResultsHint: string;
     sort: string;
+    sortAuto: string;
+    sortAutoReverse: string;
+    pagination: string;
+    previousPage: string;
+    nextPage: string;
+    pageLabel: string; // {n}
+    editPage: string;
+    showing: string; // {start}, {end}
     sortName: string;
+    sortNameReverse: string;
     sortSize: string;
+    sortSizeReverse: string;
     sortGlyphs: string;
+    sortGlyphsReverse: string;
     filters: string;
     reset: string;
     form: string;
@@ -56,6 +72,7 @@ export interface UIStrings {
     weights: string;
     coverageAny: string;
     coveragePresets: string;
+    coverageClear: string;
     charsLookup: string;
     charsPlaceholder: string;
     charsHint: string;
@@ -81,9 +98,13 @@ export interface UIStrings {
   };
 
   detail: {
+    sourceType: string;
+    sourceBitmap: string;
+    sourcePixelOutline: string;
     /** Accessible name for the generic "close" button */
     close: string;
     backToCatalogue: string;
+    jumpToDownloads: string;
     /** Title for the variant-sizes overview table */
     sizesOverview: string;
     variants: string;
@@ -203,7 +224,6 @@ export interface UIStrings {
   };
   compare: {
     title: string;
-    intro: string;
     add: string;
     remove: string;
     pickFont: string;

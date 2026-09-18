@@ -1,5 +1,7 @@
 /** Default sample sentences — kept in sync with pipeline/opf/samples.py (spec §5.2). */
 
+import type { UIStrings } from '../i18n/types';
+
 export const SAMPLES: Record<string, string> = {
   latin: 'Sphinx of black quartz, judge my vow. 0123456789',
   'latin-supp': 'Naïve déjà forêt gâteau très Noël île goût ça · Größe Bäcker Öl Übung · niño ¿qué? Ávila canción Perú · ação avô limões Luís · città così però più · Ærø smörgås ský',
@@ -15,6 +17,10 @@ export const SAMPLES: Record<string, string> = {
   // right for inspecting glyph coverage (includes Persian and Urdu letters).
   arabic:
     'ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي\nپ چ ژ گ ک ی · ٹ ڈ ڑ ں ھ ہ ے\n٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ · ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹',
+  // Thai combining vowels and tone marks carry dwidth 0 and a negative bbx,
+  // so they stack over the preceding consonant even though nothing here does
+  // shaping — a real sentence renders correctly and is the better test.
+  thai: 'เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน ๐๑๒๓๔๕๖๗๘๙',
   javascript:
     '// Quick sort: O(n log n) average, ASCII 0-9\nconst quickSort = ([p, ...rest]) =>\n  p === undefined\n    ? []\n    : [...quickSort(rest.filter((x) => x < p)), p,\n       ...quickSort(rest.filter((x) => x >= p))];\nconsole.log(quickSort([42, 7, 19, 3, 88, 0]), "OK!");',
   'box-drawing': '┌─┬─┐ ┏━┳━┓ ╔═╦═╗ ╭─┬─╮\n├─┼─┤ ┣━╋━┫ ╠═╬═╣ ├─┼─┤\n└─┴─┘ ┗━┻━┛ ╚═╩═╝ ╰─┴─╯\n┄┅┆┇┈┉┊┋ ╌╍╎╏ ╱╲╳ ╴╵╶╷ ╸╹╺╻',
@@ -25,4 +31,13 @@ export const NOWRAP_PRESETS: ReadonlySet<string> = new Set(['box-drawing']);
 
 export function defaultSample(sampleLang: string): string {
   return SAMPLES[sampleLang] ?? SAMPLES['latin']!;
+}
+
+export function matchingPreset(text: string): string {
+  return Object.entries(SAMPLES).find(([, sample]) => sample === text)?.[0] ?? '';
+}
+
+export function presetLabel(key: string, s: UIStrings): string {
+  return s.scriptNames[key.toLowerCase()] ??
+    (key === 'box-drawing' ? s.catalogue.boxDrawing : key === 'javascript' ? 'JavaScript' : key);
 }

@@ -1,7 +1,7 @@
 /** Pixel rasterization (contract C4): a pure function that outputs an RGBA buffer; paint handles scaled drawing. */
 
-import type { DecodedGlyph } from './glyphpack';
-import { rowBytes } from './glyphpack';
+import type { DecodedGlyph } from './bitmap';
+import { rowBytes } from './bitmap';
 
 export interface FontVMetrics {
   pixelSize: number;

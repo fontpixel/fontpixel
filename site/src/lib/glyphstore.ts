@@ -1,142 +1,77 @@
-/** Glyph data access: manifest cache + chunked LRU + in-flight request dedup (contract C4). */
+/** The font download is also the rendering source. Cache whole selected variants. */
+import type { BitmapFont, DecodedGlyph } from './bitmap';
 
-import { gunzip } from './decompress';
-import { GlyphChunk, type DecodedGlyph } from './glyphpack';
-
-export interface VariantManifest {
-  version: 1;
-  slug: string;
-  variantId: string;
-  pixelSize: number;
-  ascent: number;
-  descent: number;
-  glyphCount: number;
-  core: { file: string; gzBytes: number; glyphs: number };
-  ranges: { start: number; end: number; file: string; gzBytes: number; glyphs: number }[];
+let worker: Worker | undefined;
+let requestId = 0;
+const pending = new Map<number, { resolve: (font: BitmapFont) => void; reject: (e: Error) => void }>();
+async function parse(buffer: ArrayBuffer): Promise<BitmapFont> {
+  if (typeof Worker === 'undefined') return (await import('./bdf')).decodeBdf(buffer);
+  if (!worker) {
+    worker = new Worker(new URL('./bdf.worker.ts', import.meta.url), { type: 'module' });
+    worker.onmessage = ({ data }) => {
+      const job = pending.get(data.id);
+      pending.delete(data.id);
+      if (data.error) job?.reject(new Error(data.error));
+      else job?.resolve(data.font);
+    };
+    worker.onerror = (event) => {
+      for (const job of pending.values()) job.reject(new Error(event.message));
+      pending.clear();
+      worker?.terminate();
+      worker = undefined;
+    };
+  }
+  const id = ++requestId;
+  return new Promise((resolve, reject) => {
+    pending.set(id, { resolve, reject });
+    worker!.postMessage({ id, buffer }, [buffer]);
+  });
 }
 
 export class GlyphStore {
-  private manifests = new Map<string, Promise<VariantManifest>>();
-  private cores = new Map<string, Promise<GlyphChunk>>();
-  private chunks = new Map<string, Promise<GlyphChunk>>(); // insertion order is LRU order
-
+  private fonts = new Map<string, Promise<BitmapFont>>();
+  private inflight = new Map<string, Promise<BitmapFont>>();
   private readonly fetchFn: typeof fetch;
-
-  constructor(
-    private readonly dataBase: string,
-    fetchFn?: typeof fetch,
-    private readonly capacity = 64,
-  ) {
-    // Can't store the global fetch directly: calling it through `this` throws Illegal invocation
+  private readonly downloadBase: string;
+  constructor(dataBase: string, fetchFn?: typeof fetch, private readonly capacity = 8) {
     this.fetchFn = fetchFn ?? ((input, init) => globalThis.fetch(input, init));
+    this.downloadBase = dataBase.replace(/\/data\/?$/, '/downloads');
   }
-
-  private url(slug: string, variantId: string, file: string): string {
-    return `${this.dataBase}/packs/${slug}/${variantId}/${file}`;
-  }
-
-  private async fetchChunk(url: string): Promise<GlyphChunk> {
-    const res = await this.fetchFn(url);
-    if (!res.ok) throw new Error(`fetch ${url}: ${res.status}`);
-    return GlyphChunk.parse(await gunzip(await res.arrayBuffer()));
-  }
-
-  loadManifest(slug: string, variantId: string): Promise<VariantManifest> {
+  loadFont(slug: string, variantId: string): Promise<BitmapFont> {
     const key = `${slug}/${variantId}`;
-    let p = this.manifests.get(key);
-    if (!p) {
-      p = this.fetchFn(this.url(slug, variantId, 'manifest.json')).then((r) => {
-        if (!r.ok) throw new Error(`manifest ${key}: ${r.status}`);
-        return r.json() as Promise<VariantManifest>;
-      });
-      p.catch(() => this.manifests.delete(key));
-      this.manifests.set(key, p);
+    const cached = this.fonts.get(key) ?? this.inflight.get(key);
+    if (cached) {
+      if (this.fonts.has(key)) {
+        this.fonts.delete(key);
+        this.fonts.set(key, cached);
+      }
+      return cached;
     }
-    return p;
+    const url = `${this.downloadBase}/${encodeURIComponent(`${slug}--${variantId}.bdf.gz`)}`;
+    const promise = this.fetchFn(url).then(async (response) => {
+      if (!response.ok) throw new Error(`BDF ${url}: ${response.status}`);
+      return parse(await response.arrayBuffer());
+    });
+    this.inflight.set(key, promise);
+    void promise.then(() => {
+      this.inflight.delete(key);
+      this.fonts.set(key, promise);
+      while (this.fonts.size > this.capacity) this.fonts.delete(this.fonts.keys().next().value!);
+    }, () => { this.inflight.delete(key); });
+    return promise;
   }
-
-  private coreChunk(slug: string, variantId: string, m: VariantManifest): Promise<GlyphChunk> {
-    const key = `${slug}/${variantId}`;
-    let p = this.cores.get(key);
-    if (!p) {
-      p = this.fetchChunk(this.url(slug, variantId, m.core.file));
-      p.catch(() => this.cores.delete(key));
-      this.cores.set(key, p);
-    }
-    return p;
-  }
-
-  private rangeChunk(
-    slug: string,
-    variantId: string,
-    file: string,
-  ): Promise<GlyphChunk> {
-    const key = `${slug}/${variantId}/${file}`;
-    let p = this.chunks.get(key);
-    if (p) {
-      // refresh LRU position
-      this.chunks.delete(key);
-      this.chunks.set(key, p);
-      return p;
-    }
-    p = this.fetchChunk(this.url(slug, variantId, file));
-    p.catch(() => this.chunks.delete(key));
-    this.chunks.set(key, p);
-    while (this.chunks.size > this.capacity) {
-      const oldest = this.chunks.keys().next().value as string;
-      this.chunks.delete(oldest);
-    }
-    return p;
-  }
-
-  /** Load a range chunk directly (used by the glyph grid). */
-  loadChunk(slug: string, variantId: string, file: string): Promise<GlyphChunk> {
-    return this.rangeChunk(slug, variantId, file);
-  }
-
-  async glyphsFor(
-    slug: string,
-    variantId: string,
-    text: string,
-  ): Promise<Map<number, DecodedGlyph | null>> {
-    const cps = new Set<number>();
-    for (const ch of text) {
+  async glyphsFor(slug: string, variantId: string, text: string): Promise<Map<number, DecodedGlyph | null>> {
+    if (!text) return new Map();
+    const font = await this.loadFont(slug, variantId);
+    return new Map([...text].filter((ch) => ch !== '\n').map((ch) => {
       const cp = ch.codePointAt(0)!;
-      if (cp !== 0x0a) cps.add(cp);
-    }
-    const out = new Map<number, DecodedGlyph | null>();
-    if (cps.size === 0) return out;
-
-    const m = await this.loadManifest(slug, variantId);
-    const core = await this.coreChunk(slug, variantId, m);
-
-    const byFile = new Map<string, number[]>();
-    for (const cp of cps) {
-      const g = core.get(cp);
-      if (g) {
-        out.set(cp, g);
-        continue;
-      }
-      const range = m.ranges.find((r) => cp >= r.start && cp < r.end);
-      if (!range) {
-        out.set(cp, null);
-        continue;
-      }
-      const list = byFile.get(range.file);
-      if (list) list.push(cp);
-      else byFile.set(range.file, [cp]);
-    }
-
-    await Promise.all(
-      [...byFile.entries()].map(async ([file, list]) => {
-        try {
-          const chunk = await this.rangeChunk(slug, variantId, file);
-          for (const cp of list) out.set(cp, chunk.get(cp));
-        } catch {
-          for (const cp of list) out.set(cp, null);
-        }
-      }),
-    );
-    return out;
+      return [cp, font.glyphs.get(cp) ?? null];
+    }));
   }
+}
+const stores = new Map<string, GlyphStore>();
+export function getGlyphStore(dataBase: string): GlyphStore {
+  let store = stores.get(dataBase);
+  if (!store) stores.set(dataBase, store = new GlyphStore(dataBase));
+  return store;
 }

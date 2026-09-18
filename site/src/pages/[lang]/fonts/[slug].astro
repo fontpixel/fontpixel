@@ -1,11 +1,13 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import { previewFor } from '../../../lib/preview';
 import CoverageReport from '../../../components/CoverageReport.astro';
 import InkDiagram from '../../../components/InkDiagram.astro';
 import MetaSidebar from '../../../components/MetaSidebar.astro';
 import DownloadList from '../../../components/DownloadList.astro';
 import GlyphGrid from '../../../islands/GlyphGrid.svelte';
 import SampleEditor from '../../../islands/SampleEditor.svelte';
+import Icon from '../../../islands/Icon.svelte';
 import { LANGS, pickName, pickText, t, type Lang } from '../../../i18n';
 import {
   downloadsBase,
@@ -28,7 +30,16 @@ const slug = Astro.params.slug!;
 const s = t(lang);
 const detail = loadDetail(slug);
 const m = detail.meta;
+const preview = previewFor(m);
 const displayName = pickName(lang, m.names, m.name);
+// spdx.org publishes a page per licence id, which is the canonical URL schema.org's
+// `license` wants. Skipped for LicenseRef-* (no such page) and for compound
+// expressions, where no single page describes the terms -- better to say nothing
+// than to point at half of them.
+const spdxUrl = (id: string | null) =>
+  id && !id.startsWith('LicenseRef-') && !id.includes(' ')
+    ? `https://spdx.org/licenses/${id}.html`
+    : undefined;
 
 // Sizes overview: multi-variant families get a comparison table below the intro.
 // For families like Galmuri, where "upstream numbering, recommended size, declared
@@ -51,7 +62,7 @@ const displayDesc = pickText(lang, detail.description, detail.descriptionEn);
 const licenseText = readLicenseText(slug);
 let previewSvg = '';
 try {
-  previewSvg = readPreviewSvg(m.preview);
+  previewSvg = readPreviewSvg(preview.file);
 } catch {
   /* ignore when no pre-rendered preview exists */
 }
@@ -85,6 +96,7 @@ const coverageGroups = groupBy((vid) =>
     detail.unicodeBlocks[vid],
     detail.missingChars[vid] ?? {},
     detail.overview[vid],
+    detail.cjkCoverage[vid],
   ]),
 );
 ---
@@ -95,21 +107,24 @@ const coverageGroups = groupBy((vid) =>
   description={displayDesc || `${displayName} — ${s.siteTagline}`}
   path={`/fonts/${slug}/`}
   ogImage={withBase(`/data/og/${slug}.png`)}
+  entityName={displayName}
+  licenseUrl={spdxUrl(m.license.spdx)}
 >
   <nav class="crumb">
-    <a href={withBase(`/${lang}/`)}>← {s.detail.backToCatalogue}</a>
+    <a class="icon-control" href={withBase(`/${lang}/`)} title={s.detail.backToCatalogue}><Icon name="arrow-left" />{s.detail.backToCatalogue}</a>
+    <a class="crumb__download icon-control" href="#downloads" title={s.detail.jumpToDownloads}>{s.detail.jumpToDownloads}<Icon name="arrow-down" /></a>
   </nav>
 
   <header class="hero">
-    <h1>{displayName}</h1>
+    <h1 id="font-name">{displayName}</h1>
     {displayName !== m.name && <p class="hero__latin mono">{m.name}</p>}
     {displayDesc && <p class="hero__desc">{displayDesc}</p>}
-    <div class="hero__preview lattice" set:html={previewSvg} />
+    <div class="hero__preview lattice" data-variant-id={preview.variantId} set:html={previewSvg} />
   </header>
 
   {
     m.variants.length > 1 && (
-      <section class="metrics sizes">
+      <section id="sizes" class="metrics sizes">
         <details data-testid="sizes-details">
           <summary>
             <h2>{s.detail.sizesOverview}</h2>
@@ -153,8 +168,8 @@ const coverageGroups = groupBy((vid) =>
       <SampleEditor
         client:load
         slug={slug}
-        sampleText={m.sampleText}
-        previewVariant={m.previewVariant}
+        sampleText={preview.text}
+        previewVariant={preview.variantId}
         variants={m.variants.map((v) => ({
           id: v.id,
           size: v.size,
@@ -165,21 +180,21 @@ const coverageGroups = groupBy((vid) =>
         }))}
         s={s}
         dataBase={withBase('/data')}
-        sampleLang={m.sampleLang}
+        sampleLang={preview.sampleLang}
       />
       <p class="compare-link">
-        <a href={withBase(`/${lang}/compare/?v=${slug}:${m.previewVariant}`)}
+        <a href={withBase(`/${lang}/compare/?v=${slug}:${preview.variantId}`)}
           >{s.compare.withOthers} →</a
         >
       </p>
 
-      <section class="metrics">
+      <section id="metrics" class="metrics">
         <h2>{s.detail.metricsTitle}</h2>
         {
-          metricsGroups.map((g, i) => {
+          metricsGroups.map((g) => {
             const mm = detail.metrics[g.repId]!;
             return (
-              <div data-variant-panel={g.attr} hidden={i !== 0}>
+              <div data-variant-panel={g.attr} hidden={!g.ids.includes(preview.variantId)}>
                 <div class="metrics__flex">
                   <table class="metrics__table mono" data-testid="metrics-table">
                     <tbody>
@@ -267,6 +282,7 @@ const coverageGroups = groupBy((vid) =>
       </section>
 
       <CoverageReport
+        initialVariant={preview.variantId}
         lang={lang}
         detail={detail}
         sections={charsetsMeta.sections}
@@ -284,6 +300,7 @@ const coverageGroups = groupBy((vid) =>
         client:visible
         slug={slug}
         variantIds={variantIds}
+        initialVariant={preview.variantId}
         blocksByVariant={blocksByVariant}
         s={s}
         dataBase={withBase('/data')}
@@ -313,11 +330,26 @@ const coverageGroups = groupBy((vid) =>
   }
 
     .crumb {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--s2) var(--s4);
       font-size: 0.85rem;
       margin-bottom: var(--s4);
     }
+    .crumb__download {
+      margin-inline-start: auto;
+      text-align: right;
+    }
     .crumb a {
       color: var(--ink-2);
+    }
+    .crumb a:hover,
+    .crumb a:focus-visible {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: .2em;
     }
     .hero h1 {
       margin: 0;

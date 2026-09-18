@@ -1,21 +1,18 @@
 <script lang="ts">
+  import Icon from './Icon.svelte';
   import { onMount } from 'svelte';
   import { themeInkPaper, onThemeChange } from '../lib/colors';
-  import { GlyphStore } from '../lib/glyphstore';
+  import { getGlyphStore } from '../lib/glyphstore';
   import { paint, rasterize } from '../lib/render';
   import type { RasterResult } from '../lib/render';
-  import type { DecodedGlyph } from '../lib/glyphpack';
+  import type { DecodedGlyph } from '../lib/bitmap';
   import { toBdfText, toDotText } from '../lib/dotcopy';
-  import { NOWRAP_PRESETS, SAMPLES, defaultSample } from '../lib/samples';
-  import {
-    CODE_INK,
-    CODE_LANGS,
-    CODE_LANG_EXT,
-    CODE_LANG_LABELS,
-    CODE_PAPER,
-    highlightCode,
-    type CodeLang,
-  } from '../lib/codehl';
+  import { NOWRAP_PRESETS, SAMPLES, defaultSample, presetLabel } from '../lib/samples';
+  import { fragmentTarget, revealFragment } from '../lib/fragments';
+  import { highlightCode, type CodeLang } from '../lib/codehl';
+  import { framePalette, type Frame } from '../lib/frames';
+  import FrameControls from './FrameControls.svelte';
+  import FrameShell from './FrameShell.svelte';
   import type { UIStrings } from '../i18n/types';
   import { variantLabels, type LabelledVariant } from '../lib/variantlabel';
 
@@ -32,7 +29,7 @@
   const { slug, variants, s, dataBase, sampleLang, sampleText, previewVariant }:
     Props = $props();
 
-  const store = new GlyphStore(dataBase);
+  const store = getGlyphStore(dataBase);
   // Shares the variant with the top preview, so both sections show the same font
   let variantId = $state(
     variants.some((v) => v.id === previewVariant)
@@ -43,18 +40,11 @@
   let zoom = $state(2);
   let nowrap = $state(false);
   // Canvas appearance, pick one of four: none (follows theme) / whole-frame invert / code editor (black background + syntax highlighting) / retro-game dialog box
-  let frame = $state<'none' | 'invert' | 'code' | 'game'>('none');
+  let frame = $state<Frame>('none');
   let codeLang = $state<CodeLang>('javascript');
-  // Retro-game frame: an FF-style dialog box with dark-navy background and white text, independent of the site theme
-  const GAME_PAPER = [19, 19, 83, 255] as const;
-  const GAME_INK = [240, 240, 252, 255] as const;
-  // Preset names prefer the script name; tab stops and code aren't scripts, so use a different label
-  const presetLabel = (k: string) =>
-    s.scriptNames[k.toLowerCase()] ??
-    (k === 'box-drawing' ? s.catalogue.boxDrawing : k === 'javascript' ? 'JavaScript' : k);
   let grid = $state(false);
-  // Size ladder: the same text drawn once per variant, stacked and labelled,
-  // the way a printed specimen sheet shows a face at every size it comes in.
+  // All variants: the same text drawn once per variant, stacked and labelled,
+  // including different sizes, weights and styles.
   // It reuses whatever is currently typed and the current frame, which beats
   // a fixed sentence, so it lives here rather than in a section of its own.
   let ladder = $state(false);
@@ -78,14 +68,27 @@
       }
     };
     document.addEventListener('opf:variantchange', onExternal);
+    // Coverage anchors can point into another variant's initially hidden panel.
+    const onFragment = () => {
+      const panel = fragmentTarget()?.closest<HTMLElement>('[data-variant-panel]');
+      if (!panel) return;
+      const ids = (panel.dataset.variantPanel ?? '').split(' ');
+      if (!ids.includes(variantId)) {
+        variantId = ids.find((id) => variants.some((v) => v.id === id)) ?? variantId;
+      }
+      revealFragment();
+    };
+    onFragment();
+    window.addEventListener('hashchange', onFragment);
     const off = onThemeChange(() => (themeTick += 1));
     return () => {
       document.removeEventListener('opf:variantchange', onExternal);
+      window.removeEventListener('hashchange', onFragment);
       off();
     };
   });
 
-  async function copy(kind: 'dots' | 'bdf' | 'image') {
+  async function copy(kind: 'hash' | 'dots' | 'bdf' | 'image') {
     try {
       if (kind === 'image') {
         // A PNG is more useful as a file than on the clipboard: the usual reason
@@ -103,9 +106,9 @@
       } else {
         if (!lastRaster) return;
         const out =
-          kind === 'dots'
-            ? toDotText(lastRaster)
-            : toBdfText(text, lastGlyphs ?? new Map());
+          kind === 'bdf'
+            ? toBdfText(text, lastGlyphs ?? new Map())
+            : toDotText(lastRaster, kind === 'hash' ? '#' : '@');
         if (!out) return;
         await navigator.clipboard.writeText(out);
       }
@@ -126,6 +129,8 @@
   });
 
   $effect(() => {
+    lastRaster = null;
+    lastGlyphs = null;
     if (!canvasEl || !text) return;
     const vid = variantId;
     const t = text;
@@ -139,13 +144,11 @@
     let cancelled = false;
     (async () => {
       const [m, glyphs] = await Promise.all([
-        store.loadManifest(slug, vid),
+        store.loadFont(slug, vid),
         store.glyphsFor(slug, vid, t),
       ]);
       if (cancelled || !canvasEl) return;
-      const theme = themeInkPaper();
-      const ink = fr === 'code' ? CODE_INK : fr === 'game' ? GAME_INK : theme.ink;
-      const paper = fr === 'code' ? CODE_PAPER : fr === 'game' ? GAME_PAPER : theme.paper;
+      const { ink, paper } = framePalette(fr, themeInkPaper());
       const r = rasterize(t, glyphs, m, {
         // Invert isn't done here: it's a CSS invert on the whole canvas container (including the paper texture)
         invert: false,
@@ -182,14 +185,12 @@
     void themeTick;
     let cancelled = false;
     (async () => {
-      const theme = themeInkPaper();
-      const ink = fr === 'code' ? CODE_INK : fr === 'game' ? GAME_INK : theme.ink;
-      const paper = fr === 'code' ? CODE_PAPER : fr === 'game' ? GAME_PAPER : theme.paper;
+      const { ink, paper } = framePalette(fr, themeInkPaper());
       for (const [i, v] of variants.entries()) {
         const el = ladderEls[i];
         if (!el) continue;
         const [m, glyphs] = await Promise.all([
-          store.loadManifest(slug, v.id),
+          store.loadFont(slug, v.id),
           store.glyphsFor(slug, v.id, t),
         ]);
         if (cancelled) return;
@@ -209,11 +210,11 @@
   });
 </script>
 
-<section class="ed" data-testid="sample-editor">
+<section id="sample-editor" class="ed" data-testid="sample-editor">
   <div class="ed__bar">
     <label class="ed__variant"
       >{s.detail.variants}
-      <select bind:value={variantId} data-testid="variant-select">
+      <select name="sample-variant" bind:value={variantId} data-testid="variant-select">
         {#each variants as v, i (v.id)}
           <option value={v.id}>{labels[i]}</option>
         {/each}
@@ -225,6 +226,7 @@
         <button
           type="button"
           class="chip chipbtn"
+          aria-pressed={text === sample}
           onclick={() => {
             text = sample;
             if (NOWRAP_PRESETS.has(langKey)) nowrap = true;
@@ -233,23 +235,34 @@
               codeLang = 'javascript';
             }
           }}
-          >{presetLabel(langKey)}</button
+          >{presetLabel(langKey, s)}</button
         >
       {/each}
     </div>
   </div>
 
-  <textarea rows="3" bind:value={text} spellcheck="false"></textarea>
+  <textarea
+    name="sample-text"
+    rows="3"
+    bind:value={text}
+    spellcheck="false"
+    aria-label={s.catalogue.sampleLabel}
+  ></textarea>
 
   <div class="ed__controls">
     {#if variants.length > 1}
       <label class="ed__check"
-        ><input type="checkbox" bind:checked={ladder} data-testid="ladder-toggle" />
+        ><input
+          type="checkbox"
+          name="size-ladder"
+          bind:checked={ladder}
+          data-testid="ladder-toggle"
+        />
         {s.detail.sizeLadder}</label
       >
     {/if}
-    <label>{s.catalogue.zoom}
-      <select bind:value={zoom}>
+    <label class="icon-control" title={s.catalogue.zoom}><Icon name="zoom-in" />
+      <select name="sample-zoom" aria-label={s.catalogue.zoom} bind:value={zoom}>
         <option value={1}>×1</option>
         <option value={2}>×2</option>
         <option value={3}>×3</option>
@@ -260,71 +273,52 @@
       <!-- Grid lines only render at ≥×4 (any smaller and they'd swallow the ink), so checking the box bumps the zoom up automatically -->
       <input
         type="checkbox"
+        name="sample-grid"
         bind:checked={grid}
         onchange={() => {
           if (grid && zoom < 4) zoom = 4;
         }}
       />{s.catalogue.grid}
     </label>
-    <label class="check"><input type="checkbox" bind:checked={nowrap} />{s.catalogue.nowrap}</label>
+    <label class="check"
+      ><input type="checkbox" name="sample-nowrap" bind:checked={nowrap} />{s.catalogue
+        .nowrap}</label
+    >
     {#if missing > 0}
       <span class="chip chip--accent" data-testid="missing-count"
         >{s.detail.missingCount.replace('{n}', String(missing))}</span
       >
     {/if}
-    <span class="ed__frames" data-testid="frame-radios">
-      <label class="check"><input type="radio" bind:group={frame} value="none" />{s.catalogue.frameNone}</label>
-      <label class="check"><input type="radio" bind:group={frame} value="invert" />{s.catalogue.invert}</label>
-      <label class="check"><input type="radio" bind:group={frame} value="game" />{s.catalogue.frameGame}</label>
-      <label class="check"><input type="radio" bind:group={frame} value="code" />{s.catalogue.frameCode}</label>
-      {#if frame === 'code'}
-        <select bind:value={codeLang} aria-label={s.catalogue.frameCode}>
-          {#each CODE_LANGS as l (l)}
-            <option value={l}>{CODE_LANG_LABELS[l]}</option>
-          {/each}
-        </select>
-      {/if}
-    </span>
+    <FrameControls {s} bind:frame bind:codeLang />
   </div>
 
-  <div
-    class="ed__shell"
-    class:ed__shell--invert={frame === 'invert'}
-    class:ed__shell--code={frame === 'code'}
-    class:ed__shell--game={frame === 'game'}
-  >
-    {#if frame === 'code'}
-      <div class="ed__titlebar mono" aria-hidden="true">
-        <span class="ed__title">sample.{CODE_LANG_EXT[codeLang]}</span>
-        <span class="ed__winbtns"><span>–</span><span>□</span><span>×</span></span>
+  <FrameShell {frame} {codeLang} bind:canvasEl={wrapEl}>
+    {#if ladder}
+      <div class="ed__ladder">
+        {#each variants as v, i (v.id)}
+          <div class="ed__rung">
+            <span class="ed__rungname mono">{labels[i]}</span>
+            <canvas bind:this={ladderEls[i]}></canvas>
+          </div>
+        {/each}
       </div>
+    {:else}
+      <canvas bind:this={canvasEl}></canvas>
     {/if}
-    <div class="ed__canvas lattice" bind:this={wrapEl}>
-      {#if ladder}
-        <div class="ed__ladder">
-          {#each variants as v, i (v.id)}
-            <div class="ed__rung">
-              <span class="ed__rungname mono">{labels[i]}</span>
-              <canvas bind:this={ladderEls[i]}></canvas>
-            </div>
-          {/each}
-        </div>
-      {:else}
-        <canvas bind:this={canvasEl}></canvas>
-      {/if}
-    </div>
-    {#if frame === 'game'}<div class="ed__crt" aria-hidden="true"></div>{/if}
-  </div>
+  </FrameShell>
 
   <div class="ed__copy" data-testid="dot-copy">
     <span class="ed__copylabel">{s.detail.copyDots}</span>
-    <button type="button" data-testid="copy-dots" onclick={() => copy('dots')}
-      >{copied === 'dots' ? s.detail.copied : '.#'}</button
+    <button type="button" data-testid="copy-hash" disabled={ladder || !lastRaster} onclick={() => copy('hash')}
+      >{copied === 'hash' ? s.detail.copied : '.#'}</button
     >
-    <button type="button" data-testid="copy-bdf" onclick={() => copy('bdf')}
+    <button type="button" data-testid="copy-dots" disabled={ladder || !lastRaster} onclick={() => copy('dots')}
+      >{copied === 'dots' ? s.detail.copied : '.@'}</button
+    >
+    <button type="button" data-testid="copy-bdf" disabled={ladder || !lastRaster} onclick={() => copy('bdf')}
       >{copied === 'bdf' ? s.detail.copied : 'BDF'}</button
     >
-    <button type="button" data-testid="copy-image" onclick={() => copy('image')}
+    <button type="button" data-testid="copy-image" disabled={ladder || !lastRaster} onclick={() => copy('image')}
       >{copied === 'image' ? s.detail.saved : s.detail.savePng}</button
     >
   </div>
@@ -343,7 +337,7 @@
     gap: var(--s1);
   }
   .ed__rungname {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     opacity: 0.6;
   }
 
@@ -387,6 +381,11 @@
     cursor: pointer;
     background: none;
   }
+  .chipbtn[aria-pressed='true'] {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
   textarea {
     width: 100%;
     resize: vertical;
@@ -413,6 +412,10 @@
     color: var(--accent);
     border-color: var(--accent);
   }
+  .ed__copy button:disabled {
+    opacity: 0.5;
+    cursor: wait;
+  }
   .ed__controls {
     display: flex;
     gap: var(--s4);
@@ -427,72 +430,5 @@
     align-items: center;
     gap: var(--s1);
     cursor: pointer;
-  }
-  .ed__canvas {
-    border: 1px solid var(--line);
-    background: var(--surface);
-    padding: var(--s4);
-    overflow-x: auto;
-  }
-  .ed__canvas canvas {
-    display: block;
-    image-rendering: pixelated;
-  }
-  /* —— Invert: the whole canvas container (paper texture and padding included) turns negative together —— */
-  .ed__shell--invert .ed__canvas {
-    filter: invert(1);
-  }
-  /* —— Code editor frame: black background, white text, regardless of light/dark theme —— */
-  .ed__shell--code .ed__titlebar {
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-    background: #2b2b2b;
-    color: #c9c9c9;
-    border: 1px solid #000;
-    border-bottom: none;
-    border-radius: 6px 6px 0 0;
-    padding: 4px 10px;
-    font-size: 12px;
-  }
-  .ed__winbtns {
-    margin-left: auto;
-    display: inline-flex;
-    gap: 12px;
-  }
-  .ed__shell--code .ed__canvas {
-    background: #0d0d0d;
-    border-color: #000;
-  }
-  /* —— Retro-game dialog box: dark-navy background, gold double-line border, plus CRT scanlines —— */
-  .ed__shell--game {
-    position: relative;
-  }
-  .ed__shell--game .ed__canvas {
-    background: #131353;
-    border: 2px solid #efe2b0;
-    border-radius: 8px;
-    box-shadow:
-      inset 0 0 0 2px #131353,
-      inset 0 0 0 4px #8a7a45,
-      0 0 0 3px #08061f;
-  }
-  .ed__crt {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: 8px;
-    background:
-      repeating-linear-gradient(0deg, rgba(4, 2, 24, 0.22) 0 1px, transparent 1px 3px),
-      radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 60%, rgba(2, 0, 20, 0.38) 100%);
-  }
-  .ed__frames {
-    display: inline-flex;
-    align-items: center;
-    /* On narrow screens (~300px) the four options don't fit on one row, so wrapping within the group must be allowed */
-    flex-wrap: wrap;
-    gap: var(--s2);
-    padding-left: var(--s3);
-    border-left: 1px solid var(--line);
   }
 </style>

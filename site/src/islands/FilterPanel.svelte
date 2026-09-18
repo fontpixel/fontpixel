@@ -5,6 +5,8 @@
   import type { UIStrings } from '../i18n/types';
   import { COVERAGE_PICKS } from '../lib/coveragepicks';
   import { licenseShortLabel } from '../lib/licenselabel';
+  import { VIBE_GROUPS, vibeGroupName } from '../lib/vibes';
+  import Icon from './Icon.svelte';
 
   interface Props {
     families: FamilyIndex[];
@@ -21,24 +23,42 @@
   let covId = $state('');
   // Pre-filled with 90%: the threshold used for the "script fully supported" judgment, and the most commonly asked-about number
   let covPct = $state<number | null>(90);
+  let lastCoverageWrite: string | undefined;
   const csLabel = (id: string) =>
     pickText(lang, charsetNames[id]?.zh ?? id, charsetNames[id]?.en ?? id);
   // Listed in COVERAGE_PICKS order (Simplified → Traditional → Japanese → Korean → Latin), not alphabetically
   const csOptions = $derived(
     COVERAGE_PICKS.filter((id) => charsetNames[id] && charsetIds.includes(id)),
   );
-  $effect(() => {
+  function applyCoverage() {
     const pct = covPct;
     const id = covId;
-    filters.coverage = id && pct != null && pct > 0
+    const coverage = id && pct != null && pct > 0
       ? [{ id, min: Math.min(Math.max(pct, 0), 100) / 100 }]
       : [];
+    lastCoverageWrite = JSON.stringify(coverage);
+    filters.coverage = coverage;
+  }
+  $effect(() => {
+    if (JSON.stringify(filters.coverage) === lastCoverageWrite) return;
+    const req = filters.coverage[0];
+    covId = req?.id ?? '';
+    if (req) covPct = req.min * 100;
   });
 
   const uniq = <T,>(xs: T[]) => [...new Set(xs)];
-  const forms = $derived(uniq(families.map((f) => f.form)).sort());
+  const forms = $derived(uniq(families.flatMap((f) => f.forms)).sort());
   const sizes = $derived(uniq(families.flatMap((f) => f.sizes)).sort((a, b) => a - b));
   const vibes = $derived(uniq(families.flatMap((f) => f.vibes)).sort());
+  // Start selected groups open; subsequent expansion belongs to the user.
+  let openVibeGroups = $state<Record<string, boolean>>({});
+  const vibeGroups = $derived.by(() => {
+    const groups = VIBE_GROUPS.map(group => ({ ...group, tags: group.tags.filter(tag => vibes.includes(tag)) })).filter(group => group.tags.length);
+    const known = new Set(VIBE_GROUPS.flatMap(group => group.tags));
+    const other = vibes.filter(tag => !known.has(tag));
+    if (other.length) groups.push({ id: 'other', names: Array(5).fill(s.forms.other), tags: other });
+    return groups;
+  });
   // Scripts: fully-supported ones come first, "incomplete" ones come after, each group in a fixed order,
   // so the list order doesn't jump around as the number of included fonts changes
   const SCRIPT_ORDER = [
@@ -52,6 +72,7 @@
     'cyrillic',
     'greek',
     'arabic',
+    'thai',
   ];
   const scriptRank = (sc: string) => {
     const partial = sc.endsWith('-partial');
@@ -92,10 +113,9 @@
     covId = '';
     covPct = 90;
     const chars = filters.chars;
-    const q = filters.q;
     const sort = filters.sort;
     filters = {
-      q,
+      q: '',
       forms: [],
       vibes: [],
       sizes: [],
@@ -111,13 +131,29 @@
   }
 </script>
 
-<aside class="fp" data-testid="filter-panel">
+<aside id="filters" class="fp" data-testid="filter-panel">
   <div class="fp__head">
     <span class="fp__title">{s.catalogue.filters}</span>
-    <button type="button" class="fp__reset" onclick={reset}>{s.catalogue.reset}</button>
+    <button type="button" class="fp__reset" onclick={reset}
+      title={s.catalogue.reset} aria-label={s.catalogue.reset}><Icon name="funnel-x" /></button>
   </div>
 
-  <section>
+  <section id="filter-search">
+    <div class="fp__search">
+    <input
+      type="search"
+      name="catalogue-search"
+      placeholder={s.catalogue.searchPlaceholder}
+      aria-label={s.catalogue.searchLabel}
+      title={s.catalogue.searchLabel}
+      bind:value={filters.q}
+      data-testid="search-input"
+    />
+      <span class="fp__search-icon"><Icon name="search" size={18} /></span>
+    </div>
+  </section>
+
+  <section id="filter-scripts">
     <h3>{s.catalogue.scripts}</h3>
     <div class="chips">
       {#each scripts as sc (sc)}
@@ -133,10 +169,16 @@
     </div>
   </section>
 
-  <section>
+  <section id="filter-coverage">
     <h3>{s.catalogue.coveragePresets}</h3>
     <div class="cov" data-testid="coverage-filter">
-      <select bind:value={covId} data-testid="coverage-charset" aria-label={s.catalogue.coveragePresets}>
+      <select
+        name="coverage-charset"
+        value={covId}
+        onchange={(e) => { covId = e.currentTarget.value; applyCoverage(); }}
+        data-testid="coverage-charset"
+        aria-label={s.catalogue.coveragePresets}
+      >
         <option value="">{s.catalogue.coverageAny}</option>
         {#each csOptions as id (id)}
           <option value={id}>{csLabel(id)}</option>
@@ -146,6 +188,7 @@
       <input
         class="cov__pct mono"
         type="number"
+        name="coverage-pct"
         min="0"
         max="100"
         step="1"
@@ -155,6 +198,7 @@
         oninput={(e) => {
           const v = Number.parseFloat(e.currentTarget.value);
           covPct = Number.isFinite(v) ? v : null;
+          applyCoverage();
         }}
       />
       <span class="cov__op mono">%</span>
@@ -163,16 +207,18 @@
           type="button"
           class="cov__clear"
           data-testid="coverage-clear"
-          onclick={() => { covId = ''; covPct = 90; }}>{s.catalogue.reset}</button
+          title={s.catalogue.coverageClear}
+          onclick={() => { covId = ''; covPct = 90; applyCoverage(); }}>{s.catalogue.coverageClear}</button
         >
       {/if}
     </div>
   </section>
 
-  <section>
+  <section id="filter-characters">
     <h3>{s.catalogue.charsLookup}</h3>
     <input
       type="text"
+      name="filter-chars"
       placeholder={s.catalogue.charsPlaceholder}
       bind:value={filters.chars}
       data-testid="chars-input"
@@ -180,7 +226,7 @@
     <p class="hint">{s.catalogue.charsHint}</p>
   </section>
 
-  <section>
+  <section id="filter-sizes">
     <h3>{s.catalogue.sizes}</h3>
     <div class="chips">
       {#each sizes as sz (sz)}
@@ -196,13 +242,14 @@
     </div>
   </section>
 
-  <section>
+  <section id="filter-ink-height">
     <h3>{s.catalogue.inkHeight}</h3>
     <div class="range mono">
       <input
         type="number"
         min={inkRange[0]}
         max={inkRange[1]}
+        name="ink-height-min"
         placeholder={String(inkRange[0])}
         value={filters.inkH?.[0] ?? ''}
         oninput={(e) => {
@@ -216,6 +263,7 @@
         type="number"
         min={inkRange[0]}
         max={inkRange[1]}
+        name="ink-height-max"
         placeholder={String(inkRange[1])}
         value={filters.inkH?.[1] ?? ''}
         oninput={(e) => {
@@ -227,7 +275,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="filter-form">
     <h3>{s.catalogue.form}</h3>
     <div class="chips">
       {#each forms as f (f)}
@@ -243,7 +291,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="filter-spacing-weight">
     <h3>{s.catalogue.spacing} · {s.catalogue.weights}</h3>
     <div class="chips">
       {#each spacings as sp (sp)}
@@ -268,23 +316,32 @@
   </section>
 
   {#if vibes.length}
-    <section>
+    <section id="filter-vibes">
       <h3>{s.catalogue.vibes}</h3>
-      <div class="chips">
-        {#each vibes as v (v)}
-          <button
-            type="button"
-            class="chip chipbtn"
-            class:on={filters.vibes.includes(v)}
-            onclick={() => (filters.vibes = toggle(filters.vibes, v))}
-            >{s.vibeNames[v] ?? v}</button
-          >
-        {/each}
-      </div>
+      {#each vibeGroups as group (group.id)}
+        <details
+          class="vibe-group"
+          open={openVibeGroups[group.id] ?? group.tags.some(tag => filters.vibes.includes(tag))}
+          ontoggle={(event) => (openVibeGroups[group.id] = event.currentTarget.open)}
+        >
+          <summary>{vibeGroupName(group, lang)}</summary>
+          <div class="chips">
+            {#each group.tags as v (v)}
+              <button
+                type="button"
+                class="chip chipbtn"
+                class:on={filters.vibes.includes(v)}
+                onclick={() => (filters.vibes = toggle(filters.vibes, v))}
+                >{s.vibeNames[v] ?? v}</button
+              >
+            {/each}
+          </div>
+        </details>
+      {/each}
     </section>
   {/if}
 
-  <section>
+  <section id="filter-license">
     <h3>{s.catalogue.license}</h3>
     <div class="chips">
       {#each licenses as lic (lic)}
@@ -311,13 +368,18 @@
   .fp__head {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     margin-bottom: var(--s2);
   }
   .fp__title {
     font-weight: 600;
   }
   .fp__reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
     border: none;
     color: var(--ink-3);
     font-size: 0.78rem;
@@ -325,6 +387,17 @@
   }
   .fp__reset:hover {
     color: var(--accent);
+  }
+  .fp__search { position: relative; }
+  .fp__search input { padding-inline-end: 2.25rem; font-size: 1rem; }
+  .fp__search-icon {
+    position: absolute;
+    inset-inline-end: var(--s2);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    color: var(--ink-3);
+    pointer-events: none;
   }
   section {
     padding: var(--s3) 0;
@@ -341,6 +414,17 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--s1);
+  }
+  .vibe-group + .vibe-group {
+    margin-top: var(--s2);
+  }
+  .vibe-group summary {
+    cursor: pointer;
+    color: var(--ink-2);
+    font-size: 0.78rem;
+  }
+  .vibe-group[open] summary {
+    margin-bottom: var(--s2);
   }
   .chipbtn {
     cursor: pointer;
@@ -402,7 +486,9 @@
     margin-bottom: var(--s2);
     cursor: pointer;
   }
-  input[type='text'] {
+  input[type='text'],
+  input[type='search'] {
     width: 100%;
+    min-width: 0;
   }
 </style>

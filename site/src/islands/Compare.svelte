@@ -1,5 +1,5 @@
 <script lang="ts">
-  /** Side-by-side comparison: the same text, the same pixel size, 2-4 faces.
+  /** Side-by-side comparison: the same text and zoom, with no fixed slot limit.
    *
    * The collection's whole claim is that every font here was measured with one
    * ruler; this is that claim made visible. Everything is driven from the
@@ -10,13 +10,20 @@
   import { onMount } from 'svelte';
   import type { FamilyIndex } from '../lib/schema';
   import type { UIStrings } from '../i18n/types';
-  import { GlyphStore } from '../lib/glyphstore';
+  import { getGlyphStore } from '../lib/glyphstore';
   import { rasterize, paint } from '../lib/render';
-  import { themeInkPaper } from '../lib/colors';
-  import { defaultSample } from '../lib/samples';
+  import { onThemeChange, themeInkPaper } from '../lib/colors';
+  import { NOWRAP_PRESETS, SAMPLES, defaultSample, presetLabel } from '../lib/samples';
   import { variantLabels } from '../lib/variantlabel';
+  import { previewFor } from '../lib/preview';
+  import { highlightCode, type CodeLang } from '../lib/codehl';
+  import { framePalette, type Frame } from '../lib/frames';
+  import FrameControls from './FrameControls.svelte';
+  import FrameShell from './FrameShell.svelte';
+  import Icon from './Icon.svelte';
 
   interface Props {
+    /** Catalogue order, including the current Auto rating. */
     families: FamilyIndex[];
     s: UIStrings;
     dataBase: string;
@@ -26,8 +33,7 @@
   }
   const { families, s, dataBase, lang, initial }: Props = $props();
 
-  const MAX = 4;
-  const store = new GlyphStore(dataBase);
+  const store = getGlyphStore(dataBase);
   const bySlug = new Map(families.map((f) => [f.slug, f]));
 
   const nameOf = (f: FamilyIndex) => f.names[lang] ?? f.names.en ?? f.name;
@@ -41,9 +47,8 @@
       const [slug, vid] = p.split(':');
       const fam = slug ? bySlug.get(slug) : undefined;
       if (!fam) continue;
-      const v = fam.variants.find((x) => x.id === vid) ?? fam.variants[0]!;
-      out.push({ slug: fam.slug, variantId: v.id });
-      if (out.length >= MAX) break;
+      const variantId = fam.variants.find((x) => x.id === vid)?.id ?? previewFor(fam).variantId;
+      out.push({ slug: fam.slug, variantId });
     }
     return out;
   };
@@ -56,32 +61,28 @@
   let slots = $state<Slot[]>(parse(fromUrl.length ? fromUrl : initial));
   let text = $state('');
   let zoom = $state(3);
+  // The same controls as the detail page's type-test box, minus the size ladder:
+  // every column here is already a different variant, which is what the ladder
+  // is for. They apply to all columns at once — a comparison that let the
+  // columns differ in zoom or frame would be showing two variables at a time.
+  let grid = $state(false);
+  let nowrap = $state(false);
+  let frame = $state<Frame>('none');
+  let codeLang = $state<CodeLang>('javascript');
   let canvases: (HTMLCanvasElement | undefined)[] = $state([]);
+  let missing: number[] = $state([]);
   let themeTick = $state(0);
 
-  // Nothing chosen yet: open with two faces so the page is never a blank form
-  if (slots.length === 0 && sorted.length >= 2) {
-    slots = [
-      { slug: sorted[0]!.slug, variantId: sorted[0]!.variants[0]!.id },
-      { slug: sorted[1]!.slug, variantId: sorted[1]!.variants[0]!.id },
-    ];
+  // Fixed defaults; explicit URL selections continue to take precedence.
+  if (slots.length === 0) {
+    slots = parse(['press-start-2p', 'pixelify-sans']);
   }
   if (!text) {
     const first = slots[0] ? bySlug.get(slots[0].slug) : undefined;
-    text = defaultSample(first?.sampleLang ?? 'latin');
+    text = first ? previewFor(first).text : defaultSample('latin');
   }
 
-  onMount(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const bump = () => (themeTick += 1);
-    mq.addEventListener('change', bump);
-    const obs = new MutationObserver(bump);
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => {
-      mq.removeEventListener('change', bump);
-      obs.disconnect();
-    };
-  });
+  onMount(() => onThemeChange(() => (themeTick += 1)));
 
   // Keep the URL in step so a comparison can be copied out of the address bar
   $effect(() => {
@@ -95,27 +96,42 @@
   $effect(() => {
     const t = text;
     const z = zoom;
+    // Read synchronously before the await, or Svelte can't track them and
+    // ticking a checkbox wouldn't repaint
+    const g = grid;
+    const nw = nowrap;
+    const fr = frame;
+    const cl = codeLang;
     const list = slots.map((x) => ({ ...x }));
     void themeTick;
     let cancelled = false;
     (async () => {
-      const { ink, paper } = themeInkPaper();
+      const { ink, paper } = framePalette(fr, themeInkPaper());
+      const charColors = fr === 'code' ? highlightCode(t, cl) : undefined;
+      const counts: number[] = [];
       for (const [i, slot] of list.entries()) {
         const el = canvases[i];
         if (!el || !t) continue;
         const [m, glyphs] = await Promise.all([
-          store.loadManifest(slot.slug, slot.variantId),
+          store.loadFont(slot.slug, slot.variantId),
           store.glyphsFor(slot.slug, slot.variantId, t),
         ]);
         if (cancelled) return;
         const r = rasterize(t, glyphs, m, {
           invert: false,
-          maxWidth: Math.max(48, Math.floor((el.parentElement?.clientWidth ?? 320) / z) - 2),
+          charColors,
+          // No cap when wrapping is off: the column's canvas container scrolls
+          // sideways rather than the page
+          maxWidth: nw
+            ? undefined
+            : Math.max(48, Math.floor((el.parentElement?.clientWidth ?? 320) / z) - 2),
           ink,
           paper,
         });
-        paint(el, r, z, {});
+        counts[i] = r.missing.length;
+        paint(el, r, z, { grid: g });
       }
+      missing = counts;
     })().catch((e) => console.error(e));
     return () => {
       cancelled = true;
@@ -125,31 +141,73 @@
   function setSlug(i: number, slug: string) {
     const fam = bySlug.get(slug);
     if (!fam) return;
-    slots[i] = { slug, variantId: fam.variants[0]!.id };
+    slots[i] = { slug, variantId: previewFor(fam).variantId };
   }
   function add() {
     const used = new Set(slots.map((x) => x.slug));
     const next = sorted.find((f) => !used.has(f.slug)) ?? sorted[0];
-    if (next && slots.length < MAX) {
-      slots = [...slots, { slug: next.slug, variantId: next.variants[0]!.id }];
+    if (next) {
+      slots = [...slots, { slug: next.slug, variantId: previewFor(next).variantId }];
     }
   }
   const remove = (i: number) => (slots = slots.filter((_, k) => k !== i));
 </script>
 
-<section class="cmp" data-testid="compare">
+<section id="compare" class="cmp" data-testid="compare">
   <div class="cmp__bar">
-    <textarea rows="2" bind:value={text} spellcheck="false" aria-label={s.detail.sampleTitle}
-    ></textarea>
-    <label class="cmp__zoom"
-      >{s.catalogue.zoom}
-      <select bind:value={zoom}>
+    <div class="cmp__presets">
+      <span class="hint">{s.detail.presets}</span>
+      {#each Object.entries(SAMPLES) as [langKey, sample] (langKey)}
+        <button
+          type="button"
+          class="chip chipbtn"
+          aria-pressed={text === sample}
+          onclick={() => {
+            text = sample;
+            if (NOWRAP_PRESETS.has(langKey)) nowrap = true;
+            if (langKey === 'javascript') {
+              frame = 'code';
+              codeLang = 'javascript';
+            }
+          }}>{presetLabel(langKey, s)}</button
+        >
+      {/each}
+    </div>
+    <button type="button" onclick={add} data-testid="compare-add"
+      >{s.compare.add}</button
+    >
+  </div>
+
+  <textarea
+    name="compare-text"
+    rows="2"
+    bind:value={text}
+    spellcheck="false"
+    aria-label={s.detail.sampleTitle}
+  ></textarea>
+
+  <div class="cmp__controls">
+    <label class="icon-control" title={s.catalogue.zoom}><Icon name="zoom-in" />
+      <select name="compare-zoom" aria-label={s.catalogue.zoom} bind:value={zoom}>
         {#each [1, 2, 3, 4, 6, 8] as z (z)}<option value={z}>×{z}</option>{/each}
       </select>
     </label>
-    <button type="button" onclick={add} disabled={slots.length >= MAX} data-testid="compare-add"
-      >{s.compare.add}</button
+    <label class="check">
+      <!-- Grid lines only render at ≥×4 (any smaller and they'd swallow the ink), so checking the box bumps the zoom up automatically -->
+      <input
+        type="checkbox"
+        name="compare-grid"
+        bind:checked={grid}
+        onchange={() => {
+          if (grid && zoom < 4) zoom = 4;
+        }}
+      />{s.catalogue.grid}
+    </label>
+    <label class="check"
+      ><input type="checkbox" name="compare-nowrap" bind:checked={nowrap} />{s.catalogue
+        .nowrap}</label
     >
+    <FrameControls {s} bind:frame bind:codeLang />
   </div>
 
   <div class="cmp__grid">
@@ -158,6 +216,7 @@
       <div class="cmp__col">
         <div class="cmp__pick">
           <select
+            name={`compare-font-${i + 1}`}
             value={slot.slug}
             onchange={(e) => setSlug(i, (e.currentTarget as HTMLSelectElement).value)}
             aria-label={s.compare.pickFont}
@@ -166,7 +225,11 @@
           </select>
           {#if fam && fam.variants.length > 1}
             {@const labels = variantLabels(fam.variants, s)}
-            <select bind:value={slots[i].variantId} aria-label={s.detail.variants}>
+            <select
+              name={`compare-variant-${i + 1}`}
+              bind:value={slots[i].variantId}
+              aria-label={s.detail.variants}
+            >
               {#each fam.variants as v, k (v.id)}<option value={v.id}>{labels[k]}</option>{/each}
             </select>
           {/if}
@@ -176,9 +239,14 @@
             >
           {/if}
         </div>
-        <div class="cmp__canvas lattice">
+        <FrameShell {frame} {codeLang} dense>
           <canvas bind:this={canvases[i]}></canvas>
-        </div>
+        </FrameShell>
+        {#if (missing[i] ?? 0) > 0}
+          <span class="chip chip--accent cmp__missing" data-testid="missing-count"
+            >{s.detail.missingCount.replace('{n}', String(missing[i]))}</span
+          >
+        {/if}
         {#if fam}
           <a class="cmp__more" href={`${dataBase.replace(/\/data$/, '')}/${lang}/fonts/${fam.slug}/`}
             >{nameOf(fam)} →</a
@@ -192,26 +260,65 @@
 <style>
   .cmp__bar {
     display: flex;
-    align-items: flex-end;
-    gap: var(--s3);
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--s2) var(--s3);
     flex-wrap: wrap;
-    margin-bottom: var(--s4);
+    margin-bottom: var(--s2);
   }
-  .cmp__bar textarea {
-    flex: 1 1 20rem;
+  .cmp__bar > * {
     min-width: 0;
+    max-width: 100%;
   }
-  .cmp__zoom {
+  .cmp__presets {
+    display: flex;
+    /* Language preset buttons don't fit on one row at 300px, so wrapping must be allowed */
+    flex-wrap: wrap;
+    gap: var(--s1);
+    align-items: center;
+  }
+  .cmp__presets .hint {
+    color: var(--ink-3);
+    font-size: 0.75rem;
+    margin-right: var(--s1);
+  }
+  .chipbtn {
+    cursor: pointer;
+    background: none;
+  }
+  .chipbtn[aria-pressed='true'] {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  textarea {
+    width: 100%;
+    resize: vertical;
+    font-family: var(--font-ui);
+  }
+  .cmp__controls {
+    display: flex;
+    gap: var(--s4);
+    align-items: center;
+    flex-wrap: wrap;
+    margin: var(--s2) 0 var(--s4);
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+  .check {
     display: flex;
     align-items: center;
     gap: var(--s1);
-    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .cmp__missing {
+    margin-top: var(--s2);
   }
   /* Side by side on a wide screen, stacked once the columns would get too
      narrow to judge a face by */
   .cmp__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
     gap: var(--s4);
     align-items: start;
   }
@@ -234,10 +341,6 @@
   .cmp__x {
     flex: none;
     padding: 0 var(--s2);
-  }
-  .cmp__canvas {
-    overflow-x: auto;
-    min-height: 3rem;
   }
   .cmp__more {
     display: inline-block;

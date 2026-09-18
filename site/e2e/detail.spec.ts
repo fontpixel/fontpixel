@@ -156,7 +156,7 @@ test('license is shown as a short label, never the raw LicenseRef id', async ({
   }
 });
 
-test('the sample editor can copy its dot matrix three ways', async ({
+test('the sample editor can copy its dot matrix four ways', async ({
   page,
   context,
 }) => {
@@ -165,17 +165,26 @@ test('the sample editor can copy its dot matrix three ways', async ({
   const bar = page.getByTestId('dot-copy');
   await bar.scrollIntoViewIfNeeded();
 
-  // .# plain text: only dots and hashes, consistent line width
+  // .# plain text: the same bitmap, but with # as the ink character
+  await page.getByTestId('copy-hash').click();
+  const hashes = await page.evaluate(() => navigator.clipboard.readText());
+  expect(hashes.length).toBeGreaterThan(0);
+  expect(hashes.split('\n').every((l) => /^[.#]+$/.test(l))).toBe(true);
+  expect(hashes).toContain('#');
+
+  // .@ plain text (as in .yaff): only dots and at-signs, consistent line width
   await page.getByTestId('copy-dots').click();
   const dots = await page.evaluate(() => navigator.clipboard.readText());
   expect(dots.length).toBeGreaterThan(0);
   const lines = dots.split('\n');
-  expect(lines.every((l) => /^[.#]+$/.test(l))).toBe(true);
+  expect(lines.every((l) => /^[.@]+$/.test(l))).toBe(true);
   expect(new Set(lines.map((l) => l.length)).size).toBe(1);
-  expect(dots).toContain('#');
+  expect(dots).toContain('@');
   // the first and last lines shouldn't be blank—already trimmed on export
-  expect(lines[0]).toContain('#');
-  expect(lines[lines.length - 1]).toContain('#');
+  expect(lines[0]).toContain('@');
+  expect(lines[lines.length - 1]).toContain('@');
+  // the two dot exports differ only in the ink character
+  expect(hashes.replaceAll('#', '@')).toBe(dots);
 
   // BDF style: a glyph block pastable into a .bdf file
   await page.getByTestId('copy-bdf').click();
@@ -211,4 +220,38 @@ test('a former name can find the font via search', async ({ page }) => {
   const island = page.locator('[data-testid="catalogue-island"]');
   await expect(island.locator('.card')).toHaveCount(1);
   await expect(island).toContainText('全小素');
+});
+
+test('structured data names the font and states its own licence', async ({ page }) => {
+  // Both fields used to be hardcoded to the site's values in Base.astro: every font
+  // page called itself 开源像素字体馆 and declared MIT, including the GPL and
+  // public-domain ones. Nothing renders it, so only a test catches it drifting back.
+  const read = async (path: string) => {
+    await page.goto(path);
+    const raw = await page.locator('script[type="application/ld+json"]').textContent();
+    return JSON.parse(raw!);
+  };
+
+  const cozette = await read('zh/fonts/cozette/');
+  expect(cozette.name).toBe('Cozette');
+  expect(cozette.license).toBe('https://spdx.org/licenses/MIT.html');
+  expect(cozette.isPartOf?.['@type']).toBe('WebSite');
+
+  // A font under a different licence must not inherit the site's
+  const gpl = await read('zh/fonts/nectec-thai/');
+  expect(gpl.license).toBe('https://spdx.org/licenses/GPL-2.0-or-later.html');
+
+  // Public domain has no spdx.org page, and a compound expression has no single one:
+  // saying nothing beats pointing at half the terms
+  for (const slug of ['izumi', 'jiskan']) {
+    const d = await read(`zh/fonts/${slug}/`);
+    expect(d.license).toBeUndefined();
+    expect(d.name).not.toBe('FontPixel：开源像素字体馆');
+  }
+
+  // The home page is the one place the site's own name and licence belong
+  const home = await read('zh/');
+  expect(home['@type']).toBe('WebSite');
+  expect(home.name).toBe('FontPixel：开源像素字体馆');
+  expect(home.license).toBe('https://opensource.org/licenses/MIT');
 });

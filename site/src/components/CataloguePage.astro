@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Catalogue from '../islands/Catalogue.svelte';
+import { pickName, t, type Lang } from '../i18n';
+import { readPreviewSvg, withBase } from '../lib/data';
+import { loadCatalogue } from '../lib/catalogue-build';
+import { PAGE_SIZE } from '../lib/catalogue';
+import { previewFor } from '../lib/preview';
+
+interface Props { lang: Lang; page?: number }
+const { lang, page = 1 } = Astro.props;
+const s = t(lang);
+const index = loadCatalogue();
+const path = page === 1 ? '/' : `/page/${page}/`;
+const pageFamilies = index.families.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+const previewSvgs = Object.fromEntries(pageFamilies.map((f) => {
+  try { return [f.slug, readPreviewSvg(f.cardPreview || previewFor(f).file)]; }
+  catch { return [f.slug, '']; }
+}));
+const namePreviewSvgs = Object.fromEntries(pageFamilies.map((f) => {
+  const file = f.namePreviews[pickName(lang, f.names, f.name)];
+  try { return [f.slug, file ? readPreviewSvg(file) : '']; }
+  catch { return [f.slug, '']; }
+}));
+const title = page === 1 ? s.siteName : `${s.siteName} · ${s.catalogue.pageLabel.replace('{n}', String(page))}`;
+---
+
+<Base {lang} {title} description={s.siteTagline} {path}>
+  <Catalogue client:load families={index.families} {lang} {s} {previewSvgs} {namePreviewSvgs}
+    initialPage={page} catalogueBase={withBase(`/${lang}/`)}
+    dataBase={withBase('/data')} fontsBase={withBase(`/${lang}/fonts/`)}
+    charsetIds={index.charsetIds} charsetNames={index.charsetNames} />
+</Base>

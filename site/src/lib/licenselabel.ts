@@ -13,7 +13,11 @@ const OVERRIDES: Record<string, string> = {
   // Keep the exception visible — it is what separates these from plain GPL in
   // the filter list — but short: the full name beside the chip spells it out.
   'GPL-2.0-with-font-exception': 'GPL 2 (font exc.)',
+  'GPL-3.0-with-font-exception': 'GPL 3 (font exc.)',
   'OFL-1.1 OR GPL-2.0-with-font-exception': 'OFL 1.1 / GPL 2',
+  // Fullwidth public domain, halfwidth OFL — the chip has to show both, since
+  // only one of the two carries obligations.
+  'LicenseRef-PublicDomain AND OFL-1.1': 'PD / OFL 1.1',
 };
 
 export function licenseShortLabel(spdx: string): string {

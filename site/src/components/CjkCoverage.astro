@@ -1,0 +1,201 @@
+---
+import type { Lang } from '../i18n';
+import { cjkText, type CjkKey } from '../i18n/cjk';
+
+interface Props {
+  lang: Lang;
+  coverage: Record<string, number[]>;
+  id: string;
+}
+const { lang, coverage, id } = Astro.props;
+const s = cjkText(lang);
+const number = new Intl.NumberFormat(lang === 'zh' ? 'zh-Hans' : lang);
+const count = (key: CjkKey) => coverage[key]!;
+const fraction = (key: CjkKey) => count(key).map(n => number.format(n)).join(' / ');
+const ratio = (key: CjkKey) => count(key)[1] ? count(key)[0]! / count(key)[1]! : 0;
+const percentage = (key: CjkKey) => `${number.format(Math.round(ratio(key) * 1000) / 10)}%`;
+const main = ['tw', 'sc', 'jp', 'kr'] as const;
+const scripts = ['kana', 'hangul', 'bopomofo'] as const;
+const groups: { title: string; keys: CjkKey[] }[] = [
+  { title: s.sets, keys: ['combined', 'han', 'union', 'tw', 'tw-common', 'tw-less', 'sc', 'sc-l1', 'sc-l2', 'sc-l3', 'jp', 'kr', 'kr-compat'] },
+  { title: s.overlaps, keys: ['tw-sc', 'jp-tw', 'jp-sc', 'kr-tw', 'kr-sc', 'jp-only', 'kr-only', 'kr-sc-not-tw'] },
+  { title: s.scripts, keys: ['kana', 'hiragana', 'katakana', 'kana-ext', 'kana-halfwidth', 'hangul', 'hangul-common', 'jamo', 'bopomofo'] },
+];
+// Adapted from the user's cjk_character_sets_euler_v3_measured.svg.
+// Keep its overlapping contours; move dense annotations to readable HTML.
+const shapes = [
+  { key: 'tw' as const, x: 50, y: 20, w: 445, h: 298 },
+  { key: 'sc' as const, x: 350, y: 85, w: 520, h: 319 },
+  { key: 'jp' as const, x: 28, y: 222, w: 590, h: 90 },
+  { key: 'kr' as const, x: 75, y: 292, w: 482, h: 91 },
+];
+---
+<section id={id} class="cjk" data-testid="cjk-coverage" aria-labelledby={`${id}-heading`}>
+  <header class="cjk__heading">
+    <h3 id={`${id}-heading`}>{s.title}</h3>
+  </header>
+  <figure>
+    <div class="cjk__han">
+      <div class="cjk__summary" data-cjk="han">
+        <span>{s.labels.han} <small>Unicode 17</small></span>
+        <span class="cjk__value mono">{fraction('han')}</span>
+      </div>
+      <div class="cjk__combined" data-cjk="combined">
+        <span>{s.labels.combined}</span>
+        <span class="cjk__value"><strong>{fraction('combined')}</strong><span class="cjk__percent mono">{percentage('combined')}</span></span>
+      </div>
+      <svg class="cjk__map" viewBox="0 0 900 430" role="img" aria-labelledby={`${id}-svg-title ${id}-svg-desc`}>
+        <title id={`${id}-svg-title`}>{s.title}</title>
+        <desc id={`${id}-svg-desc`}>{s.schematic} {main.map(k => `${s.labels[k]}: ${fraction(k)}`).join('; ')}. {s.shared}: {fraction('tw-sc')}.</desc>
+        {shapes.map(({ key, x, y, w, h }) => (
+          <rect class={`cjk__region tone-${key}`} x={x} y={y} width={w} height={h} rx="5" />
+        ))}
+        <g class="tone-tw" data-cjk="tw">
+          <text class="cjk__svg-label" x="70" y="50">{s.labels.tw}</text>
+          <text class="cjk__svg-count" x="70" y="79">{fraction('tw')}</text>
+          <text class="cjk__svg-percent" x="308" y="79">{percentage('tw')}</text>
+          <rect class="cjk__track" x="70" y="92" width="260" height="5" />
+          <rect class="cjk__fill" x="70" y="92" width={260 * ratio('tw')} height="5" />
+        </g>
+        <g class="tone-sc" data-cjk="sc">
+          <text class="cjk__svg-label" x="850" y="116" text-anchor="end">{s.labels.sc}</text>
+          <text class="cjk__svg-count" x="850" y="145" text-anchor="end">{fraction('sc')}</text>
+          <text class="cjk__svg-percent" x="592" y="145">{percentage('sc')}</text>
+          <rect class="cjk__track" x="592" y="158" width="258" height="5" />
+          <rect class="cjk__fill" x="592" y="158" width={258 * ratio('sc')} height="5" />
+        </g>
+        <g data-cjk="tw-sc">
+          <title>{s.labels['tw-sc']}</title>
+          <text class="cjk__svg-shared" x="422" y="174" text-anchor="middle">{s.shared}</text>
+          <text class="cjk__svg-shared mono" x="422" y="196" text-anchor="middle">{fraction('tw-sc')}</text>
+        </g>
+        <g class="tone-jp" data-cjk="jp">
+          <text class="cjk__svg-label" x="48" y="250">{s.labels.jp}</text>
+          <text class="cjk__svg-count" x="598" y="250" text-anchor="end">{fraction('jp')}</text>
+          <rect class="cjk__track" x="48" y="267" width="550" height="5" />
+          <rect class="cjk__fill" x="48" y="267" width={550 * ratio('jp')} height="5" />
+        </g>
+        <g class="tone-kr" data-cjk="kr">
+          <text class="cjk__svg-label" x="95" y="337">{s.labels.kr}</text>
+          <text class="cjk__svg-count" x="537" y="362" text-anchor="end">{fraction('kr')}</text>
+          <text class="cjk__svg-percent" x="95" y="362">{percentage('kr')}</text>
+          <rect class="cjk__track" x="95" y="373" width="442" height="5" />
+          <rect class="cjk__fill" x="95" y="373" width={442 * ratio('kr')} height="5" />
+        </g>
+      </svg>
+      <div class="cjk__mobile">
+        {main.map(key => (
+          <div class={`cjk__mobile-set tone-${key}`}>
+            <span>{s.labels[key]}</span><strong>{fraction(key)}</strong>
+            <meter min="0" max={count(key)[1]} value={count(key)[0]} aria-label={s.labels[key]}>{percentage(key)}</meter>
+          </div>
+        ))}
+        <div class="cjk__mobile-shared"><span>{s.labels['tw-sc']}</span><strong>{fraction('tw-sc')}</strong></div>
+      </div>
+    </div>
+    <div class="cjk__scripts">
+      {scripts.map(key => (
+        <div class={`cjk__script tone-${key}`} data-cjk={key}>
+          <span>{s.labels[key]}</span>
+          <strong>{fraction(key)}</strong>
+          <meter min="0" max={count(key)[1]} value={count(key)[0]} aria-label={s.labels[key]}>{percentage(key)}</meter>
+          {key === 'kana' && <small>{s.labels.hiragana} <span>{fraction('hiragana')}</span><br />{s.labels.katakana} <span>{fraction('katakana')}</span></small>}
+          {key === 'hangul' && <small>{s.labels['hangul-common']} <span>{fraction('hangul-common')}</span><br />{s.labels.jamo} <span>{fraction('jamo')}</span></small>}
+        </div>
+      ))}
+    </div>
+    <figcaption>{s.schematic}</figcaption>
+  </figure>
+  <details id={`${id}-definitions`} class="cjk__details">
+    <summary>{s.details}</summary>
+    <div class="cjk__details-body">
+    <p>{s.combinedDefinition}</p>
+    <p>{s.sharedDefinition}</p>
+    <p>{s.note}</p>
+    <p>{s.definitions}</p>
+    <div class="cjk__tables">
+      {groups.map(group => (
+        <table>
+          <caption>{group.title}</caption>
+          <thead class="visually-hidden"><tr><th>{group.title}</th><th>{s.legend}</th></tr></thead>
+          <tbody>{group.keys.map(key => (
+            <tr data-cjk-detail={key}>
+              <th scope="row">{s.labels[key]}</th>
+              <td><span>{fraction(key)}</span><meter min="0" max={count(key)[1]} value={count(key)[0]} aria-label={s.labels[key]}>{percentage(key)}</meter></td>
+            </tr>
+          ))}</tbody>
+        </table>
+      ))}
+    </div>
+    <p class="cjk__sources">{s.source}: <a href="https://www.unicode.org/versions/Unicode17.0.0/">Unicode 17</a> · <a href="https://github.com/fontpixel/fontpixel/tree/main/pipeline/opf/coverage/data">FontPixel</a></p>
+    </div>
+  </details>
+</section>
+
+<style>
+  .cjk { margin: var(--s5) 0 var(--s6); container-type: inline-size; --tw: #62508b; --sc: #286f63; --jp: #99503b; --kr: #86631e; }
+  :global([data-theme='dark']) .cjk { --tw: #baa7dc; --sc: #82bcae; --jp: #dfa590; --kr: #d7b670; }
+  .tone-tw { --tone: var(--tw); } .tone-sc, .tone-bopomofo { --tone: var(--sc); }
+  .tone-jp, .tone-kana { --tone: var(--jp); } .tone-kr, .tone-hangul { --tone: var(--kr); }
+  .cjk__heading h3 { font-size: .9rem; margin: 0 0 var(--s3); }
+  figure { margin: 0; }
+  .cjk__han { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); }
+  .cjk__summary { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--s1) var(--s3); padding: var(--s3) var(--s4) var(--s2); font-size: .76rem; color: var(--ink-2); }
+  .cjk__summary small { color: var(--ink-3); font-size: .72rem; margin-inline-start: var(--s2); white-space: nowrap; }
+  .cjk__value { white-space: nowrap; }
+  strong { font-family: var(--font-mono); font-size: .9rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .cjk__combined { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--s1) var(--s3); padding: 0 var(--s4) var(--s2); font-size: .9rem; }
+  .cjk__combined strong { font-size: 1rem; }
+  .cjk__percent { margin-inline-start: var(--s3); font-size: .85rem; color: var(--ink-2); }
+  .cjk__map { display: block; width: 100%; height: auto; }
+  .cjk__region { fill: var(--tone); fill-opacity: .065; stroke: var(--tone); stroke-opacity: .6; stroke-width: 1; }
+  .cjk__svg-label { fill: var(--tone); font-size: 17px; font-weight: 500; }
+  .cjk__svg-count { fill: var(--ink); font: 20px var(--font-mono); font-variant-numeric: tabular-nums; }
+  .cjk__svg-percent { fill: var(--tone); font: 14px var(--font-mono); }
+  .cjk__svg-shared { fill: var(--ink-2); font-size: 14px; }
+  .cjk__track { fill: var(--tone); fill-opacity: .15; }
+  .cjk__fill { fill: var(--tone); }
+  .cjk__mobile { display: none; }
+  .cjk__scripts { display: grid; grid-template-columns: 1.1fr 1.2fr .8fr; gap: var(--s3); margin-top: var(--s3); }
+  .cjk__script { padding: var(--s2) var(--s3); border-inline-start: 2px solid var(--tone); background: color-mix(in srgb, var(--tone) 5%, var(--surface)); font-size: .8rem; min-width: 0; }
+  .cjk__script > span { color: var(--tone); }
+  .cjk__script strong { display: block; margin: var(--s1) 0; }
+  .cjk__script small { display: block; color: var(--ink-2); margin-top: var(--s2); font-size: .75rem; }
+  .cjk__script small span { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  meter { display: block; appearance: none; width: 100%; height: 5px; background: var(--line-soft); border: 0; border-radius: 0; }
+  meter::-webkit-meter-bar { border: 0; border-radius: 0; background: var(--line-soft); height: 5px; }
+  meter::-webkit-meter-optimum-value { background: var(--tone, var(--accent)); border-radius: 0; }
+  meter::-moz-meter-bar { background: var(--tone, var(--accent)); }
+  figcaption { font-size: .72rem; color: var(--ink-3); margin: var(--s2) 0; }
+  .cjk__details { font-size: .78rem; border: 1px solid var(--line); border-radius: var(--radius); }
+  .cjk__details[open] { background: var(--surface); }
+  summary { cursor: pointer; color: var(--ink-2); padding: var(--s2) var(--s3); }
+  .cjk__details[open] > summary { border-bottom: 1px solid var(--line); background: var(--paper); }
+  summary:hover { color: var(--accent); }
+  .cjk__details-body { padding: var(--s3); }
+  .cjk__details-body > p:first-child { margin-top: 0; }
+  .cjk__details-body > p:last-child { margin-bottom: 0; }
+  .cjk__details p { color: var(--ink-2); max-width: 85ch; }
+  .cjk__tables { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4) var(--s5); align-items: start; }
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; font-weight: 600; padding-bottom: var(--s2); }
+  th { text-align: left; font-weight: 400; padding: 5px var(--s2) 5px 0; font-size: .74rem; }
+  td { padding: 5px 0; text-align: right; font-size: .74rem; font-family: var(--font-mono); white-space: nowrap; }
+  td meter { margin-top: 4px; height: 3px; }
+  .cjk__sources a { text-decoration: underline; text-underline-offset: 3px; }
+  @container (max-width: 580px) {
+    .cjk__map { display: none; }
+    .cjk__mobile { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); padding: var(--s3) var(--s4); }
+    .cjk__mobile-set { display: flex; flex-direction: column; min-width: 0; font-size: .76rem; color: var(--tone); }
+    .cjk__mobile-set > span { flex: 1; }
+    .cjk__mobile-set strong { display: block; font-size: .78rem; margin: var(--s1) 0; color: var(--ink); white-space: nowrap; }
+    .cjk__mobile-shared { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: var(--s2); font-size: .76rem; color: var(--ink-2); }
+    .cjk__mobile-shared strong { font-size: .78rem; white-space: nowrap; flex: none; }
+    .cjk__scripts { grid-template-columns: 1fr; gap: var(--s2); }
+    .cjk__script { display: grid; grid-template-columns: 1fr auto; gap: var(--s1) var(--s3); }
+    .cjk__script strong { margin: 0; font-size: .82rem; }
+    .cjk__script meter, .cjk__script small { grid-column: 1 / -1; }
+    .cjk__script small { margin-top: var(--s1); }
+    .cjk__tables { grid-template-columns: 1fr; }
+  }
+</style>

@@ -23,5 +23,13 @@ export function themeInkPaper(): { ink: Rgba; paper: Rgba } {
 export function onThemeChange(cb: () => void): () => void {
   const mo = new MutationObserver(cb);
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  return () => mo.disconnect();
+  // With the site left on "system" nothing touches data-theme when the OS flips
+  // to dark, so the media query has to be watched too or a canvas keeps its old
+  // ink until something else forces a repaint.
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  mq.addEventListener('change', cb);
+  return () => {
+    mo.disconnect();
+    mq.removeEventListener('change', cb);
+  };
 }

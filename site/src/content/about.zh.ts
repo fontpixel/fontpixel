@@ -1,20 +1,54 @@
-/** Chinese body text for the about page. The English version, about.en.ts, is produced by the Opus/Sonnet translation pipeline. */
+/** About page copy and shared structure; Traditional Chinese is derived from this version. */
 
 export interface AboutSection {
   id: string;
   heading: string;
   paragraphs: string[];
   code?: string;
+  examplesIntro?: string;
+  examples?: {
+    name: string;
+    href: string;
+    reason: string;
+    reference?: { label: string; href: string };
+  }[];
 }
 
 export const aboutIntro =
   
-  '开源像素字体馆把散落在网络各处的所有能找到的自由版权的点阵（像素）字体收入同一座博物馆：拆开字体，审视每个字形，用同一把尺子反复去量，弄清每张字表的详细的覆盖；再给你一个能随手打字的试写框，看看这种字体的各种文字在老街机游戏或代码高亮的编辑器中的效果；最后为你提供BDF、PCF、点阵TTF乃至于矢量化（将每个像素变成正方形或圆形）的TTF格式的下载。';
+  'Tom Chen的FontPixel.com开源像素字体馆把散落在网络各处的所有能找到的自由版权的点阵（像素）字体收入同一座博物馆：拆开字体，审视每个字形，用同一把尺子反复去量，弄清每张字表的详细的覆盖；再给你一个能随手打字的试写框，看看这种字体的各种文字在老街机游戏或代码高亮的编辑器中的效果；最后为你提供BDF、PCF、点阵TTF乃至于矢量化（将每个像素变成正方形或圆形）的TTF格式的下载。';
 
 export const aboutSections: AboutSection[] = [
   {
     id: 'criteria',
     heading: '收录标准',
+    examplesIntro: "以下是一些容易被误认为开源、但经核查未收录的字体：",
+    examples: [
+      {
+        "name": "HZK / mplus_hzk_12",
+        "href": "https://github.com/py-zhao/mplus_hzk_12#readme",
+        "reason": "所用 HZK 字形未找到可核验的自由授权；年代久远不等于公有领域，衍生仓库的 Unlicense 也不能补足原始字形的授权。"
+      },
+      {
+        "name": "Zpix（最像素）",
+        "href": "https://github.com/SolidZORO/zpix-pixel-font#readme",
+        "reason": "个人、教育项目免费，但商业使用须另行付费授权，且禁止修改、转换等操作，不符合本站的自由许可标准。"
+      },
+      {
+        "name": "观致 8px（FontChinese7x7）",
+        "href": "https://github.com/Angelic47/FontChinese7x7#readme",
+        "reason": "中文增补者不明；issue #6 转述夏夏（lietxia）表示并未增补该字体。仓库的 MIT 仅覆盖工具代码，不能据此认定字体开源。",
+        "reference": {
+          "label": "讨论 #6",
+          "href": "https://github.com/Angelic47/FontChinese7x7/issues/6"
+        }
+      },
+      {
+        "name": "tewi",
+        "href": "https://github.com/lucy/tewi-font#readme",
+        "reason": "作者因大量字形衍生自 Monaco、授权情况不明而撤下字体，并建议分发者停止分发；旧副本的 GPL 标记不足以澄清其来源授权。"
+      }
+    ],
     paragraphs: [
       '只收录自由许可字体，判定从严：授权必须明确允许任何人使用、复制、修改、再分发并允许商用，且明确适用于本站收录的这份文件，来源链可核验。仅写着“免费”“免费商用”“freeware”、只允许复制，或“将来会改成开源许可”的，都不算。因此站上每一款字体都可放心商用。',
       '写着“作者声明”“个人使用条款”这类自拟授权的，多半收不进来。能不能收不看条款叫什么名字，只看内容是否满足自由软件与自由字体的通行定义：任何人可为任何目的使用、研究、修改与再分发，不因用途或使用者身份设限，授权不可事后单方撤回，并随衍生版本传递。缺任何一条，只记进收录报告，不上架。',
@@ -65,7 +99,7 @@ name_zh = "我的字体"
 authors = ["作者名"]
 homepage = "https://example.com"
 description = "一句话介绍"
-form = "gothic"          # 字形分类：gothic|mingcho|rounded|kai|fangsong|…
+forms = ["gothic", "sans"]          # 字形分类：gothic|song|rounded|kai|fangsong|…
 vibes = ["retro-game"]   # 气质标签，自由填写
 aliases = ["曾用名"]     # 可选：曾用名／别名，只用于搜索`,
   },

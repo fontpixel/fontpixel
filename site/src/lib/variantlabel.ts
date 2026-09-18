@@ -64,6 +64,13 @@ export function variantLabels(vs: LabelledVariant[], s: Names): string[] {
  * difference, like hk / tw.
  */
 function distinguishing(id: string, all: LabelledVariant[]): string {
+  // Converted named faces can differ only in the family/style name before a
+  // shared Regular/size suffix. Show that name instead of repeating file details.
+  const faceNames = all.map((v) => v.id.replace(/-(?:Regular-)?\d+px$/i, ''));
+  if (faceNames.every((name, i) => name !== all[i]!.id && /^[A-Z][A-Za-z0-9]*$/.test(name))
+      && new Set(faceNames).size === all.length) {
+    return id.replace(/-(?:Regular-)?\d+px$/i, '').replace(/([a-z])([A-Z])/g, '$1 $2');
+  }
   // Only compare against the peers that share this label — comparing across
   // sizes would make the common prefix diverge too early, leaving the whole
   // "10px-monospaced-zh_hk" string in the result

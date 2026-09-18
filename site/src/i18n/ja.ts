@@ -1,3 +1,4 @@
+import { vibeNames } from '../lib/vibes';
 import sitenames from './sitenames.json';
 import type { UIStrings } from './types';
 
@@ -19,23 +20,39 @@ export const ja: UIStrings = {
   },
 
   catalogue: {
-    searchPlaceholder: '名前、作者、タグを検索…',
+    searchPlaceholder: '名前、作者、タグ…',
+    searchLabel: '名前、作者、タグを検索…',
+    sortAutoReverse: '自動（逆順）',
     samplePlaceholder: '試し書きを入力すると、すべてのカードが即座に更新されます',
     sampleLabel: '試し書き',
+    preset: '例文',
+    previewStyle: 'プレビュースタイル',
+    codeLanguage: 'コードの言語',
     zoom: '拡大',
     grid: 'グリッド',
     nowrap: '折り返さない',
     boxDrawing: '罫線素片',
     frameNone: 'なし',
+    frameInvert: '色反転',
     frameCode: 'コードハイライト',
     frameGame: 'レトロゲーム',
-    results: '{n} 書体',
+    results: '{n}書体',
     noResults: '条件に一致するフォントはありません',
     noResultsHint: '条件を緩めるか、文字検索を消してみてください。',
     sort: '並べ替え',
-    sortName: '名前',
-    sortSize: 'ピクセルサイズ',
-    sortGlyphs: 'グリフ数',
+    sortAuto: '自動',
+    pagination: 'フォント一覧のページ',
+    previousPage: '前へ',
+    nextPage: '次へ',
+    pageLabel: '{n} ページ',
+    editPage: 'ページ番号を編集',
+    showing: '{start}–{end}件を表示',
+    sortName: '名前（昇順）',
+    sortNameReverse: '名前（降順）',
+    sortSize: 'サイズ（小→大）',
+    sortSizeReverse: 'サイズ（大→小）',
+    sortGlyphs: 'グリフ数（多→少）',
+    sortGlyphsReverse: 'グリフ数（少→多）',
     filters: '絞り込み',
     reset: '条件をクリア',
     form: '書体分類',
@@ -48,18 +65,19 @@ export const ja: UIStrings = {
     weights: 'ウェイト',
     coverageAny: '文字集合を選択…',
     coveragePresets: '収録率',
+    coverageClear: 'クリア',
     charsLookup: '文字で検索',
-    charsPlaceholder: '任意の文字を入力（例：龘齉𰻝）',
+    charsPlaceholder: '任意の文字を入力（例：Æφは𰻝）',
     charsHint: '入力したすべての文字を収録するフォントだけを表示します',
   },
 
   forms: {
     gothic: 'ゴシック体',
-    mingcho: '宋体／明朝体',
+    song: '宋体／明朝体',
     rounded: '丸ゴシック体',
     kai: '楷書体',
     fangsong: '仿宋体',
-    'serif-pixel': 'セリフ',
+    serif: 'セリフ',
     sans: 'サンセリフ',
     script: '手書き',
     decorative: '装飾',
@@ -68,15 +86,7 @@ export const ja: UIStrings = {
     '': '未分類',
   },
 
-  vibeNames: {
-    classic: 'クラシック',
-    cute: 'かわいい',
-    decorative: '装飾',
-    fallback: '代替用',
-    handwriting: '手書き',
-    'retro-game': 'レトロゲーム',
-    'terminal-hardcore': 'ターミナル／ハードコア',
-  },
+  vibeNames: vibeNames('ja'),
 
   widthNames: {
     normal: '標準',
@@ -97,6 +107,7 @@ export const ja: UIStrings = {
     cyrillic: 'キリル文字',
     greek: 'ギリシャ文字',
     arabic: 'アラビア文字（ペルシア語・ウルドゥー語を含む）',
+    thai: 'タイ文字',
     'zh-hans-partial': '簡体字中国語（不完全）',
     'zh-hant-partial': '繁体字中国語（不完全）',
     'ja-partial': '日本語（不完全）',
@@ -107,6 +118,7 @@ export const ja: UIStrings = {
     'cyrillic-partial': 'キリル文字（不完全）',
     'greek-partial': 'ギリシャ文字（不完全）',
     'arabic-partial': 'アラビア文字（不完全）',
+    'thai-partial': 'タイ文字（不完全）',
   },
 
   scriptRules: {
@@ -120,6 +132,7 @@ export const ja: UIStrings = {
     'cyrillic': '実用キリル文字 ≥ 90%',
     'greek': '実用ギリシャ文字 ≥ 90%',
     'arabic': '実用アラビア文字 ≥ 90%',
+    'thai': '実用タイ文字 ≥ 90%',
     'zh-hans-partial': 'GB/T 2312または通用規範漢字表10–90%',
     'zh-hant-partial': 'Big5常用漢字10–90%',
     'ja-partial': 'かな ≥ 95%かつJIS第1水準漢字10–90%',
@@ -130,10 +143,13 @@ export const ja: UIStrings = {
     'cyrillic-partial': '実用キリル文字10–90%',
     'greek-partial': '実用ギリシャ文字10–90%',
     'arabic-partial': '実用アラビア文字10–90%',
+    'thai-partial': '実用タイ文字10–90%',
   },
 
   weightNames: {
     regular: '標準',
+    medium: '中太',
+    semibold: '半太',
     bold: '太字',
     light: '細字',
   },
@@ -152,8 +168,12 @@ export const ja: UIStrings = {
   },
 
   detail: {
+    sourceType: 'ソースの種類',
+    sourceBitmap: 'ビットマップ原本',
+    sourcePixelOutline: 'ピクセル輪郭',
     close: '閉じる',
     backToCatalogue: 'カタログに戻る',
+    jumpToDownloads: 'ダウンロードへ',
     sizesOverview: 'バリエーションサイズ表',
     variants: 'バリエーション',
     sampleTitle: '試し書き',
@@ -165,7 +185,7 @@ export const ja: UIStrings = {
     hanInkNone: '漢字グリフなし',
     displaySize: '推奨サイズ',
     copyDots: 'ビットマップをコピー',
-    sizeLadder: 'サイズ一覧',
+    sizeLadder: 'すべてのバリエーション',
     copied: 'コピーしました',
     saved: '保存しました',
     savePng: 'PNGを保存',
@@ -278,7 +298,7 @@ export const ja: UIStrings = {
 
   footer: {
     navLabel: 'フッターナビゲーション',
-    siteLicense: "サイトと収録データは MIT ライセンスで公開しています。",
+    siteLicense: "サイトのコードと収録データは MIT ライセンスで公開しています。",
     disclaimer:
       '各フォントの著作権は原作者に帰属します。ライセンス情報は参考用であり、上流で公開された原文が優先されます。',
     dataSources: '文字集合のデータ出典',
@@ -292,7 +312,6 @@ export const ja: UIStrings = {
   },
   compare: {
     title: 'フォント比較',
-    intro: '同じ文章を同じピクセルサイズで、最大4書体まで並べて表示します。この館が使う「同じ物差し」を目で見る画面です。',
     add: 'フォントを追加',
     remove: '削除',
     pickFont: 'フォントを選択',

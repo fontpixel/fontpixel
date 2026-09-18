@@ -1,3 +1,4 @@
+import { vibeNames } from '../lib/vibes';
 import sitenames from './sitenames.json';
 import type { UIStrings } from './types';
 
@@ -19,23 +20,39 @@ export const en: UIStrings = {
   },
 
   catalogue: {
-    searchPlaceholder: 'Search names, authors, tags…',
-    samplePlaceholder: 'Type to preview — every card redraws instantly',
+    searchPlaceholder: 'Names, authors, tags…',
+    searchLabel: 'Search names, authors, tags…',
+    sortAutoReverse: 'Auto (reversed)',
+    samplePlaceholder: 'Type to preview (every card redraws instantly)',
     sampleLabel: 'Preview text',
+    preset: 'Preset',
+    previewStyle: 'Preview style',
+    codeLanguage: 'Code language',
     zoom: 'Zoom',
     grid: 'Grid',
     nowrap: 'No wrap',
     boxDrawing: 'Box drawing',
     frameNone: 'None',
+    frameInvert: 'Invert',
     frameCode: 'Highlighted code',
     frameGame: 'Old game',
     results: '{n} fonts',
     noResults: 'No fonts match these filters',
     noResultsHint: 'Try loosening the filters, or clear the character lookup.',
     sort: 'Sort',
-    sortName: 'Name',
-    sortSize: 'Pixel size',
-    sortGlyphs: 'Glyph count',
+    sortAuto: 'Auto',
+    pagination: 'Font catalogue pages',
+    previousPage: 'Previous',
+    nextPage: 'Next',
+    pageLabel: 'Page {n}',
+    editPage: 'Edit page number',
+    showing: 'Showing {start}–{end}',
+    sortName: 'Name (A–Z)',
+    sortNameReverse: 'Name (Z–A)',
+    sortSize: 'Size (small–large)',
+    sortSizeReverse: 'Size (large–small)',
+    sortGlyphs: 'Glyphs (most–fewest)',
+    sortGlyphsReverse: 'Glyphs (fewest–most)',
     filters: 'Filters',
     reset: 'Clear filters',
     form: 'Category',
@@ -48,18 +65,19 @@ export const en: UIStrings = {
     weights: 'Weights',
     coverageAny: 'Pick a character set…',
     coveragePresets: 'Coverage',
+    coverageClear: 'Clear',
     charsLookup: 'Find by character',
-    charsPlaceholder: 'Type any characters, e.g. 龘齉𰻝',
+    charsPlaceholder: 'Type any characters, e.g. Æφは𰻝',
     charsHint: 'Shows only fonts that cover every character you enter',
   },
 
   forms: {
     gothic: 'Gothic',
-    mingcho: 'Song / Mincho',
+    song: 'Song / Mincho',
     rounded: 'Rounded',
     kai: 'Kai',
     fangsong: 'Fangsong',
-    'serif-pixel': 'Serif',
+    serif: 'Serif',
     sans: 'Sans-serif',
     script: 'Handwriting',
     decorative: 'Decorative',
@@ -68,15 +86,7 @@ export const en: UIStrings = {
     '': 'Unclassified',
   },
 
-  vibeNames: {
-    classic: 'Classic',
-    cute: 'Cute',
-    decorative: 'Decorative',
-    fallback: 'Fallback',
-    handwriting: 'Handwriting',
-    'retro-game': 'Retro game',
-    'terminal-hardcore': 'Terminal / hardcore',
-  },
+  vibeNames: vibeNames('en'),
 
   widthNames: {
     normal: 'Normal',
@@ -97,6 +107,7 @@ export const en: UIStrings = {
     cyrillic: 'Cyrillic',
     greek: 'Greek',
     arabic: 'Arabic (incl. Persian, Urdu)',
+    thai: 'Thai',
     'zh-hans-partial': 'Simplified Chinese (incomplete)',
     'zh-hant-partial': 'Traditional Chinese (incomplete)',
     'ja-partial': 'Japanese (incomplete)',
@@ -107,6 +118,7 @@ export const en: UIStrings = {
     'cyrillic-partial': 'Cyrillic (incomplete)',
     'greek-partial': 'Greek (incomplete)',
     'arabic-partial': 'Arabic (incomplete)',
+    'thai-partial': 'Thai (incomplete)',
   },
 
   scriptRules: {
@@ -120,6 +132,7 @@ export const en: UIStrings = {
     'cyrillic': 'Everyday Cyrillic characters ≥ 90%',
     'greek': 'Everyday Greek characters ≥ 90%',
     'arabic': 'Everyday Arabic characters ≥ 90%',
+    'thai': 'Everyday Thai characters ≥ 90%',
     'zh-hans-partial': 'GB/T 2312 or General Standard list 10–90%',
     'zh-hant-partial': 'Big5 frequently-used hanzi 10–90%',
     'ja-partial': 'Kana ≥ 95% and JIS level 1 kanji 10–90%',
@@ -130,10 +143,13 @@ export const en: UIStrings = {
     'cyrillic-partial': 'Everyday Cyrillic characters 10–90%',
     'greek-partial': 'Everyday Greek characters 10–90%',
     'arabic-partial': 'Everyday Arabic characters 10–90%',
+    'thai-partial': 'Everyday Thai characters 10–90%',
   },
 
   weightNames: {
     regular: 'Regular',
+    medium: 'Medium',
+    semibold: 'SemiBold',
     bold: 'Bold',
     light: 'Light',
   },
@@ -152,8 +168,12 @@ export const en: UIStrings = {
   },
 
   detail: {
+    sourceType: 'Source type',
+    sourceBitmap: 'Bitmap source',
+    sourcePixelOutline: 'Pixel outlines',
     close: 'Close',
     backToCatalogue: 'Back to catalogue',
+    jumpToDownloads: 'Jump to downloads',
     sizesOverview: 'Variant size table',
     variants: 'Variants',
     sampleTitle: 'Preview',
@@ -165,7 +185,7 @@ export const en: UIStrings = {
     hanInkNone: 'No Han glyphs',
     displaySize: 'Recommended size',
     copyDots: 'Copy dot matrix',
-    sizeLadder: 'Size ladder',
+    sizeLadder: 'All variants',
     copied: 'Copied',
     saved: 'Saved',
     savePng: 'Save PNG',
@@ -278,7 +298,7 @@ export const en: UIStrings = {
 
   footer: {
     navLabel: 'Site navigation',
-    siteLicense: "Site and catalogue data are MIT-licensed.",
+    siteLicense: "Site code and catalogue data are MIT-licensed.",
     disclaimer:
       'Every font remains the copyright of its original author; license details are for reference only, and the upstream original text prevails.',
     dataSources: 'Character set data sources',
@@ -292,7 +312,6 @@ export const en: UIStrings = {
   },
   compare: {
     title: 'Compare fonts',
-    intro: 'The same words, the same pixel size, up to four faces at once — the one ruler this collection measures with, made visible.',
     add: 'Add a font',
     remove: 'Remove',
     pickFont: 'Pick a font',

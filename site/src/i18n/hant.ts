@@ -33,6 +33,8 @@ const FIXUPS: [RegExp, string][] = [
   // fixes up the site name wherever it's embedded in a sentence (e.g. the
   // about-page intro).
   [/開源畫素字型館/g, '開源點陣字型館'],
+  // Keep the font term 像素 instead of s2twp's image-oriented 畫素.
+  [/畫素/g, '像素'],
   // Simplified body text uses curly quotes “” uniformly; Traditional (Taiwan)
   // convention is corner brackets 「」, so convert them back. Same for inner
   // quotes: ''→『』. OpenCC only handles characters and words, not punctuation.
@@ -44,13 +46,16 @@ const FIXUPS: [RegExp, string][] = [
  * written separately rather than converted from the Simplified version.
  *
  * For example the site description — the keyword mix Traditional readers
- * search with differs from Simplified (using 點陣/畫素/位元圖 together); this
+ * search with differs from Simplified (using 點陣/像素/畫素/位元圖 together); this
  * kind of SEO-driven difference is something OpenCC can't produce, and
  * shouldn't be forced through FIXUPS either (that's word-by-word replacement
  * and would collateral-damage other text). The key is the Simplified source
  * text, the value is the final Traditional text.
  */
 const OVERRIDES: Record<string, string> = {
+  // The example names exact code points, so keep 𰻝 instead of converting it to 𰻞.
+  '输入任意字符，如：Æφは𰻝': '輸入任意字元，如：Æφは𰻝',
+  // This keyword list intentionally keeps 畫素 as an exception to FIXUPS.
   '免费可商用的自由开源点阵/像素/位图字体合集，BDF、PCF、TTF格式下载':
     '免費可商用的自由開源點陣/像素/畫素/位元圖字型合集，BDF、PCF、TTF格式下載',
 };

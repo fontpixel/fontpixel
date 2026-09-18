@@ -15,6 +15,11 @@ function v(over: Partial<LabelledVariant>): LabelledVariant {
 }
 
 describe('variantLabels', () => {
+  test('named converted faces show readable names without repeated size suffixes', () => {
+    const labels = variantLabels(['Bitcount', 'BitcountSingle', 'BitcountGridDouble']
+      .map((name) => v({ id: `${name}-Regular-10px`, size: 10 })), S);
+    expect(labels).toEqual(['10px · Bitcount', '10px · Bitcount Single', '10px · Bitcount Grid Double']);
+  });
   test('单变体只报尺寸与基本维度', () => {
     expect(variantLabels([v({})], S)).toEqual(['16px · 常规 · 比例']);
   });

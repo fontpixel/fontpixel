@@ -1,0 +1,107 @@
+import type { Lang } from './types';
+import { toHantDeep } from './hant';
+
+const en = {
+  title: 'CJK character map',
+  legend: 'Covered / total',
+  schematic: 'Schematic overlaps; areas are not proportional to character counts.',
+  shared: 'Simp Trad Shared',
+  details: 'Explore the counts & definitions',
+  sets: 'Reference sets',
+  overlaps: 'Shared & unique characters',
+  scripts: 'Kana, Hangul & Bopomofo',
+  note: 'Unicode 17. Counts use exact code points, with no variant-form or compatibility normalization. The Han map includes the 12 unified ideographs in the compatibility block; other compatibility ideographs are listed separately. “Only” means absent from the other three reference sets.',
+  sharedDefinition: '“Simp Trad Shared” counts Unicode code points shared by the Simplified and Traditional Han reference sets. Shared code points can still have different regional glyph shapes, for example through OpenType locl; coverage does not imply identical glyphs.',
+  definitions: 'Taiwan: the 4,808 common and 6,343 less-common character tables. Mainland China: the 8,105 standard characters in three levels. Japan: the 2,136 Jōyō kanji. Korea: the unified Han subset of KS X 1001. Kana, Jamo and Bopomofo use assigned Unicode block characters, including extensions; halfwidth kana are included separately in the kana total.',
+  combinedDefinition: 'The selected CJK total combines the four Han tables, Japanese kana, Hangul syllables and Bopomofo, counting each code point once. Jamo and compatibility Han are listed separately. Kana include historical and extended characters, so this total is not a list of everyday characters.',
+  source: 'Reference tables',
+  labels: {
+    han: 'CJK unified ideographs', union: 'Combined common, without duplicates', combined: 'Selected CJK, without duplicates',
+    tw: 'Taiwan · Common Traditional Han', 'tw-common': 'Taiwan · Common', 'tw-less': 'Taiwan · Less-common',
+    sc: 'Mainland China · Standard Simplified Han', 'sc-l1': 'Mainland China · Level 1', 'sc-l2': 'Mainland China · Level 2', 'sc-l3': 'Mainland China · Level 3',
+    jp: 'Japan · Jōyō kanji', kr: 'Korea · KS X 1001 Han', 'kr-compat': 'Korea · Compatibility Han',
+    'tw-sc': 'Traditional Han ∩ Simplified Han', 'jp-tw': 'Japanese Kanji ∩ Traditional Han', 'jp-sc': 'Japanese Kanji ∩ Simplified Han',
+    'kr-tw': 'Korean Han ∩ Traditional Han', 'kr-sc': 'Korean Han ∩ Simplified Han', 'jp-only': 'Japanese Kanji only', 'kr-only': 'Korean Han only',
+    'kr-sc-not-tw': '(Korean Han ∩ Simplified Han) − Traditional Han', kana: 'Japanese kana', hiragana: 'Hiragana', katakana: 'Katakana',
+    'kana-ext': 'Kana extensions', 'kana-halfwidth': 'Halfwidth kana', hangul: 'Hangul syllables',
+    'hangul-common': 'KS X 1001 syllables', jamo: 'Hangul Jamo', bopomofo: 'Bopomofo',
+  },
+};
+type Copy = typeof en;
+const zh: Copy = {
+  title: '中日韩文字集合图',
+  legend: '已覆盖 / 总数', schematic: '集合关系示意，区域面积不代表字符数量。', shared: '简繁同码位',
+  details: '查看统计明细与口径', sets: '参考字集', overlaps: '共有与独有汉字', scripts: '假名、谚文与注音',
+  note: 'Unicode 17。按实际码位统计，不合并异体字或兼容汉字。汉字主图含兼容区中的12个统一表意文字，其他兼容汉字单列。“独有”指不在其余三表中。',
+  sharedDefinition: '“简繁同码位”指简体、繁体参考字表共有的Unicode码位。同一码位仍可能有不同的地区字形，例如通过OpenType的locl本地化字形替换；码位覆盖不代表字形一致。',
+  definitions: '台湾采用常用4,808字及次常用6,343字两表；中国大陆采用三级共8,105字的通用规范汉字表；日本采用2,136字的常用汉字表；韩国采用KS X 1001中的统一汉字。假名、谚文字母和注音按Unicode区块内已分配的码位计算，包含扩展区；半角假名单列并计入假名总数。',
+  combinedDefinition: '所选中日韩字集总数包含四张汉字表、日文假名、谚文音节和注音符号，各码位只计一次。谚文字母和兼容汉字另列。假名包含历史和扩展字符，因此该合计不等于日常常用字总数。',
+  source: '参考字表', labels: {
+    han: 'CJK统一表意文字', union: '四常用表合并，去除重复', combined: '所选中日韩字集合并，去除重复', tw: '台湾 · 常用繁体汉字', 'tw-common': '台湾 · 常用字', 'tw-less': '台湾 · 次常用字',
+    sc: '中国大陆 · 通用简体汉字', 'sc-l1': '中国大陆 · 一级字', 'sc-l2': '中国大陆 · 二级字', 'sc-l3': '中国大陆 · 三级字',
+    jp: '日本 · 常用汉字', kr: '韩国 · KS X 1001汉字', 'kr-compat': '韩国 · 兼容汉字',
+    'tw-sc': '繁 ∩ 简', 'jp-tw': '日 ∩ 繁', 'jp-sc': '日 ∩ 简', 'kr-tw': '韩 ∩ 繁', 'kr-sc': '韩 ∩ 简',
+    'jp-only': '日本独有', 'kr-only': '韩国独有', 'kr-sc-not-tw': '（韩 ∩ 简）− 繁',
+    kana: '日文假名', hiragana: '平假名', katakana: '片假名', 'kana-ext': '假名扩展', 'kana-halfwidth': '半角假名',
+    hangul: '谚文音节', 'hangul-common': 'KS X 1001音节', jamo: '谚文字母', bopomofo: '注音符号',
+  },
+};
+const ja: Copy = {
+  title: '中日韓の文字集合マップ',
+  legend: '収録数 / 総数', schematic: '集合関係の模式図です。面積は文字数に比例しません。', shared: '簡繁共通の文字',
+  details: '集計の詳細と定義', sets: '基準文字集合', overlaps: '共通・固有の漢字', scripts: '仮名・ハングル・注音',
+  note: 'Unicode 17。異体字・互換漢字を正規化せず、コードポイント単位で集計します。主図には互換領域の12の統合漢字を含み、その他の互換漢字は別記します。「固有」は他の3表に含まれない文字です。',
+  sharedDefinition: '「簡繁共通の文字」は簡体字・繁体字の基準表に共通するUnicodeコードポイントです。同じコードポイントでも、OpenTypeのloclによる置換などで地域ごとに字形が異なる場合があります。収録数は字形の一致を意味しません。',
+  definitions: '台湾は常用4,808字と次常用6,343字、中国本土は通用規範漢字8,105字、日本は常用漢字2,136字、韓国はKS X 1001の統合漢字を使用します。仮名・字母・注音は拡張を含むUnicodeブロックの割り当て済み文字です。半角仮名も仮名の総数に含みます。',
+  combinedDefinition: 'CJKの合計は漢字4表、日本語の仮名、ハングル音節、注音符号を合わせ、各コードポイントを1回だけ数えます。字母と互換漢字は別記します。仮名には歴史的・拡張文字も含むため、日常的な文字だけの合計ではありません。',
+  source: '参照文字表', labels: {
+    han: 'CJK統合漢字', union: '常用漢字4表の和集合（重複を除く）', combined: '選択したCJK文字集合（重複を除く）', tw: '台湾 · 常用繁体字', 'tw-common': '台湾 · 常用字', 'tw-less': '台湾 · 次常用字',
+    sc: '中国本土 · 標準簡体字', 'sc-l1': '中国本土 · 一級', 'sc-l2': '中国本土 · 二級', 'sc-l3': '中国本土 · 三級',
+    jp: '日本 · 常用漢字', kr: '韓国 · KS X 1001漢字', 'kr-compat': '韓国 · 互換漢字',
+    'tw-sc': '繁体字 ∩ 簡体字', 'jp-tw': '日本の漢字 ∩ 繁体字', 'jp-sc': '日本の漢字 ∩ 簡体字', 'kr-tw': '韓国の漢字 ∩ 繁体字', 'kr-sc': '韓国の漢字 ∩ 簡体字',
+    'jp-only': '日本の漢字のみ', 'kr-only': '韓国の漢字のみ', 'kr-sc-not-tw': '（韓国の漢字 ∩ 簡体字）− 繁体字',
+    kana: '日本語の仮名', hiragana: 'ひらがな', katakana: 'カタカナ', 'kana-ext': '仮名拡張', 'kana-halfwidth': '半角仮名',
+    hangul: 'ハングル音節', 'hangul-common': 'KS X 1001音節', jamo: 'ハングル字母', bopomofo: '注音符号',
+  },
+};
+const ko: Copy = {
+  title: '한중일 문자 집합 지도',
+  legend: '포함 / 전체', schematic: '집합 관계를 나타낸 개략도이며 면적은 문자 수에 비례하지 않습니다.', shared: '간체·번체 공통 문자',
+  details: '집계 상세 및 기준', sets: '기준 문자 집합', overlaps: '공통·고유 한자', scripts: '가나·한글·주음',
+  note: 'Unicode 17. 이체자나 호환 한자를 정규화하지 않고 코드 포인트별로 집계합니다. 한자 지도에는 호환 영역의 통합 한자 12자가 포함되며 나머지 호환 한자는 별도로 표시합니다. “고유”는 다른 세 집합에 없는 문자입니다.',
+  sharedDefinition: '“간체·번체 공통 문자”는 두 기준 한자 목록에 공통으로 포함된 Unicode 코드 포인트입니다. 같은 코드 포인트라도 OpenType locl의 지역별 글리프 대체 등으로 글자 모양이 달라질 수 있습니다. 문자 포함 여부는 글자 모양의 일치를 뜻하지 않습니다.',
+  definitions: '대만은 상용 4,808자와 차상용 6,343자, 중국 본토는 통용규범한자 8,105자, 일본은 상용한자 2,136자, 한국은 KS X 1001의 통합 한자를 사용합니다. 가나·한글 자모·주음은 확장 영역을 포함한 Unicode 블록의 할당된 문자를 집계합니다. 반각 가나도 가나 총수에 포함합니다.',
+  combinedDefinition: '선택한 한중일 문자 총수는 네 한자 목록, 일본어 가나, 한글 음절, 주음부호를 합쳐 각 코드 포인트를 한 번만 집계합니다. 자모와 호환 한자는 별도입니다. 가나에는 옛 문자와 확장 문자도 포함되므로 일상적인 상용 문자만의 총수는 아닙니다.',
+  source: '참조 문자표', labels: {
+    han: 'CJK 통합 한자', union: '상용 한자 네 목록의 합집합 (중복 제외)', combined: '선택한 한중일 문자 집합 (중복 제외)', tw: '대만 · 상용 번체 한자', 'tw-common': '대만 · 상용자', 'tw-less': '대만 · 차상용자',
+    sc: '중국 본토 · 표준 간체 한자', 'sc-l1': '중국 본토 · 1급', 'sc-l2': '중국 본토 · 2급', 'sc-l3': '중국 본토 · 3급',
+    jp: '일본 · 상용한자', kr: '한국 · KS X 1001 한자', 'kr-compat': '한국 · 호환 한자',
+    'tw-sc': '번체 한자 ∩ 간체 한자', 'jp-tw': '일본 한자 ∩ 번체 한자', 'jp-sc': '일본 한자 ∩ 간체 한자', 'kr-tw': '한국 한자 ∩ 번체 한자', 'kr-sc': '한국 한자 ∩ 간체 한자',
+    'jp-only': '일본 한자에만 포함', 'kr-only': '한국 한자에만 포함', 'kr-sc-not-tw': '(한국 한자 ∩ 간체 한자) − 번체 한자',
+    kana: '일본어 가나', hiragana: '히라가나', katakana: '가타카나', 'kana-ext': '가나 확장', 'kana-halfwidth': '반각 가나',
+    hangul: '한글 음절', 'hangul-common': 'KS X 1001 음절', jamo: '한글 자모', bopomofo: '주음부호',
+  },
+};
+const fr: Copy = {
+  title: 'Carte des caractères CJK',
+  legend: 'Couverts / total', schematic: 'Schéma des intersections ; les surfaces ne représentent pas les effectifs.', shared: 'Communs simpl./trad.',
+  details: 'Détail des effectifs et définitions', sets: 'Ensembles de référence', overlaps: 'Caractères communs et exclusifs', scripts: 'Kana, hangul et bopomofo',
+  note: 'Unicode 17. Comptage par point de code, sans normalisation des variantes ni des idéogrammes de compatibilité. La carte inclut les 12 idéogrammes unifiés du bloc de compatibilité ; les autres sont comptés à part. « Communs simpl./trad. » désigne les points de code partagés par les listes Han simplifiés et traditionnels. « Exclusifs » désigne les caractères absents des trois autres listes.',
+  sharedDefinition: 'Un même point de code peut avoir des glyphes différents selon la région, notamment grâce aux substitutions localisées OpenType locl. Une couverture commune ne signifie donc pas des glyphes identiques.',
+  definitions: 'Taïwan : 4 808 caractères courants et 6 343 moins courants. Chine continentale : 8 105 caractères normalisés en trois niveaux. Japon : 2 136 kanji jōyō. Corée : idéogrammes unifiés de KS X 1001. Kana, jamo et bopomofo : caractères attribués des blocs Unicode, extensions comprises ; les kana à demi-chasse sont aussi inclus dans le total.',
+  combinedDefinition: 'Le total CJK sélectionné réunit les quatre listes Han, les kana japonais, les syllabes hangul et le bopomofo, sans doublons. Les jamo et les Han de compatibilité sont comptés à part. Les kana comprennent des caractères historiques et étendus : ce total ne se limite donc pas aux caractères du quotidien.',
+  source: 'Tables de référence', labels: {
+    han: 'Idéogrammes unifiés CJK', union: 'Union des quatre listes usuelles, sans doublons', combined: 'Ensembles CJK sélectionnés, sans doublons', tw: 'Taïwan · Han traditionnels courants', 'tw-common': 'Taïwan · Courants', 'tw-less': 'Taïwan · Moins courants',
+    sc: 'Chine continentale · Han simplifiés normalisés', 'sc-l1': 'Chine continentale · Niveau 1', 'sc-l2': 'Chine continentale · Niveau 2', 'sc-l3': 'Chine continentale · Niveau 3',
+    jp: 'Japon · Kanji jōyō', kr: 'Corée · Han KS X 1001', 'kr-compat': 'Corée · Han de compatibilité',
+    'tw-sc': 'Han traditionnels ∩ Han simplifiés', 'jp-tw': 'Kanji japonais ∩ Han traditionnels', 'jp-sc': 'Kanji japonais ∩ Han simplifiés', 'kr-tw': 'Hanja coréens ∩ Han traditionnels', 'kr-sc': 'Hanja coréens ∩ Han simplifiés',
+    'jp-only': 'Kanji japonais exclusifs', 'kr-only': 'Hanja coréens exclusifs', 'kr-sc-not-tw': '(Hanja coréens ∩ Han simplifiés) − Han traditionnels',
+    kana: 'Kana japonais', hiragana: 'Hiragana', katakana: 'Katakana', 'kana-ext': 'Extensions kana', 'kana-halfwidth': 'Kana à demi-chasse',
+    hangul: 'Syllabes hangul', 'hangul-common': 'Syllabes KS X 1001', jamo: 'Jamo hangul', bopomofo: 'Bopomofo',
+  },
+};
+export type CjkKey = keyof Copy['labels'];
+export function cjkText(lang: Lang): Copy {
+  if (lang === 'zh-Hant') return toHantDeep(zh);
+  return { en, zh, ja, ko, fr }[lang];
+}

@@ -141,6 +141,14 @@ export const SUMMARIES_EN: Record<string, LicenseSummary> = {
       'If Reserved Font Names are declared, modified versions must use different names. Format conversion and rebuilds that change the font also count as modifications. Documents and applications using the font are not subject to OFL.',
     ],
   },
+  "LicenseRef-PublicDomain AND OFL-1.1": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'yes', 'no', 'no', 'cond'),
+    body: [
+      'Two licences in one font: the fullwidth kanji are public domain, the halfwidth Latin and kana are under OFL 1.1. Commercial use, embedding, and modification are all allowed, and nothing is asked of a document or application that merely uses the font.',
+      'Whenever the halfwidth glyphs travel on as reusable font data — bundled, redistributed, or embedded in a form they can be extracted from — the OFL has to be stated somewhere, and derivatives of those glyphs stay under it. Use only the kanji, or ship rendered images, and no notice is required.',
+    ],
+  },
   "OFL-1.1 OR GPL-2.0-with-font-exception": {
     tier: 'copyleft',
     flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
@@ -155,6 +163,14 @@ export const SUMMARIES_EN: Record<string, LicenseSummary> = {
     body: [
       'The Font Exception allows document embedding without making the document subject to GPL. Modified fonts still require GPL 2 and corresponding source when distributed.',
       'Modifiers may remove the exception, and it does not clearly cover direct application embedding. Check the license of modified versions.',
+    ],
+  },
+  "GPL-3.0-with-font-exception": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
+    body: [
+      'The Font Exception allows document embedding without making the document subject to GPL. Modified fonts still require GPL 3 or later and corresponding source when distributed.',
+      'Modifiers may remove the exception, and it does not clearly cover direct application embedding. GPL 3 also adds anti-tivoisation and patent terms that GPL 2 does not. Check the license of modified versions.',
     ],
   },
   "GPL-2.0-only": {
@@ -276,6 +292,14 @@ export const SUMMARIES_ZH: Record<string, LicenseSummary> = {
       '如果声明了保留字体名称，修改后的版本必须使用不同的名称。格式转换或重新构建如果改变了字体，也算作修改。使用该字体的文档和应用不受 OFL 约束。',
     ],
   },
+  "LicenseRef-PublicDomain AND OFL-1.1": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'yes', 'no', 'no', 'cond'),
+    body: [
+      '一套字体里的两种授权：全角汉字为公有领域，半角拉丁与假名采用 OFL 1.1。商用、嵌入与修改均可，仅仅使用该字体的文档或应用不承担任何义务。',
+      '只要半角字形以可复用的字体数据形式继续流转——随包分发、再分发，或以可被提取的方式嵌入——就须在某处明示 OFL，且这部分字形的衍生版本仍须采用 OFL。若只用汉字部分，或只分发渲染后的图像，则无需任何署名。',
+    ],
+  },
   "OFL-1.1 OR GPL-2.0-with-font-exception": {
     tier: 'copyleft',
     flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
@@ -290,6 +314,14 @@ export const SUMMARIES_ZH: Record<string, LicenseSummary> = {
     body: [
       '字体例外条款允许将字体嵌入文档，而不会使该文档受 GPL 约束。修改后的字体在分发时仍须采用 GPL 2，并提供相应源代码。',
       '修改者可以移除该例外条款，而且该条款是否涵盖直接嵌入应用并不明确。请检查修改版本的许可证。',
+    ],
+  },
+  "GPL-3.0-with-font-exception": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
+    body: [
+      '字体例外条款允许将字体嵌入文档，而不会使该文档受 GPL 约束。修改后的字体在分发时仍须采用 GPL 3 或更高版本，并提供相应源代码。',
+      '修改者可以移除该例外条款，而且该条款是否涵盖直接嵌入应用并不明确。GPL 3 另有 GPL 2 所没有的反 tivo 化与专利条款。请检查修改版本的许可证。',
     ],
   },
   "GPL-2.0-only": {
@@ -411,6 +443,14 @@ export const SUMMARIES_JA: Record<string, LicenseSummary> = {
       '予約されたフォント名（Reserved Font Names）が指定されている場合、改変版には異なる名前を使用しなければなりません。フォントに変更を加える形式変換や再ビルドも改変に該当します。フォントを使用する文書やアプリケーションは OFL の適用対象にはなりません。',
     ],
   },
+  "LicenseRef-PublicDomain AND OFL-1.1": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'yes', 'no', 'no', 'cond'),
+    body: [
+      'ひとつのフォントに二つのライセンスが同居しています。全角の漢字はパブリックドメイン、半角の英数字と仮名は OFL 1.1 です。商用利用・埋め込み・改変はいずれも可能で、フォントを使うだけの文書やアプリケーションには何の義務も生じません。',
+      '半角字形が再利用可能なフォントデータとして流通する場合——同梱、再頒布、あるいは取り出せる形での埋め込み——には OFL の明示が必要で、その部分の派生物にも OFL が引き継がれます。漢字だけを使う場合や、描画済みの画像として配布する場合は表記は不要です。',
+    ],
+  },
   "OFL-1.1 OR GPL-2.0-with-font-exception": {
     tier: 'copyleft',
     flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
@@ -425,6 +465,14 @@ export const SUMMARIES_JA: Record<string, LicenseSummary> = {
     body: [
       'フォント例外（Font Exception）により、文書を GPL の適用対象にせずにフォントを埋め込めます。改変したフォントを頒布する場合には、引き続き GPL 2 の適用と対応するソースコードが必要です。',
       '改変者はこの例外条項を削除できます。また、この例外条項がアプリケーションへの直接の埋め込みを対象とするかは明確ではありません。改変版のライセンスを確認してください。',
+    ],
+  },
+  "GPL-3.0-with-font-exception": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
+    body: [
+      'フォント例外（Font Exception）により、文書を GPL の適用対象にせずにフォントを埋め込めます。改変したフォントを頒布する場合には、引き続き GPL 3 以降の適用と対応するソースコードが必要です。',
+      '改変者はこの例外条項を削除できます。また、この例外条項がアプリケーションへの直接の埋め込みを対象とするかは明確ではありません。GPL 3 には GPL 2 にはない tivoization 対策条項と特許条項もあります。改変版のライセンスを確認してください。',
     ],
   },
   "GPL-2.0-only": {
@@ -546,6 +594,14 @@ export const SUMMARIES_KO: Record<string, LicenseSummary> = {
       '예약 글꼴 이름(Reserved Font Names)이 지정된 경우, 수정된 버전은 다른 이름을 사용해야 합니다. 글꼴을 변경하는 형식 변환과 재빌드도 수정으로 간주됩니다. 이 글꼴을 사용하는 문서와 애플리케이션에는 OFL이 적용되지 않습니다.',
     ],
   },
+  "LicenseRef-PublicDomain AND OFL-1.1": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'yes', 'no', 'no', 'cond'),
+    body: [
+      '글꼴 하나에 두 가지 라이선스가 함께 적용됩니다. 전각 한자는 퍼블릭 도메인이고, 반각 영숫자와 가나는 OFL 1.1입니다. 상업적 이용, 임베드, 수정이 모두 가능하며 글꼴을 사용하기만 하는 문서나 애플리케이션에는 아무 의무도 없습니다.',
+      '반각 글리프가 재사용 가능한 글꼴 데이터 형태로 계속 유통되는 경우—함께 묶어 배포하거나, 재배포하거나, 추출 가능한 형태로 임베드하는 경우—에는 OFL을 어딘가에 명시해야 하며 해당 부분의 파생물에도 OFL이 계속 적용됩니다. 한자만 사용하거나 렌더링된 이미지로 배포한다면 표기는 필요 없습니다.',
+    ],
+  },
   "OFL-1.1 OR GPL-2.0-with-font-exception": {
     tier: 'copyleft',
     flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
@@ -560,6 +616,14 @@ export const SUMMARIES_KO: Record<string, LicenseSummary> = {
     body: [
       'Font Exception(글꼴 예외 조항)에 따라 문서에 글꼴을 임베드해도 해당 문서에 GPL을 적용할 필요가 없습니다. 수정된 글꼴을 배포할 때는 여전히 GPL 2를 적용하고 상응하는 소스 코드를 제공해야 합니다.',
       '글꼴 수정자는 Font Exception을 삭제할 수 있으며, 이 조항이 애플리케이션에 직접 임베드하는 경우까지 적용되는지는 명확하지 않습니다. 수정본의 라이선스를 확인하십시오.',
+    ],
+  },
+  "GPL-3.0-with-font-exception": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
+    body: [
+      'Font Exception(글꼴 예외 조항)에 따라 문서에 글꼴을 임베드해도 해당 문서에 GPL을 적용할 필요가 없습니다. 수정된 글꼴을 배포할 때는 여전히 GPL 3 이상을 적용하고 상응하는 소스 코드를 제공해야 합니다.',
+      '글꼴 수정자는 Font Exception을 삭제할 수 있으며, 이 조항이 애플리케이션에 직접 임베드하는 경우까지 적용되는지는 명확하지 않습니다. GPL 3에는 GPL 2에 없는 티보화 방지 조항과 특허 조항도 있습니다. 수정본의 라이선스를 확인하십시오.',
     ],
   },
   "GPL-2.0-only": {
@@ -681,6 +745,14 @@ export const SUMMARIES_FR: Record<string, LicenseSummary> = {
       'Si des noms de police réservés (« Reserved Font Names ») sont déclarés, les versions modifiées doivent porter des noms différents. Les conversions de format et les reconstructions qui modifient la police sont également considérées comme des modifications. Les documents et applications utilisant la police ne sont pas soumis à l’OFL.',
     ],
   },
+  "LicenseRef-PublicDomain AND OFL-1.1": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'yes', 'no', 'no', 'cond'),
+    body: [
+      'Deux licences dans une seule police : les idéogrammes pleine chasse sont dans le domaine public, les caractères latins et les kana demi-chasse sont sous OFL 1.1. L’usage commercial, l’incorporation et la modification sont tous permis, et rien n’est exigé d’un document ou d’une application qui se contente d’utiliser la police.',
+      'Dès que les glyphes demi-chasse circulent encore sous forme de données de police réutilisables — regroupés, redistribués ou incorporés de façon extractible — l’OFL doit être mentionnée quelque part, et les dérivés de ces glyphes y restent soumis. Si vous n’utilisez que les idéogrammes, ou si vous ne diffusez que des images rendues, aucune mention n’est requise.',
+    ],
+  },
   "OFL-1.1 OR GPL-2.0-with-font-exception": {
     tier: 'copyleft',
     flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
@@ -695,6 +767,14 @@ export const SUMMARIES_FR: Record<string, LicenseSummary> = {
     body: [
       'La Font Exception (exception relative aux polices) permet l’intégration dans un document sans que celui-ci soit soumis à la GPL. Lorsqu’elles sont distribuées, les polices modifiées restent soumises à la GPL 2 et leur source correspondante doit être mise à disposition.',
       'Les personnes qui modifient la police peuvent supprimer l’exception, qui ne couvre pas clairement l’intégration directe dans une application. Vérifiez la licence des versions modifiées.',
+    ],
+  },
+  "GPL-3.0-with-font-exception": {
+    tier: 'copyleft',
+    flags: F('yes', 'yes', 'yes', 'cond', 'no', 'no', 'yes'),
+    body: [
+      'La Font Exception (exception relative aux polices) permet l’intégration dans un document sans que celui-ci soit soumis à la GPL. Lorsqu’elles sont distribuées, les polices modifiées restent soumises à la GPL 3 ou ultérieure et leur source correspondante doit être mise à disposition.',
+      'Les personnes qui modifient la police peuvent supprimer l’exception, qui ne couvre pas clairement l’intégration directe dans une application. La GPL 3 ajoute en outre des clauses anti-tivoïsation et des clauses de brevets absentes de la GPL 2. Vérifiez la licence des versions modifiées.',
     ],
   },
   "GPL-2.0-only": {

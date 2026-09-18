@@ -1,6 +1,7 @@
 ---
 // Language redirect page: sends to /zh/ or /en/ based on browser language, defaulting to zh.
 import { withBase } from '../lib/data';
+import sitenames from '../i18n/sitenames.json';
 const zhUrl = withBase('/zh/');
 const enUrl = withBase('/en/');
 ---
@@ -10,7 +11,7 @@ const enUrl = withBase('/en/');
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>开源像素字体馆 Open Pixel Fonts</title>
+    <title>{sitenames.zh} / {sitenames.en}</title>
     <link rel="alternate" hreflang="zh-Hans" href={zhUrl} />
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="x-default" href={zhUrl} />

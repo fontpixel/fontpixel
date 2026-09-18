@@ -6,11 +6,13 @@ import type { FamilyIndex } from './schema';
 function fam(over: Partial<FamilyIndex>): FamilyIndex {
   return {
     slug: 'x',
+    cardPreview: '',
+    namePreviews: {},
     name: 'X',
     names: { en: 'X' },
     authors: [],
     authorsEn: [],
-    form: 'gothic',
+    forms: ['gothic', 'sans'],
     vibes: [],
     scripts: ['latin'],
     sizes: [12],
@@ -49,9 +51,10 @@ const A = fam({
   authors: ['quiple', 'Lee Yerim'],
   sizes: [8, 16], inkHeight: 16, inkHeights: [11, 12, 13, 14, 16],
   vibes: ['cute'], glyphCount: 500, added: '2026-08-10',
+  coverageSummary: { 'latin-basic': 1, 'latin1-supp': 1, 'latin-ext-a': 1 },
 });
 const B = fam({
-  slug: 'b', name: 'Beta', form: 'mingcho', scripts: ['zh-hans'],
+  slug: 'b', name: 'Beta', forms: ['song', 'serif'], scripts: ['zh-hans'],
   license: {
     spdx: 'GPL-2.0-only', name: 'GPL', nameEn: 'GPL',
     confidence: 'auto-high',
@@ -66,8 +69,9 @@ function run(over: Partial<FilterState>) {
 }
 
 describe('applyFilters', () => {
-  test('empty state keeps all, sorted by name', () => {
-    expect(run({})).toEqual(['b', 'a']); // 阿尔法 vs Beta: localeCompare
+  test('empty state sorts by fixed rating, regardless of input order', () => {
+    expect(run({})).toEqual(['a', 'b']);
+    expect(applyFilters([B, A], emptyState()).map(f => f.slug)).toEqual(['a', 'b']);
   });
 
   test('q 简繁互通', () => {
@@ -107,7 +111,14 @@ describe('applyFilters', () => {
     expect(run({ inkH: [17, 20] })).toEqual([]);
   });
 
-  test('forms', () => expect(run({ forms: ['mingcho'] })).toEqual(['b']));
+  test('categories match any selected category without duplicating fonts', () => {
+    expect(run({ forms: ['song'] })).toEqual(['b']);
+    expect(run({ forms: ['serif'] })).toEqual(['b']);
+    expect(run({ forms: ['sans'] })).toEqual(['a']);
+    expect(run({ forms: ['gothic', 'sans'] })).toEqual(['a']);
+    expect(run({ forms: ['sans', 'song'] })).toEqual(['a', 'b']);
+    expect(run({ forms: ['rounded'] })).toEqual([]);
+  });
   test('vibes', () => expect(run({ vibes: ['cute'] })).toEqual(['a']));
   test('sizes intersect', () => expect(run({ sizes: [16] })).toEqual(['a']));
   test('scripts', () => expect(run({ scripts: ['zh-hans'] })).toEqual(['b']));
@@ -140,21 +151,37 @@ describe('applyFilters', () => {
       applyFilters(ALL, { ...emptyState(), chars: '永' }, lookup).map((f) => f.slug),
     ).toEqual(['b']);
     // without a lookup, don't filter (waiting on lazy load)
-    expect(run({ chars: '永' })).toEqual(['b', 'a']);
+    expect(run({ chars: '永' })).toEqual(['a', 'b']);
   });
 
   test('sorts', () => {
+    expect(run({ sort: 'name' })).toEqual(['b', 'a']);
     expect(run({ sort: 'size' })).toEqual(['a', 'b']);
     expect(run({ sort: 'glyphs' })).toEqual(['b', 'a']);
+  });
+
+  test('each reverse order mirrors the entire forward order, including ties', () => {
+    const fonts = [...ALL, { ...A, slug: 'c' }];
+    for (const sort of ['rating', 'name', 'size', 'glyphs'] as const) {
+      const forward = applyFilters(fonts, { ...emptyState(), sort }).map(f => f.slug);
+      const reverse = applyFilters(fonts, { ...emptyState(), sort: `${sort}-reverse` }).map(f => f.slug);
+      expect(reverse).toEqual(forward.toReversed());
+    }
   });
 });
 
 describe('urlstate', () => {
+  test('legacy category links normalize and deduplicate their values', () => {
+    const state = decodeState(new URLSearchParams('forms=mingcho,song,round,rounded,serif-pixel'));
+    expect(state.forms).toEqual(['song', 'rounded', 'serif']);
+    expect(encodeState(state).get('forms')).toBe('song,rounded,serif');
+  });
+
   test('roundtrip identity', () => {
     const s: FilterState = {
       ...emptyState(),
       q: '像素',
-      forms: ['gothic', 'mingcho'],
+      forms: ['gothic', 'song'],
       vibes: ['cute'],
       sizes: [8, 16],
       inkH: [7, 15],
@@ -174,6 +201,19 @@ describe('urlstate', () => {
     const s = decodeState(p);
     expect(s.sizes).toEqual([8]);
     expect(s.inkH).toBeNull();
-    expect(s.sort).toBe('name');
+    expect(s.sort).toBe('rating');
+  });
+  test('every reverse sort survives URL serialization', () => {
+    for (const sort of ['rating-reverse', 'name-reverse', 'size-reverse', 'glyphs-reverse'] as const) {
+      const state = { ...emptyState(), sort };
+      expect(encodeState(state).get('sort')).toBe(sort);
+      expect(decodeState(encodeState(state))).toEqual(state);
+    }
+  });
+  test('default rating needs no URL parameter and replaces old random links', () => {
+    expect(encodeState(emptyState()).toString()).toBe('');
+    expect(decodeState(new URLSearchParams('sort=rating')).sort).toBe('rating');
+    expect(decodeState(new URLSearchParams('sort=random')).sort).toBe('rating');
+    expect(encodeState({ ...emptyState(), sort: 'name' }).get('sort')).toBe('name');
   });
 });

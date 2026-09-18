@@ -108,6 +108,7 @@
 <div class="bdfed">
   <textarea
     class="bdfed__code mono"
+    name="bdf-source"
     bind:value={code}
     oninput={onInput}
     spellcheck="false"

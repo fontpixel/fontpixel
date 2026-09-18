@@ -1,3 +1,4 @@
+import { vibeNames } from '../lib/vibes';
 import sitenames from './sitenames.json';
 import type { UIStrings } from './types';
 
@@ -18,23 +19,39 @@ export const zh: UIStrings = {
   },
 
   catalogue: {
-    searchPlaceholder: '搜索名称、作者、标签…',
+    searchPlaceholder: '名称、作者、标签…',
+    searchLabel: '搜索名称、作者、标签…',
+    sortAutoReverse: '自动（反向）',
     samplePlaceholder: '输入试写文字，所有卡片即时重绘',
     sampleLabel: '试写',
+    preset: '预设句',
+    previewStyle: '预览样式',
+    codeLanguage: '代码语言',
     zoom: '缩放',
     grid: '网格',
     nowrap: '不换行',
     boxDrawing: '制表符',
     frameNone: '无',
+    frameInvert: '反色',
     frameCode: '高亮代码',
     frameGame: '老游戏',
-    results: '{n} 款字体',
+    results: '{n}款字体',
     noResults: '没有符合条件的字体',
     noResultsHint: '试试放宽筛选，或清空查字输入。',
     sort: '排序',
-    sortName: '名称',
-    sortSize: '像素尺寸',
-    sortGlyphs: '字形数',
+    sortAuto: '自动',
+    pagination: '字体列表分页',
+    previousPage: '上一页',
+    nextPage: '下一页',
+    pageLabel: '第 {n} 页',
+    editPage: '编辑页码',
+    showing: '显示{start}–{end}',
+    sortName: '名称（升序）',
+    sortNameReverse: '名称（降序）',
+    sortSize: '尺寸（小到大）',
+    sortSizeReverse: '尺寸（大到小）',
+    sortGlyphs: '字形数（多到少）',
+    sortGlyphsReverse: '字形数（少到多）',
     filters: '筛选',
     reset: '清空筛选',
     form: '字形分类',
@@ -47,19 +64,20 @@ export const zh: UIStrings = {
     weights: '字重',
     coverageAny: '选择字表…',
     coveragePresets: '覆盖达标',
+    coverageClear: '清除',
     charsLookup: '查字',
-    charsPlaceholder: '输入任意字符，如：龘齉𰻝',
+    charsPlaceholder: '输入任意字符，如：Æφは𰻝',
     charsHint: '只显示完整覆盖这些字符的字体',
   },
 
   forms: {
     gothic: '黑体',
-    mingcho: '宋体 / 明朝体',
+    song: '宋体 / 明朝体',
     rounded: '圆体',
     kai: '楷体',
     fangsong: '仿宋',
-    'serif-pixel': '西文衬线',
-    sans: '西文无衬线',
+    serif: '衬线体',
+    sans: '无衬线体',
     script: '手写',
     decorative: '装饰',
     terminal: '终端',
@@ -67,15 +85,7 @@ export const zh: UIStrings = {
     '': '未分类',
   },
 
-  vibeNames: {
-    classic: '经典',
-    cute: '可爱',
-    decorative: '装饰',
-    fallback: '兜底备用',
-    handwriting: '手写',
-    'retro-game': '复古游戏',
-    'terminal-hardcore': '终端硬核',
-  },
+  vibeNames: vibeNames('zh'),
 
   widthNames: {
     normal: '普通',
@@ -96,6 +106,7 @@ export const zh: UIStrings = {
     cyrillic: '西里尔',
     greek: '希腊',
     arabic: '阿拉伯文（含波斯、乌尔都）',
+    thai: '泰文',
     'zh-hans-partial': '简体中文（不完整）',
     'zh-hant-partial': '繁体中文（不完整）',
     'ja-partial': '日文（不完整）',
@@ -106,6 +117,7 @@ export const zh: UIStrings = {
     'cyrillic-partial': '西里尔（不完整）',
     'greek-partial': '希腊（不完整）',
     'arabic-partial': '阿拉伯文（不完整）',
+    'thai-partial': '泰文（不完整）',
   },
 
   scriptRules: {
@@ -119,6 +131,7 @@ export const zh: UIStrings = {
     'cyrillic': '西里尔字母常用字符 ≥ 90%',
     'greek': '希腊字母常用字符 ≥ 90%',
     'arabic': '阿拉伯文常用字符 ≥ 90%',
+    'thai': '泰文常用字符 ≥ 90%',
     'zh-hans-partial': 'GB/T 2312或通用规范汉字表10–90%',
     'zh-hant-partial': 'Big5常用汉字10–90%',
     'ja-partial': '平/片假名 ≥ 95% 且JIS第一水準漢字10–90%',
@@ -129,10 +142,13 @@ export const zh: UIStrings = {
     'cyrillic-partial': '西里尔字母常用字符10–90%',
     'greek-partial': '希腊字母常用字符10–90%',
     'arabic-partial': '阿拉伯文常用字符10–90%',
+    'thai-partial': '泰文常用字符10–90%',
   },
 
   weightNames: {
     regular: '常规',
+    medium: '中等',
+    semibold: '半粗',
     bold: '粗体',
     light: '细体',
   },
@@ -151,8 +167,12 @@ export const zh: UIStrings = {
   },
 
   detail: {
+    sourceType: '源文件类型',
+    sourceBitmap: '原生点阵',
+    sourcePixelOutline: '像素轮廓',
     close: '关闭',
     backToCatalogue: '返回馆藏',
+    jumpToDownloads: '滑动到下载',
     sizesOverview: '变体尺寸表',
     variants: '变体',
     sampleTitle: '试写',
@@ -164,7 +184,7 @@ export const zh: UIStrings = {
     hanInkNone: '无汉字',
     displaySize: '上游推荐尺寸',
     copyDots: '复制点阵',
-    sizeLadder: '字号阶梯',
+    sizeLadder: '所有变体',
     copied: '已复制',
     saved: '已保存',
     savePng: '保存PNG',
@@ -273,7 +293,7 @@ export const zh: UIStrings = {
 
   footer: {
     navLabel: '页脚导航',
-    siteLicense: "本站与馆藏数据以MIT许可发布。",
+    siteLicense: "本站代码与馆藏数据以MIT许可发布。",
     disclaimer: '各字体版权归原作者所有；许可证信息仅供参考，以上游原文为准。',
     dataSources: '字表数据来源',
     sourceCode: '本站源码',
@@ -286,7 +306,6 @@ export const zh: UIStrings = {
   },
   compare: {
     title: '字体对比',
-    intro: '同一段文字、同一像素尺寸，最多四款并排——把本馆那把「同一把尺子」摆到眼前。',
     add: '添加字体',
     remove: '移除',
     pickFont: '选择字体',

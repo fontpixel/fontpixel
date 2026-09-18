@@ -46,7 +46,7 @@ const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
       </ul>
     </nav>
     <article class="doc__article">
-      <h1>{entry.data.title}</h1>
+      <h1 id="doc-title">{entry.data.title}</h1>
       <slot />
       <nav class="doc__pager">
         {prev ? <a href={link(prev)}>← {prev.data.label ?? prev.data.title}</a> : <span />}

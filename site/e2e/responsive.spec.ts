@@ -3,7 +3,10 @@ import { expect, test } from '@playwright/test';
 const PAGES = [
   'zh/',
   'en/',
+  'en/page/2/',
   'zh/about/',
+  // four columns of controls plus a preset row: the widest toolbar on the site
+  'zh/compare/',
   'zh/fonts/wqy-bitmap-song/',
   // the two families with the most variants and longest labels: their size table and variant dropdown are most likely to overflow a narrow screen
   'zh/fonts/misc-fixed/',

@@ -1,8 +1,10 @@
 /** Pure filter functions for the catalog page (contract per plan Task 16). */
 
 import type { FamilyIndex } from './schema';
+import { ratingOrder } from './rating';
 
-export type SortKey = 'name' | 'size' | 'glyphs';
+export const SORTS = ['rating', 'rating-reverse', 'name', 'name-reverse', 'size', 'size-reverse', 'glyphs', 'glyphs-reverse'] as const;
+export type SortKey = typeof SORTS[number];
 
 export interface CoverageReq {
   id: string;
@@ -37,7 +39,7 @@ export function emptyState(): FilterState {
     weights: [],
     coverage: [],
     chars: '',
-    sort: 'name',
+    sort: 'rating',
   };
 }
 
@@ -66,7 +68,7 @@ export function applyFilters(
       const hay = `${f.searchText} ${f.name} ${Object.values(f.names).join(' ')} ${f.authors.join(' ')} ${f.slug}`.toLowerCase();
       if (!terms.every((t) => hay.includes(t))) return false;
     }
-    if (s.forms.length && !s.forms.includes(f.form)) return false;
+    if (s.forms.length && !intersects(s.forms, f.forms)) return false;
     if (s.vibes.length && !intersects(s.vibes, f.vibes)) return false;
     if (s.sizes.length && !intersects(s.sizes, f.sizes)) return false;
     // A match if any variant's ink height falls in the range: comparing the
@@ -98,7 +100,12 @@ export function applyFilters(
   // predates the addition of multi-language names.
   const byName = (f: FamilyIndex) => (f.names['zh-Hans'] || f.name).toLowerCase();
   out = [...out];
-  switch (s.sort) {
+  const reversed = s.sort.endsWith('-reverse');
+  const order = s.sort.replace(/-reverse$/, '');
+  switch (order) {
+    case 'rating':
+      out = ratingOrder(out, charsetIds);
+      break;
     case 'name':
       out.sort((a, b) => byName(a).localeCompare(byName(b)));
       break;
@@ -109,5 +116,5 @@ export function applyFilters(
       out.sort((a, b) => b.glyphCount - a.glyphCount);
       break;
   }
-  return out;
+  return reversed ? out.reverse() : out;
 }

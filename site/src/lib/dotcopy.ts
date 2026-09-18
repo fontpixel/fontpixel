@@ -1,21 +1,26 @@
 /** Export the bitmap in the trial-writing box as pasteable text. */
-import type { DecodedGlyph } from './glyphpack';
-import { rowBytes } from './glyphpack';
+import type { DecodedGlyph } from './bitmap';
+import { rowBytes } from './bitmap';
 import type { RasterResult } from './render';
 
-/** Convert a full raster result into a `.#` bitmap. */
-export function toDotText(r: RasterResult): string {
+/**
+ * Convert a full raster result into a dot bitmap: `.` for paper, `ink` for ink.
+ *
+ * `@` is the .yaff convention; `#` is what most other pixel-art and roguelike
+ * tooling expects, so the ink character is a parameter rather than a constant.
+ */
+export function toDotText(r: RasterResult, ink = '@'): string {
   const lines: string[] = [];
   for (let y = 0; y < r.height; y++) {
     let s = '';
-    for (let x = 0; x < r.width; x++) s += r.mask[y * r.width + x] ? '#' : '.';
+    for (let x = 0; x < r.width; x++) s += r.mask[y * r.width + x] ? ink : '.';
     lines.push(s);
   }
   // Trim blank rows from the top and bottom so pasting doesn't drag in whitespace
   let a = 0;
   let b = lines.length - 1;
-  while (a <= b && !lines[a]!.includes('#')) a++;
-  while (b >= a && !lines[b]!.includes('#')) b--;
+  while (a <= b && !lines[a]!.includes(ink)) a++;
+  while (b >= a && !lines[b]!.includes(ink)) b--;
   return lines.slice(a, b + 1).join('\n');
 }
 

@@ -1,11 +1,14 @@
-/* 设计令牌:纸白/炭黑双主题 + 朱砂红强调(spec §8「标本馆」) */
+/* 设计令牌:纸白/炭黑双主题 + 朱砂红强调(spec §8「标本馆」)
+   ink-2 / ink-3 于 2026-09-03 调暗/调亮:原值在正文尺寸下对比度只有 2.8-3.7,
+   低于 WCAG AA 的 4.5(Lighthouse color-contrast 报错)。两个令牌一起调是为了
+   保住层级——只压 ink-3 会让它与 ink-2 几乎重合。 */
 
 :root {
   --paper: #f6f2e9;
   --surface: #fdfbf5;
   --ink: #1c1a17;
-  --ink-2: #6b6459;
-  --ink-3: #97907f;
+  --ink-2: #4d4840;
+  --ink-3: #736d5e;
   --line: #d9d2c2;
   --line-soft: #e9e3d6;
   --accent: #b5312f;
@@ -36,8 +39,8 @@
   --paper: #151310;
   --surface: #1d1a16;
   --ink: #e9e3d5;
-  --ink-2: #a69d8c;
-  --ink-3: #776f60;
+  --ink-2: #b2aa9b;
+  --ink-3: #8c8371;
   --line: #35312a;
   --line-soft: #26231e;
   --accent: #e25a4f;
@@ -56,6 +59,10 @@ html {
 }
 html[data-theme='dark'] {
   color-scheme: dark;
+}
+
+:where(section, h1, h2, h3, h4, h5, h6, details, aside)[id] {
+  scroll-margin-top: var(--s5);
 }
 
 body {
@@ -112,6 +119,9 @@ select {
 input::placeholder,
 textarea::placeholder {
   color: var(--ink-3);
+}
+select {
+  cursor: pointer;
 }
 
 code,
@@ -174,4 +184,10 @@ pre,
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+.icon-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
 }

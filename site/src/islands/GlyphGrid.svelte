@@ -2,9 +2,10 @@
   import { onMount } from 'svelte';
   import { themeInkPaper, onThemeChange } from '../lib/colors';
   import { formatCp } from '../lib/format';
-  import type { DecodedGlyph } from '../lib/glyphpack';
-  import { rowBytes } from '../lib/glyphpack';
-  import { GlyphStore, type VariantManifest } from '../lib/glyphstore';
+  import type { DecodedGlyph } from '../lib/bitmap';
+  import { rowBytes } from '../lib/bitmap';
+  import { getGlyphStore } from '../lib/glyphstore';
+  import type { BitmapFont } from '../lib/bitmap';
   import { paint, rasterize } from '../lib/render';
   import type { UIStrings } from '../i18n/types';
   import { UNICODE_BLOCKS } from '../lib/unicodeblocks';
@@ -12,16 +13,17 @@
   interface Props {
     slug: string;
     variantIds: string[];
+    initialVariant: string;
     s: UIStrings;
     dataBase: string;
     /** Names of the Unicode blocks each variant actually covers (has at least one glyph in) */
     blocksByVariant: Record<string, string[]>;
   }
-  const { slug, variantIds, s, dataBase, blocksByVariant }: Props = $props();
+  const { slug, variantIds, s, dataBase, blocksByVariant, initialVariant }: Props = $props();
 
-  const store = new GlyphStore(dataBase);
-  let variantId = $state(variantIds[0]!);
-  let manifest = $state<VariantManifest | null>(null);
+  const store = getGlyphStore(dataBase);
+  let variantId = $state(initialVariant);
+  let manifest = $state<BitmapFont | null>(null);
   let selection = $state('r:0');
   let jumpQuery = $state('');
   let themeTick = $state(0);
@@ -29,6 +31,9 @@
   let inspectorCanvas: HTMLCanvasElement | undefined = $state();
 
   onMount(() => {
+    // This island hydrates on scroll, after the editor may have changed variants.
+    const current = document.querySelector<HTMLSelectElement>('[name="sample-variant"]')?.value;
+    if (current && variantIds.includes(current)) variantId = current;
     const onVariant = (e: Event) => {
       const id = (e as CustomEvent).detail?.id;
       if (id && variantIds.includes(id)) {
@@ -47,13 +52,14 @@
 
   $effect(() => {
     const vid = variantId;
+    manifest = null;
     store
-      .loadManifest(slug, vid)
-      .then((m) => (manifest = m))
+      .loadFont(slug, vid)
+      .then((m) => { if (variantId === vid) manifest = m; })
       .catch((e) => console.error(e));
   });
 
-  // The dropdown holds both chunked ranges and Unicode blocks the variant covers;
+  // The dropdown holds occupied 256-codepoint ranges and Unicode blocks;
   // both resolve to a single [start, end) code point span.
   const span = $derived.by((): [number, number] | null => {
     const m = manifest;
@@ -76,10 +82,6 @@
       out.push({ start: b, count: Math.min(256, span[1] - b) });
     return out;
   });
-  /** Which chunk file a given code point falls into — a block may span multiple chunks. */
-  function rangeFor(cp: number) {
-    return manifest?.ranges.find((r) => cp >= r.start && cp < r.end) ?? null;
-  }
   const coveredBlocks = $derived(
     (blocksByVariant[variantId] ?? [])
       .filter((n) => UNICODE_BLOCKS[n])
@@ -112,15 +114,16 @@
   function drawSheet(canvas: HTMLCanvasElement, sheet: { start: number; count: number }) {
     const m = manifest;
     const blockStart = sheet.start;
-    const r = rangeFor(blockStart);
-    if (!m || !r) return;
+    const vid = variantId;
+    if (!m) return;
     const cell = Math.max(m.ascent + m.descent + 3, 10);
     const cols = 16;
     const rows = Math.ceil(sheet.count / cols);
     void themeTick;
     store
-      .loadChunk(slug, variantId, r.file)
+      .loadFont(slug, variantId)
       .then((chunk) => {
+        if (variantId !== vid || !canvas.isConnected) return;
         const { ink, paper } = themeInkPaper();
         canvas.width = cols * cell;
         canvas.height = rows * cell;
@@ -137,7 +140,7 @@
           for (let x = 0; x < canvas.width; x++) put(x, y, paper);
         for (let i = 0; i < sheet.count; i++) {
           const cp = blockStart + i;
-          const g = chunk.get(cp);
+          const g = chunk.glyphs.get(cp) ?? null;
           if (!g) continue;
           const cx = (i % cols) * cell + 1;
           const baseline = Math.floor(i / cols) * cell + 1 + m.ascent;
@@ -184,14 +187,7 @@
     const col = Math.floor((e.clientX - rect.left) / scale / cell);
     const row = Math.floor((e.clientY - rect.top) / scale / cell);
     const cp = blockStart + row * 16 + col;
-    const r = rangeFor(blockStart);
-    if (!r) return;
-    store
-      .loadChunk(slug, variantId, r.file)
-      .then((chunk) => {
-        inspected = chunk.get(cp);
-      })
-      .catch(() => {});
+    inspected = manifest.glyphs.get(cp) ?? null;
   }
 
   $effect(() => {
@@ -224,7 +220,7 @@
   }
 </script>
 
-<section class="gg" data-testid="glyph-grid">
+<section id="glyph-grid" class="gg" data-testid="glyph-grid">
   <div class="gg__bar">
     <h2>{s.detail.glyphGridTitle}</h2>
     {#if manifest}
@@ -232,6 +228,7 @@
         <input
           class="gg__search"
           type="search"
+          name="glyph-search"
           bind:value={jumpQuery}
           placeholder={s.detail.glyphGridSearch}
           aria-label={s.detail.glyphGridSearch}
@@ -239,8 +236,8 @@
         />
         <label
           >{s.detail.glyphGridJump}
-          <select bind:value={selection} data-testid="range-select">
-            {#each shownRanges as { r, i } (r.file)}
+          <select name="glyph-range" bind:value={selection} data-testid="range-select">
+            {#each shownRanges as { r, i } (r.start)}
               <option value={`r:${i}`}>{rangeLabel(r)}</option>
             {/each}
           {#if shownBlocks.length > 0}
@@ -340,7 +337,7 @@
     min-width: 0;
   }
   .gg__sheet figcaption {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--ink-3);
     margin-bottom: 2px;
   }

@@ -2,9 +2,9 @@ import { expect, test } from '@playwright/test';
 
 test('zh catalogue renders with brand and cards', async ({ page }) => {
   await page.goto('zh/');
-  await expect(page).toHaveTitle(/开源像素字体馆/);
+  await expect(page).toHaveTitle('FontPixel：开源像素字体馆');
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-Hans');
-  await expect(page.locator('.site-brand')).toContainText('开源像素字体馆');
+  await expect(page.locator('.site-brand')).toContainText('FontPixel：开源像素字体馆');
   const island = page.locator('[data-testid="catalogue-island"]');
   expect(await island.locator('.card').count()).toBeGreaterThanOrEqual(5);
   await expect(
@@ -78,10 +78,10 @@ test('root redirects by browser language', async ({ page }) => {
   await page.waitForURL(/\/(zh|en)\//);
 });
 
-test('island card renders sample canvas', async ({ page }) => {
+test('island card renders a fixed SVG sample', async ({ page }) => {
   await page.goto('zh/');
   await expect(
-    page.locator('[data-testid="catalogue-island"] .card__sample canvas').first(),
+    page.locator('[data-testid="catalogue-island"] .card__sample svg').first(),
   ).toBeVisible();
 });
 
@@ -125,6 +125,6 @@ test('language menu opens on keyboard focus and closes on Escape', async ({
 test('github link in the header points at the repository', async ({ page }) => {
   await page.goto('zh/');
   const gh = page.getByTestId('github-link');
-  await expect(gh).toHaveAttribute('href', /github\.com\/.+/);
+  await expect(gh).toHaveAttribute('href', 'https://github.com/fontpixel/fontpixel');
   await expect(gh).toHaveAttribute('title', '源码');
 });

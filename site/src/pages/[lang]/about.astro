@@ -15,7 +15,6 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const s = t(lang);
-// About page body: Traditional Chinese is converted from Simplified; other languages fall back to English
 // About page body: Traditional Chinese is converted from Simplified; other languages each have their own translation
 const CONTENT = { zh: zhContent, 'zh-Hant': zhContent, en: enContent,
                   ja: jaContent, ko: koContent, fr: frContent };
@@ -23,9 +22,10 @@ const CONTENT = { zh: zhContent, 'zh-Hant': zhContent, en: enContent,
 // body are unaffected: toHantDeep only touches string values
 const c =
   lang === 'zh-Hant'
-    ? toHantDeep(zhContent as unknown as Record<string, unknown>)
+    ? toHantDeep(zhContent)
     : CONTENT[lang] ?? enContent;
 const meta = loadCharsetsMeta();
+const [introBeforeAuthor, introAfterAuthor] = c.aboutIntro.split('Tom Chen');
 const name = (x: (typeof meta.charsets)[number]) =>
   pickText(lang, x.nameZh, x.nameEn);
 ---
@@ -37,8 +37,8 @@ const name = (x: (typeof meta.charsets)[number]) =>
   path="/about/"
 >
   <article class="about">
-    <h1>{s.about.title}</h1>
-    <p class="about__intro">{c.aboutIntro}</p>
+    <h1 id="about">{s.about.title}</h1>
+    <p class="about__intro">{introBeforeAuthor}<a href="https://tomchen.org/">Tom Chen</a>{introAfterAuthor}</p>
 
     {
       c.aboutSections.map((sec) => (
@@ -47,6 +47,18 @@ const name = (x: (typeof meta.charsets)[number]) =>
           {sec.paragraphs.map((p) => (
             <p>{p}</p>
           ))}
+          {sec.examples && <>
+            <p>{sec.examplesIntro}</p>
+            <ul class="about__examples">
+              {sec.examples.map(example => (
+                <li>
+                  <strong><a href={example.href}>{example.name}</a></strong>{': '}
+                  {example.reason}
+                  {example.reference && <>{' '}<a class="about__reference" href={example.reference.href}>{example.reference.label}</a></>}
+                </li>
+              ))}
+            </ul>
+          </>}
           {sec.code && <pre class="about__code">{sec.code}</pre>}
         </section>
       ))
@@ -102,6 +114,22 @@ const name = (x: (typeof meta.charsets)[number]) =>
     .about p {
       line-height: 1.8;
     }
+    .about a {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+    .about__examples {
+      padding-inline-start: 1.25em;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+    .about__examples li + li {
+      margin-top: var(--s3);
+    }
+    .about__reference {
+      font-size: 0.85em;
+      white-space: nowrap;
+    }
     .about__code {
       background: var(--surface);
       border: 1px solid var(--line);
@@ -126,7 +154,7 @@ const name = (x: (typeof meta.charsets)[number]) =>
     }
     .about__src {
       color: var(--ink-3);
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       max-width: 22rem;
     }
   </style>

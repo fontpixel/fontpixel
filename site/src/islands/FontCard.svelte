@@ -4,7 +4,11 @@
   import { themeInkPaper, onThemeChange } from '../lib/colors';
   import type { GlyphStore } from '../lib/glyphstore';
   import { paint, rasterize } from '../lib/render';
-  import { defaultSample } from '../lib/samples';
+  import { previewFor } from '../lib/preview';
+  import FixedSvg from './FixedSvg.svelte';
+  import FrameShell from './FrameShell.svelte';
+  import { framePalette, type Frame } from '../lib/frames';
+  import { highlightCode, type CodeLang } from '../lib/codehl';
   import type { FamilyIndex } from '../lib/schema';
   import { pickName, pickText } from '../i18n';
   import type { UIStrings } from '../i18n/types';
@@ -15,18 +19,32 @@
     s: UIStrings;
     sampleText: string;
     zoom: number;
+    frame?: Frame;
+    codeLang?: CodeLang;
+    nowrap?: boolean;
     store: GlyphStore;
     href: string;
+    dataBase: string;
+    initialSvg?: string;
+    initialNameSvg?: string;
   }
-  const { family, lang, s, sampleText, zoom, store, href }: Props = $props();
+  const { family, lang, s, sampleText, zoom, store, href, dataBase, initialSvg = '', initialNameSvg = '',
+    frame = 'none', codeLang = 'javascript', nowrap = false }: Props = $props();
 
   const displayName = $derived(
     pickName(lang, family.names, family.name),
   );
-  const variant = family.variants.reduce((a, b) => (b.glyphs > a.glyphs ? b : a));
+  const preview = $derived(previewFor(family));
+  const previewSize = $derived(family.variants.find(v => v.id === preview.variantId)?.size ?? family.sizes[0] ?? 16);
+  // The catalogue is a compact specimen. Large grids stay at native size;
+  // smaller fonts retain the requested integer zoom without blurring pixels.
+  const previewZoom = $derived(Math.max(1, Math.min(zoom, Math.floor(48 / previewSize))));
   const text = $derived(
-    sampleText.trim() || family.sampleText || defaultSample(family.sampleLang),
+    sampleText.trim() ? sampleText : preview.text,
   );
+  // Plain, inverted and game defaults can reuse their small static SVG. Code
+  // needs the canvas even for default text, to color individual characters.
+  const useCanvas = $derived(Boolean(sampleText.trim()) || frame === 'code');
   const sizeLabel = $derived(
     family.sizes.length > 3
       ? `${family.sizes[0]}–${family.sizes[family.sizes.length - 1]}${s.card.px}`
@@ -34,19 +52,18 @@
   );
 
   let canvasEl: HTMLCanvasElement | undefined = $state();
-  let nameEl: HTMLCanvasElement | undefined = $state();
+  let sampleWidth = $state(0);
   let rootEl: HTMLElement | undefined = $state();
   let visible = $state(false);
+  let seen = $state(false);
   let missing = $state(0);
   let themeTick = $state(0);
 
   onMount(() => {
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          visible = true;
-          io.disconnect();
-        }
+        visible = entries.some((e) => e.isIntersecting);
+        if (visible) seen = true;
       },
       { rootMargin: '200px' },
     );
@@ -59,46 +76,33 @@
   });
 
   $effect(() => {
-    if (!visible || !canvasEl) return;
+    if (!useCanvas) { missing = 0; return; }
+    if (!visible || !canvasEl || !sampleWidth) return;
     const t = text;
-    const z = zoom;
+    const z = previewZoom;
+    const width = sampleWidth;
+    const fr = frame;
+    const cl = codeLang;
+    const nw = nowrap;
     void themeTick;
     let cancelled = false;
     (async () => {
       const [m, glyphs] = await Promise.all([
-        store.loadManifest(family.slug, variant.id),
-        store.glyphsFor(family.slug, variant.id, t),
+        store.loadFont(family.slug, preview.variantId),
+        store.glyphsFor(family.slug, preview.variantId, t),
       ]);
       if (cancelled || !canvasEl) return;
-      const { ink, paper } = themeInkPaper();
+      const { ink, paper } = framePalette(fr, themeInkPaper());
       const r = rasterize(t, glyphs, m, {
         invert: false,
-        maxWidth: Math.max(48, Math.floor((canvasEl.parentElement?.clientWidth ?? 320) / z)),
+        maxWidth: nw ? undefined : Math.max(1, Math.floor(width / z)),
+        charColors: fr === 'code' ? highlightCode(t, cl) : undefined,
         ink,
         paper,
       });
       missing = r.missing.length;
       paint(canvasEl, r, z);
 
-      // Self-render the family name: only when this font covers every character in the name
-      if (nameEl) {
-        const nameGlyphs = await store.glyphsFor(family.slug, variant.id, displayName);
-        if (cancelled || !nameEl) return;
-        const anyMissing = [...displayName].some(
-          (ch) => !nameGlyphs.get(ch.codePointAt(0)!),
-        );
-        if (!anyMissing) {
-          const nr = rasterize(displayName, nameGlyphs, m, {
-            invert: false,
-            ink,
-            paper,
-          });
-          paint(nameEl, nr, Math.min(z + 1, 3));
-          nameEl.style.display = '';
-        } else {
-          nameEl.style.display = 'none';
-        }
-      }
     })().catch((e) => console.error(e));
     return () => {
       cancelled = true;
@@ -106,7 +110,7 @@
   });
 </script>
 
-<article class="card" bind:this={rootEl} data-slug={family.slug}>
+<article class="card" bind:this={rootEl} data-slug={family.slug} data-variant-id={preview.variantId}>
   <a class="card__link" {href}>
     <header class="card__head">
       <h2 class="card__name">{displayName}</h2>
@@ -119,15 +123,24 @@
         {/if}
       </span>
     </header>
-    <canvas class="card__namecanvas" bind:this={nameEl} style="display:none" aria-hidden="true"
-    ></canvas>
-    <div class="card__sample lattice">
-      <canvas bind:this={canvasEl} aria-hidden="true"></canvas>
-    </div>
+    {#if (seen || initialNameSvg) && family.namePreviews[displayName]}
+      <div class="card__namecanvas">
+        <FixedSvg url={`${dataBase}/${family.namePreviews[displayName]}`} scale={Math.min(zoom + 1, 3)} maxHeight={64} initialSvg={initialNameSvg} />
+      </div>
+    {/if}
+    <FrameShell {frame} {codeLang} compact canvasClass="card__sample">
+      <div class="card__sample-content" bind:clientWidth={sampleWidth}>
+        {#if useCanvas}
+          <canvas bind:this={canvasEl} width="0" height="0" aria-hidden="true"></canvas>
+        {:else if seen || initialSvg}
+          <FixedSvg url={`${dataBase}/${family.cardPreview || preview.file}`} scale={previewZoom} {initialSvg} />
+        {/if}
+      </div>
+    </FrameShell>
     <p class="card__meta mono">
       <span>{sizeLabel}</span>
-      {#if family.form}<span class="card__sep">·</span><span
-          >{s.forms[family.form] ?? family.form}</span
+      {#if family.forms.length}<span class="card__sep">·</span><span
+          >{family.forms.map(form => s.forms[form] ?? form).join(' / ')}</span
         >{/if}
       <span class="card__sep">·</span>
       <span>{family.glyphCount.toLocaleString()} {s.card.glyphs}</span>
@@ -176,17 +189,8 @@
     display: block;
     margin-bottom: var(--s2);
     max-width: 100%;
-  }
-  .card__sample {
-    min-height: 3.6rem;
-    overflow: hidden;
-    border: 1px solid var(--line-soft);
-    padding: var(--s3);
-  }
-  .card__sample canvas {
-    max-width: 100%;
-    image-rendering: pixelated;
-    display: block;
+    max-height: 5rem;
+    overflow: auto;
   }
   .card__meta {
     display: flex;
@@ -194,7 +198,7 @@
     align-items: baseline;
     gap: var(--s2);
     margin: var(--s3) 0 0;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     color: var(--ink-3);
   }
   .card__sep {

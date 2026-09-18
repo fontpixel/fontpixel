@@ -4,12 +4,39 @@ import type { AboutSection } from './about.zh';
 
 export const aboutIntro =
   
-  'Open Pixel Fonts gathers every freely licensed bitmap (pixel) font that can be found scattered across the web into a single museum: the fonts are taken apart and every glyph inspected, measured again and again against one ruler, with the coverage of each character set worked out in detail; then you get a preview you can type into, to see how a font\'s various scripts look inside an old arcade game or a syntax-highlighting editor; and finally there are downloads as BDF, PCF, bitmap TTF, and even vectorised TTF, in which every pixel becomes a square or a circle.';
+  'Tom Chen’s FontPixel.com open-source pixel font museum gathers every freely licensed bitmap (pixel) font that can be found scattered across the web into a single museum: the fonts are taken apart and every glyph inspected, measured again and again against one ruler, with the coverage of each character set worked out in detail; then you get a preview you can type into, to see how a font\'s various scripts look inside an old arcade game or a syntax-highlighting editor; and finally there are downloads as BDF, PCF, bitmap TTF, and even vectorised TTF, in which every pixel becomes a square or a circle.';
 
 export const aboutSections: AboutSection[] = [
   {
     id: 'criteria',
     heading: 'Inclusion criteria',
+    examplesIntro: "Some fonts that are easily mistaken for open source but were excluded after review:",
+    examples: [
+      {
+        "name": "HZK / mplus_hzk_12",
+        "href": "https://github.com/py-zhao/mplus_hzk_12#readme",
+        "reason": "No verifiable libre license was found for the HZK glyphs used. Age does not establish public-domain status, and a derivative repository’s Unlicense does not resolve the original glyphs’ licensing."
+      },
+      {
+        "name": "Zpix (最像素)",
+        "href": "https://github.com/SolidZORO/zpix-pixel-font#readme",
+        "reason": "Free for personal and educational projects, but commercial use requires a paid license, and modification and conversion are prohibited. These terms do not meet our libre-font criteria."
+      },
+      {
+        "name": "Guanzhi 8px (FontChinese7x7)",
+        "href": "https://github.com/Angelic47/FontChinese7x7#readme",
+        "reason": "The Chinese glyph contributor is unknown. Issue #6 reports that Xiaxia (lietxia) said they had not added those glyphs. The repository’s MIT license covers the tool code only, not the font.",
+        "reference": {
+          "label": "Discussion #6",
+          "href": "https://github.com/Angelic47/FontChinese7x7/issues/6"
+        }
+      },
+      {
+        "name": "tewi",
+        "href": "https://github.com/lucy/tewi-font#readme",
+        "reason": "The author removed the font over unclear licensing of glyphs heavily derived from Monaco and asked distributors to consider removing it. GPL labels on older copies do not resolve that provenance issue."
+      }
+    ],
     paragraphs: [
       'Only freely licensed fonts make it in, and the bar is strict: the license must clearly allow anyone to use, copy, modify and redistribute the font, commercial use included, and it must verifiably cover the exact file catalogued here. “Free”, “free for commercial use”, “freeware”, copying-only terms, or a promise to “switch to an open-source license later” do not qualify. Everything on the site is therefore safe to use commercially.',
       'Fonts under bespoke terms such as an “author’s statement” or a “personal use license” rarely make it in. What matters is not what the terms are called but whether they meet the accepted definitions of free software and libre fonts: anyone may use, study, modify and redistribute for any purpose; no restriction may turn on the use or the user; the grant cannot be revoked after the fact; and it must carry over to derivatives. Miss any one of those and the font goes into the import report, not the catalogue.',
@@ -60,7 +87,7 @@ name_zh = "我的字体"
 authors = ["Author name"]
 homepage = "https://example.com"
 description = "One-line description"
-form = "gothic"          # category: gothic|mingcho|rounded|kai|fangsong|…
+forms = ["gothic", "sans"]          # category: gothic|song|rounded|kai|fangsong|…
 vibes = ["retro-game"]   # vibe tags, free-form
 aliases = ["Former Name"] # optional former names / aliases, used for search only`,
   },
