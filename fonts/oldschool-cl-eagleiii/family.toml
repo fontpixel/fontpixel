@@ -1,0 +1,27 @@
+name = "CL EagleIII"
+authors = ["VileR"]
+homepage = "https://int10h.org/oldschool-pc-fonts/"
+repository = ""
+description = "Ultimate Oldschool PC Font Pack 2.2 中的历史硬件字体，以原生 OTB 点阵导入；保留扩展字符集。"
+forms = ["terminal"]
+vibes = ["retro-computer", "terminal"]
+source_kind = "bitmap"
+source_formats = ["OTB"]
+aliases = ["Ultimate Oldschool PC Font Pack", "Oldschool PC", "CL_EagleIII"]
+converted_from = ""
+provenance = "导入自 https://int10h.org/oldschool-pc-fonts/ (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained)；由 otb 转换"
+added = "2026-09-17"
+
+name_en = "CL EagleIII"
+authors_en = ["VileR"]
+description_en = "A historical hardware design from the Ultimate Oldschool PC Font Pack 2.2, imported from native OTB bitmaps with complete character coverage."
+provenance_en = "Imported from https://int10h.org/oldschool-pc-fonts/ (retrieved 2026-09-17; full files, all encoded and unencoded glyphs retained); converted from otb"
+
+[license]
+spdx = "CC-BY-SA-4.0"
+name = "CC-BY-SA-4.0"
+confidence = "manual"
+file = "LICENSE-FONTPIXEL.txt"
+note = "依据作者许可声明及源文件；完整来源和 SHA-256 见本批导入审计。"
+name_en = "CC-BY-SA-4.0"
+note_en = "Verified against the author’s licence statement and source files; source URLs and SHA-256 are recorded in the import audit."
