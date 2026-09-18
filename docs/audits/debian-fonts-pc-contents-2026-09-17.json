@@ -1,0 +1,425 @@
+[
+  {
+    "package": "fonts-pc",
+    "version": "1.0-2",
+    "url": "https://deb.debian.org/debian/pool/main/f/fonts-pc/fonts-pc_1.0-2_all.deb",
+    "sha256": "424bdfee5ed1961d3c0a104eb1390c3f057dcd1e28c6c1d0906bbb4e0f763650",
+    "count": 8,
+    "fonts": [
+      {
+        "file": "Px_AmstradPC1512-2y.ttf",
+        "family": "Px AmstradPC1512-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_CGA-2y.ttf",
+        "family": "Px IBM CGA-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_CGA.ttf",
+        "family": "Px IBM CGA",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_EGA8.ttf",
+        "family": "Px IBM EGA8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_MDA.ttf",
+        "family": "Px IBM MDA",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_VGA8.ttf",
+        "family": "Px IBM VGA8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_VGA9.ttf",
+        "family": "Px IBM VGA9",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_VGA_SquarePx.ttf",
+        "family": "Px VGA SquarePx",
+        "style": "Regular"
+      }
+    ]
+  },
+  {
+    "package": "fonts-pc-extra",
+    "version": "1.0-2",
+    "url": "https://deb.debian.org/debian/pool/main/f/fonts-pc/fonts-pc-extra_1.0-2_all.deb",
+    "sha256": "f67a0577c91addcc25412e1bb353f876301fd89d9ed52db41e23fce05b8a9f4f",
+    "count": 73,
+    "fonts": [
+      {
+        "file": "Px_AMI_BIOS-2y.ttf",
+        "family": "Px AMI BIOS-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_AMI_BIOS.ttf",
+        "family": "Px AMI BIOS",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATI_8x14.ttf",
+        "family": "Px ATI 8x14",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATI_8x16.ttf",
+        "family": "Px ATI 8x16",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATI_8x8-2y.ttf",
+        "family": "Px ATI 8x8-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATI_8x8.ttf",
+        "family": "Px ATI 8x8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATI_9x14.ttf",
+        "family": "Px ATI 9x14",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATI_9x16.ttf",
+        "family": "Px ATI 9x16",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATI_SmallW_6x8.ttf",
+        "family": "Px ATI SmallW 6x8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATT_PC6300-2x.ttf",
+        "family": "Px ATT PC6300-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ATT_PC6300.ttf",
+        "family": "Px ATT PC6300",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_AmstradPC1512.ttf",
+        "family": "Px AmstradPC1512",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_CompaqThin_8x14.ttf",
+        "family": "Px CompaqThin 8x14",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_CompaqThin_8x16.ttf",
+        "family": "Px CompaqThin 8x16",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_CompaqThin_8x8.ttf",
+        "family": "Px CompaqThin 8x8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_DTK_BIOS-2y.ttf",
+        "family": "Px DTK BIOS-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_DTK_BIOS.ttf",
+        "family": "Px DTK BIOS",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_3270pc.ttf",
+        "family": "Px IBM 3270pc",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_BIOS-2x.ttf",
+        "family": "Px IBM BIOS-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_BIOS-2y.ttf",
+        "family": "Px IBM BIOS-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_BIOS.ttf",
+        "family": "Px IBM BIOS",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_CGAthin-2y.ttf",
+        "family": "Px IBM CGAthin-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_CGAthin.ttf",
+        "family": "Px IBM CGAthin",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_Conv-2x.ttf",
+        "family": "Px IBM Conv-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_Conv-2y.ttf",
+        "family": "Px IBM Conv-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_Conv.ttf",
+        "family": "Px IBM Conv",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_EGA8-2x.ttf",
+        "family": "Px IBM EGA8-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_EGA9-2x.ttf",
+        "family": "Px IBM EGA9-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_EGA9.ttf",
+        "family": "Px IBM EGA9",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_ISO8.ttf",
+        "family": "Px IBM ISO8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_ISO9.ttf",
+        "family": "Px IBM ISO9",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_PGC-2x.ttf",
+        "family": "Px IBM PGC-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_PGC.ttf",
+        "family": "Px IBM PGC",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_PS2thin1.ttf",
+        "family": "Px IBM PS2thin1",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_PS2thin2.ttf",
+        "family": "Px IBM PS2thin2",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_PS2thin3.ttf",
+        "family": "Px IBM PS2thin3",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_PS2thin4.ttf",
+        "family": "Px IBM PS2thin4",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_VGA8-2x.ttf",
+        "family": "Px IBM VGA8-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_IBM_VGA9-2x.ttf",
+        "family": "Px IBM VGA9-2x",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ITT_BIOS-2y.ttf",
+        "family": "Px ITT BIOS-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ITT_BIOS.ttf",
+        "family": "Px ITT BIOS",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Kaypro2K.ttf",
+        "family": "Px Kaypro2K",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Kaypro2k-2y.ttf",
+        "family": "Px Kaypro2k-2y",
+        "style": "Regular "
+      },
+      {
+        "file": "Px_PhoenixEGA_8x14.ttf",
+        "family": "Px PhoenixEGA 8x14",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_PhoenixEGA_8x16.ttf",
+        "family": "Px PhoenixEGA 8x16",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_PhoenixEGA_8x8-2y.ttf",
+        "family": "Px PhoenixEGA 8x8-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_PhoenixEGA_8x8.ttf",
+        "family": "Px PhoenixEGA 8x8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_PhoenixEGA_9x14.ttf",
+        "family": "Px PhoenixEGA 9x14",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Phoenix_BIOS-2y.ttf",
+        "family": "Px Phoenix BIOS-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Phoenix_BIOS.ttf",
+        "family": "Px Phoenix BIOS",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyNew_225-2y.ttf",
+        "family": "Px TandyNew 225-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyNew_225.ttf",
+        "family": "Px TandyNew 225",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyNew_Mono.ttf",
+        "family": "Px TandyNew Mono",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyNew_TV-2y.ttf",
+        "family": "Px TandyNew TV-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyNew_TV.ttf",
+        "family": "Px TandyNew TV",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyOld_225-2y.ttf",
+        "family": "Px TandyOld 225-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyOld_225.ttf",
+        "family": "Px TandyOld 225",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyOld_TV-2y.ttf",
+        "family": "Px TandyOld TV-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_TandyOld_TV.ttf",
+        "family": "Px TandyOld TV",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ToshibaLCD_8x16.ttf",
+        "family": "Px ToshibaLCD 8x16",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_ToshibaLCD_8x8.ttf",
+        "family": "Px ToshibaLCD 8x8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_VTech_BIOS-2y.ttf",
+        "family": "Px VTech BIOS-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_VTech_BIOS.ttf",
+        "family": "Px VTech BIOS",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Verite_8x14.ttf",
+        "family": "Px Verite 8x14",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Verite_8x16.ttf",
+        "family": "Px Verite 8x16",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Verite_8x8-2y.ttf",
+        "family": "Px Verite 8x8-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Verite_8x8.ttf",
+        "family": "Px Verite 8x8",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Verite_9x14.ttf",
+        "family": "Px Verite 9x14",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Verite_9x16.ttf",
+        "family": "Px Verite 9x16",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Wyse700a-2y.ttf",
+        "family": "Px Wyse700a-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Wyse700a.ttf",
+        "family": "Px Wyse700a",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Wyse700b-2y.ttf",
+        "family": "Px Wyse700b-2y",
+        "style": "Regular"
+      },
+      {
+        "file": "Px_Wyse700b.ttf",
+        "family": "Px Wyse700b",
+        "style": "Regular"
+      }
+    ]
+  }
+]

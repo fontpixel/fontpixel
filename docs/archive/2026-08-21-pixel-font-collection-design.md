@@ -1,13 +1,21 @@
-# Open Pixel Fonts (开源像素字体馆) — Design Specification
+# FontPixel.com: Opensource Pixel Fonts (开源像素字体馆) — Design Specification
 
 Date: 2026-08-21
-Status: confirmed section by section with the project owner
-Site name: Open Pixel Fonts / 开源像素字体馆
+Status: historical design, originally confirmed section by section with the project owner
+Site name: FontPixel.com: Opensource Pixel Fonts / 开源像素字体馆
 Deployment: GitHub Pages (presentation assets) + GitHub Releases (downloadables)
+
+> 2026-09-17 architecture update: fixed specimens use SVG; interactive previews
+> parse and cache the downloadable Unicode BDF.gz in a Web Worker and render
+> on Canvas. Separate glyph packs are no longer published. One Cloudflare Pages
+> project serves both the site and `/downloads/`; the older deployment and
+> glyph-pack decisions below are historical. See [the hosting audit](../audits/hosting-audit-2026-09-17.md)
+> and [README](../../README.md) for the current implementation. This document is
+> retained as design history and does not prescribe an agent workflow.
 
 ## 1. Background and Goals
 
-Turn the collected open-source bitmap fonts (mostly CJK) into an automatically built static catalogue site. A font source is included automatically once its BDF/PCF is placed in the `fonts/` directory. The old project `../open-pixel-fonts-old` is scrapped and redone in full; its coverage-report concept is kept and substantially extended, while visuals, interaction, and engineering all start over. The three confirmed failings of the old project: the visuals had an AI smell, interaction and features were inadequate, and engineering quality was poor (including hash routing, which is bad for sharing).
+Turn the collected open-source bitmap fonts (mostly CJK) into an automatically built static catalogue site. A font source is included automatically once its BDF/PCF is placed in the `fonts/` directory. The old project `../pixel-font-collection-old` is scrapped and redone in full; its coverage-report concept is kept and substantially extended, while visuals, interaction, and engineering all start over. The three confirmed failings of the old project: the visuals had an AI smell, interaction and features were inadequate, and engineering quality was poor (including hash routing, which is bad for sharing).
 
 **Success criteria**
 
@@ -47,7 +55,7 @@ label, or a license that only permits copying, does not count; nor does an autho
 ## 3. Repository and Directory Conventions
 
 ```
-open-pixel-fonts/
+fontpixel/
 ├── fonts/                        # font sources, git-tracked
 │   └── <family-slug>/
 │       ├── family.toml           # hand-written metadata (optional; builder generates a stub)
@@ -69,7 +77,8 @@ open-pixel-fonts/
 │   ├── src/lib/                  # glyph pack decoder, GlyphStore, filter logic (vitest)
 │   └── public/data/              # pipeline artifacts (gitignored)
 ├── dist-downloads/               # downloadables (gitignored, uploaded to Releases by CI)
-├── docs/superpowers/specs/       # design and plan documents
+├── docs/specs/                  # design specifications
+├── docs/plans/                  # implementation plans and historical records
 └── .github/workflows/build.yml
 ```
 
@@ -84,7 +93,7 @@ author = "quiple"
 homepage = "https://galmuri.quiple.dev"
 repository = "https://github.com/quiple/galmuri"
 description = ""                  # optional, one-line blurb (Chinese; English produced by the translation flow)
-form = "gothic"                   # controlled letterform category, see §3.3; empty = "uncategorized"
+forms = ["gothic", "sans"]        # controlled letterform categories, see §3.3; [] = uncategorized
 vibes = ["retro-game"]            # free-form vibe tags (kebab-case; the site aggregates them into filters)
 converted_from = ""               # conversion source: "ttf"|"otf"|"woff2"|empty = native
 provenance = ""                   # source and acquisition notes (written automatically by the import tool)
@@ -109,9 +118,9 @@ script_subset = ""                # zh-Hans|zh-Hant|ja|ko|latin|… (fusion-pixe
 
 Variant dimensions = claimed size × weight × monospaced/proportional × language subset. Auto-detection priority: BDF/PCF properties (`PIXEL_SIZE`, `WEIGHT_NAME`, `SPACING`, `CHARSET_REGISTRY`, etc.) → filename heuristics → manual `[variants]` overrides. The family page organizes variants with size as the primary axis and the rest as switchers.
 
-### 3.3 Controlled Letterform Categories (form)
+### 3.3 Controlled Letterform Categories (forms)
 
-`gothic` heiti/gothic sans, `mingcho` songti/mincho serif, `rounded` rounded, `kai` kaishu, `fangsong` fangsong, `songti-serif` serif pixel (Latin serif lineage), `sans` sans-serif pixel (Latin), `script` handwriting, `decorative` decorative/display, `terminal` terminal/system, `other` other. The vocabulary may be extended or trimmed during implementation, but stays controlled (the site's filter lists each entry with bilingual names). One primary category per family, with at most one secondary category allowed.
+`gothic` East Asian heiti/gothic, `song` songti/mincho, `rounded` rounded, `kai` kaishu, `fangsong` fangsong, `serif` serif, `sans` sans-serif, `script` handwriting, `decorative` decorative/display, `terminal` terminal/system, `other` other. Families may have multiple categories; `gothic` always includes `sans`, and `song` always includes `serif`. Selecting several categories matches any of them. Legacy `form` strings remain readable; `mingcho`, `round`, and `serif-pixel` normalize to `song`, `rounded`, and `serif` in metadata and filter URLs.
 
 ## 4. Build Pipeline
 
@@ -172,7 +181,7 @@ Unrecognized → build warning + a "license unconfirmed" banner on the site. (Th
 
 ## 5. Site Information Architecture
 
-Routes (`ASTRO_BASE` configurable, default `/open-pixel-fonts`):
+Routes (`OPF_BASE` configurable, default `/` for fontpixel.com):
 
 - `/` — a minimal page that redirects to zh/en based on `navigator.language`, with hreflang.
 - `/zh/`, `/en/` — the catalogue page (i.e. the home page).
@@ -248,10 +257,10 @@ Concept: **a specimen hall** — the fonts are the exhibits, the interface is th
   - pytest: golden samples for each parser (a small hand-built BDF plus PCF fixtures generated by bdftopcf), metric definition cases, coverage counting cases, license fingerprint cases, glyph pack writer round-trip.
   - vitest: the glyph pack decoder (sharing binary fixtures with the Python writer), the pure filter functions, GlyphStore.
   - Playwright smoke tests: catalogue page rendering, filtering, sample editing triggering a redraw, the detail page's glyph grid, download links validated against the manifest.
-  - TDD throughout implementation (the superpowers flow).
+  - TDD throughout the original implementation.
 - **CI (GitHub Actions)**: job1 pipeline (cached on the fonts/ hash) → job2 Astro build + size red-line check (≤900MB) → Pages deployment; job3 incremental upload of downloadables to Releases. PRs only run the build and tests, without deploying.
 - **Licensing**: code is MIT; fonts keep their own licenses; charset data carries third-party notices.
-- **i18n**: typed zh/en dictionaries for UI copy; charset names and descriptions are bilingual and travel with the data files. **All English translation is done by Opus/Sonnet subagents (global rule: Fable does not do translation directly, including translation review).**
+- **i18n**: typed zh/en dictionaries for UI copy; charset names and descriptions are bilingual and travel with the data files.
 
 ## 10. Implementation Order
 
@@ -261,7 +270,7 @@ Concept: **a specimen hall** — the fonts are the exhibits, the interface is th
 4. **Bulk import**: run ingest over the whole collection folder, produce the import report; hand the style-annotation list to the owner for review.
 5. **Visual polish + bilingual copy + CI/deployment go-live.**
 
-Per-stage completion criteria and task breakdown are in the subsequent implementation plan (writing-plans).
+The completed implementation checklist has been removed; use the repository README for current commands.
 
 ## 11. Risks and Agreed Handling
 
@@ -270,3 +279,179 @@ Per-stage completion criteria and task breakdown are in the subsequent implement
 - **TTF native grid misdetection**: a failed check means no automatic conversion; the case goes into the report for a manual decision.
 - **Release asset URL stability**: asset names contain the family slug and no hash, so links stay stable long-term; content changes are expressed through the manifest sha256.
 - **Build duration**: incremental caching + parallel parsing; target for a full cold build < 15 minutes (in CI).
+
+
+## Historical implementation contracts
+
+Preserved from the completed August 21 plan because source comments still refer to C1–C8. These are historical schemas, not current build instructions. Current definitions live in `pipeline/opf/model.py`, `site/src/lib/schema.ts` and `site/src/lib/render.ts`; glyph packs are no longer published. The completed task checklists and agent workflow instructions have been removed.
+
+### C1. Glyph pack binary format v1 (little-endian)
+
+One file = one chunk, covering the code point range `[rangeStart, rangeEnd)`. The core pack uses the same format with the range `[0, 0x110000)`, stored sparsely. Written to disk gzipped (`.bin.gz`, mtime=0).
+
+```
+Offset  Type  Field
+0       4B    magic = "PFG1"
+4       u8    version = 1
+5       u8    flags = 0 (reserved)
+6       u16   glyphCount
+8       u32   rangeStart
+12      u32   rangeEnd
+16      glyphCount × 14B index entries (ascending by cp):
+          u32 cp
+          i16 dwidth        (x advance, px)
+          u8  bbw, u8 bbh   (bitmap width/height, px)
+          i8  bbxoff, i8 bbyoff (BDF BBX offsets)
+          u32 bitmapOffset  (relative to the start of the bitmap area)
+after   bitmap area: bbh × ceil(bbw/8) bytes per glyph, rows top to bottom, bits MSB-first (BDF convention)
+```
+
+### C2. Variant manifest (`data/packs/<slug>/<variantId>/manifest.json`)
+
+```json
+{ "version": 1, "slug": "galmuri", "variantId": "Galmuri9",
+  "pixelSize": 9, "ascent": 8, "descent": 1, "glyphCount": 12000,
+  "core": { "file": "core.bin.gz", "gzBytes": 6100, "glyphs": 320 },
+  "ranges": [ { "start": 0, "end": 256, "file": "00000000-00000100.bin.gz",
+                "gzBytes": 1500, "glyphs": 95 } ] }
+```
+
+### C3. Python internal model (`pfc/model.py`)
+
+```python
+@dataclass
+class Glyph:
+    cp: int; name: str; dwidth: int
+    bbw: int; bbh: int; bbx: int; bby: int
+    rows: bytes                     # bbh*ceil(bbw/8), MSB-first
+@dataclass
+class ParsedFont:
+    path: Path; family_slug: str; file_name: str
+    props: dict[str, str | int]
+    pixel_size: int; ascent: int; descent: int
+    bbox: tuple[int, int, int, int] # (w, h, xoff, yoff)
+    glyphs: list[Glyph]             # ascending by cp, only ENCODING>=0
+    warnings: list[str]
+```
+
+### C4. TS decoding and rendering interfaces (`site/src/lib/`)
+
+```ts
+// glyphpack.ts
+export interface DecodedGlyph { cp: number; dwidth: number; w: number; h: number;
+  xoff: number; yoff: number; rows: Uint8Array }
+export class GlyphChunk {
+  static parse(buf: ArrayBuffer): GlyphChunk
+  readonly rangeStart: number; readonly rangeEnd: number; readonly size: number
+  has(cp: number): boolean
+  get(cp: number): DecodedGlyph | null
+}
+// glyphstore.ts
+export interface VariantManifest { version: 1; slug: string; variantId: string;
+  pixelSize: number; ascent: number; descent: number; glyphCount: number;
+  core: { file: string; gzBytes: number; glyphs: number };
+  ranges: { start: number; end: number; file: string; gzBytes: number; glyphs: number }[] }
+export class GlyphStore {
+  constructor(dataBase: string)   // e.g. `${base}/data`
+  loadManifest(slug: string, variantId: string): Promise<VariantManifest>
+  glyphsFor(slug: string, variantId: string, text: string): Promise<Map<number, DecodedGlyph | null>>
+}
+// render.ts — pure-function rasterization into a 1:1 buffer, then wrapped and scaled up by canvas (imageSmoothing off)
+export interface RenderOpts { scale: number; invert: boolean; grid: boolean;
+  highlightMissing: boolean; maxWidth?: number }
+export interface RasterResult { width: number; height: number;
+  data: Uint8ClampedArray /* RGBA */; missing: number[] }
+export function rasterize(text: string, glyphs: Map<number, DecodedGlyph | null>,
+  font: { pixelSize: number; ascent: number; descent: number },
+  opts: Omit<RenderOpts, "scale">): RasterResult
+export function paint(canvas: HTMLCanvasElement, r: RasterResult, scale: number): void
+```
+
+Missing-glyph layout: advance = round(pixelSize/2)+1, drawing a 1px dashed box of ascent height above the baseline; when `highlightMissing` is on, fill it with the highlight color. Line breaks on `\n` only; no shaping or kerning (noted on the About page).
+
+### C5. index.json (catalogue page; `data/index.json`)
+
+```json
+{ "generatedAt": "2026-08-21T00:00:00Z", "families": [ {
+  "slug": "galmuri", "name": "Galmuri", "nameZh": "", "author": "quiple",
+  "form": "gothic", "vibes": ["retro-game"], "scripts": ["ko", "latin"],
+  "sizes": [7, 9, 11], "weights": ["regular"], "spacing": ["proportional"],
+  "license": { "spdx": "OFL-1.1", "name": "SIL Open Font License 1.1",
+               "commercial": true, "confidence": "auto-high" },
+  "converted": false, "curated": true, "glyphCount": 17000,
+  "hanInk": null, "inkHeight": 8,
+  "badges": ["ksx1001-hangul", "kana"],
+  "coverageSummary": { "gb2312": 0.02, "big5-changyong": 0.0, "jisx0208-l1": 0.31,
+    "ksx1001-hangul": 1.0, "kana": 1.0, "wgl4": 0.88, "cp437": 0.75 },
+  "variants": [ { "id": "Galmuri9", "file": "Galmuri9.bdf", "size": 9,
+    "weight": "regular", "spacing": "proportional", "script": null,
+    "glyphs": 12000 } ],
+  "preview": "previews/galmuri/ko.svg", "sampleLang": "ko", "added": "2026-08-21" } ] }
+```
+
+`confidence ∈ {"auto-high","auto-low","manual","unknown"}`. `forms ⊆ {gothic,song,rounded,kai,fangsong,serif,sans,script,decorative,terminal,other}` (empty = uncategorized); `gothic` includes `sans`, and `song` includes `serif`. `scripts ⊆ {zh-hans,zh-hant,ja,ko,latin,cyrillic,greek}`.
+
+### C6. detail.json (`data/details/<slug>.json`)
+
+```json
+{ "slug": "galmuri", "meta": { "...same as the index family entry..." : 0 },
+  "homepage": "", "repository": "", "description": "", "provenance": "",
+  "licenseText": "OFL.txt", "warnings": ["..."],
+  "metrics": { "Galmuri9": { "pixelSize": 9, "ascent": 8, "descent": 1,
+    "bbox": [9, 9, 0, -1], "hanInk": null, "capHeight": 7, "xHeight": 5,
+    "maxInk": [9, 9], "maxInkCps": [65, 65], "monospaced": false,
+    "dwidthHistogram": { "5": 100, "9": 11900 } } },
+  "coverage": { "Galmuri9": { "gb2312-l1": [80, 3755], "hiragana": [86, 86] } },
+  "unicodeBlocks": { "Galmuri9": [ ["Basic Latin", 95, 95] ] },
+  "downloads": [ { "variantId": "Galmuri9", "kind": "bdf", "file": "galmuri--Galmuri9.bdf.gz",
+    "bytes": 120000, "sha256": "…" } ] }
+```
+
+### C7. Coverage charset registry (`pfc/coverage/charsets.py` + `pfc/coverage/data/`)
+
+```python
+@dataclass(frozen=True)
+class Charset:
+    id: str; section: str          # section ∈ overview|gb|prc-lit|tw|hk|jp|kr|intl
+    name_zh: str; name_en: str; desc_zh: str; desc_en: str
+    cps: frozenset[int]; source: str
+def load_charsets(data_dir: Path) -> list[Charset]
+def coverage_for(cps: frozenset[int], charsets: list[Charset]) -> dict[str, tuple[int, int]]
+def unicode_block_coverage(cps: frozenset[int], ucd: Ucd) -> list[tuple[str, int, int]]
+```
+
+Data file format (`pfc/coverage/data/<section>/<id>.txt`):
+
+```
+# id: gb2312-l1
+# name_zh: GB/T 2312 一级汉字
+# name_en: GB/T 2312 Level 1 Hanzi
+# desc_zh: 1980 年国家标准一级常用字,按拼音排序
+# desc_en: ...
+# source: Python gb2312 codec, rows 16-55; generated 2026-08-21
+# license: data derived from standard, factual
+4E00
+4E8C..4E8D
+啊
+```
+
+Each line is one of three forms: `XXXX` (hex), `XXXX..YYYY` (closed interval), or literal characters (any number per line, taken character by character). `#` starts a comment.
+
+### C8. Directory conventions and artifact paths
+
+```
+site/public/data/
+  index.json
+  coverage-intervals.bin.gz        # character lookup: see Task 18
+  details/<slug>.json
+  packs/<slug>/<variantId>/{manifest.json, core.bin.gz, XXXXXXXX-XXXXXXXX.bin.gz}
+  previews/<slug>/<lang>.svg       # build-time default sample SVG
+  og/<slug>.png
+dist-downloads/
+  manifest.json                    # [{family,variantId,kind,file,bytes,sha256}]
+  galmuri--Galmuri9.bdf.gz / .pcf.gz / galmuri.zip
+```
+
+`variantId` = the filename with its extension stripped, restricted to `[A-Za-z0-9_-]` (everything else replaced with `-`). `slug` = the family directory name.
+
+---

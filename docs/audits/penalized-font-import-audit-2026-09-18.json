@@ -1,0 +1,548 @@
+{
+  "date": "2026-09-18",
+  "manual_penalty": -0.5,
+  "bitmap_families": [
+    {
+      "family": "misc-fixed",
+      "method": "source BDF byte-identical",
+      "files": [
+        {
+          "file": "10x20.bdf",
+          "sha256": "3480bcb4a20b67fe7fb88e01f179caf781954e642c3a7a77f325de1a435c1208",
+          "encoded_glyphs": 5205,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "12x13ja.bdf",
+          "sha256": "29f1edcfe319996a7c228bcb28f7445153fe16bcbcecd83fef8e8b946e2ee5ee",
+          "encoded_glyphs": 19208,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "18x18ja.bdf",
+          "sha256": "e3fb85cec927d47a1210837176eb4086bbce46d5acb79826443aedbafd606955",
+          "encoded_glyphs": 19168,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "18x18ko.bdf",
+          "sha256": "928767d3c3b38c361e5c4e50c1dc95d408a086d3b12b5ce2bc594eb0021fa9b2",
+          "encoded_glyphs": 27990,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "4x6.bdf",
+          "sha256": "dab0fc40105137bae55cd60c8f061c942787a4da21e44df28deca1525851a9c0",
+          "encoded_glyphs": 919,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "5x7.bdf",
+          "sha256": "57197fb80351bd95d00110eb710158706cca883f517bdf3c4db373332ef894ca",
+          "encoded_glyphs": 1848,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "5x8.bdf",
+          "sha256": "72dbfa5359a1f327ce87b9db6371bdc98c057619605532c0010550ac76b08a35",
+          "encoded_glyphs": 1426,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "6x10.bdf",
+          "sha256": "99abf27fa2ca5a5171cad3df13aed2d4c55e73698cb141981b3e2268c733f64c",
+          "encoded_glyphs": 1597,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "6x12.bdf",
+          "sha256": "bd690faa37a6828eb8eb647174de5f95556833e847e74fc68ef4f01edd406229",
+          "encoded_glyphs": 4531,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "6x13.bdf",
+          "sha256": "c68c55ca8effcdc2714fffa9c8e07df290411867b00b547eeae952f7473efc9b",
+          "encoded_glyphs": 4121,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "6x13B.bdf",
+          "sha256": "0c7dc65258361f7cceaaa3e34d745833c4408aded6e88f60a650f9c55a04d6b0",
+          "encoded_glyphs": 1282,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "6x13O.bdf",
+          "sha256": "4ccddabaee0e0fb14de579f5c3b4e3d5bb0ca5e4ba94c28cece24d14d5fd9c10",
+          "encoded_glyphs": 770,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "6x9.bdf",
+          "sha256": "ea08f02d4d5fd33616fadd55716f0303db98b8eb5be3ed025321b784f164ed1b",
+          "encoded_glyphs": 1296,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "7x13.bdf",
+          "sha256": "c7e05ffe85a3d33744c642ac70f7ceb05b38b7457e3125d6b7d5aa82866de39d",
+          "encoded_glyphs": 3226,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "7x13B.bdf",
+          "sha256": "37a151ecf6aed170a46a4c98278611541ad30d3690ceea35df0926e4f873e311",
+          "encoded_glyphs": 1003,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "7x13O.bdf",
+          "sha256": "d86832b9d913edaddceb0d86e4386b654427ba14be93c0a4f178425e8bd58f50",
+          "encoded_glyphs": 831,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "7x14.bdf",
+          "sha256": "b7ab88773ed6a9004039c001f7687e14934cfa73cb0251439b51b28134a0887b",
+          "encoded_glyphs": 2576,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "7x14B.bdf",
+          "sha256": "126ebdceaf8a735cfbf9c6d11cf4435fcbe8942329971e628d43dc6ee50f3f5f",
+          "encoded_glyphs": 1009,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "8x13.bdf",
+          "sha256": "57cf39e2f24007c5e6bd0d4b9c03ebe5ae0003277a005f819c3aab4cc5ecb623",
+          "encoded_glyphs": 3703,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "8x13B.bdf",
+          "sha256": "fbdf12fb3fa41a2cee4b94e0d4b9a7380053d18d986fbfd8a21ea4acfce1ab4c",
+          "encoded_glyphs": 1141,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "8x13O.bdf",
+          "sha256": "6e9bc236497ab45d050ced426c93272be6921d1859524097556df65a09f1f62f",
+          "encoded_glyphs": 1295,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "9x15.bdf",
+          "sha256": "038abf717dfba53c21ae7ac06221a2548c5212c92e9690c66cc4ab1d7b25d999",
+          "encoded_glyphs": 4777,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "9x15B.bdf",
+          "sha256": "7f8a10a84f2f3f01b22fb8cffccf4af690caa370942433d2bf119a67782da1f4",
+          "encoded_glyphs": 1688,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "9x18.bdf",
+          "sha256": "35771bf96948cbb10a9c8de08ae2a064710ee61c3094bbeb170e2aa369be060d",
+          "encoded_glyphs": 4766,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "9x18B.bdf",
+          "sha256": "086aae1db21514671478843eac3ff563cfe0b7a8cf96fdd32cb797065a297cfb",
+          "encoded_glyphs": 762,
+          "unencoded_glyphs": 0
+        }
+      ]
+    },
+    {
+      "family": "dos-gothic",
+      "method": "source BDF byte-identical",
+      "files": [
+        {
+          "file": "DOSGothic-16.bdf",
+          "sha256": "8c83bb9b9a700d9689deced356112aae597e9fc3d3d1793e0ec5b80e4825c032",
+          "encoded_glyphs": 24567,
+          "unencoded_glyphs": 302
+        }
+      ]
+    },
+    {
+      "family": "dos-saemmul",
+      "method": "source BDF byte-identical",
+      "files": [
+        {
+          "file": "DOSSaemmul-16.bdf",
+          "sha256": "245a2d86700fe54700373f7ce6e603974c5cc73bb1c41718e96bfe0cb4d38aaf",
+          "encoded_glyphs": 24567,
+          "unencoded_glyphs": 302
+        }
+      ]
+    },
+    {
+      "family": "baekmuk-batang",
+      "method": "source BDF byte-identical",
+      "files": [
+        {
+          "file": "batang10.bdf",
+          "sha256": "f76b791e51420c55492beebd377f559dbd2bb9e6e5f07211cdb0f375745513b1",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang10b.bdf",
+          "sha256": "ab2fab605a0f4c91cc904556a45e03cbf4622fde80d4cf2e88c66b9920964227",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang12.bdf",
+          "sha256": "1159ee8f700541ca26432990496c1bbe8d7c02da1d048933cee66a42f5ea9ec8",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang12b.bdf",
+          "sha256": "81a925629f398b529d909794f7a609f761008ebf1c8660a8d47007f7fc2f4e9d",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang14.bdf",
+          "sha256": "75d0bab4ad43de17752b2b58d82807830a55ee5df1e179f8c99d8fb4d050e142",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang14b.bdf",
+          "sha256": "fe3a1549c4489188437ec0c18cf37b1fb040cdc0af4493c54bff71512af16aa4",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang16.bdf",
+          "sha256": "d5f703deef87af44d45465a8795966d87ea09eb68366e71433b5d40e69cfe21f",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang16b.bdf",
+          "sha256": "e71f46258ffbd912c8fd79ec1e922e97b85752e013f5449014da894813a57638",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang18.bdf",
+          "sha256": "10bba4c988714564cb1575dd636b765748c3abe3a86d2e7983fdcb8869dc764c",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang18b.bdf",
+          "sha256": "e3dfb5519814ad01976452e550a5c46716b83d8ebda1a2e3b38f0be1e0934f18",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang20.bdf",
+          "sha256": "35e5e9abd4717baca911b62efe7f4d2461c0faf1059258ee98414c55bc26beed",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang20b.bdf",
+          "sha256": "3d67b2b5c6bcc1164e785fa4b9d6fbf83f9f5eb0727f344859b63b0d417f268d",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang24.bdf",
+          "sha256": "6019f67f41a52d9b08f5f71dcc367898a396e6a298ecad13e0ec83d69c642e9a",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "batang24b.bdf",
+          "sha256": "8823deaf2630f10e4d3fc1bf7074a28f5a3b87250c86bc6baf13551d57b0b6e1",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        }
+      ]
+    },
+    {
+      "family": "baekmuk-dotum",
+      "method": "source BDF byte-identical",
+      "files": [
+        {
+          "file": "dotum10.bdf",
+          "sha256": "964988cf5954258a7831dd3446323b9b59c3477ff80d17662205075a19ac6f79",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "dotum12.bdf",
+          "sha256": "a557bd74fc9987aca93428b8e1968c90780f204215ae10ea6e8cc9aa8bf6876f",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "dotum14.bdf",
+          "sha256": "ff71b7fc9821053e95589d709f670484a19a7662fb228bed055e9050280e5030",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "dotum16.bdf",
+          "sha256": "8d36111f1610d9634bf8b3f3cb9cefb4c5814980425f1ac223fa31c24b1d1aba",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "dotum18.bdf",
+          "sha256": "6e911456fb1f74aacfd7ceae399b200b2b752a79aa3575f6050368a4eb070080",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "dotum20.bdf",
+          "sha256": "d626cd496be3d72f7dfad45c96aed3a292e7ec9bea0703b36a619683d518d7f0",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "dotum24.bdf",
+          "sha256": "2448e01744d7bc9fb0e58449156ea349a5d007a909a3cf75feb5c9b57ee2a729",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        }
+      ]
+    },
+    {
+      "family": "baekmuk-gulim",
+      "method": "source BDF byte-identical",
+      "files": [
+        {
+          "file": "gulim10.bdf",
+          "sha256": "b5cf5f4bb06549e2874e696375ebe02e001b78c3d3b1b75296e0a5a41f049ade",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim10b.bdf",
+          "sha256": "bcc891af90e4cfcaaff513e9ffa793e7cdd6a1234e6da1ce15b5f934834f2593",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim12.bdf",
+          "sha256": "7046a2080d343c2499e69c08e73efcdde106a9a154b854028147c8ae292afbf7",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim12b.bdf",
+          "sha256": "6e42de2a25b51b467a054280c86086783ef923ab752b812b8106cbfbcc1565fc",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim14.bdf",
+          "sha256": "b41174facc55a7eb01e4209b7068e03c86f1f294265b993258fe66568df1b92c",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim14b.bdf",
+          "sha256": "2a2a3438e49135d59625a67fab71ccad5f10e6c6f4bd542fc75d04adf6eb0e1a",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim16.bdf",
+          "sha256": "783ed6a3200fc9b88fa5c301d3b008a532b6972d1cb423862110ae8c1222ab81",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim16b.bdf",
+          "sha256": "8455932dba13247a4736ac684012a71593b593346defc627b32c5163cc1075b0",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim18.bdf",
+          "sha256": "290da3c85f9cc86aa756e5ced693d3ee24493111d0b913151ae9a1f3cfe395cf",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim18b.bdf",
+          "sha256": "8fd04f96f0fa086e3ca4ff3671ef7fa74911572658d5dd1e48c7741810afbdbd",
+          "encoded_glyphs": 8224,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim20.bdf",
+          "sha256": "8ee7bfdbd8347264c6a1dc6ba82ec7c1c817e87614d5cdd1a7cd4b1183d999a1",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim20b.bdf",
+          "sha256": "1d75ef68595de97e30d4b28d17f7a0a22d221334606b3effb983a71f0a71346a",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim24.bdf",
+          "sha256": "0f1184f4a105180cd26905510abddd2ac78a355db9559e515d0aa99bfd9606a7",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "gulim24b.bdf",
+          "sha256": "f3591220b02831a651953e9d49fa9ced70f71cc9a65d028bf49c30c81bc48abe",
+          "encoded_glyphs": 8225,
+          "unencoded_glyphs": 0
+        }
+      ]
+    },
+    {
+      "family": "baekmuk-hline",
+      "method": "source BDF byte-identical",
+      "files": [
+        {
+          "file": "hline10.bdf",
+          "sha256": "af1edc3a350db7932ba77a6b2669081fa25eadbaa2cd0ef038cdb4739e01bcab",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "hline12.bdf",
+          "sha256": "fa2e0c31ea546a1b196e41a2923e66f2d6313abae1614d1f6678c51c9cae284f",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "hline14.bdf",
+          "sha256": "b21885d8a5b7e6416347857c699081f42b25edc37feceac2770aa926c1624e38",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "hline16.bdf",
+          "sha256": "1a6de600201e21e4b3c8b60f9dc38e6044776292a2aa87b56e7446bc2a4a4e42",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "hline18.bdf",
+          "sha256": "03d9e8540ad9020e83d526bdbf773e568458a1f63ea57f7820504847d82f4599",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "hline20.bdf",
+          "sha256": "36255414cad63816902b3d36493c87ee8c8751f1c5dfdf2ac8a4461c88290937",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        },
+        {
+          "file": "hline24.bdf",
+          "sha256": "b30d3c7725df35de2817ea5e23129a2994ddd3506aef8f03bda984d2c7f3e032",
+          "encoded_glyphs": 8223,
+          "unencoded_glyphs": 0
+        }
+      ]
+    },
+    {
+      "family": "1307",
+      "method": "sprite pixels identical",
+      "files": [
+        {
+          "file": "1307-8px.bdf",
+          "sha256": "50a0e35a5f8d164d1c996b80b6e88e0cbcfe48c4aeabe3e49f5599656316a833",
+          "encoded_glyphs": 95,
+          "unencoded_glyphs": 14
+        }
+      ]
+    }
+  ],
+  "misc_fixed_reference_url": "https://xorg.freedesktop.org/releases/individual/font/font-misc-misc-1.1.3.tar.xz",
+  "misc_fixed_reference_sha256": "79abe361f58bb21ade9f565898e486300ce1cc621d5285bec26e14b6a8618fed",
+  "jiskan_variants": [
+    {
+      "family": "jiskan",
+      "file": "JF-Dot-jiskan16s-16px.bdf",
+      "source": "direct-downloads-2026-09-03/jikasei-jfdotfont-20150527/JF-Dot-jiskan16s.ttf",
+      "source_sha256": "3ac43ee180f695289cc6ea1ec6878865fa13f6795b33228fe1a2a68232cfd0d7",
+      "unicode_characters": 11389,
+      "unencoded_glyphs": 0,
+      "cmap_sha256": "a68a63d2a98bb26f8e320fead2ba8162b8089d312022b9e24cef6d6c9d8703f6",
+      "unencoded_names_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "pixel_geometry_sha256": "c872432108a3ee70ea5a60e347b768e3dab2ff3dc780482f58dbc0a232ee49d0",
+      "checked_linear_glyphs": 11389,
+      "curved_glyphs": 0,
+      "grid_mismatches": 0
+    },
+    {
+      "family": "jiskan",
+      "file": "JF-Dot-jiskan16s-1990-16px.bdf",
+      "source": "direct-downloads-2026-09-03/jikasei-jfdotfont-20150527/JF-Dot-jiskan16s-1990.ttf",
+      "source_sha256": "700eb8cca15305301dccc0726f01d8b0960ad28003d7f70b52b2bb2b8276ed9f",
+      "unicode_characters": 7146,
+      "unencoded_glyphs": 0,
+      "cmap_sha256": "590581a8302544c7b8522ae84ea04ffef381096eb4f9714493fea1e21d85e2f5",
+      "unencoded_names_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "pixel_geometry_sha256": "83f75100205302f0cf9b1d6abca3b94bbc6f26d7bb8cf7786b9ab89866b6d6b8",
+      "checked_linear_glyphs": 7146,
+      "curved_glyphs": 0,
+      "grid_mismatches": 0
+    },
+    {
+      "family": "jiskan",
+      "file": "JF-Dot-jiskan16s-2000-16px.bdf",
+      "source": "direct-downloads-2026-09-03/jikasei-jfdotfont-20150527/JF-Dot-jiskan16s-2000.ttf",
+      "source_sha256": "d80d63f93d35bf5a448925160ec9a6761208037b68fbd2af59e532e8103c472e",
+      "unicode_characters": 11379,
+      "unencoded_glyphs": 0,
+      "cmap_sha256": "7eea70fc440cf8465e687d0f29931be4665dd624a55ff07607dcbb3aab0338ba",
+      "unencoded_names_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "pixel_geometry_sha256": "4825ddadda1cce18ec043863b5291a0fc788ed0af2a66efc997c974f6818b6e6",
+      "checked_linear_glyphs": 11379,
+      "curved_glyphs": 0,
+      "grid_mismatches": 0
+    },
+    {
+      "family": "jiskan",
+      "file": "JF-Dot-jiskan24h-2000-24px.bdf",
+      "source": "direct-downloads-2026-09-03/jikasei-jfdotfont-20150527/JF-Dot-jiskan24h-2000.ttf",
+      "source_sha256": "c34bb92efa5ded91936ee3c92b16e90f038b7c8f7a6a043938521f4bcba979c9",
+      "unicode_characters": 11385,
+      "unencoded_glyphs": 0,
+      "cmap_sha256": "8b36fc2d6a8047d99ea973b68a38a4f374ee596a2f5e0374485d672a83610f82",
+      "unencoded_names_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "pixel_geometry_sha256": "940997d415f87b06a036beeaf42b846d39b3945e76b4eb85a7f0d1fc3542a428",
+      "checked_linear_glyphs": 11385,
+      "curved_glyphs": 0,
+      "grid_mismatches": 0
+    },
+    {
+      "family": "jiskan",
+      "file": "JF-Dot-jiskan24h-24px.bdf",
+      "source": "direct-downloads-2026-09-03/jikasei-jfdotfont-20150527/JF-Dot-jiskan24h.ttf",
+      "source_sha256": "ad334e6cc57ea7f77bb3b0b2d2cf96bac0e8332729adf1a7ea8917c7314b4720",
+      "unicode_characters": 11385,
+      "unencoded_glyphs": 0,
+      "cmap_sha256": "8b36fc2d6a8047d99ea973b68a38a4f374ee596a2f5e0374485d672a83610f82",
+      "unencoded_names_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "pixel_geometry_sha256": "0970329a7c1db1f0177d14892698b1a4587fdef5424a388d981750e70f263ab7",
+      "checked_linear_glyphs": 11385,
+      "curved_glyphs": 0,
+      "grid_mismatches": 0
+    }
+  ]
+}

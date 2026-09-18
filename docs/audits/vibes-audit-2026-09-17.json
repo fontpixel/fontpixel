@@ -1,0 +1,5830 @@
+{
+  "1307": {
+    "name": "1307",
+    "previous": [],
+    "vibes": [
+      "handwriting",
+      "manuscript",
+      "western-rpg",
+      "handheld"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PNG"
+    ]
+  },
+  "3x3-mono": {
+    "name": "3x3 Mono",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "micro"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "4thd": {
+    "name": "4thD",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "512-8": {
+    "name": "512_8",
+    "previous": [
+      "terminal-hardcore",
+      "retro-game"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "5thelement": {
+    "name": "5thElement",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "adobe-courier": {
+    "name": "Adobe Courier",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "typewriter",
+      "unix",
+      "serif"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "adobe-helvetica": {
+    "name": "Adobe Helvetica",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "adobe-new-century-schoolbook": {
+    "name": "Adobe New Century Schoolbook",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "adobe-times": {
+    "name": "Adobe Times",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "ant-party": {
+    "name": "Ant Party",
+    "previous": [
+      "micro",
+      "serif",
+      "western-rpg"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui",
+      "western-rpg",
+      "rounded"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "ark-pixel": {
+    "name": "Ark Pixel",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-anorexia": {
+    "name": "Artwiz Anorexia",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-aqui": {
+    "name": "Artwiz Aqui",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-cure": {
+    "name": "Artwiz Cure",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-drift": {
+    "name": "Artwiz Drift",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-edges": {
+    "name": "Artwiz Edges",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-fkp": {
+    "name": "Artwiz FKP",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-gelly": {
+    "name": "Artwiz Gelly",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-glisp": {
+    "name": "Artwiz Glisp",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-kates": {
+    "name": "Artwiz Kates",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-lime": {
+    "name": "Artwiz Lime",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-mints": {
+    "name": "Artwiz Mints",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-nu": {
+    "name": "Artwiz Nu",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-smoothansi": {
+    "name": "Artwiz Smoothansi",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "artwiz-snap": {
+    "name": "Artwiz Snap",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "ayu-gothic": {
+    "name": "Ayu Gothic",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "ayu-mincho": {
+    "name": "Ayu Mincho",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "ba-ding-shi-wei-ti-16": {
+    "name": "BaDingShiWeiTi 16",
+    "previous": [
+      "decorative",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "baekmuk-batang": {
+    "name": "Baekmuk Batang",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "baekmuk-dotum": {
+    "name": "Baekmuk Dotum",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "baekmuk-gulim": {
+    "name": "Baekmuk Gulim",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "baekmuk-hline": {
+    "name": "Baekmuk Hline",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "bestten": {
+    "name": "BestTen",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "bitbuntu": {
+    "name": "Bitbuntu",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "bitcount": {
+    "name": "Bitcount",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "dot-matrix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "bitocra": {
+    "name": "Bitocra",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "boutique-bitmap": {
+    "name": "Boutique Bitmap",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "breadcrumbs-flakery": {
+    "name": "Breadcrumbs & Flakery",
+    "previous": [
+      "micro",
+      "serif",
+      "western-rpg"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "bytesized": {
+    "name": "Bytesized",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "micro",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "chang-ban-dian-song": {
+    "name": "ChangBanDianSong",
+    "previous": [
+      "retro-game",
+      "classic"
+    ],
+    "vibes": [
+      "game-ui",
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "chenhao-rp-font": {
+    "name": "ChenhaoRPFont",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "KBITX"
+    ]
+  },
+  "cherry": {
+    "name": "Cherry",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "chill-bitmap": {
+    "name": "ChillBitmap",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "chillmoonmono": {
+    "name": "ChillMoonmono",
+    "previous": [
+      "handwriting"
+    ],
+    "vibes": [
+      "handwriting"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "chusung": {
+    "name": "Chusung",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "clearlyu": {
+    "name": "ClearlyU",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "clfn": {
+    "name": "CLFN",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "KBITX"
+    ]
+  },
+  "corvid-conspirator": {
+    "name": "Corvid Conspirator",
+    "previous": [
+      "micro",
+      "serif",
+      "western-rpg"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "counting-apples": {
+    "name": "Counting Apples",
+    "previous": [
+      "micro",
+      "serif",
+      "western-rpg"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "cozette": {
+    "name": "Cozette",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "cute"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "creep": {
+    "name": "Creep",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "ctrld": {
+    "name": "CtrlD",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "cubic-11": {
+    "name": "Cubic 11",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "WOFF"
+    ]
+  },
+  "dank-depths": {
+    "name": "Dank Depths",
+    "previous": [],
+    "vibes": [
+      "western-rpg",
+      "serif",
+      "experimental"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "departure-mono": {
+    "name": "Departure Mono",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "programming",
+      "technical",
+      "sci-fi",
+      "retro-futuristic"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "dina": {
+    "name": "Dina",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "dos-gothic": {
+    "name": "DOSGothic",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "dos",
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "dos-iyagi-boldface": {
+    "name": "DOSIyagiBoldface",
+    "previous": [
+      "cute"
+    ],
+    "vibes": [
+      "dos",
+      "cute",
+      "block"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "dos-myungjo": {
+    "name": "DOSMyungjo",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "dos",
+      "retro-computer",
+      "serif"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "dos-pilgi": {
+    "name": "DOSPilgi",
+    "previous": [
+      "handwriting"
+    ],
+    "vibes": [
+      "dos",
+      "handwriting"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "dos-saemmul": {
+    "name": "DOSSaemmul",
+    "previous": [
+      "cute"
+    ],
+    "vibes": [
+      "dos",
+      "cute",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "dotgothic16": {
+    "name": "DotGothic16",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "doto": {
+    "name": "Doto",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "dot-matrix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "dylex-crawl": {
+    "name": "Dylex Crawl",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "dylex-terminal": {
+    "name": "Dylex Terminal",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "envypn": {
+    "name": "Envypn",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "erusfont": {
+    "name": "Erusfont",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "etl-thai": {
+    "name": "ETL Thai",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "fairfax": {
+    "name": "Fairfax",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fairfax-hax": {
+    "name": "Fairfax Hax",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fairfax-pona": {
+    "name": "Fairfax Pona",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fairfax-pula": {
+    "name": "Fairfax Pula",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fairfax-serif": {
+    "name": "Fairfax Serif",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fairfax-sm": {
+    "name": "Fairfax SM",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fantasy-warrior": {
+    "name": "Fantasy Warrior",
+    "previous": [],
+    "vibes": [
+      "blackletter",
+      "western-rpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fashionbitmap16": {
+    "name": "FashionBitmap16",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "fonsung": {
+    "name": "Fonsung",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "font8x8": {
+    "name": "font8x8",
+    "previous": [
+      "retro-game",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "retro-computer",
+      "bios",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "C bitmap arrays"
+    ]
+  },
+  "frogatto-dialog": {
+    "name": "Frogatto Dialog",
+    "previous": [
+      "game-ui",
+      "western-rpg"
+    ],
+    "vibes": [
+      "game-ui",
+      "western-rpg"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PNG"
+    ]
+  },
+  "frogatto-label": {
+    "name": "Frogatto Label",
+    "previous": [
+      "game-ui",
+      "western-rpg"
+    ],
+    "vibes": [
+      "game-ui",
+      "western-rpg"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PNG"
+    ]
+  },
+  "frogatto-numbers": {
+    "name": "Frogatto Numbers",
+    "previous": [
+      "game-ui",
+      "western-rpg",
+      "block"
+    ],
+    "vibes": [
+      "game-ui",
+      "western-rpg",
+      "block"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PNG"
+    ]
+  },
+  "frogatto-outline": {
+    "name": "Frogatto Outline",
+    "previous": [
+      "game-ui",
+      "western-rpg"
+    ],
+    "vibes": [
+      "game-ui",
+      "western-rpg"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PNG"
+    ]
+  },
+  "fusion-bold-pixel": {
+    "name": "Fusion Bold Pixel",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "fusion-pixel": {
+    "name": "Fusion Pixel",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "galmuri": {
+    "name": "Galmuri",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "handheld",
+      "nintendo-ds",
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "gilded-bitmap": {
+    "name": "Gilded Bitmap",
+    "previous": [
+      "serif",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "serif",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BMP",
+      "PNG"
+    ]
+  },
+  "gnu-unifont": {
+    "name": "GNU Unifont",
+    "previous": [
+      "fallback"
+    ],
+    "vibes": [
+      "fallback",
+      "terminal"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "gohufont": {
+    "name": "GohuFont",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "gossip": {
+    "name": "Gossip",
+    "previous": [
+      "blackletter",
+      "textura",
+      "textile",
+      "manuscript"
+    ],
+    "vibes": [
+      "blackletter",
+      "textura",
+      "textile",
+      "manuscript"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "gossip-icons": {
+    "name": "Gossip Icons",
+    "previous": [
+      "textile",
+      "symbols"
+    ],
+    "vibes": [
+      "textile",
+      "symbols"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "gothic-pixelart": {
+    "name": "Gothic Pixelart Font",
+    "previous": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "gothic-pixels": {
+    "name": "Gothic Pixels",
+    "previous": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "handjet": {
+    "name": "Handjet",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "dot-matrix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "haxor": {
+    "name": "Haxor",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "hexin-pixel": {
+    "name": "Hexin Pixel Font",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "home-video": {
+    "name": "Home Video",
+    "previous": [
+      "vhs",
+      "crt-osd"
+    ],
+    "vibes": [
+      "vhs",
+      "crt-osd"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "ibm-bios": {
+    "name": "IBM BIOS",
+    "vibes": [
+      "retro-computer",
+      "dos",
+      "terminal",
+      "bios"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ],
+    "catalogue_status": "restored"
+  },
+  "ibm-cga": {
+    "name": "IBM CGA",
+    "vibes": [
+      "retro-computer",
+      "dos",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ],
+    "catalogue_status": "restored"
+  },
+  "ibm-cga-light": {
+    "name": "IBM CGA Light",
+    "vibes": [
+      "retro-computer",
+      "dos",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ],
+    "catalogue_status": "restored"
+  },
+  "ibm-ega": {
+    "name": "IBM EGA",
+    "vibes": [
+      "retro-computer",
+      "dos",
+      "terminal",
+      "ega"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ],
+    "catalogue_status": "restored"
+  },
+  "ibm-mda": {
+    "name": "IBM MDA",
+    "vibes": [
+      "retro-computer",
+      "dos",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ],
+    "catalogue_status": "restored"
+  },
+  "ibm-vga": {
+    "name": "IBM VGA",
+    "vibes": [
+      "retro-computer",
+      "dos",
+      "terminal",
+      "vga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ],
+    "catalogue_status": "restored"
+  },
+  "illusion-book": {
+    "name": "Illusion Book",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book",
+      "elegant"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "isas-song": {
+    "name": "ISAS Song",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "izumi": {
+    "name": "Izumi Gothic",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "jacquard": {
+    "name": "Jacquard",
+    "previous": [
+      "decorative"
+    ],
+    "vibes": [
+      "blackletter",
+      "textura",
+      "manuscript",
+      "textile"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "jacquarda-bastarda-9": {
+    "name": "Jacquarda Bastarda 9",
+    "previous": [
+      "decorative"
+    ],
+    "vibes": [
+      "blackletter",
+      "bastarda",
+      "manuscript",
+      "textile"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "jelly-pixel": {
+    "name": "Jelly Pixel",
+    "previous": [
+      "cute"
+    ],
+    "vibes": [
+      "cute",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "jersey": {
+    "name": "Jersey",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "sports",
+      "block",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "jiskan": {
+    "name": "jiskan",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "k12": {
+    "name": "K12",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "k12x10": {
+    "name": "k12x10",
+    "previous": [
+      "retro-game",
+      "classic"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "k12x8": {
+    "name": "k12x8",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "k14": {
+    "name": "K14",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "k6x8": {
+    "name": "k6x8",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "micro"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "k8x12": {
+    "name": "k8x12",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kakwa": {
+    "name": "Kakwafont",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "kanamecho": {
+    "name": "Kanamecho",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kappa20": {
+    "name": "Kappa 20dot",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-akihabara": {
+    "name": "KH Dot Akihabara",
+    "previous": [
+      "cute",
+      "retro-game"
+    ],
+    "vibes": [
+      "cute",
+      "game-ui",
+      "rounded",
+      "unix"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-dougenzaka": {
+    "name": "KH Dot Dougenzaka",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "serif",
+      "book",
+      "unix"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-hatchoubori": {
+    "name": "KH Dot Hatchoubori",
+    "previous": [
+      "decorative",
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-hibiya": {
+    "name": "KH Dot Hibiya",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book",
+      "unix"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-kabutochou": {
+    "name": "KH Dot Kabutochou",
+    "previous": [
+      "decorative",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-kagurazaka": {
+    "name": "KH Dot Kagurazaka",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "serif",
+      "book",
+      "unix"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-kodenmachou": {
+    "name": "KH Dot Kodenmachou",
+    "previous": [
+      "retro-game",
+      "classic"
+    ],
+    "vibes": [
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kh-dot-ningyouchou": {
+    "name": "KH Dot Ningyouchou",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "handwriting"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "kirsch": {
+    "name": "kirsch",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "lana-pixel": {
+    "name": "LanaPixel",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "leggie": {
+    "name": "Leggie",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "lemon": {
+    "name": "Lemon",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "liora-chip-10x12": {
+    "name": "Liora Chip 10x12",
+    "previous": [
+      "cute",
+      "retro-game"
+    ],
+    "vibes": [
+      "cute",
+      "game-ui",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "KBITX"
+    ]
+  },
+  "lode": {
+    "name": "Lode",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "lyusung": {
+    "name": "Lyusung",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "manop-thai": {
+    "name": "Manop Thai",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "matrix": {
+    "name": "Matrix",
+    "previous": [
+      "terminal-hardcore",
+      "retro-game"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "matrixtype": {
+    "name": "MatrixType",
+    "previous": [
+      "dot-matrix",
+      "technical"
+    ],
+    "vibes": [
+      "dot-matrix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "micro-5": {
+    "name": "Micro 5",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "milkjf": {
+    "name": "milkjf",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "miraero-normal": {
+    "name": "MiraeroNormal",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "misaki": {
+    "name": "Misaki",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "jrpg",
+      "micro",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "misc-fixed": {
+    "name": "Misc Fixed",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "misekibitmap": {
+    "name": "MisekiBitmap",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "modd": {
+    "name": "Modd",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "mona": {
+    "name": "Mona",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "mona-s": {
+    "name": "Mona S",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "monocraft": {
+    "name": "Monocraft",
+    "previous": [
+      "retro-game",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "game-ui",
+      "programming",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "monogram": {
+    "name": "monogram",
+    "previous": [
+      "game-ui",
+      "programming",
+      "elegant"
+    ],
+    "vibes": [
+      "game-ui",
+      "programming",
+      "elegant"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "mplus-fixed": {
+    "name": "M+ Bitmap Fixed",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "mplus-helv": {
+    "name": "M+ Bitmap Helv",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "mplus-qub": {
+    "name": "M+ Bitmap Qub",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "mplus-sys": {
+    "name": "M+ Bitmap Sys",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "muzai-pixel": {
+    "name": "MuzaiPixel",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "KBITX"
+    ]
+  },
+  "nectec-thai": {
+    "name": "NECTEC Thai",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "neep": {
+    "name": "Neep",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "neodgm": {
+    "name": "NeoDunggeunmo",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "dos",
+      "terminal",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "nightgazer-bitmap": {
+    "name": "Nightgazer-Bitmap",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-atomic": {
+    "name": "Not Jam Atomic",
+    "previous": [
+      "grunge",
+      "experimental"
+    ],
+    "vibes": [
+      "grunge",
+      "experimental"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-blackletter": {
+    "name": "Not Jam Blackletter",
+    "previous": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-bore-blasters": {
+    "name": "Bore Blasters",
+    "previous": [
+      "game-ui",
+      "block"
+    ],
+    "vibes": [
+      "game-ui",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-chunky-sans": {
+    "name": "Not Jam Chunky Sans",
+    "previous": [
+      "block",
+      "game-ui"
+    ],
+    "vibes": [
+      "block",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-faithless": {
+    "name": "Not Jam Faithless",
+    "previous": [
+      "handwriting",
+      "western-rpg"
+    ],
+    "vibes": [
+      "handwriting",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-giant-ui": {
+    "name": "Not Jam Giant UI",
+    "previous": [
+      "game-ui",
+      "block"
+    ],
+    "vibes": [
+      "game-ui",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-glasgow": {
+    "name": "Not Jam Glasgow",
+    "previous": [
+      "art-nouveau",
+      "elegant"
+    ],
+    "vibes": [
+      "art-nouveau",
+      "elegant"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-laika": {
+    "name": "Not Jam Laika",
+    "previous": [
+      "constructivist",
+      "block"
+    ],
+    "vibes": [
+      "constructivist",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-mono-casual": {
+    "name": "Not Jam Mono Casual",
+    "previous": [
+      "handwriting",
+      "game-ui"
+    ],
+    "vibes": [
+      "handwriting",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-mono-clean": {
+    "name": "Not Jam Mono Clean",
+    "previous": [
+      "terminal",
+      "programming"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-mono-crooked": {
+    "name": "Not Jam Mono Crooked",
+    "previous": [
+      "crooked",
+      "game-ui"
+    ],
+    "vibes": [
+      "crooked",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-mono-prophet": {
+    "name": "Not Jam Mono Prophet",
+    "previous": [
+      "uncial",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "uncial",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-novel": {
+    "name": "Not Jam Novel",
+    "previous": [
+      "serif",
+      "book"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-old-peculiar": {
+    "name": "Not Jam Old Peculiar",
+    "previous": [
+      "crooked",
+      "western-rpg"
+    ],
+    "vibes": [
+      "crooked",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-old-style": {
+    "name": "Not Jam Old Style",
+    "previous": [
+      "serif",
+      "book"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-pixel": {
+    "name": "Not Jam Pixel",
+    "previous": [
+      "micro",
+      "game-ui"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-play": {
+    "name": "Not Jam Play",
+    "previous": [
+      "rounded",
+      "cute"
+    ],
+    "vibes": [
+      "rounded",
+      "cute"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-sci-mono": {
+    "name": "Not Jam Sci Mono",
+    "previous": [
+      "sci-fi",
+      "technical"
+    ],
+    "vibes": [
+      "sci-fi",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-scrawl": {
+    "name": "Not Jam Scrawl",
+    "previous": [
+      "handwriting",
+      "crooked"
+    ],
+    "vibes": [
+      "handwriting",
+      "crooked"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-serif": {
+    "name": "Not Jam Serif",
+    "previous": [
+      "serif",
+      "book"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-signature": {
+    "name": "Not Jam Signature",
+    "previous": [
+      "handwriting",
+      "cursive"
+    ],
+    "vibes": [
+      "handwriting",
+      "cursive"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-slab-serif": {
+    "name": "Not Jam Slab Serif",
+    "previous": [
+      "slab-serif",
+      "book"
+    ],
+    "vibes": [
+      "slab-serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-third-dimension": {
+    "name": "Not Jam Third Dimension",
+    "previous": [
+      "3d",
+      "shadow"
+    ],
+    "vibes": [
+      "3d",
+      "shadow"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-toolkit": {
+    "name": "Not Jam Toolkit",
+    "previous": [
+      "experimental",
+      "block"
+    ],
+    "vibes": [
+      "experimental",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-ui": {
+    "name": "Not Jam UI",
+    "previous": [
+      "game-ui",
+      "block"
+    ],
+    "vibes": [
+      "game-ui",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-ui-condensed": {
+    "name": "Not Jam UI Condensed",
+    "previous": [
+      "game-ui",
+      "technical"
+    ],
+    "vibes": [
+      "game-ui",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "not-jam-undead-pixel-light": {
+    "name": "Undead Pixel Light",
+    "previous": [
+      "game-ui",
+      "block"
+    ],
+    "vibes": [
+      "game-ui",
+      "block"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "obilic": {
+    "name": "Obilic",
+    "previous": [
+      "classic",
+      "retro-game"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "ohsnap": {
+    "name": "Ohsnap",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "olde-tome": {
+    "name": "Olde Tome",
+    "previous": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "oldschool-acer-vga": {
+    "name": "Acer VGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "vga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-acer710-cga": {
+    "name": "Acer710 CGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-acer710-mono": {
+    "name": "Acer710 Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-acm-vga": {
+    "name": "ACM VGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "vga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ami-ega": {
+    "name": "AMI EGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "ega"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-amstrad-pc": {
+    "name": "Amstrad PC",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-apricot-200l": {
+    "name": "Apricot 200L",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-apricot-256l": {
+    "name": "Apricot 256L",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-apricot-mono": {
+    "name": "Apricot Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-apricotportable": {
+    "name": "ApricotPortable",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-apricotxenc": {
+    "name": "ApricotXenC",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ast-premiumexec": {
+    "name": "AST PremiumExec",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ati": {
+    "name": "ATI",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ati-smallw": {
+    "name": "ATI SmallW",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-att-pc6300": {
+    "name": "ATT PC6300",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-cl-eagleii": {
+    "name": "CL EagleII",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-cl-eagleiii": {
+    "name": "CL EagleIII",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-cl-stingray": {
+    "name": "CL Stingray",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-compaq-port3": {
+    "name": "Compaq Port3",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-compaqthin": {
+    "name": "CompaqThin",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-compis": {
+    "name": "Compis",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-copam-bios": {
+    "name": "Copam BIOS",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "bios"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-cordata-ppc-21": {
+    "name": "Cordata PPC-21",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-cordata-ppc-400": {
+    "name": "Cordata PPC-400",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dg-one": {
+    "name": "DG One",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-ank16": {
+    "name": "DOS-V Recreated ANK16",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-ank19": {
+    "name": "DOS-V Recreated ANK19",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-ank24": {
+    "name": "DOS-V Recreated ANK24",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-ank30": {
+    "name": "DOS-V Recreated ANK30",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-jpn12": {
+    "name": "DOS-V Recreated JPN12",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-jpn16": {
+    "name": "DOS-V Recreated JPN16",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-jpn19": {
+    "name": "DOS-V Recreated JPN19",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-jpn24": {
+    "name": "DOS-V Recreated JPN24",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-jpn30": {
+    "name": "DOS-V Recreated JPN30",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-prc16": {
+    "name": "DOS-V Recreated PRC16",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-re-prc19": {
+    "name": "DOS-V Recreated PRC19",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-twn16": {
+    "name": "DOS-V TWN16",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dos-v-twn19": {
+    "name": "DOS-V TWN19",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-dtk-bios": {
+    "name": "DTK BIOS",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "bios"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-eaglespcga-alt1": {
+    "name": "EagleSpCGA Alt1",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-eaglespcga-alt2": {
+    "name": "EagleSpCGA Alt2",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-eaglespcga-alt3": {
+    "name": "EagleSpCGA Alt3",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-epsonmga": {
+    "name": "EpsonMGA",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-epsonmga-alt": {
+    "name": "EpsonMGA Alt",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-epsonmga-mono": {
+    "name": "EpsonMGA Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-europc-cga": {
+    "name": "EuroPC CGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-europc-mono": {
+    "name": "EuroPC Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-everexme": {
+    "name": "EverexME",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-fmtowns-re": {
+    "name": "FMTowns Recreated",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-hp-100lx": {
+    "name": "HP 100LX",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-hp-150-re": {
+    "name": "HP 150 Recreated",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-3270pc": {
+    "name": "IBM 3270pc",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-conv": {
+    "name": "IBM Conv",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-dos-iso8": {
+    "name": "IBM DOS ISO8",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-dos-iso9": {
+    "name": "IBM DOS ISO9",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "dos"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-model30r0": {
+    "name": "IBM Model30r0",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-model3x-alt1": {
+    "name": "IBM Model3x Alt1",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-model3x-alt2": {
+    "name": "IBM Model3x Alt2",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-model3x-alt3": {
+    "name": "IBM Model3x Alt3",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-model3x-alt4": {
+    "name": "IBM Model3x Alt4",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-pgc": {
+    "name": "IBM PGC",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-ps-55-re": {
+    "name": "IBM PS-55 Recreated",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ibm-xga-ai": {
+    "name": "IBM XGA-AI",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-igs-vga": {
+    "name": "IGS VGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "vga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-itt-xtra": {
+    "name": "ITT Xtra",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-kaypro2k-g": {
+    "name": "Kaypro2K G",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-le-model-d-cga": {
+    "name": "LE Model D CGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-le-model-d-mono": {
+    "name": "LE Model D Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-master-512": {
+    "name": "Master 512",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-master-512-m7": {
+    "name": "Master 512-M7",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-mbytepc230": {
+    "name": "MBytePC230",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-mbytepc230-cga": {
+    "name": "MBytePC230 CGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-mbytepc230-ega": {
+    "name": "MBytePC230 EGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "ega"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-mbytepc230-mono": {
+    "name": "MBytePC230 Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-mindset": {
+    "name": "Mindset",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-nec-apc3": {
+    "name": "NEC APC3",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-nec-multispeed": {
+    "name": "NEC MultiSpeed",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-nix8810-m15": {
+    "name": "Nix8810 M15",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-nix8810-m16": {
+    "name": "Nix8810 M16",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-nix8810-m35": {
+    "name": "Nix8810 M35",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-olivetti-m15": {
+    "name": "Olivetti M15",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-olivettithin": {
+    "name": "OlivettiThin",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-paradise132": {
+    "name": "Paradise132",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-philips-yes-g": {
+    "name": "Philips YES G",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-philips-yes-t": {
+    "name": "Philips YES T",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-phoenix-bios": {
+    "name": "Phoenix BIOS",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "bios"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-phoenixega": {
+    "name": "PhoenixEGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "ega"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-phoenixvga": {
+    "name": "PhoenixVGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "vga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-portfolio": {
+    "name": "Portfolio",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-rainbow100-re-132": {
+    "name": "Rainbow100 Recreated 132",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-rainbow100-re-40": {
+    "name": "Rainbow100 Recreated 40",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-rainbow100-re-66": {
+    "name": "Rainbow100 Recreated 66",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-rainbow100-re-80": {
+    "name": "Rainbow100 Recreated 80",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-rm-nimbus": {
+    "name": "RM Nimbus",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-robotron-a7100": {
+    "name": "Robotron A7100",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sanyombc16": {
+    "name": "SanyoMBC16",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sanyombc55x": {
+    "name": "SanyoMBC55x",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sanyombc775": {
+    "name": "SanyoMBC775",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-seequacm": {
+    "name": "SeequaCm",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sharp-pc3k": {
+    "name": "Sharp PC3K",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sharp-pc3k-alt": {
+    "name": "Sharp PC3K Alt",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-siemens-pc-d": {
+    "name": "Siemens PC-D",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sigma-rm": {
+    "name": "Sigma RM",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sperrypc": {
+    "name": "SperryPC",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-sperrypc-cga": {
+    "name": "SperryPC CGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "cga"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-stb-autoega": {
+    "name": "STB AutoEGA",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "ega"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy1k-i-200l": {
+    "name": "Tandy1K-I 200L",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy1k-i-225l": {
+    "name": "Tandy1K-I 225L",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy1k-ii-200l": {
+    "name": "Tandy1K-II 200L",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy1k-ii-225l": {
+    "name": "Tandy1K-II 225L",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy1k-ii-mono": {
+    "name": "Tandy1K-II Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy2k": {
+    "name": "Tandy2K",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy2k-g": {
+    "name": "Tandy2K G",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tandy2k-g-tv": {
+    "name": "Tandy2K G-TV",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-telepc": {
+    "name": "TelePC",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-ti-pro": {
+    "name": "Ti Pro",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-toshibasat": {
+    "name": "ToshibaSat",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-toshibat300": {
+    "name": "ToshibaT300",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-toshibatxl1": {
+    "name": "ToshibaTxL1",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-toshibatxl2": {
+    "name": "ToshibaTxL2",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-trident": {
+    "name": "Trident",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tridentearly": {
+    "name": "TridentEarly",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-tsengeva-132": {
+    "name": "TsengEVA 132",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-verite": {
+    "name": "Verite",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-vtech-bios": {
+    "name": "VTech BIOS",
+    "vibes": [
+      "retro-computer",
+      "terminal",
+      "bios"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-wang-pro-color": {
+    "name": "Wang Pro Color",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-wang-pro-mono": {
+    "name": "Wang Pro Mono",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-wyse700a": {
+    "name": "Wyse700a",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-wyse700b": {
+    "name": "Wyse700b",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-zenith-z-100": {
+    "name": "Zenith Z-100",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "oldschool-zenith-z-100-alt": {
+    "name": "Zenith Z-100 Alt",
+    "vibes": [
+      "retro-computer",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ],
+    "catalogue_status": "restored"
+  },
+  "onix-fantasy": {
+    "name": "Onix Fantasy",
+    "previous": [
+      "block",
+      "western-rpg",
+      "game-ui"
+    ],
+    "vibes": [
+      "block",
+      "western-rpg",
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PNG"
+    ]
+  },
+  "opendesktop-firefly": {
+    "name": "OpenDesktop / Firefly",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "orp": {
+    "name": "Orp",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "pixel-mplus": {
+    "name": "PixelMplus",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "jrpg"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "pixel-operator": {
+    "name": "Pixel Operator",
+    "previous": [
+      "game-ui",
+      "dos",
+      "terminal"
+    ],
+    "vibes": [
+      "game-ui",
+      "dos",
+      "terminal"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "pixelcastle": {
+    "name": "Pixelcastle",
+    "previous": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "blackletter",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "pixelify-sans": {
+    "name": "Pixelify Sans",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "pixellari": {
+    "name": "Pixellari",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "pixeloid-mono": {
+    "name": "Pixeloid Mono",
+    "previous": [
+      "retro-game",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "pixeloid-sans": {
+    "name": "Pixeloid Sans",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "pixelzone": {
+    "name": "Pixelzone",
+    "previous": [
+      "retro-computer",
+      "game-ui"
+    ],
+    "vibes": [
+      "retro-computer",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "pixtile": {
+    "name": "Pixtile",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "pixtura12": {
+    "name": "Pixtura12",
+    "previous": [
+      "blackletter",
+      "textura",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "blackletter",
+      "textura",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "poxiao-pixel": {
+    "name": "PoxiaoPixel",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "press-start-2p": {
+    "name": "Press Start 2P",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "arcade",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "profont": {
+    "name": "ProFont",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "programming",
+      "terminal",
+      "retro-computer"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "proggy-clean": {
+    "name": "Proggy Clean SZ",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "proggy-square": {
+    "name": "Proggy Square SZ",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "proggy-tiny": {
+    "name": "Proggy Tiny SZ",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "progsole": {
+    "name": "Progsole",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "psevdoazbuka": {
+    "name": "PsevdoAzbuka",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "public-pixel": {
+    "name": "Public Pixel",
+    "previous": [
+      "retro-game",
+      "classic"
+    ],
+    "vibes": [
+      "retro-computer",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "qiu-ye-yuan-ti-16": {
+    "name": "QiuYeYuanTi 16",
+    "previous": [
+      "cute",
+      "retro-game"
+    ],
+    "vibes": [
+      "cute",
+      "game-ui",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "quan-pixel": {
+    "name": "QuanPixel",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "quanta-strike": {
+    "name": "Quanta Strike",
+    "previous": [
+      "retro-game",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "quinquefive": {
+    "name": "QuinqueFive",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "micro"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "raster-forge": {
+    "name": "Raster Forge",
+    "previous": [
+      "micro",
+      "technical"
+    ],
+    "vibes": [
+      "micro",
+      "technical"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "ren-ou-fang-song-16": {
+    "name": "RenOuFangSong 16",
+    "previous": [
+      "handwriting",
+      "decorative"
+    ],
+    "vibes": [
+      "handwriting",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "retro-pixel-arcade": {
+    "name": "Retro Pixel Arcade",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "arcade",
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "retro-pixel-cute": {
+    "name": "Retro Pixel Cute",
+    "previous": [
+      "cute"
+    ],
+    "vibes": [
+      "game-ui",
+      "cute",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "retro-pixel-petty": {
+    "name": "Retro Pixel Petty",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "retro-pixel-thick": {
+    "name": "Retro Pixel Thick",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui",
+      "block"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "sam3kr-font": {
+    "name": "Sam3KRFont",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "schumacher-clean": {
+    "name": "Schumacher Clean",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "scientifica": {
+    "name": "Scientifica",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "scriptorium": {
+    "name": "Scriptorium",
+    "previous": [
+      "uncial",
+      "manuscript",
+      "western-rpg"
+    ],
+    "vibes": [
+      "uncial",
+      "manuscript",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "shinonome-gothic": {
+    "name": "Shinonome Gothic",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "shinonome-marumoji": {
+    "name": "Shinonome Marumoji",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "shinonome-mincho": {
+    "name": "Shinonome Mincho",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "siji": {
+    "name": "Siji",
+    "previous": [
+      "decorative"
+    ],
+    "vibes": [
+      "symbols",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "silkscreen": {
+    "name": "Silkscreen",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "web-pixel",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "sol-schori": {
+    "name": "Sol Schori",
+    "previous": [
+      "micro",
+      "serif",
+      "western-rpg"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "spleen": {
+    "name": "Spleen",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "springwrite": {
+    "name": "Springwrite",
+    "previous": [
+      "blackletter",
+      "handwriting",
+      "manuscript"
+    ],
+    "vibes": [
+      "blackletter",
+      "handwriting",
+      "manuscript"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PNG"
+    ]
+  },
+  "sq": {
+    "name": "Sq",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "stlarch": {
+    "name": "STLarch",
+    "previous": [
+      "decorative"
+    ],
+    "vibes": [
+      "symbols",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "taipei-pixel": {
+    "name": "Taipei",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "tamsyn": {
+    "name": "Tamsyn",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "tamsynmod": {
+    "name": "Tamsynmod",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "tamzen": {
+    "name": "Tamzen",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "tekuplus": {
+    "name": "Tekuplus",
+    "previous": [],
+    "vibes": [
+      "game-ui",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "terminus": {
+    "name": "Terminus",
+    "previous": [
+      "classic",
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "terminusmod": {
+    "name": "Terminusmod",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "terminusmodx": {
+    "name": "Terminusmodx",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "termsyn": {
+    "name": "Termsyn",
+    "previous": [
+      "terminal-hardcore",
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "terrarum-sans-bitmap": {
+    "name": "Terrarum Sans Bitmap",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "OTF"
+    ]
+  },
+  "tiny-rpg-badge": {
+    "name": "Tiny RPG Badge",
+    "previous": [
+      "jrpg",
+      "game-ui"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-brilliant-strength": {
+    "name": "Tiny RPG Brilliant Strength",
+    "previous": [
+      "jrpg",
+      "game-ui"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-fine-fantasy-strategies": {
+    "name": "Tiny RPG Fine Fantasy Strategies",
+    "previous": [
+      "jrpg",
+      "game-ui"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-forbidden-denizens": {
+    "name": "Tiny RPG Forbidden Denizens",
+    "previous": [
+      "jrpg",
+      "game-ui",
+      "blackletter",
+      "western-rpg"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui",
+      "blackletter",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-mana-branch": {
+    "name": "Tiny RPG Mana Branch",
+    "previous": [
+      "jrpg",
+      "game-ui"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-mana-root": {
+    "name": "Tiny RPG Mana Root",
+    "previous": [
+      "jrpg",
+      "game-ui"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-mana-trunk": {
+    "name": "Tiny RPG Mana Trunk",
+    "previous": [
+      "jrpg",
+      "game-ui"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-necro-romance": {
+    "name": "Tiny RPG Necro Romance",
+    "previous": [
+      "jrpg",
+      "game-ui",
+      "blackletter",
+      "western-rpg"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui",
+      "blackletter",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny-rpg-vampire-ire": {
+    "name": "Tiny RPG Vampire Ire",
+    "previous": [
+      "jrpg",
+      "game-ui",
+      "blackletter",
+      "western-rpg"
+    ],
+    "vibes": [
+      "jrpg",
+      "game-ui",
+      "blackletter",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "tiny5": {
+    "name": "Tiny5",
+    "previous": [
+      "terminal-hardcore",
+      "retro-game"
+    ],
+    "vibes": [
+      "micro",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "tobi": {
+    "name": "Coding Font Tobi",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "tom-thumb": {
+    "name": "Tom Thumb",
+    "previous": [
+      "terminal-hardcore",
+      "cute"
+    ],
+    "vibes": [
+      "cute",
+      "terminal",
+      "programming",
+      "rounded",
+      "micro"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "unifont-ex": {
+    "name": "UnifontEX Mono",
+    "previous": [
+      "fallback"
+    ],
+    "vibes": [
+      "fallback",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "unscii": {
+    "name": "Unscii",
+    "previous": [
+      "retro-game",
+      "classic"
+    ],
+    "vibes": [
+      "retro-computer",
+      "microcomputer",
+      "demoscene",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "PCF"
+    ]
+  },
+  "uranus-pixel": {
+    "name": "Uranus Pixel",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "uushi": {
+    "name": "Uushi",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "unix",
+      "technical"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "uw-ttyp0": {
+    "name": "UW ttyp0",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "varnished": {
+    "name": "Varnished",
+    "previous": [
+      "micro",
+      "serif",
+      "western-rpg"
+    ],
+    "vibes": [
+      "micro",
+      "game-ui",
+      "western-rpg",
+      "rounded"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "vergilia": {
+    "name": "Vergilia",
+    "previous": [
+      "manuscript",
+      "serif",
+      "book",
+      "western-rpg"
+    ],
+    "vibes": [
+      "manuscript",
+      "serif",
+      "book",
+      "western-rpg"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "vyaz-pixel": {
+    "name": "Vyaz Pixel",
+    "previous": [
+      "manuscript",
+      "decorative"
+    ],
+    "vibes": [
+      "vyaz",
+      "manuscript"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "wqy-bitmap-song": {
+    "name": "WenQuanYi Bitmap Song",
+    "previous": [
+      "classic"
+    ],
+    "vibes": [
+      "serif",
+      "book"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ]
+  },
+  "wqy-unibit": {
+    "name": "WenQuanYi Unibit",
+    "previous": [
+      "fallback"
+    ],
+    "vibes": [
+      "fallback",
+      "terminal"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "OTB"
+    ]
+  },
+  "x10y12px-denki-chip-hangul": {
+    "name": "x10y12pxDenkiChipHangul",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "x12y12px-maru-minya": {
+    "name": "x12y12pxMaruMinya",
+    "previous": [
+      "cute"
+    ],
+    "vibes": [
+      "cute",
+      "rounded"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "x12y12px-maru-minya-hangul": {
+    "name": "x12y12pxMaruMinyaHangul",
+    "previous": [
+      "cute"
+    ],
+    "vibes": [
+      "cute",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "x5y8px-nega-clip": {
+    "name": "x5y8pxNegaClip",
+    "previous": [
+      "decorative",
+      "retro-game"
+    ],
+    "vibes": [
+      "outline",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "x5y8px-nega-tape": {
+    "name": "x5y8pxNegaTape",
+    "previous": [
+      "decorative",
+      "retro-game"
+    ],
+    "vibes": [
+      "block",
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "x8y12px-denki-chip": {
+    "name": "x8y12pxDenkiChip",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "xbmicons": {
+    "name": "Xbmicons",
+    "previous": [
+      "decorative"
+    ],
+    "vibes": [
+      "symbols",
+      "unix"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "xiaoya-pixel": {
+    "name": "XiaoyaPixel",
+    "previous": [
+      "cute"
+    ],
+    "vibes": [
+      "cute",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "xiu-zhen-xiang-su-ti": {
+    "name": "XiuZhenXiangSuTi",
+    "previous": [
+      "terminal-hardcore"
+    ],
+    "vibes": [
+      "terminal",
+      "programming"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "yarndings-12": {
+    "name": "Yarndings 12",
+    "previous": [
+      "decorative",
+      "cute"
+    ],
+    "vibes": [
+      "symbols",
+      "textile"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "yarndings-20": {
+    "name": "Yarndings 20",
+    "previous": [
+      "decorative",
+      "cute"
+    ],
+    "vibes": [
+      "symbols",
+      "textile"
+    ],
+    "source_kind": "pixel-outline",
+    "source_formats": [
+      "TTF"
+    ]
+  },
+  "zheng-ge-dian-hei-16": {
+    "name": "ZhengGeDianHei 16",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "BDF"
+    ]
+  },
+  "zlabs-diamondpix-16px": {
+    "name": "Z Labs DiamondPix 16px",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "KBITX"
+    ]
+  },
+  "zlabs-pixel-12px": {
+    "name": "Z Labs Pixel 12px",
+    "previous": [
+      "retro-game"
+    ],
+    "vibes": [
+      "game-ui"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "KBITX"
+    ]
+  },
+  "zlabs-roundpix": {
+    "name": "Z Labs RoundPix",
+    "previous": [
+      "cute",
+      "retro-game"
+    ],
+    "vibes": [
+      "cute",
+      "game-ui",
+      "rounded"
+    ],
+    "source_kind": "bitmap",
+    "source_formats": [
+      "KBITX"
+    ]
+  }
+}

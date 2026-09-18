@@ -1,0 +1,235 @@
+{
+  "google_fonts_commit": "92345ac0dbb28d27dbd32f3a782e84c55eaac214",
+  "variants": [
+    {
+      "family": "silkscreen",
+      "file": "Silkscreen-Bold-8px.bdf",
+      "source_file": "Silkscreen-Bold.ttf",
+      "source_sha256": "768476aa712d4f5c3e18d3bce80f980a8bd3f72b7094d22ec5e768df3acfed61",
+      "ppem": 8,
+      "axes": {},
+      "glyph_offsets": {},
+      "unicode_characters": 226,
+      "unencoded_glyphs": 2,
+      "source_glyphs": 228,
+      "cmap_sha256": "a5fb94e30a1c9cd4b18585499fd181f5c3316c2c0e7b65594f1c3405414ab398",
+      "unencoded_names_sha256": "f293c4e9218486f937db8a600359ebe829ed27c56e8832034ab1f99bab9ecc06",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "silkscreen",
+      "file": "Silkscreen-Regular-8px.bdf",
+      "source_file": "Silkscreen-Regular.ttf",
+      "source_sha256": "c845473330b94c2079ce9af01c51ac8ba2d99c24f4d14c039843bbb8e642ebd8",
+      "ppem": 8,
+      "axes": {},
+      "glyph_offsets": {},
+      "unicode_characters": 226,
+      "unencoded_glyphs": 2,
+      "source_glyphs": 228,
+      "cmap_sha256": "a5fb94e30a1c9cd4b18585499fd181f5c3316c2c0e7b65594f1c3405414ab398",
+      "unencoded_names_sha256": "f293c4e9218486f937db8a600359ebe829ed27c56e8832034ab1f99bab9ecc06",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "micro-5",
+      "file": "Micro5-Regular-11px.bdf",
+      "source_file": "Micro5-Regular.ttf",
+      "source_sha256": "08a08c0d10129d2ecd869ff2f8914fcbf32487d3cbee3568b2a2957866dfdac8",
+      "ppem": 11,
+      "axes": {},
+      "glyph_offsets": {},
+      "unicode_characters": 331,
+      "unencoded_glyphs": 29,
+      "source_glyphs": 360,
+      "cmap_sha256": "a8a43cc47cc8cd5be772c748653811bc33f3008dd4ff56dcc1f9c694819e5bbd",
+      "unencoded_names_sha256": "42640676bb9c3637f1aba42978545ac20bd85677cd91d9b795290c5a80b725b5",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "bytesized",
+      "file": "Bytesized-Regular-8px.bdf",
+      "source_file": "Bytesized-Regular.ttf",
+      "source_sha256": "867b090a29cf5b45378692d3163439bb51875a3ddf4e37dcabf62030d04f1d51",
+      "ppem": 8,
+      "axes": {},
+      "glyph_offsets": {},
+      "unicode_characters": 347,
+      "unencoded_glyphs": 1,
+      "source_glyphs": 328,
+      "cmap_sha256": "2c0c0fc2103da491aaadf93f1e859cedfb9a366aef4c4e9d529abd43345e3420",
+      "unencoded_names_sha256": "5dec1687d967ea505cf8c9c85a457dec4250c37493792ff8b88534be6ff3cb24",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "pixelify-sans",
+      "file": "PixelifySans-Regular-11px.bdf",
+      "source_file": "PixelifySans[wght].ttf",
+      "source_sha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+      "ppem": 11,
+      "axes": {
+        "wght": 400
+      },
+      "glyph_offsets": {},
+      "unicode_characters": 574,
+      "unencoded_glyphs": 6,
+      "source_glyphs": 576,
+      "cmap_sha256": "93f58f0200299d3212b0dac9847bf69cd2da6f31806fdaa993a7f4b85b67c485",
+      "unencoded_names_sha256": "373a5d9114c46f3ac1ac23d2cc4225a26b3f4e5b775d03c98f2ed82485bdd98e",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "pixelify-sans",
+      "file": "PixelifySans-Medium-11px.bdf",
+      "source_file": "PixelifySans[wght].ttf",
+      "source_sha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+      "ppem": 11,
+      "axes": {
+        "wght": 500
+      },
+      "glyph_offsets": {},
+      "unicode_characters": 574,
+      "unencoded_glyphs": 6,
+      "source_glyphs": 576,
+      "cmap_sha256": "93f58f0200299d3212b0dac9847bf69cd2da6f31806fdaa993a7f4b85b67c485",
+      "unencoded_names_sha256": "373a5d9114c46f3ac1ac23d2cc4225a26b3f4e5b775d03c98f2ed82485bdd98e",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "pixelify-sans",
+      "file": "PixelifySans-SemiBold-11px.bdf",
+      "source_file": "PixelifySans[wght].ttf",
+      "source_sha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+      "ppem": 11,
+      "axes": {
+        "wght": 600
+      },
+      "glyph_offsets": {},
+      "unicode_characters": 574,
+      "unencoded_glyphs": 6,
+      "source_glyphs": 576,
+      "cmap_sha256": "93f58f0200299d3212b0dac9847bf69cd2da6f31806fdaa993a7f4b85b67c485",
+      "unencoded_names_sha256": "373a5d9114c46f3ac1ac23d2cc4225a26b3f4e5b775d03c98f2ed82485bdd98e",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "pixelify-sans",
+      "file": "PixelifySans-Bold-11px.bdf",
+      "source_file": "PixelifySans[wght].ttf",
+      "source_sha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+      "ppem": 11,
+      "axes": {
+        "wght": 700
+      },
+      "glyph_offsets": {},
+      "unicode_characters": 574,
+      "unencoded_glyphs": 6,
+      "source_glyphs": 576,
+      "cmap_sha256": "93f58f0200299d3212b0dac9847bf69cd2da6f31806fdaa993a7f4b85b67c485",
+      "unencoded_names_sha256": "373a5d9114c46f3ac1ac23d2cc4225a26b3f4e5b775d03c98f2ed82485bdd98e",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "jacquarda-bastarda-9",
+      "file": "JacquardaBastarda9-Regular-13px.bdf",
+      "source_file": "JacquardaBastarda9-Regular.ttf",
+      "source_sha256": "7d8e5c30bd58598913fc5fd297bc875d1fab1c05fc407c2dfc406a0be9c5a22c",
+      "ppem": 13,
+      "axes": {},
+      "glyph_offsets": {},
+      "unicode_characters": 331,
+      "unencoded_glyphs": 19,
+      "source_glyphs": 350,
+      "cmap_sha256": "a8a43cc47cc8cd5be772c748653811bc33f3008dd4ff56dcc1f9c694819e5bbd",
+      "unencoded_names_sha256": "2be88d4e30811e9eafb4a547c99570063bbce033c7246692945342155e5c0bb9",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "bitcount-single",
+      "file": "BitcountSingle-Regular-10px.bdf",
+      "source_file": "BitcountSingle[CRSV,ELSH,ELXP,slnt,wght].ttf",
+      "source_sha256": "007608c704d41cfff140892070b71f31971ec6d85b9f8ad5fdd0d2625f517c70",
+      "ppem": 10,
+      "axes": {
+        "wght": 400,
+        "ELXP": 0,
+        "ELSH": 0,
+        "slnt": 0,
+        "CRSV": 0
+      },
+      "glyph_offsets": {
+        "el_circle": [
+          0.5,
+          0.5
+        ],
+        "el_raster": [
+          0.5,
+          0.5
+        ]
+      },
+      "unicode_characters": 396,
+      "unencoded_glyphs": 1358,
+      "source_glyphs": 1754,
+      "cmap_sha256": "4d0a646910d84d71ed1333b70d78d3df2fdc4e432bf0fa49482a1107b701bb9e",
+      "unencoded_names_sha256": "e7ab48b83484fabb639e2ce87e30605e2366b8813090327fb2040dfc9c0c038a",
+      "visible_glyphs_lost": [],
+      "current_family": "bitcount"
+    },
+    {
+      "family": "bitcount",
+      "file": "Bitcount-Regular-10px.bdf",
+      "source_file": "Bitcount[CRSV,ELSH,ELXP,slnt,wght].ttf",
+      "source_sha256": "c7931919e67faa0e9cea2118f47d8f96383c580cc5cb6a3cef9aa1233ba3923e",
+      "ppem": 10,
+      "axes": {
+        "wght": 400,
+        "ELXP": 0,
+        "ELSH": 0,
+        "slnt": 0,
+        "CRSV": 0
+      },
+      "glyph_offsets": {
+        "circle": [
+          0.5,
+          0.5
+        ],
+        "raster": [
+          0.5,
+          0.5
+        ],
+        "el_circle": [
+          0.5,
+          0.5
+        ],
+        "el_raster": [
+          0.5,
+          0.5
+        ]
+      },
+      "unicode_characters": 396,
+      "unencoded_glyphs": 648,
+      "source_glyphs": 1044,
+      "cmap_sha256": "4d0a646910d84d71ed1333b70d78d3df2fdc4e432bf0fa49482a1107b701bb9e",
+      "unencoded_names_sha256": "350898f9922e8758257f7deec1e2f61f47277f9968c435482f3aa5f6b7d4c8e9",
+      "visible_glyphs_lost": []
+    },
+    {
+      "family": "doto",
+      "file": "Doto-Grid-10px.bdf",
+      "source_file": "Doto[ROND,wght].ttf",
+      "source_sha256": "6f4fe7d37853b91df3698daa84cde2dbe1c9695d88c986e6510134910337d426",
+      "ppem": 10,
+      "axes": {
+        "wght": 900,
+        "ROND": 100
+      },
+      "glyph_offsets": {},
+      "unicode_characters": 319,
+      "unencoded_glyphs": 1,
+      "source_glyphs": 320,
+      "cmap_sha256": "331182f8920faafd34a3f05f5d71e3d184d7a97ce99dcd7f3e15a43485ce9cb1",
+      "unencoded_names_sha256": "5dec1687d967ea505cf8c9c85a457dec4250c37493792ff8b88534be6ff3cb24",
+      "visible_glyphs_lost": []
+    }
+  ]
+}

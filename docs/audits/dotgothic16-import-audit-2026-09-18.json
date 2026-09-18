@@ -1,0 +1,66 @@
+{
+  "date": "2026-09-18",
+  "variants": [
+    {
+      "family": "dotgothic16",
+      "file": "DotGothic16-Regular-16px.bdf",
+      "source": "direct-downloads-2026-09-18/google-fonts-dotgothic16/DotGothic16-Regular.ttf",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/9a6cc6b8ce992aff77b69c857c46af0b42cdff76/ofl/dotgothic16/DotGothic16-Regular.ttf",
+      "source_sha256": "3ad9af88726d42b40f7f365f0dcac785af73cf20ea6f1d5b44e57cc21150b8f1",
+      "unicode_characters": 8231,
+      "unencoded_glyphs": 1392,
+      "source_glyphs": 9362,
+      "pixel_offset": [
+        0.703125,
+        0.703125
+      ],
+      "cmap_sha256": "210a3eccd47fb6cd0fc9311605966715341baf07347ff064c845f01129726e7d",
+      "unencoded_names_sha256": "abc7006bf17d74c3ef0c7435a19803d66c01bb46266acdcd67a78718205875bd",
+      "pixel_geometry_sha256": "c0f10a82245aa4ab7c6f8157a73c0794b2fbef75c349dc777d6d6c69e4159423",
+      "encoded_grid_mismatches": 0,
+      "unencoded_dropout_preservation": [
+        {
+          "name": "quotedblright.half",
+          "cp": -1,
+          "extra": [
+            [
+              1,
+              10
+            ],
+            [
+              1,
+              12
+            ],
+            [
+              1,
+              13
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "name": "quoteright.half",
+          "cp": -1,
+          "extra": [
+            [
+              1,
+              10
+            ],
+            [
+              1,
+              12
+            ],
+            [
+              1,
+              13
+            ]
+          ],
+          "missing": []
+        }
+      ],
+      "previous_unicode_characters": 8230,
+      "changed_encoded_bitmaps": 4717,
+      "newly_blank_encoded_characters": []
+    }
+  ]
+}

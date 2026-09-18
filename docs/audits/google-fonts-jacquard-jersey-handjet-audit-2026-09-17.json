@@ -1,0 +1,220 @@
+{
+  "date": "2026-09-17",
+  "variants": [
+    {
+      "family": "jacquard",
+      "upstream_directory": "jacquard12",
+      "source_file": "Jacquard12-Regular.ttf",
+      "source_sha256": "b1560583565a37f3d3a25cf2572df3efd2d773ecdcbb459dcd7ea0398cb840d1",
+      "file": "Jacquard12-Regular-21px.bdf",
+      "ppem": 21,
+      "source_upem": 1260,
+      "grid_units": 60,
+      "raster_em_normalization": null,
+      "axes": null,
+      "unicode_characters": 331,
+      "source_glyphs": 357,
+      "unencoded_glyphs": 26,
+      "cmap_sha256": "a8a43cc47cc8cd5be772c748653811bc33f3008dd4ff56dcc1f9c694819e5bbd",
+      "unencoded_names_sha256": "dc2c82004c56b801b339f1b9df705b8656ad8d0746038b8792ca776b67d1259a",
+      "pixel_geometry_sha256": "a35afda7e5cab5fb8c13de2fc315b757b01a20919ab7c4946e269c99b43bfe51",
+      "glyphs_compared_to_independent_grid": 357,
+      "pixel_mismatches": 0,
+      "off_grid_contours": [],
+      "unicode_scripts": {
+        "Latn": 229,
+        "Zinh": 15,
+        "Zyyy": 87
+      }
+    },
+    {
+      "family": "jacquard",
+      "upstream_directory": "jacquard24",
+      "source_file": "Jacquard24-Regular.ttf",
+      "source_sha256": "8e5b1bdb8b6087d6175f1d9edd2634e38b10fb109c0955c24ad55272a866ed49",
+      "file": "Jacquard24-Regular-43px.bdf",
+      "ppem": 43,
+      "source_upem": 1290,
+      "grid_units": 30,
+      "raster_em_normalization": null,
+      "axes": null,
+      "unicode_characters": 331,
+      "source_glyphs": 357,
+      "unencoded_glyphs": 26,
+      "cmap_sha256": "a8a43cc47cc8cd5be772c748653811bc33f3008dd4ff56dcc1f9c694819e5bbd",
+      "unencoded_names_sha256": "dc2c82004c56b801b339f1b9df705b8656ad8d0746038b8792ca776b67d1259a",
+      "pixel_geometry_sha256": "826c1703f0d8376d56bedfc9a894dc96a1b748c46064eb67d9c24fad9a4306af",
+      "glyphs_compared_to_independent_grid": 357,
+      "pixel_mismatches": 0,
+      "off_grid_contours": [],
+      "unicode_scripts": {
+        "Latn": 229,
+        "Zinh": 15,
+        "Zyyy": 87
+      }
+    },
+    {
+      "family": "jersey",
+      "upstream_directory": "jersey10",
+      "source_file": "Jersey10-Regular.ttf",
+      "source_sha256": "db9cbd091617048a145d249daa2b815fe7083be6ab66ac26626e21a4e01c3e82",
+      "file": "Jersey10-Regular-19px.bdf",
+      "ppem": 19,
+      "source_upem": 1400,
+      "grid_units": 75,
+      "raster_em_normalization": 1425,
+      "axes": null,
+      "unicode_characters": 332,
+      "source_glyphs": 363,
+      "unencoded_glyphs": 31,
+      "cmap_sha256": "b0e8291158c1595066ee97d8bafd41cbdbe91b5e420e490d7d503c44cddb78ba",
+      "unencoded_names_sha256": "7c9f073cd7f5b07445f207ca75b06d40e4e2196e920ecae7b8436bee0014a39d",
+      "pixel_geometry_sha256": "7e94f290e2b7b22f4ae7459908be911c4996af279a3bdd074ce64607704365be",
+      "glyphs_compared_to_independent_grid": 363,
+      "pixel_mismatches": 0,
+      "off_grid_contours": [],
+      "unicode_scripts": {
+        "Latn": 229,
+        "Zinh": 15,
+        "Zyyy": 88
+      }
+    },
+    {
+      "family": "jersey",
+      "upstream_directory": "jersey15",
+      "source_file": "Jersey15-Regular.ttf",
+      "source_sha256": "dbe00479d62bb3b9fcf0d28f88a021ffc4bd7b01d6ad5c6f74b5fa371bb210ed",
+      "file": "Jersey15-Regular-27px.bdf",
+      "ppem": 27,
+      "source_upem": 1350,
+      "grid_units": 50,
+      "raster_em_normalization": null,
+      "axes": null,
+      "unicode_characters": 332,
+      "source_glyphs": 362,
+      "unencoded_glyphs": 30,
+      "cmap_sha256": "b0e8291158c1595066ee97d8bafd41cbdbe91b5e420e490d7d503c44cddb78ba",
+      "unencoded_names_sha256": "79aaeda9c0afd363d02660c82a4ccb57d4b19fb4dc2b9ba800ed20411f430da8",
+      "pixel_geometry_sha256": "97ef8912595782a8bd8f1afe8400c02391c20a764a26686c8570d5f2f2c73416",
+      "glyphs_compared_to_independent_grid": 362,
+      "pixel_mismatches": 0,
+      "off_grid_contours": [],
+      "unicode_scripts": {
+        "Latn": 229,
+        "Zinh": 15,
+        "Zyyy": 88
+      }
+    },
+    {
+      "family": "jersey",
+      "upstream_directory": "jersey20",
+      "source_file": "Jersey20-Regular.ttf",
+      "source_sha256": "76670d7e8826860e3d2f2846b88bc1652135b8d54b6adfa5a87649b9fa4bd3b4",
+      "file": "Jersey20-Regular-34px.bdf",
+      "ppem": 34,
+      "source_upem": 1292,
+      "grid_units": 38,
+      "raster_em_normalization": null,
+      "axes": null,
+      "unicode_characters": 332,
+      "source_glyphs": 362,
+      "unencoded_glyphs": 30,
+      "cmap_sha256": "b0e8291158c1595066ee97d8bafd41cbdbe91b5e420e490d7d503c44cddb78ba",
+      "unencoded_names_sha256": "79aaeda9c0afd363d02660c82a4ccb57d4b19fb4dc2b9ba800ed20411f430da8",
+      "pixel_geometry_sha256": "8878cee2c476a9431d98ea948cf4d3a011e4e9e8e16a26021a47d593bc44da22",
+      "glyphs_compared_to_independent_grid": 362,
+      "pixel_mismatches": 0,
+      "off_grid_contours": [],
+      "unicode_scripts": {
+        "Latn": 229,
+        "Zinh": 15,
+        "Zyyy": 88
+      }
+    },
+    {
+      "family": "jersey",
+      "upstream_directory": "jersey25",
+      "source_file": "Jersey25-Regular.ttf",
+      "source_sha256": "4d4acdd89a748e9548041a3046d95536c500e1a7be9197c6aeef7d980f79d370",
+      "file": "Jersey25-Regular-41px.bdf",
+      "ppem": 41,
+      "source_upem": 1230,
+      "grid_units": 30,
+      "raster_em_normalization": null,
+      "axes": null,
+      "unicode_characters": 332,
+      "source_glyphs": 362,
+      "unencoded_glyphs": 30,
+      "cmap_sha256": "b0e8291158c1595066ee97d8bafd41cbdbe91b5e420e490d7d503c44cddb78ba",
+      "unencoded_names_sha256": "79aaeda9c0afd363d02660c82a4ccb57d4b19fb4dc2b9ba800ed20411f430da8",
+      "pixel_geometry_sha256": "95dca664a7dfc79b57239fced32ccfa6aa58cdf9ce31ff7787939b268cd827ed",
+      "glyphs_compared_to_independent_grid": 362,
+      "pixel_mismatches": 0,
+      "off_grid_contours": [
+        {
+          "glyph": "emdash",
+          "off_grid_points": [
+            [
+              106,
+              -276
+            ],
+            [
+              106,
+              -271
+            ],
+            [
+              121,
+              -276
+            ],
+            [
+              121,
+              -271
+            ]
+          ]
+        }
+      ],
+      "unicode_scripts": {
+        "Latn": 229,
+        "Zinh": 15,
+        "Zyyy": 88
+      }
+    },
+    {
+      "family": "handjet",
+      "upstream_directory": "handjet",
+      "source_file": "Handjet[ELGR,ELSH,wght].ttf",
+      "source_sha256": "9262749e8bb0b73ebcae0e20428689c3c59576eebeb6c4e1020300d2d41bdf4d",
+      "file": "Handjet-Regular-34px.bdf",
+      "ppem": 34,
+      "source_upem": 8160,
+      "grid_units": 240,
+      "raster_em_normalization": null,
+      "axes": {
+        "wght": 400,
+        "ELGR": 1,
+        "ELSH": 2
+      },
+      "unicode_characters": 1339,
+      "source_glyphs": 1605,
+      "unencoded_glyphs": 266,
+      "cmap_sha256": "c01899ab0853aca0d8f81b3351b18e588119c1c12f15c0f129ac803ddfbff837",
+      "unencoded_names_sha256": "b009d65144a8977d5f3d84d3abf595f8a7de4c7810e7c4c0074d2ef42551b253",
+      "pixel_geometry_sha256": "b0e09d3cba2524befab3c3302b046f456c229e7597fc68c18fd86efe96952adc",
+      "glyphs_compared_to_independent_grid": 1605,
+      "pixel_mismatches": 0,
+      "off_grid_contours": [],
+      "unicode_scripts": {
+        "Arab": 221,
+        "Armn": 93,
+        "Cyrl": 182,
+        "Grek": 74,
+        "Hebr": 86,
+        "Latn": 408,
+        "Zinh": 40,
+        "Zyyy": 223,
+        "Zzzz": 12
+      }
+    }
+  ],
+  "google_fonts_commit": "92345ac0dbb28d27dbd32f3a782e84c55eaac214"
+}

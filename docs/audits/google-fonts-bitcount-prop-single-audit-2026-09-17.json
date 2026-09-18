@@ -1,0 +1,47 @@
+{
+  "google_fonts_commit": "92345ac0dbb28d27dbd32f3a782e84c55eaac214",
+  "variants": [
+    {
+      "family": "bitcount-prop-single",
+      "file": "BitcountPropSingle-Regular-10px.bdf",
+      "source_file": "BitcountPropSingle[CRSV,ELSH,ELXP,slnt,wght].ttf",
+      "source_sha256": "e6f39bb11077484a1becaf94b712331b5c2d169a27b4a4591f6ab70c901a8405",
+      "ppem": 10,
+      "axes": {
+        "wght": 400,
+        "ELXP": 0,
+        "ELSH": 0,
+        "slnt": 0,
+        "CRSV": 0
+      },
+      "glyph_offsets": {
+        "el_circle": [
+          0.5,
+          0.5
+        ],
+        "el_raster": [
+          0.5,
+          0.5
+        ]
+      },
+      "unicode_characters": 396,
+      "unencoded_glyphs": 1595,
+      "source_glyphs": 1991,
+      "cmap_sha256": "4d0a646910d84d71ed1333b70d78d3df2fdc4e432bf0fa49482a1107b701bb9e",
+      "unencoded_names_sha256": "787bd187382a50e0d5b6c59b93ec39c1713ad998cf5126ea4b83f8e5deb58c20",
+      "pixel_geometry_sha256": "a11e480beddb15aafa6a6f78ff94568889d1af9c6cddae6c10293d6294882c22",
+      "visible_glyphs_lost": [],
+      "encoded_glyphs_compared_to_component_grid": 396,
+      "pixel_mismatches": 0,
+      "advance_width_mismatches": 0,
+      "unicode_scripts": {
+        "Zyyy": 115,
+        "Latn": 264,
+        "Zinh": 14,
+        "Grek": 2,
+        "Zzzz": 1
+      },
+      "current_family": "bitcount"
+    }
+  ]
+}

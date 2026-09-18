@@ -1,11 +1,12 @@
-# 开源像素字体馆 / Open Pixel Fonts
+# FontPixel.com：开源像素字体馆 / Opensource Pixel Fonts
 
 自由许可位图字体的标本馆：把 BDF/PCF 字体放进 `fonts/`，自动构建出一个可检索的
 静态目录站——逐字形解析、宣称／墨迹双口径度量、六十余张字表的覆盖率报告、
 canvas 像素级样例试写，以及 BDF／PCF／位图 TTF 打包下载。
 
-- 站点：<https://pixelfonts.dev> — `/zh/`（中文）· `/en/`（English）
-- 设计规格：`docs/superpowers/specs/`
+- 站点：<https://fontpixel.com> — `/zh/`（中文）· `/en/`（English）
+- 仓库：<https://github.com/fontpixel/fontpixel>
+- 文档：[文档索引](docs/README.md) · [评分说明](docs/specs/catalogue-rating.md)
 - 收录标准、度量与覆盖率口径：见站点「关于」页
 
 ## 收录标准
@@ -40,8 +41,14 @@ fonts/my-font/
   family.toml      # 可选；不写会生成待补全的 stub，站点标「未整理」
 ```
 
-`form`（字形分类）与 `vibes`（气质标签）是仅有的建议人工填写项；
+`forms`（字形分类，可多选）与 `vibes`（气质标签）是仅有的建议人工填写项；
 授权无法自动识别时，在 `[license]` 块里手填 SPDX、可商用标记与判定依据。
+
+分类写为数组，例如 `forms = ["gothic", "decorative", "sans"]`。
+`gothic`（东亚黑体）自动包含 `sans`，`song`（宋体 / 明朝体）自动包含 `serif`。
+首页同时选择多个分类时，匹配任一分类即可；卡片和详情页显示全部分类。
+旧的 `form` 单值元数据仍可读取，`mingcho`、`round`、`serif-pixel` 等旧分类及筛选链接
+分别归一化为 `song`、`rounded`、`serif`。
 
 `aliases` 收这款字体自己的其它名字——曾用名、上游项目名、字体文件自报的名字、
 原生语言名、分词写法不同的同名。只进搜索文本，不在站上显示；中文别名不必写
@@ -64,6 +71,10 @@ fonts/my-font/
   --src ../pixel-font-collection-fonts \
   --dest fonts --report docs/import-report.md
 ```
+
+`--report` 只重写 `docs/import-report.md` 里 `<!-- opf:manual … -->` 标记**之前**的
+自动统计部分；标记之后的人工收录记录（逐批收录理由、许可证判定、移除记录）原样保留。
+若目标文件存在却没有该标记，导入器会报错拒绝写入，而不是把它覆盖掉。
 
 東雲フォント另有专用重建流程（上游以 `.bit` 源码分发）：
 
@@ -92,15 +103,41 @@ Unicode Unihan 的 `kSimplifiedVariant`／`kTraditionalVariant` 生成，
 ```text
 fonts/                字体源（git 版本管理）
 pipeline/             Python 管线：解析 → 度量 → 覆盖率 → 许可证 →
-                      字形二进制分块 + SVG 预渲染 + 下载物（含 TTF）+ JSON 索引
-site/                 Astro 5 静态站点（Svelte 岛屿，canvas 逐像素渲染）
+                      SVG 样张 + BDF/PCF/TTF 等下载物 + JSON 索引
+site/                 Astro 5 静态站点（默认 SVG；交互时加载 BDF.gz，Canvas 逐像素渲染）
 site/public/data/     管线产物（gitignored）
-dist-downloads/       下载物 → CI 上传 GitHub Releases
+dist-downloads/       下载物 → 构建时复制到站点 /downloads/
 ```
 
-部署：GitHub Actions 构建 → GitHub Pages（展示资产）+ Releases 滚动标签
-`downloads`（下载物，增量同步）。站点基路径由 `OPF_BASE` 控制，
-下载基址由 `OPF_DOWNLOADS_BASE` 控制。
+部署：GitHub Actions 构建 → 一个 Cloudflare Pages 项目，同时提供页面和
+`/downloads/` 字体下载。试字、对比、字形浏览共用下载 BDF.gz，在 Web Worker
+中解析并缓存；不发布另一套点阵分片。BDF 导出统一使用 Unicode 编码，保留
+点阵、度量及未编码替代字形，`fonts/` 中的上游源文件不变。
+
+`npm run build` 会自动准备下载目录。部署前运行
+`python .github/scripts/check_pages_limits.py site/dist`，检查完整产物不超过
+20,000 个文件、任一文件不超过 25 MiB。无需第二个 Pages 项目或 R2。
+站点基路径仍由 `OPF_BASE` 控制。
+
+首页每页 24 个字体，使用 `/en/page/2/` 等真实静态分页，六种语言共用同一份
+默认顺序。默认的 Auto（自动）按固定评分降序排列：主要目标文字的完整度为主，
+90 分来自主要文字的完整度，8 分来自该文字的扩展覆盖，其他文字和终端符号
+各最多 1 分；跨文字支持不累加，重叠的简繁日汉字不重复加分。
+8–16px 以外的原生尺寸逐渐小幅降权。许可另作小幅修正：GPL 带字体例外
+降 1.5%，普通 GPL 降 4%，CC BY-SA 降 2%；OFL 与宽松许可保持基准，
+双许可证按 OR 可选择、AND 同时适用的关系计算。
+另按站主的审美偏好，对指定家族加 1.5 分或减 0.5 分；配置集中在
+`site/src/lib/rating-adjustments.ts`，最终排序分可以超过 100，避免加分被截掉。
+Google Fonts 名单中的家族另加 1 分，名单集中在 `site/src/lib/google-fonts.ts`。
+CJK 使用常用字表及更宽松的覆盖曲线，不要求覆盖全部 Unicode。
+同分按家族 slug 排序；刷新、切换语言和重新构建都不会随机重排。
+具体口径见[评分说明](docs/specs/catalogue-rating.md)。
+筛选保留相对顺序并回到第一页；名称、尺寸和字形数排序仍可选择。
+每页直接输出字体链接、SVG 和分页链接，无 JavaScript 也可翻阅完整目录。
+
+默认预览先在 8–16px（含两端）中选择字形最多的变体；没有该范围的尺寸时，
+再从所有尺寸中选择字形最多者。`family.toml` 的 `default_variant` 可显式指定。
+字号相同或字形数量相同不会引入随机选择；完整构建与缓存刷新使用同一规则。
 
 ## 许可证
 
@@ -110,7 +147,7 @@ dist-downloads/       下载物 → CI 上传 GitHub Releases
 
 ---
 
-# Open Pixel Fonts (English)
+# FontPixel.com: Opensource Pixel Fonts (English)
 
 A specimen cabinet for freely-licensed bitmap fonts. Drop BDF/PCF files into
 `fonts/` and the build produces a static, searchable catalogue: per-glyph
