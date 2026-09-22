@@ -138,6 +138,13 @@ The current architecture needs neither a second Pages project nor R2. `OPF_BASE`
 sets the deployment path; `OPF_SITE` sets the canonical origin and defaults to
 `https://fontpixel.com`.
 
+The `Deploy` workflow runs the reusable CI checks before publishing `main`.
+Configure the repository's Actions secrets `CLOUDFLARE_API_TOKEN` (a dedicated
+token with Cloudflare Pages Edit permission) and `CLOUDFLARE_ACCOUNT_ID`, plus the
+Actions variable `CF_PAGES_PROJECT` (`fontpixel`). Add `fontpixel.com` as a Pages
+custom domain and configure a proxied apex CNAME pointing to
+`fontpixel.pages.dev`. A local Wrangler OAuth session is not a durable CI credential.
+
 The catalogue has 24 fonts per page, using real static URLs such as
 `/en/page/2/`. All six languages share the same default order. Every page renders
 font links, SVG previews, and pagination links without requiring JavaScript.

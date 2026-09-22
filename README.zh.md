@@ -122,6 +122,12 @@ dist-downloads/       下载物 → 构建时复制到站点 /downloads/
 20,000 个文件、任一文件不超过 25 MiB。无需第二个 Pages 项目或 R2。
 站点基路径由 `OPF_BASE` 控制；`OPF_SITE` 指定规范域名，默认 `https://fontpixel.com`。
 
+`Deploy` 工作流先运行可复用的 CI 检查，通过后发布 `main`。仓库的 Actions Secrets
+需要配置 `CLOUDFLARE_API_TOKEN`（具有 Cloudflare Pages Edit 权限的专用令牌）和
+`CLOUDFLARE_ACCOUNT_ID`，Actions 变量 `CF_PAGES_PROJECT` 设置为 `fontpixel`。
+在 Pages 中添加自定义域名 `fontpixel.com`，再设置开启代理的根域 CNAME，指向
+`fontpixel.pages.dev`。本地 Wrangler 的 OAuth 登录不能作为长期 CI 凭据。
+
 首页每页 24 个字体，使用 `/en/page/2/` 等真实静态分页，六种语言共用同一份
 默认顺序。默认的 Auto（自动）按固定评分降序排列：主要目标文字的完整度为主，
 90 分来自主要文字的完整度，8 分来自该文字的扩展覆盖，其他文字和终端符号
