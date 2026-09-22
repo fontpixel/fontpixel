@@ -14,32 +14,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  checks:
-    uses: ./.github/workflows/ci.yml
-
   deploy:
-    needs: checks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-
-      - name: Download verified site
-        uses: actions/download-artifact@v4
-        with:
-          name: pages-site
-          path: site/dist/
-
-      - name: Check Cloudflare Pages Free limits
-        run: python .github/scripts/check_pages_limits.py site/dist
-
-      - name: Deploy site to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          command: pages deploy site/dist --project-name=${{ vars.CF_PAGES_PROJECT }}
+    uses: ./.github/workflows/ci.yml
+    with:
+      deploy: true
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
