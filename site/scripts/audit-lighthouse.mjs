@@ -12,6 +12,9 @@ const modes = process.env.AUDIT_MODES?.split(',') ?? ['mobile', 'desktop'];
 const runs = Number(process.env.AUDIT_RUNS ?? 3);
 if (!Number.isInteger(runs) || runs < 1 || runs % 2 !== 1) throw new Error('AUDIT_RUNS must be a positive odd integer');
 const thresholds = { performance: 0.9, accessibility: 1, 'best-practices': 1, seo: 1 };
+const chromeFlags = ['--headless', '--disable-dev-shm-usage'];
+// Match Playwright's launch mode on the disposable GitHub runner.
+if (process.env.GITHUB_ACTIONS === 'true') chromeFlags.push('--no-sandbox');
 const output = new URL('../quality-reports/', import.meta.url);
 await mkdir(output, { recursive: true });
 const server = process.env.AUDIT_BASE_URL ? null : await preview({
@@ -28,7 +31,7 @@ try {
         const name = `${mode}-${path.replace(/\/$/, '').replaceAll('/', '-')}`;
         const samples = [];
         for (let run = 1; run <= runs; run++) {
-          const chrome = await launch({ chromePath: chromium.executablePath(), chromeFlags: ['--headless', '--disable-dev-shm-usage'] });
+          const chrome = await launch({ chromePath: chromium.executablePath(), chromeFlags, logLevel: 'error' });
           try {
             const result = await lighthouse(new URL(path, base).href, {
               port: chrome.port, logLevel: 'error', output: ['json', 'html'],
