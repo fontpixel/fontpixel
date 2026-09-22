@@ -138,7 +138,9 @@ The current architecture needs neither a second Pages project nor R2. `OPF_BASE`
 sets the deployment path; `OPF_SITE` sets the canonical origin and defaults to
 `https://fontpixel.com`.
 
-The `Deploy` workflow runs the reusable CI checks before publishing `main`.
+The `Deploy` workflow runs the reusable CI checks before publishing `main` and
+deploys the exact site artifact that passed those checks. Font cache metadata
+and generated files are cached together to avoid unnecessary full rebuilds.
 Configure the repository's Actions secrets `CLOUDFLARE_API_TOKEN` (a dedicated
 token with Cloudflare Pages Edit permission) and `CLOUDFLARE_ACCOUNT_ID`, plus the
 Actions variable `CF_PAGES_PROJECT` (`fontpixel`). Add `fontpixel.com` as a Pages

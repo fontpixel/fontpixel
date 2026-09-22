@@ -39,14 +39,32 @@ jobs:
         run: .venv/bin/python -m pytest pipeline/tests -q
 
       - name: 恢复构建缓存
-        uses: actions/cache@v4
+        id: font-cache
+        uses: actions/cache/restore@v4
         with:
-          path: .cache
-          key: opf-cache-${{ hashFiles('fonts/**', 'pipeline/opf/**') }}
-          restore-keys: opf-cache-
+          # Cache metadata and its outputs together; metadata alone cannot be reused.
+          path: |
+            .cache
+            site/public/data
+            dist-downloads
+          key: opf-output-v1-${{ hashFiles('fonts/**', 'pipeline/opf/**', 'pipeline/pyproject.toml') }}
+          restore-keys: opf-output-v1-
 
       - name: 构建字体数据
-        run: .venv/bin/python -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
+        run: .venv/bin/python -u -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
+
+      - name: Save generated font cache
+        if: steps.font-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .cache
+            site/public/data
+            dist-downloads
+          key: ${{ steps.font-cache.outputs.cache-primary-key }}
+
+      - name: Build site wordmark
+        run: .venv/bin/python -m opf.brandfont --fonts fonts --data site/public/data --names site/src/i18n/sitenames.json
 
       - name: 安装站点依赖
         run: cd site && bun install --frozen-lockfile
@@ -59,6 +77,9 @@ jobs:
 
       - name: Astro 构建
         run: cd site && bun run build
+        env:
+          OPF_BASE: /
+          OPF_DOWNLOADS_BASE: /downloads
 
       - name: Check generated SEO metadata and sitemaps
         run: cd site && bun run audit:seo
@@ -76,6 +97,17 @@ jobs:
 
       - name: Lighthouse mobile and desktop
         run: cd site && bun run audit:lighthouse
+
+      - name: Upload verified site for deployment
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-site
+          path: site/dist/
+          include-hidden-files: true
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
 
       - name: Upload quality reports
         if: always()

@@ -23,55 +23,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - uses: oven-sh/setup-bun@v2
+
+      - name: Download verified site
+        uses: actions/download-artifact@v4
         with:
-          bun-version: '1.4.2'
-      - uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-1.4.2-${{ hashFiles('site/bun.lock') }}
-
-      - name: Install system dependencies (bdftopcf)
-        run: sudo apt-get update && sudo apt-get install -y xfonts-utils
-
-      - name: Install Python dependencies
-        run: |
-          python -m venv .venv
-          .venv/bin/pip install -e "pipeline[dev]"
-
-      - name: Restore build cache
-        uses: actions/cache@v4
-        with:
-          path: .cache
-          key: opf-cache-${{ hashFiles('fonts/**', 'pipeline/opf/**') }}
-          restore-keys: opf-cache-
-
-      - name: Build font data (display-asset budget 900MB)
-        run: .venv/bin/python -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
-
-      - name: Build site wordmark
-        run: .venv/bin/python -m opf.brandfont --fonts fonts --data site/public/data --names site/src/i18n/sitenames.json
-
-      - name: Astro build
-        run: |
-          cd site && bun install --frozen-lockfile && bun run build
-        env:
-          # Pages serves both the site and downloadable fonts from one project.
-          OPF_BASE: /
-          OPF_DOWNLOADS_BASE: /downloads
+          name: pages-site
+          path: site/dist/
 
       - name: Check Cloudflare Pages Free limits
         run: python .github/scripts/check_pages_limits.py site/dist
-
-      - name: Check generated SEO metadata and sitemaps
-        run: cd site && bun run audit:seo
 
       - name: Deploy site to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4

@@ -122,7 +122,8 @@ dist-downloads/       下载物 → 构建时复制到站点 /downloads/
 20,000 个文件、任一文件不超过 25 MiB。无需第二个 Pages 项目或 R2。
 站点基路径由 `OPF_BASE` 控制；`OPF_SITE` 指定规范域名，默认 `https://fontpixel.com`。
 
-`Deploy` 工作流先运行可复用的 CI 检查，通过后发布 `main`。仓库的 Actions Secrets
+`Deploy` 工作流先运行可复用的 CI 检查，通过后直接发布已验证的站点产物。
+字体缓存同时保存索引和生成文件，避免重复全量构建。仓库的 Actions Secrets
 需要配置 `CLOUDFLARE_API_TOKEN`（具有 Cloudflare Pages Edit 权限的专用令牌）和
 `CLOUDFLARE_ACCOUNT_ID`，Actions 变量 `CF_PAGES_PROJECT` 设置为 `fontpixel`。
 在 Pages 中添加自定义域名 `fontpixel.com`，再设置开启代理的根域 CNAME，指向
