@@ -1,4 +1,5 @@
 ---
+import { pageCopy } from '../../../i18n/page-copy';
 import Base from '../../../layouts/Base.astro';
 import Compare from '../../../islands/Compare.svelte';
 import { LANGS, t, type Lang } from '../../../i18n';
@@ -16,7 +17,7 @@ const index = loadCatalogue();
 // server-side we only need the family list.
 ---
 
-<Base lang={lang} title={s.compare.title} description={s.compare.title} path="/compare/">
+<Base lang={lang} title={`${s.compare.title} · ${s.siteName}`} description={pageCopy[lang].compare} path="/compare/">
   <h1>{s.compare.title}</h1>
   <Compare
     client:load

@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Catalogue from '../islands/Catalogue.svelte';
-import { pickName, t, type Lang } from '../i18n';
+import { pickName, pickText, t, type Lang } from '../i18n';
 import { readPreviewSvg, withBase } from '../lib/data';
 import { loadCatalogue } from '../lib/catalogue-build';
 import { PAGE_SIZE } from '../lib/catalogue';
@@ -11,6 +11,12 @@ interface Props { lang: Lang; page?: number }
 const { lang, page = 1 } = Astro.props;
 const s = t(lang);
 const index = loadCatalogue();
+// Resolve localized metadata on the server; OpenCC's dictionaries never belong in the browser bundle.
+const labels = {
+  names: Object.fromEntries(index.families.map(f => [f.slug, pickName(lang, f.names, f.name)])),
+  licenses: Object.fromEntries(index.families.map(f => [f.license.spdx ?? 'unknown', pickText(lang, f.license.name, f.license.nameEn)])),
+  charsets: Object.fromEntries(Object.entries(index.charsetNames).map(([id, c]) => [id, pickText(lang, c.zh, c.en)])),
+};
 const path = page === 1 ? '/' : `/page/${page}/`;
 const pageFamilies = index.families.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 const previewSvgs = Object.fromEntries(pageFamilies.map((f) => {
@@ -26,7 +32,8 @@ const title = page === 1 ? s.siteName : `${s.siteName} · ${s.catalogue.pageLabe
 ---
 
 <Base {lang} {title} description={s.siteTagline} {path}>
-  <Catalogue client:load families={index.families} {lang} {s} {previewSvgs} {namePreviewSvgs}
+  <h1 class="visually-hidden">{title}</h1>
+  <Catalogue client:load {labels} families={index.families} {lang} {s} {previewSvgs} {namePreviewSvgs}
     initialPage={page} catalogueBase={withBase(`/${lang}/`)}
     dataBase={withBase('/data')} fontsBase={withBase(`/${lang}/fonts/`)}
     charsetIds={index.charsetIds} charsetNames={index.charsetNames} />

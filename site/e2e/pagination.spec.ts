@@ -98,7 +98,7 @@ test('page pencils jump on Enter and preserve sorting, specimen and zoom', async
   await expect(page.getByTestId('zoom-select')).toHaveValue('3');
   await expect(top.getByTestId('page-edit')).toHaveCount(1);
   await expect(top.locator('.page-edit:first-child + [data-testid="page-prev"]')).toHaveCount(1);
-  await expect(top.locator('.gap')).toHaveText(['…', '…']);
+  await expect(top.locator('.gap[aria-hidden="true"] svg.lucide-ellipsis')).toHaveCount(2);
 
   await page.setViewportSize({ width: 300, height: 800 });
   const bottom = page.getByTestId('pagination').last();
@@ -131,7 +131,7 @@ test('page editing validates bounds and integers and cancels with Escape or blur
   await expect(pencil).toBeFocused();
   await pencil.click();
   await input.fill('3');
-  await page.locator('.cat__tagline').click();
+  await page.getByTestId('result-count').click();
   await expect(input).toHaveCount(0);
   await expect(page).toHaveURL(/\/zh\/page\/8\/$/);
 });
@@ -205,7 +205,7 @@ test('language switching preserves the current page and build order', async ({ p
   await page.goto('en/page/2/');
   await ready(page);
   const order = await slugs(page);
-  await page.getByTestId('lang-menu').locator('summary').click();
+  await page.getByTestId('lang-menu').locator('.navmenu__trigger').click();
   await page.getByTestId('lang-switch').click();
   await ready(page);
   await expect(page).toHaveURL(/\/zh\/page\/2\/$/);

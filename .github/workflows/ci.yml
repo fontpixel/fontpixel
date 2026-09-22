@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_call:
   pull_request:
   push:
     branches-ignore: [main]
@@ -18,8 +19,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: npm
-          cache-dependency-path: site/package-lock.json
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-1.4.2-${{ hashFiles('site/bun.lock') }}
 
       - name: 安装系统依赖(bdftopcf)
         run: sudo apt-get update && sudo apt-get install -y xfonts-utils
@@ -43,24 +49,40 @@ jobs:
         run: .venv/bin/python -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
 
       - name: 安装站点依赖
-        run: cd site && npm ci
+        run: cd site && bun install --frozen-lockfile
 
       - name: vitest
-        run: cd site && npx vitest run
+        run: cd site && bun run vitest run
 
       - name: 类型检查(astro check + svelte-check)
-        run: cd site && npm run check
+        run: cd site && bun run check
 
       - name: Astro 构建
-        run: cd site && npm run build
+        run: cd site && bun run build
+
+      - name: Check generated SEO metadata and sitemaps
+        run: cd site && bun run audit:seo
 
       - name: 检查完整站点的 Pages 免费额度
         run: python .github/scripts/check_pages_limits.py site/dist
 
       - name: 安装 Playwright Chromium
-        run: cd site && npx playwright install --with-deps chromium
+        run: cd site && bun run playwright install --with-deps chromium
 
       - name: e2e
-        run: cd site && npx playwright test
+        run: cd site && bun run playwright test
         env:
           CI: 'true'
+
+      - name: Lighthouse mobile and desktop
+        run: cd site && bun run audit:lighthouse
+
+      - name: Upload quality reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-quality-reports
+          path: |
+            site/quality-reports/
+            site/test-results/
+          retention-days: 14

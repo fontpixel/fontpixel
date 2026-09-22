@@ -1,0 +1,24 @@
+3x5 Pixel Font Pack
+Copyright © 2026 mazeon
+
+This license applies to all font files included in the 3x5 Pixel Font Pack.
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+
+Reserved Font Names:
+3x5 Blocked Mono
+3x5 Notched Mono
+3x5 Rounded Mono
+3x5 Blocked Adjusted
+3x5 Notched Adjusted
+3x5 Rounded Adjusted
+
+You may use, study, modify, and redistribute the fonts under the terms of the SIL Open Font License, Version 1.1.
+
+Modified versions may not use the Reserved Font Names listed above without permission from the copyright holder.
+
+The fonts may not be sold by themselves.
+
+Credit to mazeon is appreciated, but not required.
+
+Official license text:
+https://openfontlicense.org/open-font-license-official-text/

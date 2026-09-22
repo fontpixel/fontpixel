@@ -1,0 +1,37 @@
+name = "Pixelosopher"
+authors = ["Helianthus Games", "Jovanny Lemonad"]
+homepage = "https://helianthus-games.itch.io/pixelosopher"
+repository = ""
+description = "Helianthus Games 将 Jovanny Lemonad 的 Philosopher 改作为 16px 网格上的优雅像素无衬线体，含常规、粗体与斜体。"
+forms = ["sans"]
+vibes = ["elegant", "sci-fi", "game-ui"]
+default_variant = "Pixelosopher-16px"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://helianthus-games.itch.io/pixelosopher；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Pixelosopher"
+authors_en = ["Helianthus Games", "Jovanny Lemonad"]
+description_en = "Helianthus Games' elegant 16px pixel adaptation of Jovanny Lemonad's Philosopher, in regular, bold and italic cuts."
+provenance_en = "Imported from https://helianthus-games.itch.io/pixelosopher; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "License.txt"
+note = "发布包保留完整 OFL 1.1，同时列出原 Philosopher 设计者 Jovanny Lemonad 与像素改作者 Filip Uzunov，保留字体名 Pixelosopher。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The bundled complete OFL 1.1 credits original Philosopher designer Jovanny Lemonad and pixel adapter Filip Uzunov, and reserves the name Pixelosopher."
+
+[variants."Pixelosopher-16px.bdf"]
+display = "Pixelosopher Regular"
+
+[variants."Pixelosopher Bold-16px.bdf"]
+weight = "bold"
+display = "Pixelosopher Bold"
+
+[variants."Pixelosopher Italic-16px.bdf"]
+display = "Pixelosopher Italic"

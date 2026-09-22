@@ -1,4 +1,5 @@
 ---
+import { pageCopy } from '../../i18n/page-copy';
 import Base from '../../layouts/Base.astro';
 import { LANGS, pickText, t, type Lang } from '../../i18n';
 import { toHantDeep } from '../../i18n/hant';
@@ -33,7 +34,7 @@ const name = (x: (typeof meta.charsets)[number]) =>
 <Base
   lang={lang}
   title={`${s.about.title} · ${s.siteName}`}
-  description={c.aboutIntro.slice(0, 120)}
+  description={pageCopy[lang].about}
   path="/about/"
 >
   <article class="about">
@@ -59,7 +60,7 @@ const name = (x: (typeof meta.charsets)[number]) =>
               ))}
             </ul>
           </>}
-          {sec.code && <pre class="about__code">{sec.code}</pre>}
+          {sec.code && <pre class="about__code" tabindex="0">{sec.code}</pre>}
         </section>
       ))
     }
@@ -67,7 +68,7 @@ const name = (x: (typeof meta.charsets)[number]) =>
     <section id="datasources">
       <h2>{c.aboutDataSourcesHeading}</h2>
       <p>{c.aboutDataSourcesIntro}</p>
-      <div class="about__tablewrap" data-testid="datasources">
+      <div class="about__tablewrap" data-testid="datasources" tabindex="0" role="region" aria-label={c.aboutDataSourcesHeading}>
         <table>
           <thead>
             <tr>

@@ -1,0 +1,55 @@
+name = "Canyon Racer Game Over"
+authors = ["bbbbbr"]
+homepage = "https://bbbbbr.itch.io/canyon-racer-fonts"
+repository = "https://github.com/bbbbbr/canyon-racer/tree/main/font"
+description = "Canyon Racer 结束画面的粗壮显示体家族：常规与粗体、平面与 3D 投影效果，各有等宽与比例间距版。"
+forms = ["decorative", "sans"]
+vibes = ["handheld", "arcade", "3d", "shadow", "game-ui"]
+default_variant = "Canyon-Racer-Game-Over-16px"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://bbbbbr.itch.io/canyon-racer-fonts；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Canyon Racer Game Over"
+authors_en = ["bbbbbr"]
+description_en = "The sturdy end-screen display family from Canyon Racer: regular and bold, flat and 3D-shadow treatments, each in monospaced and proportional cuts."
+provenance_en = "Imported from https://bbbbbr.itch.io/canyon-racer-fonts; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "Readme.md"
+note = "发布包 Readme 与 itch.io 页面均明确声明 Canyon Racer Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。"
+name_en = "CC0 1.0 Universal"
+note_en = "The bundled Readme and itch.io page explicitly release Canyon Racer Fonts under CC0; the font name tables also say 'CC0 Public Domain'."
+
+[variants."Canyon Racer Game Over-16px.bdf"]
+display = "Regular"
+
+[variants."Canyon Racer Game Over mono-16px.bdf"]
+display = "Regular Mono"
+
+[variants."Canyon Racer Game Over bold-16px.bdf"]
+weight = "bold"
+display = "Bold"
+
+[variants."Canyon Racer Game Over Bold mono-16px.bdf"]
+weight = "bold"
+display = "Bold Mono"
+
+[variants."Canyon Racer Game Over 3D-16px.bdf"]
+display = "3D"
+
+[variants."Canyon Racer Game Over 3D mono-16px.bdf"]
+display = "3D Mono"
+
+[variants."Canyon Racer Game Over 3D bold-16px.bdf"]
+weight = "bold"
+display = "3D Bold"
+
+[variants."Canyon Racer Game Over 3D Bold mono-16px.bdf"]
+weight = "bold"
+display = "3D Bold Mono"

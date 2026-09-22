@@ -24,8 +24,9 @@ test('all About translations link the author and exclusion sources on narrow scr
     await expect(intro.getByRole('link', { name: 'Tom Chen', exact: true }))
       .toHaveAttribute('href', 'https://tomchen.org/');
     const examples = page.locator('#criteria .about__examples');
-    await expect(examples.locator('li')).toHaveCount(4);
-    await expect(examples.locator('li strong a')).toHaveCount(4);
+    await expect(examples.locator('li')).toHaveCount(5);
+    await expect(examples.locator('li strong a')).toHaveCount(5);
+    await expect(examples.locator('a[href="https://timothyqiu.itch.io/vonwaon-bitmap"]')).toHaveCount(1);
     await expect(examples.locator('a[href="https://github.com/Angelic47/FontChinese7x7/issues/6"]')).toHaveCount(1);
     await expect(examples).toContainText('lietxia');
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);

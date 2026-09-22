@@ -1,6 +1,6 @@
 name = "Z Labs DiamondPix 16px"
 name_zh_hans = "Z工坊金刚黑体16px"
-authors = ["Astro_2539", "ChenhaoUwU", "Dalict", "yzdnn"]
+authors = ["Astro_2539 (Z Labs)", "ChenhaoUwU", "Dalict", "yzdnn"]
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
 description = ""
@@ -13,5 +13,5 @@ converted_from = ""
 provenance = "导入自CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px；上游https://github.com/Astro-2539/ZLabs-DiamondPix-16px/releases (Build_20260309)；由kbitx转换；字形基于ChenhaoUwU的UwU点矩黑。"
 added = "2026-08-21"
 name_en = "Z Labs DiamondPix 16px"
-authors_en = ["Astro_2539", "ChenhaoUwU", "Dalict", "yzdnn"]
+authors_en = ["Astro_2539 (Z Labs)", "ChenhaoUwU", "Dalict", "yzdnn"]
 provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Chinese/Astro-2539--ZLabs-DiamondPix-16px; upstream https://github.com/Astro-2539/ZLabs-DiamondPix-16px/releases (Build_20260309); converted from kbitx; Glyphs are based on ChenhaoUwU's UwU DotMatrix Black."

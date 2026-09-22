@@ -1,0 +1,36 @@
+name = "Floppy Pixel"
+authors = ["JD Jiménez"]
+homepage = "https://jdjimenez.itch.io/floppy-pixel-font"
+repository = ""
+description = "原为手游设计的厚重块状像素字体；社区包收录常规、描边和软描边三款。"
+forms = ["decorative", "sans"]
+vibes = ["block", "outline", "game-ui"]
+default_variant = "Floppy-Pixel-Regular-16px"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://jdjimenez.itch.io/floppy-pixel-font；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Floppy Pixel"
+authors_en = ["JD Jiménez"]
+description_en = "A heavy block pixel face originally designed for a mobile game; the Community Pack includes regular, stroke and soft-stroke cuts."
+provenance_en = "Imported from https://jdjimenez.itch.io/floppy-pixel-font; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "LICENSE (SIL OFL 1.1).txt"
+note = "Community Pack 内附完整 OFL 1.1，版权声明为 Jesse D. Jimenez，三款字体的 name 表均写同一许可。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The Community Pack bundles the complete OFL 1.1 under Jesse D. Jimenez's copyright; all three fonts repeat that licence in their name tables."
+
+[variants."Floppy Pixel Regular-16px.bdf"]
+display = "Floppy Pixel Regular"
+
+[variants."Floppy Pixel Stroke-16px.bdf"]
+display = "Floppy Pixel Stroke"
+
+[variants."Floppy Pixel Soft-Stroke-16px.bdf"]
+display = "Floppy Pixel Soft Stroke"

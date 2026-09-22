@@ -35,10 +35,17 @@ const { groupId, defaultValue, values = [] } = Astro.props;
     const key = group ? `opf-tabs-${group}` : '';
     const bar = document.createElement('div');
     bar.className = 'tabs__bar';
+    bar.setAttribute('role', 'tablist');
+    bar.setAttribute('aria-label', group || 'Examples');
     const show = (v: string) => {
+      if (!items.some((it) => it.dataset.tabValue === v)) return;
       for (const it of items) it.hidden = it.dataset.tabValue !== v;
-      for (const b of bar.children)
-        (b as HTMLElement).classList.toggle('on', (b as HTMLElement).dataset.v === v);
+      for (const b of bar.children) {
+        const selected = (b as HTMLElement).dataset.v === v;
+        b.classList.toggle('on', selected);
+        b.setAttribute('aria-selected', String(selected));
+        (b as HTMLElement).tabIndex = selected ? 0 : -1;
+      }
     };
     for (const it of items) {
       const v = it.dataset.tabValue!;
@@ -46,6 +53,12 @@ const { groupId, defaultValue, values = [] } = Astro.props;
       it.id ||= `tab-${index + 1}-${v}`;
       const btn = document.createElement('button');
       btn.type = 'button';
+      btn.id = `${it.id}-tab`;
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-controls', it.id);
+      it.setAttribute('role', 'tabpanel');
+      it.setAttribute('aria-labelledby', btn.id);
+      it.tabIndex = 0;
       btn.dataset.v = v;
       btn.textContent = labelOf(v);
       btn.addEventListener('click', () => {
@@ -64,6 +77,18 @@ const { groupId, defaultValue, values = [] } = Astro.props;
       bar.append(btn);
     }
     root.prepend(bar);
+    bar.addEventListener('keydown', (event) => {
+      const buttons = [...bar.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+      const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
+      if (current < 0) return;
+      const next = event.key === 'ArrowRight' ? (current + 1) % buttons.length
+        : event.key === 'ArrowLeft' ? (current - 1 + buttons.length) % buttons.length
+        : event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : -1;
+      if (next < 0) return;
+      event.preventDefault();
+      buttons[next]!.focus();
+      buttons[next]!.click();
+    });
     root.addEventListener('opf-tab', ((e: CustomEvent<string>) => show(e.detail)) as EventListener);
     let init = root.dataset.default || items[0]!.dataset.tabValue!;
     if (key) {

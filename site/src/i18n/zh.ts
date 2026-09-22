@@ -19,6 +19,7 @@ export const zh: UIStrings = {
   },
 
   catalogue: {
+    skipToResults: '跳到搜索结果',
     searchPlaceholder: '名称、作者、标签…',
     searchLabel: '搜索名称、作者、标签…',
     sortAutoReverse: '自动（反向）',
@@ -245,6 +246,7 @@ export const zh: UIStrings = {
     licenseFlagValues: { yes: '可以', cond: '有条件', no: '不可以或无需' },
     licenseDisclaimer: '许可证信息仅供参考，以上游原文为准。',
     warningsTitle: '构建提示',
+    glyphGridKeyboard: '方向键选择字形，回车查看详情，Esc 返回字形表。',
     glyphGridTitle: '字形总览',
     glyphGridBlocks: 'Unicode区块',
     glyphGridSearch: '搜索区块',
@@ -274,7 +276,7 @@ export const zh: UIStrings = {
     pua: '私用区（PUA）',
     hanTotal: '统一表意文字（汉字）',
     compat: '兼容表意文字',
-    compatNote: '其中12个码位实为统一表意文字（Unicode官方注记）。',
+    compatNote: "兼容区中的12个统一表意文字计入统一汉字总数，此处不重复计入。",
     unicodeBlocks: 'Unicode区段',
     showAllBlocks: '显示全部区段',
     hideZeroBlocks: '仅显示有覆盖的区段',

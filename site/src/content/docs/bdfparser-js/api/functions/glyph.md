@@ -1,5 +1,6 @@
 ---
 title: "Function: $Glyph"
+description: "TypeScript reference for the $Glyph factory function: parameters and return type for creating bdfparser Glyph objects."
 label: "API · $Glyph"
 order: 15
 ---

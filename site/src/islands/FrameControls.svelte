@@ -1,8 +1,8 @@
 <script lang="ts">
-  /** The frame radio group and code language picker, shared by all previews.
+  /** The frame button group and code language picker, shared by all previews.
    * Labels are looked up through
    * FRAME_LABEL_KEY, which is typed against UIStrings, so a deleted string is a
-   * build error rather than a radio button with nothing next to it. */
+   * build error rather than a button with nothing next to it. */
   import { CODE_LANGS, CODE_LANG_LABELS, type CodeLang } from '../lib/codehl';
   import { FRAMES, FRAME_LABEL_KEY, type Frame } from '../lib/frames';
   import type { UIStrings } from '../i18n/types';
@@ -15,19 +15,26 @@
   }
   let { s, frame = $bindable(), codeLang = $bindable(), disabled = false }: Props = $props();
 
-  /* A shared radio name would make the browser treat two FrameControls on one
-   * page as a single native group, so the name is scoped to the instance. */
+  /* The id keeps the conditional language select's name unique when two
+   * FrameControls are present on the same page. */
   const uid = $props.id();
 </script>
 
 <span class="frames" data-testid="frame-radios">
-  <span class="frames__options" role="radiogroup" aria-label={s.catalogue.previewStyle}>
+  <span class="frames__options" role="group" aria-label={s.catalogue.previewStyle}>
   {#each FRAMES as f (f)}
     {@const label = s.catalogue[FRAME_LABEL_KEY[f]]}
-    <label class="frames__option" class:frames__option--selected={frame === f}
-      class:frames__option--invert={f === 'invert'} title={label}>
-      <input class="frames__radio" type="radio" name={`${uid}-frame`}
-        bind:group={frame} value={f} aria-label={label} {disabled} />
+    <button
+      type="button"
+      class="frames__option"
+      class:frames__option--selected={frame === f}
+      class:frames__option--invert={f === 'invert'}
+      aria-label={label}
+      aria-pressed={frame === f}
+      title={label}
+      onclick={() => (frame = f)}
+      {disabled}
+    >
       {#if f === 'game'}
         <svg class="frames__icon frames__icon--game" viewBox="0 0 32 24" aria-hidden="true">
           <path d="M12 6V4.5C12 3 14 3 14 1" fill="none" stroke="#81768f" stroke-width="1.8" stroke-linecap="round" />
@@ -48,7 +55,7 @@
       {:else}
         <span>{label}</span>
       {/if}
-    </label>
+    </button>
   {/each}
   </span>
   {#if frame === 'code'}
@@ -90,22 +97,13 @@
     border: 1px solid transparent;
     border-radius: var(--radius);
     color: var(--ink-2);
+    background: none;
     font-size: 0.8rem;
     line-height: 1.3;
     white-space: nowrap;
     cursor: pointer;
   }
   .frames__option:hover { background: var(--line-soft); }
-  .frames__radio {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    opacity: 0;
-    cursor: inherit;
-  }
   .frames__option--selected,
   .frames__option--selected:hover {
     color: var(--accent);
@@ -128,11 +126,11 @@
     background: var(--canvas-paper);
     filter: invert(1);
   }
-  .frames__option:has(input:focus-visible) {
+  .frames__option:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-  .frames__option:has(input:disabled) { opacity: .5; cursor: default; }
+  .frames__option:disabled { opacity: .5; cursor: default; }
   .frames__icon { width: 25px; height: 22px; }
   .frames__icon--game { width: 29px; }
   .frames__language { min-width: 0; max-width: 100%; font-size: .8rem; }

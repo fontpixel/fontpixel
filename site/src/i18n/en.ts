@@ -20,6 +20,7 @@ export const en: UIStrings = {
   },
 
   catalogue: {
+    skipToResults: 'Skip to search results',
     searchPlaceholder: 'Names, authors, tags…',
     searchLabel: 'Search names, authors, tags…',
     sortAutoReverse: 'Auto (reversed)',
@@ -249,6 +250,7 @@ export const en: UIStrings = {
     licenseDisclaimer:
       'License details are for reference only; the upstream original text prevails.',
     warningsTitle: 'Build warnings',
+    glyphGridKeyboard: 'Use arrow keys to select a glyph, Enter to inspect it, and Escape to return to the grid.',
     glyphGridTitle: 'Glyph overview',
     glyphGridBlocks: 'Unicode blocks',
     glyphGridSearch: 'Search blocks',
@@ -278,8 +280,7 @@ export const en: UIStrings = {
     pua: 'Private Use Areas (PUA)',
     hanTotal: 'Unified Ideographs (Han)',
     compat: 'Compatibility Ideographs',
-    compatNote:
-      '12 of these code points are in fact unified ideographs (per the official Unicode note).',
+    compatNote: "The 12 unified ideographs in compatibility blocks are counted under unified Han, not here.",
     unicodeBlocks: 'Unicode blocks',
     showAllBlocks: 'Show all blocks',
     hideZeroBlocks: 'Show only covered blocks',

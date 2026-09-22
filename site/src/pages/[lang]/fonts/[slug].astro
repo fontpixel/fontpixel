@@ -110,16 +110,14 @@ const coverageGroups = groupBy((vid) =>
   entityName={displayName}
   licenseUrl={spdxUrl(m.license.spdx)}
 >
-  <nav class="crumb">
-    <a class="icon-control" href={withBase(`/${lang}/`)} title={s.detail.backToCatalogue}><Icon name="arrow-left" />{s.detail.backToCatalogue}</a>
-    <a class="crumb__download icon-control" href="#downloads" title={s.detail.jumpToDownloads}>{s.detail.jumpToDownloads}<Icon name="arrow-down" /></a>
-  </nav>
-
   <header class="hero">
-    <h1 id="font-name">{displayName}</h1>
+    <div class="hero__heading">
+      <h1 id="font-name">{displayName}</h1>
+      <a class="hero__download icon-control" href="#downloads" title={s.detail.jumpToDownloads}>{s.detail.jumpToDownloads}<Icon name="arrow-down" /></a>
+    </div>
     {displayName !== m.name && <p class="hero__latin mono">{m.name}</p>}
     {displayDesc && <p class="hero__desc">{displayDesc}</p>}
-    <div class="hero__preview lattice" data-variant-id={preview.variantId} set:html={previewSvg} />
+    <div class="hero__preview lattice" role="img" aria-label={`${displayName}: ${preview.text}`} data-variant-id={preview.variantId} set:html={previewSvg.replace('role="img"', 'aria-hidden="true"')} />
   </header>
 
   {
@@ -329,24 +327,21 @@ const coverageGroups = groupBy((vid) =>
     font-size: 0.85rem;
   }
 
-    .crumb {
+    .hero__heading {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      align-items: baseline;
       gap: var(--s2) var(--s4);
-      font-size: 0.85rem;
-      margin-bottom: var(--s4);
     }
-    .crumb__download {
+    .hero__download {
+      flex: 0 0 auto;
       margin-inline-start: auto;
       text-align: right;
-    }
-    .crumb a {
+      font-size: 0.85rem;
       color: var(--ink-2);
     }
-    .crumb a:hover,
-    .crumb a:focus-visible {
+    .hero__download:hover,
+    .hero__download:focus-visible {
       color: var(--accent);
       text-decoration: underline;
       text-underline-offset: .2em;

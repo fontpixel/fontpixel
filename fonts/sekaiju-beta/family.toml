@@ -1,0 +1,26 @@
+name = "Sekaiju Beta"
+authors = ["Goburinbro"]
+homepage = "https://goburinbro.itch.io/sekaiju-font-collection"
+repository = ""
+description = "Sekaiju 系列更紧凑的 8px 字面，模拟 Nintendo DS 时代 JRPG 界面字，保留故意的倾斜与不整齐细节。"
+forms = ["sans"]
+vibes = ["nintendo-ds", "handheld", "jrpg", "game-ui", "crooked"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://goburinbro.itch.io/sekaiju-font-collection；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Sekaiju Beta"
+authors_en = ["Goburinbro"]
+description_en = "The compact 8px Sekaiju cut, evoking Nintendo DS-era JRPG interface lettering with deliberately uneven lean and details."
+provenance_en = "Imported from https://goburinbro.itch.io/sekaiju-font-collection; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "作者页面明确标注「CC0 - Public Domain / No Rights Reserved」并允许任意使用。"
+name_en = "CC0 1.0 Universal"
+note_en = "The author page explicitly states 'CC0 - Public Domain / No Rights Reserved' and permits unrestricted use."

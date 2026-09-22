@@ -35,6 +35,15 @@ export const aboutSections: AboutSection[] = [
         "name": "tewi",
         "href": "https://github.com/lucy/tewi-font#readme",
         "reason": "작성자는 Monaco에서 상당수 글리프를 가져온 데 따른 라이선스 불확실성 때문에 글꼴을 철회하고 배포자에게도 삭제를 검토해 달라고 요청했습니다. 이전 사본의 GPL 표기만으로 원본의 라이선스 문제를 해소할 수는 없습니다."
+      },
+      {
+        "name": "봉황 도트 글꼴 (Vonwaon Bitmap)",
+        "href": "https://timothyqiu.itch.io/vonwaon-bitmap",
+        "reason": "CC0 1.0으로 배포되지만 https://github.com/aguegu/BitmapFont에 수집된 저작권 미상의 HZK 글꼴을 사용하고 Windows 3.2 글꼴과도 매우 유사하여 글리프의 저작권 출처를 확인할 수 없습니다.",
+        "reference": {
+          "label": "BitmapFont",
+          "href": "https://github.com/aguegu/BitmapFont"
+        }
       }
     ],
     paragraphs: [

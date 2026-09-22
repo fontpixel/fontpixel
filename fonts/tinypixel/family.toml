@@ -1,0 +1,26 @@
+name = "tinypixel"
+authors = ["videodante"]
+homepage = "https://videodante.itch.io/tinypixel"
+repository = ""
+description = "通常在 5×5 格子内绘制、下伸部占 2px 的微型像素字体。"
+forms = ["sans"]
+vibes = ["micro", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["OTF"]
+converted_from = "ttf"
+provenance = "导入自 https://videodante.itch.io/tinypixel；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "tinypixel"
+authors_en = ["videodante"]
+description_en = "A miniature pixel face generally drawn in a 5x5 grid, with two-pixel descenders."
+provenance_en = "Imported from https://videodante.itch.io/tinypixel; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "readme.txt"
+note = "发布包 readme 明言 licensed under the OFL，字体 name 表内嵌完整 OFL 1.1 声明并保留字体名 tinypixel。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The bundled readme says the font is licensed under the OFL; the font name table embeds the full OFL 1.1 declaration and reserves the name tinypixel."

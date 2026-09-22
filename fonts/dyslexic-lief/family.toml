@@ -1,0 +1,27 @@
+name = "Dyslexic Lief"
+authors = ["Lady Liefy"]
+homepage = "https://ladyliefy.itch.io/dyslexic-lief"
+repository = ""
+description = "为阅读辨识而设计的像素字体：加长上下伸部、加重字形底部，并在 m、n、u 等字母上以左侧重心引导阅读方向。"
+forms = ["sans"]
+vibes = ["game-ui", "rounded"]
+aliases = ["DyslexicPixel"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://ladyliefy.itch.io/dyslexic-lief；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Dyslexic Lief"
+authors_en = ["Lady Liefy"]
+description_en = "A pixel face designed for character differentiation, with long ascenders and descenders, bottom-weighted forms, and left-weighting on letters such as m, n and u."
+provenance_en = "Imported from https://ladyliefy.itch.io/dyslexic-lief; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "itch.io 元数据将资产许可明确标为 CC0 1.0；正文的商用付费用语是「please pay what you can」的请求，不是额外条件。"
+name_en = "CC0 1.0 Universal"
+note_en = "The itch.io asset metadata expressly identifies CC0 1.0. The commercial-payment wording in the prose is phrased as a request to pay what one can, not an additional condition."

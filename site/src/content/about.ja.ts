@@ -35,6 +35,15 @@ export const aboutSections: AboutSection[] = [
         "name": "tewi",
         "href": "https://github.com/lucy/tewi-font#readme",
         "reason": "作者は、多くの字形が Monaco に由来し、その許諾が不明確なためフォントを撤去し、配布者にも撤去の検討を求めています。旧コピーの GPL 表記だけでは元の字形の許諾は確認できません。"
+      },
+      {
+        "name": "鳳凰ドットフォント（Vonwaon Bitmap）",
+        "href": "https://timothyqiu.itch.io/vonwaon-bitmap",
+        "reason": "CC0 1.0 で公開されていますが、https://github.com/aguegu/BitmapFont に収集された著作権不明の HZK フォントを使用しており、Windows 3.2 のフォントとも非常によく似ているため、字形の著作権上の出所を確認できません。",
+        "reference": {
+          "label": "BitmapFont",
+          "href": "https://github.com/aguegu/BitmapFont"
+        }
       }
     ],
     paragraphs: [

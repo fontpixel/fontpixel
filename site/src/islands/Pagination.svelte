@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { pageCopy } from '../i18n/page-copy';
+  import type { Lang } from '../i18n/types';
   import { tick } from 'svelte';
   import { pageItems } from '../lib/catalogue';
   import type { UIStrings } from '../i18n/types';
   import Icon from './Icon.svelte';
-  const { page, pages, href, s, onNavigate, disabled = false }:
-    { page: number; pages: number; href: (page: number) => string; s: UIStrings; onNavigate?: () => void; disabled?: boolean } = $props();
+  const { page, pages, href, s, lang, onNavigate, position = 'top', disabled = false }:
+    { page: number; pages: number; href: (page: number) => string; s: UIStrings; lang: Lang; onNavigate?: () => void; position?: 'top' | 'bottom'; disabled?: boolean } = $props();
   let editing = $state(false);
   let targetPage = $state<number | undefined>();
   let nav = $state<HTMLElement | undefined>();
@@ -27,7 +29,7 @@
 </script>
 
 {#if pages > 1}
-  <nav bind:this={nav} class="pagination mono" aria-label={s.catalogue.pagination} data-testid="pagination">
+  <nav bind:this={nav} class="pagination mono" aria-label={`${s.catalogue.pagination} (${pageCopy[lang][position]})`} data-testid="pagination">
     {#if editing}
       <form class="page-editor" onsubmit={jump}>
         <input type="number" name="page" min="1" max={pages} step="1" required
@@ -50,7 +52,15 @@
     {/if}
     {#each pageItems(page, pages) as item, i (i)}
       {#if item === 'gap'}
-        <span class="gap" aria-hidden="true">…</span>
+        <span class="gap" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="lucide lucide-ellipsis">
+            <circle cx="12" cy="12" r="1" />
+            <circle cx="19" cy="12" r="1" />
+            <circle cx="5" cy="12" r="1" />
+          </svg>
+        </span>
       {:else}
         <a href={href(item)} aria-label={s.catalogue.pageLabel.replace('{n}', String(item))}
           aria-current={item === page ? 'page' : undefined} data-page={item} onclick={onNavigate}>{item}</a>
@@ -69,7 +79,7 @@
   a, .page-edit { color: var(--ink-2); text-decoration: none; }
   a:hover, .page-edit:hover { color: var(--accent); border-color: var(--accent); }
   a[aria-current="page"] { color: var(--paper); background: var(--ink); border-color: var(--ink); }
-  .gap { color: var(--ink-3); padding: 0 var(--s1); }
+  .gap { display: inline-flex; align-items: center; color: var(--ink-3); padding: 0 var(--s1); }
   .page-editor { display: inline-flex; margin: 0; }
   .page-editor input { min-width: 3rem; height: 2rem; text-align: center; appearance: textfield; }
   .page-editor input::-webkit-inner-spin-button,

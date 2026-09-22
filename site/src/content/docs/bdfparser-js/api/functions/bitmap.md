@@ -1,5 +1,6 @@
 ---
 title: "Function: $Bitmap"
+description: "TypeScript reference for the $Bitmap factory function: parameters and return type for creating bdfparser Bitmap objects."
 label: "API · $Bitmap"
 order: 13
 ---

@@ -1,0 +1,27 @@
+name = "innerlight serif"
+authors = ["innerlightdev"]
+homepage = "https://innerlightdev.itch.io/serif-pixel-font"
+repository = ""
+description = "面向对话框与游戏文本的 16px 像素衬线体；收录基础版和字符更多、为重音符号调整垂直位置的 localization 版。"
+forms = ["serif"]
+vibes = ["serif", "game-ui", "jrpg"]
+aliases = ["innerlightv2", "innerlight localization"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://innerlightdev.itch.io/serif-pixel-font；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "innerlight serif"
+authors_en = ["innerlightdev"]
+description_en = "A 16px pixel serif for dialogue and game text, with a base cut and a broader localization cut whose accented letters are vertically adjusted."
+provenance_en = "Imported from https://innerlightdev.itch.io/serif-pixel-font; converted from ttf"
+
+[license]
+spdx = "MIT"
+name = "MIT 许可证"
+confidence = "manual"
+file = "innerlight-MIT.txt"
+note = "itch.io 正文明确标注「MIT license」；发布包未附单独文本，本站保存标准 MIT 全文并以作者 innerlightdev 为版权人。"
+name_en = "MIT License"
+note_en = "The itch.io prose explicitly says 'MIT license'. As the release has no separate text file, the catalogue retains the standard MIT text with innerlightdev named as copyright holder."

@@ -1,0 +1,27 @@
+name = "5x7 Levee"
+authors = ["Flogram"]
+homepage = "https://flogram.itch.io/5x7-levee-pixel-font"
+repository = ""
+description = "采用 5×7 核心网格的纤细比例字体，字腹开放、局部笔画偏移，兼顾小字与科技界面感。"
+forms = ["sans"]
+vibes = ["technical", "game-ui", "sci-fi"]
+aliases = ["5x7Levee"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://flogram.itch.io/5x7-levee-pixel-font；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "5x7 Levee"
+authors_en = ["Flogram"]
+description_en = "A fine proportional face built around a 5x7 core grid, with open counters and selective offsets suited to tiny technical interfaces."
+provenance_en = "Imported from https://flogram.itch.io/5x7-levee-pixel-font; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "itch.io 正文明确声明 CC0（公共领域），可任意使用且无需署名。"
+name_en = "CC0 1.0 Universal"
+note_en = "The itch.io text explicitly states CC0 (public domain), permitting any use without required attribution."

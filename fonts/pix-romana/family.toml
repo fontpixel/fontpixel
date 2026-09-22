@@ -1,0 +1,33 @@
+name = "Pix Romana"
+authors = ["Helianthus Games", "Natanael Gama"]
+homepage = "https://helianthus-games.itch.io/pix-romana"
+repository = ""
+description = "Helianthus Games 将 Natanael Gama 的 Cinzel 罗马碑刻大写风格改作为 16px 像素衬线体，并附一款对 B、O、P、Q、R、T 作机械感处理的 Robotic 变体。"
+forms = ["serif", "decorative"]
+vibes = ["serif", "elegant", "sci-fi", "game-ui"]
+default_variant = "Pix-Romana-16px"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://helianthus-games.itch.io/pix-romana；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Pix Romana"
+authors_en = ["Helianthus Games", "Natanael Gama"]
+description_en = "Helianthus Games' 16px pixel-serif adaptation of Natanael Gama's Roman-inscriptional Cinzel, plus a Robotic cut altering B, O, P, Q, R and T."
+provenance_en = "Imported from https://helianthus-games.itch.io/pix-romana; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "License.txt"
+note = "发布包保留完整 OFL 1.1，同时列出原 Cinzel 设计者 Natanael Gama 与像素改作者 Filip Uzunov，保留字体名 Cinzel 与 Pix Romana。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The bundled complete OFL 1.1 credits original Cinzel designer Natanael Gama and pixel adapter Filip Uzunov, reserving the names Cinzel and Pix Romana."
+
+[variants."Pix Romana-16px.bdf"]
+display = "Pix Romana Regular"
+
+[variants."Pix Romana Robotic-16px.bdf"]
+display = "Pix Romana Robotic"

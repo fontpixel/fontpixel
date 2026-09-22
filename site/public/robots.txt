@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-
-# Build artifacts and raw data need not be indexed: glyph packs are
-# binary chunks; downloads are served via R2, not this site
-Disallow: /data/packs/
-Disallow: /data/details/
-
-Sitemap: https://fontpixel.com/sitemap-index.xml

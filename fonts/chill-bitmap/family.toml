@@ -1,7 +1,7 @@
 name = "ChillBitmap"
 name_zh_hans = "寒蝉点阵体"
 name_zh_hant = "寒蟬點陣體"
-authors = ["Warren2060", "ChillType"]
+authors = ["Warren2060 (ChillType)"]
 homepage = ""
 repository = "https://github.com/Warren2060/ChillBitmap"
 description = "8px点阵字体，7px字面。以美咲字体为底改造，融合部分精品点阵体7×7与GuanZhi 8px字形，重绘西文与标点，收录日文、繁体、简体共约13600字符。"
@@ -14,7 +14,7 @@ converted_from = "ttf"
 provenance = "上游https://github.com/Warren2060/ChillBitmap，取自仓库内ChillBitmap7x_v2.500.zip（收录于2026-08-30）。由ttf按原生8px格点栅格化。README另述有16px一档（基于Unifont），但该仓库未分发其字体文件，故本站只收7px。"
 added = "2026-08-30"
 name_en = "ChillBitmap"
-authors_en = ["Warren2060", "ChillType"]
+authors_en = ["Warren2060 (ChillType)"]
 description_en = "An 8px bitmap font with a 7px face. Reworked from Misaki, blending some glyphs from Boutique Bitmap 7x7 and GuanZhi 8px, with redrawn Latin and punctuation; about 13,600 characters covering Japanese, Traditional and Simplified Chinese."
 provenance_en = "Upstream https://github.com/Warren2060/ChillBitmap , taken from ChillBitmap7x_v2.500.zip in the repository (catalogued 2026-08-30). Rasterised from TTF at its native 8px grid. The README also describes a 16px face based on Unifont, but that repository does not ship its font file, so only the 7px face is catalogued here."
 

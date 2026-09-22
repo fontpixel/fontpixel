@@ -10,11 +10,11 @@
   import { framePalette, type Frame } from '../lib/frames';
   import { highlightCode, type CodeLang } from '../lib/codehl';
   import type { FamilyIndex } from '../lib/schema';
-  import { pickName, pickText } from '../i18n';
   import type { UIStrings } from '../i18n/types';
 
   interface Props {
     family: FamilyIndex;
+    displayName: string;
     lang: string;
     s: UIStrings;
     sampleText: string;
@@ -28,12 +28,9 @@
     initialSvg?: string;
     initialNameSvg?: string;
   }
-  const { family, lang, s, sampleText, zoom, store, href, dataBase, initialSvg = '', initialNameSvg = '',
+  const { family, displayName, lang, s, sampleText, zoom, store, href, dataBase, initialSvg = '', initialNameSvg = '',
     frame = 'none', codeLang = 'javascript', nowrap = false }: Props = $props();
 
-  const displayName = $derived(
-    pickName(lang, family.names, family.name),
-  );
   const preview = $derived(previewFor(family));
   const previewSize = $derived(family.variants.find(v => v.id === preview.variantId)?.size ?? family.sizes[0] ?? 16);
   // The catalogue is a compact specimen. Large grids stay at native size;
@@ -124,7 +121,7 @@
       </span>
     </header>
     {#if (seen || initialNameSvg) && family.namePreviews[displayName]}
-      <div class="card__namecanvas">
+      <div class="card__namecanvas" aria-hidden="true">
         <FixedSvg url={`${dataBase}/${family.namePreviews[displayName]}`} scale={Math.min(zoom + 1, 3)} maxHeight={64} initialSvg={initialNameSvg} />
       </div>
     {/if}
@@ -139,10 +136,10 @@
     </FrameShell>
     <p class="card__meta mono">
       <span>{sizeLabel}</span>
-      {#if family.forms.length}<span class="card__sep">·</span><span
+      {#if family.forms.length}<span class="card__sep" aria-hidden="true">·</span><span
           >{family.forms.map(form => s.forms[form] ?? form).join(' / ')}</span
         >{/if}
-      <span class="card__sep">·</span>
+      <span class="card__sep" aria-hidden="true">·</span>
       <span>{family.glyphCount.toLocaleString()} {s.card.glyphs}</span>
       <span class="card__lic" class:card__lic--warn={!family.license.spdx}>
         {family.license.spdx

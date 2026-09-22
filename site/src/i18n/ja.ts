@@ -20,6 +20,7 @@ export const ja: UIStrings = {
   },
 
   catalogue: {
+    skipToResults: '検索結果へスキップ',
     searchPlaceholder: '名前、作者、タグ…',
     searchLabel: '名前、作者、タグを検索…',
     sortAutoReverse: '自動（逆順）',
@@ -249,6 +250,7 @@ export const ja: UIStrings = {
     licenseDisclaimer:
       'ライセンス情報は参考用です。上流で公開された原文が優先されます。',
     warningsTitle: 'ビルド警告',
+    glyphGridKeyboard: '矢印キーで字形を選択し、Enter で詳細を表示、Esc で一覧に戻ります。',
     glyphGridTitle: 'グリフ一覧',
     glyphGridBlocks: 'Unicodeブロック',
     glyphGridSearch: 'ブロックを検索',
@@ -278,8 +280,7 @@ export const ja: UIStrings = {
     pua: '私用領域（PUA）',
     hanTotal: '統合漢字',
     compat: '互換漢字',
-    compatNote:
-      'このうち12コードポイントは、Unicodeの公式注記では統合漢字です。',
+    compatNote: "互換領域の12の統合漢字は統合漢字に計上し、ここには含めません。",
     unicodeBlocks: 'Unicodeブロック',
     showAllBlocks: 'すべてのブロックを表示',
     hideZeroBlocks: '収録のあるブロックのみ表示',

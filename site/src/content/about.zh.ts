@@ -47,6 +47,15 @@ export const aboutSections: AboutSection[] = [
         "name": "tewi",
         "href": "https://github.com/lucy/tewi-font#readme",
         "reason": "作者因大量字形衍生自 Monaco、授权情况不明而撤下字体，并建议分发者停止分发；旧副本的 GPL 标记不足以澄清其来源授权。"
+      },
+      {
+        "name": "凤凰点阵体（Vonwaon Bitmap）",
+        "href": "https://timothyqiu.itch.io/vonwaon-bitmap",
+        "reason": "虽然以 CC0 1.0 发布，但使用了 https://github.com/aguegu/BitmapFont 中收集的版权未知的 HZK 字体，且与 Windows 3.2 的字体高度相似，无法核验字形的版权来源。",
+        "reference": {
+          "label": "BitmapFont",
+          "href": "https://github.com/aguegu/BitmapFont"
+        }
       }
     ],
     paragraphs: [

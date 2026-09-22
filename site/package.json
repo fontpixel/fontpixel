@@ -1,5 +1,6 @@
 {
   "name": "fontpixel-site",
+  "packageManager": "bun@1.4.2",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -11,7 +12,10 @@
     "preview": "astro preview",
     "test": "vitest run",
     "check": "astro check && svelte-check --threshold error",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "audit:seo": "python3 ../.github/scripts/check_seo.py dist",
+    "test:a11y": "playwright test accessibility",
+    "audit:lighthouse": "node scripts/audit-lighthouse.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.14",
@@ -26,8 +30,12 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@astrojs/sitemap": "^3.7.3",
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "@types/node": "^24.0.0",
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.5.0",
+    "sharp": "^0.35.4",
     "svelte-check": "^4.7.6",
     "typescript": "^5.9.3",
     "vitest": "^3.0.0"

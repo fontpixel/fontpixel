@@ -1,0 +1,26 @@
+name = "Pixuf"
+authors = ["Erytau"]
+homepage = "https://erytau.itch.io/pixuf"
+repository = ""
+description = "平均字宽仅 3px 的极小比例像素字体，8px 原生网格上仍保持可读性；覆盖扩展拉丁、希腊与西里尔文。"
+forms = ["sans"]
+vibes = ["micro", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://erytau.itch.io/pixuf；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Pixuf"
+authors_en = ["Erytau"]
+description_en = "A tiny proportional font averaging three pixels in width, still readable on its native 8px grid and covering extended Latin, Greek and Cyrillic."
+provenance_en = "Imported from https://erytau.itch.io/pixuf; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "作者页面明确将 Pixuf 以 CC0 1.0 发布，允许任何用途且无需署名。"
+name_en = "CC0 1.0 Universal"
+note_en = "The author explicitly releases Pixuf under CC0 1.0 for any purpose without required attribution."

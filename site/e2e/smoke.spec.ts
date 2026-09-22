@@ -19,16 +19,90 @@ test('en page has english lang attribute and switch back', async ({ page }) => {
   await expect(sw).toHaveAttribute('href', /\/zh\//);
 });
 
+test('catalogue alone offers a keyboard shortcut to its results region', async ({ page }) => {
+  await page.goto('zh/?q=no-such-font-name');
+  const skipToMain = page.getByRole('link', { name: '跳到主内容' });
+  const skipToResults = page.getByTestId('skip-to-results');
+  const results = page.getByTestId('catalogue-results');
+
+  await page.keyboard.press('Tab');
+  await expect(skipToMain).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(skipToResults).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(results).toBeFocused();
+  await expect(page).toHaveURL(/#catalogue-results$/);
+
+  await page.goto('zh/about/');
+  await expect(page.getByTestId('skip-to-results')).toHaveCount(0);
+});
+
+test('header uses the requested icons, a tools menu, and no catalogue link', async ({ page }) => {
+  await page.goto('en/');
+  const nav = page.locator('.site-nav');
+  await expect(nav.locator(':scope > a[href="/en/"]')).toHaveCount(0);
+  for (const [path, title, icon] of [
+    ['/en/compare/', 'Compare fonts', 'lucide-equal-approximately'],
+    ['/en/about/', 'About', 'lucide-info'],
+  ] as const) {
+    const link = nav.locator(`:scope > a[href="${path}"]`);
+    await expect(link).toHaveAttribute('title', title);
+    await expect(link).toHaveAttribute('aria-label', title);
+    await expect(link.locator('svg')).toHaveClass(new RegExp(`\\b${icon}\\b`));
+    await expect(link).toHaveText('');
+  }
+
+  const tools = page.getByTestId('tools-menu');
+  const toolsTrigger = tools.getByRole('button', { name: 'Tools' });
+  await expect(toolsTrigger).toHaveAttribute('title', 'Tools');
+  await expect(toolsTrigger.locator('svg')).toHaveClass(/\blucide-pocket-knife\b/);
+  await toolsTrigger.click();
+  await expect(tools.locator('a')).toHaveCount(4);
+  await expect(tools.locator('a')).toHaveText([
+    'bdfparser (JS/TS)',
+    'bdfparser (Python)',
+    'BDF Specification',
+    'Font Template',
+  ]);
+});
+
+test('header menus stay inside the viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('en/');
+  for (const testId of ['tools-menu', 'lang-menu']) {
+    const menu = page.getByTestId(testId);
+    await menu.locator('.navmenu__trigger').click();
+    await expect(menu.locator('a').first()).toBeVisible();
+    const box = await menu.locator('ul').boundingBox();
+    const viewportWidth = await page.evaluate(() => document.documentElement.clientWidth);
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    if (box!.width <= viewportWidth) {
+      expect(box!.x + box!.width).toBeLessThanOrEqual(viewportWidth);
+    }
+    expect(box!.y).toBeGreaterThanOrEqual(0);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(640);
+    const scroll = await menu.locator('ul').evaluate((element) => ({
+      clientHeight: element.clientHeight,
+      scrollHeight: element.scrollHeight,
+      overflowY: getComputedStyle(element).overflowY,
+    }));
+    expect(scroll.scrollHeight).toBeLessThanOrEqual(scroll.clientHeight);
+    expect(scroll.overflowY).toBe('visible');
+  }
+});
+
 test('the language menu offers every language, each linking to the same page', async ({
   page,
 }) => {
   await page.goto('zh/fonts/galmuri/');
   const menu = page.getByTestId('lang-menu');
-  // summary has only an icon; the accessible name comes from aria-label/title—it labels
+  // The button has only an icon; the accessible name comes from aria-label/title—it labels
   // the control itself as "Language", not the current language's own name
-  await expect(menu.locator('summary')).toHaveAttribute('aria-label', '语言');
-  await expect(menu.locator('summary')).toHaveAttribute('title', '语言');
-  await menu.locator('summary').click();
+  const trigger = menu.getByRole('button', { name: '语言' });
+  await expect(trigger).toHaveAttribute('aria-label', '语言');
+  await expect(trigger).toHaveAttribute('title', '语言');
+  await trigger.click();
   const links = menu.locator('a');
   // six languages, the current language no longer appears in the menu
   await expect(links).toHaveCount(5);
@@ -93,7 +167,7 @@ test('language menu opens on hover and closes when the pointer leaves', async ({
   const link = page.getByTestId('lang-switch');
   await expect(link).toBeHidden();
 
-  await menu.locator('summary').hover();
+  await menu.locator('.navmenu__trigger').hover();
   await expect(link).toBeVisible();
 
   // move elsewhere on the page, the menu closes (closing has a 120ms buffer, waited out via toBeHidden's retry)
@@ -105,7 +179,7 @@ test('language menu opens on keyboard focus and closes on Escape', async ({
   page,
 }) => {
   await page.goto('zh/');
-  const summary = page.getByTestId('lang-menu').locator('summary');
+  const trigger = page.getByTestId('lang-menu').getByRole('button', { name: '语言' });
   const link = page.getByTestId('lang-switch');
 
   // only keyboard-originated focus expands it, so actually press Tab—programmatic focus
@@ -113,13 +187,37 @@ test('language menu opens on keyboard focus and closes on Escape', async ({
   await page.locator('body').click({ position: { x: 2, y: 2 } });
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press('Tab');
-    if (await summary.evaluate((el) => el === document.activeElement)) break;
+    if (await trigger.evaluate((el) => el === document.activeElement)) break;
   }
-  await expect(summary).toBeFocused();
+  await expect(trigger).toBeFocused();
   await expect(link).toBeVisible();
 
   await page.keyboard.press('Escape');
   await expect(link).toBeHidden();
+});
+
+test('header menus use one Tab stop and arrow keys navigate their items', async ({ page }) => {
+  await page.goto('en/');
+  for (const [testId, label] of [
+    ['tools-menu', 'Tools'],
+    ['lang-menu', 'Language'],
+  ] as const) {
+    const menu = page.getByTestId(testId);
+    const trigger = menu.getByRole('button', { name: label });
+    const items = menu.getByRole('menuitem');
+
+    await trigger.focus();
+    await trigger.press('ArrowDown');
+    await expect(items.first()).toBeFocused();
+    await page.keyboard.press('ArrowDown');
+    await expect(items.nth(1)).toBeFocused();
+    await page.keyboard.press('ArrowUp');
+    await expect(items.first()).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(trigger).toBeFocused();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await expect(menu.locator('[role="menuitem"]').first()).toHaveAttribute('tabindex', '-1');
+  }
 });
 
 test('github link in the header points at the repository', async ({ page }) => {

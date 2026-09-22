@@ -1,0 +1,29 @@
+name = "Nano Square"
+authors = ["SpicyGame"]
+homepage = "https://spicygame.itch.io/fonts"
+repository = ""
+description = "SG Font Collection 中的方块小字，含实心常规版与轮廓版。"
+forms = ["decorative", "sans"]
+vibes = ["block", "outline", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://spicygame.itch.io/fonts；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Nano Square"
+authors_en = ["SpicyGame"]
+description_en = "A compact square-built face from the SG Font Collection, in solid regular and outlined cuts."
+provenance_en = "Imported from https://spicygame.itch.io/fonts; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。"
+name_en = "CC0 1.0 Universal"
+note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table."
+
+[variants."NanoSquareO-11px.bdf"]
+display = "Nano Square Outline"

@@ -1,0 +1,26 @@
+name = "Canyon Racer Sound Test"
+authors = ["bbbbbr"]
+homepage = "https://bbbbbr.itch.io/canyon-racer-fonts"
+repository = "https://github.com/bbbbbr/canyon-racer/tree/main/font"
+description = "Canyon Racer 声音测试界面的 8×8 等宽字，用方格化、断笔的数字仪表风格区别于游戏其余文字。"
+forms = ["terminal", "sans"]
+vibes = ["handheld", "game-ui", "technical"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://bbbbbr.itch.io/canyon-racer-fonts；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Canyon Racer Sound Test"
+authors_en = ["bbbbbr"]
+description_en = "The 8x8 monospaced sound-test face from Canyon Racer, using square, broken-stroke digital-instrument lettering."
+provenance_en = "Imported from https://bbbbbr.itch.io/canyon-racer-fonts; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "Readme.md"
+note = "发布包 Readme 与 itch.io 页面均明确声明 Canyon Racer Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。"
+name_en = "CC0 1.0 Universal"
+note_en = "The bundled Readme and itch.io page explicitly release Canyon Racer Fonts under CC0; the font name tables also say 'CC0 Public Domain'."

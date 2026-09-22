@@ -36,7 +36,14 @@ const table = (): Record<string, LicenseSummary> => {
 };
 const summary = spdx ? table()[spdx] : undefined;
 
-const MARK: Record<Flag, string> = { yes: '✓', cond: '⚠', no: '×' };
+const MARK: Record<Flag, { name: string; paths: string[] }> = {
+  yes: { name: 'check', paths: ['M20 6 9 17l-5-5'] },
+  no: { name: 'x', paths: ['M18 6 6 18', 'm6 6 12 12'] },
+  cond: {
+    name: 'triangle-alert',
+    paths: ['m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3', 'M12 9v4', 'M12 17h.01'],
+  },
+};
 ---
 
 {
@@ -49,7 +56,12 @@ const MARK: Record<Flag, string> = { yes: '✓', cond: '⚠', no: '×' };
           <>
             <dt>{s.detail.licenseFlags[k]}</dt>
             <dd class={`lsum__f lsum__f--${summary.flags[k]}`}>
-              <span aria-hidden="true">{MARK[summary.flags[k]]}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.15em" height="1.15em" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class={`lucide lucide-${MARK[summary.flags[k]].name}`}
+                aria-hidden="true" focusable="false">
+                {MARK[summary.flags[k]].paths.map(d => <path d={d} />)}
+              </svg>
               <span class="lsum__sr">{s.detail.licenseFlagValues[summary.flags[k]]}</span>
             </dd>
           </>
@@ -89,6 +101,9 @@ const MARK: Record<Flag, string> = { yes: '✓', cond: '⚠', no: '×' };
     color: var(--ink-2);
   }
   .lsum__grid dd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0;
     text-align: center;
     font-weight: 700;

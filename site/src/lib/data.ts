@@ -2,6 +2,7 @@
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { compactPreviewSvg } from './svg-preview';
 import {
   DATA_SCHEMA_VERSION,
   DetailSchema,
@@ -47,8 +48,14 @@ export function listDetailSlugs(): string[] {
     .map((f) => f.replace(/\.json$/, ''));
 }
 
+const previews = new Map<string, string>();
 export function readPreviewSvg(relPath: string): string {
-  return readFileSync(join(DATA_DIR, relPath), 'utf-8');
+  let svg = previews.get(relPath);
+  if (svg === undefined) {
+    svg = compactPreviewSvg(readFileSync(join(DATA_DIR, relPath), 'utf-8'));
+    previews.set(relPath, svg);
+  }
+  return svg;
 }
 
 /** Shared between client and server: join the base path. */

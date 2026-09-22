@@ -1,5 +1,6 @@
 ---
 title: "Class: Glyph"
+description: "TypeScript API for the bdfparser Glyph class: constructors, properties, and methods to inspect character metrics and draw individual pixel glyphs as bitmaps."
 label: "API · Glyph"
 order: 12
 ---

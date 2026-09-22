@@ -1,0 +1,45 @@
+name = "Den of Snakes Four Player"
+authors = ["bbbbbr"]
+homepage = "https://bbbbbr.itch.io/den-of-snakes-pixel-fonts"
+repository = "https://github.com/bbbbbr/gbdk-gb-4-player/tree/main/font/den_of_snakes_fourplayer_font"
+description = "Game Boy 四人游戏 Den of Snakes 的界面字体，收录常规、粗体、反白块、粗反白块与描边五种 8×8 等宽效果。"
+forms = ["decorative", "sans"]
+vibes = ["handheld", "game-ui", "outline", "block"]
+aliases = ["Den Of Snakes Pixel Fonts", "Pixel Den of Snakes Four Player"]
+default_variant = "Pixel-Den-of-Snakes-Four-Player-Regular-8x8-Mono-16px"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://bbbbbr.itch.io/den-of-snakes-pixel-fonts；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Den of Snakes Four Player"
+authors_en = ["bbbbbr"]
+description_en = "Interface lettering from the four-player Game Boy game Den of Snakes, with five 8x8 monospaced treatments: regular, heavy, invert block, heavy invert block and outline."
+provenance_en = "Imported from https://bbbbbr.itch.io/den-of-snakes-pixel-fonts; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "Readme.md"
+note = "发布包 Readme 与 itch.io 页面均明确声明 Den of Snakes Four Player Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。"
+name_en = "CC0 1.0 Universal"
+note_en = "The bundled Readme and itch.io page explicitly release the Den of Snakes Four Player fonts under CC0; the font name tables also say 'CC0 Public Domain'."
+
+[variants."Pixel Den of Snakes Four Player Regular 8x8 Mono-16px.bdf"]
+display = "Regular"
+
+[variants."Pixel Den of Snakes Four Player Heavy 8x8 Mono-16px.bdf"]
+weight = "bold"
+display = "Heavy"
+
+[variants."Pixel Den of Snakes Four Player Invert Block 8x8 Mono-16px.bdf"]
+display = "Invert Block"
+
+[variants."Pixel Den of Snakes Four Player Heavy Invert Block 8x8 Mono-16px.bdf"]
+weight = "bold"
+display = "Heavy Invert Block"
+
+[variants."Pixel Den of Snakes Four Player Outline 8x8 Mono-16px.bdf"]
+display = "Outline"

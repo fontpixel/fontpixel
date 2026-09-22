@@ -102,8 +102,9 @@ def test_overview():
     pua = dict((p[0], (p[1], p[2])) for p in ov["pua"])
     assert pua["BMP PUA"] == (1, 6400)
     assert pua["Plane 15"] == (0, 65534)
-    assert ov["han_total"][0] == 2  # 4E00 + 20000; FA0E is counted separately under the compatibility block
-    assert ov["compat"][0] == 1
+    assert ov["han_total"] == (3, 101996)  # 4E00 + 20000 + the unified ideograph FA0E
+    assert ov["compat"][0] == 0
+    assert overview(frozenset({0xF900}), UCD)["compat"][0] == 1
     assert ov["compat_unified_note"] == (1, 12)
 
 

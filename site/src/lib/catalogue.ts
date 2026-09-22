@@ -17,3 +17,10 @@ export function pageItems(current: number, total: number): (number | 'gap')[] {
   }
   return out;
 }
+
+/** Build-time translations passed to catalogue islands, without conversion dictionaries. */
+export interface CatalogueLabels {
+  names: Record<string, string>;
+  licenses: Record<string, string>;
+  charsets: Record<string, string>;
+}

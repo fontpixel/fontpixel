@@ -42,6 +42,23 @@ def font_cps(f: ParsedFont) -> frozenset[int]:
     return frozenset(g.cp for g in f.glyphs)
 
 
+def unified_han(ucd: Ucd) -> frozenset[int]:
+    """Assigned unified ideographs, including the 12 in the compatibility block."""
+    return frozenset(cp for a, b in _UNIFIED_RANGES for cp in range(a, b + 1)
+                     if cp in ucd.assigned) | UNIFIED_IN_COMPAT
+
+
+def han_counts(cps: frozenset[int], ucd: Ucd) -> dict[str, tuple[int, int]]:
+    han = unified_han(ucd)
+    compat = frozenset(cp for a, b in _COMPAT_RANGES for cp in range(a, b + 1)
+                       if cp in ucd.assigned) - UNIFIED_IN_COMPAT
+    return {
+        "han_total": (len(cps & han), len(han)),
+        "compat": (len(cps & compat), len(compat)),
+        "compat_unified_note": (len(cps & UNIFIED_IN_COMPAT), len(UNIFIED_IN_COMPAT)),
+    }
+
+
 def coverage_for(cps: frozenset[int], charsets: list[Charset]) -> dict[str, tuple[int, int]]:
     return {c.id: (len(cps & c.cps), len(c.cps)) for c in charsets}
 
@@ -57,16 +74,6 @@ def unicode_block_coverage(cps: frozenset[int], ucd: Ucd) -> list[tuple[str, int
     return out
 
 
-def _count_in(cps: frozenset[int], ranges: list[tuple[int, int]],
-              assigned: frozenset[int] | None = None) -> tuple[int, int]:
-    have = sum(1 for cp in cps for a, b in ranges if a <= cp <= b)
-    if assigned is None:
-        total = sum(b - a + 1 for a, b in ranges)
-    else:
-        total = sum(1 for cp in assigned for a, b in ranges if a <= cp <= b)
-    return have, total
-
-
 def overview(cps: frozenset[int], ucd: Ucd) -> dict:
     covered_assigned = len(cps & ucd.assigned)
     planes = []
@@ -78,16 +85,11 @@ def overview(cps: frozenset[int], ucd: Ucd) -> dict:
     for name, a, b in _PUA:
         have = sum(1 for cp in cps if a <= cp <= b)
         pua.append((name, have, b - a + 1))
-    han = _count_in(cps, _UNIFIED_RANGES, ucd.assigned)
-    compat = _count_in(cps, _COMPAT_RANGES, ucd.assigned)
-    note = (len(cps & UNIFIED_IN_COMPAT), len(UNIFIED_IN_COMPAT))
     return {
         "total": (covered_assigned, len(ucd.assigned)),
         "planes": planes,
         "pua": pua,
-        "han_total": han,
-        "compat": compat,
-        "compat_unified_note": note,
+        **han_counts(cps, ucd),
     }
 
 

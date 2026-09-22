@@ -11,6 +11,14 @@ test('detail page shows metadata and license', async ({ page }) => {
   );
 });
 
+test('detail heading shares its row with the download jump and has no catalogue back link', async ({ page }) => {
+  await page.goto('en/fonts/wqy-bitmap-song/');
+  const heading = page.locator('.hero__heading');
+  await expect(heading.locator('h1')).toBeVisible();
+  await expect(heading.getByRole('link', { name: 'Jump to downloads' })).toHaveAttribute('href', '#downloads');
+  await expect(page.getByRole('link', { name: 'Back to catalogue' })).toHaveCount(0);
+});
+
 test('downloads list has per-variant files with sizes', async ({ page }) => {
   await page.goto('zh/fonts/wqy-bitmap-song/');
   const dl = page.getByTestId('download-list');

@@ -1,5 +1,6 @@
 ---
 title: "Type alias: GlyphMetaInFont"
+description: "TypeScript type reference for glyph metadata stored in a parsed font in bdfparser, including the type declaration and source definition."
 label: "API · GlyphMetaInFont"
 order: 22
 ---

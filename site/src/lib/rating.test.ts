@@ -42,10 +42,10 @@ test('aesthetic adjustments apply once after automatic scoring and retain headro
     cp437: 1, 'box-drawing': 1, 'block-elements': 1 };
   const preferred = font(complete, [12], 'galmuri');
   const ordinary = font(complete, [12], 'ordinary');
-  const lowered = font(complete, [12], 'misc-fixed');
+  const smallerBonus = font(complete, [12], 'qiu-ye-yuan-ti-16');
   expect(rate(preferred)).toMatchObject({ automaticScore: 100, adjustment: 1.5, score: 101.5 });
-  expect(rate(lowered)).toMatchObject({ automaticScore: 100, adjustment: -0.5, score: 99.5 });
-  expect(ratingOrder([lowered, ordinary, preferred])).toEqual([preferred, ordinary, lowered]);
+  expect(rate(smallerBonus)).toMatchObject({ automaticScore: 100, adjustment: 0.5, score: 100.5 });
+  expect(ratingOrder([ordinary, smallerBonus, preferred])).toEqual([preferred, smallerBonus, ordinary]);
   const licensed = rate({ ...preferred, license: { spdx: 'GPL-2.0-only' } });
   expect(licensed).toMatchObject({ automaticScore: 96, adjustment: 1.5, score: 97.5 });
   expect(rate(font({}, [12], 'misc-fixed')).score).toBe(0);
@@ -57,7 +57,9 @@ test('aesthetic preferences target exact existing families, including only regul
     expect(rate(font(latin, [12], slug)).score).toBe(90 + adjustment);
   }
   expect(rate(font(latin, [12], 'fusion-pixel')).adjustment).toBe(1.5);
-  for (const slug of ['fusion-bold-pixel', 'zlabs-diamondpix-16px', 'unknown', 'constructor']) {
+  for (const slug of ['zheng-ge-dian-hei-16', 'misc-fixed', 'dos-gothic', 'dos-saemmul',
+    'jiskan', '1307', 'baekmuk-batang', 'baekmuk-dotum', 'baekmuk-gulim', 'baekmuk-hline',
+    'fusion-bold-pixel', 'zlabs-diamondpix-16px', 'unknown', 'constructor']) {
     expect(rate(font(latin, [12], slug)).adjustment).toBe(0);
   }
 });

@@ -1,0 +1,26 @@
+name = "3x5 Rounded"
+authors = ["mazeon"]
+homepage = "https://mazeon.itch.io/3x5-pixel-font-pack"
+repository = ""
+description = "3×5 Pixel Font Pack 中转角更柔和的设计，含等宽 Mono 与逐字调宽 Adjusted 两款。"
+forms = ["rounded", "sans"]
+vibes = ["micro", "rounded", "cute", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://mazeon.itch.io/3x5-pixel-font-pack；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "3x5 Rounded"
+authors_en = ["mazeon"]
+description_en = "The softer rounded design in the 3x5 Pixel Font Pack, in monospaced Mono and individually spaced Adjusted cuts."
+provenance_en = "Imported from https://mazeon.itch.io/3x5-pixel-font-pack; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "LICENSE.txt"
+note = "发布包 LICENSE.txt 声明全部六款字体按 OFL 1.1 发布，列出六个保留字体名；字体 name 表亦写入 OFL 1.1。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The bundled LICENSE.txt applies OFL 1.1 to all six fonts and lists six Reserved Font Names; the font name tables also state OFL 1.1."

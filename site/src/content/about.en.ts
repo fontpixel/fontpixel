@@ -35,6 +35,15 @@ export const aboutSections: AboutSection[] = [
         "name": "tewi",
         "href": "https://github.com/lucy/tewi-font#readme",
         "reason": "The author removed the font over unclear licensing of glyphs heavily derived from Monaco and asked distributors to consider removing it. GPL labels on older copies do not resolve that provenance issue."
+      },
+      {
+        "name": "Vonwaon Bitmap (凤凰点阵体)",
+        "href": "https://timothyqiu.itch.io/vonwaon-bitmap",
+        "reason": "Released under CC0 1.0, but it uses HZK fonts of unknown copyright collected in https://github.com/aguegu/BitmapFont and is highly similar to the Windows 3.2 fonts, so the glyphs’ copyright provenance cannot be verified.",
+        "reference": {
+          "label": "BitmapFont",
+          "href": "https://github.com/aguegu/BitmapFont"
+        }
       }
     ],
     paragraphs: [

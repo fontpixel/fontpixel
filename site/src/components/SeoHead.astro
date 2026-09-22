@@ -1,0 +1,78 @@
+---
+import { LANGS, LANG_TAGS, t, type Lang } from '../i18n';
+import { withBase } from '../lib/data';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  path: string;
+  canonicalPath?: string;
+  markdownPath?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  availableLangs?: Lang[];
+  entityName?: string;
+  licenseUrl?: string;
+  noindex?: boolean;
+}
+const { lang, title, path, canonicalPath, ogImage, ogImageAlt, ogType = 'website',
+  availableLangs = LANGS, entityName, licenseUrl, noindex = false } = Astro.props;
+const s = t(lang);
+const description = Astro.props.description?.trim() || s.siteTagline;
+// Open Graph uses territory codes; HTML lang and hreflang use BCP 47 tags.
+const locales: Record<Lang, string> = {
+  en: 'en_US', zh: 'zh_CN', 'zh-Hant': 'zh_TW', ja: 'ja_JP', ko: 'ko_KR', fr: 'fr_FR',
+};
+const abs = (p: string) => new URL(withBase(p), Astro.site).href;
+const canonical = abs(canonicalPath ?? `/${lang}${path}`);
+const image = new URL(ogImage ?? withBase('/og.png'), Astro.site).href;
+const imageAlt = ogImageAlt ?? (ogImage ? `${entityName ?? title} — pixel font specimen` : 'FontPixel — open-source pixel font collection');
+const alternates = availableLangs.length > 1 ? availableLangs : [];
+const defaultLang = availableLangs.includes('zh') ? 'zh' : availableLangs[0];
+const isHome = path === '/' && !canonicalPath;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': isHome ? 'WebSite' : 'WebPage',
+  name: entityName ?? title,
+  ...(!isHome && { isPartOf: { '@type': 'WebSite', name: s.siteName, url: abs(`/${lang}/`) } }),
+  description, url: canonical, inLanguage: LANG_TAGS[lang],
+  image,
+  ...(licenseUrl ? { license: licenseUrl } : isHome ? { license: 'https://opensource.org/licenses/MIT' } : {}),
+  ...(isHome && { potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${canonical}?q={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  } }),
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+<link rel="canonical" href={canonical} />
+{alternates.map((l) => <link rel="alternate" hreflang={LANG_TAGS[l]} href={abs(`/${l}${path}`)} />)}
+{alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={abs(`/${defaultLang}${path}`)} />}
+<link rel="sitemap" type="application/xml" href={abs('/sitemap-index.xml')} />
+<link rel="describedby" type="text/plain" href={abs('/llms.txt')} />
+{Astro.props.markdownPath && <link rel="alternate" type="text/markdown" href={abs(Astro.props.markdownPath)} />}
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={s.siteName} />
+<meta property="og:locale" content={locales[lang]} />
+{alternates.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={locales[l]} />)}
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+{image.startsWith('https:') && <meta property="og:image:secure_url" content={image} />}
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+<meta name="twitter:image:alt" content={imageAlt} />
+{!noindex && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}

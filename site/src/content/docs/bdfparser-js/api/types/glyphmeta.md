@@ -1,5 +1,6 @@
 ---
 title: "Type alias: GlyphMeta"
+description: "TypeScript type reference for glyph encoding, bounding boxes, and advance metrics in bdfparser, including the type declaration and source definition."
 label: "API · GlyphMeta"
 order: 21
 ---

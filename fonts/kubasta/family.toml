@@ -1,0 +1,26 @@
+name = "Kubasta"
+authors = ["studio zichy"]
+homepage = "https://zichy.itch.io/kubasta"
+repository = ""
+description = "注重小字号可读性的等宽像素字体，约 900 个字形覆盖多个拉丁扩展区。"
+forms = ["terminal", "sans"]
+vibes = ["game-ui", "terminal", "retro-computer", "programming"]
+source_kind = "pixel-outline"
+source_formats = ["OTF"]
+converted_from = "ttf"
+provenance = "导入自 https://zichy.itch.io/kubasta；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Kubasta"
+authors_en = ["studio zichy"]
+description_en = "A monospaced pixel face designed for small-size legibility, with roughly 900 glyphs across several extended Latin blocks."
+provenance_en = "Imported from https://zichy.itch.io/kubasta; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "当前 itch.io 页面的正文与资产元数据均明确声明 CC0；发布包内的旧字体 name 表仍写 Open Font License，本站依作者较新且更宽松的公开声明记为 CC0。"
+name_en = "CC0 1.0 Universal"
+note_en = "The current itch.io prose and asset metadata both expressly state CC0. The older embedded font name record still says Open Font License; the catalogue follows the author's newer and more permissive public grant."

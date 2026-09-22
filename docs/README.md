@@ -14,7 +14,7 @@
 
 - Google Fonts：[早期覆盖检查](audits/google-fonts-coverage-audit.md)、[完整导入](audits/google-fonts-import-audit-2026-09-17.md)、[Jacquard / Jersey / Handjet](audits/google-fonts-jacquard-jersey-handjet-audit-2026-09-17.md)、[Bitcount 合并与 Prop Single](audits/bitcount-family-audit-2026-09-17.md)。
 - 导入修复：[DotGothic16 与减分字体核对](audits/dotgothic16-import-audit-2026-09-18.md)、[kbitx 解码](audits/kbitx-decoder-audit-2026-09-17.md)、[默认字号、Frogatto、Chunky Sans、Poxiao](audits/font-preview-and-import-fixes-2026-09-18.md)。
-- 收录与标签：[扩充批次及三款补充导入](audits/style-expansion-audit-2026-09-17.md)、[Vibes](audits/vibes-audit-2026-09-17.md)、[CJK 关系图与扇尾胄黑](audits/cjk-map-and-shanweizhouhei-2026-09-17.md)。
+- 收录与标签：[itch.io FOSS 点阵字体](audits/itch-foss-font-import-audit-2026-09-18.md)、[扩充批次及三款补充导入](audits/style-expansion-audit-2026-09-17.md)、[Vibes](audits/vibes-audit-2026-09-17.md)、[CJK 关系图与扇尾胄黑](audits/cjk-map-and-shanweizhouhei-2026-09-17.md)。
 - 来源与许可：[来源复核](audits/font-provenance-review-2026-09-17.md)、[Oldschool PC](audits/oldschool-pc-license-review-2026-09-17.md)、[Debian 包清单](audits/debian-fonts-pc-contents-2026-09-17.md)。
 - 部署：[Cloudflare Pages 容量与预览迁移记录](audits/hosting-audit-2026-09-17.md)。
 

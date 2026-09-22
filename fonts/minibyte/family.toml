@@ -1,0 +1,33 @@
+name = "minibyte"
+authors = ["WQON"]
+homepage = "https://wqonart.itch.io/minibyte"
+repository = ""
+description = "4px 高、3px 宽、以大写结构为核心的微型半等宽字体，含常规与斜体；524 个字形覆盖大量拉丁和西里尔语言。"
+forms = ["terminal", "sans"]
+vibes = ["micro", "game-ui", "terminal", "programming"]
+default_variant = "minibyte-regular-4px"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://wqonart.itch.io/minibyte；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "minibyte"
+authors_en = ["WQON"]
+description_en = "A 4px-tall, 3px-wide, uppercase-driven semi-monospaced microfont in regular and italic, with 524 glyphs covering many Latin and Cyrillic languages."
+provenance_en = "Imported from https://wqonart.itch.io/minibyte; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "发布包附完整 OFL 1.1，版权归 WQON，并保留字体名 minibyte。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The release bundles the complete OFL 1.1, attributes WQON and reserves the name minibyte."
+
+[variants."minibyte-regular-4px.bdf"]
+display = "minibyte Regular"
+
+[variants."minibyte-italic-4px.bdf"]
+display = "minibyte Italic"

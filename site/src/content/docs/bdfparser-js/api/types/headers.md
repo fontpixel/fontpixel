@@ -1,5 +1,6 @@
 ---
 title: "Type alias: Headers"
+description: "TypeScript type reference for global BDF font headers and metrics in bdfparser, including the type declaration and source definition."
 label: "API · Headers"
 order: 23
 ---

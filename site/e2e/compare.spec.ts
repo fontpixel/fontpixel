@@ -9,13 +9,13 @@ test('compare draws a column per font and carries the type-test controls', async
     await expect(cmp.locator(`[name="compare-font-${i + 1}"]`)).toHaveValue(slug!);
   }
 
-  // Every frame radio must keep its accessible label, including icon options.
+  // Every frame button must keep its accessible label, including icon options.
   // The Invert one once rendered blank
   // for months because its i18n key was deleted with the catalogue control that
   // used to share it, and nothing failed.
   const radios = cmp.getByTestId('frame-radios');
   for (const label of ['无', '反色', '老游戏', '高亮代码']) {
-    await expect(radios.getByRole('radio', { name: label, exact: true })).toBeEnabled();
+    await expect(radios.getByRole('button', { name: label, exact: true })).toBeEnabled();
   }
 
   // A preset fills the shared text box, and box drawing forces wrapping off

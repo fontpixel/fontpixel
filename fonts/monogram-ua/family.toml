@@ -1,0 +1,27 @@
+name = "Monogram UA"
+authors = ["Dmitriy Shmilo", "Vinícius Menézio"]
+homepage = "https://dmitriy-shmilo.itch.io/monogram-ua"
+repository = "https://github.com/dmitriy-shmilo/monogram-extended-ua"
+description = "Dmitriy Shmilo 在 Vinícius Menézio 的 monogram-extended 上增补乌克兰字母的紧凑等宽像素字体。"
+forms = ["sans"]
+vibes = ["game-ui", "programming", "elegant"]
+aliases = ["monogramextended", "monogram extended UA"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://dmitriy-shmilo.itch.io/monogram-ua；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Monogram UA"
+authors_en = ["Dmitriy Shmilo", "Vinícius Menézio"]
+description_en = "Dmitriy Shmilo's Ukrainian extension of Vinícius Menézio's compact monogram-extended pixel font."
+provenance_en = "Imported from https://dmitriy-shmilo.itch.io/monogram-ua; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "itch.io 页面与 GitHub 仓库将该乌克兰语扩展版按原 monogram 的 CC0 条款发布。"
+name_en = "CC0 1.0 Universal"
+note_en = "The itch.io page and GitHub repository publish this Ukrainian extension under the original monogram font's CC0 terms."

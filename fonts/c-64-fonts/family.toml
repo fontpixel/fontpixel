@@ -1,0 +1,27 @@
+name = "C-64 Fonts"
+authors = ["Jamie Cross"]
+homepage = "https://jamiecross.itch.io/c-64-font-free"
+repository = ""
+description = "取自 Commodore 64 字符集的两款显示体：普通实心点阵版，以及将每个原像素再分成带缝方块的 Pixel 版。"
+forms = ["terminal"]
+vibes = ["retro-computer", "microcomputer", "game-ui"]
+aliases = ["C-64", "C-64 Pixel", "Commodore 64"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://jamiecross.itch.io/c-64-font-free；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "C-64 Fonts"
+authors_en = ["Jamie Cross"]
+description_en = "Two display cuts based on the Commodore 64 character set: a solid bitmap rendering and a Pixel cut that redraws each source pixel as a separated square."
+provenance_en = "Imported from https://jamiecross.itch.io/c-64-font-free; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "license.txt"
+note = "发布包的 license.txt 与字体 name 表均声明 Creative Commons CC0 Public Domain Dedication，itch.io 页面同样标注 CC0。"
+name_en = "CC0 1.0 Universal"
+note_en = "The bundled license.txt and embedded font name records state the Creative Commons CC0 Public Domain Dedication; the itch.io page agrees."

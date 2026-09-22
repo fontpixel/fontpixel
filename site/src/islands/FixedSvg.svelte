@@ -1,11 +1,12 @@
 <script module lang="ts">
+  import { compactPreviewSvg } from '../lib/svg-preview';
   const cache = new Map<string, Promise<string>>();
   function load(url: string): Promise<string> {
     let pending = cache.get(url);
     if (!pending) {
       pending = fetch(url).then((r) => {
         if (!r.ok) throw new Error(`SVG ${url}: ${r.status}`);
-        return r.text();
+        return r.text().then(compactPreviewSvg);
       });
       cache.set(url, pending);
       void pending.catch(() => cache.delete(url));

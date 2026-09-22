@@ -109,6 +109,7 @@
   <textarea
     class="bdfed__code mono"
     name="bdf-source"
+    aria-label="JavaScript code for the live bitmap preview"
     bind:value={code}
     oninput={onInput}
     spellcheck="false"
@@ -116,9 +117,9 @@
   ></textarea>
   <div class="bdfed__out">
     {#if error}
-      <p class="bdfed__error mono">{error}</p>
+      <p class="bdfed__error mono" role="status">{error}</p>
     {/if}
-    <canvas bind:this={canvasEl} class:bdfed--busy={running}></canvas>
+    <canvas bind:this={canvasEl} class:bdfed--busy={running} role="img" aria-label="Live bitmap preview" aria-busy={running}></canvas>
   </div>
 </div>
 

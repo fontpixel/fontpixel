@@ -32,7 +32,7 @@ test('catalogue presets follow typed text and preserve multiline code', async ({
 
   await preset.selectOption('javascript');
   await expect(sample).toHaveValue(SAMPLES.javascript!);
-  await expect(page.getByRole('radio', { name: 'Highlighted code', exact: true })).toBeChecked();
+  await expect(page.getByRole('button', { name: 'Highlighted code', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('combobox', { name: 'Code language' })).toHaveValue('javascript');
   const canvas = page.locator('[data-slug="dylex-terminal"] .card__sample canvas');
   await canvas.scrollIntoViewIfNeeded();
@@ -53,16 +53,16 @@ test('catalogue frames keep SVG defaults cheap and color custom text correctly',
   await page.goto('en/?q=dylex-terminal');
   const card = page.locator('[data-slug="dylex-terminal"]');
   const preview = card.locator('.card__sample');
-  await expect(page.getByRole('radio', { name: 'Old game', exact: true })).toBeEnabled();
-  await page.getByRole('radio', { name: 'Old game', exact: true }).check();
+  await expect(page.getByRole('button', { name: 'Old game', exact: true })).toBeEnabled();
+  await page.getByRole('button', { name: 'Old game', exact: true }).click();
   await expect(preview.locator('svg')).toBeVisible();
   await expect(preview).toHaveCSS('background-color', 'rgb(19, 19, 83)');
   await expect(preview).toHaveCSS('color', 'rgb(240, 240, 252)');
-  await page.getByRole('radio', { name: 'Invert', exact: true }).check();
+  await page.getByRole('button', { name: 'Invert', exact: true }).click();
   await expect(preview).toHaveCSS('filter', 'invert(1)');
   expect(bdfs).toEqual([]);
 
-  await page.getByRole('radio', { name: 'Old game', exact: true }).check();
+  await page.getByRole('button', { name: 'Old game', exact: true }).click();
   await page.getByTestId('sample-input').fill('ABC');
   const canvas = preview.locator('canvas');
   await expect.poll(() => canvas.evaluate((c: HTMLCanvasElement) => c.width)).toBeGreaterThan(0);
@@ -84,7 +84,7 @@ test('preview frame and code language survive catalogue pagination', async ({ pa
   await page.getByTestId('page-next').first().click();
   await expect(page.getByTestId('preset-select')).toHaveValue('javascript');
   await expect(page.getByTestId('sample-input')).toHaveValue(SAMPLES.javascript!);
-  await expect(page.getByRole('radio', { name: 'Highlighted code', exact: true })).toBeChecked();
+  await expect(page.getByRole('button', { name: 'Highlighted code', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('combobox', { name: 'Code language' })).toHaveValue('typescript');
 });
 
@@ -93,15 +93,61 @@ for (const path of ['zh/', 'zh/compare/', 'zh/fonts/dylex-terminal/']) {
     await page.setViewportSize({ width: 300, height: 900 });
     await page.goto(path);
     const radios = page.getByTestId('frame-radios');
-    await expect(radios.getByRole('radio', { name: '老游戏', exact: true })).toBeEnabled();
-    await expect(radios.locator('label[title="老游戏"] svg')).toBeVisible();
-    await expect(radios.locator('label[title="高亮代码"] svg')).toBeVisible();
+    await expect(radios.getByRole('button', { name: '老游戏', exact: true })).toBeEnabled();
+    await expect(radios.locator('button[title="老游戏"] svg')).toBeVisible();
+    await expect(radios.locator('button[title="高亮代码"] svg')).toBeVisible();
     await expect(radios.getByText('老游戏', { exact: true })).toHaveCount(0);
-    const game = radios.getByRole('radio', { name: '老游戏', exact: true });
-    await game.check();
-    await game.press('ArrowRight');
-    await expect(radios.getByRole('radio', { name: '高亮代码', exact: true })).toBeChecked();
+    const game = radios.getByRole('button', { name: '老游戏', exact: true });
+    await game.click();
+    await expect(game).toHaveAttribute('aria-pressed', 'true');
+    await radios.getByRole('button', { name: '高亮代码', exact: true }).click();
+    await expect(radios.getByRole('button', { name: '高亮代码', exact: true })).toHaveAttribute('aria-pressed', 'true');
     await expect(radios.getByRole('combobox', { name: '代码语言' })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
 }
+
+test('preview style buttons are all in the Tab order', async ({ page }) => {
+  await page.goto('en/?q=dylex-terminal');
+  const frames = page.getByTestId('frame-radios');
+  const buttons = frames.getByRole('button');
+  await expect(buttons).toHaveCount(4);
+  await expect(buttons.first()).toBeEnabled();
+  await buttons.first().focus();
+  for (let i = 1; i < 4; i++) {
+    await page.keyboard.press('Tab');
+    await expect(buttons.nth(i)).toBeFocused();
+  }
+});
+
+test('filter button groups are one Tab stop with arrow-key navigation', async ({ page }) => {
+  await page.goto('en/');
+  await expect(page.getByTestId('catalogue-island')).toHaveAttribute('data-ready', 'true', {
+    timeout: 20_000,
+  });
+  for (const sectionId of [
+    'filter-scripts',
+    'filter-sizes',
+    'filter-form',
+    'filter-spacing-weight',
+    'filter-license',
+  ]) {
+    const toolbar = page.locator(`#${sectionId} [role="toolbar"]`);
+    const buttons = toolbar.getByRole('button');
+    const count = await buttons.count();
+    expect(count).toBeGreaterThan(1);
+    expect(await buttons.evaluateAll((items) =>
+      items.filter((item) => (item as HTMLButtonElement).tabIndex === 0).length,
+    )).toBe(1);
+
+    const current = toolbar.locator('button[tabindex="0"]');
+    const currentIndex = await current.evaluate((item) =>
+      [...item.parentElement!.querySelectorAll('button')].indexOf(item as HTMLButtonElement),
+    );
+    await current.focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(buttons.nth((currentIndex + 1) % count)).toBeFocused();
+    await page.keyboard.press('Tab');
+    expect(await toolbar.evaluate((element) => element.contains(document.activeElement))).toBe(false);
+  }
+});

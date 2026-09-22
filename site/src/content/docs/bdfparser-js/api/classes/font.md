@@ -1,5 +1,6 @@
 ---
 title: "Class: Font"
+description: "TypeScript API for the bdfparser Font class: constructors, properties, and methods to load BDF files, inspect headers and properties, look up glyphs, and render text."
 label: "API · Font"
 order: 11
 ---

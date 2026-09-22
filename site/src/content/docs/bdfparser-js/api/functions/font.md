@@ -1,5 +1,6 @@
 ---
 title: "Function: $Font"
+description: "TypeScript reference for the $Font factory function: parameters and return type for creating bdfparser Font objects."
 label: "API · $Font"
 order: 14
 ---

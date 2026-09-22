@@ -60,6 +60,25 @@ function rehypeExternalLinks() {
   return (tree) => walk(tree);
 }
 
+// The layout supplies h1. Imported API references sometimes start at h4;
+// preserve their nesting while removing skipped heading levels.
+function rehypeHeadingOrder() {
+  return (tree) => {
+    const levels = [{ source: 0, output: 1 }];
+    const walk = (node) => {
+      if (node.type === 'element' && /^h[1-6]$/.test(node.tagName)) {
+        const source = Number(node.tagName.slice(1));
+        while (levels.length > 1 && levels.at(-1).source >= source) levels.pop();
+        const output = Math.min(6, levels.at(-1).output + 1);
+        node.tagName = `h${output}`;
+        levels.push({ source, output });
+      }
+      for (const child of node.children ?? []) walk(child);
+    };
+    walk(tree);
+  };
+}
+
 export default defineConfig({
   site,
   redirects: Object.fromEntries(
@@ -74,12 +93,16 @@ export default defineConfig({
     mdx(),
     svelte(),
     sitemap({
-      filter: (page) => !/\/fonts\/bitcount-(?:single|prop-single)\/?$/.test(page),
+      filter: (page) => {
+        const path = new URL(page).pathname.replace(process.env.OPF_BASE?.replace(/\/$/, '') || '', '');
+        return path !== '/' && !/^\/404(?:\.html|\/)?$/.test(path)
+          && !/\/fonts\/bitcount-(?:single|prop-single)\/?$/.test(path);
+      },
       // The site has six parallel languages; each page lists the other five as
       // alternates, so search engines know they're different-language versions of the
       // same content, not duplicates
       i18n: {
-        defaultLocale: 'en',
+        defaultLocale: 'zh',
         locales: { en: 'en', zh: 'zh-Hans', 'zh-Hant': 'zh-Hant',
                    ja: 'ja', ko: 'ko', fr: 'fr' },
       },
@@ -87,9 +110,28 @@ export default defineConfig({
   ],
   // Cloudflare Pages serves from the domain root; override with OPF_BASE when deploying to a subpath
   base: process.env.OPF_BASE ?? '/',
-  markdown: { rehypePlugins: [rehypeExternalLinks] },
+  markdown: {
+    rehypePlugins: [rehypeExternalLinks, rehypeHeadingOrder],
+    shikiConfig: { theme: 'github-dark-high-contrast', langAlias: { markup: 'html' } },
+  },
   vite: {
     plugins: [downloadsAsAttachments()],
+    server: {
+      // Font builds place thousands of immutable generated assets under public/data
+      // and expose several thousand downloads through public/downloads. They are
+      // build outputs, not HMR inputs; restart the dev server after `make fonts`
+      // instead of watching them. Linux polling also keeps local development usable
+      // when a desktop session has exhausted its per-user inotify-instance quota.
+      watch: {
+        usePolling: process.platform === 'linux',
+        interval: 250,
+        ignored: [
+          '**/public/data/**',
+          '**/public/downloads/**',
+          '**/dist/**',
+        ],
+      },
+    },
     resolve: {
       // MDX docs reference doc components via @dc/, avoiding relative paths that shift with directory depth
       alias: { '@dc': new URL('./src/components/docs', import.meta.url).pathname },

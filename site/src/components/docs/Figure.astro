@@ -1,26 +1,33 @@
 ---
 /** Doc figure (ported from the original site's Figure.js). When imgUrl is true, src resolves to a file under public/img/. */
+import { existsSync } from 'node:fs';
+import sharp from 'sharp';
+
 interface Props {
   src: string;
   caption?: string;
+  alt?: string;
   figure_number?: string | number;
   width?: string | number;
   imgUrl?: boolean;
   link?: string;
   position?: 'left' | 'right' | string;
 }
-const { src, caption, figure_number, width, imgUrl, link, position } = Astro.props;
+const { src, caption, alt, figure_number, width, imgUrl, link, position } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const finalSrc = imgUrl ? `${base}/img/${src}` : src;
+const file = new URL(`../../../public${finalSrc.replace(base, '')}`, import.meta.url);
+const dimensions: { width?: number; height?: number } = finalSrc.startsWith('/') && existsSync(file) ? await sharp(file.pathname).metadata() : {};
+const imageAlt = alt ?? caption ?? src.split('/').pop()?.replace(/[_-]/g, ' ').replace(/\.[^.]+$/, '') ?? '';
 const float = position === 'left' || position === 'right' ? position : 'none';
 ---
 
 <div style="display: flow-root">
   <figure style={`float: ${float}; text-align: center; margin: 1em;`}>
     {link ? (
-      <a href={link}><img alt={caption} src={finalSrc} width={width} /></a>
+      <a href={link}><img alt={imageAlt} src={finalSrc} width={width ?? dimensions.width} height={dimensions.height && dimensions.width && width ? Math.round(dimensions.height * Number(width) / dimensions.width) : dimensions.height} loading="lazy" decoding="async" style="max-width:100%;height:auto" /></a>
     ) : (
-      <img alt={caption} src={finalSrc} width={width} />
+      <img alt={imageAlt} src={finalSrc} width={width ?? dimensions.width} height={dimensions.height && dimensions.width && width ? Math.round(dimensions.height * Number(width) / dimensions.width) : dimensions.height} loading="lazy" decoding="async" style="max-width:100%;height:auto" />
     )}
     <figcaption style="font-style: italic">
       {figure_number && <strong>Figure {figure_number} </strong>}{caption}

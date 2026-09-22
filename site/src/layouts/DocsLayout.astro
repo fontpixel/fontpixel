@@ -1,6 +1,6 @@
 ---
 import Base from './Base.astro';
-import { t, type Lang } from '../i18n';
+import { type Lang } from '../i18n';
 import { withBase } from '../lib/data';
 import {
   DOC_LANGS,
@@ -18,7 +18,6 @@ interface Props {
   entry: DocEntry;
 }
 const { lang, section, entry } = Astro.props;
-const s = t(lang);
 const entries = await sectionEntries(section);
 const current = docSlug(entry, section);
 const sectionTitle = DOC_SECTIONS[section];
@@ -29,7 +28,7 @@ const prev = idx > 0 ? entries[idx - 1] : null;
 const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
 ---
 
-<Base lang={lang} title={`${entry.data.title} · ${sectionTitle}`} description={entry.data.description} path={path} availableLangs={DOC_LANGS}>
+<Base lang={lang} title={`${entry.data.title} · ${sectionTitle}`} description={entry.data.description} path={path} availableLangs={DOC_LANGS} ogType="article" markdownPath={`/en${path}index.md`}>
   <div class="doc">
     <nav class="doc__side" aria-label={sectionTitle}>
       <p class="doc__section">{sectionTitle}</p>
@@ -57,6 +56,9 @@ const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
 </Base>
 
 <style>
+  .doc__article :global(p a),
+  .doc__article :global(li a),
+  .doc__article :global(td a) { text-decoration: underline; text-underline-offset: 0.15em; }
   /* Docusaurus-classic (Infima) look for the tools/docs area only — the
      catalogue keeps the site's own pixel-museum styling. Values mirror the
      original font.tomchen.org theme: the site accent as primary, 95% code size,

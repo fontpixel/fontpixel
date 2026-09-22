@@ -2,14 +2,14 @@
   import { onMount, untrack } from 'svelte';
   import { applyFilters, emptyState, type CharLookup } from '../lib/filters';
   import { decodeState, encodeState } from '../lib/urlstate';
-  import { PAGE_SIZE, pageCount, pagePath } from '../lib/catalogue';
+  import { PAGE_SIZE, pageCount, pagePath, type CatalogueLabels } from '../lib/catalogue';
   import { getGlyphStore } from '../lib/glyphstore';
   import { revealFragment } from '../lib/fragments';
   import { SAMPLES, NOWRAP_PRESETS, matchingPreset, presetLabel } from '../lib/samples';
   import { CODE_LANGS, type CodeLang } from '../lib/codehl';
   import { FRAMES, type Frame } from '../lib/frames';
   import type { FamilyIndex } from '../lib/schema';
-  import type { UIStrings } from '../i18n/types';
+  import type { UIStrings, Lang } from '../i18n/types';
   import FilterPanel from './FilterPanel.svelte';
   import FontCard from './FontCard.svelte';
   import Pagination from './Pagination.svelte';
@@ -18,7 +18,8 @@
 
   interface Props {
     families: FamilyIndex[];
-    lang: string;
+    labels: CatalogueLabels;
+    lang: Lang;
     s: UIStrings;
     dataBase: string;
     fontsBase: string;
@@ -29,7 +30,7 @@
     charsetIds: string[];
     charsetNames: Record<string, { zh: string; en: string; section: string; total: number }>;
   }
-  const { families, lang, s, dataBase, fontsBase, catalogueBase, initialPage, previewSvgs, namePreviewSvgs, charsetIds, charsetNames }: Props =
+  const { families, labels, lang, s, dataBase, fontsBase, catalogueBase, initialPage, previewSvgs, namePreviewSvgs, charsetIds, charsetNames }: Props =
     $props();
 
   const store = getGlyphStore(dataBase);
@@ -115,14 +116,18 @@
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonical?.href ?? location.href);
     document.title = page === 1 ? s.siteName : `${s.siteName} · ${s.catalogue.pageLabel.replace('{n}', String(page))}`;
-    let robots = document.querySelector<HTMLMetaElement>('meta[data-catalogue-robots]');
-    if (qs && !robots) {
-      robots = document.createElement('meta');
-      robots.name = 'robots';
-      robots.dataset.catalogueRobots = '';
-      robots.content = 'noindex, follow';
-      document.head.append(robots);
-    } else if (!qs) robots?.remove();
+    for (const name of ['og:title', 'twitter:title']) {
+      document.querySelector(`meta[property="${name}"], meta[name="${name}"]`)?.setAttribute('content', document.title);
+    }
+    document.querySelector('meta[name="robots"]')?.setAttribute('content',
+      qs ? 'noindex, follow' : 'index, follow, max-image-preview:large');
+    const structured = document.querySelector<HTMLScriptElement>('script[type="application/ld+json"]');
+    if (structured && canonical) {
+      const data = JSON.parse(structured.textContent ?? '{}');
+      data.url = canonical.href;
+      data.name = document.title;
+      structured.textContent = JSON.stringify(data);
+    }
   });
 
   const results = $derived(applyFilters(families, filters, charLookup, charsetIds));
@@ -150,14 +155,28 @@
 </script>
 
 <section id="catalogue" class="cat" data-testid="catalogue-island" data-ready={mounted}>
-  <p class="cat__tagline">{s.siteTagline}</p>
   <div class="cat__body">
-    <details class="cat__filters" open bind:this={filtersEl} inert={!mounted}>
-      <summary class="cat__filters-summary">{s.catalogue.filters}</summary>
-      <fieldset class="cat__filter-fields" disabled={!mounted}>
-        <FilterPanel {families} bind:filters {s} {lang} {charsetIds} {charsetNames} />
-      </fieldset>
-    </details>
+    <div class="cat__sidebar">
+      <div class="cat__search">
+        <input
+          type="search"
+          name="catalogue-search"
+          placeholder={s.catalogue.searchPlaceholder}
+          aria-label={s.catalogue.searchLabel}
+          title={s.catalogue.searchLabel}
+          bind:value={filters.q}
+          data-testid="search-input"
+          disabled={!mounted}
+        />
+        <span class="cat__search-icon"><Icon name="search" size={18} /></span>
+      </div>
+      <details class="cat__filters" open bind:this={filtersEl} inert={!mounted}>
+        <summary class="cat__filters-summary">{s.catalogue.filters}</summary>
+        <fieldset class="cat__filter-fields" disabled={!mounted}>
+          <FilterPanel {labels} {families} bind:filters {s} {lang} {charsetIds} {charsetNames} />
+        </fieldset>
+      </details>
+    </div>
     <div class="cat__main">
       <div class="cat__toolbar">
         <div class="cat__sample-field">
@@ -219,35 +238,45 @@
             </select>
           </label>
         </div>
-        <Pagination {page} {pages} href={pageHref} {s} onNavigate={rememberView} disabled={!mounted} />
+        <Pagination {lang} position="top" {page} {pages} href={pageHref} {s} onNavigate={rememberView} disabled={!mounted} />
       </div>
-      {#if results.length === 0}
-        <div class="cat__empty">
-          <p>{s.catalogue.noResults}</p>
-          <p class="hint">{s.catalogue.noResultsHint}</p>
-        </div>
-      {:else}
-        <div class="cat__grid">
-          {#each pageResults as family (family.slug)}
-            <FontCard
-              {family}
-              {lang}
-              {s}
-              sampleText={sampleText}
-              {zoom}
-              {frame}
-              {codeLang}
-              {nowrap}
-              {store}
-              {dataBase}
-              initialSvg={previewSvgs[family.slug] ?? ''}
-              initialNameSvg={namePreviewSvgs[family.slug] ?? ''}
-              href={`${fontsBase}${family.slug}/`}
-            />
-          {/each}
-        </div>
-        <div class="cat__bottom"><Pagination {page} {pages} href={pageHref} {s} onNavigate={rememberView} disabled={!mounted} /></div>
-      {/if}
+      <div
+        id="catalogue-results"
+        class="cat__results-region"
+        role="region"
+        aria-label={s.catalogue.skipToResults}
+        tabindex="-1"
+        data-testid="catalogue-results"
+      >
+        {#if results.length === 0}
+          <div class="cat__empty">
+            <p>{s.catalogue.noResults}</p>
+            <p class="hint">{s.catalogue.noResultsHint}</p>
+          </div>
+        {:else}
+          <div class="cat__grid">
+            {#each pageResults as family (family.slug)}
+              <FontCard
+                {family}
+                displayName={labels.names[family.slug] ?? family.name}
+                {lang}
+                {s}
+                sampleText={sampleText}
+                {zoom}
+                {frame}
+                {codeLang}
+                {nowrap}
+                {store}
+                {dataBase}
+                initialSvg={previewSvgs[family.slug] ?? ''}
+                initialNameSvg={namePreviewSvgs[family.slug] ?? ''}
+                href={`${fontsBase}${family.slug}/`}
+              />
+            {/each}
+          </div>
+          <div class="cat__bottom"><Pagination {lang} position="bottom" {page} {pages} href={pageHref} {s} onNavigate={rememberView} disabled={!mounted} /></div>
+        {/if}
+      </div>
     </div>
   </div>
 </section>
@@ -259,9 +288,27 @@
     align-items: center;
     gap: var(--s2) var(--s4);
   }
-  .cat__tagline {
-    color: var(--ink-2);
-    margin: 0 0 var(--s4);
+  .cat__sidebar {
+    min-width: 0;
+  }
+  .cat__search {
+    position: relative;
+    margin-bottom: var(--s3);
+  }
+  .cat__search input {
+    width: 100%;
+    min-width: 0;
+    padding-inline-end: 2.25rem;
+    font-size: 1rem;
+  }
+  .cat__search-icon {
+    position: absolute;
+    inset-inline-end: var(--s2);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    color: var(--ink-3);
+    pointer-events: none;
   }
   .cat__sort {
     display: inline-flex;
@@ -339,6 +386,13 @@
   }
   .cat__pagebar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s3); }
   .cat__bottom { margin-top: var(--s5); display: flex; justify-content: center; }
+  .cat__results-region {
+    scroll-margin-top: var(--s4);
+  }
+  .cat__results-region:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: var(--s2);
+  }
   .cat__grid {
     display: grid;
     /* min() lets the floor track the viewport: at 300px, a fixed 19rem (304px) would blow out the grid */

@@ -27,6 +27,8 @@ export interface UIStrings {
   };
 
   catalogue: {
+    /** Homepage link that skips search and filters and focuses the results region */
+    skipToResults: string;
     searchPlaceholder: string;
     searchLabel: string;
     samplePlaceholder: string;
@@ -170,6 +172,7 @@ export interface UIStrings {
     licenseFlagValues: Record<'yes' | 'cond' | 'no', string>;
     licenseDisclaimer: string;
     warningsTitle: string;
+    glyphGridKeyboard: string;
     glyphGridTitle: string;
     glyphGridBlocks: string;
     glyphGridSearch: string;

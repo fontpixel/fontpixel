@@ -1,6 +1,6 @@
 name = "Z Labs RoundPix"
 name_zh = "Z工坊像素圆体"
-authors = ["Astro_2539"]
+authors = ["Astro_2539 (Z Labs)"]
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-RoundPix-16px"
 description = "Astro_2539制作的中文像素圆体，12px与16px两档。12px一档字形取自hicc／x0y0pxFreeFont的x12y12pxMaruMinya，16px一档取形参考Zen Maru Gothic，另含一套日文字形（JP）。两档字面上游分属两个独立仓库，本站合并为一个家族。"
@@ -14,7 +14,7 @@ provenance = "导入自 CJK-bitmap-fonts-open-source-2026-08-18/Chinese；上游
 added = "2026-08-31"
 
 name_en = "Z Labs RoundPix"
-authors_en = ["Astro_2539"]
+authors_en = ["Astro_2539 (Z Labs)"]
 description_en = "A rounded Chinese pixel typeface by Astro_2539, at 12px and 16px. The 12px cut takes its letterforms from x12y12pxMaruMinya by hicc / x0y0pxFreeFont; the 16px cut references Zen Maru Gothic and adds a Japanese glyph set (JP). Upstream publishes the two sizes from two separate repositories; they are catalogued here as one family."
 provenance_en = "Imported from CJK-bitmap-fonts-open-source-2026-08-18/Chinese; upstream https://github.com/Astro-2539/ZLabs-RoundPix-12px/releases (Build_20260813), https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501); converted from kbitx"
 

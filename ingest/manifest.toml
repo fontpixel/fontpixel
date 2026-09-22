@@ -211,7 +211,7 @@ convert_take = ["data/ZLabsPixel_12px_M_CN.kbitx", "data/ZLabsPixel_12px_M_HC.kb
 license_files = ["./LICENSE-OFL"]
 name = "Z Labs Pixel 12px"
 name_zh = "Z工坊像素黑体 12px"
-author = "Astro_2539"
+author = "Astro_2539 (Z Labs)"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-Pixel-12px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-Pixel-12px/releases (Build_20260519)"
@@ -232,7 +232,7 @@ convert_take = ["ZLabsDiamondPix_16px_SC.kbitx"]
 license_files = ["./LICENSE-OFL"]
 name = "Z Labs DiamondPix 16px"
 name_zh = "Z工坊金刚黑体 16px"
-author = "Astro_2539, ChenhaoUwU, Dalict, yzdnn"
+author = "Astro_2539 (Z Labs), ChenhaoUwU, Dalict, yzdnn"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-DiamondPix-16px/releases (Build_20260309)"
@@ -257,7 +257,7 @@ convert_take = ["Astro-2539--ZLabs-RoundPix-12px/data/ZLabsRoundPix_12px_CN.kbit
 license_files = ["Astro-2539--ZLabs-RoundPix-12px/LICENSE-OFL"]
 name = "Z Labs RoundPix"
 name_zh = "Z工坊像素圆体"
-author = "Astro_2539"
+author = "Astro_2539 (Z Labs)"
 homepage = ""
 repository = "https://github.com/Astro-2539/ZLabs-RoundPix-16px"
 provenance_url = "https://github.com/Astro-2539/ZLabs-RoundPix-12px/releases (Build_20260813), https://github.com/Astro-2539/ZLabs-RoundPix-16px/releases (Build_20260501)"
@@ -1368,7 +1368,7 @@ convert_take = ["ChillMoonMono.otf"]
 license_files = ["license.txt"]
 name = "ChillMoonmono"
 name_zh = ""
-author = "Warren2060"
+author = "Warren2060 (ChillType)"
 homepage = ""
 repository = "https://github.com/Warren2060/ChillMoonmono"
 provenance_url = "https://github.com/Warren2060/ChillMoonmono/releases (v1.000)"
@@ -10062,7 +10062,7 @@ slug = "shanweizhouhei-16"
 name = "ShanWeiZhouHei 16"
 name_zh = "扇尾胄黑16"
 export_name = "FontPixel SWZH 16"
-authors = ["yzdnn", "Keitarou Hiraki", "自家製フォント工房 (Jikasei)"]
+authors = ["yzdnn"]
 source = "direct-downloads-2026-09-17/yzdnn--ShanWeiZhouHei-16"
 source_kind = "pixel-outline"
 source_formats = ["TTF"]
@@ -10083,3 +10083,1093 @@ added = "2026-09-17"
 provenance_url = "https://github.com/yzdnn/ShanWeiZhouHei-16/tree/f0373bc2183778615d6ae4ff56fd2b9c5511ce25 (2026-09-17)"
 provenance_url_en = "https://github.com/yzdnn/ShanWeiZhouHei-16/tree/f0373bc2183778615d6ae4ff56fd2b9c5511ce25 (2026-09-17)"
 license = { spdx = "OFL-1.1", name = "SIL开放字体许可证1.1", name_en = "SIL Open Font License 1.1", file = "OFL.txt", confidence = "manual", note = "保留上游OFL及版权声明。项目声明保留名称「扇尾胄黑 16」和「ShanWeiZhouHei 16」，本站转换后的字体内部名称为FontPixel SWZH 16。", note_en = "Retains the upstream OFL and copyright notices. Upstream reserves the names ShanWeiZhouHei 16 and 扇尾胄黑 16; converted fonts use the internal name FontPixel SWZH 16." }
+
+# ==================== itch.io FOSS pixel fonts, 2026-09-18 ====================
+# User-supplied release files and saved itch.io pages. Multi-font packs are split
+# by design; weights, spacing cuts and effect variants remain within one family.
+
+[[family]]
+slug = "monogram-ua"
+name = "Monogram UA"
+authors = ["Dmitriy Shmilo", "Vinícius Menézio"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://dmitriy-shmilo.itch.io/monogram-ua"
+repository = "https://github.com/dmitriy-shmilo/monogram-extended-ua"
+description = "Dmitriy Shmilo 在 Vinícius Menézio 的 monogram-extended 上增补乌克兰字母的紧凑等宽像素字体。"
+description_en = "Dmitriy Shmilo's Ukrainian extension of Vinícius Menézio's compact monogram-extended pixel font."
+forms = ["sans"]
+form_verified = true
+vibes = ["game-ui", "programming", "elegant"]
+aliases = ["monogramextended", "monogram extended UA"]
+convert = "ttf"
+convert_take = ["files/direct/monogram-extended.ttf"]
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://dmitriy-shmilo.itch.io/monogram-ua"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "itch.io 页面与 GitHub 仓库将该乌克兰语扩展版按原 monogram 的 CC0 条款发布。", note_en = "The itch.io page and GitHub repository publish this Ukrainian extension under the original monogram font's CC0 terms." }
+
+[[family]]
+slug = "attomic"
+name = "Attomic"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中笔画极细、水平延展的科幻感像素无衬线体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A very light, horizontally stretched science-fiction sans from the SG Font Collection, with Latin, Greek, Cyrillic and Hebrew coverage."
+forms = ["sans"]
+form_verified = true
+vibes = ["sci-fi", "retro-futuristic", "technical", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/Attomic.ttf"]
+ppem = 14
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "pixuf"
+name = "Pixuf"
+authors = ["Erytau"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://erytau.itch.io/pixuf"
+description = "平均字宽仅 3px 的极小比例像素字体，8px 原生网格上仍保持可读性；覆盖扩展拉丁、希腊与西里尔文。"
+description_en = "A tiny proportional font averaging three pixels in width, still readable on its native 8px grid and covering extended Latin, Greek and Cyrillic."
+forms = ["sans"]
+form_verified = true
+vibes = ["micro", "game-ui"]
+convert = "ttf"
+convert_take = ["files/direct/Pixuf.ttf"]
+ppem = 8
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://erytau.itch.io/pixuf"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "作者页面明确将 Pixuf 以 CC0 1.0 发布，允许任何用途且无需署名。", note_en = "The author explicitly releases Pixuf under CC0 1.0 for any purpose without required attribution." }
+
+[[family]]
+slug = "thin-sans"
+name = "Thin Sans"
+authors = ["enekoatxa"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://enekoatxa.itch.io/thin-sans"
+description = "受 Balatro 细线字启发的 8px 清爽像素无衬线体，收录 Adobe Latin 2 范围的 242 个字符。"
+description_en = "A clean 8px pixel sans inspired by Balatro's fine-line lettering, with 242 characters from the Adobe Latin 2 set."
+forms = ["sans"]
+form_verified = true
+vibes = ["game-ui", "technical", "elegant"]
+convert = "ttf"
+convert_take = ["files/direct/Thin Sans.ttf"]
+ppem = 8
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://enekoatxa.itch.io/thin-sans"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "itch.io 正文与元数据均明确标注 CC0 1.0，包括商业使用且无需署名。", note_en = "Both the itch.io text and metadata explicitly state CC0 1.0, including commercial use without attribution." }
+
+[[family]]
+slug = "lief"
+name = "Lief"
+authors = ["Lady Liefy"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://ladyliefy.itch.io/lief"
+description = "干净、古典的像素衬线体，收录英语、西班牙语字符和常用货币符号。"
+description_en = "A clean, classical pixel serif covering English and Spanish characters plus common currency symbols."
+forms = ["serif"]
+form_verified = true
+vibes = ["serif", "book", "game-ui"]
+convert = "ttf"
+convert_take = ["files/direct/Lief.ttf"]
+ppem = 14
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://ladyliefy.itch.io/lief"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "itch.io 元数据将资产许可明确标为 CC0 1.0；正文的商用付费用语是「please pay what you can」的请求，不是额外条件。", note_en = "The itch.io asset metadata expressly identifies CC0 1.0. The commercial-payment wording in the prose is phrased as a request to pay what one can, not an additional condition." }
+
+[[family]]
+slug = "dyslexic-lief"
+name = "Dyslexic Lief"
+authors = ["Lady Liefy"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://ladyliefy.itch.io/dyslexic-lief"
+description = "为阅读辨识而设计的像素字体：加长上下伸部、加重字形底部，并在 m、n、u 等字母上以左侧重心引导阅读方向。"
+description_en = "A pixel face designed for character differentiation, with long ascenders and descenders, bottom-weighted forms, and left-weighting on letters such as m, n and u."
+forms = ["sans"]
+form_verified = true
+vibes = ["game-ui", "rounded"]
+aliases = ["DyslexicPixel"]
+convert = "ttf"
+convert_take = ["files/direct/DyslexicPixel.ttf"]
+ppem = 32
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://ladyliefy.itch.io/dyslexic-lief"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "itch.io 元数据将资产许可明确标为 CC0 1.0；正文的商用付费用语是「please pay what you can」的请求，不是额外条件。", note_en = "The itch.io asset metadata expressly identifies CC0 1.0. The commercial-payment wording in the prose is phrased as a request to pay what one can, not an additional condition." }
+
+[[family]]
+slug = "kubasta"
+name = "Kubasta"
+authors = ["studio zichy"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["OTF"]
+homepage = "https://zichy.itch.io/kubasta"
+description = "注重小字号可读性的等宽像素字体，约 900 个字形覆盖多个拉丁扩展区。"
+description_en = "A monospaced pixel face designed for small-size legibility, with roughly 900 glyphs across several extended Latin blocks."
+forms = ["terminal", "sans"]
+form_verified = true
+vibes = ["game-ui", "terminal", "retro-computer", "programming"]
+convert = "ttf"
+convert_take = ["files/Kubasta/Kubasta/Kubasta.otf"]
+ppem = 10
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://zichy.itch.io/kubasta"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "当前 itch.io 页面的正文与资产元数据均明确声明 CC0；发布包内的旧字体 name 表仍写 Open Font License，本站依作者较新且更宽松的公开声明记为 CC0。", note_en = "The current itch.io prose and asset metadata both expressly state CC0. The older embedded font name record still says Open Font License; the catalogue follows the author's newer and more permissive public grant." }
+
+[[family]]
+slug = "pirkkala"
+name = "pirkkala"
+authors = ["Otto Ojala"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://ottoojala.itch.io/pirkkala"
+description = "只含小写字母的手绘像素字体，字形有明显的摇摆、断笔与漫画感。"
+description_en = "A lowercase-only hand-drawn pixel face with visible wobble, broken strokes and a comic quality."
+forms = ["script"]
+form_verified = true
+vibes = ["handwriting", "crooked", "cute", "game-ui"]
+convert = "ttf"
+convert_take = ["files/direct/pirkkala.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://ottoojala.itch.io/pirkkala"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "作者正文与 itch.io 资产元数据均明确声明 CC0。", note_en = "Both the author's page text and the itch.io asset metadata explicitly state CC0." }
+
+[[family]]
+slug = "c-64-fonts"
+name = "C-64 Fonts"
+authors = ["Jamie Cross"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://jamiecross.itch.io/c-64-font-free"
+description = "取自 Commodore 64 字符集的两款显示体：普通实心点阵版，以及将每个原像素再分成带缝方块的 Pixel 版。"
+description_en = "Two display cuts based on the Commodore 64 character set: a solid bitmap rendering and a Pixel cut that redraws each source pixel as a separated square."
+forms = ["terminal"]
+form_verified = true
+vibes = ["retro-computer", "microcomputer", "game-ui"]
+aliases = ["C-64", "C-64 Pixel", "Commodore 64"]
+convert = "ttf"
+convert_take = ["files/C-64-Fonts/C-64-Fonts/C-64/c-64.ttf", "files/C-64-Fonts/C-64-Fonts/C-64-Pixel/c-64-pixel.ttf"]
+ppem = { "c-64.ttf" = 6, "c-64-pixel.ttf" = 30 }
+all_glyphs = true
+license_files = ["files/C-64-Fonts/C-64-Fonts/C-64/license.txt"]
+added = "2026-09-18"
+provenance_url = "https://jamiecross.itch.io/c-64-font-free"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "license.txt", confidence = "manual", note = "发布包的 license.txt 与字体 name 表均声明 Creative Commons CC0 Public Domain Dedication，itch.io 页面同样标注 CC0。", note_en = "The bundled license.txt and embedded font name records state the Creative Commons CC0 Public Domain Dedication; the itch.io page agrees." }
+
+[[family]]
+slug = "sekaiju-alpha"
+name = "Sekaiju Alpha"
+authors = ["Goburinbro"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://goburinbro.itch.io/sekaiju-font-collection"
+description = "为 Nintendo DS 地牢角色扮演游戏界面构想的 12px 像素字体，以可读的高挑字形保留倾斜横画与不规则重心。"
+description_en = "A 12px face imagined for Nintendo DS dungeon-RPG interfaces, balancing tall readable forms with tilted bars and deliberately irregular lean."
+forms = ["sans"]
+form_verified = true
+vibes = ["nintendo-ds", "handheld", "jrpg", "game-ui", "crooked"]
+convert = "ttf"
+convert_take = ["files/direct/SekaijuAlpha.ttf"]
+ppem = 12
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://goburinbro.itch.io/sekaiju-font-collection"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "作者页面明确标注「CC0 - Public Domain / No Rights Reserved」并允许任意使用。", note_en = "The author page explicitly states 'CC0 - Public Domain / No Rights Reserved' and permits unrestricted use." }
+
+[[family]]
+slug = "sekaiju-beta"
+name = "Sekaiju Beta"
+authors = ["Goburinbro"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://goburinbro.itch.io/sekaiju-font-collection"
+description = "Sekaiju 系列更紧凑的 8px 字面，模拟 Nintendo DS 时代 JRPG 界面字，保留故意的倾斜与不整齐细节。"
+description_en = "The compact 8px Sekaiju cut, evoking Nintendo DS-era JRPG interface lettering with deliberately uneven lean and details."
+forms = ["sans"]
+form_verified = true
+vibes = ["nintendo-ds", "handheld", "jrpg", "game-ui", "crooked"]
+convert = "ttf"
+convert_take = ["files/direct/SekaijuBeta.ttf"]
+ppem = 8
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://goburinbro.itch.io/sekaiju-font-collection"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "作者页面明确标注「CC0 - Public Domain / No Rights Reserved」并允许任意使用。", note_en = "The author page explicitly states 'CC0 - Public Domain / No Rights Reserved' and permits unrestricted use." }
+
+[[family]]
+slug = "splcf"
+name = "SPLCF"
+authors = ["def_the_dev"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://def-the-dev.itch.io/splcf"
+description = "SPLCF（Simple Pixel Latin & Cyrillic Font）是一款笔画方正厚重的 16px 拉丁—西里尔像素字体。"
+description_en = "SPLCF (Simple Pixel Latin & Cyrillic Font) is a sturdy square-built 16px face for Latin and Cyrillic."
+forms = ["sans"]
+form_verified = true
+vibes = ["game-ui", "block", "retro-computer"]
+convert = "ttf"
+convert_take = ["files/direct/SPLCF.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["licenses/SPLCF-PUBLIC-DOMAIN.txt"]
+added = "2026-09-18"
+provenance_url = "https://def-the-dev.itch.io/splcf"
+license = { spdx = "LicenseRef-PublicDomain", name = "公共领域放弃", name_en = "Public-domain dedication", file = "SPLCF-PUBLIC-DOMAIN.txt", confidence = "manual", note = "作者明确表示在法律允许的最大范围内放弃 SPLCF 的所有版权及相关权利，并明言允许免费商用、非商用且无需署名。", note_en = "The author waives all copyright and related or neighbouring rights to the extent legally possible, and expressly permits free commercial and non-commercial use without attribution." }
+
+[[family]]
+slug = "levee-5x7"
+name = "5x7 Levee"
+authors = ["Flogram"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://flogram.itch.io/5x7-levee-pixel-font"
+description = "采用 5×7 核心网格的纤细比例字体，字腹开放、局部笔画偏移，兼顾小字与科技界面感。"
+description_en = "A fine proportional face built around a 5x7 core grid, with open counters and selective offsets suited to tiny technical interfaces."
+forms = ["sans"]
+form_verified = true
+vibes = ["technical", "game-ui", "sci-fi"]
+aliases = ["5x7Levee"]
+convert = "ttf"
+convert_take = ["files/direct/5x7Levee.ttf"]
+ppem = 8
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://flogram.itch.io/5x7-levee-pixel-font"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "itch.io 正文明确声明 CC0（公共领域），可任意使用且无需署名。", note_en = "The itch.io text explicitly states CC0 (public domain), permitting any use without required attribution." }
+
+[[family]]
+slug = "mago1"
+name = "mago1"
+authors = ["Nimble Beasts"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://nimblebeastscollective.itch.io/magosfonts"
+description = "Mago 免费字体包中纤细、几何化的科幻像素字体，含心形与社交平台等像素图标。"
+description_en = "The fine geometric science-fiction face in the free Mago bundle, including pixel icons such as hearts and social-platform marks."
+forms = ["sans"]
+form_verified = true
+vibes = ["sci-fi", "technical", "game-ui", "symbols"]
+aliases = ["magofont1"]
+convert = "ttf"
+convert_take = ["files/magofonts/mago1.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://nimblebeastscollective.itch.io/magosfonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "页面正文在 License 标题下明确写「CC0 Public Domain」并链接 CC0 1.0；itch.io 元数据栏的 CC BY-SA 与正文冲突，依用户指示与作者正文按 CC0 收录。", note_en = "Under its License heading the page text explicitly says 'CC0 Public Domain' and links CC0 1.0. The itch.io metadata's CC BY-SA label conflicts with that prose; per the supplied instruction and the author's licence text, the catalogue records CC0." }
+
+[[family]]
+slug = "mago2"
+name = "mago2"
+authors = ["Nimble Beasts"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://nimblebeastscollective.itch.io/magosfonts"
+description = "Mago 免费字体包中最微型的全大写块状字面，并以部分符号位收录像素图标。"
+description_en = "The smallest face in the free Mago bundle, an all-caps block alphabet with pixel icons occupying part of the symbol range."
+forms = ["sans"]
+form_verified = true
+vibes = ["micro", "game-ui", "symbols"]
+aliases = ["magofont2"]
+convert = "ttf"
+convert_take = ["files/magofonts/mago2.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://nimblebeastscollective.itch.io/magosfonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "页面正文在 License 标题下明确写「CC0 Public Domain」并链接 CC0 1.0；itch.io 元数据栏的 CC BY-SA 与正文冲突，依用户指示与作者正文按 CC0 收录。", note_en = "Under its License heading the page text explicitly says 'CC0 Public Domain' and links CC0 1.0. The itch.io metadata's CC BY-SA label conflicts with that prose; per the supplied instruction and the author's licence text, the catalogue records CC0." }
+
+[[family]]
+slug = "mago3"
+name = "mago3"
+authors = ["Nimble Beasts"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://nimblebeastscollective.itch.io/magosfonts"
+description = "Mago 免费字体包中厚实、转角微圆的游戏界面字体，附有心形、幽灵、骷髅等像素图标。"
+description_en = "The sturdy, softly rounded game-interface face in the Mago bundle, with pixel icons including hearts, a ghost and a skull."
+forms = ["rounded", "sans"]
+form_verified = true
+vibes = ["rounded", "block", "game-ui", "symbols"]
+aliases = ["magofont3"]
+convert = "ttf"
+convert_take = ["files/magofonts/mago3.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://nimblebeastscollective.itch.io/magosfonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "页面正文在 License 标题下明确写「CC0 Public Domain」并链接 CC0 1.0；itch.io 元数据栏的 CC BY-SA 与正文冲突，依用户指示与作者正文按 CC0 收录。", note_en = "Under its License heading the page text explicitly says 'CC0 Public Domain' and links CC0 1.0. The itch.io metadata's CC BY-SA label conflicts with that prose; per the supplied instruction and the author's licence text, the catalogue records CC0." }
+
+[[family]]
+slug = "tinypixel"
+name = "tinypixel"
+authors = ["videodante"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["OTF"]
+homepage = "https://videodante.itch.io/tinypixel"
+description = "通常在 5×5 格子内绘制、下伸部占 2px 的微型像素字体。"
+description_en = "A miniature pixel face generally drawn in a 5x5 grid, with two-pixel descenders."
+forms = ["sans"]
+form_verified = true
+vibes = ["micro", "game-ui"]
+convert = "ttf"
+convert_take = ["files/tinypixel/tinypixel/tinypixel.otf"]
+ppem = 7
+all_glyphs = true
+license_files = ["files/tinypixel/tinypixel/readme.txt"]
+added = "2026-09-18"
+provenance_url = "https://videodante.itch.io/tinypixel"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "readme.txt", confidence = "manual", note = "发布包 readme 明言 licensed under the OFL，字体 name 表内嵌完整 OFL 1.1 声明并保留字体名 tinypixel。", note_en = "The bundled readme says the font is licensed under the OFL; the font name table embeds the full OFL 1.1 declaration and reserves the name tinypixel." }
+
+[[family]]
+slug = "cairopixel"
+name = "Cairopixel"
+authors = ["GGBotNet"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://ggbot.itch.io/cairopixel-font"
+description = "16px 等宽板状衬线像素字体，900 个字形覆盖扩展拉丁、希腊与西里尔文的 93 种语言。"
+description_en = "A 16px monospaced slab-serif pixel face whose 900 glyphs cover 93 languages across extended Latin, Greek and Cyrillic."
+forms = ["serif", "terminal"]
+form_verified = true
+vibes = ["slab-serif", "typewriter", "book", "game-ui"]
+convert = "ttf"
+convert_take = ["files/Cairopixel_Font_1_00/Cairopixel.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["files/Cairopixel_Font_1_00/License.txt"]
+added = "2026-09-18"
+provenance_url = "https://ggbot.itch.io/cairopixel-font"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "License.txt", confidence = "manual", note = "发布包附完整 OFL 1.1，版权归 GGBotNet，并保留字体名 Cairopixel；字体 name 表与 itch.io 页面一致。", note_en = "The release bundles the complete OFL 1.1, attributes GGBotNet and reserves the name Cairopixel; the embedded name table and itch.io page agree." }
+
+[[family]]
+slug = "pixelosopher"
+name = "Pixelosopher"
+authors = ["Helianthus Games", "Jovanny Lemonad"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://helianthus-games.itch.io/pixelosopher"
+description = "Helianthus Games 将 Jovanny Lemonad 的 Philosopher 改作为 16px 网格上的优雅像素无衬线体，含常规、粗体与斜体。"
+description_en = "Helianthus Games' elegant 16px pixel adaptation of Jovanny Lemonad's Philosopher, in regular, bold and italic cuts."
+forms = ["sans"]
+form_verified = true
+vibes = ["elegant", "sci-fi", "game-ui"]
+default_variant = "Pixelosopher-16px"
+convert = "ttf"
+convert_take = ["files/Pixelosopher/Pixelosopher.ttf", "files/Pixelosopher/Pixelosopher Bold.ttf", "files/Pixelosopher/Pixelosopher Italic.ttf"]
+ppem = 16
+all_glyphs = true
+variants = { "Pixelosopher-16px.bdf" = { display = "Pixelosopher Regular" }, "Pixelosopher Bold-16px.bdf" = { weight = "bold", display = "Pixelosopher Bold" }, "Pixelosopher Italic-16px.bdf" = { display = "Pixelosopher Italic" } }
+license_files = ["files/Pixelosopher/License.txt"]
+added = "2026-09-18"
+provenance_url = "https://helianthus-games.itch.io/pixelosopher"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "License.txt", confidence = "manual", note = "发布包保留完整 OFL 1.1，同时列出原 Philosopher 设计者 Jovanny Lemonad 与像素改作者 Filip Uzunov，保留字体名 Pixelosopher。", note_en = "The bundled complete OFL 1.1 credits original Philosopher designer Jovanny Lemonad and pixel adapter Filip Uzunov, and reserves the name Pixelosopher." }
+
+[[family]]
+slug = "pix-romana"
+name = "Pix Romana"
+authors = ["Helianthus Games", "Natanael Gama"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://helianthus-games.itch.io/pix-romana"
+description = "Helianthus Games 将 Natanael Gama 的 Cinzel 罗马碑刻大写风格改作为 16px 像素衬线体，并附一款对 B、O、P、Q、R、T 作机械感处理的 Robotic 变体。"
+description_en = "Helianthus Games' 16px pixel-serif adaptation of Natanael Gama's Roman-inscriptional Cinzel, plus a Robotic cut altering B, O, P, Q, R and T."
+forms = ["serif", "decorative"]
+form_verified = true
+vibes = ["serif", "elegant", "sci-fi", "game-ui"]
+default_variant = "Pix-Romana-16px"
+convert = "ttf"
+convert_take = ["files/PixRomana/Pix Romana.ttf", "files/PixRomana/Pix Romana Robotic.ttf"]
+ppem = 16
+all_glyphs = true
+variants = { "Pix Romana-16px.bdf" = { display = "Pix Romana Regular" }, "Pix Romana Robotic-16px.bdf" = { display = "Pix Romana Robotic" } }
+license_files = ["files/PixRomana/License.txt"]
+added = "2026-09-18"
+provenance_url = "https://helianthus-games.itch.io/pix-romana"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "License.txt", confidence = "manual", note = "发布包保留完整 OFL 1.1，同时列出原 Cinzel 设计者 Natanael Gama 与像素改作者 Filip Uzunov，保留字体名 Cinzel 与 Pix Romana。", note_en = "The bundled complete OFL 1.1 credits original Cinzel designer Natanael Gama and pixel adapter Filip Uzunov, reserving the names Cinzel and Pix Romana." }
+
+[[family]]
+slug = "minibyte"
+name = "minibyte"
+authors = ["WQON"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://wqonart.itch.io/minibyte"
+description = "4px 高、3px 宽、以大写结构为核心的微型半等宽字体，含常规与斜体；524 个字形覆盖大量拉丁和西里尔语言。"
+description_en = "A 4px-tall, 3px-wide, uppercase-driven semi-monospaced microfont in regular and italic, with 524 glyphs covering many Latin and Cyrillic languages."
+forms = ["terminal", "sans"]
+form_verified = true
+vibes = ["micro", "game-ui", "terminal", "programming"]
+default_variant = "minibyte-regular-4px"
+convert = "ttf"
+convert_take = ["files/minibyte-v2.210-byWQON/minibyte-v2.210-byWQON/ttf/minibyte-regular.ttf", "files/minibyte-v2.210-byWQON/minibyte-v2.210-byWQON/ttf/minibyte-italic.ttf"]
+ppem = 4
+all_glyphs = true
+variants = { "minibyte-regular-4px.bdf" = { display = "minibyte Regular" }, "minibyte-italic-4px.bdf" = { display = "minibyte Italic" } }
+license_files = ["files/minibyte-v2.210-byWQON/minibyte-v2.210-byWQON/OFL.txt"]
+added = "2026-09-18"
+provenance_url = "https://wqonart.itch.io/minibyte"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "OFL.txt", confidence = "manual", note = "发布包附完整 OFL 1.1，版权归 WQON，并保留字体名 minibyte。", note_en = "The release bundles the complete OFL 1.1, attributes WQON and reserves the name minibyte." }
+
+[[family]]
+slug = "floppy-pixel"
+name = "Floppy Pixel"
+authors = ["JD Jiménez"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://jdjimenez.itch.io/floppy-pixel-font"
+description = "原为手游设计的厚重块状像素字体；社区包收录常规、描边和软描边三款。"
+description_en = "A heavy block pixel face originally designed for a mobile game; the Community Pack includes regular, stroke and soft-stroke cuts."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["block", "outline", "game-ui"]
+default_variant = "Floppy-Pixel-Regular-16px"
+convert = "ttf"
+convert_take = ["files/FloppyPixel - Community Pack/FloppyPixel - Community Pack/TTF/Floppy Pixel Regular.ttf", "files/FloppyPixel - Community Pack/FloppyPixel - Community Pack/TTF/Floppy Pixel Stroke.ttf", "files/FloppyPixel - Community Pack/FloppyPixel - Community Pack/TTF/Floppy Pixel Soft-Stroke.ttf"]
+ppem = 16
+all_glyphs = true
+variants = { "Floppy Pixel Regular-16px.bdf" = { display = "Floppy Pixel Regular" }, "Floppy Pixel Stroke-16px.bdf" = { display = "Floppy Pixel Stroke" }, "Floppy Pixel Soft-Stroke-16px.bdf" = { display = "Floppy Pixel Soft Stroke" } }
+license_files = ["files/FloppyPixel - Community Pack/FloppyPixel - Community Pack/LICENSE (SIL OFL 1.1).txt"]
+added = "2026-09-18"
+provenance_url = "https://jdjimenez.itch.io/floppy-pixel-font"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "LICENSE (SIL OFL 1.1).txt", confidence = "manual", note = "Community Pack 内附完整 OFL 1.1，版权声明为 Jesse D. Jimenez，三款字体的 name 表均写同一许可。", note_en = "The Community Pack bundles the complete OFL 1.1 under Jesse D. Jimenez's copyright; all three fonts repeat that licence in their name tables." }
+
+[[family]]
+slug = "3x5-block"
+name = "3x5 Block"
+authors = ["mazeon"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://mazeon.itch.io/3x5-pixel-font-pack"
+description = "3×5 Pixel Font Pack 中最刚硬、严格遵循方格的设计，含等宽 Mono 与逐字调宽 Adjusted 两款。"
+description_en = "The rigid, strictly grid-built design in the 3x5 Pixel Font Pack, in monospaced Mono and individually spaced Adjusted cuts."
+forms = ["sans"]
+form_verified = true
+vibes = ["micro", "block", "game-ui", "technical"]
+aliases = ["3x5 Blocked"]
+convert = "ttf"
+convert_take = ["files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/3x5_TTF/3x5_Block_Mono-Regular.ttf", "files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/3x5_TTF/3x5_Block_Adjusted-Regular.ttf"]
+ppem = 6
+all_glyphs = true
+license_files = ["files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/LICENSE.txt"]
+added = "2026-09-18"
+provenance_url = "https://mazeon.itch.io/3x5-pixel-font-pack"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "LICENSE.txt", confidence = "manual", note = "发布包 LICENSE.txt 声明全部六款字体按 OFL 1.1 发布，列出六个保留字体名；字体 name 表亦写入 OFL 1.1。", note_en = "The bundled LICENSE.txt applies OFL 1.1 to all six fonts and lists six Reserved Font Names; the font name tables also state OFL 1.1." }
+
+[[family]]
+slug = "3x5-notched"
+name = "3x5 Notched"
+authors = ["mazeon"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://mazeon.itch.io/3x5-pixel-font-pack"
+description = "3×5 Pixel Font Pack 中以缺口与断笔增强辨识度的设计，含等宽 Mono 与逐字调宽 Adjusted 两款。"
+description_en = "The distinctive notched and broken-stroke design in the 3x5 pack, in monospaced Mono and individually spaced Adjusted cuts."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["micro", "technical", "game-ui"]
+convert = "ttf"
+convert_take = ["files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/3x5_TTF/3x5_Notched_Mono-Regular.ttf", "files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/3x5_TTF/3x5_Notched_Adjusted-Regular.ttf"]
+ppem = 6
+all_glyphs = true
+license_files = ["files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/LICENSE.txt"]
+added = "2026-09-18"
+provenance_url = "https://mazeon.itch.io/3x5-pixel-font-pack"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "LICENSE.txt", confidence = "manual", note = "发布包 LICENSE.txt 声明全部六款字体按 OFL 1.1 发布，列出六个保留字体名；字体 name 表亦写入 OFL 1.1。", note_en = "The bundled LICENSE.txt applies OFL 1.1 to all six fonts and lists six Reserved Font Names; the font name tables also state OFL 1.1." }
+
+[[family]]
+slug = "3x5-rounded"
+name = "3x5 Rounded"
+authors = ["mazeon"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://mazeon.itch.io/3x5-pixel-font-pack"
+description = "3×5 Pixel Font Pack 中转角更柔和的设计，含等宽 Mono 与逐字调宽 Adjusted 两款。"
+description_en = "The softer rounded design in the 3x5 Pixel Font Pack, in monospaced Mono and individually spaced Adjusted cuts."
+forms = ["rounded", "sans"]
+form_verified = true
+vibes = ["micro", "rounded", "cute", "game-ui"]
+convert = "ttf"
+convert_take = ["files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/3x5_TTF/3x5_Rounded_Mono-Regular.ttf", "files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/3x5_TTF/3x5_Rounded_Adjusted-Regular.ttf"]
+ppem = 6
+all_glyphs = true
+license_files = ["files/3x5_Pixel_Font_Pack_v1.1/3x5_Pixel_Font_Pack_v1.1/LICENSE.txt"]
+added = "2026-09-18"
+provenance_url = "https://mazeon.itch.io/3x5-pixel-font-pack"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "LICENSE.txt", confidence = "manual", note = "发布包 LICENSE.txt 声明全部六款字体按 OFL 1.1 发布，列出六个保留字体名；字体 name 表亦写入 OFL 1.1。", note_en = "The bundled LICENSE.txt applies OFL 1.1 to all six fonts and lists six Reserved Font Names; the font name tables also state OFL 1.1." }
+
+[[family]]
+slug = "capsigrany"
+name = "Capsigrany"
+authors = ["enmarimo"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://enmarimo.itch.io/capsigrany"
+description = "为游戏菜单与 UI 设计的 16px 卡通像素字体，字形饱满、圆角并带有跳跃的不规则细节。"
+description_en = "A 16px cartoon pixel face for game menus and UI, with full rounded forms and lively irregular details."
+forms = ["rounded", "sans"]
+form_verified = true
+vibes = ["rounded", "cute", "game-ui"]
+convert = "ttf"
+convert_take = ["files/capsigrany_ttf/capsigrany_ttf/Capsigrany.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["files/capsigrany_ttf/capsigrany_ttf/OFL.txt"]
+added = "2026-09-18"
+provenance_url = "https://enmarimo.itch.io/capsigrany"
+license = { spdx = "OFL-1.1", name = "SIL 开放字体许可证 1.1", name_en = "SIL Open Font License 1.1", file = "OFL.txt", confidence = "manual", note = "发布包附完整 OFL 1.1，版权归 enmarimo，并保留字体名 Capsigrany。", note_en = "The release bundles the complete OFL 1.1, attributes enmarimo and reserves the name Capsigrany." }
+
+[[family]]
+slug = "innerlight-serif"
+name = "innerlight serif"
+authors = ["innerlightdev"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://innerlightdev.itch.io/serif-pixel-font"
+description = "面向对话框与游戏文本的 16px 像素衬线体；收录基础版和字符更多、为重音符号调整垂直位置的 localization 版。"
+description_en = "A 16px pixel serif for dialogue and game text, with a base cut and a broader localization cut whose accented letters are vertically adjusted."
+forms = ["serif"]
+form_verified = true
+vibes = ["serif", "game-ui", "jrpg"]
+aliases = ["innerlightv2", "innerlight localization"]
+convert = "ttf"
+convert_take = ["files/direct/innerlightv2.ttf", "files/direct/innerlight_localization.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["licenses/innerlight-MIT.txt"]
+added = "2026-09-18"
+provenance_url = "https://innerlightdev.itch.io/serif-pixel-font"
+license = { spdx = "MIT", name = "MIT 许可证", name_en = "MIT License", file = "innerlight-MIT.txt", confidence = "manual", note = "itch.io 正文明确标注「MIT license」；发布包未附单独文本，本站保存标准 MIT 全文并以作者 innerlightdev 为版权人。", note_en = "The itch.io prose explicitly says 'MIT license'. As the release has no separate text file, the catalogue retains the standard MIT text with innerlightdev named as copyright holder." }
+
+[[family]]
+slug = "canyon-racer-notify"
+name = "Canyon Racer Notify"
+authors = ["bbbbbr"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://bbbbbr.itch.io/canyon-racer-fonts"
+repository = "https://github.com/bbbbbr/canyon-racer/tree/main/font"
+description = "Game Boy 演示游戏 Canyon Racer 的通知文字，收录 8×16 常规版与 9×16 描边版，两者均含等宽和比例间距变体。"
+description_en = "Notification lettering from the Game Boy demo Canyon Racer: 8x16 regular and 9x16 outline designs, each in monospaced and proportional-spacing cuts."
+forms = ["sans"]
+form_verified = true
+vibes = ["handheld", "game-ui", "outline"]
+convert = "ttf"
+convert_take = ["files/canyon_racer_fonts/notify_font/ttf/*.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["files/canyon_racer_fonts/Readme.md"]
+added = "2026-09-18"
+provenance_url = "https://bbbbbr.itch.io/canyon-racer-fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "Readme.md", confidence = "manual", note = "发布包 Readme 与 itch.io 页面均明确声明 Canyon Racer Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。", note_en = "The bundled Readme and itch.io page explicitly release Canyon Racer Fonts under CC0; the font name tables also say 'CC0 Public Domain'." }
+
+[[family]]
+slug = "canyon-racer-splash"
+name = "Canyon Racer Splash"
+authors = ["bbbbbr"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://bbbbbr.itch.io/canyon-racer-fonts"
+repository = "https://github.com/bbbbbr/canyon-racer/tree/main/font"
+description = "Canyon Racer 开场画面使用的 8×9 等宽标题体，字面宽阔、前倾，有街机赛车标识的速度感。"
+description_en = "The 8x9 monospaced splash-screen face from Canyon Racer, broad and forward-slanting like arcade racing lettering."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["handheld", "arcade", "sports", "game-ui"]
+convert = "ttf"
+convert_take = ["files/canyon_racer_fonts/splash_font/ttf/*.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["files/canyon_racer_fonts/Readme.md"]
+added = "2026-09-18"
+provenance_url = "https://bbbbbr.itch.io/canyon-racer-fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "Readme.md", confidence = "manual", note = "发布包 Readme 与 itch.io 页面均明确声明 Canyon Racer Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。", note_en = "The bundled Readme and itch.io page explicitly release Canyon Racer Fonts under CC0; the font name tables also say 'CC0 Public Domain'." }
+
+[[family]]
+slug = "canyon-racer-game-over"
+name = "Canyon Racer Game Over"
+authors = ["bbbbbr"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://bbbbbr.itch.io/canyon-racer-fonts"
+repository = "https://github.com/bbbbbr/canyon-racer/tree/main/font"
+description = "Canyon Racer 结束画面的粗壮显示体家族：常规与粗体、平面与 3D 投影效果，各有等宽与比例间距版。"
+description_en = "The sturdy end-screen display family from Canyon Racer: regular and bold, flat and 3D-shadow treatments, each in monospaced and proportional cuts."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["handheld", "arcade", "3d", "shadow", "game-ui"]
+default_variant = "Canyon-Racer-Game-Over-16px"
+convert = "ttf"
+convert_take = ["files/canyon_racer_fonts/gameover_font/ttf/*.ttf"]
+ppem = 16
+all_glyphs = true
+variants = { "Canyon Racer Game Over-16px.bdf" = { display = "Regular" }, "Canyon Racer Game Over mono-16px.bdf" = { display = "Regular Mono" }, "Canyon Racer Game Over bold-16px.bdf" = { weight = "bold", display = "Bold" }, "Canyon Racer Game Over Bold mono-16px.bdf" = { weight = "bold", display = "Bold Mono" }, "Canyon Racer Game Over 3D-16px.bdf" = { display = "3D" }, "Canyon Racer Game Over 3D mono-16px.bdf" = { display = "3D Mono" }, "Canyon Racer Game Over 3D bold-16px.bdf" = { weight = "bold", display = "3D Bold" }, "Canyon Racer Game Over 3D Bold mono-16px.bdf" = { weight = "bold", display = "3D Bold Mono" } }
+license_files = ["files/canyon_racer_fonts/Readme.md"]
+added = "2026-09-18"
+provenance_url = "https://bbbbbr.itch.io/canyon-racer-fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "Readme.md", confidence = "manual", note = "发布包 Readme 与 itch.io 页面均明确声明 Canyon Racer Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。", note_en = "The bundled Readme and itch.io page explicitly release Canyon Racer Fonts under CC0; the font name tables also say 'CC0 Public Domain'." }
+
+[[family]]
+slug = "canyon-racer-sound-test"
+name = "Canyon Racer Sound Test"
+authors = ["bbbbbr"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://bbbbbr.itch.io/canyon-racer-fonts"
+repository = "https://github.com/bbbbbr/canyon-racer/tree/main/font"
+description = "Canyon Racer 声音测试界面的 8×8 等宽字，用方格化、断笔的数字仪表风格区别于游戏其余文字。"
+description_en = "The 8x8 monospaced sound-test face from Canyon Racer, using square, broken-stroke digital-instrument lettering."
+forms = ["terminal", "sans"]
+form_verified = true
+vibes = ["handheld", "game-ui", "technical"]
+convert = "ttf"
+convert_take = ["files/canyon_racer_fonts/sound_test_font/ttf/*.ttf"]
+ppem = 16
+all_glyphs = true
+license_files = ["files/canyon_racer_fonts/Readme.md"]
+added = "2026-09-18"
+provenance_url = "https://bbbbbr.itch.io/canyon-racer-fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "Readme.md", confidence = "manual", note = "发布包 Readme 与 itch.io 页面均明确声明 Canyon Racer Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。", note_en = "The bundled Readme and itch.io page explicitly release Canyon Racer Fonts under CC0; the font name tables also say 'CC0 Public Domain'." }
+
+[[family]]
+slug = "den-of-snakes-four-player"
+name = "Den of Snakes Four Player"
+authors = ["bbbbbr"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://bbbbbr.itch.io/den-of-snakes-pixel-fonts"
+repository = "https://github.com/bbbbbr/gbdk-gb-4-player/tree/main/font/den_of_snakes_fourplayer_font"
+description = "Game Boy 四人游戏 Den of Snakes 的界面字体，收录常规、粗体、反白块、粗反白块与描边五种 8×8 等宽效果。"
+description_en = "Interface lettering from the four-player Game Boy game Den of Snakes, with five 8x8 monospaced treatments: regular, heavy, invert block, heavy invert block and outline."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["handheld", "game-ui", "outline", "block"]
+aliases = ["Den Of Snakes Pixel Fonts", "Pixel Den of Snakes Four Player"]
+default_variant = "Pixel-Den-of-Snakes-Four-Player-Regular-8x8-Mono-16px"
+convert = "ttf"
+convert_take = ["files/den_of_snakes_fourplayer_pixel_font/*.ttf"]
+ppem = 16
+all_glyphs = true
+variants = { "Pixel Den of Snakes Four Player Regular 8x8 Mono-16px.bdf" = { display = "Regular" }, "Pixel Den of Snakes Four Player Heavy 8x8 Mono-16px.bdf" = { weight = "bold", display = "Heavy" }, "Pixel Den of Snakes Four Player Invert Block 8x8 Mono-16px.bdf" = { display = "Invert Block" }, "Pixel Den of Snakes Four Player Heavy Invert Block 8x8 Mono-16px.bdf" = { weight = "bold", display = "Heavy Invert Block" }, "Pixel Den of Snakes Four Player Outline 8x8 Mono-16px.bdf" = { display = "Outline" } }
+license_files = ["files/den_of_snakes_fourplayer_pixel_font/Readme.md"]
+added = "2026-09-18"
+provenance_url = "https://bbbbbr.itch.io/den-of-snakes-pixel-fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "Readme.md", confidence = "manual", note = "发布包 Readme 与 itch.io 页面均明确声明 Den of Snakes Four Player Fonts 为 CC0；字体 name 表亦写「CC0 Public Domain」。", note_en = "The bundled Readme and itch.io page explicitly release the Den of Snakes Four Player fonts under CC0; the font name tables also say 'CC0 Public Domain'." }
+
+[[family]]
+slug = "blocky-pixel"
+name = "Blocky Pixel"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中的块状角切显示体，含常规与粗体两款。"
+description_en = "A blocky, chamfered display face from the SG Font Collection, in regular and bold cuts."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["block", "game-ui", "western-rpg"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/BlockyPixel.ttf", "files/SG Font Collection/BlockyPixelB.ttf"]
+ppem = 12
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+variants = { "BlockyPixelB-12px.bdf" = { weight = "bold", display = "Blocky Pixel Bold" } }
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "canned-pixels"
+name = "Canned Pixels"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中紧缩厚重的全大写块状像素显示体。"
+description_en = "A heavy, condensed, all-caps block display face from the SG Font Collection."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["block", "arcade", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/CannedPixels.ttf"]
+ppem = 10
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "chibi-mono"
+name = "Chibi Mono"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中笔画饱满、转角柔和的可爱等宽体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A compact, soft-cornered monospaced face from the SG Font Collection, with Latin, Greek, Cyrillic and Hebrew coverage."
+forms = ["rounded", "sans"]
+form_verified = true
+vibes = ["cute", "rounded", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/ChibiMono.ttf"]
+ppem = 11
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "impactful-bits"
+name = "Impactful Bits"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中粗黑高对比的游戏界面字体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A heavy, high-impact game-interface face from the SG Font Collection, with Latin, Greek, Cyrillic and Hebrew coverage."
+forms = ["sans"]
+form_verified = true
+vibes = ["block", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/ImpactfulBits.ttf"]
+ppem = 13
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "micro-pixel-sg"
+name = "Micro Pixel"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中一款小尺寸、笔形灵动的比例像素体。"
+description_en = "A tiny proportional pixel face with lively letterforms from the SG Font Collection."
+forms = ["sans"]
+form_verified = true
+vibes = ["micro", "game-ui"]
+aliases = ["MicroPixel", "SG Micro Pixel"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/MicroPixel.ttf"]
+ppem = 9
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "nano-bits"
+name = "Nano Bits"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中紧凑干净的小字号像素体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A compact, clean small-size face from the SG Font Collection, with Latin, Greek, Cyrillic and Hebrew coverage."
+forms = ["sans"]
+form_verified = true
+vibes = ["micro", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/NanoBits.ttf"]
+ppem = 10
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "nano-plus"
+name = "Nano Plus"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中粗壮圆润、适合显眼 UI 的像素无衬线体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A sturdy rounded pixel sans for prominent UI text, with Latin, Greek, Cyrillic and Hebrew coverage."
+forms = ["rounded", "sans"]
+form_verified = true
+vibes = ["rounded", "cute", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/NanoPlus.ttf"]
+ppem = 13
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "nano-square"
+name = "Nano Square"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中的方块小字，含实心常规版与轮廓版。"
+description_en = "A compact square-built face from the SG Font Collection, in solid regular and outlined cuts."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["block", "outline", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/NanoSquare.ttf", "files/SG Font Collection/NanoSquareO.ttf"]
+ppem = { "NanoSquare.ttf" = 9, "NanoSquareO.ttf" = 11 }
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+variants = { "NanoSquareO-11px.bdf" = { display = "Nano Square Outline" } }
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "narrow-pixel"
+name = "Narrow Pixel"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中纤细高挑、带微小突角的紧缩像素体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A tall, slender condensed pixel face with small projecting details, covering Latin, Greek, Cyrillic and Hebrew."
+forms = ["serif"]
+form_verified = true
+vibes = ["elegant", "technical", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/NarrowPixel.ttf"]
+ppem = 15
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "pixel-sans"
+name = "Pixel Sans"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中开放清晰的通用像素无衬线体。"
+description_en = "An open, readable general-purpose pixel sans from the SG Font Collection."
+forms = ["sans"]
+form_verified = true
+vibes = ["game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/PixelSans.ttf"]
+ppem = 11
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "quest-square"
+name = "Quest Square"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中结构方正、局部带断笔的界面字体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A square-built interface face with selective stencil breaks, covering Latin, Greek, Cyrillic and Hebrew."
+forms = ["sans"]
+form_verified = true
+vibes = ["game-ui", "technical"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/QuestSquare.ttf"]
+ppem = 15
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "retro-sans"
+name = "Retro Sans"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中笔画圆滑厚实的复古游戏字体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A sturdy, smoothly shaped retro-game sans with Latin, Greek, Cyrillic and Hebrew coverage."
+forms = ["sans"]
+form_verified = true
+vibes = ["retro-computer", "game-ui", "console"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/RetroSans.ttf"]
+ppem = 17
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "royalty-mono"
+name = "Royalty Mono"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中纤细、带古典装饰细节的等宽像素体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A fine monospaced pixel face with restrained classical details, covering Latin, Greek, Cyrillic and Hebrew."
+forms = ["serif"]
+form_verified = true
+vibes = ["elegant", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/RoyaltyMono.ttf"]
+ppem = 14
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "rune-mono"
+name = "Rune Mono"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中采用切角、断笔和仿卢恩节奏的等宽显示体，支持拉丁、希腊、西里尔与希伯来文。"
+description_en = "A monospaced display face built from chamfers, breaks and rune-like rhythms, covering Latin, Greek, Cyrillic and Hebrew."
+forms = ["decorative"]
+form_verified = true
+vibes = ["sci-fi", "technical", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/RuneMono.ttf"]
+ppem = 12
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "scroll-pixel"
+name = "Scroll Pixel"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中带手稿感衬线和不规则笔势的奇幻游戏字体。"
+description_en = "A fantasy-game face with manuscript-like serifs and deliberately irregular strokes."
+forms = ["serif", "decorative"]
+form_verified = true
+vibes = ["western-rpg", "manuscript", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/ScrollPixel.ttf"]
+ppem = 11
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }
+
+[[family]]
+slug = "superwide"
+name = "Superwide"
+authors = ["SpicyGame"]
+source = "direct-downloads-2026-09-18/itch-foss-pixel-fonts"
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+homepage = "https://spicygame.itch.io/fonts"
+description = "SG Font Collection 中极宽、前倾、带速度感的科幻标题体。"
+description_en = "An extremely wide, forward-slanting science-fiction title face from the SG Font Collection."
+forms = ["decorative", "sans"]
+form_verified = true
+vibes = ["sci-fi", "sports", "retro-futuristic", "game-ui"]
+convert = "ttf"
+convert_take = ["files/SG Font Collection/Superwide.ttf"]
+ppem = 10
+all_glyphs = true
+license_files = ["licenses/CC0-1.0.txt"]
+added = "2026-09-18"
+provenance_url = "https://spicygame.itch.io/fonts"
+license = { spdx = "CC0-1.0", name = "CC0 1.0 公共领域贡献", name_en = "CC0 1.0 Universal", file = "CC0-1.0.txt", confidence = "manual", note = "SG Font Collection 页面明确声明全套为 CC0，字体 name 表亦内嵌同一许可。", note_en = "The SG Font Collection page explicitly releases the complete set under CC0; the same licence is embedded in the font name table." }

@@ -20,6 +20,7 @@ export const ko: UIStrings = {
   },
 
   catalogue: {
+    skipToResults: '검색 결과로 건너뛰기',
     searchPlaceholder: '이름, 제작자, 태그…',
     searchLabel: '이름, 제작자, 태그 검색…',
     sortAutoReverse: '자동 (역순)',
@@ -249,6 +250,7 @@ export const ko: UIStrings = {
     licenseDisclaimer:
       '라이선스 정보는 참고용이며 원 배포처의 원문이 우선합니다.',
     warningsTitle: '빌드 경고',
+    glyphGridKeyboard: '방향키로 글리프를 선택하고 Enter로 살펴보세요. Esc를 누르면 목록으로 돌아갑니다.',
     glyphGridTitle: '글리프 전체 보기',
     glyphGridBlocks: 'Unicode 블록',
     glyphGridSearch: '블록 검색',
@@ -278,8 +280,7 @@ export const ko: UIStrings = {
     pua: '사용자 정의 영역(PUA)',
     hanTotal: '통합 한자',
     compat: '호환 한자',
-    compatNote:
-      '이 중 12개 코드 포인트는 Unicode 공식 주석에 따르면 실제로 통합 한자입니다.',
+    compatNote: "호환 영역의 통합 한자 12자는 통합 한자 총수에 포함되며 여기에서는 제외합니다.",
     unicodeBlocks: 'Unicode 블록',
     showAllBlocks: '모든 블록 표시',
     hideZeroBlocks: '수록된 블록만 표시',

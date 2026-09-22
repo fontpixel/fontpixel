@@ -1,0 +1,26 @@
+name = "pirkkala"
+authors = ["Otto Ojala"]
+homepage = "https://ottoojala.itch.io/pirkkala"
+repository = ""
+description = "只含小写字母的手绘像素字体，字形有明显的摇摆、断笔与漫画感。"
+forms = ["script"]
+vibes = ["handwriting", "crooked", "cute", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://ottoojala.itch.io/pirkkala；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "pirkkala"
+authors_en = ["Otto Ojala"]
+description_en = "A lowercase-only hand-drawn pixel face with visible wobble, broken strokes and a comic quality."
+provenance_en = "Imported from https://ottoojala.itch.io/pirkkala; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "作者正文与 itch.io 资产元数据均明确声明 CC0。"
+name_en = "CC0 1.0 Universal"
+note_en = "Both the author's page text and the itch.io asset metadata explicitly state CC0."

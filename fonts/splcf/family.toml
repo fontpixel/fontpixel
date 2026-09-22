@@ -1,0 +1,26 @@
+name = "SPLCF"
+authors = ["def_the_dev"]
+homepage = "https://def-the-dev.itch.io/splcf"
+repository = ""
+description = "SPLCF（Simple Pixel Latin & Cyrillic Font）是一款笔画方正厚重的 16px 拉丁—西里尔像素字体。"
+forms = ["sans"]
+vibes = ["game-ui", "block", "retro-computer"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://def-the-dev.itch.io/splcf；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "SPLCF"
+authors_en = ["def_the_dev"]
+description_en = "SPLCF (Simple Pixel Latin & Cyrillic Font) is a sturdy square-built 16px face for Latin and Cyrillic."
+provenance_en = "Imported from https://def-the-dev.itch.io/splcf; converted from ttf"
+
+[license]
+spdx = "LicenseRef-PublicDomain"
+name = "公共领域放弃"
+confidence = "manual"
+file = "SPLCF-PUBLIC-DOMAIN.txt"
+note = "作者明确表示在法律允许的最大范围内放弃 SPLCF 的所有版权及相关权利，并明言允许免费商用、非商用且无需署名。"
+name_en = "Public-domain dedication"
+note_en = "The author waives all copyright and related or neighbouring rights to the extent legally possible, and expressly permits free commercial and non-commercial use without attribution."

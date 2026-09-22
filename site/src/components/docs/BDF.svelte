@@ -52,7 +52,7 @@
 {#if error}
   <p class="bdf-error mono">{error}</p>
 {:else}
-  <canvas bind:this={canvasEl}></canvas>
+  <canvas bind:this={canvasEl} role="img" aria-label="Bitmap output for the accompanying code example"></canvas>
 {/if}
 
 <style>
@@ -60,7 +60,7 @@
     image-rendering: pixelated;
   }
   .bdf-error {
-    color: #b5312f;
+    color: var(--accent);
     font-size: 0.8rem;
   }
 </style>

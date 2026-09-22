@@ -1,5 +1,6 @@
 ---
 title: "Type alias: DirectionType"
+description: "TypeScript type reference for text rendering directions in bdfparser, including the type declaration and source definition."
 label: "API · DirectionType"
 order: 19
 ---

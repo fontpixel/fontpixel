@@ -11,7 +11,7 @@
   --ink-3: #736d5e;
   --line: #d9d2c2;
   --line-soft: #e9e3d6;
-  --accent: #b5312f;
+  --accent: #ac2c2a;
   --accent-soft: #b5312f22;
   --on-accent: #fdfbf5;
   --canvas-ink: #1c1a17;
@@ -43,7 +43,7 @@
   --ink-3: #8c8371;
   --line: #35312a;
   --line-soft: #26231e;
-  --accent: #e25a4f;
+  --accent: #f0786c;
   --accent-soft: #e25a4f2b;
   --on-accent: #151310;
   --canvas-ink: #e9e3d5;
@@ -190,4 +190,10 @@ pre,
   display: inline-flex;
   align-items: center;
   gap: var(--s2);
+}
+
+/* Inline links remain identifiable without relying on color perception. */
+.site-main p a, .site-main li:not([role="none"]) > a:not(.tools__card) {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }

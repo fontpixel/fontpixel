@@ -151,14 +151,14 @@ size and license factors; changing them never changes the inferred target or
 the automatic score. Positive adjustments are not clipped to 100, so already
 complete fonts can still receive a useful bonus.
 
-- **+1.5 points:** 秋叶圆体16, 正格点黑16, Z工坊像素圆体, Z工坊像素黑体12px,
-  破晓像素, 目哉像素, 全小素, 缝合像素 (Fusion Pixel), 俐方体11号,
-  Ark Pixel, 精品点阵体, Galmuri, Misaki.
-- **−0.5 points:** Misc Fixed, DOSGothic, DOSSaemmul, jiskan, 1307,
-  Baekmuk Batang, Baekmuk Dotum, Baekmuk Gulim and Baekmuk Hline (Headline).
+- **+0.5 points:** 秋叶圆体16.
+- **+1 point:** Z工坊像素圆体, Z工坊像素黑体12px, 破晓像素, 目哉像素, 全小素.
+- **+1.5 points:** 缝合像素 (Fusion Pixel), 俐方体11号, Ark Pixel, 精品点阵体,
+  Galmuri, Misaki.
 
-Fusion Bold Pixel and Z Labs DiamondPix are separate families and receive no
-adjustment. The final score remains fixed across locales, reloads and filters.
+This is the complete adjustment list; there are no aesthetic deductions.
+正格点黑16, Fusion Bold Pixel and Z Labs DiamondPix receive no adjustment.
+The final score remains fixed across locales, reloads and filters.
 
 ### Google Fonts preference
 

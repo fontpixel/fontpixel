@@ -1,0 +1,26 @@
+name = "Cairopixel"
+authors = ["GGBotNet"]
+homepage = "https://ggbot.itch.io/cairopixel-font"
+repository = ""
+description = "16px 等宽板状衬线像素字体，900 个字形覆盖扩展拉丁、希腊与西里尔文的 93 种语言。"
+forms = ["serif", "terminal"]
+vibes = ["slab-serif", "typewriter", "book", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://ggbot.itch.io/cairopixel-font；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Cairopixel"
+authors_en = ["GGBotNet"]
+description_en = "A 16px monospaced slab-serif pixel face whose 900 glyphs cover 93 languages across extended Latin, Greek and Cyrillic."
+provenance_en = "Imported from https://ggbot.itch.io/cairopixel-font; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "License.txt"
+note = "发布包附完整 OFL 1.1，版权归 GGBotNet，并保留字体名 Cairopixel；字体 name 表与 itch.io 页面一致。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The release bundles the complete OFL 1.1, attributes GGBotNet and reserves the name Cairopixel; the embedded name table and itch.io page agree."

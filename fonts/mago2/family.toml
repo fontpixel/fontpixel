@@ -1,0 +1,27 @@
+name = "mago2"
+authors = ["Nimble Beasts"]
+homepage = "https://nimblebeastscollective.itch.io/magosfonts"
+repository = ""
+description = "Mago 免费字体包中最微型的全大写块状字面，并以部分符号位收录像素图标。"
+forms = ["sans"]
+vibes = ["micro", "game-ui", "symbols"]
+aliases = ["magofont2"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://nimblebeastscollective.itch.io/magosfonts；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "mago2"
+authors_en = ["Nimble Beasts"]
+description_en = "The smallest face in the free Mago bundle, an all-caps block alphabet with pixel icons occupying part of the symbol range."
+provenance_en = "Imported from https://nimblebeastscollective.itch.io/magosfonts; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "页面正文在 License 标题下明确写「CC0 Public Domain」并链接 CC0 1.0；itch.io 元数据栏的 CC BY-SA 与正文冲突，依用户指示与作者正文按 CC0 收录。"
+name_en = "CC0 1.0 Universal"
+note_en = "Under its License heading the page text explicitly says 'CC0 Public Domain' and links CC0 1.0. The itch.io metadata's CC BY-SA label conflicts with that prose; per the supplied instruction and the author's licence text, the catalogue records CC0."

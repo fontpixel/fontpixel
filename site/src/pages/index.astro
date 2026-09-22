@@ -1,6 +1,7 @@
 ---
 // Language redirect page: sends to /zh/ or /en/ based on browser language, defaulting to zh.
 import { withBase } from '../lib/data';
+import SeoHead from '../components/SeoHead.astro';
 import sitenames from '../i18n/sitenames.json';
 const zhUrl = withBase('/zh/');
 const enUrl = withBase('/en/');
@@ -11,11 +12,8 @@ const enUrl = withBase('/en/');
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{sitenames.zh} / {sitenames.en}</title>
-    <link rel="alternate" hreflang="zh-Hans" href={zhUrl} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="x-default" href={zhUrl} />
-    <meta name="robots" content="noindex" />
+    <SeoHead lang="zh" title={`${sitenames.zh} / ${sitenames.en}`} path="/" canonicalPath="/" availableLangs={[]} noindex />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <script is:inline define:vars={{ zhUrl, enUrl }}>
       var lang = (navigator.language || 'zh').toLowerCase();
       location.replace(lang.indexOf('zh') === 0 ? zhUrl : enUrl);
@@ -23,6 +21,6 @@ const enUrl = withBase('/en/');
     <noscript><meta http-equiv="refresh" content={`0; url=${zhUrl}`} /></noscript>
   </head>
   <body>
-    <p><a href={zhUrl}>中文</a> · <a href={enUrl}>English</a></p>
+    <main><h1>{sitenames.en}</h1><p><a href={zhUrl}>中文</a> · <a href={enUrl}>English</a></p></main>
   </body>
 </html>

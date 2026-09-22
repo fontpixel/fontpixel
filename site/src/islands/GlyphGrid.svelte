@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { themeInkPaper, onThemeChange } from '../lib/colors';
   import { formatCp } from '../lib/format';
   import type { DecodedGlyph } from '../lib/bitmap';
@@ -28,6 +28,40 @@
   let jumpQuery = $state('');
   let themeTick = $state(0);
   let inspected = $state<DecodedGlyph | null>(null);
+  let activeCp = $state<number | null>(null);
+  let inspector: HTMLDivElement | undefined = $state();
+  let returnFocus: HTMLCanvasElement | null = null;
+  const sheetCps = (start: number, count: number) => [...(manifest?.glyphs.keys() ?? [])]
+    .filter(cp => cp >= start && cp < start + count).sort((a, b) => a - b);
+  async function inspect(cp: number, canvas: HTMLCanvasElement) {
+    inspected = manifest?.glyphs.get(cp) ?? null;
+    activeCp = cp;
+    returnFocus = canvas;
+    if (inspected) { await tick(); inspector?.focus(); }
+  }
+  function closeInspector() {
+    inspected = null;
+    returnFocus?.focus();
+  }
+  function sheetKey(event: KeyboardEvent, start: number, count: number) {
+    const cps = sheetCps(start, count);
+    if (!cps.length) return;
+    const cp = activeCp != null && cps.includes(activeCp) ? activeCp : cps[0]!;
+    const index = cps.indexOf(cp);
+    let next: number | undefined;
+    if (event.key === 'ArrowRight') next = cps[Math.min(index + 1, cps.length - 1)];
+    else if (event.key === 'ArrowLeft') next = cps[Math.max(index - 1, 0)];
+    else if (event.key === 'ArrowDown') next = cps.find(c => c >= cp + 16) ?? cps.at(-1);
+    else if (event.key === 'ArrowUp') next = [...cps].reverse().find(c => c <= cp - 16) ?? cps[0];
+    else if (event.key === 'Home') next = cps[0];
+    else if (event.key === 'End') next = cps.at(-1);
+    else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      void inspect(cp, event.currentTarget as HTMLCanvasElement);
+      return;
+    }
+    if (next != null) { event.preventDefault(); activeCp = next; }
+  }
   let inspectorCanvas: HTMLCanvasElement | undefined = $state();
 
   onMount(() => {
@@ -187,7 +221,7 @@
     const col = Math.floor((e.clientX - rect.left) / scale / cell);
     const row = Math.floor((e.clientY - rect.top) / scale / cell);
     const cp = blockStart + row * 16 + col;
-    inspected = manifest.glyphs.get(cp) ?? null;
+    void inspect(cp, canvas);
   }
 
   $effect(() => {
@@ -259,8 +293,8 @@
 
   {#if inspected}
     {@const g = inspected}
-    <div class="gg__inspector" data-testid="glyph-inspector">
-      <canvas bind:this={inspectorCanvas}></canvas>
+    <div class="gg__inspector" data-testid="glyph-inspector" bind:this={inspector} tabindex="-1" role="group" aria-label={`${s.detail.inspectorCp} ${formatCp(g.cp)}`} onkeydown={(event) => { if (event.key === 'Escape') { event.preventDefault(); closeInspector(); } }}>
+      <canvas bind:this={inspectorCanvas} role="img" aria-label={`${s.detail.glyphGridTitle}: ${formatCp(g.cp)}`}></canvas>
       <dl class="mono">
         <dt>{s.detail.inspectorCp}</dt>
         <dd>{formatCp(g.cp)} <span class="gg__char">{String.fromCodePoint(g.cp)}</span></dd>
@@ -272,16 +306,30 @@
         <dd>{inkSize(g)}</dd>
       </dl>
       <button type="button" class="gg__close" aria-label={s.detail.close}
-        onclick={() => (inspected = null)}>×</button>
+        onclick={closeInspector}>×</button>
     </div>
   {/if}
 
+  <p id="glyph-keyboard-help" class="gg__help">{s.detail.glyphGridKeyboard}</p>
   <div class="gg__sheets">
     {#key `${variantId}:${selection}:${themeTick}`}
       {#each sheets as sh (sh.start)}
+        {@const selected = activeCp != null && activeCp >= sh.start && activeCp < sh.start + sh.count ? activeCp : sheetCps(sh.start, sh.count)[0]}
         <figure class="gg__sheet">
           <figcaption class="mono">{formatCp(sh.start)}</figcaption>
-          <canvas use:sheetAction={sh} onclick={onSheetClick}></canvas>
+          <div class="gg__sheet-image">
+            <canvas use:sheetAction={sh} onclick={onSheetClick} role="button" tabindex="0"
+              aria-label={`${s.detail.glyphGridTitle}: ${formatCp(selected ?? sh.start)}`}
+              aria-describedby="glyph-keyboard-help"
+              onfocus={() => { activeCp = selected ?? sh.start; }}
+              onkeydown={(event) => sheetKey(event, sh.start, sh.count)}></canvas>
+            {#if selected != null}
+              <span class="gg__cursor" aria-hidden="true"
+                style:left={`${((selected - sh.start) % 16) / 16 * 100}%`}
+                style:top={`${Math.floor((selected - sh.start) / 16) / Math.ceil(sh.count / 16) * 100}%`}
+                style:height={`${100 / Math.ceil(sh.count / 16)}%`}></span>
+            {/if}
+          </div>
         </figure>
       {/each}
     {/key}
@@ -289,6 +337,10 @@
 </section>
 
 <style>
+  .gg__help { color: var(--ink-2); font-size: 0.8rem; }
+  .gg__sheet-image { position: relative; width: fit-content; max-width: 100%; }
+  .gg__cursor { display: none; position: absolute; width: 6.25%; border: 2px solid var(--accent); pointer-events: none; }
+  .gg__sheet-image:focus-within .gg__cursor { display: block; }
   .gg {
     display: block;
     margin-bottom: var(--s6);

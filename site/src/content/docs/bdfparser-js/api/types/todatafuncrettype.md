@@ -1,5 +1,6 @@
 ---
 title: "Type alias: TodataFuncRetType<T>"
+description: "TypeScript type reference for bitmap data export return values in bdfparser, including the type declaration and source definition."
 label: "API · TodataFuncRetType"
 order: 26
 ---

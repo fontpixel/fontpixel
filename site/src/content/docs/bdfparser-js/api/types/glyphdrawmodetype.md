@@ -1,5 +1,6 @@
 ---
 title: "Type alias: GlyphDrawModeType"
+description: "TypeScript type reference for glyph drawing modes in bdfparser, including the type declaration and source definition."
 label: "API · GlyphDrawModeType"
 order: 20
 ---

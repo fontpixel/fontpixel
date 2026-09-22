@@ -1,5 +1,6 @@
 ---
 title: "Type alias: Props"
+description: "TypeScript type reference for BDF font properties in bdfparser, including the type declaration and source definition."
 label: "API · Props"
 order: 25
 ---

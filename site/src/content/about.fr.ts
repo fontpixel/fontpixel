@@ -35,6 +35,15 @@ export const aboutSections: AboutSection[] = [
         "name": "tewi",
         "href": "https://github.com/lucy/tewi-font#readme",
         "reason": "L’auteur a retiré la police en raison des droits incertains sur de nombreux glyphes dérivés de Monaco et invite les distributeurs à envisager son retrait. Les mentions GPL des anciennes copies ne clarifient pas les droits sur ces glyphes."
+      },
+      {
+        "name": "Vonwaon Bitmap (凤凰点阵体)",
+        "href": "https://timothyqiu.itch.io/vonwaon-bitmap",
+        "reason": "Publiée sous CC0 1.0, elle utilise pourtant des polices HZK de droits inconnus rassemblées dans https://github.com/aguegu/BitmapFont et ressemble fortement aux polices de Windows 3.2 ; l’origine des droits sur les glyphes ne peut donc pas être vérifiée.",
+        "reference": {
+          "label": "BitmapFont",
+          "href": "https://github.com/aguegu/BitmapFont"
+        }
       }
     ],
     paragraphs: [

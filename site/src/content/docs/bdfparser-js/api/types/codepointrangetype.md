@@ -1,5 +1,6 @@
 ---
 title: "Type alias: CodepointRangeType"
+description: "TypeScript type reference for Unicode code point ranges in bdfparser, including the type declaration and source definition."
 label: "API · CodepointRangeType"
 order: 17
 ---

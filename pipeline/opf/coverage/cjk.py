@@ -14,8 +14,11 @@ import re
 from pathlib import Path
 
 from opf.coverage.charsets import Charset
-from opf.coverage.engine import UNIFIED_IN_COMPAT, _UNIFIED_RANGES
+from opf.coverage.engine import han_counts, unified_han
 from opf.coverage.ucd import Ucd
+
+CJK_TABLE_KEYS = ('han', 'combined', 'tw', 'kr', 'kr-compat', 'kana',
+                  'kana-marks', 'kana-ext', 'jamo', 'jamo-ext')
 
 
 def cjk_sets(charsets: list[Charset], ucd: Ucd) -> dict[str, frozenset[int]]:
@@ -25,17 +28,18 @@ def cjk_sets(charsets: list[Charset], ucd: Ucd) -> dict[str, frozenset[int]]:
         return frozenset(cp for name, a, b in ucd.blocks if name in names
                          for cp in range(a, b + 1) if cp in ucd.assigned)
 
-    han = frozenset(cp for a, b in _UNIFIED_RANGES for cp in range(a, b + 1)
-                    if cp in ucd.assigned) | UNIFIED_IN_COMPAT
+    han = unified_han(ucd)
     tw = c['tw-changyong-4808'] | c['tw-cichangyong-6343']
-    sc, jp = c['tongyong-guifan'], c['joyo']
+    sc, jp = c['tongyong-guifan'], c['jisx0208-l1']
     kr = c['ksx1001-hanja'] & han
-    hira, kata = blocks('Hiragana'), blocks('Katakana')
+    hira, kata = c['hiragana'], c['katakana']
+    kana_marks = blocks('Hiragana', 'Katakana') - (hira | kata)
     kana_ext = blocks('Katakana Phonetic Extensions', 'Kana Supplement',
                       'Kana Extended-A', 'Kana Extended-B', 'Small Kana Extension')
     union = tw | sc | jp | kr
-    kana = hira | kata | kana_ext | c['halfwidth-kana']
-    bopomofo = blocks('Bopomofo', 'Bopomofo Extended')
+    kana = hira | kata | kana_marks | kana_ext | c['halfwidth-kana']
+    jamo_ext = blocks('Hangul Jamo Extended-A', 'Hangul Jamo Extended-B')
+    bopomofo = c['bopomofo']
     return {
         'han': han, 'union': union,
         # The overview combines the four Han tables and the three script
@@ -46,16 +50,20 @@ def cjk_sets(charsets: list[Charset], ucd: Ucd) -> dict[str, frozenset[int]]:
         'sc': sc, 'sc-l1': c['tongyong-guifan-l1'],
         'sc-l2': c['tongyong-guifan-l2'], 'sc-l3': c['tongyong-guifan-l3'],
         'jp': jp, 'kr': kr, 'kr-compat': c['ksx1001-hanja'] - han,
+        'tw-sc-union': tw | sc,
+        'tw-sc-jp-union': tw | sc | jp, 'tw-sc-kr-union': tw | sc | kr,
         'tw-sc': tw & sc, 'jp-tw': jp & tw, 'jp-sc': jp & sc,
         'kr-tw': kr & tw, 'kr-sc': kr & sc,
+        'tw-sc-jp': tw & sc & jp, 'tw-sc-kr': tw & sc & kr,
+        'tw-sc-jp-kr': tw & sc & jp & kr,
+        'tw-only': tw - (sc | jp | kr), 'sc-only': sc - (tw | jp | kr),
         'jp-only': jp - (tw | sc | kr), 'kr-only': kr - (tw | sc | jp),
-        'kr-sc-not-tw': (kr & sc) - tw,
         'kana': kana,
-        'hiragana': hira, 'katakana': kata, 'kana-ext': kana_ext,
+        'hiragana': hira, 'katakana': kata, 'kana-marks': kana_marks, 'kana-ext': kana_ext,
         'kana-halfwidth': c['halfwidth-kana'],
         'hangul': c['hangul-syllables'], 'hangul-common': c['ksx1001-hangul'],
-        'jamo': blocks('Hangul Jamo', 'Hangul Compatibility Jamo',
-                       'Hangul Jamo Extended-A', 'Hangul Jamo Extended-B'),
+        'jamo': c['hangul-jamo'] | c['hangul-compat-jamo'] | jamo_ext,
+        'jamo-ext': jamo_ext,
         'bopomofo': bopomofo,
     }
 
@@ -73,7 +81,8 @@ def refresh_cjk_details(entries: list[dict], site_data: Path, downloads_dir: Pat
     The signature covers definitions and every variant's BDF hash.
     """
     sets = cjk_sets(charsets, ucd)
-    definitions = json.dumps({k: sorted(v) for k, v in sets.items()}, sort_keys=True)
+    definitions = json.dumps({'sets': {k: sorted(v) for k, v in sets.items()},
+                              'missingCharts': CJK_TABLE_KEYS}, sort_keys=True)
     definition_hash = hashlib.sha256(definitions.encode()).hexdigest()
     for entry in entries:
         path = site_data / 'details' / f"{entry['slug']}.json"
@@ -89,7 +98,22 @@ def refresh_cjk_details(entries: list[dict], site_data: Path, downloads_dir: Pat
             source = downloads_dir / item['file']
             raw = gzip.decompress(source.read_bytes()) if source.suffix == '.gz' else source.read_bytes()
             cps = frozenset(int(cp) for cp in re.findall(rb'^ENCODING (\d+)\r?$', raw, re.M))
-            coverage[item['variantId']] = cjk_coverage(cps, sets)
+            variant = item['variantId']
+            coverage[variant] = cjk_coverage(cps, sets)
+            # Refresh old cached overview counts too: the map and overview must
+            # classify the 12 unified ideographs in the compatibility block alike.
+            if variant in detail.get('overview', {}):
+                counts = han_counts(cps, ucd)
+                detail['overview'][variant].update(
+                    hanTotal=list(counts['han_total']), compat=list(counts['compat']),
+                    compatUnifiedNote=list(counts['compat_unified_note']))
+            missing = detail.setdefault('missingChars', {}).setdefault(variant, {})
+            for key in CJK_TABLE_KEYS:
+                absent = sets[key] - cps
+                if 0 < len(absent) <= 500:
+                    missing[key] = ''.join(chr(cp) for cp in sorted(absent))
+                else:
+                    missing.pop(key, None)
         expected = {v['id'] for v in entry['variants']}
         if set(coverage) != expected:
             raise ValueError(f"{entry['slug']}: missing canonical BDF for CJK coverage")

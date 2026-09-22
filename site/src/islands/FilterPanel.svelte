@@ -1,22 +1,24 @@
 <script lang="ts">
   import type { FilterState } from '../lib/filters';
   import type { FamilyIndex } from '../lib/schema';
-  import { pickText } from '../i18n';
+  import type { CatalogueLabels } from '../lib/catalogue';
   import type { UIStrings } from '../i18n/types';
   import { COVERAGE_PICKS } from '../lib/coveragepicks';
   import { licenseShortLabel } from '../lib/licenselabel';
+  import { rovingFocus } from '../lib/roving-focus';
   import { VIBE_GROUPS, vibeGroupName } from '../lib/vibes';
   import Icon from './Icon.svelte';
 
   interface Props {
     families: FamilyIndex[];
+    labels: CatalogueLabels;
     filters: FilterState;
     s: UIStrings;
     lang: string;
     charsetIds: string[];
     charsetNames: Record<string, { zh: string; en: string; section: string; total: number }>;
   }
-  let { families, filters = $bindable(), s, lang, charsetIds, charsetNames }: Props =
+  let { families, labels, filters = $bindable(), s, lang, charsetIds, charsetNames }: Props =
     $props();
 
   // Coverage filter: a single "charset ≥ percentage" rule, applied as soon as it changes
@@ -25,7 +27,7 @@
   let covPct = $state<number | null>(90);
   let lastCoverageWrite: string | undefined;
   const csLabel = (id: string) =>
-    pickText(lang, charsetNames[id]?.zh ?? id, charsetNames[id]?.en ?? id);
+    labels.charsets[id] ?? id;
   // Listed in COVERAGE_PICKS order (Simplified → Traditional → Japanese → Korean → Latin), not alphabetically
   const csOptions = $derived(
     COVERAGE_PICKS.filter((id) => charsetNames[id] && charsetIds.includes(id)),
@@ -86,16 +88,6 @@
   const licenses = $derived(
     uniq(families.map((f) => f.license.spdx ?? 'unknown')).sort(),
   );
-  /** SPDX id -> the full licence name, so a chip can spell itself out on hover.
-   * The names travel with the families, so no extra data is needed. */
-  const licenseNames = $derived.by(() => {
-    const out: Record<string, string> = {};
-    for (const f of families) {
-      const id = f.license.spdx ?? 'unknown';
-      if (!out[id]) out[id] = pickText(lang, f.license.name, f.license.nameEn);
-    }
-    return out;
-  });
   const weights = $derived(uniq(families.flatMap((f) => f.weights)).sort());
   const spacings = $derived(uniq(families.flatMap((f) => f.spacing)).sort());
   const inkRange = $derived.by(() => {
@@ -138,29 +130,15 @@
       title={s.catalogue.reset} aria-label={s.catalogue.reset}><Icon name="funnel-x" /></button>
   </div>
 
-  <section id="filter-search">
-    <div class="fp__search">
-    <input
-      type="search"
-      name="catalogue-search"
-      placeholder={s.catalogue.searchPlaceholder}
-      aria-label={s.catalogue.searchLabel}
-      title={s.catalogue.searchLabel}
-      bind:value={filters.q}
-      data-testid="search-input"
-    />
-      <span class="fp__search-icon"><Icon name="search" size={18} /></span>
-    </div>
-  </section>
-
   <section id="filter-scripts">
-    <h3>{s.catalogue.scripts}</h3>
-    <div class="chips">
+    <h2>{s.catalogue.scripts}</h2>
+    <div class="chips" role="toolbar" aria-label={s.catalogue.scripts} use:rovingFocus>
       {#each scripts as sc (sc)}
         <button
           type="button"
           class="chip chipbtn"
           class:on={filters.scripts.includes(sc)}
+          aria-pressed={filters.scripts.includes(sc)}
           title={s.scriptRules[sc] ?? ''}
           onclick={() => (filters.scripts = toggle(filters.scripts, sc))}
           >{s.scriptNames[sc] ?? sc}</button
@@ -170,7 +148,7 @@
   </section>
 
   <section id="filter-coverage">
-    <h3>{s.catalogue.coveragePresets}</h3>
+    <h2>{s.catalogue.coveragePresets}</h2>
     <div class="cov" data-testid="coverage-filter">
       <select
         name="coverage-charset"
@@ -215,7 +193,7 @@
   </section>
 
   <section id="filter-characters">
-    <h3>{s.catalogue.charsLookup}</h3>
+    <h2>{s.catalogue.charsLookup}</h2>
     <input
       type="text"
       name="filter-chars"
@@ -227,13 +205,14 @@
   </section>
 
   <section id="filter-sizes">
-    <h3>{s.catalogue.sizes}</h3>
-    <div class="chips">
+    <h2>{s.catalogue.sizes}</h2>
+    <div class="chips" role="toolbar" aria-label={s.catalogue.sizes} use:rovingFocus>
       {#each sizes as sz (sz)}
         <button
           type="button"
           class="chip chipbtn mono"
           class:on={filters.sizes.includes(sz)}
+          aria-pressed={filters.sizes.includes(sz)}
           data-size={sz}
           onclick={() => (filters.sizes = toggleNum(filters.sizes, sz))}
           >{sz}{s.card.px}</button
@@ -243,7 +222,7 @@
   </section>
 
   <section id="filter-ink-height">
-    <h3>{s.catalogue.inkHeight}</h3>
+    <h2>{s.catalogue.inkHeight}</h2>
     <div class="range mono">
       <input
         type="number"
@@ -276,13 +255,14 @@
   </section>
 
   <section id="filter-form">
-    <h3>{s.catalogue.form}</h3>
-    <div class="chips">
+    <h2>{s.catalogue.form}</h2>
+    <div class="chips" role="toolbar" aria-label={s.catalogue.form} use:rovingFocus>
       {#each forms as f (f)}
         <button
           type="button"
           class="chip chipbtn"
           class:on={filters.forms.includes(f)}
+          aria-pressed={filters.forms.includes(f)}
           data-form={f}
           onclick={() => (filters.forms = toggle(filters.forms, f))}
           >{s.forms[f] ?? f}</button
@@ -292,13 +272,19 @@
   </section>
 
   <section id="filter-spacing-weight">
-    <h3>{s.catalogue.spacing} · {s.catalogue.weights}</h3>
-    <div class="chips">
+    <h2>{s.catalogue.spacing} · {s.catalogue.weights}</h2>
+    <div
+      class="chips"
+      role="toolbar"
+      aria-label={`${s.catalogue.spacing} · ${s.catalogue.weights}`}
+      use:rovingFocus
+    >
       {#each spacings as sp (sp)}
         <button
           type="button"
           class="chip chipbtn"
           class:on={filters.spacing.includes(sp)}
+          aria-pressed={filters.spacing.includes(sp)}
           onclick={() => (filters.spacing = toggle(filters.spacing, sp))}
           >{s.spacingNames[sp] ?? sp}</button
         >
@@ -308,6 +294,7 @@
           type="button"
           class="chip chipbtn"
           class:on={filters.weights.includes(w)}
+          aria-pressed={filters.weights.includes(w)}
           onclick={() => (filters.weights = toggle(filters.weights, w))}
           >{s.weightNames[w] ?? w}</button
         >
@@ -317,7 +304,7 @@
 
   {#if vibes.length}
     <section id="filter-vibes">
-      <h3>{s.catalogue.vibes}</h3>
+      <h2>{s.catalogue.vibes}</h2>
       {#each vibeGroups as group (group.id)}
         <details
           class="vibe-group"
@@ -342,14 +329,15 @@
   {/if}
 
   <section id="filter-license">
-    <h3>{s.catalogue.license}</h3>
-    <div class="chips">
+    <h2>{s.catalogue.license}</h2>
+    <div class="chips" role="toolbar" aria-label={s.catalogue.license} use:rovingFocus>
       {#each licenses as lic (lic)}
         <button
           type="button"
           class="chip chipbtn mono"
           class:on={filters.licenses.includes(lic)}
-          title={lic === 'unknown' ? s.card.licenseUnknown : (licenseNames[lic] ?? lic)}
+          aria-pressed={filters.licenses.includes(lic)}
+          title={lic === 'unknown' ? s.card.licenseUnknown : (labels.licenses[lic] ?? lic)}
           onclick={() => (filters.licenses = toggle(filters.licenses, lic))}
           >{lic === 'unknown'
             ? s.card.licenseUnknown
@@ -388,22 +376,11 @@
   .fp__reset:hover {
     color: var(--accent);
   }
-  .fp__search { position: relative; }
-  .fp__search input { padding-inline-end: 2.25rem; font-size: 1rem; }
-  .fp__search-icon {
-    position: absolute;
-    inset-inline-end: var(--s2);
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    color: var(--ink-3);
-    pointer-events: none;
-  }
   section {
     padding: var(--s3) 0;
     border-top: 1px dotted var(--line);
   }
-  h3 {
+  h2 {
     font-size: 0.78rem;
     font-weight: 600;
     color: var(--ink-2);
@@ -486,8 +463,7 @@
     margin-bottom: var(--s2);
     cursor: pointer;
   }
-  input[type='text'],
-  input[type='search'] {
+  input[type='text'] {
     width: 100%;
     min-width: 0;
   }

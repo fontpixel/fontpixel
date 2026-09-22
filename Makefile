@@ -8,7 +8,7 @@ PYTEST := $(PY) -m pytest
 
 setup:
 	python3 -m venv --clear .venv && $(PY) -m pip -q install -e "pipeline[dev]"
-	cd site && npm install
+	cd site && bun install --frozen-lockfile
 
 fonts:
 	$(PY) -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache
@@ -16,24 +16,24 @@ fonts:
 	mkdir -p site/public/downloads && rsync -a --delete dist-downloads/ site/public/downloads/
 
 dev: fonts
-	cd site && npm run dev
+	cd site && bun run dev
 
 build: fonts
-	cd site && npm run build
+	cd site && bun run build
 
 py-test:
 	$(PYTEST) pipeline/tests -q
 
 ts-test:
-	cd site && npm test
+	cd site && bun run test
 
 # astro check covers .astro/.ts; svelte-check covers the islands' templates,
 # which astro check does not read. Without the second one a component can
 # reference an i18n key that no longer exists and still build clean.
 check:
-	cd site && npm run check
+	cd site && bun run check
 
 e2e:
-	cd site && npx playwright test
+	cd site && bun run playwright test
 
 test: py-test ts-test check

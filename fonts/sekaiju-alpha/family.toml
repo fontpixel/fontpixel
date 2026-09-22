@@ -1,0 +1,26 @@
+name = "Sekaiju Alpha"
+authors = ["Goburinbro"]
+homepage = "https://goburinbro.itch.io/sekaiju-font-collection"
+repository = ""
+description = "为 Nintendo DS 地牢角色扮演游戏界面构想的 12px 像素字体，以可读的高挑字形保留倾斜横画与不规则重心。"
+forms = ["sans"]
+vibes = ["nintendo-ds", "handheld", "jrpg", "game-ui", "crooked"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://goburinbro.itch.io/sekaiju-font-collection；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Sekaiju Alpha"
+authors_en = ["Goburinbro"]
+description_en = "A 12px face imagined for Nintendo DS dungeon-RPG interfaces, balancing tall readable forms with tilted bars and deliberately irregular lean."
+provenance_en = "Imported from https://goburinbro.itch.io/sekaiju-font-collection; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "作者页面明确标注「CC0 - Public Domain / No Rights Reserved」并允许任意使用。"
+name_en = "CC0 1.0 Universal"
+note_en = "The author page explicitly states 'CC0 - Public Domain / No Rights Reserved' and permits unrestricted use."

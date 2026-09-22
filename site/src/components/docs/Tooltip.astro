@@ -4,9 +4,20 @@ interface Props {
   tip: string;
 }
 const { tip } = Astro.props;
+const id = `tooltip-${crypto.randomUUID()}`;
 ---
 
-<span class="tt" tabindex="0"><span class="tt__text"><slot /></span><span class="tt__mark" aria-hidden="true">?</span><span class="tt__tip" role="tooltip">{tip}</span></span>
+<span class="tt" tabindex="0" aria-describedby={id}><span class="tt__text"><slot /></span><span class="tt__mark" aria-hidden="true">?</span><span id={id} class="tt__tip" role="tooltip">{tip}</span></span>
+
+<script>
+  for (const tip of document.querySelectorAll<HTMLElement>('.tt')) {
+    tip.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') { event.preventDefault(); tip.dataset.dismissed = ''; }
+    });
+    tip.addEventListener('blur', () => { delete tip.dataset.dismissed; });
+    tip.addEventListener('mouseleave', () => { delete tip.dataset.dismissed; });
+  }
+</script>
 
 <style>
   .tt {
@@ -42,4 +53,5 @@ const { tip } = Astro.props;
   .tt:focus .tt__tip {
     visibility: visible;
   }
+  .tt[data-dismissed] .tt__tip { visibility: hidden; }
 </style>

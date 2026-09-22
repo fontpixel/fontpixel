@@ -1,5 +1,6 @@
 ---
 title: "Class: Bitmap"
+description: "TypeScript API for the bdfparser Bitmap class: constructors, properties, and methods to crop, resize, concatenate, transform, and export bitmap images."
 label: "API · Bitmap"
 order: 10
 ---

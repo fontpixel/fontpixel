@@ -1,5 +1,6 @@
 ---
 title: "bdfparser"
+description: "TypeScript API reference for bdfparser: Font, Glyph, and Bitmap classes, factory functions, and supporting types."
 label: "API · Table of contents"
 order: 16
 ---

@@ -1,0 +1,13 @@
+SPLCF public-domain dedication
+
+Source: https://def-the-dev.itch.io/splcf
+Author: def_the_dev
+
+The author states:
+
+"To the extent possible under law, def_the_dev has waived all copyright
+and related or neighboring rights to SPLCF."
+
+The source page also expressly permits commercial and non-commercial use
+without attribution. A saved copy of the source page is retained in this
+source snapshot.

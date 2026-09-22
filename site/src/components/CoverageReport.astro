@@ -1,9 +1,10 @@
 ---
-import { formatCp } from '../lib/format';
 import { pickText, t, type Lang } from '../i18n';
 import type { CharsetMeta } from '../lib/data';
 import type { FontDetail } from '../lib/schema';
 import CjkCoverage from './CjkCoverage.astro';
+import { cjkText } from '../i18n/cjk';
+import { CJK_COVERAGE_ROWS, coverageTree } from '../lib/coverage-tree';
 
 interface Props {
   lang: Lang;
@@ -17,6 +18,9 @@ interface Props {
 }
 const { lang, detail, sections, charsets, groups, variants, initialVariant } = Astro.props;
 const s = t(lang);
+const cjk = cjkText(lang);
+const coverageCopy: Record<string, string> = { ...cjk.labels, ...cjk.coverage };
+const tableSections = sections.flatMap(sec => sec === 'intl' ? [sec, 'cjk'] : [sec]);
 const name = (c: CharsetMeta) => pickText(lang, c.nameZh, c.nameEn);
 const desc = (c: CharsetMeta) => pickText(lang, c.descZh, c.descEn);
 const bySection = new Map<string, CharsetMeta[]>();
@@ -52,7 +56,7 @@ const pct = (have: number, total: number) =>
         <div data-variant-panel={g.attr} hidden={!g.ids.includes(initialVariant)}>
           <section id={`coverage-overview-${g.repId}`} class="cov__overview">
             <h3>{s.coverage.sections['overview']}</h3>
-            <div class="cov__scroll">
+            <div class="cov__scroll" tabindex="0">
               <table class="cov__table">
                 <tbody>
                   <tr>
@@ -75,16 +79,8 @@ const pct = (have: number, total: number) =>
                         <td />
                       </tr>
                     ))}
-                  <tr>
-                    <th>{s.coverage.hanTotal}</th>
-                    <td class="mono">
-                      {ov.hanTotal[0]!.toLocaleString()} / {ov.hanTotal[1]!.toLocaleString()}
-                    </td>
-                    <td class="mono cov__pct">{pct(ov.hanTotal[0]!, ov.hanTotal[1]!)}%</td>
-                    <td />
-                  </tr>
                   {ov.compat[0]! > 0 && (
-                    <tr>
+                    <tr data-coverage-summary="compat">
                       <th>
                         {s.coverage.compat}
                         <span class="cov__note" title={s.coverage.compatNote}>
@@ -116,25 +112,36 @@ const pct = (have: number, total: number) =>
             </div>
           </section>
 
-          {sections.map((sec) => {
-            const rows = (bySection.get(sec) ?? []).filter((c) => cov[c.id]);
+          {tableSections.map((sec) => {
+            const rows = coverageTree([
+              ...(bySection.get(sec) ?? []).filter((c) => cov[c.id]).map((c) => ({
+                id: c.id, label: coverageCopy[c.id] ?? name(c),
+                description: coverageCopy[c.id] ?? desc(c), source: c.source, pair: cov[c.id]!,
+              })),
+              ...(CJK_COVERAGE_ROWS[sec] ?? []).map((key) => ({
+                id: key, label: coverageCopy[key]!, description: coverageCopy[key]!,
+                source: 'https://www.unicode.org/versions/Unicode17.0.0/',
+                pair: detail.cjkCoverage[g.repId]![key]!,
+              })),
+            ]);
             if (!rows.length) return null;
             return (
               <>
               <section id={`coverage-${sec}-${g.repId}`} class="cov__section">
-                <h3>{s.coverage.sections[sec] ?? sec}</h3>
-                <div class="cov__scroll">
+                <h3>{sec === 'cjk' ? cjk.coverageTitle : s.coverage.sections[sec] ?? sec}</h3>
+                <div class="cov__scroll" tabindex="0">
                   <table class="cov__table">
                     <tbody>
                       {rows.map((c) => {
-                        const [have, total] = cov[c.id]!;
+                        const [have, total] = c.pair;
                         const ratio = total ? have / total : 0;
                         const filled = Math.round(ratio * 100);
                         const miss = missing[c.id];
                         return (
-                          <tr data-charset={c.id}>
-                            <th title={`${desc(c)}\n${s.coverage.sourceLabel}:${c.source}`}>
-                              {name(c)}
+                          <tr data-charset={c.id} data-coverage-parent={c.parent}
+                            class:list={{ 'cov__sub': c.depth > 0 }} style={`--coverage-depth:${c.depth}`}>
+                            <th title={`${c.description}\n${s.coverage.sourceLabel}:${c.source}`}>
+                              {c.label}
                             </th>
                             <td class="mono">
                               {have.toLocaleString()} / {total.toLocaleString()}
@@ -161,15 +168,9 @@ const pct = (have: number, total: number) =>
                                     <div
                                       class="cov__miss-src"
                                       hidden
-                                      data-label={name(c)}
+                                      data-label={c.label}
+                                      data-chars={miss}
                                     >
-                                      {[...miss].map((ch) => (
-                                        <button
-                                          type="button"
-                                          class="cov__miss"
-                                          title={formatCp(ch.codePointAt(0)!)}
-                                        >{ch}</button>
-                                      ))}
                                     </div>
                                   </>
                                 )
@@ -191,7 +192,7 @@ const pct = (have: number, total: number) =>
             <summary>
               {s.coverage.unicodeBlocks}({blocks.filter((b) => b[1] > 0).length})
             </summary>
-            <div class="cov__scroll">
+            <div class="cov__scroll" tabindex="0">
               <table class="cov__table">
                 <tbody>
                   {blocks
@@ -220,9 +221,9 @@ const pct = (have: number, total: number) =>
     })
   }
 
-  <dialog class="cov__modal" data-missing-modal data-copied-label={s.coverage.copiedChar}>
+  <dialog class="cov__modal" data-missing-modal data-copied-label={s.coverage.copiedChar} aria-labelledby="missing-modal-title">
     <div class="cov__modal-head">
-      <h3 class="cov__modal-title" data-modal-title />
+      <h3 id="missing-modal-title" class="cov__modal-title" data-modal-title />
       <button type="button" class="cov__modal-copyall" data-modal-copyall
         >{s.coverage.copyAll}</button
       >
@@ -233,11 +234,13 @@ const pct = (have: number, total: number) =>
         aria-label={s.coverage.close}>×</button
       >
     </div>
-    <div class="cov__modal-body" data-modal-body />
+    <div class="cov__modal-body" data-modal-body role="toolbar" aria-labelledby="missing-modal-title" />
+    <p class="visually-hidden" role="status" data-modal-status />
   </dialog>
 </section>
 
 <script>
+  import { rovingFocus } from '../lib/roving-focus';
   // Two-way sync with the variant dropdown at the top of the page: both sides dispatch the same event, whichever changes first drives the other
   const pick = document.querySelector<HTMLSelectElement>('[data-coverage-variant]');
   if (pick) {
@@ -254,23 +257,33 @@ const pct = (have: number, total: number) =>
 
   // The missing-glyph list is shown in a modal: a cell can't hold thousands of characters,
   // and expanding it inline would break the table layout. The content is already rendered
-  // by SSR into a hidden container right after the button; a click moves it into this shared dialog.
+  // as a compact string; buttons are created when the shared dialog opens.
   const dlg = document.querySelector<HTMLDialogElement>('[data-missing-modal]');
   if (dlg) {
     const title = dlg.querySelector('[data-modal-title]')!;
-    const body = dlg.querySelector('[data-modal-body]')!;
+    const body = dlg.querySelector<HTMLElement>('[data-modal-body]')!;
+    rovingFocus(body);
     document.querySelectorAll('[data-missing]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const src = btn.nextElementSibling as HTMLElement | null;
         if (!src) return;
         title.textContent = `${src.dataset.label ?? ''} · ${btn.textContent?.trim() ?? ''}`;
-        body.replaceChildren(...[...src.children].map((n) => n.cloneNode(true)));
+        body.replaceChildren(...Array.from(src.dataset.chars ?? '', (ch) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'cov__miss';
+          button.textContent = ch;
+          button.title = `U+${ch.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`;
+          button.setAttribute('aria-label', `${ch} ${button.title}`);
+          return button;
+        }));
         dlg.showModal();
       });
     });
     // Clicking one glyph copies just that glyph; the header button copies the lot.
     const copied = dlg.dataset.copiedLabel ?? 'Copied';
     const flash = (el: HTMLElement) => {
+      dlg.querySelector('[data-modal-status]')!.textContent = `${copied}: ${el.textContent}`;
       el.classList.add('cov__miss--copied');
       setTimeout(() => el.classList.remove('cov__miss--copied'), 600);
     };
@@ -323,6 +336,7 @@ const pct = (have: number, total: number) =>
     padding: 3px var(--s3) 3px 0;
     border-top: 1px dotted var(--line);
     width: 40%;
+    min-width: 14rem;
   }
   .cov__table td {
     padding: 3px var(--s3) 3px 0;
@@ -330,7 +344,7 @@ const pct = (have: number, total: number) =>
     white-space: nowrap;
   }
   .cov__sub th {
-    padding-left: var(--s4);
+    padding-left: calc(var(--s4) * var(--coverage-depth, 1));
     color: var(--ink-3);
   }
   .cov__pct {

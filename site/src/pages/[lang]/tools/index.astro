@@ -14,7 +14,7 @@ const s = t(lang);
 const docLang = DOC_LANGS.includes(lang) ? lang : DOC_LANGS[0];
 ---
 
-<Base lang={lang} title={s.tools.title} description={s.tools.intro} path="/tools/">
+<Base lang={lang} title={`${s.tools.title} · ${s.siteName}`} description={s.tools.intro} path="/tools/">
   <div class="tools">
   <h1 id="tools">{s.tools.title}</h1>
   <p class="tools__intro">{s.tools.intro}</p>

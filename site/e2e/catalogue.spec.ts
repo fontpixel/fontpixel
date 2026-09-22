@@ -92,13 +92,22 @@ test('zoom changes fixed SVG height', async ({ page }) => {
 test('reset clears filters including the name search, and preserves sorting', async ({ page }) => {
   await page.goto('zh/?forms=song&q=wenquanyi&sort=name');
   await expect(page.locator('[data-testid="filter-panel"] [data-form="song"]')).toHaveClass(/\bon\b/);
-  await expect(page.getByTestId('filter-panel').getByTestId('search-input')).toHaveValue('wenquanyi');
+  await expect(page.getByTestId('search-input')).toHaveValue('wenquanyi');
+  await expect(page.locator('.cat__filters').getByTestId('search-input')).toHaveCount(0);
   const filtered = await resultCount(page);
   await page.locator('[data-testid="filter-panel"] .fp__reset').click();
   await expect(page.getByTestId('search-input')).toHaveValue('');
   await expect(page.getByTestId('sort-select')).toHaveValue('name');
   await expect(page).not.toHaveURL(/[?&](q|forms)=/);
   await expect.poll(() => resultCount(page)).toBeGreaterThan(filtered);
+});
+
+test('search stays visible when filters are collapsed on a narrow screen', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('zh/');
+  await expect(page.locator('.cat__filters')).not.toHaveAttribute('open', /.*/);
+  await expect(page.getByTestId('filter-panel')).toBeHidden();
+  await expect(page.getByTestId('search-input')).toBeVisible();
 });
 
 test('coverage form filters as you type and resets', async ({ page, request }) => {
@@ -178,7 +187,7 @@ test('switching language keeps the current page and its filter state', async ({
   await page.getByTestId('coverage-charset').selectOption('gb2312');
   await expect.poll(() => page.url()).toContain('cov=gb2312');
 
-  await page.getByTestId('lang-menu').locator('summary').click();
+  await page.getByTestId('lang-menu').locator('.navmenu__trigger').click();
   await page.getByTestId('lang-switch').click();
   await page.waitForLoadState('domcontentloaded');
   const url = new URL(page.url());
@@ -188,7 +197,7 @@ test('switching language keeps the current page and its filter state', async ({
 
   // the detail page has no query string, but should still switch to the same font
   await page.goto('zh/fonts/galmuri/');
-  await page.getByTestId('lang-menu').locator('summary').click();
+  await page.getByTestId('lang-menu').locator('.navmenu__trigger').click();
   await page.getByTestId('lang-switch').click();
   await page.waitForLoadState('domcontentloaded');
   expect(new URL(page.url()).pathname).toBe('/en/fonts/galmuri/');

@@ -17,9 +17,12 @@ const percentage = (key: CjkKey) => `${number.format(Math.round(ratio(key) * 100
 const main = ['tw', 'sc', 'jp', 'kr'] as const;
 const scripts = ['kana', 'hangul', 'bopomofo'] as const;
 const groups: { title: string; keys: CjkKey[] }[] = [
-  { title: s.sets, keys: ['combined', 'han', 'union', 'tw', 'tw-common', 'tw-less', 'sc', 'sc-l1', 'sc-l2', 'sc-l3', 'jp', 'kr', 'kr-compat'] },
-  { title: s.overlaps, keys: ['tw-sc', 'jp-tw', 'jp-sc', 'kr-tw', 'kr-sc', 'jp-only', 'kr-only', 'kr-sc-not-tw'] },
-  { title: s.scripts, keys: ['kana', 'hiragana', 'katakana', 'kana-ext', 'kana-halfwidth', 'hangul', 'hangul-common', 'jamo', 'bopomofo'] },
+  { title: s.overlaps, keys: [
+    'tw-sc', 'jp-tw', 'jp-sc', 'kr-tw', 'kr-sc',
+    'tw-sc-jp', 'tw-sc-kr', 'tw-sc-jp-kr',
+    'tw-sc-union', 'tw-sc-jp-union', 'tw-sc-kr-union', 'union',
+    'tw-only', 'sc-only', 'jp-only', 'kr-only',
+  ] },
 ];
 // Adapted from the user's cjk_character_sets_euler_v3_measured.svg.
 // Keep its overlapping contours; move dense annotations to readable HTML.
@@ -175,8 +178,8 @@ const shapes = [
   .cjk__details-body { padding: var(--s3); }
   .cjk__details-body > p:first-child { margin-top: 0; }
   .cjk__details-body > p:last-child { margin-bottom: 0; }
-  .cjk__details p { color: var(--ink-2); max-width: 85ch; }
-  .cjk__tables { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4) var(--s5); align-items: start; }
+  .cjk__details p { color: var(--ink-2); }
+  .cjk__tables { max-width: 44rem; }
   table { width: 100%; border-collapse: collapse; }
   caption { text-align: left; font-weight: 600; padding-bottom: var(--s2); }
   th { text-align: left; font-weight: 400; padding: 5px var(--s2) 5px 0; font-size: .74rem; }
@@ -196,6 +199,5 @@ const shapes = [
     .cjk__script strong { margin: 0; font-size: .82rem; }
     .cjk__script meter, .cjk__script small { grid-column: 1 / -1; }
     .cjk__script small { margin-top: var(--s1); }
-    .cjk__tables { grid-template-columns: 1fr; }
   }
 </style>

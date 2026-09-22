@@ -1,8 +1,11 @@
 ---
 import '../styles/tokens.css';
+import SeoHead from '../components/SeoHead.astro';
 import { readFileSync } from 'node:fs';
 import { LANGS, LANG_NAMES, LANG_TAGS, t, otherLang, type Lang } from '../i18n';
 import { withBase } from '../lib/data';
+import { pageCopy } from '../i18n/page-copy';
+import { DOC_LANGS } from '../lib/docs';
 
 interface Props {
   lang: Lang;
@@ -10,7 +13,10 @@ interface Props {
   description?: string;
   /** Path without the language prefix, e.g. "/fonts/galmuri/" — used for hreflang and language switching */
   path: string;
+  markdownPath?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
   /** Language versions this page actually exists in; defaults to all. English-only
    * docs pages pass ['en'] — the language menu and hreflang only list these. */
   availableLangs?: Lang[];
@@ -25,26 +31,14 @@ interface Props {
 }
 
 const REPO_URL = 'https://github.com/fontpixel/fontpixel';
-// The site's own licence, correct only for the site itself -- a font page states
-// its font's licence instead, via the licenseUrl prop.
-const REPO_LICENSE = 'https://opensource.org/licenses/MIT';
-
-const { lang, title, description, path, ogImage, availableLangs, entityName, licenseUrl } =
+const { lang, path, availableLangs } =
   Astro.props;
 const langs = availableLangs ?? LANGS;
 const otherLangs = langs.filter((l) => l !== lang);
 const s = t(lang);
 const other = otherLang(lang);
-// canonical / og:url / hreflang must be absolute URLs — search engines don't honor relative paths.
-// Astro.site comes from `site` in astro.config (CI injects OPF_SITE).
-const abs = (p: string) => new URL(withBase(p), Astro.site).href;
-const canonical = abs(`/${lang}${path}`);
-// A single-language page emits no alternates — hreflang must come in mutually
-// referencing groups; one lone entry is meaningless.
-const alternates =
-  langs.length > 1 ? langs.map((l) => ({ tag: LANG_TAGS[l], href: abs(`/${l}${path}`) })) : [];
-const xDefaultLang = langs.includes('zh' as Lang) ? 'zh' : langs[0];
-const isHome = path === '/';
+const docLang = DOC_LANGS.includes(lang) ? lang : DOC_LANGS[0]!;
+const isHome = path === '/' || /^\/page\/\d+\/$/.test(path);
 
 // The site name uses a pixel web font subsetted at build time (brand.woff2, a few KB,
 // cached once site-wide), replacing the old per-page canvas rendering. brand is null
@@ -69,55 +63,9 @@ const brandCss = brand
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    {description && <meta name="description" content={description} />}
-    <link rel="canonical" href={canonical} />
-    {alternates.map((a) => (
-      <link rel="alternate" hreflang={a.tag} href={a.href} />
-    ))}
-    {alternates.length > 0 && (
-      <link rel="alternate" hreflang="x-default" href={abs(`/${xDefaultLang}${path}`)} />
-    )}
-    <meta property="og:type" content={isHome ? 'website' : 'article'} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:site_name" content={s.siteName} />
-    <meta property="og:locale" content={LANG_TAGS[lang].replace('-', '_')} />
-    {otherLangs.map((l) => (
-      <meta property="og:locale:alternate" content={LANG_TAGS[l].replace('-', '_')} />
-    ))}
-    <meta property="og:title" content={title} />
-    {description && <meta property="og:description" content={description} />}
-    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site).href} />}
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
-    <meta name="twitter:title" content={title} />
-    {description && <meta name="twitter:description" content={description} />}
-    {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />}
+    <SeoHead {...Astro.props} />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={withBase('/favicon.ico')} sizes="16x16" />
-    {/* Structured data: lets search engines recognize this as a font collection with site search */}
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': isHome ? 'WebSite' : 'WebPage',
-        name: entityName ?? s.siteName,
-        ...(entityName && { isPartOf: { '@type': 'WebSite', name: s.siteName, url: abs('/') } }),
-        description,
-        url: canonical,
-        inLanguage: LANG_TAGS[lang],
-        ...(licenseUrl ? { license: licenseUrl } : isHome ? { license: REPO_LICENSE } : {}),
-        ...(isHome && {
-          potentialAction: {
-            '@type': 'SearchAction',
-            target: {
-              '@type': 'EntryPoint',
-              urlTemplate: `${abs(`/${lang}/`)}?q={search_term_string}`,
-            },
-            'query-input': 'required name=search_term_string',
-          },
-        }),
-      })}
-    />
     {brand && (
       <link rel="preload" as="font" type="font/woff2" crossorigin
             href={withBase(`/data/${brand.file}`)} />
@@ -143,8 +91,15 @@ const brandCss = brand
     </script>
   </head>
   <body>
-    {/* Lets keyboard/screen-reader users skip the whole header straight to main content; visible only on focus */}
-    <a class="skip-link" href="#main">{s.skipToContent}</a>
+    {/* Keyboard/screen-reader shortcuts are visible only while focused. */}
+    <div class="skip-links">
+      <a class="skip-link" href="#main">{s.skipToContent}</a>
+      {isHome && (
+        <a class="skip-link" href="#catalogue-results" data-testid="skip-to-results">
+          {s.catalogue.skipToResults}
+        </a>
+      )}
+    </div>
     <header class="site-header">
       <div class="container site-header__row">
         <a class="site-brand" href={withBase(`/${lang}/`)}>
@@ -156,14 +111,105 @@ const brandCss = brand
           </span>
         </a>
         <nav class="site-nav" aria-label={s.siteNavLabel}>
-          <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
-          <a href={withBase(`/${lang}/compare/`)}>{s.nav.compare}</a>
-          <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
-          <a href={withBase(`/${lang}/about/`)}>{s.nav.about}</a>
+          <a
+            class="nav-icon"
+            href={withBase(`/${lang}/compare/`)}
+            aria-label={s.compare.title}
+            title={s.compare.title}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon lucide lucide-equal-approximately preview-icon"
+              aria-hidden="true"
+            >
+              <path d="M5 15a6.5 6.5 0 0 1 7 0 6.5 6.5 0 0 0 7 0" />
+              <path d="M5 9a6.5 6.5 0 0 1 7 0 6.5 6.5 0 0 0 7 0" />
+            </svg>
+          </a>
+          <div class="navmenu toolsmenu" data-nav-menu data-testid="tools-menu">
+            <button
+              type="button"
+              class="navmenu__trigger"
+              aria-label={s.nav.tools}
+              title={s.nav.tools}
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="tools-menu-popup"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon lucide lucide-pocket-knife preview-icon"
+                aria-hidden="true"
+              >
+                <path d="M3 2v1c0 1 2 1 2 2S3 6 3 7s2 1 2 2-2 1-2 2 2 1 2 2" />
+                <path d="M18 6h.01" />
+                <path d="M6 18h.01" />
+                <path d="M20.83 8.83a4 4 0 0 0-5.66-5.66l-12 12a4 4 0 1 0 5.66 5.66Z" />
+                <path d="M18 11.66V22a4 4 0 0 0 4-4V6" />
+              </svg>
+            </button>
+            <ul id="tools-menu-popup" role="menu" data-menu-popup hidden>
+              {s.tools.cards.map((card) => (
+                <li role="none">
+                  <a role="menuitem" tabindex="-1" href={withBase(`/${docLang}/${card.slug}/`)}>
+                    {card.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a
+            class="nav-icon"
+            href={withBase(`/${lang}/about/`)}
+            aria-label={s.nav.about}
+            title={s.nav.about}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon lucide lucide-info preview-icon"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4" />
+              <path d="M12 8h.01" />
+            </svg>
+          </a>
           {/* Pages that exist in one language only get no language button at all */}
           {otherLangs.length > 0 && (
-            <details class="langmenu" data-testid="lang-menu">
-              <summary aria-label={s.langLabel} title={s.langLabel}>
+            <div class="navmenu langmenu" data-nav-menu data-testid="lang-menu">
+              <button
+                type="button"
+                class="navmenu__trigger"
+                aria-label={s.langLabel}
+                title={s.langLabel}
+                aria-haspopup="menu"
+                aria-expanded="false"
+                aria-controls="language-menu-popup"
+              >
                 <svg
                   class="icon"
                   viewBox="0 0 24 24"
@@ -181,11 +227,13 @@ const brandCss = brand
                   <path d="m22 22-5-10-5 10" />
                   <path d="M14 18h6" />
                 </svg>
-              </summary>
-              <ul>
+              </button>
+              <ul id="language-menu-popup" role="menu" data-menu-popup hidden>
                 {otherLangs.map((l) => (
-                  <li>
+                  <li role="none">
                     <a
+                      role="menuitem"
+                      tabindex="-1"
                       href={withBase(`/${l}${path}`)}
                       data-lang-link
                       data-testid={l === other ? 'lang-switch' : undefined}
@@ -195,7 +243,7 @@ const brandCss = brand
                   </li>
                 ))}
               </ul>
-            </details>
+            </div>
           )}
           <button
             type="button"
@@ -294,56 +342,196 @@ const brandCss = brand
     </script>
 
     <script>
-      // The language menu follows the pointer and focus: expands on hover, collapses on
-      // leave. <details> natively only responds to clicks, so we add this — but we keep
-      // the native click behavior too, so touchscreens and devices without hover still work.
-      document.querySelectorAll<HTMLDetailsElement>('.langmenu').forEach((menu) => {
-        const summary = menu.querySelector('summary');
-        if (!summary) return;
+      // Each header dropdown is one Tab stop. Arrow keys enter and move through
+      // its menu items; the popup follows its icon and stays inside the viewport.
+      const navMenus = [...document.querySelectorAll<HTMLElement>('[data-nav-menu]')];
+      const menuTrigger = (menu: HTMLElement) =>
+        menu.querySelector<HTMLButtonElement>('.navmenu__trigger');
+      const menuPopup = (menu: HTMLElement) =>
+        menu.querySelector<HTMLElement>('[data-menu-popup]');
+      const menuItems = (menu: HTMLElement) =>
+        [...menu.querySelectorAll<HTMLElement>('[role="menuitem"]')].filter(
+          (item) => item.getAttribute('aria-disabled') !== 'true',
+        );
+      const menuIsOpen = (menu: HTMLElement) =>
+        menuTrigger(menu)?.getAttribute('aria-expanded') === 'true';
+
+      const closeMenu = (menu: HTMLElement) => {
+        const trigger = menuTrigger(menu);
+        const popup = menuPopup(menu);
+        if (!trigger || !popup) return;
+        trigger.setAttribute('aria-expanded', 'false');
+        popup.hidden = true;
+        delete menu.dataset.open;
+        delete menu.dataset.menuSide;
+        delete menu.dataset.menuClipped;
+      };
+
+      const placeMenu = (menu: HTMLElement) => {
+        const trigger = menuTrigger(menu);
+        const popup = menu.querySelector<HTMLElement>('[data-menu-popup]');
+        if (!trigger || !popup || !menuIsOpen(menu)) return;
+
+        const gutter = 8;
+        const viewportWidth = document.documentElement.clientWidth;
+        popup.style.left = '0px';
+        popup.style.right = 'auto';
+        popup.style.top = '100%';
+        popup.style.bottom = 'auto';
+        popup.style.maxHeight = '';
+        popup.style.maxWidth = `${viewportWidth}px`;
+        delete menu.dataset.menuClipped;
+
+        const menuRect = menu.getBoundingClientRect();
+        const triggerRect = trigger.getBoundingClientRect();
+        const popupRect = popup.getBoundingClientRect();
+        const viewportLeft = popupRect.width <= viewportWidth
+          ? Math.min(Math.max(triggerRect.left, 0), viewportWidth - popupRect.width)
+          : 0;
+        popup.style.left = `${viewportLeft - menuRect.left}px`;
+
+        const below = Math.max(0, window.innerHeight - triggerRect.bottom - gutter);
+        const above = Math.max(0, triggerRect.top - gutter);
+        const naturalHeight = popupRect.height;
+        const viewportHeight = Math.max(0, window.innerHeight - gutter * 2);
+        if (naturalHeight <= below) {
+          menu.dataset.menuSide = 'bottom';
+        } else if (naturalHeight <= above) {
+          popup.style.top = 'auto';
+          popup.style.bottom = '100%';
+          menu.dataset.menuSide = 'top';
+        } else if (naturalHeight <= viewportHeight) {
+          const viewportTop = Math.min(
+            Math.max(triggerRect.bottom, gutter),
+            window.innerHeight - naturalHeight - gutter,
+          );
+          popup.style.top = `${viewportTop - menuRect.top}px`;
+          menu.dataset.menuSide = 'free';
+        } else {
+          const openAbove = above > below;
+          popup.style.top = openAbove ? 'auto' : '100%';
+          popup.style.bottom = openAbove ? '100%' : 'auto';
+          popup.style.maxHeight = `${openAbove ? above : below}px`;
+          menu.dataset.menuSide = openAbove ? 'top' : 'bottom';
+          menu.dataset.menuClipped = '';
+        }
+      };
+
+      const openMenu = (menu: HTMLElement, focus: 'none' | 'first' | 'last' = 'none') => {
+        const trigger = menuTrigger(menu);
+        const popup = menuPopup(menu);
+        if (!trigger || !popup) return;
+        navMenus.forEach((other) => {
+          if (other !== menu) closeMenu(other);
+        });
+        popup.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+        menu.dataset.open = '';
+        requestAnimationFrame(() => {
+          placeMenu(menu);
+          if (focus !== 'none') {
+            const items = menuItems(menu);
+            (focus === 'first' ? items[0] : items.at(-1))?.focus();
+          }
+        });
+      };
+
+      navMenus.forEach((menu) => {
+        const trigger = menuTrigger(menu);
+        const popup = menuPopup(menu);
+        if (!trigger || !popup) return;
         let closeTimer = 0;
-        const open = () => {
+        let openedByHover = false;
+        let suppressFocusOpen = false;
+        const open = (focus: 'none' | 'first' | 'last' = 'none') => {
           clearTimeout(closeTimer);
-          menu.open = true;
+          openMenu(menu, focus);
         };
         const close = () => {
           clearTimeout(closeTimer);
-          menu.open = false;
+          openedByHover = false;
+          closeMenu(menu);
         };
 
         if (matchMedia('(hover: hover)').matches) {
-          menu.addEventListener('mouseenter', open);
-          // The pointer crosses a small gap moving from summary to menu — buffer this
+          menu.addEventListener('mouseenter', () => {
+            if (!menuIsOpen(menu)) openedByHover = true;
+            open();
+          });
+          // The pointer crosses a small gap moving from trigger to menu — buffer this
           // so it doesn't close midway
           menu.addEventListener('mouseleave', () => {
-            closeTimer = window.setTimeout(close, 120);
-          });
-          // Hover already expanded it, so letting this click go through native toggle
-          // would just close it again
-          summary.addEventListener('click', (e) => {
-            if (menu.open) e.preventDefault();
+            closeTimer = window.setTimeout(() => {
+              if (!menu.contains(document.activeElement)) close();
+            }, 120);
           });
         }
 
+        trigger.addEventListener('click', () => {
+          if (openedByHover) {
+            openedByHover = false;
+            return;
+          }
+          if (menuIsOpen(menu)) close();
+          else open();
+        });
+        trigger.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            open('first');
+          } else if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            open('last');
+          } else if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            open('first');
+          } else if (event.key === 'Escape') {
+            event.preventDefault();
+            close();
+          }
+        });
         menu.addEventListener('focusin', () => {
-          // Only respond to keyboard-originated focus; leave mouse/touch-triggered focus
-          // to <details> itself — otherwise focusin would open it and the native toggle
-          // right after would close it again
-          if (summary.matches(':focus-visible')) open();
+          if (!suppressFocusOpen && trigger.matches(':focus-visible')) open();
         });
         menu.addEventListener('focusout', (e) => {
           const next = (e as FocusEvent).relatedTarget;
           if (!(next instanceof Node) || !menu.contains(next)) close();
         });
-        menu.addEventListener('keydown', (e) => {
-          if ((e as KeyboardEvent).key === 'Escape') {
+        popup.addEventListener('keydown', (event) => {
+          const items = menuItems(menu);
+          const index = items.indexOf(document.activeElement as HTMLElement);
+          let nextIndex: number | undefined;
+          if (event.key === 'ArrowDown') nextIndex = (index + 1) % items.length;
+          else if (event.key === 'ArrowUp') nextIndex = (index - 1 + items.length) % items.length;
+          else if (event.key === 'Home') nextIndex = 0;
+          else if (event.key === 'End') nextIndex = items.length - 1;
+          else if (event.key === 'Escape') {
+            event.preventDefault();
             close();
-            summary.focus();
+            suppressFocusOpen = true;
+            trigger.focus();
+            requestAnimationFrame(() => (suppressFocusOpen = false));
+            return;
+          }
+          if (nextIndex !== undefined && items.length) {
+            event.preventDefault();
+            items[nextIndex]!.focus();
           }
         });
       });
+      document.addEventListener('pointerdown', (event) => {
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        navMenus.forEach((menu) => {
+          if (!menu.contains(target)) closeMenu(menu);
+        });
+      });
+      window.addEventListener('resize', () =>
+        navMenus.filter(menuIsOpen).forEach(placeMenu),
+      );
     </script>
 
-    <main id="main" class="container site-main">
+    <main id="main" class="container site-main" tabindex="-1">
       <slot />
     </main>
 
@@ -354,7 +542,7 @@ const brandCss = brand
           <p class="site-footer__name">{s.siteName}</p>
           <p>{s.siteTagline}</p>
         </div>
-        <nav class="site-footer__links" aria-label={s.footer.navLabel}>
+        <nav class="site-footer__links" aria-label={pageCopy[lang].footer}>
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
           <a href={withBase(`/${lang}/compare/`)}>{s.nav.compare}</a>
           <a href={withBase(`/${lang}/tools/`)}>{s.nav.tools}</a>
@@ -389,18 +577,25 @@ const brandCss = brand
     </script>
 
     <style>
-      .skip-link {
+      .skip-links {
         position: absolute;
         left: var(--s3);
-        top: -3rem;
+        top: 0;
         z-index: 100;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--s1);
+        max-width: calc(100% - 2 * var(--s3));
+        transform: translateY(-100%);
+        transition: transform 0.15s;
+      }
+      .skip-link {
         padding: var(--s2) var(--s3);
         background: var(--surface);
         border: 1px solid var(--line);
-        transition: top 0.15s;
       }
-      .skip-link:focus {
-        top: var(--s2);
+      .skip-links:focus-within {
+        transform: translateY(var(--s2));
       }
       /* Interactive header items carry their own padding so the hit areas are
          generous; the row's padding shrinks by the same amount to keep the
@@ -451,22 +646,22 @@ const brandCss = brand
       .site-nav > a {
         padding: var(--s2);
       }
-      .langmenu {
+      .navmenu {
         position: relative;
       }
-      .langmenu summary {
+      .navmenu__trigger {
         cursor: pointer;
-        list-style: none;
         display: block;
         padding: var(--s2);
+        border: 0;
+        color: inherit;
+        font-size: 1rem;
+        background: transparent;
       }
-      .langmenu summary::-webkit-details-marker {
-        display: none;
-      }
-      .langmenu ul {
+      .navmenu ul {
         position: absolute;
-        right: 0;
-        top: 100%; /* flush under the padded summary */
+        left: 0;
+        top: 100%; /* flush under the padded trigger */
         z-index: 20;
         margin: 0;
         padding: var(--s2) 0;
@@ -474,27 +669,35 @@ const brandCss = brand
         background: var(--surface);
         border: 1px solid var(--line);
         min-width: 8rem;
+        max-width: calc(100vw - 16px);
+        overflow-y: visible;
       }
-      .langmenu li a {
+      .navmenu[data-menu-clipped] ul {
+        overflow-y: auto;
+      }
+      .toolsmenu ul {
+        min-width: 14rem;
+      }
+      .navmenu li a {
         display: block;
         padding: var(--s1) var(--s3);
         white-space: nowrap;
       }
-      .langmenu li a:hover {
+      .navmenu li a:hover {
         background: var(--accent-soft);
       }
-      /* There's a visual gap between summary and the menu — the pointer leaves .langmenu
+      /* There's a visual gap between the trigger and menu — the pointer leaves .navmenu
          crossing it, triggering a close. Fill it with a transparent area — placed right
-         under summary only, so it doesn't cover the nav links to the left when expanded. */
-      .langmenu[open]::after {
+         under the trigger only, so it doesn't cover the nav links to the left when expanded. */
+      .navmenu[data-open][data-menu-side='bottom']::after {
         content: '';
         position: absolute;
         inset: 100% 0 auto 0;
         height: 0.8em;
       }
       .icon {
-        width: 1.15em;
-        height: 1.15em;
+        width: 1.5em;
+        height: 1.5em;
         display: block;
       }
       /* The button shows the icon for the "current" theme: sun in light mode, moon in dark mode */
@@ -512,8 +715,16 @@ const brandCss = brand
         display: flex;
         align-items: center;
         padding: var(--s2);
-        margin-right: calc(-1 * var(--s2)); /* right edge stays aligned with the container */
         color: var(--ink-2);
+      }
+      .site-nav > .nav-icon:last-child {
+        margin-right: calc(-1 * var(--s2)); /* right edge stays aligned with the container */
+      }
+      .navmenu__trigger:is(:hover, :focus-visible),
+      .theme-toggle:is(:hover, :focus-visible),
+      .site-nav a:is(:hover, :focus-visible) {
+        color: var(--accent);
+        background-color: var(--accent-soft);
       }
       .site-main {
         min-height: 70vh;

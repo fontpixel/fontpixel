@@ -1,0 +1,26 @@
+name = "Capsigrany"
+authors = ["enmarimo"]
+homepage = "https://enmarimo.itch.io/capsigrany"
+repository = ""
+description = "为游戏菜单与 UI 设计的 16px 卡通像素字体，字形饱满、圆角并带有跳跃的不规则细节。"
+forms = ["rounded", "sans"]
+vibes = ["rounded", "cute", "game-ui"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://enmarimo.itch.io/capsigrany；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Capsigrany"
+authors_en = ["enmarimo"]
+description_en = "A 16px cartoon pixel face for game menus and UI, with full rounded forms and lively irregular details."
+provenance_en = "Imported from https://enmarimo.itch.io/capsigrany; converted from ttf"
+
+[license]
+spdx = "OFL-1.1"
+name = "SIL 开放字体许可证 1.1"
+confidence = "manual"
+file = "OFL.txt"
+note = "发布包附完整 OFL 1.1，版权归 enmarimo，并保留字体名 Capsigrany。"
+name_en = "SIL Open Font License 1.1"
+note_en = "The release bundles the complete OFL 1.1, attributes enmarimo and reserves the name Capsigrany."

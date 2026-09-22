@@ -1,0 +1,26 @@
+name = "Thin Sans"
+authors = ["enekoatxa"]
+homepage = "https://enekoatxa.itch.io/thin-sans"
+repository = ""
+description = "受 Balatro 细线字启发的 8px 清爽像素无衬线体，收录 Adobe Latin 2 范围的 242 个字符。"
+forms = ["sans"]
+vibes = ["game-ui", "technical", "elegant"]
+source_kind = "pixel-outline"
+source_formats = ["TTF"]
+converted_from = "ttf"
+provenance = "导入自 https://enekoatxa.itch.io/thin-sans；由 ttf 转换"
+added = "2026-09-18"
+
+name_en = "Thin Sans"
+authors_en = ["enekoatxa"]
+description_en = "A clean 8px pixel sans inspired by Balatro's fine-line lettering, with 242 characters from the Adobe Latin 2 set."
+provenance_en = "Imported from https://enekoatxa.itch.io/thin-sans; converted from ttf"
+
+[license]
+spdx = "CC0-1.0"
+name = "CC0 1.0 公共领域贡献"
+confidence = "manual"
+file = "CC0-1.0.txt"
+note = "itch.io 正文与元数据均明确标注 CC0 1.0，包括商业使用且无需署名。"
+name_en = "CC0 1.0 Universal"
+note_en = "Both the itch.io text and metadata explicitly state CC0 1.0, including commercial use without attribution."
