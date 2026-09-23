@@ -69,8 +69,15 @@
     // `narrow` class has been hiding its contents with CSS while the element itself
     // stayed open: collapsing it here is visually identical, so nothing shifts, and
     // from this point the summary toggles it the ordinary way.
+    // data-instant skips the <details> animation (tokens.css) for this one collapse:
+    // it would start from the full height of the contents the class removal below
+    // reveals, pushing the results down and back up -- the page's whole CLS. The
+    // style read settles the collapse before the animation is allowed again.
     const narrow = matchMedia('(max-width: 900px)');
-    if (filtersEl && narrow.matches) filtersEl.open = false;
+    if (filtersEl && narrow.matches) {
+      filtersEl.dataset.instant = '';
+      filtersEl.open = false;
+    }
     // The desktop summary is hidden, so a panel collapsed on mobile must reopen
     // when the viewport grows or the search and filters would become unreachable.
     const revealDesktopFilters = () => {
@@ -78,6 +85,10 @@
     };
     narrow.addEventListener('change', revealDesktopFilters);
     document.documentElement.classList.remove('narrow');
+    if (filtersEl?.dataset.instant !== undefined) {
+      void getComputedStyle(filtersEl).blockSize;
+      delete filtersEl.dataset.instant;
+    }
     mounted = true;
     revealFragment();
     return () => narrow.removeEventListener('change', revealDesktopFilters);

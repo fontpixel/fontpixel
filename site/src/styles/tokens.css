@@ -88,6 +88,10 @@ html[data-theme='dark'] {
     block-size: auto;
     opacity: 1;
   }
+  /* 脚本代为开合、不该有动画时（如目录页挂载时收起筛选面板）用它关掉过渡。 */
+  details[data-instant]::details-content {
+    transition: none;
+  }
 }
 
 body {

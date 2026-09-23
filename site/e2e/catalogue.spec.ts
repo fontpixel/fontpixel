@@ -202,3 +202,28 @@ test('switching language keeps the current page and its filter state', async ({
   await page.waitForLoadState('domcontentloaded');
   expect(new URL(page.url()).pathname).toBe('/en/fonts/galmuri/');
 });
+
+test('collapsing the filter panel on a phone does not shift the results', async ({ page }) => {
+  // On a narrow screen the panel is collapsed once the island mounts. Animated like a
+  // user's toggle, it grew to full height first and pushed the results down and back
+  // up: a CLS of 0.86 that cost the page its Lighthouse performance score.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => {
+    const w = window as unknown as { __cls: number };
+    w.__cls = 0;
+    new PerformanceObserver((list) => {
+      for (const e of list.getEntries() as unknown as { value: number; hadRecentInput: boolean }[]) {
+        if (!e.hadRecentInput) w.__cls += e.value;
+      }
+    }).observe({ type: 'layout-shift', buffered: true });
+  });
+  // Lighthouse's mobile run slows the CPU 4x, so the panel is painted before the island
+  // mounts; on an unthrottled machine it mounts before the first paint and nothing moves.
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  await page.goto('en/');
+  await expect(page.locator(`${ISLAND} .cat__filters:not([inert])`)).toBeAttached();
+  await expect(page.locator(`${ISLAND} .cat__filters`)).not.toHaveAttribute('open');
+  await page.waitForTimeout(600); // past the 0.25s <details> transition
+  expect(await page.evaluate(() => (window as unknown as { __cls: number }).__cls)).toBeLessThan(0.1);
+});
