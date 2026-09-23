@@ -1,11 +1,13 @@
-Copyright (C) 2012-2015 Uwe Waldmann
+Copyright (C) 2012-2025 Uwe Waldmann
 
 The UW ttyp0 fonts and all associated data files in this archive
-with the exception of the utilities "bdfmangle" and "mkshallow" are
+with the exception of the utilities "bdfmangle", "mkshallow",
+"bdftobsdh", "bdftosyscons", "bdftorep", and "bdftoequiv" are
 released under the ttyp0 License.
 
-The utilities "bdfmangle" and "mkshallow" and their manual pages
-are released under the MIT License.
+The utilities "bdfmangle", "mkshallow", "bdftobsdh", "bdftosyscons",
+"bdftorep", and "bdftoequiv" and their manual pages are released under
+the MIT License.
 
 ------------------------------------------------------------------------
 

@@ -2,25 +2,19 @@ name = "UW ttyp0"
 authors = ["Uwe Waldmann"]
 homepage = "https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/"
 repository = ""
-description = "覆盖极广的等宽点阵终端字体，含拉丁、希腊、西里尔、越南语、亚美尼亚语、格鲁吉亚语与制表符，11–22px多档尺寸并含粗体与斜体。"
+description = "覆盖极广的等宽点阵终端字体，含拉丁、希腊、西里尔、越南语、亚美尼亚语、格鲁吉亚语、提非纳文、盲文与制表符，11–40px多档尺寸并含粗体与斜体。"
 forms = ["terminal"]
 vibes = ["terminal", "programming", "unix"]
 source_kind = "bitmap"
 source_formats = ["BDF"]
 converted_from = ""
-provenance = "官方发行版uw-ttyp0-1.3.tar.gz（https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/，取于2026-08-29）。上游以字体自有编码的主控BDF分发，本站用其mgl/unicode.mgl按字形名重映射为Unicode BDF，重建代码见pipeline/opf/ingest/uwttyp0.py。masaeedu/bitmap-fonts的1.2快照因缺mgl目录无法重建，未采用。"
+provenance = "官方发行版uw-ttyp0-2.1.tar.gz（https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/，2025-09-14发布，取于2026-09-23，SHA-256 99506dd8794e1a5d5cd5811e6c1e55eeef989f8c3501fdb9265bda972aba1630）。上游以字体自有编码的主控BDF分发，安装时由自带的bdfmangle按VARIANTS.dat与mgl/unicode.mgl生成Unicode BDF，单数字号（11/13/15/17px）由大一号的偶数字号经mkshallow减去一行、再叠加单数字号专用字形得到。本站原样运行上游构建（configure后make bdf GEN_BDF=1）并规范化为本站BDF，未改动任何字形，重建代码见pipeline/opf/ingest/uwttyp0.py。60/80px是30/40px的简单倍放，不收录。2026-08-29首次收录的是1.3版，当时只按PUT行重映射，漏掉了74个COPYTO字形（包括星号U+002A），也漏掉了单数字号；本次升级一并修正。masaeedu/bitmap-fonts的1.2快照因缺mgl目录无法重建，未采用。"
 added = "2026-08-29"
 
 name_en = "UW ttyp0"
 authors_en = ["Uwe Waldmann"]
-description_en = "An extremely broad-coverage monospace bitmap terminal font covering Latin, Greek, Cyrillic, Vietnamese, Armenian, Georgian, and box-drawing characters, in multiple sizes from 11 to 22px with bold and italic styles."
-provenance_en = "Official release uw-ttyp0-1.3.tar.gz (https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/, retrieved 2026-08-29). Upstream distributes a master BDF in the font's own custom encoding; this site remaps it to a Unicode BDF using its mgl/unicode.mgl glyph-name mapping. Rebuild code at pipeline/opf/ingest/uwttyp0.py. The 1.2 snapshot in masaeedu/bitmap-fonts lacks the mgl directory and could not be rebuilt, so it was not used."
-
-# Upstream's odd-size files (11/13/15/17px, 10 total) have only 234 glyphs each -- a
-# fixed supplementary set of rarely-used precomposed accented letters, arrows, and math symbols, identical across all four sizes,
-# and all already present in the corresponding even-size complete fonts. Without basic letters, no text can be typeset at all,
-# so including them would just show up as “an 11px font with not a single letter” -- not included.
-exclude = ["t0-11*.bdf", "t0-13*.bdf", "t0-15*.bdf", "t0-17*.bdf"]
+description_en = "An extremely broad-coverage monospace bitmap terminal font covering Latin, Greek, Cyrillic, Vietnamese, Armenian, Georgian, Tifinagh, Braille, and box-drawing characters, in multiple sizes from 11 to 40px with bold and italic styles."
+provenance_en = "Official release uw-ttyp0-2.1.tar.gz (https://people.mpi-inf.mpg.de/~uwe/misc/uw-ttyp0/, released 2025-09-14, retrieved 2026-09-23, SHA-256 99506dd8794e1a5d5cd5811e6c1e55eeef989f8c3501fdb9265bda972aba1630). Upstream distributes master BDFs in the font's own custom encoding and generates Unicode BDFs at install time with its bundled bdfmangle, applying VARIANTS.dat and mgl/unicode.mgl; each odd size (11/13/15/17px) is the next even size made one row shallower by mkshallow, with the odd-size glyphs laid over it. This site runs that upstream build unchanged (configure, then make bdf GEN_BDF=1) and normalizes the output to the site's BDF form without altering any glyph; rebuild code at pipeline/opf/ingest/uwttyp0.py. The 60/80px sizes are naive 2x scalings of 30/40px and are not included. The first import on 2026-08-29 used version 1.3 and remapped only the PUT lines, which dropped 74 COPYTO glyphs (including the asterisk, U+002A) and all odd sizes; this upgrade corrects both. The 1.2 snapshot in masaeedu/bitmap-fonts lacks the mgl directory and could not be rebuilt, so it was not used."
 
 [license]
 spdx = "LicenseRef-UW-ttyp0"

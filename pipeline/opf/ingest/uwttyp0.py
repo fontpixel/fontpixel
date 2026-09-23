@@ -1,93 +1,70 @@
-"""UW ttyp0's font-specific encoding → Unicode BDF.
+"""UW ttyp0's official release → Unicode BDF.
 
-Upstream distributes a "fontspecific" master BDF (`CHARSET_REGISTRY "UW"`,
-ENCODING is the font's internal ordinal, glyph names look like
-`LtCapALdot`), and `genbdf` combines it with `mgl/*.mgl` mapping tables at
-install time to generate the BDF for each encoding. This module reads
-`mgl/unicode.mgl` directly (format: `PUT <glyph name> <code point>`) and
-remaps the master BDF straight to Unicode BDF -- no need to run upstream's
-autotools build.
+Upstream distributes "fontspecific" master BDFs (`CHARSET_REGISTRY "UW"`,
+ENCODING is the font's internal ordinal, glyph names look like `LtCapALdot`)
+and generates the encoded fonts at install time with its own Makefile:
+`bin/bdfmangle` applies `VARIANTS.dat` and `mgl/unicode.mgl` (PUT mappings
+plus conditional IFDEF/IFUNDEF … COPYTO fallbacks), and each odd size
+(11/13/15/17) is the next even size run through `bin/mkshallow` with the
+odd-size supplement laid over it -- the odd-size master files alone hold only
+~240 glyphs.
+
+This module runs that build unchanged (`./configure`, then
+`make bdf GEN_BDF=1`; needs sh, GNU make and perl) in a scratch copy of the
+release and rewrites each `genbdf/t0-<size>-uni.bdf` as a canonical BDF named
+after its master file. An earlier version re-implemented only the PUT lines
+of `unicode.mgl`, which silently dropped every COPYTO glyph (74 in v1.3,
+among them U+002A) and cannot evaluate the IFDEF conditions added in v2.0.
 """
 
 from __future__ import annotations
 
-import re
+import shutil
+import subprocess
+import tempfile
 from pathlib import Path
 
-from opf.model import ParsedFont
+from opf.ingest.bdfwrite import write_bdf
 from opf.parsers.bdf import parse_bdf
 
-_PUT = re.compile(r"^PUT\s+(\S+)\s+0x([0-9A-Fa-f]+)\s*$")
-_COPYTO = re.compile(r"^IFUNDEF\s+(\S+)\s+COPYTO\s+(\S+)\s+(\S+)\s*$")
+
+def _run(cmd: list[str], cwd: Path) -> None:
+    r = subprocess.run(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if r.returncode != 0:
+        tail = r.stdout.decode("utf-8", "replace")[-500:]
+        raise RuntimeError(f"{' '.join(cmd)} 失败: {tail}")
 
 
-def load_unicode_map(mgl: Path) -> dict[str, int]:
-    """Glyph name → Unicode code point."""
-    table: dict[str, int] = {}
-    for line in mgl.read_text(encoding="latin-1").splitlines():
-        line = line.strip()
-        m = _PUT.match(line)
-        if m:
-            table.setdefault(m.group(1), int(m.group(2), 16))
-    return table
-
-
-def convert(bdf: Path, mgl: Path, family_slug: str) -> ParsedFont:
-    """Remap a fontspecific master BDF to Unicode."""
-    font = parse_bdf(bdf, family_slug, remap_charset=False)
-    table = load_unicode_map(mgl)
-
-    remapped: dict[int, object] = {}
-    unmapped = 0
-    for g in font.glyphs:
-        cp = table.get(g.name)
-        if cp is None:
-            unmapped += 1
-            continue
-        if cp in remapped:
-            continue
-        g.cp = cp
-        remapped[cp] = g
-
-    if not remapped:
-        raise ValueError(f"{bdf}: 没有字形能映射到 Unicode")
-
-    vals = list(remapped.values())
-    xoff = min(g.bbx for g in vals)
-    yoff = min(g.bby for g in vals)
-    bw = max(g.bbx + g.bbw for g in vals) - xoff
-    bh = max(g.bby + g.bbh for g in vals) - yoff
-
-    props = dict(font.props)
-    props["CHARSET_REGISTRY"] = "ISO10646"
-    props["CHARSET_ENCODING"] = "1"
-    warnings = list(font.warnings)
-    if unmapped:
-        warnings.append(
-            f"{unmapped} 个字形在 unicode.mgl 中无对应码位（多为控制符与行图形），已跳过"
-        )
-
-    font.props = props
-    font.glyphs = [remapped[cp] for cp in sorted(remapped)]
-    font.bbox = (bw, bh, xoff, yoff)
-    font.warnings = warnings
-    font.file_name = bdf.name
-    return font
+def build_upstream(repo: Path, work: Path) -> list[Path]:
+    """Run upstream's Unicode BDF build in a copy of `repo` under `work`; returns genbdf/*-uni.bdf."""
+    if not (repo / "mgl" / "unicode.mgl").exists():
+        raise FileNotFoundError(f"缺少 {repo / 'mgl' / 'unicode.mgl'}")
+    tree = work / repo.name
+    shutil.copytree(repo, tree, symlinks=True)
+    _run(["sh", "./configure"], tree)
+    # GEN_BDF is off in upstream's TARGETS.dat; sizes come from TARGETS_BDF.dat.
+    _run(["make", "bdf", "GEN_BDF=1", "ENCODINGS_BDF=uni"], tree)
+    out = sorted((tree / "genbdf").glob("t0-*-uni.bdf"))
+    if not out:
+        raise RuntimeError(f"{repo}: 上游构建没有生成 genbdf/t0-*-uni.bdf")
+    return out
 
 
 def build_all(repo: Path, dest: Path) -> list[tuple[str, int]]:
-    """Convert repo/bdf/*.bdf, writing into dest; returns [(filename, glyph count), ...]."""
-    from opf.ingest.bdfwrite import write_bdf
-
-    mgl = repo / "mgl" / "unicode.mgl"
-    if not mgl.exists():
-        raise FileNotFoundError(f"缺少 {mgl}")
+    """Build the release into dest (replacing its t0-*.bdf); returns [(filename, glyph count), ...]."""
     dest.mkdir(parents=True, exist_ok=True)
     out: list[tuple[str, int]] = []
-    for src in sorted((repo / "bdf").glob("*.bdf")):
-        font = convert(src, mgl, dest.name)
-        write_bdf(font, dest / src.name)
-        out.append((src.name, len(font.glyphs)))
+    with tempfile.TemporaryDirectory() as tmp:
+        built = build_upstream(repo, Path(tmp))
+        # A size dropped upstream must not linger from the previous import.
+        for stale in dest.glob("t0-*.bdf"):
+            stale.unlink()
+        for src in built:
+            name = src.name.removesuffix("-uni.bdf") + ".bdf"
+            font = parse_bdf(src, dest.name)
+            font.file_name = name
+            write_bdf(font, dest / name)
+            out.append((name, len(font.glyphs)))
     return out
 
 

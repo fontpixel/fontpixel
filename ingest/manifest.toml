@@ -2682,9 +2682,9 @@ reason_en = "A Powerline separator supplement only, with no ordinary Latin glyph
 source = "github-clones-2026-08-29/masaeedu-bitmap-fonts/bitmap/uw-ttyp0-1.2"
 reason = """masaeedu 快照里只有 fontspecific 主控 BDF(CHARSET_REGISTRY 为 UW,ENCODING 是字体内部序号),
 上游要靠 genbdf 配合 mgl/*.mgl 在安装时生成有编码的版本,而该快照没带 mgl 目录。
-改从官方 1.3 发行版收录:用 mgl/unicode.mgl 按字形名重映射为 Unicode,
+改从官方发行版收录(现为 2.1):原样运行上游 configure 与 make bdf 生成 Unicode BDF,
 见 fonts/uw-ttyp0 与 pipeline/opf/ingest/uwttyp0.py(可重跑)。"""
-reason_en = "The masaeedu snapshot holds only the fontspecific master BDFs, whose CHARSET_REGISTRY is UW and whose ENCODING values are the font's internal indices; upstream relies on genbdf plus mgl/*.mgl to generate an encoded version at install time, and the snapshot ships no mgl directory. Catalogued instead from the official 1.3 release, remapping glyph names to Unicode via mgl/unicode.mgl; see fonts/uw-ttyp0 and pipeline/opf/ingest/uwttyp0.py, which can be rerun."
+reason_en = "The masaeedu snapshot holds only the fontspecific master BDFs, whose CHARSET_REGISTRY is UW and whose ENCODING values are the font's internal indices; upstream relies on genbdf plus mgl/*.mgl to generate an encoded version at install time, and the snapshot ships no mgl directory. Catalogued instead from the official release (now 2.1) by running upstream's own configure and make bdf unchanged to generate Unicode BDFs; see fonts/uw-ttyp0 and pipeline/opf/ingest/uwttyp0.py, which can be rerun."
 
 # ==================== Merged fragment: manifest-frag-tecate-2026-08-31.toml ====================
 # Additional inclusions from Tecate/bitmap-fonts + IT-Studio-Rech/bdf-fonts after free-license review (4th batch).
