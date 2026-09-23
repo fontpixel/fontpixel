@@ -1,0 +1,266 @@
+/* View Transitions (logic: src/lib/viewtransition.ts).
+ *
+ * Catalogue → font page: the clicked card's frame (font-card) grows into a
+ * sheet that fills the viewport while its name and specimen (font-name,
+ * font-preview) fly to the page title and hero specimen; the new page shows
+ * through as the sheet fades. Font page → catalogue plays it in reverse.
+ * The rules key off the *new* document's data-vt-page, which is where a
+ * cross-document transition runs. `.theme-vt` marks the theme reveal, which
+ * must never pick up the page-transition rules. */
+
+@view-transition {
+  navigation: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+:root {
+  --vt-dur: 520ms;
+  --vt-ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+/* The sheet sits above the page; the title and specimen fly above the sheet. */
+::view-transition-group(font-card) {
+  z-index: 1;
+}
+::view-transition-group(font-name),
+::view-transition-group(font-preview) {
+  z-index: 2;
+  animation-duration: var(--vt-dur);
+  animation-timing-function: var(--vt-ease);
+}
+/* Keep the card's own pixels crisp and anchored while its frame resizes,
+ * rather than stretched to the growing box. */
+::view-transition-old(font-card),
+::view-transition-new(font-card) {
+  height: 100%;
+  object-fit: none;
+  object-position: left top;
+  box-sizing: border-box;
+}
+
+/* The card wraps its specimen onto several lines where the page shows one, so
+ * the two images differ in shape: show each at its own pixel size, clipped to
+ * the moving box, and hand over quickly instead of stretching one onto the other. */
+::view-transition-image-pair(font-preview) {
+  overflow: clip;
+}
+::view-transition-old(font-preview),
+::view-transition-new(font-preview) {
+  height: 100%;
+  object-fit: none;
+  object-position: left top;
+  mix-blend-mode: normal;
+}
+::view-transition-old(font-preview) {
+  animation: vt-fade-out calc(var(--vt-dur) * 0.3) ease-out both;
+}
+::view-transition-new(font-preview) {
+  animation: vt-fade-in calc(var(--vt-dur) * 0.45) ease-in both;
+}
+
+/* ---- Forward: catalogue card → font page ---- */
+:root[data-vt-page='font']:not(.theme-vt)::view-transition-group(font-card) {
+  animation-duration: calc(var(--vt-dur) * 0.6);
+  animation-timing-function: var(--vt-ease);
+}
+:root[data-vt-page='font']:not(.theme-vt)::view-transition-old(font-card) {
+  animation: vt-fade-out calc(var(--vt-dur) * 0.28) ease-out both;
+}
+:root[data-vt-page='font']:not(.theme-vt)::view-transition-new(font-card) {
+  animation: vt-sheet-grow var(--vt-dur) linear both;
+}
+:root[data-vt-page='font']:not(.theme-vt)::view-transition-old(root) {
+  mix-blend-mode: normal;
+  animation: vt-root-out var(--vt-dur) linear both;
+}
+:root[data-vt-page='font']:not(.theme-vt)::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: vt-root-in var(--vt-dur) linear both;
+}
+
+/* ---- Back: font page → the card it came from ---- */
+:root[data-vt-page='catalogue']:not(.theme-vt)::view-transition-group(font-card) {
+  animation-duration: calc(var(--vt-dur) * 0.7);
+  animation-delay: calc(var(--vt-dur) * 0.2);
+  animation-timing-function: cubic-bezier(0.5, 0, 0.2, 1);
+}
+:root[data-vt-page='catalogue']:not(.theme-vt)::view-transition-old(font-card) {
+  animation: vt-sheet-shrink var(--vt-dur) linear both;
+}
+:root[data-vt-page='catalogue']:not(.theme-vt)::view-transition-new(font-card) {
+  animation: vt-card-settle var(--vt-dur) linear both;
+}
+:root[data-vt-page='catalogue']:not(.theme-vt)::view-transition-group(font-name),
+:root[data-vt-page='catalogue']:not(.theme-vt)::view-transition-group(font-preview) {
+  animation-timing-function: cubic-bezier(0.5, 0, 0.2, 1);
+}
+:root[data-vt-page='catalogue']:not(.theme-vt)::view-transition-old(root) {
+  mix-blend-mode: normal;
+  animation: vt-back-root-out var(--vt-dur) linear both;
+}
+:root[data-vt-page='catalogue']:not(.theme-vt)::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: vt-back-root-in var(--vt-dur) linear both;
+}
+
+/* ---- Header icon → the page it links to: the same sheet as a card opening
+ * its font page, grown from the icon. `.nav-vt` is set on the new page. ---- */
+:root.nav-vt::view-transition-group(nav-sheet) {
+  z-index: 1;
+  animation-duration: calc(var(--vt-dur) * 0.6);
+  animation-timing-function: var(--vt-ease);
+}
+:root.nav-vt::view-transition-old(nav-sheet),
+:root.nav-vt::view-transition-new(nav-sheet) {
+  height: 100%;
+  object-fit: none;
+  object-position: center;
+  box-sizing: border-box;
+}
+:root.nav-vt::view-transition-old(nav-sheet) {
+  animation: vt-fade-out calc(var(--vt-dur) * 0.28) ease-out both;
+}
+:root.nav-vt::view-transition-new(nav-sheet) {
+  animation: vt-sheet-grow var(--vt-dur) linear both;
+}
+:root.nav-vt::view-transition-old(root) {
+  mix-blend-mode: normal;
+  animation: vt-root-out var(--vt-dur) linear both;
+}
+:root.nav-vt::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: vt-root-in var(--vt-dur) linear both;
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+/* The page-coloured sheet: card-coloured and outlined at first, fully covering
+ * the viewport by ~60% (the frame has finished growing), then fading away. */
+@keyframes vt-sheet-grow {
+  0% {
+    opacity: 0;
+    background-color: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+  18% {
+    opacity: 1;
+    background-color: var(--surface);
+  }
+  58% {
+    opacity: 1;
+    background-color: var(--paper);
+    box-shadow: inset 0 0 0 1px transparent;
+  }
+  100% {
+    opacity: 0;
+    background-color: var(--paper);
+  }
+}
+/* Behind the sheet the pages swap while it fully covers them. */
+@keyframes vt-root-out {
+  0%,
+  46% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes vt-root-in {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  60%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes vt-sheet-shrink {
+  0% {
+    opacity: 0;
+    background-color: var(--paper);
+  }
+  18% {
+    opacity: 1;
+    background-color: var(--paper);
+  }
+  62% {
+    opacity: 1;
+  }
+  90% {
+    background-color: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  100% {
+    opacity: 0;
+    background-color: var(--surface);
+  }
+}
+@keyframes vt-card-settle {
+  0%,
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes vt-back-root-out {
+  0%,
+  14% {
+    opacity: 1;
+  }
+  20%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes vt-back-root-in {
+  0%,
+  16% {
+    opacity: 0;
+  }
+  22%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ---- Theme toggle: the new theme spreads from the button (clip-path is
+ * animated from the click handler, which knows where the button is). ---- */
+:root.theme-vt::view-transition-old(root),
+:root.theme-vt::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+:root.theme-vt::view-transition-new(root) {
+  z-index: 1;
+}
+/* The marker that tells the click handler where the button is among the
+ * transition's pseudo-elements; it takes no part in the picture. */
+.theme-vt-origin {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  view-transition-name: theme-origin;
+}
+:root.theme-vt::view-transition-group(theme-origin) {
+  animation: none;
+  opacity: 0;
+}

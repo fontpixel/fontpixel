@@ -91,12 +91,12 @@ test('coverage dialog traps focus, closes on Escape, and returns it to the opene
   await expect(opener).toBeFocused();
 });
 
-test('header menus open with Enter and Tab or Shift+Tab exits without a focus trap', async ({ page }) => {
+test('header menus open with Space and Tab or Shift+Tab exits without a focus trap', async ({ page }) => {
   await page.goto('en/');
   const menu = page.getByTestId('tools-menu');
-  const trigger = menu.getByRole('button', { name: 'Tools' });
+  const trigger = menu.getByRole('link', { name: 'Tools', exact: true });
   await trigger.focus();
-  await trigger.press('Enter');
+  await trigger.press(' ');
   await expect(menu.getByRole('menuitem').first()).toBeFocused();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.keyboard.press('Tab');

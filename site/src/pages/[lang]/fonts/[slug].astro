@@ -110,6 +110,8 @@ const coverageGroups = groupBy((vid) =>
   entityName={displayName}
   licenseUrl={spdxUrl(m.license.spdx)}
 >
+  {/* The frame a catalogue card grows into when it opens this page (styles/transitions.css). */}
+  <div class="vt-stage" aria-hidden="true"></div>
   <header class="hero">
     <div class="hero__heading">
       <h1 id="font-name">{displayName}</h1>
@@ -327,6 +329,23 @@ const coverageGroups = groupBy((vid) =>
     font-size: 0.85rem;
   }
 
+    /* Shared with the catalogue card that opened this page; see lib/viewtransition.ts.
+       Off during the theme reveal, which has to move the whole page as one image. */
+    .vt-stage {
+      /* Empty and transparent: invisible and inert, but still captured. */
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    :global(:root:not(.theme-vt)) .vt-stage {
+      view-transition-name: font-card;
+    }
+    :global(:root:not(.theme-vt)) .hero h1 {
+      view-transition-name: font-name;
+    }
+    :global(:root:not(.theme-vt)) .hero__preview {
+      view-transition-name: font-preview;
+    }
     .hero__heading {
       display: flex;
       justify-content: space-between;

@@ -69,21 +69,22 @@
     };
     document.addEventListener('opf:variantchange', onExternal);
     // Coverage anchors can point into another variant's initially hidden panel.
-    const onFragment = () => {
+    const onFragment = (behavior: ScrollBehavior) => {
       const panel = fragmentTarget()?.closest<HTMLElement>('[data-variant-panel]');
       if (!panel) return;
       const ids = (panel.dataset.variantPanel ?? '').split(' ');
       if (!ids.includes(variantId)) {
         variantId = ids.find((id) => variants.some((v) => v.id === id)) ?? variantId;
       }
-      revealFragment();
+      revealFragment(behavior);
     };
-    onFragment();
-    window.addEventListener('hashchange', onFragment);
+    const onHashChange = () => onFragment('auto');
+    onFragment('instant');
+    window.addEventListener('hashchange', onHashChange);
     const off = onThemeChange(() => (themeTick += 1));
     return () => {
       document.removeEventListener('opf:variantchange', onExternal);
-      window.removeEventListener('hashchange', onFragment);
+      window.removeEventListener('hashchange', onHashChange);
       off();
     };
   });

@@ -110,7 +110,7 @@
 <article class="card" bind:this={rootEl} data-slug={family.slug} data-variant-id={preview.variantId}>
   <a class="card__link" {href}>
     <header class="card__head">
-      <h2 class="card__name">{displayName}</h2>
+      <h2 class="card__name" data-vt="name">{displayName}</h2>
       <span class="card__marks">
         {#if !family.curated}<span class="chip">{s.card.uncurated}</span>{/if}
         {#if missing > 0}
@@ -125,15 +125,18 @@
         <FixedSvg url={`${dataBase}/${family.namePreviews[displayName]}`} scale={Math.min(zoom + 1, 3)} maxHeight={64} initialSvg={initialNameSvg} />
       </div>
     {/if}
-    <FrameShell {frame} {codeLang} compact canvasClass="card__sample">
-      <div class="card__sample-content" bind:clientWidth={sampleWidth}>
-        {#if useCanvas}
-          <canvas bind:this={canvasEl} width="0" height="0" aria-hidden="true"></canvas>
-        {:else if seen || initialSvg}
-          <FixedSvg url={`${dataBase}/${family.cardPreview || preview.file}`} scale={previewZoom} {initialSvg} />
-        {/if}
-      </div>
-    </FrameShell>
+    <!-- data-vt marks the parts that fly to the font page (lib/viewtransition.ts) -->
+    <div data-vt="preview">
+      <FrameShell {frame} {codeLang} compact canvasClass="card__sample">
+        <div class="card__sample-content" bind:clientWidth={sampleWidth}>
+          {#if useCanvas}
+            <canvas bind:this={canvasEl} width="0" height="0" aria-hidden="true"></canvas>
+          {:else if seen || initialSvg}
+            <FixedSvg url={`${dataBase}/${family.cardPreview || preview.file}`} scale={previewZoom} {initialSvg} />
+          {/if}
+        </div>
+      </FrameShell>
+    </div>
     <p class="card__meta mono">
       <span>{sizeLabel}</span>
       {#if family.forms.length}<span class="card__sep" aria-hidden="true">·</span><span

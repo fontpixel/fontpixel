@@ -364,6 +364,16 @@
     font-size: 0.82rem;
     color: var(--ink-2);
   }
+  /* Long Unicode block names make the select wider than a narrow phone; let
+     the row and the select shrink to the column instead of widening the page. */
+  .gg__jump,
+  .gg__jump label {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .gg__jump select {
+    max-width: 100%;
+  }
   .gg__search {
     width: 9rem;
     font-size: 0.8rem;

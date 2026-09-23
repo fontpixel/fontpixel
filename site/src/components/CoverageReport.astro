@@ -263,7 +263,46 @@ const pct = (have: number, total: number) =>
     const title = dlg.querySelector('[data-modal-title]')!;
     const body = dlg.querySelector<HTMLElement>('[data-modal-body]')!;
     rovingFocus(body);
-    document.querySelectorAll('[data-missing]').forEach((btn) => {
+    // The dialog grows out of the button that opened it and shrinks back into it on close.
+    let opener: HTMLElement | null = null;
+    let closing = false;
+    const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stopMorph = () => dlg.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+    const morph = (from: HTMLElement, reverse: boolean) => {
+      const a = from.getBoundingClientRect();
+      const b = dlg.getBoundingClientRect();
+      const dx = a.left + a.width / 2 - (b.left + b.width / 2);
+      const dy = a.top + a.height / 2 - (b.top + b.height / 2);
+      const shrunk = `translate(${dx}px, ${dy}px) scale(${a.width / b.width}, ${a.height / b.height})`;
+      const timing: KeyframeAnimationOptions = {
+        duration: 380,
+        easing: 'cubic-bezier(0.3, 0.6, 0.2, 1)',
+        direction: reverse ? 'reverse' : 'normal',
+        fill: reverse ? 'forwards' : 'none', // stay shrunk until close() takes it away
+      };
+      dlg.animate({ opacity: [0, 1] }, { ...timing, pseudoElement: '::backdrop' });
+      return dlg.animate(
+        [{ transform: shrunk, opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'none', opacity: 1 }],
+        timing,
+      );
+    };
+    const close = () => {
+      if (!dlg.open || closing) return;
+      if (still() || !opener?.isConnected || typeof dlg.animate !== 'function') return dlg.close();
+      closing = true;
+      stopMorph();
+      morph(opener, true).finished.finally(() => dlg.close());
+    };
+    dlg.addEventListener('close', () => {
+      closing = false;
+      stopMorph();
+    });
+    // Escape: animate out instead of vanishing.
+    dlg.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      close();
+    });
+    document.querySelectorAll<HTMLElement>('[data-missing]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const src = btn.nextElementSibling as HTMLElement | null;
         if (!src) return;
@@ -277,7 +316,9 @@ const pct = (have: number, total: number) =>
           button.setAttribute('aria-label', `${ch} ${button.title}`);
           return button;
         }));
+        opener = btn;
         dlg.showModal();
+        if (!still() && typeof dlg.animate === 'function') morph(btn, false);
       });
     });
     // Clicking one glyph copies just that glyph; the header button copies the lot.
@@ -301,10 +342,10 @@ const pct = (have: number, total: number) =>
         setTimeout(() => (copyAll.textContent = label), 1200);
       });
     });
-    dlg.querySelector('[data-modal-close]')?.addEventListener('click', () => dlg.close());
+    dlg.querySelector('[data-modal-close]')?.addEventListener('click', close);
     // Close on backdrop click: a click landing on the dialog itself (not its content) counts as a backdrop click
     dlg.addEventListener('click', (e) => {
-      if (e.target === dlg) dlg.close();
+      if (e.target === dlg) close();
     });
   }
 </script>

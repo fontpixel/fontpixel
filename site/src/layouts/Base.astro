@@ -1,11 +1,13 @@
 ---
 import '../styles/tokens.css';
+import '../styles/transitions.css';
 import SeoHead from '../components/SeoHead.astro';
 import { readFileSync } from 'node:fs';
 import { LANGS, LANG_NAMES, LANG_TAGS, t, otherLang, type Lang } from '../i18n';
 import { withBase } from '../lib/data';
 import { pageCopy } from '../i18n/page-copy';
 import { DOC_LANGS } from '../lib/docs';
+import { pageTransitionScript } from '../lib/viewtransition';
 
 interface Props {
   lang: Lang;
@@ -39,6 +41,9 @@ const s = t(lang);
 const other = otherLang(lang);
 const docLang = DOC_LANGS.includes(lang) ? lang : DOC_LANGS[0]!;
 const isHome = path === '/' || /^\/page\/\d+\/$/.test(path);
+// Which side of the catalogue ⇄ font-page transition this page is (styles/transitions.css).
+const vtPage = isHome ? 'catalogue' : /^\/fonts\/[^/]+\/$/.test(path) ? 'font' : undefined;
+const vtScript = pageTransitionScript(import.meta.env.BASE_URL, LANGS);
 
 // The site name uses a pixel web font subsetted at build time (brand.woff2, a few KB,
 // cached once site-wide), replacing the old per-page canvas rendering. brand is null
@@ -59,7 +64,7 @@ const brandCss = brand
 ---
 
 <!doctype html>
-<html lang={LANG_TAGS[lang]}>
+<html lang={LANG_TAGS[lang]} data-vt-page={vtPage}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,6 +94,8 @@ const brandCss = brand
         }
       })();
     </script>
+    {/* Classic and in <head>: pagereveal can fire before any module script runs. */}
+    <script is:inline set:html={vtScript} />
   </head>
   <body>
     {/* Keyboard/screen-reader shortcuts are visible only while focused. */}
@@ -114,6 +121,7 @@ const brandCss = brand
           <a
             class="nav-icon"
             href={withBase(`/${lang}/compare/`)}
+            data-vt-nav
             aria-label={s.compare.title}
             title={s.compare.title}
           >
@@ -134,10 +142,13 @@ const brandCss = brand
               <path d="M5 9a6.5 6.5 0 0 1 7 0 6.5 6.5 0 0 0 7 0" />
             </svg>
           </a>
+          {/* The icon itself links to the tools page; hovering (or a tap on touch
+              screens, which cannot hover) opens the menu of individual tools. */}
           <div class="navmenu toolsmenu" data-nav-menu data-testid="tools-menu">
-            <button
-              type="button"
+            <a
               class="navmenu__trigger"
+              href={withBase(`/${lang}/tools/`)}
+              data-vt-nav
               aria-label={s.nav.tools}
               title={s.nav.tools}
               aria-haspopup="menu"
@@ -163,11 +174,11 @@ const brandCss = brand
                 <path d="M20.83 8.83a4 4 0 0 0-5.66-5.66l-12 12a4 4 0 1 0 5.66 5.66Z" />
                 <path d="M18 11.66V22a4 4 0 0 0 4-4V6" />
               </svg>
-            </button>
+            </a>
             <ul id="tools-menu-popup" role="menu" data-menu-popup hidden>
               {s.tools.cards.map((card) => (
                 <li role="none">
-                  <a role="menuitem" tabindex="-1" href={withBase(`/${docLang}/${card.slug}/`)}>
+                  <a role="menuitem" tabindex="-1" href={withBase(`/${docLang}/${card.slug}/`)} data-vt-nav>
                     {card.name}
                   </a>
                 </li>
@@ -177,6 +188,7 @@ const brandCss = brand
           <a
             class="nav-icon"
             href={withBase(`/${lang}/about/`)}
+            data-vt-nav
             aria-label={s.nav.about}
             title={s.nav.about}
           >
@@ -321,8 +333,8 @@ const brandCss = brand
       import { revealFragment } from '../lib/fragments';
 
       revealFragment();
-      window.addEventListener('hashchange', revealFragment);
-      window.addEventListener('load', revealFragment, { once: true });
+      window.addEventListener('hashchange', () => revealFragment('auto'));
+      window.addEventListener('load', () => revealFragment(), { once: true });
 
       // Switching language should stay on the "current page" — including the catalogue
       // page's search and filter state. The link is server-rendered and doesn't know the
@@ -346,7 +358,7 @@ const brandCss = brand
       // its menu items; the popup follows its icon and stays inside the viewport.
       const navMenus = [...document.querySelectorAll<HTMLElement>('[data-nav-menu]')];
       const menuTrigger = (menu: HTMLElement) =>
-        menu.querySelector<HTMLButtonElement>('.navmenu__trigger');
+        menu.querySelector<HTMLElement>('.navmenu__trigger');
       const menuPopup = (menu: HTMLElement) =>
         menu.querySelector<HTMLElement>('[data-menu-popup]');
       const menuItems = (menu: HTMLElement) =>
@@ -440,6 +452,10 @@ const brandCss = brand
         const trigger = menuTrigger(menu);
         const popup = menuPopup(menu);
         if (!trigger || !popup) return;
+        // A trigger that is also a link (tools) goes to its page when clicked or
+        // activated with Enter; a tap on a touch screen opens the menu instead.
+        const isLink = trigger instanceof HTMLAnchorElement;
+        let pointerType = '';
         let closeTimer = 0;
         let openedByHover = false;
         let suppressFocusOpen = false;
@@ -467,7 +483,14 @@ const brandCss = brand
           });
         }
 
-        trigger.addEventListener('click', () => {
+        trigger.addEventListener('pointerdown', (event) => (pointerType = event.pointerType));
+        trigger.addEventListener('click', (event) => {
+          const tapped = pointerType === 'touch' || pointerType === 'pen';
+          pointerType = '';
+          if (isLink) {
+            if (!tapped) return;
+            event.preventDefault();
+          }
           if (openedByHover) {
             openedByHover = false;
             return;
@@ -482,7 +505,7 @@ const brandCss = brand
           } else if (event.key === 'ArrowUp') {
             event.preventDefault();
             open('last');
-          } else if (event.key === 'Enter' || event.key === ' ') {
+          } else if (event.key === ' ' || (event.key === 'Enter' && !isLink)) {
             event.preventDefault();
             open('first');
           } else if (event.key === 'Escape') {
@@ -564,15 +587,67 @@ const brandCss = brand
     </footer>
 
     <script>
-      const btn = document.querySelector('[data-testid="theme-toggle"]');
-      btn?.addEventListener('click', () => {
-        const cur = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-        document.documentElement.dataset.theme = cur;
-        try {
-          localStorage.setItem('opf-theme', cur);
-        } catch {
-          /* ignore, e.g. in private browsing mode */
+      import { revealPercent, revealRadius, transformOffset } from '../lib/viewtransition';
+
+      const btn = document.querySelector<HTMLElement>('[data-testid="theme-toggle"]');
+      if (btn) btn.addEventListener('click', () => {
+        const root = document.documentElement;
+        const cur = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        const apply = () => {
+          root.dataset.theme = cur;
+          try {
+            localStorage.setItem('opf-theme', cur);
+          } catch {
+            /* ignore, e.g. in private browsing mode */
+          }
+        };
+        if (
+          typeof document.startViewTransition !== 'function' ||
+          matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          apply();
+          return;
         }
+        // The new theme spreads from the button in a growing circle, drawn as a
+        // clip-path on ::view-transition-new(root). Two things keep it on the button:
+        // - That box is not always the viewport: on phones it also covers the area
+        //   under the browser's toolbars. A 1px marker named `theme-origin` sits on the
+        //   button, and its group's transform says where that is within the box.
+        // - On a 2x display, Chrome (152, Linux) paints px lengths in that clip-path at
+        //   half size on screen, putting the centre halfway to the top-left corner. DevTools
+        //   screenshots don't show it. Percentages of the box are unaffected.
+        const r = btn.getBoundingClientRect();
+        const x = r.left + r.width / 2;
+        const y = r.top + r.height / 2;
+        const marker = document.createElement('div');
+        marker.className = 'theme-vt-origin';
+        marker.style.left = `${x}px`;
+        marker.style.top = `${y}px`;
+        document.body.append(marker);
+        root.classList.add('theme-vt');
+        const vt = document.startViewTransition(apply);
+        vt.ready
+          .then(() => {
+            const box = getComputedStyle(root, '::view-transition');
+            const w = parseFloat(box.width) || innerWidth;
+            const h = parseFloat(box.height) || innerHeight;
+            const [cx, cy] =
+              transformOffset(getComputedStyle(root, '::view-transition-group(theme-origin)').transform) ??
+              [x, y];
+            const at = `at ${(cx / w) * 100}% ${(cy / h) * 100}%`;
+            const radius = revealPercent(revealRadius(cx, cy, w, h), w, h);
+            root.animate(
+              { clipPath: [`circle(0% ${at})`, `circle(${radius}% ${at})`] },
+              { duration: 520, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' },
+            );
+          })
+          .catch(() => {
+            /* skipped transition: the theme is applied regardless */
+          });
+        vt.finished.finally(() => {
+          marker.remove();
+          root.classList.remove('theme-vt');
+        });
       });
     </script>
 

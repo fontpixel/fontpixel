@@ -138,5 +138,12 @@ export default defineConfig({
     },
   },
   trailingSlash: 'ignore',
-  build: { format: 'directory' },
+  build: {
+    format: 'directory',
+    // Chromium drops an incoming cross-document view transition (catalogue card →
+    // font page, src/lib/viewtransition.ts) when a page with external stylesheets
+    // still loading runs an inline body script, as Astro's island loader does. On a
+    // cold cache that was most first visits. The CSS is a few KB gzipped per page.
+    inlineStylesheets: 'always',
+  },
 });

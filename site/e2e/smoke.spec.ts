@@ -53,12 +53,13 @@ test('header uses the requested icons, a tools menu, and no catalogue link', asy
   }
 
   const tools = page.getByTestId('tools-menu');
-  const toolsTrigger = tools.getByRole('button', { name: 'Tools' });
+  const toolsTrigger = tools.getByRole('link', { name: 'Tools', exact: true });
   await expect(toolsTrigger).toHaveAttribute('title', 'Tools');
+  await expect(toolsTrigger).toHaveAttribute('href', '/en/tools/');
   await expect(toolsTrigger.locator('svg')).toHaveClass(/\blucide-pocket-knife\b/);
-  await toolsTrigger.click();
-  await expect(tools.locator('a')).toHaveCount(4);
-  await expect(tools.locator('a')).toHaveText([
+  await toolsTrigger.hover();
+  await expect(tools.getByRole('menuitem')).toHaveCount(4);
+  await expect(tools.getByRole('menuitem')).toHaveText([
     'bdfparser (JS/TS)',
     'bdfparser (Python)',
     'BDF Specification',
@@ -66,13 +67,34 @@ test('header uses the requested icons, a tools menu, and no catalogue link', asy
   ]);
 });
 
+test('clicking the tools icon opens the tools page', async ({ page }) => {
+  await page.goto('en/');
+  await page.getByTestId('tools-menu').getByRole('link', { name: 'Tools', exact: true }).click();
+  await page.waitForURL(/\/en\/tools\/$/);
+});
+
+test.describe('on a touch screen', () => {
+  test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 800 } });
+
+  test('tapping the tools icon toggles its menu instead of leaving the page', async ({ page }) => {
+    await page.goto('en/');
+    const menu = page.getByTestId('tools-menu');
+    const trigger = menu.locator('.navmenu__trigger');
+    await trigger.tap();
+    await expect(menu.getByRole('menuitem').first()).toBeVisible();
+    expect(new URL(page.url()).pathname).toBe('/en/');
+    await trigger.tap();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  });
+});
+
 test('header menus stay inside the viewport', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   await page.goto('en/');
   for (const testId of ['tools-menu', 'lang-menu']) {
     const menu = page.getByTestId(testId);
-    await menu.locator('.navmenu__trigger').click();
-    await expect(menu.locator('a').first()).toBeVisible();
+    await menu.locator('.navmenu__trigger').hover();
+    await expect(menu.getByRole('menuitem').first()).toBeVisible();
     const box = await menu.locator('ul').boundingBox();
     const viewportWidth = await page.evaluate(() => document.documentElement.clientWidth);
     expect(box).not.toBeNull();
@@ -140,11 +162,13 @@ test('theme toggle persists', async ({ page }) => {
   const html = page.locator('html');
   const initial = await html.getAttribute('data-theme');
   await page.getByTestId('theme-toggle').click();
-  const flipped = await html.getAttribute('data-theme');
-  expect(flipped).not.toBe(initial);
+  // The theme is applied inside a view transition's update callback, a frame later.
+  const flipped = initial === 'dark' ? 'light' : 'dark';
+  await expect(html).toHaveAttribute('data-theme', flipped);
+  await expect(html).not.toHaveClass(/theme-vt/);
   expect(await page.evaluate(() => localStorage.getItem('opf-theme'))).toBe(flipped);
   await page.reload();
-  await expect(html).toHaveAttribute('data-theme', flipped!);
+  await expect(html).toHaveAttribute('data-theme', flipped);
 });
 
 test('root redirects by browser language', async ({ page }) => {
@@ -203,7 +227,8 @@ test('header menus use one Tab stop and arrow keys navigate their items', async 
     ['lang-menu', 'Language'],
   ] as const) {
     const menu = page.getByTestId(testId);
-    const trigger = menu.getByRole('button', { name: label });
+    const trigger = menu.locator('.navmenu__trigger');
+    await expect(trigger).toHaveAccessibleName(label);
     const items = menu.getByRole('menuitem');
 
     await trigger.focus();

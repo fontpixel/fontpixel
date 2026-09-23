@@ -225,6 +225,8 @@ const webfontCss = webfonts.map((e) => {
   }
 
 <script>
+  import { setRevealed } from '../lib/reveal';
+
   // Switch which @font-face block is on show, and copy it.
   const box = document.querySelector<HTMLElement>('[data-testid="webfont-css"]');
   if (box) {
@@ -237,9 +239,10 @@ const webfontCss = webfonts.map((e) => {
     const show = box.querySelector<HTMLButtonElement>('[data-webfont-show]');
     show?.addEventListener('click', () => {
       if (!wrap) return;
-      wrap.hidden = !wrap.hidden;
-      show.setAttribute('aria-expanded', String(!wrap.hidden));
-      show.textContent = wrap.hidden ? (show.dataset.showLabel ?? '') : (show.dataset.hideLabel ?? '');
+      const open = show.getAttribute('aria-expanded') !== 'true';
+      setRevealed(wrap, open);
+      show.setAttribute('aria-expanded', String(open));
+      show.textContent = open ? (show.dataset.hideLabel ?? '') : (show.dataset.showLabel ?? '');
     });
     const btn = box.querySelector<HTMLButtonElement>('[data-webfont-copy]');
     btn?.addEventListener('click', () => {

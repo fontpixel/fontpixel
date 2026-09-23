@@ -7,8 +7,10 @@ export function fragmentTarget(): HTMLElement | null {
   }
 }
 
-/** Make deep links into collapsed content visible before positioning them. */
-export function revealFragment(): void {
+/** Make deep links into collapsed content visible before positioning them.
+ *  A page opened at a fragment lands there at once; a jump within the page
+ *  (`auto`) glides, following the root's CSS `scroll-behavior`. */
+export function revealFragment(behavior: ScrollBehavior = 'instant'): void {
   const target = fragmentTarget();
   if (!target) return;
   for (let el: HTMLElement | null = target; el; el = el.parentElement) {
@@ -19,5 +21,5 @@ export function revealFragment(): void {
       );
     }
   }
-  requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  requestAnimationFrame(() => target.scrollIntoView({ block: 'start', behavior }));
 }
