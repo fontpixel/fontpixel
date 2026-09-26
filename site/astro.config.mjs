@@ -144,7 +144,7 @@ export default defineConfig({
       alias: { '@dc': new URL('./src/components/docs', import.meta.url).pathname },
     },
   },
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
   build: {
     format: 'directory',
     // Chromium drops an incoming cross-document view transition (catalogue card →
