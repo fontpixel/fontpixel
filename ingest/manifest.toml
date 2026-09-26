@@ -991,20 +991,12 @@ reason_en = "FullPixel, a 12x12 pixel font built on Ark Pixel Font and aiming to
 
 # ==================== Manually added ====================
 
-[[family]]
-slug = "isas-song"
-source_kind = "bitmap"
-source_formats = ["BDF"]
-source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/olikraus--u8g2"
-take = ["gb16st.bdf", "gb24st.bdf"]
-name = "ISAS Song"
-name_zh = "中研院宋体点阵"
-author = "Institute of Software, Academia Sinica (1988)"
-repository = "https://github.com/olikraus/u8g2"
-provenance_url = "https://github.com/olikraus/u8g2 (tools/font/bdf,1988 年 GB2312 宋体点阵,BDF 注释含宽松授权声明)"
-forms = ["song", "serif"]
-vibes = ["serif", "book"]
-# Note: no standalone license file found in the repo; the licensing statement is in the BDF COMMENT, filled in by hand in family.toml after import.
+[[todo]]
+source = "CJK-bitmap-fonts-open-source-2026-08-18/Pan-CJK/olikraus--u8g2 (gb16st.bdf, gb24st.bdf)"
+reason = """2026-08-21 曾由此处的 u8g2 副本收录为 isas-song。2026-09-26 起改从 X.Org 官方发行版
+font-isas-misc-1.0.4.tar.xz 收录(同包还有 16px 仿宋 gb16fs.bdf,另收为 isas-fangsong),
+见 fonts/isas-song 与 fonts/isas-fangsong。u8g2 副本只多了 95 个 GB2312 中无效编码的 ASCII 字形。"""
+reason_en = "Catalogued from this u8g2 copy as isas-song on 2026-08-21. Since 2026-09-26 it comes from X.Org's official release font-isas-misc-1.0.4.tar.xz instead (the same package also has the 16px FangSong gb16fs.bdf, catalogued separately as isas-fangsong); see fonts/isas-song and fonts/isas-fangsong. The u8g2 copy only adds 95 ASCII glyphs whose code points are invalid in GB2312."
 
 [[todo]]
 source = "CJK-bitmap-fonts-open-source-2026-08-18/Korean/neodgm--neodgm-pro"

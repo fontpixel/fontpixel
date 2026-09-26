@@ -1,0 +1,27 @@
+name = "ISAS FangSong"
+name_zh_hans = "中科院仿宋体点阵"
+authors = ["中国科学院软件研究所"]
+homepage = "https://xorg.freedesktop.org/archive/individual/font/font-isas-misc-1.0.4.tar.xz"
+repository = ""
+description = "中国科学院软件研究所1988年制作的GB2312仿宋点阵，16px一档，覆盖GB2312全部汉字与符号，与中科院宋体点阵同出一套。软件所以类似X11/HPND/MIT的宽松许可授权，被收录在很多Linux发行版中。"
+forms = ["fangsong", "serif"]
+vibes = ["serif", "book"]
+source_kind = "bitmap"
+source_formats = ["BDF"]
+aliases = ["Fangsong ti", "中科院仿宋体", "中研院仿宋体点阵"]
+converted_from = ""
+provenance = "X.Org官方发行版font-isas-misc-1.0.4.tar.xz（https://xorg.freedesktop.org/archive/individual/font/font-isas-misc-1.0.4.tar.xz，2023年2月发布，取于2026-09-26，SHA-256 47e595bbe6da444b9f6fcaa26539abc7ba1989e23afa6cdc49e22e484cc438fc），取其中gb16fs.bdf，原样收录；同包的宋体gb16st.bdf与gb24st.bdf收为中科院宋体点阵（isas-song）。BDF为GB2312.1980 GL编码，构建时转为Unicode。1988年由中国科学院软件研究所（Institute of Software, Academia Sinica）制作。"
+added = "2026-09-26"
+
+name_en = "ISAS FangSong"
+authors_en = ["Institute of Software, Academia Sinica"]
+description_en = "A GB2312 FangSong bitmap font made in 1988 by the Institute of Software, Academia Sinica (Chinese Academy of Sciences), in a single 16px size, covering every hanzi and symbol in GB2312; a companion to ISAS Song. The institute released it under a permissive license in the X11/HPND/MIT family, and it is included in many Linux distributions."
+provenance_en = "Official X.Org release font-isas-misc-1.0.4.tar.xz (https://xorg.freedesktop.org/archive/individual/font/font-isas-misc-1.0.4.tar.xz, released February 2023, retrieved 2026-09-26, SHA-256 47e595bbe6da444b9f6fcaa26539abc7ba1989e23afa6cdc49e22e484cc438fc); gb16fs.bdf is taken unchanged. The Song fonts from the same package, gb16st.bdf and gb24st.bdf, are catalogued as ISAS Song (isas-song). The BDF is in GB2312.1980 GL encoding and is converted to Unicode at build time. Made in 1988 by the Institute of Software, Academia Sinica."
+
+[license]
+spdx = "LicenseRef-ISAS-1988"
+name = "ISAS许可证（1988，HPND风格）"
+file = "LICENSE"
+note = "与随包COPYING及BDF内COMMENT一致：允许为任何目的免费使用、复制、修改与分发，条件是在所有副本中保留版权与许可声明，且未经书面许可不得以“the Institute of Software, Academia Sinica”之名做与分发相关的广告宣传。条文与X11/HPND/MIT一类宽松许可相同。"
+name_en = "ISAS License (1988, HPND-style)"
+note_en = "Matches the COPYING file in the package and the BDF COMMENT block: use, copying, modification, and distribution for any purpose are permitted without fee, provided the copyright and permission notices appear in all copies, and the name of \"the Institute of Software, Academia Sinica\" is not used in advertising or publicity pertaining to distribution without specific, written prior permission. The wording is that of the X11/HPND/MIT family of permissive licenses."
