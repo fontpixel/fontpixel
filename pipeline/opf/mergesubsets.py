@@ -76,8 +76,8 @@ def merge(base: ParsedFont,
     for e in extras:
         if e.pixel_size != base.pixel_size:
             notes.append(
-                f"{e.file_name}：像素尺寸与主文件不一致（{e.pixel_size}px vs "
-                f"{base.pixel_size}px），未合并，单列为一个变体"
+                f"{e.file_name}: pixel size differs from the base file ({e.pixel_size}px vs "
+                f"{base.pixel_size}px), not merged, kept as its own variant"
             )
             rejected.append(e)
             continue
@@ -86,7 +86,7 @@ def merge(base: ParsedFont,
         added.extend(new)
         base.ascent = max(base.ascent, e.ascent)
         base.descent = max(base.descent, e.descent)
-        notes.append(f"{e.file_name}：并入 {len(new)} 个字形")
+        notes.append(f"{e.file_name}: merged {len(new)} glyphs")
     if not added:
         return base, notes, rejected
 

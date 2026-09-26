@@ -44,7 +44,7 @@ STYLES = {
 def _tools(repo: Path, work: Path) -> tuple[Path, Path]:
     """Replace the @PERL@ placeholder in tools/*.in with the real interpreter."""
     if shutil.which("perl") is None:
-        raise RuntimeError("需要 perl 才能运行上游的 bit2bdf / bdfmerge")
+        raise RuntimeError("perl is required to run upstream's bit2bdf / bdfmerge")
     out = []
     for name in ("bit2bdf", "bdfmerge"):
         src = repo / "tools" / f"{name}.in"
@@ -62,7 +62,7 @@ def _run(cmd: list[str], stdout: Path) -> None:
     with stdout.open("wb") as fh:
         r = subprocess.run(cmd, stdout=fh, stderr=subprocess.PIPE)
     if r.returncode != 0:
-        raise RuntimeError(f"{cmd[0]} 失败: {r.stderr.decode('utf-8', 'replace')[:300]}")
+        raise RuntimeError(f"{cmd[0]} failed: {r.stderr.decode('utf-8', 'replace')[:300]}")
 
 
 def _to_bdf(bit2bdf: Path, bdfmerge: Path, work: Path, name: str,
@@ -202,13 +202,13 @@ def build_all(repo: Path, dest_root: Path) -> dict[str, list[tuple[int, int]]]:
 def main() -> None:
     import argparse
 
-    ap = argparse.ArgumentParser(description="東雲フォント → Unicode BDF")
-    ap.add_argument("--repo", type=Path, required=True, help="shinonome-font 仓库根目录")
-    ap.add_argument("--dest", type=Path, required=True, help="fonts/ 目录")
+    ap = argparse.ArgumentParser(description="Shinonome fonts → Unicode BDF")
+    ap.add_argument("--repo", type=Path, required=True, help="root of the shinonome-font repository")
+    ap.add_argument("--dest", type=Path, required=True, help="the fonts/ directory")
     args = ap.parse_args()
     for slug, items in sorted(build_all(args.repo, args.dest).items()):
         for size, n in items:
-            print(f"{slug}: {size}px → {n} 字形")
+            print(f"{slug}: {size}px → {n} glyphs")
 
 
 if __name__ == "__main__":

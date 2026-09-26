@@ -192,7 +192,7 @@ def test_broken_family_isolated(tmp_path):
     (fonts / "mini" / "family.toml").write_text("这不是合法的 TOML ===", encoding="utf-8")
     report = build(fonts, data, dl, cache)
     assert report.failed == 1
-    assert any("mini" in w and "失败" in w for w in report.warnings)
+    assert any("mini" in w and "failed" in w for w in report.warnings)
     idx = json.loads((data / "index.json").read_text(encoding="utf-8"))
     assert [f["slug"] for f in idx["families"]] == ["nometa"]  # other families are unaffected
 
@@ -531,5 +531,5 @@ def test_zero_glyph_variant_fails_the_family(tmp_path):
     )
     (fam / "family.toml").write_text('name = "Ghost"\nform = "other"\n', encoding="utf-8")
     report = build(fonts, tmp_path / "data", tmp_path / "dl", tmp_path / "cache")
-    assert any("ghost" in w and "构建失败" in w for w in report.warnings), report.warnings
+    assert any("ghost" in w and "build failed" in w for w in report.warnings), report.warnings
     assert not (tmp_path / "data" / "details" / "ghost.json").exists()

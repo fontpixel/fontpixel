@@ -47,9 +47,9 @@ def build_brand_font(fonts_dir: Path, data_dir: Path, names_path: Path) -> dict:
         if cps <= have:
             break
         missing = "".join(chr(c) for c in sorted(cps - have))
-        print(f"  brandfont: {rel} 缺 {missing}，试下一个候选")
+        print(f"  brandfont: {rel} lacks {missing}, trying the next candidate")
     else:
-        raise SystemExit(f"brandfont: 没有候选字体能覆盖站名字符集")
+        raise SystemExit("brandfont: no candidate font covers every character of the site name")
 
     font.glyphs = [g for g in font.glyphs if g.cp in cps]
     with tempfile.TemporaryDirectory() as td:
@@ -75,8 +75,8 @@ def build_brand_font(fonts_dir: Path, data_dir: Path, names_path: Path) -> dict:
     (data_dir / "brand.json").write_text(
         json.dumps(meta, ensure_ascii=False, sort_keys=True), encoding="utf-8")
     size = (data_dir / out_name).stat().st_size
-    print(f"  brandfont: {out_name} {size/1024:.1f}KB，{len(font.glyphs)} 字形，"
-          f"源 {src.name}")
+    print(f"  brandfont: {out_name} {size/1024:.1f}KB, {len(font.glyphs)} glyphs, "
+          f"from {src.name}")
     return meta
 
 

@@ -58,16 +58,16 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
     from fontTools.ttLib.tables.BitmapGlyphMetrics import SmallGlyphMetrics
 
     if not fonts:
-        raise ValueError("没有可导出的字体")
+        raise ValueError("no fonts to export")
     fonts = sorted(fonts, key=lambda f: f.pixel_size)
     ref = fonts[-1]  # use the largest size as the reference for vector metrics
 
     cps = sorted({g.cp for f in fonts for g in f.glyphs})
     if not cps:
-        raise ValueError("没有字形")
+        raise ValueError("no glyphs")
     if len(cps) + 1 > MAX_GLYPHS:
         raise ValueError(
-            f"字形数 {len(cps)} 超过 TTF 上限 {MAX_GLYPHS - 1}，需按变体分别导出")
+            f"{len(cps)} glyphs exceed the TTF limit of {MAX_GLYPHS - 1}; export each variant separately")
     order = [".notdef"] + [glyph_name(cp) for cp in cps]
 
     fb = FontBuilder(UPEM, isTTF=True)
@@ -172,7 +172,7 @@ def build_ttf(fonts: list[ParsedFont], family_name: str, style_name: str,
         ebdt.strikeData.append(data)
 
     if not eblc.strikes:
-        raise ValueError("没有生成任何 strike")
+        raise ValueError("no strikes were generated")
 
     font["EBDT"] = ebdt
     font["EBLC"] = eblc

@@ -30,8 +30,8 @@ def decode_cp(code: int, registry: str, encoding: str,
         if key not in warned:
             warned.add(key)
             warnings.append(
-                f"字体自报 {registry} 单字节字符集,却含 >0xFF 的码位;"
-                f"这部分按 Unicode 原样收录"
+                f"font declares the single-byte charset {registry} but has code points "
+                f"above 0xFF; those are taken as Unicode"
             )
         return code
     if reg.startswith("iso8859"):

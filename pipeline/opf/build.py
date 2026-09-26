@@ -147,13 +147,13 @@ def _build_family(
         for base_name, sub_names in meta.merge.items():
             base = by_name.get(base_name)
             if base is None:
-                report.warnings.append(f"{slug}: merge 基准文件不存在 {base_name}")
+                report.warnings.append(f"{slug}: merge base file not found: {base_name}")
                 continue
             subs = groups.setdefault(base, [])
             for n in sub_names:
                 sp = by_name.get(n)
                 if sp is None:
-                    report.warnings.append(f"{slug}: merge 子文件不存在 {n}")
+                    report.warnings.append(f"{slug}: merge subset file not found: {n}")
                     continue
                 subs.extend([sp, *groups.pop(sp, [])])
             groups[base] = sorted(set(subs))
@@ -183,10 +183,10 @@ def _build_family(
         # in the report — an empty font must never get published to the site.
         if not f.glyphs:
             raise ValueError(
-                f"{f.file_name} 解析后一个字形都不剩"
+                f"{f.file_name} has no glyphs left after parsing "
                 f"(CHARSET_REGISTRY={f.props.get('CHARSET_REGISTRY', '?')}, "
-                f"CHARSET_ENCODING={f.props.get('CHARSET_ENCODING', '?')});"
-                "多半是该字符集尚未支持,需先补码位映射再收录"
+                f"CHARSET_ENCODING={f.props.get('CHARSET_ENCODING', '?')}); "
+                "the charset is most likely unsupported and needs a code point mapping first"
             )
         v = resolve_variant(f, meta)
         if v.id in seen_ids:
@@ -205,12 +205,12 @@ def _build_family(
             latin = sum(1 for c in range(0x41, 0x7B) if c in cps)
             if latin == 0:
                 f.warnings.append(
-                    "不含任何 ASCII 字母，需搭配拉丁字体使用（上游即如此）"
+                    "no ASCII letters; pair it with a Latin font (upstream ships it this way)"
                 )
             if 0x20 not in cps:
                 f.warnings.append(
-                    "不含半角空格 U+0020"
-                    + ("，站内预览按空白显示" if 0x3000 in cps else "")
+                    "no space U+0020"
+                    + ("; site previews show it as blank" if 0x3000 in cps else "")
                 )
         cov = coverage_for(cps, charsets)
         built.append(BuiltVariant(
@@ -672,7 +672,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
             continue
         files = _font_files(family_dir)
         if not files:
-            report.warnings.append(f"{slug}: 目录中无字体文件，跳过")
+            report.warnings.append(f"{slug}: no font files in the directory, skipped")
             continue
         if not (family_dir / "family.toml").exists():
             load_family_meta(family_dir)  # materialize a stub so the cache key stays stable
@@ -723,7 +723,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
         entry, payload, n_variants, warns, err = done[slug]
         report.warnings.extend(warns)
         if err:
-            report.warnings.append(f"{slug}: 构建失败,已跳过 — {err}")
+            report.warnings.append(f"{slug}: build failed, skipped — {err}")
             report.failed += 1
             continue
         report.variants += n_variants
@@ -822,10 +822,10 @@ def main() -> None:
     for w in report.warnings:
         print(f"  warn: {w}")
     if mb > args.budget_mb:
-        print(f"ERROR: 站点数据 {mb:.0f}MB 超过预算 {args.budget_mb}MB", file=sys.stderr)
+        print(f"ERROR: site data is {mb:.0f}MB, over the {args.budget_mb}MB budget", file=sys.stderr)
         sys.exit(2)
     if report.failed:
-        print(f"ERROR: {report.failed} 个家族构建失败(见 warn 行)", file=sys.stderr)
+        print(f"ERROR: {report.failed} families failed to build (see the warn lines)", file=sys.stderr)
         sys.exit(3)
 
 

@@ -92,7 +92,7 @@ def convert_otb(path: Path, family_slug: str, *, all_glyphs: bool = False) -> li
         max_bottom = max(-g.bby for g in all_bitmaps)
         if asc + desc > ppem * 1.4 or asc < max_top - 1:
             warnings.append(
-                f"strike {ppem}px ascender/descender ({asc}/{desc}) 异常,按字形实测取值"
+                f"strike {ppem}px ascender/descender ({asc}/{desc}) implausible, measured from the glyphs instead"
             )
         if asc + desc > ppem * 1.4:
             asc, desc = max_top, max(max_bottom, 0)

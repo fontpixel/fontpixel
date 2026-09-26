@@ -271,7 +271,7 @@ def build_downloads(
             entries.append(_entry(slug, v.id, "pcf", f"{slug}--{v.id}.pcf.gz",
                                   _gz(pcf_data), out))
         else:
-            f.warnings.append(f"{v.id}: PCF 生成失败，仅提供 BDF")
+            f.warnings.append(f"{v.id}: PCF generation failed, BDF only")
 
     from opf.vectorize import build_vector_ttf
 
@@ -312,7 +312,7 @@ def build_downloads(
                                           tmp.read_bytes(), out))
             except Exception as e:  # noqa: BLE001 - a TTF failure doesn't affect BDF/PCF downloads
                 for f, _ in batch:
-                    f.warnings.append(f"TTF 导出失败（{fname}）：{e}")
+                    f.warnings.append(f"TTF export failed ({fname}): {e}")
 
         # Vector TTF: only export the largest pixel size for each typeface.
         # Vector outlines already scale arbitrarily, so exporting every
@@ -342,7 +342,7 @@ def build_downloads(
                             slug, None, f"woff2-{shape}",
                             f"{suffix}-{rv.size}px-{shape}.woff2", w2, out))
             except Exception as e:  # noqa: BLE001 - a single file failing doesn't affect other downloads
-                rf.warnings.append(f"矢量 TTF 导出失败（{vname}）：{e}")
+                rf.warnings.append(f"vector TTF export failed ({vname}): {e}")
 
     for lf in license_files:
         p = family_dir / lf

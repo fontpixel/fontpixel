@@ -214,7 +214,7 @@ def rasterize_ttf(path: Path, ppem: int, family_slug: str,
     max_bottom = max(-g.bby for g in rendered)
     if asc + desc > ppem * 1.6:
         asc, desc = max_top, max(max_bottom, 0)
-        warnings.append("ascender/descender 异常,按字形实测取值")
+        warnings.append("ascender/descender implausible, measured from the glyphs instead")
 
     xoff = min(g.bbx for g in rendered)
     yoff = min(g.bby for g in rendered)

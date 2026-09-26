@@ -37,10 +37,10 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-1.4.2-${{ hashFiles('site/bun.lock') }}
 
-      - name: 安装系统依赖(bdftopcf)
+      - name: Install system dependencies (bdftopcf)
         run: sudo apt-get update && sudo apt-get install -y xfonts-utils
 
-      - name: 安装 Python 依赖
+      - name: Install Python dependencies
         run: |
           python -m venv .venv
           .venv/bin/python -m pip install -e "pipeline[dev]"
@@ -48,7 +48,7 @@ jobs:
       - name: pytest
         run: .venv/bin/python -m pytest pipeline/tests -q
 
-      - name: 恢复构建缓存
+      - name: Restore generated font cache
         id: font-cache
         uses: actions/cache/restore@v4
         with:
@@ -60,7 +60,7 @@ jobs:
           key: opf-output-v1-${{ hashFiles('fonts/**', 'pipeline/opf/**', 'pipeline/pyproject.toml') }}
           restore-keys: opf-output-v1-
 
-      - name: 构建字体数据
+      - name: Build font data
         run: .venv/bin/python -u -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
 
       - name: Save generated font cache
@@ -76,16 +76,16 @@ jobs:
       - name: Build site wordmark
         run: .venv/bin/python -m opf.brandfont --fonts fonts --data site/public/data --names site/src/i18n/sitenames.json
 
-      - name: 安装站点依赖
+      - name: Install site dependencies
         run: cd site && bun install --frozen-lockfile
 
       - name: vitest
         run: cd site && bun run vitest run
 
-      - name: 类型检查(astro check + svelte-check)
+      - name: Type check (astro check + svelte-check)
         run: cd site && bun run check
 
-      - name: Astro 构建
+      - name: Build site
         run: cd site && bun run build
         env:
           OPF_BASE: /
@@ -94,10 +94,10 @@ jobs:
       - name: Check generated SEO metadata and sitemaps
         run: cd site && bun run audit:seo
 
-      - name: 检查完整站点的 Pages 免费额度
+      - name: Check the full site against Pages free-plan limits
         run: python .github/scripts/check_pages_limits.py site/dist
 
-      - name: 安装 Playwright Chromium
+      - name: Install Playwright Chromium
         run: cd site && bun run playwright install --with-deps chromium
 
       - name: e2e

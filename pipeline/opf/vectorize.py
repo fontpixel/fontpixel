@@ -236,13 +236,13 @@ def build_vector_ttf(font: ParsedFont, family_name: str, style_name: str,
     from fontTools.pens.ttGlyphPen import TTGlyphPen
 
     if shape not in ("square", "round"):
-        raise ValueError(f"未知造型 {shape}")
+        raise ValueError(f"unknown shape {shape}")
     if not font.glyphs:
-        raise ValueError("没有字形")
+        raise ValueError("no glyphs")
 
     unit = UPEM // max(font.pixel_size, 1)
     if unit < 1:
-        raise ValueError(f"像素尺寸 {font.pixel_size} 超出 upem {UPEM}")
+        raise ValueError(f"pixel size {font.pixel_size} exceeds upem {UPEM}")
     upem = unit * font.pixel_size  # the actual em after rounding, ensuring pixel alignment
     baseline_top_of = lambda g: g.bby + g.bbh  # noqa: E731
 

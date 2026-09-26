@@ -41,7 +41,7 @@ def test_merge_adds_only_missing_codepoints():
     other = parse_bdf(FIX / "mini.bdf", "mini")
     merged, notes, rejected = merge(base, [other])
     assert {g.cp for g in merged.glyphs} == before  # all duplicates, none added
-    assert "并入 0 个字形" in notes[0]
+    assert "merged 0 glyphs" in notes[0]
     assert rejected == []
 
 
@@ -54,7 +54,7 @@ def test_merge_refuses_other_pixel_sizes_but_hands_them_back():
     other.pixel_size = base.pixel_size + 2
     other.file_name = "other.bdf"
     _, notes, rejected = merge(base, [other])
-    assert "未合并" in notes[0]
+    assert "not merged" in notes[0]
     assert [f.file_name for f in rejected] == ["other.bdf"]
 
 

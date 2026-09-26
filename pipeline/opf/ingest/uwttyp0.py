@@ -32,13 +32,13 @@ def _run(cmd: list[str], cwd: Path) -> None:
     r = subprocess.run(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if r.returncode != 0:
         tail = r.stdout.decode("utf-8", "replace")[-500:]
-        raise RuntimeError(f"{' '.join(cmd)} 失败: {tail}")
+        raise RuntimeError(f"{' '.join(cmd)} failed: {tail}")
 
 
 def build_upstream(repo: Path, work: Path) -> list[Path]:
     """Run upstream's Unicode BDF build in a copy of `repo` under `work`; returns genbdf/*-uni.bdf."""
     if not (repo / "mgl" / "unicode.mgl").exists():
-        raise FileNotFoundError(f"缺少 {repo / 'mgl' / 'unicode.mgl'}")
+        raise FileNotFoundError(f"missing {repo / 'mgl' / 'unicode.mgl'}")
     tree = work / repo.name
     shutil.copytree(repo, tree, symlinks=True)
     _run(["sh", "./configure"], tree)
@@ -46,7 +46,7 @@ def build_upstream(repo: Path, work: Path) -> list[Path]:
     _run(["make", "bdf", "GEN_BDF=1", "ENCODINGS_BDF=uni"], tree)
     out = sorted((tree / "genbdf").glob("t0-*-uni.bdf"))
     if not out:
-        raise RuntimeError(f"{repo}: 上游构建没有生成 genbdf/t0-*-uni.bdf")
+        raise RuntimeError(f"{repo}: the upstream build produced no genbdf/t0-*-uni.bdf")
     return out
 
 
@@ -72,11 +72,11 @@ def main() -> None:
     import argparse
 
     ap = argparse.ArgumentParser(description="UW ttyp0 → Unicode BDF")
-    ap.add_argument("--repo", type=Path, required=True, help="uw-ttyp0-x.y 解包目录")
-    ap.add_argument("--dest", type=Path, required=True, help="fonts/uw-ttyp0 目录")
+    ap.add_argument("--repo", type=Path, required=True, help="unpacked uw-ttyp0-x.y directory")
+    ap.add_argument("--dest", type=Path, required=True, help="the fonts/uw-ttyp0 directory")
     args = ap.parse_args()
     for name, n in build_all(args.repo, args.dest):
-        print(f"{name}: {n} 字形")
+        print(f"{name}: {n} glyphs")
 
 
 if __name__ == "__main__":
