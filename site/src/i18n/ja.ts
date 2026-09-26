@@ -5,11 +5,17 @@ import type { UIStrings } from './types';
 export const ja: UIStrings = {
   siteName: sitenames.ja,
   siteTagline:
-    'フリー＆オープンソースのドット（ビットマップ・ピクセル）フォント集。商用利用可、BDF・PCF・TTF形式でダウンロード',
+    'フリー＆オープンソースのドット（ビットマップ・ピクセル）フォント集とツール。商用利用可、BDF・PCF・TTF形式でダウンロード',
   skipToContent: 'メインコンテンツへスキップ',
   siteNavLabel: 'サイトナビゲーション',
   langLabel: '言語',
-  themeToggle: 'ライト／ダークテーマを切り替え',
+  theme: {
+    label: '配色テーマ',
+    light: 'ライト',
+    dark: 'ダーク',
+    system: 'ライト／ダークをシステムに合わせる',
+    palettes: { red: '朱', green: '孔雀石', blue: '藍', amber: '琥珀', violet: '紫水晶' },
+  },
 
   nav: {
     catalogue: '一覧',
@@ -17,6 +23,12 @@ export const ja: UIStrings = {
     github: 'ソース',
     tools: 'ツール',
     compare: '比較',
+  },
+  onThisPage: 'このページの目次',
+  githubMenu: {
+    fontTemplate: 'シンプルなフォントテンプレート',
+    website: 'FontPixelウェブサイト',
+    follow: '@tomchenをフォロー',
   },
 
   catalogue: {
@@ -299,9 +311,7 @@ export const ja: UIStrings = {
 
   footer: {
     navLabel: 'フッターナビゲーション',
-    siteLicense: "サイトのコードと収録データは MIT ライセンスで公開しています。",
-    disclaimer:
-      '各フォントの著作権は原作者に帰属します。ライセンス情報は参考用であり、上流で公開された原文が優先されます。',
+    legal: '© 2026 {author}。コード：{mit}、フォント：各フォントのライセンス、文字集合：{notices}を参照',
     dataSources: '文字集合のデータ出典',
     sourceCode: 'サイトのソース',
   },
@@ -322,10 +332,10 @@ export const ja: UIStrings = {
     title: 'ツールとドキュメント',
     intro: 'ビットマップフォントまわりの開発ツールと参考資料です。本文は現在英語です。',
     cards: [
-      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: 'BDFビットマップフォントを解析するTypeScript/JavaScriptライブラリ。ブラウザとNodeに対応、オンラインプレイグラウンド付き。' },
-      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: 'BDFビットマップフォントを解析するPythonライブラリ。Pillowと組み合わせて描画できます。' },
+      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'BDFビットマップフォントを解析するTypeScript/JavaScriptライブラリ。ブラウザとNodeに対応、オンラインプレイグラウンド付き。' },
+      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'BDFビットマップフォントを解析するPythonライブラリ。Pillowと組み合わせて描画できます。' },
       { slug: 'bdf-spec', name: 'BDF仕様', blurb: 'AdobeのGlyph Bitmap Distribution Format仕様の整理版。非公式プロパティ一覧付き。' },
-      { slug: 'font-template', name: 'フォントテンプレート', blurb: 'Adobe Illustratorでグリフを描き、FontForgeでフォントを生成する最も簡単なテンプレートと手順。' },
+      { slug: 'font-template', name: 'シンプルなフォントテンプレート', blurb: 'Adobe Illustratorでグリフを描き、FontForgeでフォントを生成する最も簡単なテンプレートと手順。' },
     ],
   },
 };

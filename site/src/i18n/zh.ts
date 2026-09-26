@@ -4,11 +4,17 @@ import type { UIStrings } from './types';
 
 export const zh: UIStrings = {
   siteName: sitenames.zh,
-  siteTagline: '免费可商用的自由开源点阵/像素/位图字体合集，BDF、PCF、TTF格式下载',
+  siteTagline: '免费可商用的自由开源点阵/像素/位图字体合集与工具，BDF、PCF、TTF格式下载',
   skipToContent: '跳到主内容',
   siteNavLabel: '站点导航',
   langLabel: '语言',
-  themeToggle: '切换明暗主题',
+  theme: {
+    label: '配色主题',
+    light: '浅色',
+    dark: '深色',
+    system: '明暗跟随系统',
+    palettes: { red: '朱砂', green: '孔雀石', blue: '靛青', amber: '琥珀', violet: '紫晶' },
+  },
 
   nav: {
     catalogue: '馆藏',
@@ -16,6 +22,12 @@ export const zh: UIStrings = {
     github: '源码',
     tools: '工具',
     compare: '对比',
+  },
+  onThisPage: '本页目录',
+  githubMenu: {
+    fontTemplate: '简易字体模板',
+    website: 'FontPixel网站',
+    follow: '关注@tomchen',
   },
 
   catalogue: {
@@ -295,8 +307,7 @@ export const zh: UIStrings = {
 
   footer: {
     navLabel: '页脚导航',
-    siteLicense: "本站代码与馆藏数据以MIT许可发布。",
-    disclaimer: '各字体版权归原作者所有；许可证信息仅供参考，以上游原文为准。',
+    legal: '© 2026 {author}。代码：{mit}；字体：各自的许可证；字表：见{notices}',
     dataSources: '字表数据来源',
     sourceCode: '本站源码',
   },
@@ -317,10 +328,10 @@ export const zh: UIStrings = {
     title: '工具与文档',
     intro: '围绕点阵字体的开发工具与参考文档。正文目前为英文。',
     cards: [
-      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: '解析BDF点阵字体的TypeScript/JavaScript库，浏览器与Node都能用，含在线试玩。' },
-      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: '解析BDF点阵字体的Python库，可配合Pillow绘制位图。' },
-      { slug: 'bdf-spec', name: 'BDF规格', blurb: 'Adobe字形位图分发格式（BDF）规范的整理版，含非官方属性清单。' },
-      { slug: 'font-template', name: '字体模板', blurb: '用Adobe Illustrator画字形、经FontForge生成字体的最简模板与教程。' },
+      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: '解析BDF点阵字体的TypeScript/JavaScript库，浏览器与Node都能用，含在线试玩。' },
+      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: '解析BDF点阵字体的Python库，可配合Pillow绘制位图。' },
+      { slug: 'bdf-spec', name: 'BDF规范', blurb: 'Adobe字形位图分发格式（BDF）规范的整理版，含非官方属性清单。' },
+      { slug: 'font-template', name: '简易字体模板', blurb: '用Adobe Illustrator画字形、经FontForge生成字体的最简模板与教程。' },
     ],
   },
 };

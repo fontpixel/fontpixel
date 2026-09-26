@@ -5,11 +5,17 @@ import type { UIStrings } from './types';
 export const en: UIStrings = {
   siteName: sitenames.en,
   siteTagline:
-    'Free and open-source (FOSS) bitmap / pixel / dot-matrix fonts, licensed for commercial use, download as BDF, PCF or TTF formats',
+    'Free and open-source (FOSS) bitmap / pixel / dot-matrix font collection and tools, licensed for commercial use, download as BDF, PCF or TTF formats',
   skipToContent: 'Skip to main content',
   siteNavLabel: 'Site navigation',
   langLabel: 'Language',
-  themeToggle: 'Toggle light / dark theme',
+  theme: {
+    label: 'Colour theme',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'Follow system light / dark',
+    palettes: { red: 'Cinnabar', green: 'Malachite', blue: 'Indigo', amber: 'Amber', violet: 'Amethyst' },
+  },
 
   nav: {
     catalogue: 'Catalogue',
@@ -17,6 +23,12 @@ export const en: UIStrings = {
     github: 'Source',
     tools: 'Tools',
     compare: 'Compare',
+  },
+  onThisPage: 'On this page',
+  githubMenu: {
+    fontTemplate: 'Simple Font Template',
+    website: 'FontPixel website',
+    follow: 'Follow @tomchen',
   },
 
   catalogue: {
@@ -299,9 +311,7 @@ export const en: UIStrings = {
 
   footer: {
     navLabel: 'Site navigation',
-    siteLicense: "Site code and catalogue data are MIT-licensed.",
-    disclaimer:
-      'Every font remains the copyright of its original author; license details are for reference only, and the upstream original text prevails.',
+    legal: '© 2026 {author}. Code: {mit}; Fonts: their respective licenses; Charset: see {notices}',
     dataSources: 'Character set data sources',
     sourceCode: 'Site source',
   },
@@ -322,10 +332,10 @@ export const en: UIStrings = {
     title: 'Tools & Docs',
     intro: 'Developer tools and reference documents around bitmap fonts.',
     cards: [
-      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: 'A TypeScript/JavaScript library for parsing BDF bitmap fonts, for browsers and Node, with a live playground.' },
-      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: 'A Python library for parsing BDF bitmap fonts; pairs with Pillow for drawing bitmaps.' },
+      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'A TypeScript/JavaScript library for parsing BDF bitmap fonts, for browsers and Node, with a live playground.' },
+      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'A Python library for parsing BDF bitmap fonts; pairs with Pillow for drawing bitmaps.' },
       { slug: 'bdf-spec', name: 'BDF Specification', blurb: 'A cleaned-up edition of Adobe\'s Glyph Bitmap Distribution Format spec, plus an unofficial property list.' },
-      { slug: 'font-template', name: 'Font Template', blurb: 'The simplest template and walkthrough for drawing glyphs in Adobe Illustrator and building a font with FontForge.' },
+      { slug: 'font-template', name: 'Simple Font Template', blurb: 'The simplest template and walkthrough for drawing glyphs in Adobe Illustrator and building a font with FontForge.' },
     ],
   },
 };

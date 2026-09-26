@@ -158,12 +158,17 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--surface);
+    /* Grid rows stretch every card to the tallest in its row; the link has to
+       stretch with it, or the card's lower part isn't clickable. */
+    display: flex;
+    flex-direction: column;
   }
   .card:hover {
     border-color: var(--accent);
   }
   .card__link {
     display: block;
+    flex: 1 1 auto;
     padding: var(--s4);
   }
   .card__head {

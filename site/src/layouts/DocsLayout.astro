@@ -1,6 +1,9 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import Base from './Base.astro';
-import { type Lang } from '../i18n';
+import DocToc, { type TocItem } from '../components/DocToc.astro';
+import DocMenu from '../components/DocMenu.astro';
+import { t, type Lang } from '../i18n';
 import { withBase } from '../lib/data';
 import {
   DOC_LANGS,
@@ -11,54 +14,184 @@ import {
   type DocEntry,
   type DocSection,
 } from '../lib/docs';
+import { DOC_SIDEBARS, sidebarSlugs, type SidebarNode } from '../lib/docsidebar';
 
 interface Props {
   lang: Lang;
   section: DocSection;
   entry: DocEntry;
+  /** The rendered entry's headings; h2 and h3 make up the table of contents */
+  headings?: MarkdownHeading[];
 }
-const { lang, section, entry } = Astro.props;
+const { lang, section, entry, headings = [] } = Astro.props;
+const s = t(lang);
 const entries = await sectionEntries(section);
 const current = docSlug(entry, section);
 const sectionTitle = DOC_SECTIONS[section];
 const path = docPath(section, entry);
 const link = (e: DocEntry) => withBase(`/${lang}${docPath(section, e)}`);
-const idx = entries.findIndex((e) => docSlug(e, section) === current);
-const prev = idx > 0 ? entries[idx - 1] : null;
-const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
+const bySlug = new Map(entries.map((e) => [docSlug(e, section), e]));
+const pages = new Map(
+  entries.map((e) => [docSlug(e, section), { href: link(e), label: e.data.label ?? e.data.title }]),
+);
+
+// The sidebar tree sets the reading order; a page it misses (docsidebar.test.ts
+// guards against that) is still listed, at the end.
+const tree = DOC_SIDEBARS[section];
+const inTree = new Set(sidebarSlugs(tree));
+const menu: SidebarNode[] = [
+  ...tree,
+  ...[...bySlug.keys()].filter((slug) => !inTree.has(slug)).map((slug) => ({ slug })),
+];
+const ordered = sidebarSlugs(menu).flatMap((slug) => bySlug.get(slug) ?? []);
+const idx = ordered.findIndex((e) => docSlug(e, section) === current);
+const prev = idx > 0 ? ordered[idx - 1] : null;
+const next = idx >= 0 && idx < ordered.length - 1 ? ordered[idx + 1] : null;
+
+// Same depth as Docusaurus's default TOC: h2s, with their h3s nested under them.
+const toc: TocItem[] = [];
+for (const h of headings) {
+  if (h.depth === 2) toc.push({ slug: h.slug, text: h.text, children: [] });
+  else if (h.depth === 3) (toc.at(-1)?.children ?? toc).push({ slug: h.slug, text: h.text, children: [] });
+}
+const hasToc = toc.length > 0;
 ---
 
-<Base lang={lang} title={`${entry.data.title} · ${sectionTitle}`} description={entry.data.description} path={path} availableLangs={DOC_LANGS} ogType="article" markdownPath={`/en${path}index.md`}>
-  <div class="doc">
-    <nav class="doc__side" aria-label={sectionTitle}>
-      <p class="doc__section">{sectionTitle}</p>
-      <ul>
-        {entries.map((e) => {
-          const slug = docSlug(e, section);
-          return (
-            <li class:list={{ 'doc__item--sub': slug.includes('/') }}>
-              <a href={link(e)} aria-current={slug === current ? 'page' : undefined}
-                >{e.data.label ?? e.data.title}</a>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
-    <article class="doc__article">
-      <h1 id="doc-title">{entry.data.title}</h1>
-      <slot />
-      <nav class="doc__pager">
-        {prev ? <a href={link(prev)}>← {prev.data.label ?? prev.data.title}</a> : <span />}
-        {next ? <a href={link(next)}>{next.data.label ?? next.data.title} →</a> : <span />}
+<Base wide lang={lang} title={`${entry.data.title} · ${sectionTitle}`} description={entry.data.description} path={path} availableLangs={DOC_LANGS} ogType="article" markdownPath={`/en${path}index.md`}>
+  <div class:list={['doc', { 'doc--toc': hasToc }]}>
+    {/* Full width like the original Docusaurus site: the sidebar column runs
+        down the left edge, the article and TOC share the rest 3:1. */}
+    <div class="doc__sidecol">
+      <nav class="doc__side" aria-label={sectionTitle}>
+        <p class="doc__section">{sectionTitle}</p>
+        <DocMenu nodes={menu} {current} {pages} />
       </nav>
-    </article>
+    </div>
+    <div class="doc__main">
+      {/* Narrow screens: the sidebar and the TOC fold into two dropdowns on a bar
+          that stays at the top while reading (the TOC one alone between 800px
+          and 1200px, where the sidebar still has room). It sits in the grid above
+          the article rather than in it, clear of the article's typography. */}
+      <div class="doc__bar" data-doc-bar>
+        <details class="doc__drop doc__drop--nav">
+          <summary>
+            <svg class="doc__drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span class="doc__drop-label">{sectionTitle}</span>
+            <svg class="doc__drop-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </summary>
+          <nav class="doc__panel" aria-label={sectionTitle}>
+            <DocMenu nodes={menu} {current} {pages} />
+          </nav>
+        </details>
+        {hasToc && (
+          <details class="doc__drop doc__drop--toc">
+            <summary>
+              <span class="doc__drop-label">{s.onThisPage}</span>
+              <svg class="doc__drop-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <nav class="doc__panel doc-toc" aria-label={s.onThisPage}>
+              <DocToc items={toc} />
+            </nav>
+          </details>
+        )}
+      </div>
+      <article class="doc__article">
+        <h1 id="doc-title">{entry.data.title}</h1>
+        <slot />
+        <nav class="doc__pager">
+          {prev ? <a href={link(prev)}>← {prev.data.label ?? prev.data.title}</a> : <span />}
+          {next ? <a href={link(next)}>{next.data.label ?? next.data.title} →</a> : <span />}
+        </nav>
+      </article>
+      {hasToc && (
+        <nav class="doc__toc doc-toc" aria-label={s.onThisPage}>
+          <DocToc items={toc} />
+        </nav>
+      )}
+    </div>
   </div>
 </Base>
 
+<script>
+  // Scroll-spy: highlight the section being read, like Docusaurus — the last
+  // heading that has scrolled past the top, else the first one.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+  const slugs = [...new Set(links.map((a) => a.dataset.tocLink!))];
+  const targets = slugs
+    .map((slug) => document.getElementById(slug))
+    .filter((el): el is HTMLElement => el !== null);
+  const bar = document.querySelector<HTMLElement>('[data-doc-bar]');
+  let active: string | undefined;
+  let queued = false;
+  const spy = () => {
+    queued = false;
+    if (!targets.length) return;
+    const barHeight = bar && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0;
+    const line = barHeight + 80;
+    let current = targets[0]!;
+    for (const el of targets) {
+      if (el.getBoundingClientRect().top <= line) current = el;
+      else break;
+    }
+    if (current.id === active) return;
+    active = current.id;
+    for (const a of links) a.classList.toggle('doc-toc__active', a.dataset.tocLink === active);
+  };
+  const queue = () => {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(spy);
+    }
+  };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  spy();
+
+  // A table wider than the article scrolls sideways; keyboard users need a Tab
+  // stop to scroll it, the ones that fit don't.
+  const tables = [...document.querySelectorAll<HTMLTableElement>('.doc__article table')];
+  const tabbable = () => {
+    for (const table of tables) {
+      if (table.scrollWidth > table.clientWidth) table.tabIndex = 0;
+      else table.removeAttribute('tabindex');
+    }
+  };
+  addEventListener('resize', tabbable);
+  tabbable();
+
+  // The bar's dropdowns: one open at a time; picking a link, pressing Escape or
+  // tapping elsewhere closes them.
+  const drops = [...document.querySelectorAll<HTMLDetailsElement>('.doc__drop')];
+  for (const d of drops) {
+    d.addEventListener('toggle', () => {
+      if (!d.open) return;
+      for (const other of drops) if (other !== d) other.open = false;
+      // A long list opens at the section being read, not at its top.
+      d.querySelector('.doc-toc__active, [aria-current="page"]')?.scrollIntoView({ block: 'nearest' });
+    });
+    d.querySelector('.doc__panel')?.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('a')) d.open = false;
+    });
+    d.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && d.open) {
+        e.preventDefault();
+        d.open = false;
+        d.querySelector('summary')?.focus();
+      }
+    });
+  }
+  document.addEventListener('pointerdown', (e) => {
+    for (const d of drops) if (d.open && !d.contains(e.target as Node)) d.open = false;
+  });
+</script>
+
 <style>
-  .doc__article :global(p a),
-  .doc__article :global(li a),
-  .doc__article :global(td a) { text-decoration: underline; text-underline-offset: 0.15em; }
   /* Docusaurus-classic (Infima) look for the tools/docs area only — the
      catalogue keeps the site's own pixel-museum styling. Values mirror the
      original font.tomchen.org theme: the site accent as primary, 95% code size,
@@ -77,7 +210,12 @@ const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
       sans-serif;
     --dx-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --dx-primary: var(--accent);
-    --dx-primary-darker: color-mix(in srgb, var(--accent) 82%, black);
+    /* Body links go without an underline, as on the original site, so their
+       colour alone sets them apart: at least 3:1 against the body text and 4.5:1
+       against the page, table stripes and asides (WCAG G183; axe's
+       link-in-text-block). The accent itself is too close to the text for that,
+       so each palette has its own (tokens.css). */
+    --dx-link: var(--doc-link);
     --dx-text: #1c1e21;
     --dx-text-2: #606770;
     --dx-code-bg: #f6f7f8;
@@ -86,11 +224,12 @@ const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
     --dx-border: #dadde1;
     --dx-hover-bg: rgba(0, 0, 0, 0.05);
     --dx-stripe-bg: rgba(0, 0, 0, 0.03);
+    --dx-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
     font-family: var(--dx-font);
     color: var(--dx-text);
   }
   :global(:root[data-theme='dark']) .doc {
-    --dx-text: #e3e3e3;
+    --dx-text: #ececec;
     --dx-text-2: #9aa0a6;
     --dx-code-bg: rgba(255, 255, 255, 0.09);
     --dx-code-border: rgba(255, 255, 255, 0.12);
@@ -98,76 +237,232 @@ const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
     --dx-border: #444950;
     --dx-hover-bg: rgba(255, 255, 255, 0.08);
     --dx-stripe-bg: rgba(255, 255, 255, 0.04);
+    --dx-shadow: 0 5px 40px rgba(0, 0, 0, 0.6);
   }
 
+  /* --- layout: full width like Docusaurus — a sidebar column down the left
+     edge, then a container (at most 1320px, centred) holding the article
+     and the TOC 3:1. Folds from the right as the screen narrows. --- */
   .doc {
     display: grid;
-    grid-template-columns: 240px minmax(0, 1fr);
-    gap: var(--s6);
-    align-items: start;
+    grid-template-columns: 250px minmax(0, 1fr);
     line-height: 1.65;
   }
-  @media (max-width: 800px) {
+  .doc__sidecol {
+    border-right: 1px solid var(--dx-border); /* the column stretches, so the line runs the full height */
+  }
+  .doc__main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    column-gap: 2rem;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 1rem 2rem var(--s7); /* the bottom space site-main gives other pages */
+  }
+  .doc__bar,
+  .doc__article {
+    grid-column: 1;
+  }
+  @media (min-width: 1200px) {
     .doc {
-      grid-template-columns: 1fr;
+      grid-template-columns: 300px minmax(0, 1fr);
+    }
+    .doc--toc .doc__main {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    }
+    .doc__toc {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+  }
+  @media (max-width: 1199.98px) {
+    .doc__toc {
+      display: none;
+    }
+    .doc__article :global(:is(h2, h3)[id]) {
+      scroll-margin-top: 4rem; /* clear of the sticky bar */
+    }
+  }
+  @media (max-width: 799.98px) {
+    .doc {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .doc__sidecol {
+      display: none;
+    }
+    .doc__main {
+      padding: 1rem 1rem var(--s7);
     }
   }
 
-  /* --- sidebar, Docusaurus menu style --- */
+  /* --- sidebar: sticks to the top and scrolls on its own, like Docusaurus's
+     (the menu itself is DocMenu.astro) --- */
   .doc__side {
     position: sticky;
-    top: var(--s4);
-    border-right: 1px solid var(--dx-border);
-    padding: var(--s2) var(--s3) var(--s2) 0;
-    font-size: 0.875rem;
-  }
-  @media (max-width: 800px) {
-    .doc__side {
-      position: static;
-      border-right: none;
-      border-bottom: 1px solid var(--dx-border);
-      padding: 0 0 var(--s3);
-    }
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 0.5rem;
   }
   .doc__section {
     margin: 0 0 var(--s2);
-    padding: 0.375rem 0.75rem;
+    padding: 0.375rem 1rem;
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--dx-text);
   }
-  .doc__side ul {
+
+  /* --- table of contents, Infima's .table-of-contents --- */
+  .doc__toc {
+    position: sticky;
+    top: var(--s4);
+    max-height: calc(100vh - 2 * var(--s4));
+    overflow-y: auto;
+  }
+  .doc-toc :global(ul) {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 0.5rem;
   }
-  .doc__side li {
-    margin: 0.125rem 0;
+  .doc__toc > :global(ul) {
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    border-left: 1px solid var(--dx-border);
   }
-  .doc__side a {
+  .doc-toc {
+    font-size: 0.8rem;
+    line-height: 1.65;
+  }
+  .doc-toc :global(li) {
+    margin: 0.5rem;
+  }
+  .doc-toc :global(a) {
     display: block;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.25rem;
     color: var(--dx-text-2);
     text-decoration: none;
-    line-height: 1.25;
   }
-  .doc__side a:hover {
-    background: var(--dx-hover-bg);
-  }
-  .doc__item--sub a {
-    padding-left: 1.5rem;
-  }
-  .doc__side a[aria-current='page'] {
+  .doc-toc :global(a:hover),
+  .doc-toc :global(a.doc-toc__active) {
     color: var(--dx-primary);
-    background: var(--dx-hover-bg);
-    font-weight: 400;
+    text-decoration: none;
   }
 
-  /* --- article, Infima typography --- */
+  /* --- narrow screens: a sticky bar of two dropdowns --- */
+  .doc__bar {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    gap: var(--s2);
+    margin: 0 0 var(--s4);
+    padding: var(--s2) 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--dx-border);
+  }
+  @media (max-width: 1199.98px) {
+    .doc--toc .doc__bar {
+      display: flex;
+    }
+    .doc__drop--nav {
+      display: none;
+    }
+  }
+  @media (max-width: 799.98px) {
+    .doc__bar {
+      display: flex;
+    }
+    .doc__drop--nav {
+      display: block;
+    }
+  }
+  .doc__drop {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .doc__drop summary {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.4rem;
+    background: var(--dx-hover-bg);
+    color: var(--dx-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .doc__drop summary::-webkit-details-marker {
+    display: none;
+  }
+  .doc__drop summary:hover,
+  .doc__drop[open] summary {
+    color: var(--dx-primary);
+  }
+  .doc__drop-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .doc__drop-icon,
+  .doc__drop-caret {
+    flex: none;
+    width: 1.1em;
+    height: 1.1em;
+  }
+  .doc__drop-caret {
+    transition: transform 0.2s ease;
+  }
+  .doc__drop[open] .doc__drop-caret {
+    transform: rotate(180deg);
+  }
+  /* The panel hangs under the whole bar (its containing block), over the text. */
+  .doc__panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + var(--s1));
+    max-height: min(70vh, 32rem);
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--dx-border);
+    border-radius: 0.4rem;
+    box-shadow: var(--dx-shadow);
+    transform-origin: top center;
+    transition:
+      opacity 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56),
+      transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  }
+  @starting-style {
+    .doc__drop[open] .doc__panel {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .doc__panel,
+    .doc__drop-caret {
+      transition: none;
+    }
+  }
+  .doc__panel.doc-toc {
+    font-size: 0.875rem;
+  }
+  .doc__panel.doc-toc > :global(ul) {
+    padding-left: 0;
+  }
+
+/* --- article, Infima typography --- */
   .doc__article {
     min-width: 0;
     font-size: 1rem;
+    overflow-wrap: break-word; /* long URLs used as link text would widen phone screens */
   }
   .doc__article :global(h1),
   .doc__article :global(h2),
@@ -195,13 +490,18 @@ const next = idx >= 0 && idx < entries.length - 1 ? entries[idx + 1] : null;
   .doc__article :global(h4) {
     font-size: 1rem;
   }
+  /* Infima: no underline until hovered, same colour either way */
   .doc__article :global(a) {
-    color: var(--dx-primary);
+    color: var(--dx-link);
     text-decoration: none;
   }
   .doc__article :global(a:hover) {
-    color: var(--dx-primary-darker);
     text-decoration: underline;
+  }
+  /* Code already stands apart by its font, so a code link can take the
+     lighter accent that stays readable on the code background. */
+  .doc__article :global(a code) {
+    color: var(--accent);
   }
   .doc__article :global(code) {
     font-family: var(--dx-mono);

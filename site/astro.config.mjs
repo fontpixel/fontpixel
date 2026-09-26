@@ -132,6 +132,13 @@ export default defineConfig({
         ],
       },
     },
+    optimizeDeps: {
+      // Only the docs' BDF islands import these, so the dev server first met them
+      // on opening such a page and re-bundled its dependencies then; the page's
+      // already-requested copies turned stale ("504 Outdated Optimize Dep") and
+      // the live editor failed to hydrate. Bundle them at startup instead.
+      include: ['bdfparser', 'fetchline'],
+    },
     resolve: {
       // MDX docs reference doc components via @dc/, avoiding relative paths that shift with directory depth
       alias: { '@dc': new URL('./src/components/docs', import.meta.url).pathname },

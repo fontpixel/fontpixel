@@ -22,7 +22,7 @@ test('all About translations link the author and exclusion sources on narrow scr
     const intro = page.locator('.about__intro');
     await expect(intro).toContainText('FontPixel.com');
     await expect(intro.getByRole('link', { name: 'Tom Chen', exact: true }))
-      .toHaveAttribute('href', 'https://tomchen.org/');
+      .toHaveAttribute('href', 'https://github.com/tomchen');
     const examples = page.locator('#criteria .about__examples');
     await expect(examples.locator('li')).toHaveCount(5);
     await expect(examples.locator('li strong a')).toHaveCount(5);

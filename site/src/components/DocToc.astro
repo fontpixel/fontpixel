@@ -1,0 +1,22 @@
+---
+/** One level of a docs page's table of contents; h3s nest under their h2. */
+export interface TocItem {
+  slug: string;
+  text: string;
+  children: TocItem[];
+}
+
+interface Props {
+  items: TocItem[];
+}
+const { items } = Astro.props;
+---
+
+<ul>
+  {items.map((item) => (
+    <li>
+      <a href={`#${item.slug}`} data-toc-link={item.slug}>{item.text}</a>
+      {item.children.length > 0 && <Astro.self items={item.children} />}
+    </li>
+  ))}
+</ul>

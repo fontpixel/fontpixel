@@ -60,11 +60,35 @@ test('header uses the requested icons, a tools menu, and no catalogue link', asy
   await toolsTrigger.hover();
   await expect(tools.getByRole('menuitem')).toHaveCount(4);
   await expect(tools.getByRole('menuitem')).toHaveText([
-    'bdfparser (JS/TS)',
-    'bdfparser (Python)',
+    'BDF Parser (JS/TS)',
+    'BDF Parser (Python)',
     'BDF Specification',
-    'Font Template',
+    'Simple Font Template',
   ]);
+});
+
+test('the GitHub icon links to the repository and opens a menu of related repositories', async ({ page }) => {
+  await page.goto('zh/');
+  const menu = page.getByTestId('github-menu');
+  const trigger = page.getByTestId('github-link');
+  await expect(trigger).toHaveAttribute('href', 'https://github.com/fontpixel/fontpixel');
+  await trigger.focus();
+  await trigger.press('ArrowDown');
+  const items = menu.getByRole('menuitem');
+  await expect(items.first()).toBeFocused();
+  await expect(items).toHaveCount(5);
+  expect(await items.evaluateAll((as) => as.map((a) => (a as HTMLAnchorElement).href))).toEqual([
+    'https://github.com/fontpixel/bdfparser-js',
+    'https://github.com/fontpixel/bdfparser',
+    'https://github.com/fontpixel/font-template',
+    'https://github.com/fontpixel/fontpixel',
+    'https://github.com/tomchen',
+  ]);
+  await expect(items.nth(2)).toHaveText('简易字体模板');
+  for (const a of await items.all()) {
+    await expect(a).toHaveAttribute('target', '_blank');
+    await expect(a).toHaveAttribute('rel', 'noopener noreferrer');
+  }
 });
 
 test('clicking the tools icon opens the tools page', async ({ page }) => {
@@ -91,10 +115,10 @@ test.describe('on a touch screen', () => {
 test('header menus stay inside the viewport', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   await page.goto('en/');
-  for (const testId of ['tools-menu', 'lang-menu']) {
+  for (const testId of ['tools-menu', 'lang-menu', 'theme-menu', 'github-menu']) {
     const menu = page.getByTestId(testId);
     await menu.locator('.navmenu__trigger').hover();
-    await expect(menu.getByRole('menuitem').first()).toBeVisible();
+    await expect(menu.locator('[role^="menuitem"]').first()).toBeVisible();
     const box = await menu.locator('ul').boundingBox();
     const viewportWidth = await page.evaluate(() => document.documentElement.clientWidth);
     expect(box).not.toBeNull();
@@ -157,18 +181,53 @@ test('traditional Chinese is converted, not left in simplified', async ({ page }
   }
 });
 
-test('theme toggle persists', async ({ page }) => {
+test('the theme menu picks a palette and mode that persist, and can return to the system mode', async ({ page }) => {
   await page.goto('zh/');
   const html = page.locator('html');
-  const initial = await html.getAttribute('data-theme');
-  await page.getByTestId('theme-toggle').click();
+  await expect(html).toHaveAttribute('data-palette', 'red');
+  const menu = page.getByTestId('theme-menu');
+  const trigger = page.getByTestId('theme-toggle');
+  await expect(trigger).toHaveAccessibleName('配色主题');
+  await trigger.click();
+  // Five palettes, each in light and dark, plus "follow system", ticked while no mode is picked
+  await expect(menu.getByRole('menuitemradio')).toHaveCount(10);
+  const system = menu.getByRole('menuitemcheckbox', { name: '明暗跟随系统' });
+  await expect(system).toHaveAttribute('aria-checked', 'true');
+
+  await menu.getByRole('menuitemradio', { name: '孔雀石 · 深色' }).click();
   // The theme is applied inside a view transition's update callback, a frame later.
-  const flipped = initial === 'dark' ? 'light' : 'dark';
-  await expect(html).toHaveAttribute('data-theme', flipped);
+  await expect(html).toHaveAttribute('data-theme', 'dark');
+  await expect(html).toHaveAttribute('data-palette', 'green');
   await expect(html).not.toHaveClass(/theme-vt/);
-  expect(await page.evaluate(() => localStorage.getItem('opf-theme'))).toBe(flipped);
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  expect(await page.evaluate(() => [localStorage.getItem('opf-theme'), localStorage.getItem('opf-palette')])).toEqual(['dark', 'green']);
+
   await page.reload();
-  await expect(html).toHaveAttribute('data-theme', flipped);
+  await expect(html).toHaveAttribute('data-theme', 'dark');
+  await expect(html).toHaveAttribute('data-palette', 'green');
+  await trigger.click();
+  await expect(menu.getByRole('menuitemradio', { name: '孔雀石 · 深色' })).toHaveAttribute('aria-checked', 'true');
+  await expect(system).toHaveAttribute('aria-checked', 'false');
+
+  // Back to following the system (light here); the palette stays
+  await system.click();
+  await expect(html).toHaveAttribute('data-theme', 'light');
+  await expect(html).toHaveAttribute('data-palette', 'green');
+  expect(await page.evaluate(() => localStorage.getItem('opf-theme'))).toBeNull();
+
+  // A palette in the system's mode keeps following the system...
+  await trigger.click();
+  await menu.getByRole('menuitemradio', { name: '靛青 · 浅色' }).click();
+  await expect(html).toHaveAttribute('data-palette', 'blue');
+  await trigger.click();
+  await expect(system).toHaveAttribute('aria-checked', 'true');
+  expect(await page.evaluate(() => localStorage.getItem('opf-theme'))).toBeNull();
+  // ...while the other mode is a choice of mode
+  await menu.getByRole('menuitemradio', { name: '靛青 · 深色' }).click();
+  await expect(html).toHaveAttribute('data-theme', 'dark');
+  await trigger.click();
+  await expect(system).toHaveAttribute('aria-checked', 'false');
+  expect(await page.evaluate(() => localStorage.getItem('opf-theme'))).toBe('dark');
 });
 
 test('root redirects by browser language', async ({ page }) => {
@@ -225,11 +284,13 @@ test('header menus use one Tab stop and arrow keys navigate their items', async 
   for (const [testId, label] of [
     ['tools-menu', 'Tools'],
     ['lang-menu', 'Language'],
+    ['github-menu', 'Source'],
+    ['theme-menu', 'Colour theme'],
   ] as const) {
     const menu = page.getByTestId(testId);
     const trigger = menu.locator('.navmenu__trigger');
     await expect(trigger).toHaveAccessibleName(label);
-    const items = menu.getByRole('menuitem');
+    const items = menu.locator('[role^="menuitem"]');
 
     await trigger.focus();
     await trigger.press('ArrowDown');
@@ -241,7 +302,7 @@ test('header menus use one Tab stop and arrow keys navigate their items', async 
     await page.keyboard.press('Escape');
     await expect(trigger).toBeFocused();
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    await expect(menu.locator('[role="menuitem"]').first()).toHaveAttribute('tabindex', '-1');
+    await expect(items.first()).toHaveAttribute('tabindex', '-1');
   }
 });
 

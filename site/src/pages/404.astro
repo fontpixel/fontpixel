@@ -39,6 +39,8 @@ const w = ox - gap;
           var t = localStorage.getItem('opf-theme');
           document.documentElement.dataset.theme =
             t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          var p = localStorage.getItem('opf-palette');
+          if (p) document.documentElement.dataset.palette = p;
         } catch (e) {}
       })();
     </script>

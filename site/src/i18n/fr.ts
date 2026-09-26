@@ -5,11 +5,17 @@ import type { UIStrings } from './types';
 export const fr: UIStrings = {
   siteName: sitenames.fr,
   siteTagline:
-    'Polices bitmap / pixel / matricielles libres et open source, utilisables commercialement, à télécharger aux formats BDF, PCF et TTF',
+    'Collection de polices bitmap / pixel / matricielles libres et open source et outils associés, utilisables commercialement, à télécharger aux formats BDF, PCF et TTF',
   skipToContent: 'Aller au contenu principal',
   siteNavLabel: 'Navigation du site',
   langLabel: 'Langue',
-  themeToggle: 'Changer de thème clair / sombre',
+  theme: {
+    label: 'Thème de couleurs',
+    light: 'Clair',
+    dark: 'Sombre',
+    system: 'Clair / sombre selon le système',
+    palettes: { red: 'Cinabre', green: 'Malachite', blue: 'Indigo', amber: 'Ambre', violet: 'Améthyste' },
+  },
 
   nav: {
     catalogue: 'Catalogue',
@@ -17,6 +23,12 @@ export const fr: UIStrings = {
     github: 'Source',
     tools: 'Outils',
     compare: 'Comparer',
+  },
+  onThisPage: 'Sur cette page',
+  githubMenu: {
+    fontTemplate: 'Modèle de police simple',
+    website: 'Site web FontPixel',
+    follow: 'Suivre @tomchen',
   },
 
   catalogue: {
@@ -299,9 +311,7 @@ export const fr: UIStrings = {
 
   footer: {
     navLabel: 'Navigation du pied de page',
-    siteLicense: "Le code du site et les données du catalogue sont sous licence MIT.",
-    disclaimer:
-      'Chaque police reste la propriété de son auteur ; les informations de licence sont indicatives et le texte original publié en amont prévaut.',
+    legal: '© 2026 {author}. Code : {mit} ; polices : leurs licences respectives ; jeux de caractères : voir {notices}',
     dataSources: 'Sources des jeux de caractères',
     sourceCode: 'Code source du site',
   },
@@ -322,10 +332,10 @@ export const fr: UIStrings = {
     title: 'Outils et documentation',
     intro: 'Outils de développement et documents de référence autour des polices bitmap. Contenu en anglais pour le moment.',
     cards: [
-      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: 'Bibliothèque TypeScript/JavaScript pour analyser les polices bitmap BDF, pour navigateur et Node, avec un bac à sable en ligne.' },
-      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: 'Bibliothèque Python pour analyser les polices bitmap BDF ; se combine avec Pillow pour dessiner des bitmaps.' },
+      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'Bibliothèque TypeScript/JavaScript pour analyser les polices bitmap BDF, pour navigateur et Node, avec un bac à sable en ligne.' },
+      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'Bibliothèque Python pour analyser les polices bitmap BDF ; se combine avec Pillow pour dessiner des bitmaps.' },
       { slug: 'bdf-spec', name: 'Spécification BDF', blurb: 'Édition mise au propre de la spécification Glyph Bitmap Distribution Format d\'Adobe, avec une liste de propriétés non officielles.' },
-      { slug: 'font-template', name: 'Modèle de police', blurb: 'Le modèle et le guide les plus simples pour dessiner des glyphes dans Adobe Illustrator et produire une police avec FontForge.' },
+      { slug: 'font-template', name: 'Modèle de police simple', blurb: 'Le modèle et le guide les plus simples pour dessiner des glyphes dans Adobe Illustrator et produire une police avec FontForge.' },
     ],
   },
 };

@@ -5,11 +5,17 @@ import type { UIStrings } from './types';
 export const ko: UIStrings = {
   siteName: sitenames.ko,
   siteTagline:
-    '상업적 이용이 가능한 자유·오픈 소스 비트맵/픽셀/도트 글꼴 모음, BDF·PCF·TTF 형식 내려받기',
+    '상업적 이용이 가능한 자유·오픈 소스 비트맵/픽셀/도트 글꼴 모음과 도구, BDF·PCF·TTF 형식 내려받기',
   skipToContent: '본문으로 건너뛰기',
   siteNavLabel: '사이트 탐색',
   langLabel: '언어',
-  themeToggle: '밝은 테마 / 어두운 테마 전환',
+  theme: {
+    label: '색상 테마',
+    light: '라이트',
+    dark: '다크',
+    system: '라이트/다크를 시스템 설정에 맞춤',
+    palettes: { red: '주홍', green: '공작석', blue: '쪽빛', amber: '호박', violet: '자수정' },
+  },
 
   nav: {
     catalogue: '목록',
@@ -17,6 +23,12 @@ export const ko: UIStrings = {
     github: '소스',
     tools: '도구',
     compare: '비교',
+  },
+  onThisPage: '이 페이지의 목차',
+  githubMenu: {
+    fontTemplate: '간단한 글꼴 템플릿',
+    website: 'FontPixel 웹사이트',
+    follow: '@tomchen 팔로우',
   },
 
   catalogue: {
@@ -299,9 +311,7 @@ export const ko: UIStrings = {
 
   footer: {
     navLabel: '바닥글 탐색',
-    siteLicense: "사이트 코드와 수록 데이터는 MIT 라이선스로 배포됩니다.",
-    disclaimer:
-      '각 글꼴의 저작권은 원저작자에게 있습니다. 라이선스 정보는 참고용이며 원 배포처의 원문이 우선합니다.',
+    legal: '© 2026 {author}. 코드: {mit}; 글꼴: 각 글꼴의 라이선스; 문자 집합: {notices} 참고',
     dataSources: '문자 집합 데이터 출처',
     sourceCode: '사이트 소스',
   },
@@ -322,10 +332,10 @@ export const ko: UIStrings = {
     title: '도구와 문서',
     intro: '비트맵 글꼴을 둘러싼 개발 도구와 참고 문서입니다. 본문은 현재 영어입니다.',
     cards: [
-      { slug: 'bdfparser-js', name: 'bdfparser (JS/TS)', blurb: 'BDF 비트맵 글꼴을 파싱하는 TypeScript/JavaScript 라이브러리. 브라우저와 Node 지원, 온라인 플레이그라운드 포함.' },
-      { slug: 'bdfparser-py', name: 'bdfparser (Python)', blurb: 'BDF 비트맵 글꼴을 파싱하는 Python 라이브러리. Pillow와 함께 비트맵을 그릴 수 있습니다.' },
+      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'BDF 비트맵 글꼴을 파싱하는 TypeScript/JavaScript 라이브러리. 브라우저와 Node 지원, 온라인 플레이그라운드 포함.' },
+      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'BDF 비트맵 글꼴을 파싱하는 Python 라이브러리. Pillow와 함께 비트맵을 그릴 수 있습니다.' },
       { slug: 'bdf-spec', name: 'BDF 사양', blurb: 'Adobe의 Glyph Bitmap Distribution Format 사양 정리판. 비공식 속성 목록 포함.' },
-      { slug: 'font-template', name: '글꼴 템플릿', blurb: 'Adobe Illustrator로 글리프를 그리고 FontForge로 글꼴을 만드는 가장 간단한 템플릿과 안내.' },
+      { slug: 'font-template', name: '간단한 글꼴 템플릿', blurb: 'Adobe Illustrator로 글리프를 그리고 FontForge로 글꼴을 만드는 가장 간단한 템플릿과 안내.' },
     ],
   },
 };

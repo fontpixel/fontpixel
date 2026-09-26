@@ -83,9 +83,11 @@ test.describe('with reduced motion', () => {
     await page.goto('en/');
     const html = page.locator('html');
     const initial = await html.getAttribute('data-theme');
+    const flipped = initial === 'dark' ? 'light' : 'dark';
     await page.getByTestId('theme-toggle').click();
+    await page.getByTestId('theme-menu').locator(`[data-theme-palette="red"][data-theme-mode="${flipped}"]`).click();
     // Applied synchronously in the click handler: no transition to wait for.
-    expect(await html.getAttribute('data-theme')).not.toBe(initial);
+    expect(await html.getAttribute('data-theme')).toBe(flipped);
     await expect(html).not.toHaveClass(/theme-vt/);
   });
 });

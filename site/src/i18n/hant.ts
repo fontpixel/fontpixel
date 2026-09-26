@@ -56,8 +56,10 @@ const OVERRIDES: Record<string, string> = {
   // The example names exact code points, so keep 𰻝 instead of converting it to 𰻞.
   '输入任意字符，如：Æφは𰻝': '輸入任意字元，如：Æφは𰻝',
   // This keyword list intentionally keeps 畫素 as an exception to FIXUPS.
-  '免费可商用的自由开源点阵/像素/位图字体合集，BDF、PCF、TTF格式下载':
-    '免費可商用的自由開源點陣/像素/畫素/位元圖字型合集，BDF、PCF、TTF格式下載',
+  '免费可商用的自由开源点阵/像素/位图字体合集与工具，BDF、PCF、TTF格式下载':
+    '免費可商用的自由開源點陣/像素/畫素/位元圖字型合集與工具，BDF、PCF、TTF格式下載',
+  // "Follow" on GitHub is 追蹤 in Taiwan; OpenCC keeps the mainland 關注.
+  '关注@tomchen': '追蹤@tomchen',
 };
 
 const cache = new Map<string, string>();

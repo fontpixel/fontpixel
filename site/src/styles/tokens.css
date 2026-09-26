@@ -16,6 +16,9 @@
   --on-accent: #fdfbf5;
   --canvas-ink: #1c1a17;
   --canvas-paper: #fdfbf5;
+  /* Docs body link: no underline, so ≥3:1 against the docs text and ≥4.5:1
+     against paper, surface and table stripes (DocsLayout) */
+  --doc-link: #c43230;
 
   --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans',
     'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
@@ -48,6 +51,140 @@
   --on-accent: #151310;
   --canvas-ink: #e9e3d5;
   --canvas-paper: #1d1a16;
+  --doc-link: #eb4f3f;
+}
+
+/* The other palettes of the theme menu (lib/palettes.ts), each a pigment like
+   the default cinnabar: paper and ink lean toward its hue, the accent is the
+   pigment. Every text colour keeps WCAG AA (4.5:1) on paper and surface, as
+   the defaults above do; palettes.test.ts checks it. */
+
+/* 孔雀石 malachite */
+:root[data-palette='green'] {
+  --paper: #eff3ec;
+  --surface: #fafcf7;
+  --ink: #161b17;
+  --ink-2: #434b44;
+  --ink-3: #636d63;
+  --line: #cdd8cb;
+  --line-soft: #e1e8de;
+  --accent: #1b6a4b;
+  --accent-soft: #1b6a4b22;
+  --on-accent: #fafcf7;
+  --canvas-ink: #161b17;
+  --canvas-paper: #fafcf7;
+  --doc-link: #1e7754;
+}
+:root[data-palette='green'][data-theme='dark'] {
+  --paper: #0f1512;
+  --surface: #151d19;
+  --ink: #dde8e0;
+  --ink-2: #a4b3a9;
+  --ink-3: #7f8f84;
+  --line: #2a3530;
+  --line-soft: #1e2722;
+  --accent: #5cc49a;
+  --accent-soft: #5cc49a2b;
+  --on-accent: #0f1512;
+  --canvas-ink: #dde8e0;
+  --canvas-paper: #151d19;
+  --doc-link: #36966f;
+}
+
+/* 靛青 indigo */
+:root[data-palette='blue'] {
+  --paper: #eef1f6;
+  --surface: #f9fbfd;
+  --ink: #161a21;
+  --ink-2: #434954;
+  --ink-3: #636b7a;
+  --line: #cdd5e0;
+  --line-soft: #e1e6ee;
+  --accent: #2c55a5;
+  --accent-soft: #2c55a522;
+  --on-accent: #f9fbfd;
+  --canvas-ink: #161a21;
+  --canvas-paper: #f9fbfd;
+  --doc-link: #3465c5;
+}
+:root[data-palette='blue'][data-theme='dark'] {
+  --paper: #0f1219;
+  --surface: #151a23;
+  --ink: #dde3ee;
+  --ink-2: #a5aebe;
+  --ink-3: #7f899c;
+  --line: #2a3140;
+  --line-soft: #1e2430;
+  --accent: #80a8f6;
+  --accent-soft: #80a8f62b;
+  --on-accent: #0f1219;
+  --canvas-ink: #dde3ee;
+  --canvas-paper: #151a23;
+  --doc-link: #4781f2;
+}
+
+/* 琥珀 amber */
+:root[data-palette='amber'] {
+  --paper: #f7f1e2;
+  --surface: #fdf9ee;
+  --ink: #1e1910;
+  --ink-2: #504739;
+  --ink-3: #72674e;
+  --line: #ddd1b6;
+  --line-soft: #ece3cd;
+  --accent: #8f5200;
+  --accent-soft: #8f520022;
+  --on-accent: #fdf9ee;
+  --canvas-ink: #1e1910;
+  --canvas-paper: #fdf9ee;
+  --doc-link: #9b5900;
+}
+:root[data-palette='amber'][data-theme='dark'] {
+  --paper: #16130b;
+  --surface: #1e1a10;
+  --ink: #ede3cc;
+  --ink-2: #b8ab8e;
+  --ink-3: #918568;
+  --line: #383022;
+  --line-soft: #29231a;
+  --accent: #e6a748;
+  --accent-soft: #e6a7482b;
+  --on-accent: #16130b;
+  --canvas-ink: #ede3cc;
+  --canvas-paper: #1e1a10;
+  --doc-link: #b87819;
+}
+
+/* 紫晶 amethyst */
+:root[data-palette='violet'] {
+  --paper: #f3f0f6;
+  --surface: #fbfafd;
+  --ink: #1b1721;
+  --ink-2: #4a4454;
+  --ink-3: #6b6379;
+  --line: #d7cfe0;
+  --line-soft: #e8e3ee;
+  --accent: #7240a6;
+  --accent-soft: #7240a622;
+  --on-accent: #fbfafd;
+  --canvas-ink: #1b1721;
+  --canvas-paper: #fbfafd;
+  --doc-link: #844fbb;
+}
+:root[data-palette='violet'][data-theme='dark'] {
+  --paper: #131019;
+  --surface: #1b1722;
+  --ink: #e5e0ee;
+  --ink-2: #afa7bd;
+  --ink-3: #8b8299;
+  --line: #322c3c;
+  --line-soft: #241f2d;
+  --accent: #bd9df3;
+  --accent-soft: #bd9df32b;
+  --on-accent: #131019;
+  --canvas-ink: #e5e0ee;
+  --canvas-paper: #1b1722;
+  --doc-link: #9b6bed;
 }
 
 * {
@@ -221,8 +358,11 @@ pre,
   gap: var(--s2);
 }
 
-/* Inline links remain identifiable without relying on color perception. */
-.site-main p a, .site-main li:not([role="none"]) > a:not(.tools__card) {
+/* Inline links remain identifiable without relying on color perception. The
+   docs are left out: they follow the original Docusaurus look and set links
+   apart by contrast instead (DocsLayout). */
+.site-main p a:not(.doc a),
+.site-main li:not([role="none"]) > a:not(.tools__card, .doc a) {
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }

@@ -5,6 +5,8 @@
  * separately maintained text.
  */
 
+import type { Palette } from '../lib/palettes';
+
 export type Lang = 'zh' | 'zh-Hant' | 'en' | 'ja' | 'ko' | 'fr';
 
 export interface UIStrings {
@@ -16,7 +18,14 @@ export interface UIStrings {
   /** Accessible name for the header nav */
   siteNavLabel: string;
   langLabel: string;
-  themeToggle: string;
+  /** The theme menu: a colour palette in light or dark, or following the system's mode */
+  theme: {
+    label: string;
+    light: string;
+    dark: string;
+    system: string;
+    palettes: Record<Palette, string>;
+  };
 
   nav: {
     catalogue: string;
@@ -24,6 +33,15 @@ export interface UIStrings {
     github: string;
     tools: string;
     compare: string;
+  };
+  /** Label of the docs pages' table of contents (the page's own section headings) */
+  onThisPage: string;
+  /** Labels of the GitHub icon's dropdown: the author's related repositories
+   * (the BDF Parser names are product names and stay untranslated, see Base.astro) */
+  githubMenu: {
+    fontTemplate: string;
+    website: string;
+    follow: string;
   };
 
   catalogue: {
@@ -214,8 +232,9 @@ export interface UIStrings {
     /** Accessible name for the footer nav */
     navLabel: string;
     /** License for the site itself (code and collection data). The copyright line is language-independent and hardcoded in the footer markup */
-    siteLicense: string;
-    disclaimer: string;
+    /** Copyright and licences in one line, under the tagline; {author}, {mit} and
+     * {notices} become links to the author, the site's LICENSE and THIRD_PARTY_NOTICES.md */
+    legal: string;
     dataSources: string;
     sourceCode: string;
   };

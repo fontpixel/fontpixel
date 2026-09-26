@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 ---
 
-<DocsLayout lang={lang} section="bdf-spec" entry={entry}><Content /></DocsLayout>
+<DocsLayout lang={lang} section="bdf-spec" entry={entry} headings={headings}><Content /></DocsLayout>

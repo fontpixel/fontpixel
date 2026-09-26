@@ -8,6 +8,7 @@ import { withBase } from '../lib/data';
 import { pageCopy } from '../i18n/page-copy';
 import { DOC_LANGS } from '../lib/docs';
 import { pageTransitionScript } from '../lib/viewtransition';
+import { DEFAULT_PALETTE, PALETTES, SWATCHES } from '../lib/palettes';
 
 interface Props {
   lang: Lang;
@@ -30,10 +31,13 @@ interface Props {
    * carries the site's own licence; a font page that claimed it would be stating
    * MIT over a font that is GPL or public domain. */
   licenseUrl?: string;
+  /** Full-width header and main, for the tools/docs pages that follow the
+   * original Docusaurus layout (DocsLayout lays out the main area itself). */
+  wide?: boolean;
 }
 
 const REPO_URL = 'https://github.com/fontpixel/fontpixel';
-const { lang, path, availableLangs } =
+const { lang, path, availableLangs, wide } =
   Astro.props;
 const langs = availableLangs ?? LANGS;
 const otherLangs = langs.filter((l) => l !== lang);
@@ -44,6 +48,14 @@ const isHome = path === '/' || /^\/page\/\d+\/$/.test(path);
 // Which side of the catalogue ⇄ font-page transition this page is (styles/transitions.css).
 const vtPage = isHome ? 'catalogue' : /^\/fonts\/[^/]+\/$/.test(path) ? 'font' : undefined;
 const vtScript = pageTransitionScript(import.meta.env.BASE_URL, LANGS);
+const githubLinks: [string, string][] = [
+  // Product names, the same in every language
+  ['https://github.com/fontpixel/bdfparser-js', 'BDF Parser (TS/JS)'],
+  ['https://github.com/fontpixel/bdfparser', 'BDF Parser (Python)'],
+  ['https://github.com/fontpixel/font-template', s.githubMenu.fontTemplate],
+  ['https://github.com/fontpixel/fontpixel', s.githubMenu.website],
+  ['https://github.com/tomchen', s.githubMenu.follow],
+];
 
 // The site name uses a pixel web font subsetted at build time (brand.woff2, a few KB,
 // cached once site-wide), replacing the old per-page canvas rendering. brand is null
@@ -76,16 +88,20 @@ const brandCss = brand
             href={withBase(`/data/${brand.file}`)} />
     )}
     {brand && <style set:html={brandCss} />}
-    <script is:inline>
+    <script is:inline define:vars={{ palettes: PALETTES, defaultPalette: DEFAULT_PALETTE }}>
       (function () {
+        var root = document.documentElement;
         try {
           var t = localStorage.getItem('opf-theme');
           var m =
             t ||
             (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          document.documentElement.dataset.theme = m;
+          root.dataset.theme = m;
+          var p = localStorage.getItem('opf-palette');
+          root.dataset.palette = palettes.indexOf(p) >= 0 ? p : defaultPalette;
         } catch (e) {
-          document.documentElement.dataset.theme = 'light';
+          root.dataset.theme = 'light';
+          root.dataset.palette = defaultPalette;
         }
         // Lets CSS collapse the catalogue's filter panel from the first paint on
         // narrow screens; the island drops the class once it can do it natively.
@@ -108,7 +124,7 @@ const brandCss = brand
       )}
     </div>
     <header class="site-header">
-      <div class="container site-header__row">
+      <div class:list={['container site-header__row', { 'container--wide': wide }]}>
         <a class="site-brand" href={withBase(`/${lang}/`)}>
           <span
             class:list={['site-brand__name', brand && 'site-brand__name--pix']}
@@ -257,73 +273,137 @@ const brandCss = brand
               </ul>
             </div>
           )}
-          <button
-            type="button"
-            class="theme-toggle"
-            data-testid="theme-toggle"
-            aria-label={s.themeToggle}
-            title={s.themeToggle}
-          >
-            <svg
-              class="icon icon--sun"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
+          {/* The icon shows the current mode (sun: light, moon: dark); its menu has
+              a row per palette, each offering that palette's light and dark
+              theme as a swatch drawn in the theme's own paper and accent. */}
+          <div class="navmenu thememenu" data-nav-menu data-testid="theme-menu">
+            <button
+              type="button"
+              class="navmenu__trigger theme-toggle"
+              data-testid="theme-toggle"
+              aria-label={s.theme.label}
+              title={s.theme.label}
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="theme-menu-popup"
             >
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2" />
-              <path d="M12 20v2" />
-              <path d="m4.93 4.93 1.41 1.41" />
-              <path d="m17.66 17.66 1.41 1.41" />
-              <path d="M2 12h2" />
-              <path d="M20 12h2" />
-              <path d="m6.34 17.66-1.41 1.41" />
-              <path d="m19.07 4.93-1.41 1.41" />
-            </svg>
-            <svg
-              class="icon icon--moon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
+              <svg
+                class="icon icon--sun"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" />
+                <path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" />
+                <path d="m19.07 4.93-1.41 1.41" />
+              </svg>
+              <svg
+                class="icon icon--moon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
+                />
+              </svg>
+            </button>
+            <ul id="theme-menu-popup" role="menu" aria-label={s.theme.label} data-menu-popup hidden>
+              {PALETTES.map((palette) => (
+                <li role="none" class="thememenu__row">
+                  <span class="thememenu__name" aria-hidden="true">{s.theme.palettes[palette]}</span>
+                  {(['light', 'dark'] as const).map((mode) => (
+                    <button
+                      type="button"
+                      role="menuitemradio"
+                      tabindex="-1"
+                      aria-checked="false"
+                      class="thememenu__swatch"
+                      data-theme-palette={palette}
+                      data-theme-mode={mode}
+                      aria-label={`${s.theme.palettes[palette]} · ${s.theme[mode]}`}
+                      title={`${s.theme.palettes[palette]} · ${s.theme[mode]}`}
+                      style={`--sw-paper:${SWATCHES[palette][mode].paper};--sw-accent:${SWATCHES[palette][mode].accent}`}
+                    >
+                      {mode === 'light' ? (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M12 2v2M12 20v2m-7.07-17.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                      </svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+                      </svg>
+                      )}
+                    </button>
+                  ))}
+                </li>
+              ))}
+              <li role="none" class="thememenu__system">
+                <button type="button" role="menuitemcheckbox" tabindex="-1" aria-checked="false" data-theme-system>
+                  <svg class="thememenu__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  {s.theme.system}
+                </button>
+              </li>
+            </ul>
+          </div>
+          {/* Like the tools icon: the icon links to this site's repository, hovering or
+              tapping opens the menu of the author's related repositories. */}
+          <div class="navmenu githubmenu" data-nav-menu data-testid="github-menu">
+            <a
+              class="navmenu__trigger"
+              href={REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="github-link"
+              aria-label={s.nav.github}
+              title={s.nav.github}
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="github-menu-popup"
             >
-              <path
-                d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
-              />
-            </svg>
-          </button>
-          <a
-            class="nav-icon"
-            href={REPO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="github-link"
-            aria-label={s.nav.github}
-            title={s.nav.github}
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path
-                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
-              />
-              <path d="M9 18c-4.51 2-5-2-7-2" />
-            </svg>
-          </a>
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                />
+                <path d="M9 18c-4.51 2-5-2-7-2" />
+              </svg>
+            </a>
+            <ul id="github-menu-popup" role="menu" data-menu-popup hidden>
+              {githubLinks.map(([href, label]) => (
+                <li role="none">
+                  <a role="menuitem" tabindex="-1" href={href} target="_blank" rel="noopener noreferrer">
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </nav>
       </div>
       <hr class="hairline" style="margin:0" />
@@ -362,7 +442,7 @@ const brandCss = brand
       const menuPopup = (menu: HTMLElement) =>
         menu.querySelector<HTMLElement>('[data-menu-popup]');
       const menuItems = (menu: HTMLElement) =>
-        [...menu.querySelectorAll<HTMLElement>('[role="menuitem"]')].filter(
+        [...menu.querySelectorAll<HTMLElement>('[role^="menuitem"]')].filter(
           (item) => item.getAttribute('aria-disabled') !== 'true',
         );
       const menuIsOpen = (menu: HTMLElement) =>
@@ -396,15 +476,19 @@ const brandCss = brand
 
         const menuRect = menu.getBoundingClientRect();
         const triggerRect = trigger.getBoundingClientRect();
-        const popupRect = popup.getBoundingClientRect();
-        const viewportLeft = popupRect.width <= viewportWidth
-          ? Math.min(Math.max(triggerRect.left, 0), viewportWidth - popupRect.width)
+        // Layout size, not getBoundingClientRect: the popup is still scaled down
+        // while its opening animation runs. (Computed style rather than offset*,
+        // which round and can leave it a fraction of a pixel past the edge.)
+        const popupStyle = getComputedStyle(popup);
+        const popupWidth = parseFloat(popupStyle.width);
+        const viewportLeft = popupWidth <= viewportWidth
+          ? Math.min(Math.max(triggerRect.left, 0), viewportWidth - popupWidth)
           : 0;
         popup.style.left = `${viewportLeft - menuRect.left}px`;
 
         const below = Math.max(0, window.innerHeight - triggerRect.bottom - gutter);
         const above = Math.max(0, triggerRect.top - gutter);
-        const naturalHeight = popupRect.height;
+        const naturalHeight = parseFloat(popupStyle.height);
         const viewportHeight = Math.max(0, window.innerHeight - gutter * 2);
         if (naturalHeight <= below) {
           menu.dataset.menuSide = 'bottom';
@@ -554,7 +638,7 @@ const brandCss = brand
       );
     </script>
 
-    <main id="main" class="container site-main" tabindex="-1">
+    <main id="main" class:list={['container site-main', { 'site-main--wide': wide }]} tabindex="-1">
       <slot />
     </main>
 
@@ -564,6 +648,19 @@ const brandCss = brand
         <div class="site-footer__blurb">
           <p class="site-footer__name">{s.siteName}</p>
           <p>{s.siteTagline}</p>
+          <p class="site-footer__legal">
+            {s.footer.legal.split(/(\{(?:author|mit|notices)\})/).map((part) =>
+              part === '{author}' ? (
+                <a href="https://github.com/tomchen" target="_blank" rel="noopener noreferrer">Tom Chen</a>
+              ) : part === '{mit}' ? (
+                <a href={`${REPO_URL}/blob/main/LICENSE`} target="_blank" rel="noopener noreferrer">MIT</a>
+              ) : part === '{notices}' ? (
+                <a href={`${REPO_URL}/blob/main/THIRD_PARTY_NOTICES.md`} target="_blank" rel="noopener noreferrer">NOTICES</a>
+              ) : (
+                part
+              ),
+            )}
+          </p>
         </div>
         <nav class="site-footer__links" aria-label={pageCopy[lang].footer}>
           <a href={withBase(`/${lang}/`)}>{s.nav.catalogue}</a>
@@ -573,34 +670,58 @@ const brandCss = brand
           <a href={withBase(`/${lang}/about/#datasources`)}>{s.footer.dataSources}</a>
           <a href={REPO_URL} target="_blank" rel="noopener noreferrer">{s.footer.sourceCode}</a>
         </nav>
-        <div class="site-footer__legal">
-          <p>{s.footer.disclaimer}</p>
-          <p>
-            {s.footer.siteLicense}{' '}
-            {/* Copyright line skips i18n: the year and name are the same in every language, and it needs an embedded link */}
-            <span class="site-footer__copy">
-              © 2026 <a href="https://tomchen.org/" target="_blank" rel="noopener noreferrer">Tom Chen</a>
-            </span>
-          </p>
-        </div>
       </div>
     </footer>
 
     <script>
       import { revealPercent, revealRadius, transformOffset } from '../lib/viewtransition';
+      import { DEFAULT_PALETTE, type Mode, type Palette } from '../lib/palettes';
 
-      const btn = document.querySelector<HTMLElement>('[data-testid="theme-toggle"]');
-      if (btn) btn.addEventListener('click', () => {
-        const root = document.documentElement;
-        const cur = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      const root = document.documentElement;
+      const trigger = document.querySelector<HTMLElement>('[data-testid="theme-toggle"]');
+      const themeMenu = document.querySelector<HTMLElement>('[data-testid="theme-menu"]');
+      const swatches = [...document.querySelectorAll<HTMLElement>('[data-theme-palette]')];
+      const systemItem = document.querySelector<HTMLElement>('[data-theme-system]');
+      const systemDark = matchMedia('(prefers-color-scheme: dark)');
+      const systemMode = (): Mode => (systemDark.matches ? 'dark' : 'light');
+
+      const stored = (key: string) => {
+        try {
+          return localStorage.getItem(key);
+        } catch {
+          return null; /* e.g. in private browsing mode */
+        }
+      };
+      const store = (key: string, value: string | null) => {
+        try {
+          if (value === null) localStorage.removeItem(key);
+          else localStorage.setItem(key, value);
+        } catch {
+          /* ignore, e.g. in private browsing mode */
+        }
+      };
+
+      /** Tick the theme on show, and "follow system" while no mode was picked. */
+      const sync = () => {
+        for (const sw of swatches) {
+          const on =
+            sw.dataset.themePalette === root.dataset.palette && sw.dataset.themeMode === root.dataset.theme;
+          sw.setAttribute('aria-checked', String(on));
+        }
+        systemItem?.setAttribute('aria-checked', String(stored('opf-theme') === null));
+      };
+
+      /** Switch to a theme, the new one spreading out from `origin` in a growing circle. */
+      const switchTheme = (palette: Palette, mode: Mode, origin: HTMLElement) => {
         const apply = () => {
-          root.dataset.theme = cur;
-          try {
-            localStorage.setItem('opf-theme', cur);
-          } catch {
-            /* ignore, e.g. in private browsing mode */
-          }
+          root.dataset.theme = mode;
+          root.dataset.palette = palette;
+          sync();
         };
+        if (root.dataset.theme === mode && root.dataset.palette === palette) {
+          sync();
+          return;
+        }
         if (
           typeof document.startViewTransition !== 'function' ||
           matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -608,15 +729,15 @@ const brandCss = brand
           apply();
           return;
         }
-        // The new theme spreads from the button in a growing circle, drawn as a
-        // clip-path on ::view-transition-new(root). Two things keep it on the button:
+        // The circle is a clip-path on ::view-transition-new(root). Two things keep
+        // its centre on the origin:
         // - That box is not always the viewport: on phones it also covers the area
         //   under the browser's toolbars. A 1px marker named `theme-origin` sits on the
-        //   button, and its group's transform says where that is within the box.
+        //   origin, and its group's transform says where that is within the box.
         // - On a 2x display, Chrome (152, Linux) paints px lengths in that clip-path at
         //   half size on screen, putting the centre halfway to the top-left corner. DevTools
         //   screenshots don't show it. Percentages of the box are unaffected.
-        const r = btn.getBoundingClientRect();
+        const r = origin.getBoundingClientRect();
         const x = r.left + r.width / 2;
         const y = r.top + r.height / 2;
         const marker = document.createElement('div');
@@ -648,7 +769,41 @@ const brandCss = brand
           marker.remove();
           root.classList.remove('theme-vt');
         });
+      };
+
+      /** Close the menu after a pick; a keyboard pick hands focus back to the icon. */
+      const done = (event: MouseEvent) => {
+        themeMenu?.querySelector<HTMLElement>('[data-menu-popup]')?.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+        );
+        if (event.detail !== 0) trigger?.blur();
+      };
+
+      for (const sw of swatches) {
+        sw.addEventListener('click', (event) => {
+          const palette = sw.dataset.themePalette as Palette;
+          const mode = sw.dataset.themeMode as Mode;
+          // While following the system, a swatch in the system's mode only changes
+          // the palette; the other mode is a choice of mode and ends the following.
+          const following = stored('opf-theme') === null && mode === systemMode();
+          if (!following) store('opf-theme', mode);
+          store('opf-palette', palette === DEFAULT_PALETTE ? null : palette);
+          switchTheme(palette, mode, sw);
+          done(event);
+        });
+      }
+      systemItem?.addEventListener('click', (event) => {
+        store('opf-theme', null);
+        switchTheme((root.dataset.palette as Palette) ?? DEFAULT_PALETTE, systemMode(), trigger ?? systemItem);
+        done(event);
       });
+      // Until a mode is picked, the site keeps following the system as it changes.
+      systemDark.addEventListener('change', () => {
+        if (stored('opf-theme') === null && trigger) {
+          switchTheme((root.dataset.palette as Palette) ?? DEFAULT_PALETTE, systemMode(), trigger);
+        }
+      });
+      sync();
     </script>
 
     <style>
@@ -747,11 +902,128 @@ const brandCss = brand
         max-width: calc(100vw - 16px);
         overflow-y: visible;
       }
+      /* Pops out like the font.tomchen.org navbar dropdowns (Infima's
+         .dropdown__menu: scale 0.8 → 1 with a slight overshoot, 200ms), and
+         fades back out: `hidden` only takes effect once the exit has run. */
+      .navmenu ul {
+        transform-origin: top center;
+        transition:
+          opacity 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56),
+          transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56),
+          display 0.2s allow-discrete;
+      }
+      .navmenu ul[hidden] {
+        display: none;
+        opacity: 0;
+        transform: scale(0.8);
+        pointer-events: none;
+      }
+      @starting-style {
+        .navmenu ul:not([hidden]) {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+      }
+      .navmenu[data-menu-side='top'] ul {
+        transform-origin: bottom center;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .navmenu ul {
+          transition: none;
+        }
+      }
       .navmenu[data-menu-clipped] ul {
         overflow-y: auto;
       }
-      .toolsmenu ul {
+      .toolsmenu ul,
+      .githubmenu ul {
         min-width: 14rem;
+      }
+      /* Theme menu: a palette per row — its name, then its light and dark theme
+         as swatches in the theme's own paper and accent. The theme on show
+         gets a ring in its accent. */
+      .thememenu ul {
+        padding: var(--s2);
+      }
+      .thememenu__row {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        align-items: center;
+        gap: var(--s2);
+        padding: 3px 0;
+      }
+      .thememenu__name {
+        padding: 0 var(--s3) 0 var(--s1);
+        font-size: 0.85rem;
+        color: var(--ink-2);
+        white-space: nowrap;
+      }
+      .thememenu__swatch {
+        display: grid;
+        place-items: center;
+        width: 2.5rem;
+        height: 2rem;
+        padding: 0;
+        border: 1px solid color-mix(in srgb, var(--sw-accent) 30%, var(--line));
+        border-radius: 4px;
+        background: var(--sw-paper);
+        color: var(--sw-accent);
+        cursor: pointer;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+      .thememenu__swatch svg {
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+      .thememenu__swatch:hover {
+        transform: translateY(-1px);
+        border-color: var(--sw-accent);
+      }
+      .thememenu__swatch[aria-checked='true'] {
+        box-shadow:
+          0 0 0 2px var(--surface),
+          0 0 0 4px var(--sw-accent);
+      }
+      .thememenu__swatch:focus-visible {
+        outline-offset: 5px;
+      }
+      .thememenu__system {
+        margin-top: var(--s2);
+        padding-top: var(--s2);
+        border-top: 1px solid var(--line);
+      }
+      .thememenu__system button {
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+        width: 100%;
+        padding: var(--s1) var(--s1);
+        border: 0;
+        background: transparent;
+        color: var(--ink-2);
+        font: inherit;
+        font-size: 0.85rem;
+        text-align: left;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .thememenu__system button:hover {
+        color: var(--accent);
+        background: var(--accent-soft);
+      }
+      .thememenu__check {
+        flex: none;
+        width: 1rem;
+        height: 1rem;
+        color: var(--accent);
+      }
+      [aria-checked='false'] > .thememenu__check {
+        visibility: hidden;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .thememenu__swatch {
+          transition: none;
+        }
       }
       .navmenu li a {
         display: block;
@@ -792,7 +1064,7 @@ const brandCss = brand
         padding: var(--s2);
         color: var(--ink-2);
       }
-      .site-nav > .nav-icon:last-child {
+      .site-nav > :last-child {
         margin-right: calc(-1 * var(--s2)); /* right edge stays aligned with the container */
       }
       .navmenu__trigger:is(:hover, :focus-visible),
@@ -805,6 +1077,15 @@ const brandCss = brand
         min-height: 70vh;
         padding-top: var(--s5);
         padding-bottom: var(--s7);
+      }
+      .container--wide {
+        max-width: none;
+        padding-left: var(--s4);
+        padding-right: var(--s4);
+      }
+      .site-main--wide {
+        max-width: none;
+        padding: 0;
       }
       .site-footer__inner {
         display: grid;
@@ -827,11 +1108,6 @@ const brandCss = brand
         flex-direction: column;
         gap: var(--s1);
         align-items: flex-start;
-      }
-      .site-footer__legal {
-        grid-column: 1 / -1;
-        border-top: 1px solid var(--line);
-        padding-top: var(--s3);
       }
       @media (max-width: 640px) {
         .site-footer__inner {

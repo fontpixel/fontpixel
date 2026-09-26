@@ -1,0 +1,126 @@
+---
+/** A docs section's sidebar menu, Docusaurus (Infima) style: pages are links,
+ * categories fold open and shut under a caret. Renders itself for nested
+ * categories. */
+import { categoryOpen, type SidebarNode } from '../lib/docsidebar';
+
+interface Props {
+  nodes: SidebarNode[];
+  /** Slug of the page being shown */
+  current: string;
+  /** Slug → URL and default label of each page in the section */
+  pages: Map<string, { href: string; label: string }>;
+}
+const { nodes, current, pages } = Astro.props;
+---
+
+<ul class="menu">
+  {nodes.map((node) =>
+    'slug' in node ? (
+      <li>
+        <a
+          class="menu__link"
+          href={pages.get(node.slug)?.href}
+          aria-current={node.slug === current ? 'page' : undefined}
+        >
+          {node.label ?? pages.get(node.slug)?.label}
+        </a>
+      </li>
+    ) : (
+      <li>
+        <details class="menu__cat" open={categoryOpen(node, current)}>
+          <summary class="menu__link">
+            <span>{node.category}</span>
+            <svg class="menu__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </summary>
+          <Astro.self nodes={node.items} {current} {pages} />
+        </details>
+      </li>
+    ),
+  )}
+</ul>
+
+<style>
+  /* Infima's .menu__list / .menu__link, with the site accent as primary */
+  .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .menu .menu {
+    margin-top: 0.25rem;
+    padding-left: 1rem;
+  }
+  li:not(:first-child) {
+    margin-top: 0.25rem;
+  }
+  .menu__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.375rem 1rem;
+    border-radius: 0.25rem;
+    color: var(--dx-text-2);
+    line-height: 1.25;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s cubic-bezier(0.08, 0.52, 0.52, 1);
+  }
+  .menu__link:hover {
+    background: var(--dx-hover-bg);
+    text-decoration: none;
+  }
+  a.menu__link[aria-current='page'] {
+    color: var(--dx-primary);
+    background: var(--dx-hover-bg);
+  }
+  summary.menu__link {
+    list-style: none;
+    user-select: none;
+  }
+  summary.menu__link::-webkit-details-marker {
+    display: none;
+  }
+  /* Points down while open and right while folded, turning as it goes */
+  .menu__caret {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    transform: rotate(-90deg);
+    transition: transform 0.2s linear;
+  }
+  .menu__cat[open] > summary .menu__caret {
+    transform: none;
+  }
+  /* Browsers that can animate a <details> body slide it open and shut; the
+     rest just show and hide it. */
+  .menu__cat {
+    interpolate-size: allow-keywords;
+  }
+  .menu__cat::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.2s cubic-bezier(0.08, 0.52, 0.52, 1),
+      content-visibility 0.2s allow-discrete;
+  }
+  .menu__cat[open]::details-content {
+    block-size: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .menu__link,
+    .menu__caret {
+      transition: none;
+    }
+    /* On its own: a selector list with ::details-content in it would be
+       dropped whole by browsers that don't know it */
+    .menu__cat::details-content {
+      transition: none;
+    }
+  }
+</style>
