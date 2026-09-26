@@ -138,9 +138,19 @@ The current architecture needs neither a second Pages project nor R2. `OPF_BASE`
 sets the deployment path; `OPF_SITE` sets the canonical origin and defaults to
 `https://fontpixel.com`.
 
-The `Deploy` workflow runs the reusable CI checks before publishing `main` and
-deploys the exact site artifact that passed those checks. Font cache metadata
-and generated files are cached together to avoid unnecessary full rebuilds.
+Every push, `main` included, runs the `CI` workflow: tests only, never a
+deploy. pytest, vitest and the type check run before the font build, which can
+take half an hour on a cache miss, so they fail early. Run `make test` before
+pushing, and the related e2e specs when the UI changes; Lighthouse scores
+depend on the machine and are left to CI.
+
+To publish, tag a commit whose CI has passed and push the tag:
+`git tag v2026.09.27 && git push origin v2026.09.27`. The `Deploy` workflow
+does not re-run the tests. It checks that CI succeeded for that commit (waiting
+while CI is still running), then builds and deploys it as the production
+deployment; with the font cache from that CI run this takes minutes. It can
+also be started by hand for a chosen ref. Font cache metadata and generated
+files are cached together to avoid unnecessary full rebuilds.
 Configure the repository's Actions secrets `CLOUDFLARE_API_TOKEN` (a dedicated
 token with Cloudflare Pages Edit permission) and `CLOUDFLARE_ACCOUNT_ID`, plus the
 Actions variable `CF_PAGES_PROJECT` (`fontpixel`). Add `fontpixel.com` as a Pages

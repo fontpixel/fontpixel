@@ -122,7 +122,15 @@ dist-downloads/       下载物 → 构建时复制到站点 /downloads/
 20,000 个文件、任一文件不超过 25 MiB。无需第二个 Pages 项目或 R2。
 站点基路径由 `OPF_BASE` 控制；`OPF_SITE` 指定规范域名，默认 `https://fontpixel.com`。
 
-`Deploy` 工作流先运行可复用的 CI 检查，通过后直接发布已验证的站点产物。
+每次push（包括`main`）都运行`CI`工作流：只测试，从不部署。pytest、vitest和
+类型检查排在字体构建之前（缓存失效时字体构建约半小时），出错能早点发现。
+push前先运行`make test`；改了界面再加跑相关的e2e。Lighthouse的分数受机器
+影响，留给CI。
+
+发布时，给CI已经通过的提交打版本tag并推送：
+`git tag v2026.09.27 && git push origin v2026.09.27`。`Deploy`工作流不重跑测试：
+先确认这个提交的CI已经成功（CI还在跑就等它结束），再构建并作为正式部署发布；
+有CI留下的字体缓存时只需几分钟。也可以手动选定某个ref触发。
 字体缓存同时保存索引和生成文件，避免重复全量构建。仓库的 Actions Secrets
 需要配置 `CLOUDFLARE_API_TOKEN`（具有 Cloudflare Pages Edit 权限的专用令牌）和
 `CLOUDFLARE_ACCOUNT_ID`，Actions 变量 `CF_PAGES_PROJECT` 设置为 `fontpixel`。

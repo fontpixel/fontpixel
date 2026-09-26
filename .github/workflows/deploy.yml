@@ -1,23 +1,108 @@
 name: Deploy
 
+# Publishes a version tag (v*) or a manually chosen ref. It does not run the
+# tests again: it requires a successful CI run for the same commit, then
+# builds and deploys. With the font cache from that CI run this takes minutes.
 on:
   push:
-    branches: [main]
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
   deployments: write
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: deploy
   cancel-in-progress: false
 
 jobs:
   deploy:
-    uses: ./.github/workflows/ci.yml
-    with:
-      deploy: true
-    secrets:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require a successful CI run for this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+        run: |
+          # Waits while CI for the commit is still queued or running, up to 90 minutes.
+          for attempt in $(seq 1 180); do
+            runs=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/ci.yml/runs?head_sha=${SHA}&per_page=50" \
+              --jq '[.workflow_runs[] | {status, conclusion}]')
+            if jq -e 'any(.[]; .conclusion == "success")' <<<"$runs" > /dev/null; then
+              echo "CI passed for ${SHA}."
+              exit 0
+            fi
+            if ! jq -e 'any(.[]; .status != "completed")' <<<"$runs" > /dev/null; then
+              echo "::error::No successful CI run for ${SHA}. Push the commit to a branch, let CI pass, then tag it."
+              exit 1
+            fi
+            sleep 30
+          done
+          echo "::error::CI for ${SHA} did not finish within 90 minutes."
+          exit 1
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-1.4.2-${{ hashFiles('site/bun.lock') }}
+
+      - name: Install system dependencies (bdftopcf)
+        run: sudo apt-get update && sudo apt-get install -y xfonts-utils
+
+      - name: Install Python dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -e "pipeline[dev]"
+
+      # Same key as CI, whose run on main saved it; tag runs can read main's caches.
+      - name: Restore generated font cache
+        id: font-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .cache
+            site/public/data
+            dist-downloads
+          key: opf-output-v1-${{ hashFiles('fonts/**', 'pipeline/opf/**', 'pipeline/pyproject.toml') }}
+          restore-keys: opf-output-v1-
+
+      - name: Build font data
+        run: .venv/bin/python -u -m opf.build --fonts fonts --out site/public/data --downloads dist-downloads --cache .cache --budget-mb 900
+
+      - name: Build site wordmark
+        run: .venv/bin/python -m opf.brandfont --fonts fonts --data site/public/data --names site/src/i18n/sitenames.json
+
+      - name: Install site dependencies
+        run: cd site && bun install --frozen-lockfile
+
+      - name: Build site
+        run: cd site && bun run build
+        env:
+          OPF_BASE: /
+          OPF_DOWNLOADS_BASE: /downloads
+
+      - name: Check the full site against Pages free-plan limits
+        run: python .github/scripts/check_pages_limits.py site/dist
+
+      # --branch=main makes a tag deploy the production deployment.
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy site/dist --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=main

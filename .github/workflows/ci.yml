@@ -1,20 +1,16 @@
 name: CI
 
+# Tests every pushed branch, main included, and never deploys. Deploy
+# publishes a tagged commit only after this workflow has passed for it.
 on:
-  workflow_call:
-    inputs:
-      deploy:
-        description: Publish the verified site to Cloudflare Pages
-        type: boolean
-        default: false
-    secrets:
-      CLOUDFLARE_API_TOKEN:
-        required: false
-      CLOUDFLARE_ACCOUNT_ID:
-        required: false
   pull_request:
   push:
-    branches-ignore: [main]
+    branches: ['**']
+
+# A newer push to the same branch supersedes a run still in progress.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -48,6 +44,17 @@ jobs:
       - name: pytest
         run: .venv/bin/python -m pytest pipeline/tests -q
 
+      # Quick checks run before the font build, which can take half an hour
+      # when the cache misses, so their failures surface first.
+      - name: Install site dependencies
+        run: cd site && bun install --frozen-lockfile
+
+      - name: vitest
+        run: cd site && bun run vitest run
+
+      - name: Type check (astro check + svelte-check)
+        run: cd site && bun run check
+
       - name: Restore generated font cache
         id: font-cache
         uses: actions/cache/restore@v4
@@ -76,15 +83,6 @@ jobs:
       - name: Build site wordmark
         run: .venv/bin/python -m opf.brandfont --fonts fonts --data site/public/data --names site/src/i18n/sitenames.json
 
-      - name: Install site dependencies
-        run: cd site && bun install --frozen-lockfile
-
-      - name: vitest
-        run: cd site && bun run vitest run
-
-      - name: Type check (astro check + svelte-check)
-        run: cd site && bun run check
-
       - name: Build site
         run: cd site && bun run build
         env:
@@ -107,15 +105,6 @@ jobs:
 
       - name: Lighthouse mobile and desktop
         run: cd site && bun run audit:lighthouse
-
-      - name: Deploy verified site to Cloudflare Pages
-        if: inputs.deploy && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          command: pages deploy site/dist --project-name=${{ vars.CF_PAGES_PROJECT }}
 
       - name: Upload quality reports
         if: always()
