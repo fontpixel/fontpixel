@@ -12,6 +12,37 @@
 /bdf_spec/*            /en/bdf_spec/:splat        301
 /font_template         /en/font_template/         301
 /font_template/*       /en/font_template/:splat   301
+# The hyphenated section names this site used before adopting the old ones,
+# with and without the language prefix. The function pages gained a leading
+# underscore, so they come before the splats (the first matching rule wins).
+/bdfparser-js/api/functions/bitmap        /en/bdfparser_js/api/functions/_bitmap/   301
+/bdfparser-js/api/functions/bitmap/       /en/bdfparser_js/api/functions/_bitmap/   301
+/bdfparser-js/api/functions/font          /en/bdfparser_js/api/functions/_font/     301
+/bdfparser-js/api/functions/font/         /en/bdfparser_js/api/functions/_font/     301
+/bdfparser-js/api/functions/glyph         /en/bdfparser_js/api/functions/_glyph/    301
+/bdfparser-js/api/functions/glyph/        /en/bdfparser_js/api/functions/_glyph/    301
+/en/bdfparser-js/api/functions/bitmap     /en/bdfparser_js/api/functions/_bitmap/   301
+/en/bdfparser-js/api/functions/bitmap/    /en/bdfparser_js/api/functions/_bitmap/   301
+/en/bdfparser-js/api/functions/font       /en/bdfparser_js/api/functions/_font/     301
+/en/bdfparser-js/api/functions/font/      /en/bdfparser_js/api/functions/_font/     301
+/en/bdfparser-js/api/functions/glyph      /en/bdfparser_js/api/functions/_glyph/    301
+/en/bdfparser-js/api/functions/glyph/     /en/bdfparser_js/api/functions/_glyph/    301
+/bdfparser-js          /en/bdfparser_js/          301
+/bdfparser-js/*        /en/bdfparser_js/:splat    301
+/bdfparser-py          /en/bdfparser_py/          301
+/bdfparser-py/*        /en/bdfparser_py/:splat    301
+/bdf-spec              /en/bdf_spec/              301
+/bdf-spec/*            /en/bdf_spec/:splat        301
+/font-template         /en/font_template/         301
+/font-template/*       /en/font_template/:splat   301
+/en/bdfparser-js       /en/bdfparser_js/          301
+/en/bdfparser-js/*     /en/bdfparser_js/:splat    301
+/en/bdfparser-py       /en/bdfparser_py/          301
+/en/bdfparser-py/*     /en/bdfparser_py/:splat    301
+/en/bdf-spec           /en/bdf_spec/              301
+/en/bdf-spec/*         /en/bdf_spec/:splat        301
+/en/font-template      /en/font_template/         301
+/en/font-template/*    /en/font_template/:splat   301
 # Old sections with nothing to map to
 /all/*                 /                          301
 /bitmap_font/*         /                          301
