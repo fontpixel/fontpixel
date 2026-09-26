@@ -7,4 +7,4 @@ order: 19
 
 Ƭ **DirectionType**: keyof *typeof* DIRE\_SHORTCUT\_MAP
 
-Defined in: [bdfparser.ts:180](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L180)
+Defined in: [bdfparser.ts:180](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L180)

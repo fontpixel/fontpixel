@@ -8,16 +8,16 @@ order: 0
 Adobe Illustrator font templates that allow you to edit shapes of glyphs (characters) altogether in one `.ai` file (or in their separate, respective `.ai` files if you want), then export them as `.svg` files, which can be imported into a font file in free and open-source font maker [FontForge](https://fontforge.org/), and generate final production font files (`.otf`, `.ttf`, `.woff`, `.woff2`, etc.).
 
 <p align="center">
-<a href="https://github.com/tomchen/font-template" target="_blank" rel="noopener noreferrer">GitHub repository</a>
+<a href="https://github.com/fontpixel/font-template" target="_blank" rel="noopener noreferrer">GitHub repository</a>
 </p>
 
 ## Files
 
-* **`font_template.ai`** ([download](https://github.com/tomchen/font-template/raw/master/font_template.ai)): Adobe Illustrator font template for basic and extended symbols and latin letters (significant CP1252 coverage), each glyph has a separate artboard, so that you can easily export each of them as individual glyph SVG file.
-* **`font_template_single.ai`** ([download](https://github.com/tomchen/font-template/raw/master/font_template_single.ai)): Adobe Illustrator font template for a single glyph. If you want, you can use this file instead of (or along with) `font_template.ai`.
-* **`batch_import_svg.py`** ([open](https://github.com/tomchen/font-template/raw/master/batch_import_svg.py), then <kbd>Ctrl</kbd>+<kbd>S</kbd> / <kbd>Cmd</kbd>+<kbd>S</kbd> to save): a python script that can import multiple SVG individual glyph files into FontForge's `.sfd` font file (and can optionally convert it to production font files, i.e. `.otf`, `.ttf`, `.woff`, `.woff2`, etc.)
+* **`font_template.ai`** ([download](https://github.com/fontpixel/font-template/raw/master/font_template.ai)): Adobe Illustrator font template for basic and extended symbols and latin letters (significant CP1252 coverage), each glyph has a separate artboard, so that you can easily export each of them as individual glyph SVG file.
+* **`font_template_single.ai`** ([download](https://github.com/fontpixel/font-template/raw/master/font_template_single.ai)): Adobe Illustrator font template for a single glyph. If you want, you can use this file instead of (or along with) `font_template.ai`.
+* **`batch_import_svg.py`** ([open](https://github.com/fontpixel/font-template/raw/master/batch_import_svg.py), then <kbd>Ctrl</kbd>+<kbd>S</kbd> / <kbd>Cmd</kbd>+<kbd>S</kbd> to save): a python script that can import multiple SVG individual glyph files into FontForge's `.sfd` font file (and can optionally convert it to production font files, i.e. `.otf`, `.ttf`, `.woff`, `.woff2`, etc.)
 
-(Instead of downloading the files, you may also `git clone `[`https://github.com/tomchen/font-template.git`](https://github.com/tomchen/font-template.git) or [download the whole repository](https://github.com/tomchen/font-template/archive/master.zip))
+(Instead of downloading the files, you may also `git clone `[`https://github.com/fontpixel/font-template.git`](https://github.com/fontpixel/font-template.git) or [download the whole repository](https://github.com/fontpixel/font-template/archive/master.zip))
 
 (**Make sure you use the latest version of FontForge, which is 20th Anniversary Edition (2020-11-07) ([GitHub Release Page](https://github.com/fontforge/fontforge/releases) or [FontForge.org Download Page](https://fontforge.org/en-US/downloads/)). Old Windows version 20200314 crashes when importing SVG files.**)
 
@@ -100,10 +100,10 @@ When you select glyphs in Illustrator's "Export for Screens" window, you should 
 
 ### Update your font_template.ai before 2020-08-19
 
-On 19 August 2020, the project's `font_template.ai` file was updated (many artboard names were changed, e.g. `44 ,` were changed to `44 comma`) to fix an [Unicode filename issue](https://github.com/tomchen/font-template/issues/3). If you have downloaded `font_template.ai` before 2020-08-19 and made your `.ai` file based on the old version, you may optionally** update the artboard names in your `font_template.ai` using *either* of the following methods:
+On 19 August 2020, the project's `font_template.ai` file was updated (many artboard names were changed, e.g. `44 ,` were changed to `44 comma`) to fix an [Unicode filename issue](https://github.com/fontpixel/font-template/issues/3). If you have downloaded `font_template.ai` before 2020-08-19 and made your `.ai` file based on the old version, you may optionally** update the artboard names in your `font_template.ai` using *either* of the following methods:
 
 * Copy your "Artwork glyph" layer (and any other layers you have added) from your old `.ai` file to the latest `font_template.ai`
-* *Or* execute [**`/other_files/update_artboard_names.js`**](https://github.com/tomchen/font-template/raw/master/other_files/update_artboard_names.js) in Illustrator: open your `.ai` file in Adobe Illustrator, in the menu, click "File" -> "Scripts" -> "Other Script...", find and select the downloaded `update_artboard_names.js` file, click "Open"
+* *Or* execute [**`/other_files/update_artboard_names.js`**](https://github.com/fontpixel/font-template/raw/master/other_files/update_artboard_names.js) in Illustrator: open your `.ai` file in Adobe Illustrator, in the menu, click "File" -> "Scripts" -> "Other Script...", find and select the downloaded `update_artboard_names.js` file, click "Open"
 
 After the update, delete and regenerate your glyph SVG files in `SVG` folder.
 
@@ -168,4 +168,4 @@ If it is a monochrome icon font, the letter B in the HTML code will be shown as 
 
 ## License
 
-[MIT License](https://github.com/tomchen/font-template/blob/master/LICENSE) for everything in this repository
+[MIT License](https://github.com/fontpixel/font-template/blob/master/LICENSE) for everything in this repository

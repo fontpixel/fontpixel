@@ -34,4 +34,4 @@ Name | Type |
 `xres` | *number* |
 `yres` | *number* |
 
-Defined in: [bdfparser.ts:1](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1)
+Defined in: [bdfparser.ts:1](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1)

@@ -13,4 +13,4 @@ Name |
 ------ |
 `T` |
 
-Defined in: [bdfparser.ts:90](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L90)
+Defined in: [bdfparser.ts:90](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L90)

@@ -31,7 +31,7 @@ Name | Type | Description |
 
 **Returns:** [*Bitmap*](../bitmap/)
 
-Defined in: [bdfparser.ts:1188](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1188)
+Defined in: [bdfparser.ts:1188](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1188)
 
 ## Properties
 
@@ -39,7 +39,7 @@ Defined in: [bdfparser.ts:1188](https://github.com/tomchen/bdfparser-js/blob/898
 
 • **bindata**: *string*[]
 
-Defined in: [bdfparser.ts:1188](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1188)
+Defined in: [bdfparser.ts:1188](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1188)
 
 ## Methods
 
@@ -63,7 +63,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself, which now has the altered bitmap as its `.bindata`
 
-Defined in: [bdfparser.ts:1734](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1734)
+Defined in: [bdfparser.ts:1734](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1734)
 
 ___
 
@@ -79,7 +79,7 @@ Get a deep copy / clone of the `Bitmap` object.
 
 A deep copy of the original `Bitmap` object
 
-Defined in: [bdfparser.ts:1256](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1256)
+Defined in: [bdfparser.ts:1256](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1256)
 
 ___
 
@@ -102,7 +102,7 @@ Name | Type | Default value | Description |
 
 The `Bitmap` object itself, which now has the combined bitmap as its `.bindata`
 
-Defined in: [bdfparser.ts:1538](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1538)
+Defined in: [bdfparser.ts:1538](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1538)
 
 ___
 
@@ -127,7 +127,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself, which now has only the specified area as its `.bindata`
 
-Defined in: [bdfparser.ts:1380](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1380)
+Defined in: [bdfparser.ts:1380](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1380)
 
 ___
 
@@ -150,7 +150,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself
 
-Defined in: [bdfparser.ts:1806](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1806)
+Defined in: [bdfparser.ts:1806](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1806)
 
 ___
 
@@ -173,7 +173,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself, which now has the enlarged bitmap as its `.bindata`
 
-Defined in: [bdfparser.ts:1593](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1593)
+Defined in: [bdfparser.ts:1593](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1593)
 
 ___
 
@@ -197,7 +197,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself, which now has a bitmap of the original shape with glow effect as the `Bitmap` object's `.bindata`
 
-Defined in: [bdfparser.ts:1690](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1690)
+Defined in: [bdfparser.ts:1690](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1690)
 
 ___
 
@@ -213,7 +213,7 @@ Get the height of the bitmap.
 
 Height of the bitmap
 
-Defined in: [bdfparser.ts:1245](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1245)
+Defined in: [bdfparser.ts:1245](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1245)
 
 ___
 
@@ -235,7 +235,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself, which now has the combined bitmap as its `.bindata`
 
-Defined in: [bdfparser.ts:1396](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1396)
+Defined in: [bdfparser.ts:1396](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1396)
 
 ___
 
@@ -258,7 +258,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself, which now has the altered bitmap as its `.bindata`
 
-Defined in: [bdfparser.ts:1608](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1608)
+Defined in: [bdfparser.ts:1608](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1608)
 
 ___
 
@@ -274,7 +274,7 @@ Gets a programmer-readable (multi-line) `string` representation of the `Bitmap` 
 
 String representation
 
-Defined in: [bdfparser.ts:1223](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1223)
+Defined in: [bdfparser.ts:1223](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1223)
 
 ___
 
@@ -299,7 +299,7 @@ Name | Type | Description |
 
 The `Bitmap` object itself, which now has a bitmap of the original shape with its shadow as the `Bitmap` object's `.bindata`
 
-Defined in: [bdfparser.ts:1646](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1646)
+Defined in: [bdfparser.ts:1646](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1646)
 
 ___
 
@@ -315,7 +315,7 @@ Gets a human-readable (multi-line) `string` representation of the `Bitmap` objec
 
 String representation
 
-Defined in: [bdfparser.ts:1208](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1208)
+Defined in: [bdfparser.ts:1208](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1208)
 
 ___
 
@@ -343,7 +343,7 @@ Name | Type | Description |
 
 Bitmap data in the specified type (list or string) and format
 
-Defined in: [bdfparser.ts:1754](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1754)
+Defined in: [bdfparser.ts:1754](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1754)
 
 ___
 
@@ -359,7 +359,7 @@ Get the width of the bitmap.
 
 Width of the bitmap
 
-Defined in: [bdfparser.ts:1234](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1234)
+Defined in: [bdfparser.ts:1234](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1234)
 
 ___
 
@@ -379,7 +379,7 @@ Name | Type |
 
 **Returns:** *string*[]
 
-Defined in: [bdfparser.ts:1347](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1347)
+Defined in: [bdfparser.ts:1347](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1347)
 
 ___
 
@@ -397,7 +397,7 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [bdfparser.ts:1260](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1260)
+Defined in: [bdfparser.ts:1260](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1260)
 
 ___
 
@@ -415,7 +415,7 @@ Name | Type |
 
 **Returns:** *string*[]
 
-Defined in: [bdfparser.ts:1556](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1556)
+Defined in: [bdfparser.ts:1556](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1556)
 
 ___
 
@@ -433,7 +433,7 @@ Name | Type |
 
 **Returns:** *string*[]
 
-Defined in: [bdfparser.ts:1306](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1306)
+Defined in: [bdfparser.ts:1306](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1306)
 
 ___
 
@@ -451,7 +451,7 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [bdfparser.ts:1279](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1279)
+Defined in: [bdfparser.ts:1279](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1279)
 
 ___
 
@@ -474,4 +474,4 @@ Name | Type | Default value | Description |
 
 `Bitmap` object
 
-Defined in: [bdfparser.ts:1428](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1428)
+Defined in: [bdfparser.ts:1428](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1428)

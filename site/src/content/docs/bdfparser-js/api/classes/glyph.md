@@ -32,7 +32,7 @@ Name | Type | Description |
 
 **Returns:** [*Glyph*](../glyph/)
 
-Defined in: [bdfparser.ts:970](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L970)
+Defined in: [bdfparser.ts:970](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L970)
 
 ## Properties
 
@@ -40,7 +40,7 @@ Defined in: [bdfparser.ts:970](https://github.com/tomchen/bdfparser-js/blob/898e
 
 • **font**: [*Font*](../font/)
 
-Defined in: [bdfparser.ts:970](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L970)
+Defined in: [bdfparser.ts:970](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L970)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • **meta**: [*GlyphMeta*](../../types/glyphmeta/)
 
-Defined in: [bdfparser.ts:969](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L969)
+Defined in: [bdfparser.ts:969](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L969)
 
 ## Methods
 
@@ -58,7 +58,7 @@ Defined in: [bdfparser.ts:969](https://github.com/tomchen/bdfparser-js/blob/898e
 
 **Returns:** [*Bitmap*](../bitmap/)
 
-Defined in: [bdfparser.ts:1097](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1097)
+Defined in: [bdfparser.ts:1097](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1097)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 **Returns:** [*Bitmap*](../bitmap/)
 
-Defined in: [bdfparser.ts:1114](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1114)
+Defined in: [bdfparser.ts:1114](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1114)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 **Returns:** [*Bitmap*](../bitmap/)
 
-Defined in: [bdfparser.ts:1085](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1085)
+Defined in: [bdfparser.ts:1085](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1085)
 
 ___
 
@@ -94,7 +94,7 @@ Name | Type |
 
 **Returns:** [*Bitmap*](../bitmap/)
 
-Defined in: [bdfparser.ts:1077](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1077)
+Defined in: [bdfparser.ts:1077](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1077)
 
 ___
 
@@ -110,7 +110,7 @@ Get the character of the glyph.
 
 Character (one character string) of the glyph
 
-Defined in: [bdfparser.ts:1033](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1033)
+Defined in: [bdfparser.ts:1033](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1033)
 
 ___
 
@@ -126,7 +126,7 @@ Get the codepoint of the glyph.
 
 Codepoint of the glyph
 
-Defined in: [bdfparser.ts:1022](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1022)
+Defined in: [bdfparser.ts:1022](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1022)
 
 ___
 
@@ -149,7 +149,7 @@ Name | Type | Description |
 
 `Bitmap` object
 
-Defined in: [bdfparser.ts:1047](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1047)
+Defined in: [bdfparser.ts:1047](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1047)
 
 ___
 
@@ -171,7 +171,7 @@ Name | Type | Default value |
 
 The relative position (displacement) represented by `[x, y]` array / tuple (where right and top directions are positive)
 
-Defined in: [bdfparser.ts:1139](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1139)
+Defined in: [bdfparser.ts:1139](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1139)
 
 ___
 
@@ -187,7 +187,7 @@ Gets a programmer-readable `string` representation of the `Glyph` object.
 
 String representation
 
-Defined in: [bdfparser.ts:1003](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1003)
+Defined in: [bdfparser.ts:1003](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1003)
 
 ___
 
@@ -203,4 +203,4 @@ Gets a human-readable (multi-line) `string` representation of the `Glyph` object
 
 String representation
 
-Defined in: [bdfparser.ts:992](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L992)
+Defined in: [bdfparser.ts:992](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L992)

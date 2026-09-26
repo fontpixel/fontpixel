@@ -19,4 +19,4 @@ Name | Type | Description |
 
 The newly instantiated `Font` object that's loaded the font file
 
-Defined in: [bdfparser.ts:1838](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1838)
+Defined in: [bdfparser.ts:1838](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L1838)

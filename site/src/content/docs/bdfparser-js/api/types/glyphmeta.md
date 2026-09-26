@@ -29,4 +29,4 @@ Name | Type |
 `vvectorx` | [*GlyphMetaInFont*](../glyphmetainfont/)[*14*] |
 `vvectory` | [*GlyphMetaInFont*](../glyphmetainfont/)[*15*] |
 
-Defined in: [bdfparser.ts:69](https://github.com/tomchen/bdfparser-js/blob/898ed20/src/bdfparser.ts#L69)
+Defined in: [bdfparser.ts:69](https://github.com/fontpixel/bdfparser-js/blob/898ed20/src/bdfparser.ts#L69)
