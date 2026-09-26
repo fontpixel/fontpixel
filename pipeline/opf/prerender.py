@@ -47,22 +47,49 @@ def _layout(f: ParsedFont, text: str, max_width: int | None = None
     blank_adv = _blank_advance(by_cp, miss_adv)
     placed: list[_Placed] = []
     line = x = 0
-    max_w = 1
+    # Index in `placed` where the current line's last word starts (just after
+    # a space), so an overflowing Latin word moves whole; CJK text, which has
+    # no spaces, still wraps between characters.
+    word_start: int | None = None
     for ch in text:
         if ch == "\n":
             line += 1
             x = 0
+            word_start = None
             continue
         cp = ord(ch)
         g = by_cp.get(cp)
         blank = g is None and cp in _BLANK_CPS
         adv = max(g.dwidth, 0) if g else (blank_adv if blank else miss_adv)
+        space = ch.isspace()
         if max_width and x > 0 and x + adv > max_width:
             line += 1
+            if space:  # a space at a line break just disappears
+                x = 0
+                word_start = None
+                continue
+            moved = placed[word_start:] if word_start is not None else []
             x = 0
+            if moved and moved[0].x > 0:
+                shift = moved[0].x
+                for p in moved:
+                    p.x -= shift
+                    p.line = line
+                x = sum(max(p.glyph.dwidth, 0) if p.glyph else
+                        (blank_adv if p.blank else miss_adv) for p in moved)
+            word_start = None
         placed.append(_Placed(glyph=g, cp=cp, x=x, line=line, blank=blank))
         x += adv
-        max_w = max(max_w, x)
+        if space:
+            word_start = len(placed)
+    # Each line's width ends at its last non-space character.
+    ends: dict[int, int] = {}
+    for p in placed:
+        if chr(p.cp).isspace():
+            continue
+        adv = max(p.glyph.dwidth, 0) if p.glyph else (blank_adv if p.blank else miss_adv)
+        ends[p.line] = max(ends.get(p.line, 0), p.x + adv)
+    max_w = max([1, *ends.values()])
     lines = line + 1
     # Line height can't rely solely on the font's self-reported
     # ascent/descent: 60 families have glyphs taller than FONT_ASCENT

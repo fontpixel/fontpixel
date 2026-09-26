@@ -11,6 +11,9 @@ from opf.samples import SAMPLES, sample_is_broken, specimen
 from opf.coverage.engine import pick_sample_lang
 
 _PREVIEW_SCRIPTS = ("zh-Hans", "zh-Hant", "ja", "ko", "latin")
+# The font page's specimen wraps at this native width, so the page can show
+# it at a whole 2× within its 40rem box instead of a blurry fractional scale.
+HERO_WIDTH = 320
 
 
 def default_variant_rank(size: int, glyphs: int) -> tuple[bool, int]:
@@ -96,7 +99,7 @@ def refresh_previews(entry: dict, meta, data: Path, downloads: Path,
                 native = {cp for cp in cps if any(lo <= cp < hi for lo, hi in ranges)}
                 text = specimen(native or cps)
         file = f"previews/{slug}/{script}.svg"
-        (data / file).write_text(sample_svg(font, text), encoding="utf-8")
+        (data / file).write_text(sample_svg(font, text, max_width=HERO_WIDTH), encoding="utf-8")
         previews[script] = {"variantId": variant["id"], "text": text, "file": file}
         if is_default:
             entry["previewVariant"] = variant["id"]

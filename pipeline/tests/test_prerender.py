@@ -55,3 +55,27 @@ def test_missing_space_renders_blank_not_a_box():
     assert 'class="missing"' not in sample_svg(f, "永 永"), "空格不该被画成缺字框"
     # swap in an actually missing character, and the box should still be drawn
     assert 'class="missing"' in sample_svg(f, "永B永")
+
+
+def test_wrapping_moves_whole_words_and_breaks_cjk_anywhere():
+    from glob import glob
+
+    from opf.prerender import _layout
+
+    font = parse_bdf(Path(sorted(glob("fonts/galmuri/*.bdf"))[0]), "galmuri")
+
+    def lines(text: str, width: int) -> list[str]:
+        placed, max_w, *_ = _layout(font, text, width)
+        out: dict[int, str] = {}
+        for p in placed:
+            out[p.line] = out.get(p.line, "") + chr(p.cp)
+        assert max_w <= width
+        return [out[k].rstrip() for k in sorted(out)]
+
+    text = "Sphinx of black quartz, judge my vow."
+    latin = lines(text, 60)
+    # A word cut in two would show up as fragments that aren't words.
+    assert [w for line in latin for w in line.split()] == text.split() and len(latin) > 1
+    assert not any(line.startswith(" ") for line in latin)
+    cjk = lines("天地玄黄宇宙洪荒日月盈昃辰宿列张", 60)
+    assert "".join(cjk) == "天地玄黄宇宙洪荒日月盈昃辰宿列张" and len(cjk) > 1

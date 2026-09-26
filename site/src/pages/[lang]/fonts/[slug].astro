@@ -66,6 +66,9 @@ try {
 } catch {
   /* ignore when no pre-rendered preview exists */
 }
+// The specimen's native width in pixels. The hero scales it by whole
+// multiples only: any other factor gives its pixels uneven widths.
+const previewWidth = Number(/viewBox="0 0 ([\d.]+) /.exec(previewSvg)?.[1] ?? 0);
 const dlBase = downloadsBase();
 const variantIds = m.variants.map((v) => v.id);
 const blocksByVariant = Object.fromEntries(
@@ -119,7 +122,8 @@ const coverageGroups = groupBy((vid) =>
     </div>
     {displayName !== m.name && <p class="hero__latin mono">{m.name}</p>}
     {displayDesc && <p class="hero__desc">{displayDesc}</p>}
-    <div class="hero__preview lattice" role="img" aria-label={`${displayName}: ${preview.text}`} data-variant-id={preview.variantId} set:html={previewSvg.replace('role="img"', 'aria-hidden="true"')} />
+    <div class="hero__preview lattice" role="img" aria-label={`${displayName}: ${preview.text}`} data-variant-id={preview.variantId}
+      style={previewWidth ? `--preview-w:${previewWidth}px` : undefined} set:html={previewSvg.replace('role="img"', 'aria-hidden="true"')} />
   </header>
 
   {
@@ -383,10 +387,19 @@ const coverageGroups = groupBy((vid) =>
       border: 1px solid var(--line-soft);
       padding: var(--s4);
       max-width: 44rem;
+      container-type: inline-size;
+      /* A specimen wider than a phone at its native size scrolls in place. */
+      overflow-x: auto;
     }
+    /* 2×, like the sample editor's default zoom, or 1× where 2× doesn't fit:
+       round(down, space, w) is floor(space / w) × w, so the scale stays a
+       whole number. The pipeline wraps specimens at 320px so 2× fits 40rem.
+       Browsers without round() keep the native size. */
     .hero__preview :global(svg) {
-      width: 100%;
-      max-width: 40rem;
+      display: block;
+      width: var(--preview-w, 100%);
+      width: clamp(var(--preview-w), round(down, 100cqi, var(--preview-w)), calc(var(--preview-w) * 2));
+      max-width: none;
       height: auto;
       color: var(--ink);
     }

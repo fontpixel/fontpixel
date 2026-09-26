@@ -41,7 +41,7 @@ from opf.metrics import InkMetrics, claimed_size, compute_ink, is_monospaced
 from opf.model import ParsedFont
 from opf.parsers.bdf import parse_bdf
 from opf.parsers.pcf import parse_pcf
-from opf.previews import default_sample, default_variant_rank, refresh_previews
+from opf.previews import HERO_WIDTH, default_sample, default_variant_rank, refresh_previews
 from opf.prerender import og_png, sample_svg
 from opf.variants import search_text
 
@@ -255,7 +255,7 @@ def _build_family(
     preview_rel = f"previews/{slug}/{sample_lang}.svg"
     (site_data / "previews" / slug).mkdir(parents=True, exist_ok=True)
     (site_data / "previews" / slug / f"{sample_lang}.svg").write_text(
-        sample_svg(best.font, sample_text), encoding="utf-8"
+        sample_svg(best.font, sample_text, max_width=HERO_WIDTH), encoding="utf-8"
     )
     og_png(best.font, meta.name, sample_text, site_data / "og" / f"{slug}.png")
 
