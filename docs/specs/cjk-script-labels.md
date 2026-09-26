@@ -45,6 +45,8 @@
 - 数据：index.json 的每个字号带 `scripts`、`inkHeight`；多字号族的逐字号覆盖率放在
   `variant-coverage.json`，码位区间文件 `coverage-intervals.bin.gz` 改为逐字号（相同码位的字号共用一组）。
   这两个文件只在用到覆盖率或"包含字符"筛选时才加载，加载前按整个族的最大值判断，也不显示标记。
+- 触屏：长按任何带 title 的元素会显示它的内容（`site/src/lib/touchtitle.ts`）。
+  带 title 的链接长按时，不再弹出系统的链接菜单。
 
 ## 中日韩文字集合图
 
