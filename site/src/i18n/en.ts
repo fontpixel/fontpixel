@@ -178,6 +178,8 @@ export const en: UIStrings = {
     converted: 'Converted',
     px: 'px',
     licenseUnknown: 'License unconfirmed',
+    allVariants: 'All variants',
+    someVariants: 'Some variants: {list}',
   },
 
   detail: {

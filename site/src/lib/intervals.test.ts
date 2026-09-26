@@ -25,3 +25,15 @@ test('covers checks every non-space char', () => {
   expect(idx.covers('mini', '龘')).toBe(false);
   expect(idx.covers('mini', 'A龘')).toBe(false);
 });
+
+test('covers can be asked of one variant, and shared sets are resolved per variant', () => {
+  const idx = CoverageIndex.parse(fixture());
+  expect(idx.covers('mini', 'A永', 'mini')).toBe(true);
+  expect(idx.covers('mini', 'A永', 'mini2')).toBe(false);
+  expect(idx.covers('mini', 'A', 'mini-bold')).toBe(true);
+  expect(idx.covers('mini', 'A', 'ghost')).toBe(false);
+  // Without a variant, one variant must have every character: A and 永 split
+  // across two variants would not count.
+  expect(idx.covers('mini', 'A永')).toBe(true);
+  expect(idx.covers('nometa', '永', 'pixfont')).toBe(true);
+});

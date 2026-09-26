@@ -21,40 +21,73 @@ def cps_to_runs(cps: frozenset[int] | set[int]) -> list[tuple[int, int]]:
     return runs
 
 
-def write_intervals(runs_by_slug: dict[str, list[tuple[int, int]]], out: Path) -> None:
+def write_intervals(runs_by_slug: dict[str, dict[str, list[tuple[int, int]]]], out: Path) -> None:
+    """Per-variant code point runs (see site/src/lib/intervals.ts for the reader).
+
+    Layout inside gzip, little-endian: u32 familyCount; per family: u16 slugLen
+    + utf8 slug, u16 setCount, setCount × (u32 runCount, runCount × (u32 start,
+    u32 end)), u16 variantCount, variantCount × (u16 idLen + utf8 id, u16 set).
+    Variants with identical coverage (bold, oblique, subsets) share one set.
+    """
     buf = bytearray()
     buf += struct.pack("<I", len(runs_by_slug))
     for slug in sorted(runs_by_slug):
         raw = slug.encode("utf-8")
         buf += struct.pack("<H", len(raw))
         buf += raw
-        runs = runs_by_slug[slug]
-        buf += struct.pack("<I", len(runs))
-        for a, b in runs:
-            buf += struct.pack("<II", a, b)
+        sets: list[tuple[tuple[int, int], ...]] = []
+        index_of: dict[tuple[tuple[int, int], ...], int] = {}
+        variant_sets: list[tuple[str, int]] = []
+        for vid, runs in runs_by_slug[slug].items():
+            key = tuple(tuple(r) for r in runs)
+            if key not in index_of:
+                index_of[key] = len(sets)
+                sets.append(key)
+            variant_sets.append((vid, index_of[key]))
+        buf += struct.pack("<H", len(sets))
+        for runs in sets:
+            buf += struct.pack("<I", len(runs))
+            for a, b in runs:
+                buf += struct.pack("<II", a, b)
+        buf += struct.pack("<H", len(variant_sets))
+        for vid, index in variant_sets:
+            raw = vid.encode("utf-8")
+            buf += struct.pack("<H", len(raw)) + raw + struct.pack("<H", index)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes(gzip.compress(bytes(buf), compresslevel=9, mtime=0))
 
 
-def read_intervals(path: Path) -> dict[str, list[tuple[int, int]]]:
+def read_intervals(path: Path) -> dict[str, dict[str, list[tuple[int, int]]]]:
     raw = gzip.decompress(path.read_bytes())
     pos = 0
-    (count,) = struct.unpack_from("<I", raw, pos)
-    pos += 4
-    out: dict[str, list[tuple[int, int]]] = {}
+
+    def take(fmt: str):
+        nonlocal pos
+        values = struct.unpack_from(fmt, raw, pos)
+        pos += struct.calcsize(fmt)
+        return values
+
+    def text() -> str:
+        nonlocal pos
+        (n,) = take("<H")
+        pos += n
+        return raw[pos - n : pos].decode("utf-8")
+
+    out: dict[str, dict[str, list[tuple[int, int]]]] = {}
+    (count,) = take("<I")
     for _ in range(count):
-        (slen,) = struct.unpack_from("<H", raw, pos)
-        pos += 2
-        slug = raw[pos : pos + slen].decode("utf-8")
-        pos += slen
-        (n,) = struct.unpack_from("<I", raw, pos)
-        pos += 4
-        runs = []
-        for _ in range(n):
-            a, b = struct.unpack_from("<II", raw, pos)
-            pos += 8
-            runs.append((a, b))
-        out[slug] = runs
+        slug = text()
+        (n_sets,) = take("<H")
+        sets = []
+        for _ in range(n_sets):
+            (n,) = take("<I")
+            sets.append([take("<II") for _ in range(n)])
+        (n_variants,) = take("<H")
+        out[slug] = {}
+        for _ in range(n_variants):
+            vid = text()
+            (index,) = take("<H")
+            out[slug][vid] = sets[index]
     return out
 
 

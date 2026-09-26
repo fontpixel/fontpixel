@@ -2,6 +2,7 @@
 import { licenseShortLabel } from '../lib/licenselabel';
 import { pickText, t, toHant, type Lang } from '../i18n';
 import LicenseSummary from './LicenseSummary.astro';
+import VariantMark from '../islands/VariantMark.svelte';
 import { withBase } from '../lib/data';
 import type { FontDetail } from '../lib/schema';
 
@@ -90,8 +91,9 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
           <dt>{s.catalogue.scripts}</dt>
           {/* Each item links to the catalogue page filtered by that script */}
           <dd>
+            {/* The family label merges its variants; with several, a mark says which of them earn it */}
             {m.scripts.map((sc, i) => (
-              <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?scripts=${encodeURIComponent(sc)}`)} title={s.scriptRules[sc] ?? ''}>{s.scriptNames[sc] ?? sc}</a></>
+              <>{i > 0 ? ' · ' : ''}<span class="side__script" data-script={sc}><a href={withBase(`/${lang}/?scripts=${encodeURIComponent(sc)}`)} title={s.scriptRules[sc] ?? ''}>{s.scriptNames[sc] ?? sc}</a>{m.variants.length > 1 && <> <VariantMark variants={m.variants} matched={m.variants.filter((v) => v.scripts.includes(sc)).map((v) => v.id)} {s} /></>}</span></>
             ))}
           </dd>
         </>

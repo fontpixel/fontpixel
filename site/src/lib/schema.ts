@@ -20,6 +20,10 @@ export const VariantSchema = z.object({
   displaySize: z.number().default(0),
   script: z.string().nullable(),
   glyphs: z.number().int(),
+  /** This variant's own script labels, before the family merges them */
+  scripts: z.array(z.string()),
+  /** Han ink face height, or cap height when the variant has no Han */
+  inkHeight: z.number().int(),
 });
 
 export const FamilyIndexSchema = z.object({
@@ -73,7 +77,7 @@ export const CharsetMetaSchema = z.object({
 
 /** Site data contract version, kept in sync with DATA_SCHEMA_VERSION in pipeline/opf/__init__.py.
  *  Bump both sides by 1 whenever index.json's shape changes; going out of sync is caught by schema.test.ts. */
-export const DATA_SCHEMA_VERSION = 5;
+export const DATA_SCHEMA_VERSION = 6;
 
 export const IndexSchema = z.object({
   schemaVersion: z.number().int(),

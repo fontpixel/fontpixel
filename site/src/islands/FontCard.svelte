@@ -7,6 +7,7 @@
   import { previewFor } from '../lib/preview';
   import FixedSvg from './FixedSvg.svelte';
   import FrameShell from './FrameShell.svelte';
+  import VariantMark from './VariantMark.svelte';
   import { framePalette, type Frame } from '../lib/frames';
   import { highlightCode, type CodeLang } from '../lib/codehl';
   import type { FamilyIndex } from '../lib/schema';
@@ -27,9 +28,11 @@
     dataBase: string;
     initialSvg?: string;
     initialNameSvg?: string;
+    /** Variants meeting the active per-variant filters; absent when none is active */
+    matched?: string[];
   }
   const { family, displayName, lang, s, sampleText, zoom, store, href, dataBase, initialSvg = '', initialNameSvg = '',
-    frame = 'none', codeLang = 'javascript', nowrap = false }: Props = $props();
+    frame = 'none', codeLang = 'javascript', nowrap = false, matched }: Props = $props();
 
   const preview = $derived(previewFor(family));
   const previewSize = $derived(family.variants.find(v => v.id === preview.variantId)?.size ?? family.sizes[0] ?? 16);
@@ -112,6 +115,7 @@
     <header class="card__head">
       <h2 class="card__name" data-vt="name">{displayName}</h2>
       <span class="card__marks">
+        {#if matched?.length && family.variants.length > 1}<VariantMark variants={family.variants} {matched} {s} />{/if}
         {#if !family.curated}<span class="chip">{s.card.uncurated}</span>{/if}
         {#if missing > 0}
           <span class="chip chip--accent mono" data-testid="missing-chip"

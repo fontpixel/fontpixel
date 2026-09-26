@@ -326,6 +326,10 @@ def _build_family(
                 "displaySize": b.desc.display_size,
                 "script": b.desc.script_subset,
                 "glyphs": len(b.font.glyphs),
+                # Per-variant facts for filters that must be met by one and the
+                # same variant; the family-level fields above are their union.
+                "scripts": detect_scripts(b.coverage),
+                "inkHeight": b.ink.han_ink[1] if b.ink.han_ink else (b.ink.cap_height or 0),
             }
             for b in built
         ],
@@ -401,15 +405,17 @@ def _build_family(
 
     from opf.emit import cps_to_runs
 
-    fam_cps: set[int] = set()
-    for b in built:
-        fam_cps |= font_cps(b.font)
-
     report.variants += len(built)
     cache_payload = {
         "index_entry": entry,
         "downloads": dl_entries,
-        "runs": [list(r) for r in cps_to_runs(fam_cps)],
+        "variantRuns": {b.desc.id: [list(r) for r in cps_to_runs(_cps_cache[b.desc.id])]
+                        for b in built},
+        # Single-variant families are fully described by the index's family
+        # coverage, so only multi-variant families carry per-variant ratios.
+        "variantCoverage": {
+            b.desc.id: [round(_ratio(b.coverage, c.id), 4) for c in charsets] for b in built
+        } if len(built) > 1 else {},
     }
     return entry, cache_payload
 
@@ -664,7 +670,15 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
 
     entries: list[dict] = []
     all_downloads: list[dict] = []
-    runs_by_slug: dict[str, list[tuple[int, int]]] = {}
+    runs_by_slug: dict[str, dict[str, list[tuple[int, int]]]] = {}
+    variant_coverage: dict[str, dict[str, list[float]]] = {}
+
+    def collect(slug: str, payload: dict) -> None:
+        runs_by_slug[slug] = {vid: [tuple(r) for r in runs]
+                              for vid, runs in payload["variantRuns"].items()}
+        if payload["variantCoverage"]:
+            variant_coverage[slug] = payload["variantCoverage"]
+
     pending: list[tuple[str, Path, dict]] = []
     for family_dir in sorted(p for p in fonts_dir.iterdir() if p.is_dir()):
         slug = family_dir.name
@@ -682,7 +696,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
             if cached and _outputs_exist(site_data, cached["index_entry"]):
                 entries.append(cached["index_entry"])
                 all_downloads.extend(cached["downloads"])
-                runs_by_slug[slug] = [tuple(r) for r in cached.get("runs", [])]
+                collect(slug, cached)
                 report.cached += 1
                 report.families += 1
             continue
@@ -693,7 +707,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
                 entry, dl_entries = refreshed
                 entries.append(entry)
                 all_downloads.extend(dl_entries)
-                runs_by_slug[slug] = [tuple(r) for r in cached.get("runs", [])]
+                collect(slug, cached)
                 if dl_entries != cached["downloads"] or entry != cached["index_entry"]:
                     cached["downloads"] = dl_entries
                     cached["index_entry"] = entry
@@ -731,7 +745,7 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
         cache.store(slug, payload)
         entries.append(entry)
         all_downloads.extend(payload["downloads"])
-        runs_by_slug[slug] = [tuple(r) for r in payload["runs"]]
+        collect(slug, payload)
         report.families += 1
 
     entries.sort(key=lambda e: e["slug"])
@@ -757,6 +771,10 @@ def build(fonts_dir: Path, site_data: Path, downloads_dir: Path, cache_dir: Path
     from opf.emit import write_charsets_json, write_intervals
 
     write_intervals(runs_by_slug, site_data / "coverage-intervals.bin.gz")
+    # Loaded lazily by the catalogue only while a coverage filter is active,
+    # so it stays out of the index inlined into every catalogue page.
+    _json_dump({"charsetIds": [c.id for c in charsets], "families": variant_coverage},
+               site_data / "variant-coverage.json")
     write_charsets_json(charsets, site_data / "charsets.json")
 
     # Glyphs now come from downloadable BDFs. Drop legacy generated packs

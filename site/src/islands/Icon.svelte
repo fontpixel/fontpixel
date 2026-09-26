@@ -9,6 +9,9 @@
     'chevron-right': ['m9 18 6-6-6-6'],
     'arrow-left': ['m12 19-7-7 7-7', 'M19 12H5'],
     'arrow-down': ['M12 5v14', 'm19 12-7 7-7-7'],
+    // Every variant / only some variants meet a filter or label (VariantMark).
+    'check-check': ['M18 6 7 17l-5-5', 'm22 10-7.5 7.5L13 16'],
+    'check-x': ['M2 12l5 5L17 7', 'm15 14 6 6', 'm21 14-6 6'],
     pencil: ['M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z', 'm15 5 4 4'],
   };
   let { name, size = 20 }: { name: keyof typeof paths; size?: number } = $props();

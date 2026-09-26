@@ -177,6 +177,8 @@ export const zh: UIStrings = {
     converted: '转制',
     px: 'px',
     licenseUnknown: '许可证待确认',
+    allVariants: '全部变体',
+    someVariants: '部分变体：{list}',
   },
 
   detail: {

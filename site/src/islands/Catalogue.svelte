@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount, untrack } from 'svelte';
-  import { applyFilters, emptyState, type CharLookup } from '../lib/filters';
+  import {
+    applyFilters, emptyState, hasVariantFilters, matchingVariants, variantLookupsReady,
+    type CharLookup, type VariantCoverageLookup,
+  } from '../lib/filters';
   import { decodeState, encodeState } from '../lib/urlstate';
   import { PAGE_SIZE, pageCount, pagePath, type CatalogueLabels } from '../lib/catalogue';
   import { getGlyphStore } from '../lib/glyphstore';
@@ -45,6 +48,8 @@
   const selectedPreset = $derived(matchingPreset(sampleInput));
   const nowrap = $derived(NOWRAP_PRESETS.has(matchingPreset(sampleText)));
   let charLookup = $state<CharLookup | undefined>(undefined);
+  let coverageLookup = $state<VariantCoverageLookup | undefined>(undefined);
+  const lookups = $derived({ chars: charLookup, coverage: coverageLookup });
   let mounted = $state(false);
   let filtersEl: HTMLDetailsElement | undefined = $state();
 
@@ -94,14 +99,21 @@
     return () => narrow.removeEventListener('change', revealDesktopFilters);
   });
 
-  // Task 18 wiring: lazy-load the coverage interval index for `chars` glyph lookup
+  // Per-variant data loads only when its filter is used: code point runs for
+  // `chars`, and multi-variant coverage ratios for coverage requirements.
   $effect(() => {
     if (!filters.chars.trim() || charLookup) return;
     import('../lib/intervals')
       .then(async (m) => {
         const idx = await m.loadCoverageIndex(dataBase);
-        charLookup = (slug, chars) => idx.covers(slug, chars);
+        charLookup = (slug, chars, variantId) => idx.covers(slug, chars, variantId);
       })
+      .catch(() => {});
+  });
+  $effect(() => {
+    if (!filters.coverage.length || coverageLookup) return;
+    import('../lib/variantcoverage')
+      .then(async (m) => { coverageLookup = await m.loadVariantCoverage(dataBase, charsetIds); })
       .catch(() => {});
   });
 
@@ -141,7 +153,10 @@
     }
   });
 
-  const results = $derived(applyFilters(families, filters, charLookup, charsetIds));
+  const results = $derived(applyFilters(families, filters, lookups, charsetIds));
+  // Which variants of each shown family meet the per-variant filters; only
+  // once the data those filters need has loaded, so a mark is never a guess.
+  const showMarks = $derived(hasVariantFilters(filters) && variantLookupsReady(filters, lookups));
   const pages = $derived(pageCount(results.length));
   const pageResults = $derived(results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
   function pageHref(value: number): string {
@@ -282,6 +297,7 @@
                 initialSvg={previewSvgs[family.slug] ?? ''}
                 initialNameSvg={namePreviewSvgs[family.slug] ?? ''}
                 href={`${fontsBase}${family.slug}/`}
+                matched={showMarks ? matchingVariants(family, filters, lookups, charsetIds).map((v) => v.id) : undefined}
               />
             {/each}
           </div>

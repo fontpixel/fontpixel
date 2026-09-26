@@ -115,6 +115,10 @@ export interface UIStrings {
     converted: string;
     px: string;
     licenseUnknown: string;
+    /** Title of the mark shown when every variant meets the filter or label */
+    allVariants: string;
+    /** Title of the mark shown when only some variants do; {list} is their labels */
+    someVariants: string;
   };
 
   detail: {

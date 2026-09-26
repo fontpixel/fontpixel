@@ -7,4 +7,4 @@ def test_pipeline_version():
     Update the number here in the same commit that bumps it, with the reason
     recorded in the comment next to PIPELINE_VERSION.
     """
-    assert opf.PIPELINE_VERSION == 23
+    assert opf.PIPELINE_VERSION == 24

@@ -1,7 +1,18 @@
 import { describe, expect, test } from 'vitest';
-import { applyFilters, emptyState, type FilterState } from './filters';
+import {
+  applyFilters, emptyState, hasVariantFilters, matchingVariants, variantLookupsReady, type FilterState,
+} from './filters';
 import { decodeState, encodeState } from './urlstate';
 import type { FamilyIndex } from './schema';
+
+type Variant = FamilyIndex['variants'][number];
+function variant(over: Partial<Variant>): Variant {
+  return {
+    id: 'v', file: 'v.bdf', size: 12, weight: 'regular', spacing: 'proportional',
+    width: 'normal', displaySize: 0, script: null, glyphs: 100, scripts: ['latin'], inkHeight: 7,
+    ...over,
+  };
+}
 
 function fam(over: Partial<FamilyIndex>): FamilyIndex {
   return {
@@ -31,10 +42,7 @@ function fam(over: Partial<FamilyIndex>): FamilyIndex {
     badges: [],
     coverageSummary: {},
     coverage: [],
-    variants: [{
-      id: 'v', file: 'v.bdf', size: 12, weight: 'regular', spacing: 'proportional',
-      width: 'normal', displaySize: 0, script: null, glyphs: 100,
-    }],
+    variants: [variant({})],
     preview: '',
     sampleLang: 'latin',
     sampleText: '',
@@ -50,6 +58,10 @@ const A = fam({
   slug: 'a', name: 'Alpha', names: { 'zh-Hans': '阿尔法' },
   authors: ['quiple', 'Lee Yerim'],
   sizes: [8, 16], inkHeight: 16, inkHeights: [11, 12, 13, 14, 16],
+  variants: [
+    variant({ id: 'a8', size: 8, inkHeight: 11 }),
+    ...[12, 13, 14, 16].map((h) => variant({ id: `a16-${h}`, size: 16, inkHeight: h })),
+  ],
   vibes: ['cute'], glyphCount: 500, added: '2026-08-10',
   coverageSummary: { 'latin-basic': 1, 'latin1-supp': 1, 'latin-ext-a': 1 },
 });
@@ -61,6 +73,7 @@ const B = fam({
   },
   coverageSummary: { gb2312: 1 }, coverage: [], converted: true,
   spacing: ['monospaced'], weights: ['bold'], glyphCount: 7000, added: '2026-08-20',
+  variants: [variant({ id: 'b', weight: 'bold', spacing: 'monospaced', scripts: ['zh-hans'] })],
 });
 const ALL = [A, B];
 
@@ -148,10 +161,61 @@ describe('applyFilters', () => {
   test('chars via lookup', () => {
     const lookup = (slug: string) => slug === 'b';
     expect(
-      applyFilters(ALL, { ...emptyState(), chars: '永' }, lookup).map((f) => f.slug),
+      applyFilters(ALL, { ...emptyState(), chars: '永' }, { chars: lookup }).map((f) => f.slug),
     ).toEqual(['b']);
     // without a lookup, don't filter (waiting on lazy load)
     expect(run({ chars: '永' })).toEqual(['a', 'b']);
+  });
+
+  test('size, script, coverage and characters must all hold for one variant', () => {
+    // misc-fixed-like: Latin at 12px, Simplified Chinese only at 18px
+    const mixed = fam({
+      slug: 'mixed', sizes: [12, 18], scripts: ['latin', 'zh-hans'],
+      coverage: [1], variants: [
+        variant({ id: 'latin12', size: 12 }),
+        variant({ id: 'cjk18', size: 18, scripts: ['latin', 'zh-hans'] }),
+      ],
+    });
+    const ids = (over: Partial<FilterState>, lookups = {}) =>
+      matchingVariants(mixed, { ...emptyState(), ...over }, lookups, ['gb2312']).map((v) => v.id);
+    expect(applyFilters([mixed], { ...emptyState(), sizes: [12], scripts: ['zh-hans'] })).toEqual([]);
+    expect(ids({ sizes: [18], scripts: ['zh-hans'] })).toEqual(['cjk18']);
+    expect(ids({ scripts: ['latin'] })).toEqual(['latin12', 'cjk18']);
+    // Coverage: before the per-variant file loads, both inherit the family's best ratio.
+    const coverage = (_: string, id: string) => (id === 'cjk18' ? [1] : [0]);
+    expect(ids({ coverage: [{ id: 'gb2312', min: 0.9 }] })).toEqual(['latin12', 'cjk18']);
+    expect(ids({ coverage: [{ id: 'gb2312', min: 0.9 }] }, { coverage })).toEqual(['cjk18']);
+    expect(ids({ sizes: [12], coverage: [{ id: 'gb2312', min: 0.9 }] }, { coverage })).toEqual([]);
+    const chars = (_: string, __: string, id?: string) => id === 'cjk18';
+    expect(ids({ chars: '张' }, { chars })).toEqual(['cjk18']);
+    expect(applyFilters([mixed], { ...emptyState(), sizes: [12], chars: '张' }, { chars })).toEqual([]);
+  });
+
+  test('a merged family label decides which script tier a variant can match', () => {
+    // One complete variant makes the family "zh-hans"; its partial sibling no
+    // longer matches "zh-hans-partial", since the family is not labelled that way.
+    const merged = fam({
+      slug: 'merged', scripts: ['zh-hans'], variants: [
+        variant({ id: 'small', scripts: ['zh-hans-partial'] }),
+        variant({ id: 'large', scripts: ['zh-hans'] }),
+      ],
+    });
+    expect(matchingVariants(merged, { ...emptyState(), scripts: ['zh-hans'] }).map((v) => v.id)).toEqual(['large']);
+    expect(applyFilters([merged], { ...emptyState(), scripts: ['zh-hans-partial'] })).toEqual([]);
+  });
+
+  test('per-variant filters and their lazily loaded data are detected', () => {
+    expect(hasVariantFilters(emptyState())).toBe(false);
+    expect(hasVariantFilters({ ...emptyState(), q: 'x', forms: ['sans'], licenses: ['OFL-1.1'] })).toBe(false);
+    expect(hasVariantFilters({ ...emptyState(), chars: ' ' })).toBe(false);
+    for (const over of [{ sizes: [8] }, { inkH: [7, 8] as [number, number] }, { scripts: ['ja'] },
+      { spacing: ['monospaced'] }, { weights: ['bold'] }, { coverage: [{ id: 'gb2312', min: 0.5 }] }, { chars: '永' }]) {
+      expect(hasVariantFilters({ ...emptyState(), ...over })).toBe(true);
+    }
+    const state = { ...emptyState(), chars: '永', coverage: [{ id: 'gb2312', min: 0.5 }] };
+    expect(variantLookupsReady(state, { chars: () => true })).toBe(false);
+    expect(variantLookupsReady(state, { chars: () => true, coverage: () => undefined })).toBe(true);
+    expect(variantLookupsReady({ ...emptyState(), sizes: [8] }, {})).toBe(true);
   });
 
   test('sorts', () => {

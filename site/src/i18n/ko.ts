@@ -178,6 +178,8 @@ export const ko: UIStrings = {
     converted: '변환됨',
     px: 'px',
     licenseUnknown: '라이선스 미확인',
+    allVariants: '모든 변형',
+    someVariants: '일부 변형: {list}',
   },
 
   detail: {

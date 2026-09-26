@@ -178,6 +178,8 @@ export const ja: UIStrings = {
     converted: '変換済み',
     px: 'px',
     licenseUnknown: 'ライセンス未確認',
+    allVariants: 'すべてのバリエーション',
+    someVariants: '一部のバリエーション：{list}',
   },
 
   detail: {

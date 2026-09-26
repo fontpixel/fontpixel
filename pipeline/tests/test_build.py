@@ -1,4 +1,6 @@
+import gzip
 import json
+import struct
 import shutil
 from pathlib import Path
 
@@ -132,7 +134,20 @@ def test_coverage_intervals_and_missing(tmp_path):
 
     runs = read_intervals(data / "coverage-intervals.bin.gz")
     assert set(runs) == {"mini", "nometa"}
-    assert runs["mini"] == [(65, 66), (27704, 27705)]
+    # Runs are per variant; mini's two files carry the same glyphs.
+    assert runs["mini"] == {"mini": [(65, 66), (27704, 27705)], "mini2": [(65, 66), (27704, 27705)]}
+    raw = gzip.decompress((data / "coverage-intervals.bin.gz").read_bytes())
+    assert raw.count(struct.pack("<II", 27704, 27705)) == 2  # one shared set each for mini and nometa
+
+    # Per-variant facts: scripts and ink height in the index, coverage ratios
+    # for multi-variant families in a separate lazily loaded file.
+    index = json.loads((data / "index.json").read_text(encoding="utf-8"))
+    mini = next(f for f in index["families"] if f["slug"] == "mini")
+    assert all(v["scripts"] == [] and v["inkHeight"] == 15 for v in mini["variants"])
+    variant_coverage = json.loads((data / "variant-coverage.json").read_text(encoding="utf-8"))
+    assert variant_coverage["charsetIds"] == index["charsetIds"]
+    assert set(variant_coverage["families"]) == {"mini"}  # nometa has a single variant
+    assert variant_coverage["families"]["mini"]["mini"] == mini["coverage"]
 
     detail = json.loads((data / "details" / "mini.json").read_text(encoding="utf-8"))
     vid = detail["meta"]["variants"][0]["id"]
@@ -533,3 +548,25 @@ def test_zero_glyph_variant_fails_the_family(tmp_path):
     report = build(fonts, tmp_path / "data", tmp_path / "dl", tmp_path / "cache")
     assert any("ghost" in w and "build failed" in w for w in report.warnings), report.warnings
     assert not (tmp_path / "data" / "details" / "ghost.json").exists()
+
+
+# The site's interval reader is tested against this file (intervals.test.ts);
+# it must be exactly what emit.write_intervals produces for these runs.
+INTERVALS_FIXTURE_RUNS = {
+    "mini": {"mini": [(65, 66), (27704, 27705)], "mini2": [(65, 66)], "mini-bold": [(65, 66)]},
+    "nometa": {"pixfont": [(65, 66), (27704, 27705)]},
+}
+
+
+def test_intervals_fixture_in_sync(tmp_path):
+    import os
+
+    from opf.emit import read_intervals, write_intervals
+
+    dest = Path(__file__).resolve().parents[2] / "site" / "src" / "lib" / "__fixtures__" / "coverage-intervals.bin"
+    write_intervals(INTERVALS_FIXTURE_RUNS, tmp_path / "i.bin.gz")
+    assert read_intervals(tmp_path / "i.bin.gz") == INTERVALS_FIXTURE_RUNS
+    fresh = gzip.decompress((tmp_path / "i.bin.gz").read_bytes())
+    if os.environ.get("OPF_UPDATE_FIXTURES"):
+        dest.write_bytes(fresh)
+    assert dest.read_bytes() == fresh, "coverage-intervals.bin 已过期，跑 OPF_UPDATE_FIXTURES=1 pytest 更新"
