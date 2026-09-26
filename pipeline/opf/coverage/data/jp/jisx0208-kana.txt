@@ -1,0 +1,12 @@
+# id: jisx0208-kana
+# section: jp
+# order: 19
+# name_zh: 平/片假名（JIS X 0208，含ー・）
+# name_en: Hiragana & Katakana (JIS X 0208, with ー・)
+# desc_zh: JIS X 0208 的平假名 83 个、片假名 86 个，加长音符ー与中点・，共 171 个；首页“日文”判定用的假名表
+# desc_en: The 83 hiragana and 86 katakana of JIS X 0208, plus the prolonged sound mark ー and the middle dot ・; 171 in all. The kana set behind the Japanese label.
+# source: JIS X 0208 rows 4–5 via Unicode ranges, plus U+30FB and U+30FC; generated 2026-09-26
+3041..3093
+30A1..30F6
+30FB
+30FC

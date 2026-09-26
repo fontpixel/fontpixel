@@ -28,17 +28,24 @@ def test_reference_sets_are_exact_and_compatibility_is_separate(references):
     assert sets['kr'] | sets['kr-compat'] == next(c.cps for c in charsets if c.id == 'ksx1001-hanja')
     assert sets['union'] == sets['tw'] | sets['sc'] | sets['jp'] | sets['kr']
     assert len(sets['union']) == 14901
-    assert sets['kana'] == sets['hiragana'] | sets['katakana'] | sets['kana-marks'] | sets['kana-ext'] | sets['kana-halfwidth']
-    assert len(sets['hiragana']) == 86
-    assert len(sets['katakana']) == 90
-    assert len(sets['kana-marks']) == 13
+    assert sets['kana'] == sets['hiragana'] | sets['katakana'] | {0x30FB, 0x30FC}
+    assert sets['kana-other'] == sets['kana-marks'] | sets['kana-ext'] | sets['kana-halfwidth']
+    assert not sets['kana'] & sets['kana-other']
+    assert len(sets['kana']) == 171
+    assert len(sets['hiragana']) == 83
+    assert len(sets['katakana']) == 86
+    assert len(sets['kana-marks']) == 18
+    assert len(sets['kana-other']) == 408
+    assert len(sets['bopomofo']) == 37
+    assert len(sets['bopomofo-other']) == 38
+    assert not sets['bopomofo'] & sets['bopomofo-other']
     assert len(sets['jp']) == 2965
     assert sets['jp'] == next(c.cps for c in charsets if c.id == 'jisx0208-l1')
     assert len(sets['jamo']) == 451
     assert sets['combined'] == sets['union'] | sets['kana'] | sets['hangul'] | sets['bopomofo']
-    assert len(sets['combined']) == 26727
-    assert not sets['combined'] & sets['jamo']
-    assert not sets['combined'] & sets['kr-compat']
+    assert len(sets['combined']) == 26281
+    for separate in ('jamo', 'kr-compat', 'kana-other', 'bopomofo-other'):
+        assert not sets['combined'] & sets[separate]
 
 
 def test_intersections_count_glyphs_instead_of_combining_coverage_totals(references):
@@ -60,10 +67,15 @@ def test_intersections_count_glyphs_instead_of_combining_coverage_totals(referen
 
 def test_combined_summary_includes_non_han_scripts_without_double_counting(references):
     _, _, sets = references
-    cps = frozenset([min(sets['tw-sc']), 0x3042, 0xAC00, 0x3105, 0x1100, 0xF900])
+    # Hiragana a and basic Bopomofo b count; tone mark ˇ (shared with Latin),
+    # halfwidth kana, the extended Bopomofo block, Jamo and compatibility Han do not.
+    cps = frozenset([min(sets['tw-sc']), 0x3042, 0xAC00, 0x3105, 0x02C7,
+                     0xFF71, 0x31A0, 0x1100, 0xF900])
     result = cjk_coverage(cps, sets)
     assert result['union'] == [1, 14901]
-    assert result['combined'] == [4, 26727]
+    assert result['combined'] == [4, 26281]
+    assert result['kana-other'] == [1, 408]
+    assert result['bopomofo-other'] == [1, 38]
     assert result['jamo'][0] == 1
     assert result['kr-compat'][0] == 1
 
@@ -93,8 +105,9 @@ def test_map_and_coverage_tables_share_letter_and_han_definitions(references):
     c = {c.id: c.cps for c in charsets}
     for key in ('hiragana', 'katakana', 'bopomofo'):
         assert sets[key] == c[key]
-    parts = [sets[k] for k in ('hiragana', 'katakana', 'kana-marks', 'kana-ext', 'kana-halfwidth')]
-    assert len(sets['kana']) == sum(map(len, parts)) == 579
+    assert sets['kana'] == c['jisx0208-kana']
+    parts = [sets[k] for k in ('kana', 'kana-marks', 'kana-ext', 'kana-halfwidth')]
+    assert len(sets['kana'] | sets['kana-other']) == sum(map(len, parts)) == 579
     assert sets['jamo'] == c['hangul-jamo'] | c['hangul-compat-jamo'] | sets['jamo-ext']
     assert len(sets['jamo-ext']) == 101
     cps = frozenset({0xFA0E, 0xF900, 0x4E00, 0x4DBF, 0x0378})
@@ -140,7 +153,9 @@ def test_cached_details_refresh_per_variant_when_bdf_changes(tmp_path, reference
     assert detail['overview']['a']['hanTotal'] == [1, 101996]
     assert detail['overview']['a']['compat'][0] == 0
     assert detail['overview']['b']['compat'][0] == 1
-    assert len(detail['missingChars']['a']['kana-marks']) == 13
+    assert len(detail['missingChars']['a']['kana-marks']) == 18
+    assert len(detail['missingChars']['a']['kana-other']) == 408
+    assert len(detail['missingChars']['a']['bopomofo-other']) == 38
     assert len(detail['missingChars']['a']['jamo']) == 451
     assert len(detail['missingChars']['a']['kr-compat']) == 268
     assert 'han' not in detail['missingChars']['a']  # Large absent sets are not embedded.

@@ -8,7 +8,7 @@ const font = (coverageSummary: Record<string, number> = {}, sizes = [12], slug =
   ({ slug, sizes, coverageSummary, coverage: [] as number[] });
 const rate = createRater();
 const latin = { 'latin-basic': 1 };
-const japanese = { ...latin, hiragana: 1, katakana: 1, 'jisx0208-l1': 1 };
+const japanese = { ...latin, hiragana: 1, katakana: 1, 'jisx0208-kana': 1, 'jisx0208-l1': 1 };
 
 test('Google Fonts receive one small family bonus and DotGothic16 has no aesthetic penalty', () => {
   for (const slug of GOOGLE_FONTS_FAMILIES) {
@@ -78,21 +78,21 @@ test('size preferences are gentle, monotone outside 8–16 and neutral throughou
 
 test('scores use coverage completeness, with a gentler curve for large CJK repertoires', () => {
   const partialLatin = rate(font({ 'latin-basic': 0.64 }));
-  const partialChinese = rate(font({ ...latin, gb2312: 0.64 }));
+  const partialChinese = rate(font({ ...latin, 'tongyong-guifan-l1': 0.64 }));
   expect(partialChinese.target).toBe('zh-hans');
   expect(partialChinese.core).toBeCloseTo(0.8);
   expect(partialChinese.score).toBeGreaterThan(partialLatin.score);
-  expect(partialChinese.score).toBeLessThan(rate(font({ ...latin, gb2312: 1 })).score);
+  expect(partialChinese.score).toBeLessThan(rate(font({ ...latin, 'tongyong-guifan-l1': 1 })).score);
   // Complete ASCII must not mask incomplete coverage of a CJK font's target.
   expect(partialChinese.score).toBeLessThan(rate(font(latin)).score);
 });
 
 test('Japanese is judged by its own target, rather than by overlapping Chinese subsets', () => {
-  const result = rate(font({ ...japanese, gb2312: 0.5, 'big5-changyong': 0.8 }));
+  const result = rate(font({ ...japanese, 'tongyong-guifan-l1': 0.5, 'tw-changyong-4808': 0.8 }));
   expect(result.target).toBe('ja');
   expect(result.core).toBe(1);
   expect(result.score).toBeGreaterThanOrEqual(90);
-  expect(rate(font({ ...latin, hiragana: 1, katakana: 1 })).target).toBe('ja');
+  expect(rate(font({ ...latin, hiragana: 1, katakana: 1, 'jisx0208-kana': 1 })).target).toBe('ja');
   expect(rate(font({ ...japanese, hiragana: 0 })).target).toBe('latin');
 });
 
@@ -132,8 +132,8 @@ test('target depth dominates extras and adding more foreign scripts cannot keep 
 test('specialists can earn the same depth bonus without adding another language', () => {
   const profiles: Record<string, number>[] = [
     { ...latin, 'latin1-supp': 1, 'latin-ext-a': 1 },
-    { gb2312: 1, 'tongyong-guifan': 1, 'gbk-hanzi': 1 },
-    { 'big5-changyong': 1, big5: 1 },
+    { 'tongyong-guifan-l1': 1, 'tongyong-guifan': 1, 'gbk-hanzi': 1 },
+    { 'tw-changyong-4808': 1, big5: 1 },
     { ...japanese, 'jisx0208-l2': 1, 'jisx0213-l3': 1 },
     { 'ksx1001-hangul': 1, 'hangul-syllables': 1 },
   ];
@@ -145,8 +145,8 @@ test('specialists can earn the same depth bonus without adding another language'
 test('a complete Latin specialist can match a pan-CJK font without covering CJK', () => {
   const specialist = { ...latin, 'latin1-supp': 1, 'latin-ext-a': 1, greek: 1,
     cp437: 1, 'box-drawing': 1, 'block-elements': 1 };
-  const broad = { ...specialist, ...japanese, gb2312: 1, 'gbk-hanzi': 1, 'tongyong-guifan': 1,
-    'big5-changyong': 1, big5: 1, 'ksx1001-hangul': 1, 'hangul-syllables': 1,
+  const broad = { ...specialist, ...japanese, 'tongyong-guifan-l1': 1, 'gbk-hanzi': 1, 'tongyong-guifan': 1,
+    'tw-changyong-4808': 1, big5: 1, 'ksx1001-hangul': 1, 'hangul-syllables': 1,
     cyrillic: 1, arabic: 1, thai: 1 };
   expect(rate(font(specialist)).target).toBe('latin');
   expect(rate(font(specialist)).score).toBe(100);
@@ -154,14 +154,15 @@ test('a complete Latin specialist can match a pan-CJK font without covering CJK'
 });
 
 test('overlapping Han references count as one extra dimension', () => {
-  const base = { 'ksx1001-hangul': 1, 'hangul-syllables': 1, gb2312: 0.6 };
-  const overlapping = { ...base, 'big5-changyong': 0.6, 'jisx0208-l1': 0.6, hiragana: 1, katakana: 1 };
+  const base = { 'ksx1001-hangul': 1, 'hangul-syllables': 1, 'tongyong-guifan-l1': 0.6 };
+  const overlapping = { ...base, 'tw-changyong-4808': 0.6, 'jisx0208-l1': 0.6,
+    hiragana: 1, katakana: 1, 'jisx0208-kana': 1 };
   expect(rate(font(base)).target).toBe('ko');
   expect(rate(font(overlapping)).score).toBe(rate(font(base)).score);
 });
 
 test('WenQuanYi-like fonts with equal core coverage separate on useful additional support', () => {
-  const song = font({ ...japanese, gb2312: 1, 'big5-changyong': 1, big5: 1,
+  const song = font({ ...japanese, 'tongyong-guifan-l1': 1, 'tw-changyong-4808': 1, big5: 1,
     'gbk-hanzi': 1, 'tongyong-guifan': 0.9754,
     'latin1-supp': 0.6667, cyrillic: 0.6804, greek: 0.6667,
     cp437: 0.8196, 'box-drawing': 0.9141, 'block-elements': 0.625,
@@ -181,7 +182,7 @@ test('WenQuanYi-like fonts with equal core coverage separate on useful additiona
 test('more coverage cannot lower the result when switching between eligible CJK profiles', () => {
   let previous = 0;
   for (const coverage of [0.8, 0.9, 0.99, 1]) {
-    const result = rate(font({ gb2312: coverage, 'big5-changyong': 0.9, big5: 1 }));
+    const result = rate(font({ 'tongyong-guifan-l1': coverage, 'tw-changyong-4808': 0.9, big5: 1 }));
     expect(result.score).toBeGreaterThanOrEqual(previous);
     previous = result.score;
   }

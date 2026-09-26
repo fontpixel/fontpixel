@@ -59,7 +59,7 @@ def _rules(lang: str) -> dict[str, str]:
     return dict(re.findall(r"'([\w-]+)':\s*'([^']*)'", body))
 
 
-@pytest.mark.parametrize("lang", ["zh", "en"])
+@pytest.mark.parametrize("lang", ["zh", "en", "ja", "ko", "fr"])
 def test_script_rule_titles_match_the_thresholds(lang: str):
     """The percentage shown on the chip must match the threshold actually used for detection.
 
@@ -67,20 +67,25 @@ def test_script_rule_titles_match_the_thresholds(lang: str):
     to 90% while the title still said 50%.
     """
     from opf.coverage.engine import (
+        CJK_SCRIPTS,
         KANA_GATE,
-        SCRIPT_FULL,
         SCRIPT_REFERENCE_CHARSETS,
         SCRIPT_TARGET,
+        full_threshold,
     )
 
-    full = f"≥ {SCRIPT_FULL * 100:g}%"
-    partial = f"{SCRIPT_TARGET * 100:g}–{SCRIPT_FULL * 100:g}%"
     rules = _rules(lang)
-    for script in SCRIPT_REFERENCE_CHARSETS:
-        assert rules[script].endswith(full), f"{lang}/{script}: {rules[script]}"
-        assert rules[f"{script}-partial"].endswith(partial), (
-            f"{lang}/{script}-partial: {rules[f'{script}-partial']}"
-        )
-    # Japanese additionally requires the kana threshold
-    assert f"≥ {KANA_GATE * 100:g}%" in rules["ja"]
+    # ja/ko/fr phrase some alphabet thresholds in their own style ("90% 以上");
+    # the CJK rules, whose threshold differs, are checked in every language.
+    scripts = SCRIPT_REFERENCE_CHARSETS if lang in ("zh", "en") else CJK_SCRIPTS
+    for script in scripts:
+        full = full_threshold(script) * 100
+        assert f"≥ {full:g}%" in rules[script], f"{lang}/{script}: {rules[script]}"
+        if script != "ja":
+            assert rules[f"{script}-partial"].endswith(f"{SCRIPT_TARGET * 100:g}–{full:g}%"), (
+                f"{lang}/{script}-partial: {rules[f'{script}-partial']}"
+            )
+    # Japanese: complete needs every JIS kana; partial needs each kana table
+    # at the gate and some level-1 kanji.
     assert f"≥ {KANA_GATE * 100:g}%" in rules["ja-partial"]
+    assert f"≥ {SCRIPT_TARGET * 100:g}%" in rules["ja-partial"]

@@ -17,8 +17,8 @@ from opf.coverage.charsets import Charset
 from opf.coverage.engine import han_counts, unified_han
 from opf.coverage.ucd import Ucd
 
-CJK_TABLE_KEYS = ('han', 'combined', 'tw', 'kr', 'kr-compat', 'kana',
-                  'kana-marks', 'kana-ext', 'jamo', 'jamo-ext')
+CJK_TABLE_KEYS = ('han', 'combined', 'tw', 'kr', 'kr-compat', 'kana-other',
+                  'kana-marks', 'kana-ext', 'jamo', 'jamo-ext', 'bopomofo-other')
 
 
 def cjk_sets(charsets: list[Charset], ucd: Ucd) -> dict[str, frozenset[int]]:
@@ -32,18 +32,27 @@ def cjk_sets(charsets: list[Charset], ucd: Ucd) -> dict[str, frozenset[int]]:
     tw = c['tw-changyong-4808'] | c['tw-cichangyong-6343']
     sc, jp = c['tongyong-guifan'], c['jisx0208-l1']
     kr = c['ksx1001-hanja'] & han
-    hira, kata = c['hiragana'], c['katakana']
-    kana_marks = blocks('Hiragana', 'Katakana') - (hira | kata)
+    # The main kana figure is the Japanese label's own reference set: the JIS
+    # X 0208 hiragana and katakana plus ー and ・. Everything else in the kana
+    # blocks is rare, historical or halfwidth and is only listed as "other".
+    kana = c['jisx0208-kana']
+    kana_marks = blocks('Hiragana', 'Katakana') - kana
     kana_ext = blocks('Katakana Phonetic Extensions', 'Kana Supplement',
                       'Kana Extended-A', 'Kana Extended-B', 'Small Kana Extension')
+    kana_other = kana_marks | kana_ext | c['halfwidth-kana']
     union = tw | sc | jp | kr
-    kana = hira | kata | kana_marks | kana_ext | c['halfwidth-kana']
     jamo_ext = blocks('Hangul Jamo Extended-A', 'Hangul Jamo Extended-B')
+    # Basic Bopomofo is the 37 letters; dialect letters and the extended block
+    # are listed separately and stay out of the combined total. The tone marks
+    # are Spacing Modifier Letters shared with Latin, so they prove nothing
+    # about Bopomofo support and are not counted at all.
     bopomofo = c['bopomofo']
+    bopomofo_other = blocks('Bopomofo', 'Bopomofo Extended') - bopomofo
     return {
         'han': han, 'union': union,
-        # The overview combines the four Han tables and the three script
-        # panels. Jamo and compatibility Han remain separate detail rows.
+        # The overview combines the four Han tables with the main figures of
+        # the three script panels. Jamo, compatibility Han and the "other"
+        # kana and Bopomofo remain separate detail rows.
         'combined': union | kana | c['hangul-syllables'] | bopomofo,
         'tw': tw, 'tw-common': c['tw-changyong-4808'],
         'tw-less': c['tw-cichangyong-6343'],
@@ -58,13 +67,14 @@ def cjk_sets(charsets: list[Charset], ucd: Ucd) -> dict[str, frozenset[int]]:
         'tw-sc-jp-kr': tw & sc & jp & kr,
         'tw-only': tw - (sc | jp | kr), 'sc-only': sc - (tw | jp | kr),
         'jp-only': jp - (tw | sc | kr), 'kr-only': kr - (tw | sc | jp),
-        'kana': kana,
-        'hiragana': hira, 'katakana': kata, 'kana-marks': kana_marks, 'kana-ext': kana_ext,
+        'kana': kana, 'kana-other': kana_other,
+        'hiragana': c['hiragana'], 'katakana': c['katakana'],
+        'kana-marks': kana_marks, 'kana-ext': kana_ext,
         'kana-halfwidth': c['halfwidth-kana'],
         'hangul': c['hangul-syllables'], 'hangul-common': c['ksx1001-hangul'],
         'jamo': c['hangul-jamo'] | c['hangul-compat-jamo'] | jamo_ext,
         'jamo-ext': jamo_ext,
-        'bopomofo': bopomofo,
+        'bopomofo': bopomofo, 'bopomofo-other': bopomofo_other,
     }
 
 

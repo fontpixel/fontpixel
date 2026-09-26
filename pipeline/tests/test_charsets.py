@@ -22,8 +22,11 @@ def test_known_counts_codec_derived():
 
 def test_known_counts_static():
     cs = _by_id()
-    assert len(cs["hiragana"].cps) == 86  # U+3041..3096
-    assert len(cs["katakana"].cps) == 90  # U+30A1..30FA
+    assert len(cs["hiragana"].cps) == 83  # JIS X 0208 row 4, U+3041..3093
+    assert len(cs["katakana"].cps) == 86  # JIS X 0208 row 5, U+30A1..30F6
+    assert cs["jisx0208-kana"].cps == cs["hiragana"].cps | cs["katakana"].cps | {0x30FB, 0x30FC}
+    assert cs["jisx0208-kana"].cps <= cs["jisx0208-nonkanji"].cps
+    assert len(cs["bopomofo"].cps) == 37  # U+3105..3129; tone marks are shared with Latin
     assert len(cs["kangxi-radicals"].cps) == 214
     assert len(cs["cp437"].cps) == 255  # graphic interpretation is 0x01-0xFF; 0x00 doesn't count as a glyph
     assert len(cs["box-drawing"].cps) == 128

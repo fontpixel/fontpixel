@@ -28,10 +28,14 @@ to check a particular variant's exact coverage.
 
 | Target | Coverage reference |
 | --- | --- |
-| Simplified Chinese | Better coverage of GB 2312 and 通用规范汉字表 |
-| Traditional Chinese | Big5 common characters |
-| Japanese | 70% JIS X 0208 level 1 kanji + 30% of the lower hiragana/katakana coverage; both kana sets must reach 95% |
-| Korean | Better coverage of KS X 1001's 2,350 common syllables and all modern Hangul syllables |
+| Simplified Chinese | 通用规范汉字表 level 1 (3,500) |
+| Traditional Chinese | 常用国字标准字体表 (Taiwan chart A, 4,808) |
+| Japanese | 70% JIS X 0208 level 1 kanji + 30% JIS X 0208 kana (83 hiragana, 86 katakana, ー・); the hiragana and katakana tables must each reach 95% |
+| Korean | KS X 1001's 2,350 common syllables |
+
+These are the same core tables the script labels use (see
+`SCRIPT_REFERENCE_CHARSETS` in `pipeline/opf/coverage/engine.py`), scored on a
+continuous scale instead of the labels' 98% threshold.
 | Latin | Basic Latin printable characters |
 | Cyrillic, Greek, Arabic, Thai | The corresponding coverage-filter chart |
 
@@ -50,7 +54,7 @@ to one with a less-complete supplemental chart. Ties use the fixed profile order
 Arabic, Thai).
 
 For CJK, `core = sqrt(coverage)`; for other alphabets, `core = coverage`.
-Thus 64% of a large CJK reference set receives 80% core credit. Korean fonts can
+Thus 64% of a CJK core table receives 80% core credit. Korean fonts can
 receive full core credit for the common KS set without drawing 11,172 syllables.
 No score uses the full Unicode Han repertoire as a denominator.
 

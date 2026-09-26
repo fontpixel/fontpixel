@@ -3,7 +3,7 @@
 # order: 20
 # name_zh: 平假名
 # name_en: Hiragana
-# desc_zh: U+3041–3096 平假名
-# desc_en: Hiragana, U+3041–3096.
-# source: Unicode block ranges; generated 2026-08-21
-3041..3096
+# desc_zh: JIS X 0208 平假名 83 个，U+3041–3093（ゔゕゖ 计入其他假名）
+# desc_en: The 83 JIS X 0208 hiragana, U+3041–3093. ゔ, ゕ and ゖ count as other kana.
+# source: JIS X 0208 row 4 via Unicode ranges; generated 2026-09-26
+3041..3093

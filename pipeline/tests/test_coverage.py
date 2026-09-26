@@ -52,27 +52,72 @@ def test_badges():
     assert badges(coverage_for(frozenset({65}), CHARSETS)) == []
 
 
+def _scripts(cps) -> list[str]:
+    return detect_scripts(coverage_for(frozenset(cps), CHARSETS))
+
+
+def _drop(cps, table: str, share: float) -> set[int]:
+    """Remove the given share of a table's characters from cps."""
+    ordered = sorted(BY_ID[table].cps)
+    return set(cps) - set(ordered[:round(len(ordered) * share)])
+
+
 def test_detect_scripts_and_sample_lang():
-    # Simplified Chinese needs the full GB/T 2312 (>=90%); level-1 alone isn't enough
     cov = coverage_for(frozenset(BY_ID["gb2312"].cps), CHARSETS)
     assert "zh-hans" in detect_scripts(cov)
     assert pick_sample_lang(cov) == "zh-Hans"
-    partial = coverage_for(frozenset(BY_ID["gb2312-l1"].cps), CHARSETS)
-    assert "zh-hans" not in detect_scripts(partial), "一级字表仅占 55%，不该算简体中文"
 
-    kana_only = coverage_for(
-        frozenset(BY_ID["hiragana"].cps | BY_ID["katakana"].cps), CHARSETS
-    )
-    assert "ja" not in detect_scripts(kana_only), "只有假名没有汉字不算日文"
+    kana_only = coverage_for(frozenset(BY_ID["jisx0208-kana"].cps), CHARSETS)
+    assert not {"ja", "ja-partial"} & set(detect_scripts(kana_only)), "只有假名没有汉字不算日文"
     ja_cov = coverage_for(
-        frozenset(BY_ID["hiragana"].cps | BY_ID["katakana"].cps
-                  | BY_ID["jisx0208-l1"].cps), CHARSETS
+        frozenset(BY_ID["jisx0208-kana"].cps | BY_ID["jisx0208-l1"].cps), CHARSETS
     )
     assert "ja" in detect_scripts(ja_cov)
     assert pick_sample_lang(ja_cov) == "ja"
     latin_cov = coverage_for(frozenset(range(0x20, 0x7F)), CHARSETS)
     assert detect_scripts(latin_cov) == ["latin"]
     assert pick_sample_lang(latin_cov) == "latin"
+
+
+def test_chinese_scripts_use_the_core_tables_at_98_percent():
+    level1 = BY_ID["tongyong-guifan-l1"].cps
+    assert "zh-hans" in _scripts(level1)
+    assert "zh-hans-partial" in _scripts(_drop(level1, "tongyong-guifan-l1", 0.03))
+    assert "zh-hans" in _scripts(_drop(level1, "tongyong-guifan-l1", 0.02))
+    chart_a = BY_ID["tw-changyong-4808"].cps
+    assert "zh-hant" in _scripts(chart_a)
+    assert "zh-hant-partial" in _scripts(_drop(chart_a, "tw-changyong-4808", 0.03))
+    # Japanese kanji overlap Big5 heavily, but miss Taiwan's common characters.
+    jis = BY_ID["jisx0208-l1"].cps | BY_ID["jisx0208-l2"].cps
+    assert "zh-hant" not in _scripts(jis)
+    assert "zh-hant-partial" in _scripts(jis)
+
+
+def test_japanese_needs_every_jis_kana_and_98_percent_of_level_1():
+    kana, kanji = BY_ID["jisx0208-kana"].cps, BY_ID["jisx0208-l1"].cps
+    assert "ja" in _scripts(kana | _drop(kanji, "jisx0208-l1", 0.02))
+    assert "ja-partial" in _scripts(kana | _drop(kanji, "jisx0208-l1", 0.03))
+    # Missing ー and ・ keeps an otherwise complete font partial.
+    assert "ja-partial" in _scripts((kana - {0x30FB, 0x30FC}) | kanji)
+    # The partial tier needs >=95% of each kana table and some kanji.
+    assert "ja-partial" in _scripts(_drop(kana, "hiragana", 0.04) | kanji)
+    assert not {"ja", "ja-partial"} & set(_scripts(_drop(kana, "hiragana", 0.06) | kanji))
+    few_kanji = set(sorted(kanji)[:-(-len(kanji) // 10)])  # ceil(10%)
+    assert "ja-partial" in _scripts(kana | few_kanji)
+    assert not {"ja", "ja-partial"} & set(_scripts(kana | set(sorted(few_kanji)[:-5])))
+
+
+def test_korean_uses_ks_x_1001_hangul_at_98_percent():
+    hangul = BY_ID["ksx1001-hangul"].cps
+    assert "ko" in _scripts(hangul)
+    assert "ko-partial" in _scripts(_drop(hangul, "ksx1001-hangul", 0.03))
+    assert "ko" not in _scripts(BY_ID["ksx1001-hanja"].cps)
+
+
+def test_alphabets_keep_the_90_percent_threshold():
+    greek = sorted(BY_ID["greek"].cps)
+    assert "greek" in _scripts(greek[:round(len(greek) * 0.9) + 1])
+    assert "greek-partial" in _scripts(greek[:round(len(greek) * 0.9) - 1])
 
 
 def test_pan_cjk_font_prefers_zh_hans_sample():
@@ -114,3 +159,19 @@ def test_unicode_block_coverage():
     assert d["Basic Latin"] == (1, 128)
     assert len(rows) > 100  # includes zero-coverage blocks (every assigned block is listed)
     assert d["CJK Unified Ideographs"][0] == 0
+
+
+def test_a_cjk_font_with_only_partial_labels_keeps_a_cjk_sample():
+    """Ark Pixel-like: 92% of JIS level 1, so the label is partial but the specimen stays Japanese."""
+    kana = BY_ID["jisx0208-kana"].cps
+    kanji = set(sorted(BY_ID["jisx0208-l1"].cps)[:2730])  # ~92%
+    cov = coverage_for(frozenset(kana | kanji | set(range(0x20, 0x7F))), CHARSETS)
+    assert "ja-partial" in detect_scripts(cov) and "ja" not in detect_scripts(cov)
+    assert pick_sample_lang(cov) == "ja"
+
+
+def test_a_latin_font_with_some_kanji_keeps_a_latin_sample():
+    cps = BY_ID["jisx0208-kana"].cps | set(sorted(BY_ID["jisx0208-l1"].cps)[:1000]) | set(range(0x20, 0x7F))
+    cov = coverage_for(frozenset(cps), CHARSETS)
+    assert "ja-partial" in detect_scripts(cov)
+    assert pick_sample_lang(cov) == "latin"

@@ -8,7 +8,8 @@ const children: Record<string, string[]> = {
   big5: ['big5-changyong', 'big5-cichangyong'],
   tw: ['tw-changyong-4808', 'tw-cichangyong-6343'],
   joyo: ['kyoiku'],
-  kana: ['hiragana', 'katakana', 'kana-marks', 'kana-ext', 'halfwidth-kana'],
+  'jisx0208-kana': ['hiragana', 'katakana'],
+  'kana-other': ['kana-marks', 'kana-ext', 'halfwidth-kana'],
   'hangul-syllables': ['ksx1001-hangul'],
   'ksx1001-hanja': ['kr', 'kr-compat'],
   jamo: ['hangul-compat-jamo', 'hangul-jamo', 'jamo-ext'],
@@ -17,8 +18,8 @@ const children: Record<string, string[]> = {
 /** Map totals and subdivisions that supplement the existing reference tables. */
 export const CJK_COVERAGE_ROWS: Record<string, string[]> = {
   cjk: ['han', 'combined'],
-  tw: ['tw'],
-  jp: ['kana', 'kana-marks', 'kana-ext'],
+  tw: ['tw', 'bopomofo-other'],
+  jp: ['kana-other', 'kana-marks', 'kana-ext'],
   kr: ['kr', 'kr-compat', 'jamo', 'jamo-ext'],
 };
 

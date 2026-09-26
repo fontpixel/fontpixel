@@ -3,7 +3,7 @@
 # order: 21
 # name_zh: 片假名
 # name_en: Katakana
-# desc_zh: U+30A1–30FA 片假名
-# desc_en: Katakana, U+30A1–30FA.
-# source: Unicode block ranges; generated 2026-08-21
-30A1..30FA
+# desc_zh: JIS X 0208 片假名 86 个，U+30A1–30F6（ヷヸヹヺ 计入其他假名）
+# desc_en: The 86 JIS X 0208 katakana, U+30A1–30F6. ヷ, ヸ, ヹ and ヺ count as other kana.
+# source: JIS X 0208 row 5 via Unicode ranges; generated 2026-09-26
+30A1..30F6

@@ -136,8 +136,8 @@ def test_coverage_intervals_and_missing(tmp_path):
 
     detail = json.loads((data / "details" / "mini.json").read_text(encoding="utf-8"))
     vid = detail["meta"]["variants"][0]["id"]
-    # hiragana has 86 chars total, mini is missing all of them (<=500) -> a missing-chars list is provided
-    assert len(detail["missingChars"][vid]["hiragana"]) == 86
+    # hiragana has 83 chars total, mini is missing all of them (<=500) -> a missing-chars list is provided
+    assert len(detail["missingChars"][vid]["hiragana"]) == 83
     # gb2312 is missing 6763 chars (>500) -> not provided
     assert "gb2312" not in detail["missingChars"][vid]
 

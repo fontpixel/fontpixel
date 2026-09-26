@@ -6,22 +6,21 @@
  * Each writing system must keep at least one reference chart that decides
  * the label used for it, otherwise a user could see
  * "Traditional Chinese (incomplete)" with no consistent chart to filter by.
- * The second reference chart for the same label (Simplified's general-use
- * standard hanzi chart) is omitted for brevity.
  *
  * `test_coverage_picks.py` verifies both of the above.
  */
 export const COVERAGE_PICKS: readonly string[] = [
   // Simplified Chinese
+  'tongyong-guifan-l1',
   'gb2312',
   'gbk-hanzi',
   'gb18030-2022-l1',
   // Traditional Chinese
+  'tw-changyong-4808',
   'big5-changyong',
   'big5',
   // Japanese
-  'hiragana',
-  'katakana',
+  'jisx0208-kana',
   'joyo',
   'jisx0208-l1',
   // Korean

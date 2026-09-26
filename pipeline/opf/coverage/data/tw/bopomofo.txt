@@ -1,10 +1,9 @@
 # id: bopomofo
 # section: tw
 # order: 60
-# name_zh: 注音符号
-# name_en: Bopomofo
-# desc_zh: 注音符号及扩展（闽南语/客家语用）
-# desc_en: Bopomofo and its extensions, as used for Min Nan and Hakka.
-# source: Unicode block ranges; generated 2026-08-21
-3105..312F
-31A0..31BF
+# name_zh: 基本注音符号
+# name_en: Basic Bopomofo
+# desc_zh: 注音符号 37 个（U+3105–3129）；方言用字与扩展区计入其他注音符号。声调符号是与拉丁文共用的修饰符号，不统计
+# desc_en: The 37 Bopomofo letters (U+3105–3129). Dialect letters and the extended block count as other Bopomofo. Tone marks are modifier letters shared with Latin and are not counted.
+# source: Unicode block ranges and Spacing Modifier Letters; generated 2026-09-26
+3105..3129

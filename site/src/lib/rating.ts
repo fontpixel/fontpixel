@@ -30,14 +30,15 @@ export function createRater(charsetIds: readonly string[] = []) {
       const index = indices.get(id);
       return clamp((index === undefined ? undefined : font.coverage[index]) ?? font.coverageSummary[id] ?? 0);
     };
-    const kana = Math.min(r('hiragana'), r('katakana'));
-    // Same reference sets as coverage/engine.py's script detection. Japanese also
-    // credits kana-only fonts, but cannot pass as complete without common kanji.
+    const kanaGate = Math.min(r('hiragana'), r('katakana')) >= 0.95;
+    // Same reference sets as coverage/engine.py's script detection, scored on a
+    // continuous scale. Japanese also credits kana-only fonts, but cannot pass
+    // as complete without common kanji.
     const coverage: Record<Script, number> = {
-      'zh-hans': Math.max(r('gb2312'), r('tongyong-guifan')),
-      'zh-hant': r('big5-changyong'),
-      ja: kana >= 0.95 ? 0.7 * r('jisx0208-l1') + 0.3 * kana : 0,
-      ko: Math.max(r('ksx1001-hangul'), r('hangul-syllables')),
+      'zh-hans': r('tongyong-guifan-l1'),
+      'zh-hant': r('tw-changyong-4808'),
+      ja: kanaGate ? 0.7 * r('jisx0208-l1') + 0.3 * r('jisx0208-kana') : 0,
+      ko: r('ksx1001-hangul'),
       latin: r('latin-basic'),
       cyrillic: r('cyrillic'), greek: r('greek'), arabic: r('arabic'), thai: r('thai'),
     };

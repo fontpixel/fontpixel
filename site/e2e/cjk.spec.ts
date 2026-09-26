@@ -41,6 +41,18 @@ for (const lang of ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'fr']) {
       `${nf.format(Math.round(stats.combined[0] / stats.combined[1] * 1000) / 10)}%`,
     );
     await expect(map.locator('[data-cjk="sc"] .cjk__svg-label')).toHaveText(mainland[lang]!);
+    // The core tables behind the Chinese labels sit under their region's total;
+    // the rare kana and Bopomofo are small lines without a meter.
+    for (const key of ['tw-common', 'sc-l1', 'kana-other', 'bopomofo-other']) {
+      await expect(map.locator(`[data-cjk="${key}"] :is(tspan, span)`)).toHaveText(
+        stats[key].map((n: number) => nf.format(n)).join(' / '),
+      );
+    }
+    for (const key of ['kana', 'bopomofo']) {
+      await expect(map.locator(`[data-cjk="${key}"] > meter`)).toHaveAttribute('max', String(stats[key][1]));
+    }
+    expect(stats.kana[1]).toBe(171);
+    expect(stats.bopomofo[1]).toBe(37);
     await expect(map.locator('[data-cjk="jp"] .cjk__svg-label')).toContainText('JIS X 0208');
     const hierarchy = await map.evaluate(el => ({
       han: parseFloat(getComputedStyle(el.querySelector('[data-cjk="han"] .mono')!).fontSize),
@@ -67,11 +79,14 @@ for (const lang of ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'fr']) {
     // in the map disclosure; totals and script subsets live in regular tables.
     for (const [key, chart] of [
       ['han', 'han'], ['combined', 'combined'], ['tw', 'tw'], ['sc', 'tongyong-guifan'],
+      ['tw-common', 'tw-changyong-4808'], ['sc-l1', 'tongyong-guifan-l1'],
       ['jp', 'jisx0208-l1'], ['kr', 'kr'], ['kr-compat', 'kr-compat'],
-      ['kana', 'kana'], ['hiragana', 'hiragana'], ['katakana', 'katakana'],
+      ['kana', 'jisx0208-kana'], ['hiragana', 'hiragana'], ['katakana', 'katakana'],
+      ['kana-other', 'kana-other'],
       ['kana-halfwidth', 'halfwidth-kana'], ['kana-marks', 'kana-marks'], ['kana-ext', 'kana-ext'],
       ['hangul', 'hangul-syllables'], ['hangul-common', 'ksx1001-hangul'],
-      ['jamo', 'jamo'], ['jamo-ext', 'jamo-ext'], ['bopomofo', 'bopomofo'],
+      ['jamo', 'jamo'], ['jamo-ext', 'jamo-ext'],
+      ['bopomofo', 'bopomofo'], ['bopomofo-other', 'bopomofo-other'],
     ]) {
       expect(await tableCounts(`[data-charset="${chart}"] td:first-of-type`)).toBe(stats[key!].join('/'));
       expect(await panel.locator(`[data-charset="${chart}"]`).evaluate(el =>
@@ -111,7 +126,7 @@ test('CJK map remains readable on a narrow dark page, including zero coverage', 
   await expect(map.locator('svg')).toBeHidden();
   await expect(map.locator('.cjk__mobile')).toBeVisible();
   await expect(map.locator('[data-cjk="han"] .mono')).toHaveText('0 / 101,996');
-  await expect(map.locator('[data-cjk="combined"] strong')).toHaveText('0 / 26,727');
+  await expect(map.locator('[data-cjk="combined"] strong')).toHaveText('0 / 26,281');
   await expect(map.locator('[data-cjk="combined"] .cjk__percent')).toHaveText('0%');
   await map.locator('summary').click();
   expect(await map.evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
@@ -128,7 +143,8 @@ test('coverage tables put totals before indented subsets and keep missing glyphs
     big5: ['big5-changyong', 'big5-cichangyong'],
     tw: ['tw-changyong-4808', 'tw-cichangyong-6343'],
     joyo: ['kyoiku'],
-    kana: ['hiragana', 'katakana', 'kana-marks', 'kana-ext', 'halfwidth-kana'],
+    'jisx0208-kana': ['hiragana', 'katakana'],
+    'kana-other': ['kana-marks', 'kana-ext', 'halfwidth-kana'],
     'hangul-syllables': ['ksx1001-hangul'],
     'ksx1001-hanja': ['kr', 'kr-compat'],
     jamo: ['hangul-compat-jamo', 'hangul-jamo', 'jamo-ext'],
@@ -137,7 +153,8 @@ test('coverage tables put totals before indented subsets and keep missing glyphs
   };
   await expect(panel.locator('[data-charset="hiragana"] th')).toHaveText('平假名');
   await expect(panel.locator('[data-charset="katakana"] th')).toHaveText('片假名');
-  await expect(panel.locator('[data-charset="kana"] td').first()).toContainText('/ 579');
+  await expect(panel.locator('[data-charset="jisx0208-kana"] td').first()).toContainText('/ 171');
+  await expect(panel.locator('[data-charset="kana-other"] td').first()).toContainText('/ 408');
   await expect(panel.locator('[data-charset="jamo"] td').first()).toContainText('/ 451');
   for (const [parent, children] of Object.entries(groups)) {
     const root = panel.locator(`[data-charset="${parent}"]`);
@@ -162,7 +179,7 @@ test('coverage tables put totals before indented subsets and keep missing glyphs
     ? [...detail('dotgothic16').missingChars[variant]['kana-ext']].length : 0);
   await modal.locator('[data-modal-close]').click();
   await page.setViewportSize({ width: 320, height: 800 });
-  for (const id of ['kana', 'hiragana', 'jamo']) {
+  for (const id of ['jisx0208-kana', 'hiragana', 'jamo']) {
     const row = panel.locator(`[data-charset="${id}"]`);
     const layout = await row.evaluate(el => {
       const th = el.querySelector('th')!;

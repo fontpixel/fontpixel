@@ -46,9 +46,9 @@ from opf.prerender import og_png, sample_svg
 from opf.variants import search_text
 
 _SUMMARY_IDS = [
-    "gb2312", "tongyong-guifan", "big5-changyong", "tw-changyong-4808",
-    "jisx0208-l1", "ksx1001-hangul", "hangul-syllables", "wgl4", "cp437",
-    "latin-basic", "hiragana", "katakana",
+    "gb2312", "tongyong-guifan", "tongyong-guifan-l1", "big5-changyong",
+    "tw-changyong-4808", "jisx0208-l1", "jisx0208-kana", "ksx1001-hangul",
+    "hangul-syllables", "wgl4", "cp437", "latin-basic", "hiragana", "katakana",
 ]
 
 _FONT_SUFFIXES = (".bdf", ".bdf.gz", ".pcf", ".pcf.gz")

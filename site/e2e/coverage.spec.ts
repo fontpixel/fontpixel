@@ -15,9 +15,9 @@ test('coverage report shows charset rows with denominators', async ({ page }) =>
 
 test('missing chars open from the row that owns them', async ({ page }) => {
   await page.goto('zh/fonts/wqy-bitmap-song/');
-  // Bopomofo 41/75: missing 34
+  // Other Bopomofo 4/38: missing 34
   const row = page.locator(
-    '[data-variant-panel]:not([hidden]) [data-charset="bopomofo"]',
+    '[data-variant-panel]:not([hidden]) [data-charset="bopomofo-other"]',
   );
   await row.scrollIntoViewIfNeeded();
   await row.locator('.cov__missbtn').click();

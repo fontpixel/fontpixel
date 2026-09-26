@@ -76,7 +76,7 @@ test('glyph sheets can be inspected and dismissed entirely by keyboard', async (
 
 test('coverage dialog traps focus, closes on Escape, and returns it to the opener', async ({ page }) => {
   await page.goto('en/fonts/wqy-bitmap-song/');
-  const opener = page.locator('[data-variant-panel]:not([hidden]) [data-charset="bopomofo"] .cov__missbtn');
+  const opener = page.locator('[data-variant-panel]:not([hidden]) [data-charset="bopomofo-other"] .cov__missbtn');
   await opener.focus();
   await page.keyboard.press('Enter');
   const dialog = page.locator('[data-missing-modal]');

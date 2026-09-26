@@ -5,6 +5,7 @@
 | 位置 | 用途 |
 | --- | --- |
 | [specs/catalogue-rating.md](specs/catalogue-rating.md) | 现行 Auto 评分公式、手动调整和 Google Fonts 加分 |
+| [specs/cjk-script-labels.md](specs/cjk-script-labels.md) | 中日韩书写系统标签的判定规则，以及中日韩文字集合图的口径 |
 | [import-report.md](import-report.md) | 导入器的统计与人工收录记录；保留固定路径及 `opf:manual` 标记 |
 | [audits/](audits/) | 字体来源、许可、转换与部署审计，按记录日期保留 |
 | [research/gb18030-2022-levels.md](research/gb18030-2022-levels.md) | GB 18030 字表构造依据，生成器仍引用它 |

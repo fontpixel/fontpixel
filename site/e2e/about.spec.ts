@@ -6,13 +6,13 @@ test('about page explains metrics and lists data sources', async ({ page }) => {
   await expect(page.locator('main')).toContainText('宣称大小');
   await expect(page.locator('main')).toContainText('family.toml');
   const rows = page.locator('[data-testid="datasources"] tbody tr');
-  await expect(rows).toHaveCount(66); // matches the number of charsets (thai added 2026-09-03)
+  await expect(rows).toHaveCount(67); // matches the number of charsets (jisx0208-kana added 2026-09-26)
 });
 
 test('about page english version', async ({ page }) => {
   await page.goto('en/about/');
   await expect(page.locator('main')).toContainText('ink');
-  await expect(page.locator('[data-testid="datasources"] tbody tr')).toHaveCount(66);
+  await expect(page.locator('[data-testid="datasources"] tbody tr')).toHaveCount(67);
 });
 
 test('all About translations link the author and exclusion sources on narrow screens', async ({ page }) => {

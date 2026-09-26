@@ -110,23 +110,27 @@ def badges(cov: dict[str, tuple[int, int]]) -> list[str]:
 # Script detection: two tiers per script
 #   full     coverage clears the threshold — the language can be written normally
 #   partial  clearly targets the language but falls short of the threshold (e.g. a
-#            "Japanese" font with kana but no kanji, or a Korean font that only
-#            covers the KS X 1001 hanja subset)
+#            "Japanese" font with kana but few kanji)
 # Detection uses the same coverage data as the Coverage filter, but with a different
 # question in mind: this answers "can you write in this language", while Coverage
-# answers "does it meet some standard's compliance bar".
-SCRIPT_FULL = 0.9      # threshold to count as "full"
+# answers "does it meet some standard's compliance bar". CJK therefore uses each
+# region's core everyday table with a strict threshold, not a whole encoding.
+SCRIPT_FULL = 0.9      # threshold to count as "full" for alphabets
+CJK_FULL = 0.98        # CJK core tables are small, so 90% would miss hundreds of common characters
 SCRIPT_TARGET = 0.1    # lower bound for "clearly targets this language"
-KANA_GATE = 0.95       # no kana means it can't be "targeting Japanese"
+KANA_GATE = 0.95       # each JIS kana table; below this a font isn't targeting Japanese
+CJK_SCRIPTS = ("zh-hans", "zh-hant", "ja", "ko")
 
 # Reference charsets used to detect each script. The site's coverage filter
 # dropdown must list all of these, or users will see e.g. "Simplified Chinese
 # (incomplete)" with no matching filter to select by the same yardstick.
 SCRIPT_REFERENCE_CHARSETS: dict[str, tuple[str, ...]] = {
-    "zh-hans": ("gb2312", "tongyong-guifan"),
-    "zh-hant": ("big5-changyong",),
-    "ja": ("jisx0208-l1", "hiragana", "katakana"),
-    "ko": ("ksx1001-hangul", "hangul-syllables"),
+    "zh-hans": ("tongyong-guifan-l1",),
+    "zh-hant": ("tw-changyong-4808",),
+    # jisx0208-kana (JIS hiragana + katakana + ー・) must be complete; the
+    # partial tier checks the hiragana and katakana tables separately.
+    "ja": ("jisx0208-l1", "jisx0208-kana", "hiragana", "katakana"),
+    "ko": ("ksx1001-hangul",),
     "latin": ("latin-basic",),
     "latin-supp": ("latin1-supp",),
     "latin-ext": ("latin-ext-a",),
@@ -137,34 +141,26 @@ SCRIPT_REFERENCE_CHARSETS: dict[str, tuple[str, ...]] = {
 }
 
 
-def _best(cov: dict[str, tuple[int, int]], ids: tuple[str, ...]) -> float:
-    return max(_ratio(cov, i) for i in ids)
+def full_threshold(script: str) -> float:
+    return CJK_FULL if script in CJK_SCRIPTS else SCRIPT_FULL
 
 
 def _script_scores(cov: dict[str, tuple[int, int]]) -> dict[str, float]:
-    r = SCRIPT_REFERENCE_CHARSETS
-    kana = min(_ratio(cov, "hiragana"), _ratio(cov, "katakana"))
-    return {
-        "zh-hans": _best(cov, r["zh-hans"]),
-        "zh-hant": _best(cov, r["zh-hant"]),
-        # Japanese is judged by kanji coverage, but kana must be present first for it to count as targeting Japanese
-        "ja": _ratio(cov, "jisx0208-l1") if kana >= KANA_GATE else 0.0,
-        "ko": _best(cov, r["ko"]),
-        "latin": _best(cov, r["latin"]),
-        "latin-supp": _best(cov, r["latin-supp"]),
-        "latin-ext": _best(cov, r["latin-ext"]),
-        "cyrillic": _best(cov, r["cyrillic"]),
-        "greek": _best(cov, r["greek"]),
-        "arabic": _best(cov, r["arabic"]),
-        "thai": _best(cov, r["thai"]),
-    }
+    """Each script's score on its first reference charset; Japanese is special-cased in detect_scripts."""
+    return {name: _ratio(cov, ids[0]) for name, ids in SCRIPT_REFERENCE_CHARSETS.items()}
 
 
 def detect_scripts(cov: dict[str, tuple[int, int]]) -> list[str]:
     """Scripts that clear the threshold; scripts that fall short but clearly target the language are recorded as `<script>-partial`."""
     out: list[str] = []
     for name, score in _script_scores(cov).items():
-        if score >= SCRIPT_FULL:
+        if name == "ja":
+            kana_gate = min(_ratio(cov, "hiragana"), _ratio(cov, "katakana")) >= KANA_GATE
+            if _ratio(cov, "jisx0208-kana") >= 1.0 and score >= CJK_FULL:
+                out.append(name)
+            elif kana_gate and score >= SCRIPT_TARGET:
+                out.append(f"{name}-partial")
+        elif score >= full_threshold(name):
             out.append(name)
         elif score >= SCRIPT_TARGET:
             out.append(f"{name}-partial")
@@ -172,8 +168,23 @@ def detect_scripts(cov: dict[str, tuple[int, int]]) -> list[str]:
 
 
 def pick_sample_lang(cov: dict[str, tuple[int, int]]) -> str:
-    """Sample language: script strength is scored on the same 0-1 scale for all scripts; fixed priority order, ties favor the earlier one."""
-    scripts = {s for s in detect_scripts(cov) if not s.endswith("-partial")}
+    """Sample language: script strength is scored on the same 0-1 scale for all scripts; fixed priority order, ties favor the earlier one.
+
+    CJK specimens deliberately keep the broad encodings (GB 2312, Big5) at 90%
+    rather than the labels' core tables at 98%: they only pick which specimen
+    to show, the core tables tie at 100% for most pan-CJK fonts, and fonts just
+    short of a complete label (Ark Pixel) should keep their CJK specimen.
+    """
+    scripts = {s for s in detect_scripts(cov)
+               if not s.endswith("-partial") and s not in CJK_SCRIPTS}
+    kana = min(_ratio(cov, "hiragana"), _ratio(cov, "katakana"))
+    broad = {
+        "zh-hans": max(_ratio(cov, "gb2312"), _ratio(cov, "tongyong-guifan")),
+        "zh-hant": _ratio(cov, "big5-changyong"),
+        "ja": _ratio(cov, "jisx0208-l1") if kana >= KANA_GATE else 0.0,
+        "ko": max(_ratio(cov, "ksx1001-hangul"), _ratio(cov, "hangul-syllables")),
+    }
+    scripts |= {name for name, score in broad.items() if score >= SCRIPT_FULL}
     ordered = [
         ("zh-hans", max(_ratio(cov, "gb2312"), _ratio(cov, "tongyong-guifan"))),
         ("zh-hant", _ratio(cov, "big5-changyong")),

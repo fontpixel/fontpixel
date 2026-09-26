@@ -15,4 +15,4 @@ DATA_SCHEMA_VERSION = 5  # Per-variant CJK set and intersection coverage in deta
 # parallel). Pure metadata logic (searchText, description fields, TTF name
 # table, README) doesn't need it bumped — the cache-hit fast path
 # recomputes those from current code every time.
-PIPELINE_VERSION = 22  # v22: coverage sections reordered with "intl" first, which also reorders index.charsetIds -- every family's positional coverage array has to be rebuilt against it
+PIPELINE_VERSION = 23  # v23: CJK scripts are judged on core tables (tongyong level 1, Taiwan chart A, JIS kana + level 1, KS X 1001 hangul) at 98%; kana and bopomofo sets narrowed
