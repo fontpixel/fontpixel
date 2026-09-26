@@ -332,10 +332,10 @@ export const fr: UIStrings = {
     title: 'Outils et documentation',
     intro: 'Outils de développement et documents de référence autour des polices bitmap. Contenu en anglais pour le moment.',
     cards: [
-      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'Bibliothèque TypeScript/JavaScript pour analyser les polices bitmap BDF, pour navigateur et Node, avec un bac à sable en ligne.' },
-      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'Bibliothèque Python pour analyser les polices bitmap BDF ; se combine avec Pillow pour dessiner des bitmaps.' },
-      { slug: 'bdf-spec', name: 'Spécification BDF', blurb: 'Édition mise au propre de la spécification Glyph Bitmap Distribution Format d\'Adobe, avec une liste de propriétés non officielles.' },
-      { slug: 'font-template', name: 'Modèle de police simple', blurb: 'Le modèle et le guide les plus simples pour dessiner des glyphes dans Adobe Illustrator et produire une police avec FontForge.' },
+      { slug: 'bdfparser_js', name: 'BDF Parser (JS/TS)', blurb: 'Bibliothèque TypeScript/JavaScript pour analyser les polices bitmap BDF, pour navigateur et Node, avec un bac à sable en ligne.' },
+      { slug: 'bdfparser_py', name: 'BDF Parser (Python)', blurb: 'Bibliothèque Python pour analyser les polices bitmap BDF ; se combine avec Pillow pour dessiner des bitmaps.' },
+      { slug: 'bdf_spec', name: 'Spécification BDF', blurb: 'Édition mise au propre de la spécification Glyph Bitmap Distribution Format d\'Adobe, avec une liste de propriétés non officielles.' },
+      { slug: 'font_template', name: 'Modèle de police simple', blurb: 'Le modèle et le guide les plus simples pour dessiner des glyphes dans Adobe Illustrator et produire une police avec FontForge.' },
     ],
   },
 };

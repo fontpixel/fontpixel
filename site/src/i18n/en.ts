@@ -332,10 +332,10 @@ export const en: UIStrings = {
     title: 'Tools & Docs',
     intro: 'Developer tools and reference documents around bitmap fonts.',
     cards: [
-      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'A TypeScript/JavaScript library for parsing BDF bitmap fonts, for browsers and Node, with a live playground.' },
-      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'A Python library for parsing BDF bitmap fonts; pairs with Pillow for drawing bitmaps.' },
-      { slug: 'bdf-spec', name: 'BDF Specification', blurb: 'A cleaned-up edition of Adobe\'s Glyph Bitmap Distribution Format spec, plus an unofficial property list.' },
-      { slug: 'font-template', name: 'Simple Font Template', blurb: 'The simplest template and walkthrough for drawing glyphs in Adobe Illustrator and building a font with FontForge.' },
+      { slug: 'bdfparser_js', name: 'BDF Parser (JS/TS)', blurb: 'A TypeScript/JavaScript library for parsing BDF bitmap fonts, for browsers and Node, with a live playground.' },
+      { slug: 'bdfparser_py', name: 'BDF Parser (Python)', blurb: 'A Python library for parsing BDF bitmap fonts; pairs with Pillow for drawing bitmaps.' },
+      { slug: 'bdf_spec', name: 'BDF Specification', blurb: 'A cleaned-up edition of Adobe\'s Glyph Bitmap Distribution Format spec, plus an unofficial property list.' },
+      { slug: 'font_template', name: 'Simple Font Template', blurb: 'The simplest template and walkthrough for drawing glyphs in Adobe Illustrator and building a font with FontForge.' },
     ],
   },
 };

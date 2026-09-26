@@ -14,10 +14,10 @@ export type DocEntry = CollectionEntry<'docs'>;
 export const DOC_LANGS: Lang[] = ['en'];
 
 export const DOC_SECTIONS = {
-  'font-template': 'Font Template',
-  'bdf-spec': 'BDF Specification',
-  'bdfparser-js': 'bdfparser (JS/TS)',
-  'bdfparser-py': 'bdfparser (Python)',
+  'font_template': 'Font Template',
+  'bdf_spec': 'BDF Specification',
+  'bdfparser_js': 'bdfparser (JS/TS)',
+  'bdfparser_py': 'bdfparser (Python)',
 } as const;
 export type DocSection = keyof typeof DOC_SECTIONS;
 

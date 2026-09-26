@@ -19,7 +19,7 @@ test('every docs page appears in its section sidebar exactly once', () => {
 });
 
 test('a collapsed category unfolds only when it holds the current page', () => {
-  const api = DOC_SIDEBARS['bdfparser-js'].find(
+  const api = DOC_SIDEBARS['bdfparser_js'].find(
     (n): n is SidebarCategory => 'category' in n && n.category.startsWith('API TS Doc'),
   )!;
   expect(categoryOpen(api, '')).toBe(false);

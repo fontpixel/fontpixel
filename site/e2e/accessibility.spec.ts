@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 
 const paths = ['en/', 'zh/', 'en/page/2/', 'en/fonts/galmuri/', 'en/compare/',
-  'en/about/', 'en/tools/', 'en/bdfparser-js/', 'en/bdfparser-js/api/types/headers/', '404'];
+  'en/about/', 'en/tools/', 'en/bdfparser_js/', 'en/bdfparser_js/api/types/headers/', '404'];
 
 for (const mode of ['desktop-light', 'mobile-dark'] as const) {
   for (const path of paths) {
@@ -35,7 +35,7 @@ test('skip link transfers keyboard focus to main and keeps a visible focus ring'
 });
 
 test('doc tabs support arrows, Home/End, and a single Tab stop', async ({ page }) => {
-  await page.goto('en/bdfparser-js/');
+  await page.goto('en/bdfparser_js/');
   const group = page.locator('[data-tabs]').first();
   const tabs = group.getByRole('tab');
   await tabs.first().focus();

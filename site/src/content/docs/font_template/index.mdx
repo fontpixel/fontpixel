@@ -27,15 +27,15 @@ Open `font_template.ai`, draw your glyphs in the "Artwork glyph" layer.
 
 (It doesn't matter if your glyph is partially and slightly outside its artboard.)
 
-![AI font template](https://raw.githubusercontent.com/tomchen/font-template/master/img/1-ai_font_template.png)
+![AI font template](https://raw.githubusercontent.com/fontpixel/font-template/master/img/1-ai_font_template.png)
 
 After finishing drawing the glyphs, hide "Example glyph" layer. Click "File" -> "Export" -> "Export for Screens".
 
-![AI menu export](https://raw.githubusercontent.com/tomchen/font-template/master/img/2-ai_menu_export.png)
+![AI menu export](https://raw.githubusercontent.com/fontpixel/font-template/master/img/2-ai_menu_export.png)
 
 Select the glyphs you want to export (do not select empty ones), select "SVG" format, click "Export Artboard".
 
-![AI export](https://raw.githubusercontent.com/tomchen/font-template/master/img/3-ai_export.png)
+![AI export](https://raw.githubusercontent.com/fontpixel/font-template/master/img/3-ai_export.png)
 
 Exported individual glyph SVG files are inside an "SVG" folder, put it in a folder that also contains the `batch_import_svg.py` script file.
 
@@ -45,19 +45,19 @@ For Mac or Linux users, `cd <FOLDER_PATH>` and execute `fontforge -lang=py -scri
 
 *(\*: for 64 bit Windows it's `Program Files (x86)`, for 32 bit Windows it's `Program Files`)*
 
-![FontForge import](https://raw.githubusercontent.com/tomchen/font-template/master/img/4-fontforge_import.png)
+![FontForge import](https://raw.githubusercontent.com/fontpixel/font-template/master/img/4-fontforge_import.png)
 
 Open the `output.sfd` font file with FontForge. Adjust glyphs' width (use <kbd>Shift</kbd> key to select all the glyphs you want to adjust width, then, in the menu, select "Metrics" -> "Auto Width", OR, double click a glyph and manually drag its border line).
 
-![FontForge adjust width](https://raw.githubusercontent.com/tomchen/font-template/master/img/5-fontforge_adjust_width.png)
+![FontForge adjust width](https://raw.githubusercontent.com/fontpixel/font-template/master/img/5-fontforge_adjust_width.png)
 
 In the menu, select "File" -> "Generate Fonts..."
 
-![FontForge menu generate font](https://raw.githubusercontent.com/tomchen/font-template/master/img/6-fontforge_menu_generate_font.png)
+![FontForge menu generate font](https://raw.githubusercontent.com/fontpixel/font-template/master/img/6-fontforge_menu_generate_font.png)
 
 Type in a font name, select a font format (typically TrueType or OpenType), click "Generate" button. Then you have your self-made computer font!
 
-![FontForge generate font](https://raw.githubusercontent.com/tomchen/font-template/master/img/7-fontforge_generate_font.png)
+![FontForge generate font](https://raw.githubusercontent.com/fontpixel/font-template/master/img/7-fontforge_generate_font.png)
 
 You can stop here and do not need to read the following sections.
 
@@ -68,7 +68,7 @@ You can stop here and do not need to read the following sections.
 This font template can be used to draw single glyph and produce single glyph SVG.
 
 The following image depicts the guides of a single glyph.
-![Font template single description](https://raw.githubusercontent.com/tomchen/font-template/master/template_desc/font_template_single_description.png)
+![Font template single description](https://raw.githubusercontent.com/fontpixel/font-template/master/template_desc/font_template_single_description.png)
 
 In FontForge, select a glyph or open a glyph, then click "File" -> "Import...", select "SVG" as "Format", select your single glyph SVG file and import it.
 

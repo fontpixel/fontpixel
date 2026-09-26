@@ -28,6 +28,6 @@ order: 16
 
 ### Functions
 
-- [$Bitmap](functions/bitmap/)
-- [$Font](functions/font/)
-- [$Glyph](functions/glyph/)
+- [$Bitmap](functions/_bitmap/)
+- [$Font](functions/_font/)
+- [$Glyph](functions/_glyph/)

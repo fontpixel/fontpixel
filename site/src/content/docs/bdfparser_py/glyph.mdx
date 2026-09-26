@@ -58,24 +58,24 @@ _dictionary_ (_string_ as keys, _integer_ or _string_ or _list_ as values)
 
 The glyph's meta data.
 
-Glyph meta information's names (keys), value types, and their descriptions in the [BDF spec](../../bdf-spec/file_format/individual_glyph_info/):
+Glyph meta information's names (keys), value types, and their descriptions in the [BDF spec](../../bdf_spec/file_format/individual_glyph_info/):
 
-- `'glyphname'`: (_string_) see [`STARTCHAR`](../../bdf-spec/file_format/individual_glyph_info/#startchar)
-- `'codepoint'`: (_integer_) see [`ENCODING`](../../bdf-spec/file_format/individual_glyph_info/#encoding)
-- `'bbw'`: (_integer_) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
-- `'bbh'`: (_integer_) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
-- `'bbxoff'`: (_integer_) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
-- `'bbyoff'`: (_integer_) see [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx)
-- `'swx0'`: (_integer_) see [`SWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#swidth)
-- `'swy0'`: (_integer_) see [`SWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#swidth)
-- `'dwx0'`: (_integer_) see [`DWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#dwidth)
-- `'dwy0'`: (_integer_) see [`DWIDTH`](../../bdf-spec/file_format/individual_glyph_info/#dwidth)
-- `'swx1'`: (_integer_) see [`SWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#swidth1)
-- `'swy1'`: (_integer_) see [`SWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#swidth1)
-- `'dwx1'`: (_integer_) see [`DWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#dwidth1)
-- `'dwy1'`: (_integer_) see [`DWIDTH1`](../../bdf-spec/file_format/individual_glyph_info/#dwidth1)
-- `'vvectorx'`: (_integer_) see [`VVECTOR`](../../bdf-spec/file_format/individual_glyph_info/#vvector)
-- `'vvectory'`: (_integer_) see [`VVECTOR`](../../bdf-spec/file_format/individual_glyph_info/#vvector)
+- `'glyphname'`: (_string_) see [`STARTCHAR`](../../bdf_spec/file_format/individual_glyph_info/#startchar)
+- `'codepoint'`: (_integer_) see [`ENCODING`](../../bdf_spec/file_format/individual_glyph_info/#encoding)
+- `'bbw'`: (_integer_) see [`BBX`](../../bdf_spec/file_format/individual_glyph_info/#bbx)
+- `'bbh'`: (_integer_) see [`BBX`](../../bdf_spec/file_format/individual_glyph_info/#bbx)
+- `'bbxoff'`: (_integer_) see [`BBX`](../../bdf_spec/file_format/individual_glyph_info/#bbx)
+- `'bbyoff'`: (_integer_) see [`BBX`](../../bdf_spec/file_format/individual_glyph_info/#bbx)
+- `'swx0'`: (_integer_) see [`SWIDTH`](../../bdf_spec/file_format/individual_glyph_info/#swidth)
+- `'swy0'`: (_integer_) see [`SWIDTH`](../../bdf_spec/file_format/individual_glyph_info/#swidth)
+- `'dwx0'`: (_integer_) see [`DWIDTH`](../../bdf_spec/file_format/individual_glyph_info/#dwidth)
+- `'dwy0'`: (_integer_) see [`DWIDTH`](../../bdf_spec/file_format/individual_glyph_info/#dwidth)
+- `'swx1'`: (_integer_) see [`SWIDTH1`](../../bdf_spec/file_format/individual_glyph_info/#swidth1)
+- `'swy1'`: (_integer_) see [`SWIDTH1`](../../bdf_spec/file_format/individual_glyph_info/#swidth1)
+- `'dwx1'`: (_integer_) see [`DWIDTH1`](../../bdf_spec/file_format/individual_glyph_info/#dwidth1)
+- `'dwy1'`: (_integer_) see [`DWIDTH1`](../../bdf_spec/file_format/individual_glyph_info/#dwidth1)
+- `'vvectorx'`: (_integer_) see [`VVECTOR`](../../bdf_spec/file_format/individual_glyph_info/#vvector)
+- `'vvectory'`: (_integer_) see [`VVECTOR`](../../bdf_spec/file_format/individual_glyph_info/#vvector)
 - `'hexdata'`: (_list_ of _strings_) the glyph's shape data in the form of _list_ of hexadecimal-encoded _string_
 
 :::note
@@ -171,7 +171,7 @@ Get the character of the glyph.
 
 #### Examples
 
-In these examples, we use [the "quoteright" (`'`) glyph in the BDF spec's example figure 3](../../bdf-spec/examples/#figure-3).
+In these examples, we use [the "quoteright" (`'`) glyph in the BDF spec's example figure 3](../../bdf_spec/examples/#figure-3).
 
 ```python
 font = Font('tests/fonts/spec_example_fixed.bdf')
@@ -291,11 +291,11 @@ print(quoteright.draw(-1, (6, 17, 1, 1)))
 
 `mode` can be:
 
-- `0` (default): area represented by the bitmap hex data, positioned and resized (cropped) (`fbbx` × `fbby`) according to [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox) (the font's global bounding box)
-- `1`: area represented by the bitmap hex data, resized (cropped) according to [`BBX`](../../bdf-spec/file_format/individual_glyph_info/#bbx) (`bbw` × `bbh`), which is the individual glyph bounding box, without unnecessary blank margin (but still possible to have blank margin sometimes)
-- `2`: area represented by the bitmap hex data, original, without removing the [right-padded](../../bdf-spec/examples/#figure-3) `'0'`s
+- `0` (default): area represented by the bitmap hex data, positioned and resized (cropped) (`fbbx` × `fbby`) according to [`FONTBOUNDINGBOX`](../../bdf_spec/file_format/global_font_info/#fontboundingbox) (the font's global bounding box)
+- `1`: area represented by the bitmap hex data, resized (cropped) according to [`BBX`](../../bdf_spec/file_format/individual_glyph_info/#bbx) (`bbw` × `bbh`), which is the individual glyph bounding box, without unnecessary blank margin (but still possible to have blank margin sometimes)
+- `2`: area represented by the bitmap hex data, original, without removing the [right-padded](../../bdf_spec/examples/#figure-3) `'0'`s
 - `-1`: user specified area.
-  - `bb` parameter is useless when mode `-1` is not chosen. But if mode `-1` is chosen, you **MUST** specify `bb` parameter, which is a _tuple_ `(bbx, bby, bbxoff, bbyoff)` representing your customized font bounding box. Similar to [`FONTBOUNDINGBOX`](../../bdf-spec/file_format/global_font_info/#fontboundingbox), `bbx` and `bby` represent the size, `bbxoff` and `bbyoff` represent the relative position (displacement) of the starting (bottom-left) point from the origin
+  - `bb` parameter is useless when mode `-1` is not chosen. But if mode `-1` is chosen, you **MUST** specify `bb` parameter, which is a _tuple_ `(bbx, bby, bbxoff, bbyoff)` representing your customized font bounding box. Similar to [`FONTBOUNDINGBOX`](../../bdf_spec/file_format/global_font_info/#fontboundingbox), `bbx` and `bby` represent the size, `bbxoff` and `bbyoff` represent the relative position (displacement) of the starting (bottom-left) point from the origin
 
 #### Return value
 

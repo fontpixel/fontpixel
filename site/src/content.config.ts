@@ -5,7 +5,7 @@ import { glob } from 'astro/loaders';
  *
  * Body content is currently English-only; same rule as family metadata—when Chinese
  * is added later, place a same-named `*.zh.mdx` file, other languages fall back to English.
- * id is the "section/path", e.g. bdf-spec/intro.
+ * id is the "section/path", e.g. bdf_spec/intro.
  */
 const docs = defineCollection({
   loader: glob({

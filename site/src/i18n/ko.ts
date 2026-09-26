@@ -332,10 +332,10 @@ export const ko: UIStrings = {
     title: '도구와 문서',
     intro: '비트맵 글꼴을 둘러싼 개발 도구와 참고 문서입니다. 본문은 현재 영어입니다.',
     cards: [
-      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'BDF 비트맵 글꼴을 파싱하는 TypeScript/JavaScript 라이브러리. 브라우저와 Node 지원, 온라인 플레이그라운드 포함.' },
-      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'BDF 비트맵 글꼴을 파싱하는 Python 라이브러리. Pillow와 함께 비트맵을 그릴 수 있습니다.' },
-      { slug: 'bdf-spec', name: 'BDF 사양', blurb: 'Adobe의 Glyph Bitmap Distribution Format 사양 정리판. 비공식 속성 목록 포함.' },
-      { slug: 'font-template', name: '간단한 글꼴 템플릿', blurb: 'Adobe Illustrator로 글리프를 그리고 FontForge로 글꼴을 만드는 가장 간단한 템플릿과 안내.' },
+      { slug: 'bdfparser_js', name: 'BDF Parser (JS/TS)', blurb: 'BDF 비트맵 글꼴을 파싱하는 TypeScript/JavaScript 라이브러리. 브라우저와 Node 지원, 온라인 플레이그라운드 포함.' },
+      { slug: 'bdfparser_py', name: 'BDF Parser (Python)', blurb: 'BDF 비트맵 글꼴을 파싱하는 Python 라이브러리. Pillow와 함께 비트맵을 그릴 수 있습니다.' },
+      { slug: 'bdf_spec', name: 'BDF 사양', blurb: 'Adobe의 Glyph Bitmap Distribution Format 사양 정리판. 비공식 속성 목록 포함.' },
+      { slug: 'font_template', name: '간단한 글꼴 템플릿', blurb: 'Adobe Illustrator로 글리프를 그리고 FontForge로 글꼴을 만드는 가장 간단한 템플릿과 안내.' },
     ],
   },
 };

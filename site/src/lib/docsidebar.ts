@@ -23,7 +23,7 @@ const named = (prefix: string, entries: [string, string][]): SidebarPage[] =>
   entries.map(([slug, label]) => ({ slug: `${prefix}${slug}`, label }));
 
 export const DOC_SIDEBARS: Record<DocSection, SidebarNode[]> = {
-  'bdfparser-js': [
+  'bdfparser_js': [
     ...pages('', 'editor'),
     { category: 'BDF Parser (TS/JS) API', items: pages('font', 'glyph', 'bitmap') },
     {
@@ -60,19 +60,19 @@ export const DOC_SIDEBARS: Record<DocSection, SidebarNode[]> = {
           category: 'Functions',
           collapsed: true,
           items: named('api/functions/', [
-            ['bitmap', '$Bitmap'],
-            ['font', '$Font'],
-            ['glyph', '$Glyph'],
+            ['_bitmap', '$Bitmap'],
+            ['_font', '$Font'],
+            ['_glyph', '$Glyph'],
           ]),
         },
       ],
     },
   ],
-  'bdfparser-py': [
+  'bdfparser_py': [
     ...pages(''),
     { category: 'BDF Parser (Python) API', items: pages('font', 'glyph', 'bitmap') },
   ],
-  'bdf-spec': [
+  'bdf_spec': [
     ...pages('', 'intro', 'tape_format'),
     {
       category: 'File Format',
@@ -80,7 +80,7 @@ export const DOC_SIDEBARS: Record<DocSection, SidebarNode[]> = {
     },
     ...pages('examples', 'spec_2.1', 'bdf_properties'),
   ],
-  'font-template': pages(''),
+  'font_template': pages(''),
 };
 
 /** Every page slug of a tree, in reading order. */

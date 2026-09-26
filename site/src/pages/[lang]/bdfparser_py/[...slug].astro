@@ -5,7 +5,7 @@ import { docStaticPaths } from '../../../lib/docs';
 import type { Lang } from '../../../i18n';
 
 export async function getStaticPaths() {
-  return docStaticPaths('bdf-spec');
+  return docStaticPaths('bdfparser_py');
 }
 
 const lang = Astro.params.lang as Lang;
@@ -13,4 +13,4 @@ const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 ---
 
-<DocsLayout lang={lang} section="bdf-spec" entry={entry} headings={headings}><Content /></DocsLayout>
+<DocsLayout lang={lang} section="bdfparser_py" entry={entry} headings={headings}><Content /></DocsLayout>

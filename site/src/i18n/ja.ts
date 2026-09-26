@@ -332,10 +332,10 @@ export const ja: UIStrings = {
     title: 'ツールとドキュメント',
     intro: 'ビットマップフォントまわりの開発ツールと参考資料です。本文は現在英語です。',
     cards: [
-      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: 'BDFビットマップフォントを解析するTypeScript/JavaScriptライブラリ。ブラウザとNodeに対応、オンラインプレイグラウンド付き。' },
-      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: 'BDFビットマップフォントを解析するPythonライブラリ。Pillowと組み合わせて描画できます。' },
-      { slug: 'bdf-spec', name: 'BDF仕様', blurb: 'AdobeのGlyph Bitmap Distribution Format仕様の整理版。非公式プロパティ一覧付き。' },
-      { slug: 'font-template', name: 'シンプルなフォントテンプレート', blurb: 'Adobe Illustratorでグリフを描き、FontForgeでフォントを生成する最も簡単なテンプレートと手順。' },
+      { slug: 'bdfparser_js', name: 'BDF Parser (JS/TS)', blurb: 'BDFビットマップフォントを解析するTypeScript/JavaScriptライブラリ。ブラウザとNodeに対応、オンラインプレイグラウンド付き。' },
+      { slug: 'bdfparser_py', name: 'BDF Parser (Python)', blurb: 'BDFビットマップフォントを解析するPythonライブラリ。Pillowと組み合わせて描画できます。' },
+      { slug: 'bdf_spec', name: 'BDF仕様', blurb: 'AdobeのGlyph Bitmap Distribution Format仕様の整理版。非公式プロパティ一覧付き。' },
+      { slug: 'font_template', name: 'シンプルなフォントテンプレート', blurb: 'Adobe Illustratorでグリフを描き、FontForgeでフォントを生成する最も簡単なテンプレートと手順。' },
     ],
   },
 };

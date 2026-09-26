@@ -6,7 +6,7 @@ import { preview } from 'astro';
 
 const paths = process.env.AUDIT_PATHS?.split(',') ?? [
   'en/', 'zh/', 'en/page/2/', 'en/fonts/galmuri/', 'en/compare/',
-  'en/about/', 'en/tools/', 'en/bdfparser-js/', 'en/bdfparser-js/api/types/headers/',
+  'en/about/', 'en/tools/', 'en/bdfparser_js/', 'en/bdfparser_js/api/types/headers/',
 ];
 const modes = process.env.AUDIT_MODES?.split(',') ?? ['mobile', 'desktop'];
 const runs = Number(process.env.AUDIT_RUNS ?? 3);

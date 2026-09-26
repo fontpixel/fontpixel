@@ -15,7 +15,7 @@ describe('pageKind', () => {
     ['/en/compare/', 'other'],
     ['/en/fonts/', 'other'],
     ['/de/fonts/galmuri/', 'other'],
-    ['/en/bdf-spec/intro/', 'other'],
+    ['/en/bdf_spec/intro/', 'other'],
   ])('%s → %s', (path, kind) => {
     expect(pageKind(path, '/', LANGS)).toBe(kind);
   });

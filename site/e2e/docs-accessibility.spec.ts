@@ -20,7 +20,7 @@ for (const path of docs) {
 }
 
 test('tooltips describe their trigger and Escape dismisses them without moving focus', async ({ page }) => {
-  await page.goto('en/bdfparser-js/font/');
+  await page.goto('en/bdfparser_js/font/');
   const trigger = page.locator('.tt').first();
   await trigger.focus();
   await expect(trigger).toHaveAccessibleDescription('Tuple in TypeScript = Fixed-length Array in JavaScript');

@@ -328,10 +328,10 @@ export const zh: UIStrings = {
     title: '工具与文档',
     intro: '围绕点阵字体的开发工具与参考文档。正文目前为英文。',
     cards: [
-      { slug: 'bdfparser-js', name: 'BDF Parser (JS/TS)', blurb: '解析BDF点阵字体的TypeScript/JavaScript库，浏览器与Node都能用，含在线试玩。' },
-      { slug: 'bdfparser-py', name: 'BDF Parser (Python)', blurb: '解析BDF点阵字体的Python库，可配合Pillow绘制位图。' },
-      { slug: 'bdf-spec', name: 'BDF规范', blurb: 'Adobe字形位图分发格式（BDF）规范的整理版，含非官方属性清单。' },
-      { slug: 'font-template', name: '简易字体模板', blurb: '用Adobe Illustrator画字形、经FontForge生成字体的最简模板与教程。' },
+      { slug: 'bdfparser_js', name: 'BDF Parser (JS/TS)', blurb: '解析BDF点阵字体的TypeScript/JavaScript库，浏览器与Node都能用，含在线试玩。' },
+      { slug: 'bdfparser_py', name: 'BDF Parser (Python)', blurb: '解析BDF点阵字体的Python库，可配合Pillow绘制位图。' },
+      { slug: 'bdf_spec', name: 'BDF规范', blurb: 'Adobe字形位图分发格式（BDF）规范的整理版，含非官方属性清单。' },
+      { slug: 'font_template', name: '简易字体模板', blurb: '用Adobe Illustrator画字形、经FontForge生成字体的最简模板与教程。' },
     ],
   },
 };
