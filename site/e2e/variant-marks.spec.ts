@@ -61,10 +61,10 @@ test('script labels on the detail page mark the variants that earn them', async 
   await page.goto('en/fonts/misc-fixed/');
   const variants = family('misc-fixed').variants as { scripts: string[] }[];
   for (const script of family('misc-fixed').scripts as string[]) {
-    const mark = page.locator(`[data-script="${script}"] [data-testid="variant-mark"]`);
+    const mark = page.locator(`[data-script="${script}"] + [data-testid="variant-mark"]`);
     const all = variants.every((v) => v.scripts.includes(script));
     await expect(mark).toHaveAttribute('data-variant-mark', all ? 'all' : 'some');
   }
-  const zh = page.locator('[data-script="zh-hans"] [data-testid="variant-mark"]');
+  const zh = page.locator('[data-script="zh-hans"] + [data-testid="variant-mark"]');
   expect(await zh.getAttribute('title')).toContain('18px');
 });

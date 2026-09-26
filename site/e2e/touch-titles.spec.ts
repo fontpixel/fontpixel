@@ -13,7 +13,7 @@ test.describe('titles on touch screens', () => {
 
   test('a long press shows a title and does not follow the link', async ({ page }) => {
     await page.goto('en/fonts/misc-fixed/');
-    const link = page.locator('[data-script="zh-hans"] a');
+    const link = page.locator('a[data-script="zh-hans"]');
     const rule = await link.getAttribute('title');
     expect(rule).toBeTruthy();
     await link.scrollIntoViewIfNeeded();
@@ -25,7 +25,7 @@ test.describe('titles on touch screens', () => {
     await link.dispatchEvent('click');
     await expect(page).toHaveURL(/\/fonts\/misc-fixed\/$/);
     // Android's long press arrives as a contextmenu event; it must not open the system menu.
-    const mark = page.locator('[data-script="zh-hans"] [data-testid="variant-mark"]');
+    const mark = page.locator('[data-script="zh-hans"] + [data-testid="variant-mark"]');
     await mark.dispatchEvent('pointerdown', { pointerType: 'touch', isPrimary: true, bubbles: true });
     await expect(tip).toHaveCount(0);
     const prevented = await mark.evaluate((el) => !el.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true })));
@@ -38,7 +38,7 @@ test.describe('titles on touch screens', () => {
 
   test('a short tap does not show a title', async ({ page }) => {
     await page.goto('en/fonts/misc-fixed/');
-    const mark = page.locator('[data-script="latin"] [data-testid="variant-mark"]');
+    const mark = page.locator('[data-script="latin"] + [data-testid="variant-mark"]');
     await mark.dispatchEvent('pointerdown', { pointerType: 'touch', isPrimary: true, bubbles: true });
     await mark.dispatchEvent('pointerup', { pointerType: 'touch', isPrimary: true, bubbles: true });
     await page.waitForTimeout(650);

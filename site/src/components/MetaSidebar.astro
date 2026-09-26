@@ -39,7 +39,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
         <>
           <dt>{s.detail.author}</dt>
           {/* Each author links to the catalogue page searched by their name, making it easy to find their other fonts */}
-          <dd data-testid="meta-author">
+          <dd class="side__links" data-testid="meta-author">
             {authors.map((a, i) => (
               <>{i > 0 ? (cjk ? '、' : ', ') : ''}<a href={withBase(`/${lang}/?q=${encodeURIComponent(a)}`)}>{a}</a></>
             ))}
@@ -77,7 +77,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
       m.forms.length > 0 && (
         <>
           <dt>{s.catalogue.form}</dt>
-          <dd>
+          <dd class="side__links">
             {m.forms.map((form, i) => (
               <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?forms=${encodeURIComponent(form)}`)}>{s.forms[form] ?? form}</a></>
             ))}
@@ -90,10 +90,12 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
         <>
           <dt>{s.catalogue.scripts}</dt>
           {/* Each item links to the catalogue page filtered by that script */}
-          <dd>
-            {/* The family label merges its variants; with several, a mark says which of them earn it */}
+          <dd class="side__links">
+            {/* The family label merges its variants; with several, a mark says which of them earn it.
+                The links stay bare in the text run: wrapped alone in an element, axe no longer
+                treats them as inline text links and fails their 15px height on target-size. */}
             {m.scripts.map((sc, i) => (
-              <>{i > 0 ? ' · ' : ''}<span class="side__script" data-script={sc}><a href={withBase(`/${lang}/?scripts=${encodeURIComponent(sc)}`)} title={s.scriptRules[sc] ?? ''}>{s.scriptNames[sc] ?? sc}</a>{m.variants.length > 1 && <> <VariantMark variants={m.variants} matched={m.variants.filter((v) => v.scripts.includes(sc)).map((v) => v.id)} {s} /></>}</span></>
+              <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?scripts=${encodeURIComponent(sc)}`)} title={s.scriptRules[sc] ?? ''} data-script={sc}>{s.scriptNames[sc] ?? sc}</a>{m.variants.length > 1 && <> <VariantMark variants={m.variants} matched={m.variants.filter((v) => v.scripts.includes(sc)).map((v) => v.id)} {s} /></>}</>
             ))}
           </dd>
         </>
@@ -104,7 +106,7 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
         <>
           <dt>{s.catalogue.vibes}</dt>
           {/* Same as above: links to the catalogue page filtered by that vibe tag */}
-          <dd>
+          <dd class="side__links">
             {m.vibes.map((v, i) => (
               <>{i > 0 ? ' · ' : ''}<a href={withBase(`/${lang}/?vibes=${encodeURIComponent(v)}`)}>{s.vibeNames[v] ?? v}</a></>
             ))}
@@ -197,6 +199,12 @@ const prov = pickText(lang, detail.provenance, detail.provenanceEn);
   .side__list dd {
     margin: 0;
     overflow-wrap: anywhere;
+  }
+  /* Rows of small inline links (authors, forms, scripts, vibes): a line box
+     of at least 24px keeps links on stacked lines 24px apart, which the
+     target-size audit asks of a link that ends up alone on its line. */
+  .side__list dd.side__links {
+    line-height: 1.8;
   }
   .side__license {
     border-top: 1px dotted var(--line);
