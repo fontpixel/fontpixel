@@ -23,7 +23,7 @@
   });
 </script>
 
-<span class="vmark" class:vmark--some={!all} {title} aria-label={title} role="img"
+<span class="vmark" {title} aria-label={title} role="img"
   data-testid="variant-mark" data-variant-mark={all ? 'all' : 'some'}
   ><Icon name={all ? 'check-check' : 'check-x'} {size} /></span>
 
@@ -34,8 +34,5 @@
     vertical-align: -0.15em;
     color: var(--ink-3);
     cursor: help;
-  }
-  .vmark--some {
-    color: var(--accent);
   }
 </style>
